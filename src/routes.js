@@ -1,6 +1,6 @@
 import React from "react";
-const HomePage = React.lazy(() => import("./views/homepage/index"));
+const LandingBanner = React.lazy(() => import("./views/lendingpage/index"));
 
-const routes = [{ path: "/", name: "Home", element: HomePage }];
+const routes = [{ path: "/", name: "Home", element: LandingBanner }];
 
 export default routes;
