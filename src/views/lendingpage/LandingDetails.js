@@ -45,12 +45,12 @@ function LandingDetails() {
               Learn More
             </button>
             <img src={stakeDrake} className="w-48" alt="Not Found" />
-            <img src={draker} className="w-44 h-20" alt="Not Found" />
+            <img src={draker} className="w-44 h-[5.5rem]" alt="Not Found" />
           </div>
         </div>
 
         <div className="flex justify-center">
-          <div className="flex md:w-[40rem] lg:w-[55rem] xl:w-[74rem] justify-center md:space-x-14 lg:space-x-44 xl:space-x-60 items-center py-2 mt-8 bg-[#0f212e] rounded-sm">
+          <div className="flex md:w-[40rem] lg:w-[55rem] xl:w-[74rem] justify-center md:space-x-14 lg:space-x-44 xl:space-x-60 items-center py-4 mt-5 bg-[#0f212e] rounded-sm">
             <p className="text-white font-semibold">No Crypto? No problem.</p>
             <div className="flex justify-center items-center space-x-8">
               <img src={Mastercard} className="w-14 h-7" alt="Not Found" />

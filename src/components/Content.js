@@ -3,6 +3,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import routes from "../routes";
 
 function Content() {
+  console.log("routes", routes);
+  
   return (
     <div>
       <Routes>

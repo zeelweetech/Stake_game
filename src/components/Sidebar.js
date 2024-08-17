@@ -5,7 +5,7 @@ import InboxIcon from "@mui/icons-material/Inbox";
 
 function Sidebar({ openMenubar, handleDrawerToggle }) {
   return (
-    <div className={`fixed left-0 bg-[#0f212e] text-white h-screen overflow-hidden transition-all duration-[1000ms] ${openMenubar ? "w-64" : "w-14"}`}>
+    <div className={`fixed left-0 bg-[#0f212e] text-white h-screen overflow-hidden ${openMenubar ? "w-64" : "w-14"}`}>
       <div className="p-[1.18rem] shadow-2xl shadow-black">
         <button onClick={handleDrawerToggle} className="text-white">
           <MenuIcon />
