@@ -40,7 +40,7 @@ function LandingDetails() {
           </div>
         </div>
         <div className="flex justify-center">
-          <div className="flex md:w-[40rem] lg:w-[55rem] xl:w-[74rem] justify-center md:space-x-14 lg:space-x-44 xl:space-x-80 items-center mt-8 bg-[#0f212e] rounded-sm">
+          <div className="flex md:w-[40rem] lg:w-[55rem] xl:w-[74rem] justify-between px-5 items-center mt-8 bg-[#0f212e] rounded-sm">
             <button className="bg-[#2f4553] hover:bg-[#53768c] rounded-sm text-sm font-semibold text-white px-5 py-3">
               Learn More
             </button>
@@ -50,7 +50,7 @@ function LandingDetails() {
         </div>
 
         <div className="flex justify-center">
-          <div className="flex md:w-[40rem] lg:w-[55rem] xl:w-[74rem] justify-center md:space-x-14 lg:space-x-44 xl:space-x-60 items-center py-4 mt-5 bg-[#0f212e] rounded-sm">
+          <div className="flex md:w-[40rem] lg:w-[55rem] xl:w-[74rem] justify-between px-5 items-center py-4 mt-5 bg-[#0f212e] rounded-sm">
             <p className="text-white font-semibold">No Crypto? No problem.</p>
             <div className="flex justify-center items-center space-x-8">
               <img src={Mastercard} className="w-14 h-7" alt="Not Found" />

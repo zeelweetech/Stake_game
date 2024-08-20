@@ -11,16 +11,16 @@ function DefaultLayout() {
   };
 
   return (
-    <div className="flex w-[100%]">
-      <div className={`${openMenubar ? 'w-[18.9%]' : 'w-14'}`}>
+    <div className="flex">
+      <div>
         <Sidebar openMenubar={openMenubar} handleDrawerToggle={handleDrawerToggle} />
       </div>
       <div className="w-full">
-        <Header openMenubar={openMenubar} />
+        <Header openMenubar={openMenubar} handleDrawerToggle={handleDrawerToggle} />
         <div>
           <Content />
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
   );
