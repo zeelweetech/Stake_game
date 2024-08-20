@@ -1,65 +1,62 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import ForgotPassword from "../forgotpassword/ForgotPassword";
 import ErrorIcon from "@mui/icons-material/Error";
+import { userLogin } from "../../../services/LoginServices";
 
-function Login({ setOpenPage, openPage }) {
-  const [forgotPassword, setForgotPassword] = React.useState(false);
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [value, setValue] = React.useState({});
-  const [error, setError] = React.useState({});
+function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
+  const [showPassword, setShowPassword] = useState(false);
+  const [values, setValues] = useState({});
+  const [error, setError] = useState({});
 
   const handleOnChange = (e) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
-    setError({ ...error, [e.target.name]: "" });
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+    setError({ ...error, [name]: "" });
   };
 
   const Validation = () => {
     let errors = {};
+    const EmailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
-    if (!value.email) {
+    if (!values?.email) {
       errors.email = "Email Require";
-    } else if (value.email?.length < 3) {
-      errors.email = "Minimum character length is 3";
+    } else if (!EmailRegEx?.test(values?.email)) {
+      errors.email = "Invalid email format";
     }
 
-    if (!value.password) {
+    if (!values?.password) {
       errors.password = "please enter your password";
-    } else if (value.password?.length < 6) {
+    } else if (values?.password?.length < 6) {
       errors.password = "password must be at least 6 characters";
-    }
-
-    if (!value.Forgotemail) {
-      errors.Forgotemail = "This field is required";
-    } else if (value.Forgotemail?.length < 3) {
-      errors.Forgotemail = "This contains invalid email characters";
     }
 
     setError(errors);
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    // console.log("event" , e);
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (Validation()) {
-      console.log("data", value);
-    } else {
-      console.log("validation fails, Error", error);
+      const body = {
+        email: values?.email,
+        password: values?.password,
+      };
+      await userLogin({ body: body })
+        .then((response) => {
+          console.log("respo", response);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
     }
   };
 
   const handleClose = () => {
-    setOpenPage(false);
-  };
-
-  const handleForgotPasswordClick = () => {
-    // setOpenPage(false);
-    setForgotPassword(true);
+    setLoginModel(false);
   };
 
   const togglePasswordVisibility = () => {
@@ -69,7 +66,7 @@ function Login({ setOpenPage, openPage }) {
   return (
     <div>
       <Dialog
-        open={openPage}
+        open={loginModel}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -94,18 +91,18 @@ function Login({ setOpenPage, openPage }) {
                   className="flex text-[#b1bad3] text-sm mb-1"
                   htmlFor="username"
                 >
-                  Email or Username<p className="text-red-700 ml-1">*</p>
+                  Email<p className="text-red-700 ml-1">*</p>
                 </label>
                 <input
                   className={`border rounded w-[28rem] py-2 px-3 bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
-                    error.email ? "border-[#ed4163]" : ""
+                    error?.email ? "border-[#ed4163]" : ""
                   }`}
                   name="email"
-                  value={value.email}
-                  onChange={handleOnChange}
+                  value={values?.email}
+                  onChange={(e) => handleOnChange(e)}
                   type="text"
                 />
-                {error.email && (
+                {error?.email && (
                   <div className="flex items-center space-x-1 mt-2 text-[#f2708a]">
                     <ErrorIcon fontSize="10" />
                     <p className="text-xs">{error.email}</p>
@@ -121,11 +118,11 @@ function Login({ setOpenPage, openPage }) {
                 </label>
                 <input
                   className={`border rounded w-full py-2 px-3 bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
-                    error.email ? "border-[#ed4163]" : ""
+                    error?.password ? "border-[#ed4163]" : ""
                   }`}
                   name="password"
-                  value={value.password}
-                  onChange={handleOnChange}
+                  value={values?.password}
+                  onChange={(e) => handleOnChange(e)}
                   type={showPassword ? "text" : "password"}
                 />
                 <div
@@ -135,7 +132,7 @@ function Login({ setOpenPage, openPage }) {
                   {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                 </div>
               </div>
-              {error.password && (
+              {error?.password && (
                 <div className="flex items-center space-x-1 -mt-2.5 text-[#f2708a]">
                   <ErrorIcon fontSize="10" />
                   <p className="text-xs">{error.password}</p>
@@ -150,7 +147,7 @@ function Login({ setOpenPage, openPage }) {
             </form>
           </DialogContent>
           <Link
-            onClick={handleForgotPasswordClick}
+            onClick={(e) => handleOnForgotPassword(e)}
             className="flex justify-center my-2 text-white"
           >
             Forgot Password
@@ -161,16 +158,6 @@ function Login({ setOpenPage, openPage }) {
           </p>
         </div>
       </Dialog>
-      {forgotPassword && (  // This condition is already correct
-        <ForgotPassword
-          setForgotPassword={setForgotPassword}
-          forgotPassword={forgotPassword}
-          handleSubmit={handleSubmit}
-          handleOnChange={handleOnChange}
-          error={error}
-          value={value}
-        />
-      )}
     </div>
   );
 }

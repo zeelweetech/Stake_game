@@ -1,24 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, DialogContent, IconButton } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorIcon from "@mui/icons-material/Error";
 
-function ForgotPassword({
-  forgotPassword,
-  setForgotPassword,
-  error,
-  handleOnChange,
-  handleSubmit,
-  value,
-}) {
+function ForgotPassword({ forgotPasswordModel, setForgotPasswordModel }) {
+  const [values, setValues] = useState({});
+  const [error, setError] = useState({});
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+    setError({ ...error, [name]: "" });
+  };
+
+  const Validation = () => {
+    let errors = {};
+
+    if (!values.Forgotemail) {
+      errors.Forgotemail = "This field is required";
+    } else if (values.Forgotemail?.length < 3) {
+      errors.Forgotemail = "This contains invalid email characters";
+    }
+
+    setError(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (Validation()) {
+      console.log("data", values);
+    } else {
+      console.log("validation fails, Error", error);
+    }
+  };
+
   const handleForgotPasswordClose = () => {
-    setForgotPassword(false);
+    setForgotPasswordModel(false);
   };
 
   return (
     <Dialog
-      open={forgotPassword}
+      open={forgotPasswordModel}
       onClose={handleForgotPasswordClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
@@ -43,9 +67,11 @@ function ForgotPassword({
                 Email<p className="text-red-700 ml-1">*</p>
               </label>
               <input
-                className={`border rounded w-[28rem] py-2 px-3 bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${error.email ? "border-[#ed4163]" : ""}`}
+                className={`border rounded w-[28rem] py-2 px-3 bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
+                  error.email ? "border-[#ed4163]" : ""
+                }`}
                 name="Forgotemail"
-                value={value.Forgotemail}
+                value={values.Forgotemail}
                 onChange={handleOnChange}
                 type="email"
               />
@@ -56,7 +82,10 @@ function ForgotPassword({
                 </div>
               )}
             </div>
-            <button type="submit" className="bg-[#1fff20] py-3 rounded-md font-semibold w-full">
+            <button
+              type="submit"
+              className="bg-[#1fff20] py-3 rounded-md font-semibold w-full"
+            >
               Recover Password
             </button>
           </form>
