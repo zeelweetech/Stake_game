@@ -15,6 +15,10 @@ import { Link } from "react-router-dom";
 import ErrorIcon from "@mui/icons-material/Error";
 import { userRegister } from "../../../services/LoginServices";
 import toast from "react-hot-toast";
+import {
+  handleFacebookLogin,
+  handleGoogleLogin,
+} from "../../../services/FirebaseServices";
 
 function Register({
   setRagisterModel,
@@ -398,10 +402,16 @@ function Register({
               </p>
             </div>
             <div className="flex justify-center space-x-3">
-              <button className="bg-[#2f4553] hover:bg-[#47687d] px-1 py-2 rounded-md">
+              <button
+                className="bg-[#2f4553] hover:bg-[#47687d] px-1 py-2 rounded-md"
+                onClick={handleFacebookLogin}
+              >
                 <img src={facebook} className="w-7 h-4" alt="Not Found" />
               </button>
-              <button className="bg-[#2f4553] hover:bg-[#47687d] px-0.5 py-2 rounded-md">
+              <button
+                className="bg-[#2f4553] hover:bg-[#47687d] px-0.5 py-2 rounded-md"
+                onClick={handleGoogleLogin}
+              >
                 <img src={google} className="w-8 h-4" alt="Not Found" />
               </button>
             </div>

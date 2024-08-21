@@ -49,6 +49,7 @@ function Header({ openMenubar }) {
           setLoginModel={setLoginModel}
           loginModel={loginModel}
           handleOnForgotPassword={handleOnForgotPassword}
+          setRagisterModel={setRagisterModel}
         />
       )}
       {registerModel && (

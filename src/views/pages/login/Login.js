@@ -8,8 +8,17 @@ import ErrorIcon from "@mui/icons-material/Error";
 import { userLogin } from "../../../services/LoginServices";
 import facebook from "../../../assets/img/facebook.png";
 import google from "../../../assets/img/google.png";
+import {
+  handleFacebookLogin,
+  handleGoogleLogin,
+} from "../../../services/FirebaseServices";
 
-function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
+function Login({
+  setLoginModel,
+  loginModel,
+  handleOnForgotPassword,
+  setRagisterModel,
+}) {
   const [showPassword, setShowPassword] = useState(false);
   const [values, setValues] = useState({});
   const [error, setError] = useState({});
@@ -146,7 +155,9 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
               )}
               <button
                 type="submit"
-                className={`bg-[#1fff20] hover:bg-[#42ed45] py-3 rounded-md font-semibold w-full ${error?.password ? "mt-5" : ""}`}
+                className={`bg-[#1fff20] hover:bg-[#42ed45] py-3 rounded-md font-semibold w-full ${
+                  error?.password ? "mt-5" : ""
+                }`}
               >
                 Sign In
               </button>
@@ -159,10 +170,16 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
             </p>
           </div>
           <div className="flex justify-center space-x-2">
-            <button className="bg-[#2f4553] hover:bg-[#47687d] px-1 py-2 rounded-md">
+            <button
+              className="bg-[#2f4553] hover:bg-[#47687d] px-1 py-2 rounded-md"
+              onClick={handleFacebookLogin}
+            >
               <img src={facebook} className="w-7 h-4" alt="Not Found" />
             </button>
-            <button className="bg-[#2f4553] hover:bg-[#47687d] px-0.5 py-2 rounded-md">
+            <button
+              className="bg-[#2f4553] hover:bg-[#47687d] px-0.5 py-2 rounded-md"
+              onClick={handleGoogleLogin}
+            >
               <img src={google} className="w-8 h-4" alt="Not Found" />
             </button>
           </div>
@@ -174,7 +191,16 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
           </Link>
           <p className="text-center text-sm font-semibold mb-5 text-[#b1bad3]">
             Don’t have an account?
-            <Link className="text-white"> Register an Account</Link>
+            <Link
+              className="text-white"
+              onClick={() => {
+                setLoginModel(false);
+                setRagisterModel(true);
+              }}
+            >
+              {" "}
+              Register an Account
+            </Link>
           </p>
         </div>
       </Dialog>
