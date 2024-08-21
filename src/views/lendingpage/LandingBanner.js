@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Stakermen from "../../assets/img/Stakermen.webp";
 import facebook from "../../assets/img/facebook.png";
 import google from "../../assets/img/google.png";
+import Register from "../pages/register/Register";
+import ForgotPassword from "../pages/forgotpassword/ForgotPassword";
+import Login from "../pages/login/Login";
 
 function LandingBanner() {
+  const [registerModel, setRagisterModel] = useState(false);
+  const [loginModel, setLoginModel] = useState(false);
+  const [forgotPasswordModel, setForgotPasswordModel] = useState(false);
+
+  const handleOnRegister = () => {
+    setRagisterModel(true);
+  };
+
+  console.log("loginModel", loginModel);
+
+  const handleOnForgotPassword = (e) => {
+    e.preventDefault();
+    setLoginModel(false);
+    setForgotPasswordModel(true);
+  };
+
   return (
     <div className="bg-[#0f212e]">
       <div className="flex flex-col lg:flex-row justify-evenly items-center lg:space-x-4 space-y-8 lg:space-y-0">
@@ -11,7 +30,10 @@ function LandingBanner() {
           <p className="text-white font-semibold text-lg lg:text-xl md:mt-6">
             Play Smarter
           </p>
-          <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-full px-12 lg:px-14 xl:px-20 py-2.5">
+          <button
+            className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-full px-12 lg:px-14 xl:px-20 py-2.5"
+            onClick={handleOnRegister}
+          >
             Register instantly
           </button>
           <div className="text-center">
@@ -37,6 +59,26 @@ function LandingBanner() {
           />
         </div>
       </div>
+      {loginModel && (
+        <Login
+          setLoginModel={setLoginModel}
+          loginModel={loginModel}
+          handleOnForgotPassword={handleOnForgotPassword}
+        />
+      )}
+      {registerModel && (
+        <Register
+          setRagisterModel={setRagisterModel}
+          registerModel={registerModel}
+          setLoginModel={setLoginModel}
+        />
+      )}
+      {forgotPasswordModel && (
+        <ForgotPassword
+          setForgotPasswordModel={setForgotPasswordModel}
+          forgotPasswordModel={forgotPasswordModel}
+        />
+      )}
     </div>
   );
 }

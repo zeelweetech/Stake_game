@@ -16,7 +16,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import { userRegister } from "../../../services/LoginServices";
 import toast from "react-hot-toast";
 
-function Register({ setOpenPage, openPage }) {
+function Register({ setRagisterModel, registerModel, setLoginModel }) {
   const [showPassword, setShowPassword] = useState(false);
   const [codeShow, setCodeShow] = useState(false);
   const [passwordDetail, setPasswordDetail] = useState();
@@ -107,7 +107,7 @@ function Register({ setOpenPage, openPage }) {
   };
 
   const handleClose = () => {
-    setOpenPage(false);
+    setRagisterModel(false);
   };
 
   const togglePasswordVisibility = () => {
@@ -121,7 +121,7 @@ function Register({ setOpenPage, openPage }) {
   return (
     <div>
       <Dialog
-        open={openPage}
+        open={registerModel}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -389,7 +389,16 @@ function Register({ setOpenPage, openPage }) {
             </div>
             <p className="text-center mt-5 text-[#b1bad3]">
               Already have an account?
-              <Link className="text-white"> Sign In</Link>
+              <Link
+                className="text-white"
+                onClick={() => {
+                  setRagisterModel(false);
+                  setLoginModel(true);
+                }}
+              >
+                {" "}
+                Sign In
+              </Link>
             </p>
           </DialogContent>
         </div>

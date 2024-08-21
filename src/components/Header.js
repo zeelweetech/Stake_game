@@ -6,7 +6,7 @@ import Register from "../views/pages/register/Register";
 import ForgotPassword from "../views/pages/forgotpassword/ForgotPassword";
 
 function Header({ openMenubar }) {
-  const [openPage, setOpenPage] = useState(null);
+  const [registerModel, setRagisterModel] = useState(false);
   const [loginModel, setLoginModel] = useState(false);
   const [forgotPasswordModel, setForgotPasswordModel] = useState(false);
 
@@ -15,7 +15,7 @@ function Header({ openMenubar }) {
   };
 
   const handleOnRegister = () => {
-    setOpenPage("register");
+    setRagisterModel(true);
   };
 
   const handleOnForgotPassword = (e) => {
@@ -49,8 +49,12 @@ function Header({ openMenubar }) {
           handleOnForgotPassword={handleOnForgotPassword}
         />
       )}
-      {openPage === "register" && (
-        <Register setOpenPage={setOpenPage} openPage={openPage} />
+      {registerModel && (
+        <Register
+          setRagisterModel={setRagisterModel}
+          registerModel={registerModel}
+          setLoginModel={setLoginModel}
+        />
       )}
       {forgotPasswordModel && (
         <ForgotPassword
