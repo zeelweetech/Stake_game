@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -23,15 +23,13 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
     const EmailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
     if (!values?.email) {
-      errors.email = "Email Require";
+      errors.email = "Email require";
     } else if (!EmailRegEx?.test(values?.email)) {
       errors.email = "Invalid email format";
     }
 
     if (!values?.password) {
-      errors.password = "please enter your password";
-    } else if (values?.password?.length < 6) {
-      errors.password = "password must be at least 6 characters";
+      errors.password = "Please enter your password";
     }
 
     setError(errors);
@@ -47,7 +45,7 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
       };
       await userLogin({ body: body })
         .then((response) => {
-          console.log("respo", response);
+          console.log("response", response);
         })
         .catch((error) => {
           console.log("error", error);

@@ -8,6 +8,7 @@ function App() {
     <>
       <Toaster
         position="bottom-right"
+        // top-left
         toastOptions={{
           duration: 5000,
           style: {
