@@ -25,17 +25,9 @@ function Header({ openMenubar }) {
   };
 
   return (
-    <div
-      className={`fixed top-0 right-0 bg-white z-50 
-      ${
-        openMenubar
-          ? "w-[calc(100%-14%)] md:w-[calc(100%-19%)] lg:w-[calc(100%-15%)]"
-          : "w-[calc(100%-3.5rem)]"
-      }
-      transition-width duration-300 ease-in-out`}
-    >
+    <div>
       <div className="bg-[#1a2c38] shadow-2xl border-b border-b-black">
-        <div className="flex justify-between items-center md:px-4 lg:px-4 xl:px-44">
+        <div className="flex justify-around items-center space-x-[36rem]">
           <img src={stakeLogo} className="w-16 h-16" alt="Not Found" />
           <div className="flex items-center space-x-3">
             <Link onClick={handleOnLogin} className="text-white">
