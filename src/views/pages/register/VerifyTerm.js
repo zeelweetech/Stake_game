@@ -1,7 +1,7 @@
 import React from "react";
-import { Dialog, DialogTitle } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 function VerifyTerm({ verifyTermModel, setVerifyTermModel }) {
   const handleClose = () => {
@@ -19,7 +19,7 @@ function VerifyTerm({ verifyTermModel, setVerifyTermModel }) {
           "& .MuiPaper-root": {
             borderRadius: "6px",
             backgroundColor: "#1a2c38",
-            padding: "0px 35px",
+            width: "32%",
           },
         }}
       >
@@ -36,12 +36,18 @@ function VerifyTerm({ verifyTermModel, setVerifyTermModel }) {
               className="absolute top-3 right-3 cursor-pointer text-white"
             />
           </div>
-          <div>
-            <KeyboardBackspaceIcon />
-            <p className="text-[#b1bad3] text-center font-semibold">
+          <div className="relative text-[#b1bad3]">
+            <KeyboardBackspaceIcon
+              sx={{ fontSize: 20 }}
+              className="absolute top-1 left-3"
+            />
+            <p className="text-center font-semibold">
               Step 2/2: Read and accept the terms and conditions
             </p>
           </div>
+          <DialogContent>
+            <iframe src="https://sites.google.com/view/stakew-terms" className="overflow-y-auto w-96 h-[22rem]" title="stack"></iframe>
+          </DialogContent>  
         </div>
       </Dialog>
     </div>
