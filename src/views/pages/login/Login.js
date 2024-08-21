@@ -6,6 +6,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ErrorIcon from "@mui/icons-material/Error";
 import { userLogin } from "../../../services/LoginServices";
+import facebook from "../../../assets/img/facebook.png";
+import google from "../../../assets/img/google.png";
 
 function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -68,7 +70,12 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        sx={{ "& .MuiPaper-root": { borderRadius: "6px", backgroundColor: '#1a2c38' } }}
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "6px",
+            backgroundColor: "#1a2c38",
+          },
+        }}
       >
         <div>
           <div className="relative">
@@ -85,7 +92,7 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
           </div>
           <DialogContent>
             <form onSubmit={handleSubmit}>
-              <div className="mb-4">
+              <div className="mb-4 -mt-6">
                 <label
                   className="flex text-[#b1bad3] text-sm mb-1"
                   htmlFor="username"
@@ -93,8 +100,8 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
                   Email<p className="text-red-700 ml-1">*</p>
                 </label>
                 <input
-                  className={`border rounded w-[28rem] py-2 px-3 bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
-                    error?.email ? "border-[#ed4163]" : ""
+                  className={`border rounded w-[28rem] py-2 px-3 bg-[#0f212e] text-[#b1bad3] hover:border-[#7f8798] focus:outline-[#b1bad3] ${
+                    error?.email ? "border-[#ed4163]" : "border-gray-600"
                   }`}
                   name="email"
                   value={values?.email}
@@ -116,8 +123,8 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
                   Password<p className="text-red-700 ml-1">*</p>
                 </label>
                 <input
-                  className={`border rounded w-full py-2 px-3 bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
-                    error?.password ? "border-[#ed4163]" : ""
+                  className={`border rounded w-full py-2 px-3 bg-[#0f212e] text-[#b1bad3] hover:border-[#7f8798] focus:outline-[#b1bad3] ${
+                    error?.password ? "border-[#ed4163]" : "border-gray-600"
                   }`}
                   name="password"
                   value={values?.password}
@@ -139,19 +146,33 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
               )}
               <button
                 type="submit"
-                className="bg-[#1fff20] py-3 mt-6 rounded-md font-semibold w-full"
+                className={`bg-[#1fff20] hover:bg-[#42ed45] py-3 rounded-md font-semibold w-full ${error?.password ? "mt-5" : ""}`}
               >
                 Sign In
               </button>
             </form>
           </DialogContent>
+          <div className="ml-28">
+            <hr className="w-8/12 mt-1 border-[0.1px] border-[#7c85a3]"></hr>
+            <p className="bg-[#1a2c38] text-[#b1bad3] text-sm w-10 text-center -mt-3 mb-3 ml-28">
+              OR
+            </p>
+          </div>
+          <div className="flex justify-center space-x-2">
+            <button className="bg-[#2f4553] hover:bg-[#47687d] px-1 py-2 rounded-md">
+              <img src={facebook} className="w-7 h-4" alt="Not Found" />
+            </button>
+            <button className="bg-[#2f4553] hover:bg-[#47687d] px-0.5 py-2 rounded-md">
+              <img src={google} className="w-8 h-4" alt="Not Found" />
+            </button>
+          </div>
           <Link
             onClick={(e) => handleOnForgotPassword(e)}
-            className="flex justify-center my-2 text-white"
+            className="flex justify-center text-sm font-semibold my-3 text-white"
           >
             Forgot Password
           </Link>
-          <p className="text-center mb-5 text-[#b1bad3]">
+          <p className="text-center text-sm font-semibold mb-5 text-[#b1bad3]">
             Don’t have an account?
             <Link className="text-white"> Register an Account</Link>
           </p>

@@ -4,7 +4,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
   getCountries,
   getCountryCallingCode,
-} from "react-phone-number-input/input";
+} from "react-phone-number-input/input";  
 import en from "react-phone-number-input/locale/en.json";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -16,7 +16,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import { userRegister } from "../../../services/LoginServices";
 import toast from "react-hot-toast";
 
-function Register({ setOpenPage, openPage }) {
+function Register({ setOpenPage, openPage, verifyTermModel, setVerifyTermModel }) {
   const [showPassword, setShowPassword] = useState(false);
   const [codeShow, setCodeShow] = useState(false);
   const [passwordDetail, setPasswordDetail] = useState();
@@ -94,6 +94,8 @@ function Register({ setOpenPage, openPage }) {
       };
       console.log("body", body);
 
+      setVerifyTermModel(true)
+
       await userRegister({ body: body })
         .then((response) => {
           console.log("response", response);
@@ -125,8 +127,14 @@ function Register({ setOpenPage, openPage }) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "6px",
+            backgroundColor: "#1a2c38",
+          },
+        }}
       >
-        <div className="bg-[#1a2c38]">
+        <div>
           <div className="relative">
             <DialogTitle
               id="alert-dialog-title"
@@ -146,10 +154,10 @@ function Register({ setOpenPage, openPage }) {
             <form>
               <div className="mb-4">
                 <label
-                  className="flex text-[#b1bad3] text-sm mb-1"
+                  className="flex text-[#b1bad3] font-semibold text-sm mb-1"
                   htmlFor="username"
                 >
-                  Email<p className="text-red-700 ml-1">*</p>
+                  Email<p className="text-red-700  ml-1">*</p>
                 </label>
                 <input
                   className={`border rounded w-[28rem] py-2 px-3 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${
@@ -169,7 +177,7 @@ function Register({ setOpenPage, openPage }) {
               </div>
               <div className="mb-4">
                 <label
-                  className="flex text-[#b1bad3] text-sm mb-1"
+                  className="flex text-[#b1bad3] font-semibold text-sm mb-1"
                   htmlFor="username"
                 >
                   Username<p className="text-red-700 ml-1">*</p>
@@ -189,14 +197,14 @@ function Register({ setOpenPage, openPage }) {
                     <p className="text-xs">{error?.Username}</p>
                   </div>
                 )}
-                <p className="text-[#b1bad3] text-base mt-1">
+                <p className="text-[#b1bad3] font-semibold text-base mt-1">
                   Your username must be 3-14 characters long.
                 </p>
               </div>
               <div>
                 <div className="mb-4 relative">
                   <label
-                    className="flex text-[#b1bad3] text-sm mb-1"
+                    className="flex text-[#b1bad3] font-semibold text-sm mb-1"
                     htmlFor="password"
                   >
                     Password<p className="text-red-700 ml-1">*</p>
@@ -212,7 +220,7 @@ function Register({ setOpenPage, openPage }) {
                     type={showPassword ? "text" : "password"}
                   />
                   <div
-                    className="absolute inset-y-0 right-0 mt-7 pr-3 flex items-center cursor-pointer text-[#b1bad3]"
+                    className={`absolute inset-y-0 right-0 pr-3 ${error?.password ? "" : "mt-7"} flex items-center cursor-pointer text-[#b1bad3]`}
                     onClick={togglePasswordVisibility}
                   >
                     {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
@@ -245,7 +253,7 @@ function Register({ setOpenPage, openPage }) {
               </div>
               <div>
                 <label
-                  className="flex text-[#b1bad3] text-sm mb-1"
+                  className="flex text-[#b1bad3] font-semibold text-sm mb-1"
                   htmlFor="Date of Birth"
                 >
                   Date of Birth<p className="text-red-700 ml-1">*</p>
@@ -312,7 +320,7 @@ function Register({ setOpenPage, openPage }) {
               </div>
               <div className="my-4">
                 <label
-                  className="flex text-[#b1bad3] text-sm mb-1"
+                  className="flex text-[#b1bad3] font-semibold text-sm mb-1"
                   htmlFor="Phone (Optional)"
                 >
                   Phone (Optional)
@@ -349,7 +357,7 @@ function Register({ setOpenPage, openPage }) {
                     className="w-5 h-5 bg-[#0f212e]"
                     onClick={() => setCodeShow((showchek) => !showchek)}
                   />
-                  <label className="text-[#b1bad3]">Code (Optional)</label>
+                  <label className="text-[#b1bad3] text-sm font-semibold">Code (Optional)</label>
                 </div>
                 {codeShow ? (
                   <>
@@ -367,7 +375,7 @@ function Register({ setOpenPage, openPage }) {
               </div>
               <button
                 type="submit"
-                className="bg-[#1fff20] py-3 mt-6 rounded-md font-semibold w-full"
+                className="bg-[#1fff20] hover:bg-[#42ed45] py-3 mt-6 rounded-md font-semibold w-full"
                 onClick={(e) => handleSubmit(e)}
               >
                 Continue
@@ -375,19 +383,19 @@ function Register({ setOpenPage, openPage }) {
             </form>
             <div className="ml-28">
               <hr className="w-8/12 mt-8 border-[0.1px] border-[#7c85a3]"></hr>
-              <p className="bg-[#1a2c38] text-[#b1bad3] w-10 text-center -mt-3 mb-6 ml-24">
+              <p className="bg-[#1a2c38] text-[#b1bad3] text-xs w-10 text-center -mt-2 mb-4 ml-24">
                 OR
               </p>
             </div>
             <div className="flex justify-center space-x-3">
-              <button className="bg-[#2f4553] hover:bg-[#47687d] px-2 py-3 rounded-md">
-                <img src={facebook} className="w-8 h-5" alt="Not Found" />
+              <button className="bg-[#2f4553] hover:bg-[#47687d] px-1 py-2 rounded-md">
+                <img src={facebook} className="w-7 h-4" alt="Not Found" />
               </button>
-              <button className="bg-[#2f4553] hover:bg-[#47687d] px-1 py-3 rounded-md">
-                <img src={google} className="w-10 h-5" alt="Not Found" />
+              <button className="bg-[#2f4553] hover:bg-[#47687d] px-0.5 py-2 rounded-md">
+                <img src={google} className="w-8 h-4" alt="Not Found" />
               </button>
             </div>
-            <p className="text-center mt-5 text-[#b1bad3]">
+            <p className="text-center text-sm font-semibold mt-5 text-[#b1bad3]">
               Already have an account?
               <Link className="text-white"> Sign In</Link>
             </p>

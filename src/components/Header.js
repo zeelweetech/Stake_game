@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import Login from "../views/pages/login/Login";
 import Register from "../views/pages/register/Register";
 import ForgotPassword from "../views/pages/forgotpassword/ForgotPassword";
+import VerifyTerm from "../views/pages/register/VerifyTerm";
 
-function Header({ openMenubar }) {
+function Header() {
   const [openPage, setOpenPage] = useState(null);
   const [loginModel, setLoginModel] = useState(false);
   const [forgotPasswordModel, setForgotPasswordModel] = useState(false);
+  const [verifyTermModel, setVerifyTermModel] = useState(false);
 
   const handleOnLogin = () => {
     setLoginModel(true);
@@ -50,12 +52,23 @@ function Header({ openMenubar }) {
         />
       )}
       {openPage === "register" && (
-        <Register setOpenPage={setOpenPage} openPage={openPage} />
+        <Register
+          setOpenPage={setOpenPage}
+          openPage={openPage}
+          verifyTermModel={verifyTermModel}
+          setVerifyTermModel={setVerifyTermModel}
+        />
       )}
       {forgotPasswordModel && (
         <ForgotPassword
           setForgotPasswordModel={setForgotPasswordModel}
           forgotPasswordModel={forgotPasswordModel}
+        />
+      )}
+      {verifyTermModel && (
+        <VerifyTerm
+          verifyTermModel={verifyTermModel}
+          setVerifyTermModel={setVerifyTermModel}
         />
       )}
     </div>
