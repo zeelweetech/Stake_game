@@ -68,8 +68,9 @@ function Login({ setLoginModel, loginModel, handleOnForgotPassword }) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        sx={{ "& .MuiPaper-root": { borderRadius: "6px", backgroundColor: '#1a2c38' } }}
       >
-        <div className="bg-[#1a2c38]">
+        <div>
           <div className="relative">
             <DialogTitle
               id="alert-dialog-title"
