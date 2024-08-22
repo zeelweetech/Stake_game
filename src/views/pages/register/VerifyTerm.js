@@ -45,9 +45,9 @@ function VerifyTerm({ verifyTermModel, setVerifyTermModel }) {
               Step 2/2: Read and accept the terms and conditions
             </p>
           </div>
-          <DialogContent>
-            <iframe src="https://sites.google.com/view/stakew-terms" className="overflow-y-auto w-96 h-[22rem]" title="stack"></iframe>
-          </DialogContent>  
+          <div>
+            <iframe src="https://sites.google.com/view/stakew-terms/home" className="overflow-y-auto w-full h-[22rem]" title="stack"></iframe>
+          </div>  
         </div>
       </Dialog>
     </div>
