@@ -59,13 +59,13 @@ function CrashGameContent() {
   // };
 
   return (
-    <div className="min-h-[433px] w-full flex flex-col justify-center flex-grow select-none relative overflow-hidden mx-auto custom-top-right-radius">
+    <div className="min-h-[433px] w-full flex flex-col justify-center flex-grow select-none relative overflow-hidden mx-auto custom-top-right-radius bg-[#0f212e]">
       <div></div>
       <div className="flex flex-col items-center justify-between flex-grow w-full">
         <div className="flex justify-center item-center h-full">
           <AreaChart
             width={800}
-            height={500}
+            height={600}
             data={data}
             margin={{
               top: 10,
@@ -78,11 +78,15 @@ function CrashGameContent() {
               dataKey="time"
               tickFormatter={(tick) => `${tick}s`}
               interval="preserveStartEnd"
-              // domain={[0, ...data]}
+              stroke="#B1BAD3" // Set the color of the X-axis line
+              tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
+              axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
             />
             <YAxis
               tickFormatter={(tick) => `${tick}x`}
-              // domain={[0, ...data]}
+              stroke="#B1BAD3" // Set the color of the Y-axis line
+              tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
+              axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
             />
             <Area
               type="monotone"
