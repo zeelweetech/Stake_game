@@ -314,6 +314,27 @@ function CrashGameSidebar() {
                 />
               </div>
             </div>
+            <label className="text-[#b1bad3] font-semibold text-xs mt-3 mb-1">
+              On Lose
+            </label>
+            <div className="flex items-center border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div>
+                <button className="bg-[#0f212e] px-4 py-2 rounded-md">Reset</button>
+              </div>
+              <div>
+                <button className="px-[0.85rem] hover:bg-[#4d718768] py-2 rounded-md">Increase by:</button>
+              </div>
+              <div className="relative flex">
+                <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+                  <PercentIcon fontSize="small" />
+                </div>
+                <input
+                  type="number"
+                  placeholder="0"
+                  className="w-28 pr-7 pl-2 py-2 rounded-md text-white bg-[#0f212e]"
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}
