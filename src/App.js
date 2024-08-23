@@ -22,8 +22,7 @@ function App() {
         <Routes>
           <Route>
             <Route path="*" name="Home" element={<DefaultLayout />} />
-
-            <Route path="/verifyterm" element={<VerifyTerm/>} />
+            <Route path="/verifyterm" element={<VerifyTerm />} />
           </Route>
         </Routes>
       </BrowserRouter>
