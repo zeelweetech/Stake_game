@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import CrashGameSidebar from "./CrashGameSidebar";
 import CrashGameContent from "./CrashGameContent";
 import CrashGameFooter from "./CrashGameFooter";
-import Login from "../../pages/login/Login";
-import Register from "../../pages/register/Register";
-import ForgotPassword from "../../pages/forgotpassword/ForgotPassword";
-import VerifyTerm from "../../pages/register/VerifyTerm";
+import Login from "../../../pages/login/Login";
+import Register from "../../../pages/register/Register";
+import ForgotPassword from "../../../pages/forgotpassword/ForgotPassword";
+import VerifyTerm from "../../../pages/register/VerifyTerm";
 
 function CrashGame() {
   const [registerModel, setRagisterModel] = useState(false);

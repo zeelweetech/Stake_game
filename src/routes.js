@@ -3,7 +3,9 @@ const LandingBanner = React.lazy(() => import("./views/lendingpage/index"));
 const CasinoHomePage = React.lazy(() =>
   import("./views/casino/CasinoHomePage")
 );
-const CrashGame = React.lazy(() => import("./views/casino/CrashGame"));
+const CrashGame = React.lazy(() =>
+  import("./views/casino/StackOriginalsGames/CrashGame")
+);
 
 const routes = [
   { path: "/", name: "Home", element: LandingBanner },

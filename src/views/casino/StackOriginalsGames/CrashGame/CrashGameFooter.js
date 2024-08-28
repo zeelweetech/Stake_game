@@ -4,7 +4,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import LegendToggleIcon from "@mui/icons-material/LegendToggle";
-import stackCarshLogo from "../../../assets/svg/stackCarshLogo.svg";
+import stackCarshLogo from "../../../../assets/svg/stackCarshLogo.svg";
 import { Link } from "react-router-dom";
 
 function CrashGameFooter() {
@@ -12,17 +12,33 @@ function CrashGameFooter() {
     <div className="py-5 px-4 w-full bg-[#0f212e] rounded-b-lg">
       <div className="flex justify-between items-center">
         <div className="space-x-9 text-[#b1bad3]">
-          <Tooltip title="Game Settings" placement="top" className="hover:text-white hover:cursor-pointer">
-            <SettingsIcon fontSize="small"/>
+          <Tooltip
+            title="Game Settings"
+            placement="top"
+            className="hover:text-white hover:cursor-pointer"
+          >
+            <SettingsIcon fontSize="small" />
           </Tooltip>
-          <Tooltip title="Enable Theatre Mode" placement="top" className="hover:text-white hover:cursor-pointer">
-            <CheckBoxOutlineBlankIcon fontSize="small"/>
+          <Tooltip
+            title="Enable Theatre Mode"
+            placement="top"
+            className="hover:text-white hover:cursor-pointer"
+          >
+            <CheckBoxOutlineBlankIcon fontSize="small" />
           </Tooltip>
-          <Tooltip title="Open Live Status" placement="top" className="hover:text-white hover:cursor-pointer">
-            <LegendToggleIcon fontSize="small"/>
+          <Tooltip
+            title="Open Live Status"
+            placement="top"
+            className="hover:text-white hover:cursor-pointer"
+          >
+            <LegendToggleIcon fontSize="small" />
           </Tooltip>
-          <Tooltip title="Favourite Game" placement="top" className="hover:text-white hover:cursor-pointer">
-            <StarOutlineIcon fontSize="small"/>
+          <Tooltip
+            title="Favourite Game"
+            placement="top"
+            className="hover:text-white hover:cursor-pointer"
+          >
+            <StarOutlineIcon fontSize="small" />
           </Tooltip>
           <Divider
             flexItem
