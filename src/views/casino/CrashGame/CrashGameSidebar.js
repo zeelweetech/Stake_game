@@ -11,7 +11,7 @@ import { BsIncognito } from "react-icons/bs";
 import { VscLink } from "react-icons/vsc";
 import PercentIcon from "@mui/icons-material/Percent";
 
-function CrashGameSidebar() {
+function CrashGameSidebar({ handleOnRegister }) {
   const [isManual, setIsManual] = useState(true);
   const [autoControlMode, setAutoControlMode] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
@@ -185,7 +185,14 @@ function CrashGameSidebar() {
               className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
             />
           </div>
-          <button className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full">
+          <button
+            className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full"
+            onClick={() => {
+              if (!localStorage.getItem("token")) {
+                handleOnRegister();
+              }
+            }}
+          >
             Bet
           </button>
           <div className="flex justify-between mt-3">
@@ -445,7 +452,14 @@ function CrashGameSidebar() {
                   className="w-full px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
                 />
               </div>
-              <button className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full">
+              <button
+                className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
+                onClick={() => {
+                  if (!localStorage.getItem("token")) {
+                    handleOnRegister();
+                  }
+                }}
+              >
                 Start Autobet
               </button>
             </div>

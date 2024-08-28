@@ -1,52 +1,111 @@
 import React, { useEffect, useState } from "react";
-import { AreaChart, Area, XAxis, YAxis } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { IoIosTrendingUp } from "react-icons/io";
 
 function CrashGameContent() {
-  const array = [
-    { time: 0, value: 0 },
-    { time: 0.5, value: 0.25 },
-    { time: 1, value: 0.75 },
-    { time: 1.5, value: 0.9 },
-    { time: 2, value: 1 },
-    { time: 2.5, value: 1.25 },
-    { time: 3, value: 1.75 },
-    { time: 3.5, value: 1.9 },
-    { time: 4, value: 2 },
-    { time: 4.5, value: 2.5 },
-    { time: 5, value: 3 },
-  ];
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([{ time: 0, value: 1 }]);
   const [isCrashed, setIsCrashed] = useState(false);
-  // console.log("data", data);
+  const [multiplier, setMultiplier] = useState(1);
+  const [isCashedOut, setIsCashedOut] = useState(false);
+  console.log("data", data);
 
   useEffect(() => {
-    handlePlanData(7);
+    startGame();
   }, []);
 
+  const startGame = () => {
+    setIsCrashed(false);
+    setIsCashedOut(false);
+    setMultiplier(1);
+    setData([{ time: 0, value: 1 }]);
+    const randomCrashValue = 2;
+    handlePlanData(randomCrashValue);
+  };
+
+  const generateRandomCrashValue = () => {
+    return parseFloat((Math.random() * (50 - 1.2) + 1.2).toFixed(2));
+  };
+
   const handlePlanData = (targetValue) => {
+    let increment = 1;
+    let time = 0;
+
+    const interval = setInterval(() => {
+      if (isCrashed || isCashedOut) {
+        clearInterval(interval);
+        return;
+      }
+
+      increment += increment * 0.015;
+      time += 1;
+
+      console.log("increment", increment);
+      console.log("time", time);
+
+      setMultiplier(increment.toFixed(2));
+
+      setData((prevData) => [
+        ...prevData,
+        { time: time, value: parseFloat(increment.toFixed(2)) },
+      ]);
+
+      if (increment >= targetValue) {
+        clearInterval(interval);
+        setIsCrashed(true);
+      }
+    }, 300);
+  };
+
+  const handleCashOut = () => {
     if (!isCrashed) {
-      let increment = 0;
-      let time = 0;
-      const newData = [{ time: 0, value: 0 }];
-
-      const interval = setInterval(() => {
-        increment += 0.25;
-        time += 0.5;
-
-        newData.push({ time: time, value: increment });
-        console.log("newData", newData);
-        // console.log("increment", increment);
-
-        setData([...newData]);
-
-        if (increment === targetValue) {
-          clearInterval(interval);
-          setIsCrashed(true);
-        }
-      }, 1000);
+      setIsCashedOut(true);
+      alert(`You cashed out at ${multiplier}x!`);
     }
   };
+
+  // const array = [
+  //   { time: 0, value: 0 },
+  //   { time: 0.5, value: 0.25 },
+  //   { time: 1, value: 0.75 },
+  //   { time: 1.5, value: 0.9 },
+  //   { time: 2, value: 1 },
+  //   { time: 2.5, value: 1.25 },
+  //   { time: 3, value: 1.75 },
+  //   { time: 3.5, value: 1.9 },
+  //   { time: 4, value: 2 },
+  //   { time: 4.5, value: 2.5 },
+  //   { time: 5, value: 3 },
+  // ];
+  // const [data, setData] = useState([]);
+  // const [isCrashed, setIsCrashed] = useState(false);
+
+  // useEffect(() => {
+  //   handlePlanData(17);
+  // }, []);
+
+  // const handlePlanData = (targetValue) => {
+  //   if (!isCrashed) {
+  //     let increment = 0;
+  //     let time = 0;
+  //     const newData = [{ time: 0, value: 0 }];
+
+  //     const interval = setInterval(() => {
+  //       increment += 0.25;
+  //       time += 0.5;
+
+  //       newData.push({ time: time, value: increment });
+  //       console.log("newData", newData);
+  //       // console.log("increment", increment);
+
+  //       setData([...newData]);
+
+  //       if (increment === targetValue) {
+  //         clearInterval(interval);
+  //         setIsCrashed(true);
+  //       }
+  //     }, 500);
+  //   }
+  // };
 
   // const customTickFormatter = (tick) => {
   //   // Shift the labels dynamically
@@ -72,44 +131,48 @@ function CrashGameContent() {
         </button>
       </div>
       <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 pr-14 relative">
-        <AreaChart
-          width={700}
-          height={550}
-          data={data}
-          margin={{
-            top: 10,
-            right: 30,
-            left: 0,
-            bottom: 0,
-          }}
-        >
-          <XAxis
-            dataKey="time"
-            tickFormatter={(tick) => `${tick}s`}
-            interval="preserveStartEnd"
-            stroke="#B1BAD3" // Set the color of the X-axis line
-            tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
-            axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
-          />
-          <YAxis
-            tickFormatter={(tick) => `${tick}x`}
-            stroke="#B1BAD3" // Set the color of the Y-axis line
-            tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
-            axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
-          />
-          <Area
-            type="monotone"
-            dataKey="value"
-            stroke="#fff"
-            fill="#ffa500"
-            strokeWidth={5}
-            isAnimationActive={true}
-            // animationDuration={1000}
-          />
-        </AreaChart>
+        <ResponsiveContainer width={700} height={550}>
+          <AreaChart
+            // width={700}
+            // height={550}
+            data={data}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <XAxis
+              dataKey="time"
+              tickFormatter={(tick) => `${tick}s`}
+              // interval="preserveStartEnd"
+              stroke="#B1BAD3" // Set the color of the X-axis line
+              tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
+              axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
+              domain={[0, "auto"]}
+            />
+            <YAxis
+              tickFormatter={(tick) => `${tick.toFixed(1)}x`}
+              stroke="#B1BAD3" // Set the color of the Y-axis line
+              tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
+              axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
+              domain={[1, "auto"]}
+            />
+            <Area
+              type="basis"
+              dataKey="value"
+              stroke="#fff"
+              fill="#ffa500"
+              strokeWidth={5}
+              isAnimationActive={true}
+              // animationDuration={1000}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
         {/* {isCrashed && <p>The plan has crashed!</p>} */}
         <div className="absolute top-48 flex flex-col justify-center text-white font-bold">
-          <p className="text-6xl text-center">0.01x</p>
+          <p className="text-6xl text-center">{multiplier}x</p>
           <button className="bg-[#ffa500] text-2xl px-16 pt-2 pb-3 mt-3 rounded-md">
             starting in
           </button>
