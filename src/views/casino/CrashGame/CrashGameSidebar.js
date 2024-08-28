@@ -100,7 +100,7 @@ function CrashGameSidebar() {
   ];
 
   return (
-    <div className="w-80 flex flex-col p-3 bg-[#213743]">
+    <div className="w-80 flex flex-col p-3 bg-[#213743] rounded-tl-lg">
       <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">

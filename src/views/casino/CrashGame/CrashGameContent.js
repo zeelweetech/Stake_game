@@ -60,7 +60,7 @@ function CrashGameContent() {
   // };
 
   return (
-    <div className="w-full h-full flex flex-col justify-center select-none relative bg-[#0f212e]">
+    <div className="w-full h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         <button className="p-2.5 bg-white rounded-full">7.09x</button>
         <button className="p-2.5 bg-white rounded-full">1.76x</button>
@@ -71,9 +71,9 @@ function CrashGameContent() {
           <IoIosTrendingUp color="white" />
         </button>
       </div>
-      <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 pr-14 relative">
+      <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 lg:pr-12 xl:pr-28 relative">
         <AreaChart
-          width={700}
+          width={window.innerWidth < 1024 ? window.innerWidth - 60 : 750}
           height={550}
           data={data}
           margin={{

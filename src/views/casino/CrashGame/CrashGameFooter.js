@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 function CrashGameFooter() {
   return (
-    <div className="py-5 px-4 w-full bg-[#0f212e]">
+    <div className="py-5 px-4 w-full bg-[#0f212e] rounded-b-lg">
       <div className="flex justify-between items-center">
         <div className="space-x-9 text-[#b1bad3]">
           <Tooltip title="Game Settings" placement="top" className="hover:text-white hover:cursor-pointer">

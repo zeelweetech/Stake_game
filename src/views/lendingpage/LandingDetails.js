@@ -22,7 +22,7 @@ function LandingDetails() {
             </div>
             <img
               src={casino}
-              className="lg:h-48 xl:h-60 w-[36rem] rounded-md mt-4"
+              className="lg:h-48 xl:h-60 w-[36rem] rounded-md mt-4 hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-5px]"
               alt="Not Found"
             />
             <p className="text-white my-3">Leading Online Casino</p>
@@ -52,7 +52,7 @@ function LandingDetails() {
             </div>
             <img
               src={sports}
-              className="lg:h-48 xl:h-60 w-[36rem] rounded-md mt-4"
+              className="lg:h-48 xl:h-60 w-[36rem] rounded-md mt-4 hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-5px]"
               alt="Not Found"
             />
             <p className="text-white my-3">Best Sports Betting Online</p>
