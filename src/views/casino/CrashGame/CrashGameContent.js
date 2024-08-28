@@ -119,7 +119,7 @@ function CrashGameContent() {
   // };
 
   return (
-    <div className="w-full h-full flex flex-col justify-center select-none relative bg-[#0f212e]">
+    <div className="w-full h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         <button className="p-2.5 bg-white rounded-full">7.09x</button>
         <button className="p-2.5 bg-white rounded-full">1.76x</button>
