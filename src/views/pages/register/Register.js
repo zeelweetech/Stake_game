@@ -19,21 +19,20 @@ import {
   handleFacebookLogin,
   handleGoogleLogin,
 } from "../../../services/FirebaseServices";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  closeRegisterModel,
+  openLoginModel,
+} from "../../../features/auth/authSlice";
 
-function Register({
-  setRagisterModel,
-  registerModel,
-  setLoginModel,
-  verifyTermModel,
-  setVerifyTermModel,
-}) {
+function Register() {
+  const dispatch = useDispatch();
+  const { isRegisterModelOpen } = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
   const [codeShow, setCodeShow] = useState(false);
   const [passwordDetail, setPasswordDetail] = useState();
   const [values, setValues] = useState({});
   const [error, setError] = useState({});
-
-  console.log("values", values);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -104,7 +103,7 @@ function Register({
       };
       console.log("body", body);
 
-      setVerifyTermModel(true);
+      // setVerifyTermModel(true);
 
       await userRegister({ body: body })
         .then((response) => {
@@ -119,7 +118,7 @@ function Register({
   };
 
   const handleClose = () => {
-    setRagisterModel(false);
+    dispatch(closeRegisterModel());
   };
 
   const togglePasswordVisibility = () => {
@@ -133,7 +132,7 @@ function Register({
   return (
     <div>
       <Dialog
-        open={registerModel}
+        open={isRegisterModelOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -420,8 +419,8 @@ function Register({
               <Link
                 className="text-white"
                 onClick={() => {
-                  setRagisterModel(false);
-                  setLoginModel(true);
+                  dispatch(closeRegisterModel());
+                  dispatch(openLoginModel());
                 }}
               >
                 {" "}

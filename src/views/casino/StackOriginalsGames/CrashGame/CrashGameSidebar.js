@@ -10,8 +10,11 @@ import { RiMoneyCnyCircleFill } from "react-icons/ri";
 import { BsIncognito } from "react-icons/bs";
 import { VscLink } from "react-icons/vsc";
 import PercentIcon from "@mui/icons-material/Percent";
+import { useDispatch } from "react-redux";
+import { openRegisterModel } from "../../../../features/auth/authSlice";
 
-function CrashGameSidebar({ handleOnRegister }) {
+function CrashGameSidebar() {
+  const dispatch = useDispatch();
   const [isManual, setIsManual] = useState(true);
   const [autoControlMode, setAutoControlMode] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
@@ -189,7 +192,7 @@ function CrashGameSidebar({ handleOnRegister }) {
             className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full"
             onClick={() => {
               if (!localStorage.getItem("token")) {
-                handleOnRegister();
+                dispatch(openRegisterModel());
               }
             }}
           >
@@ -456,7 +459,7 @@ function CrashGameSidebar({ handleOnRegister }) {
                 className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
                 onClick={() => {
                   if (!localStorage.getItem("token")) {
-                    handleOnRegister();
+                    dispatch(openRegisterModel());
                   }
                 }}
               >

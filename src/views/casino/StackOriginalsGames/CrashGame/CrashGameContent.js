@@ -14,8 +14,6 @@ function CrashGameContent() {
   }, []);
 
   const startGame = () => {
-    setIsCrashed(false);
-    setIsCashedOut(false);
     setMultiplier(1);
     setData([{ time: 0, value: 1 }]);
     const randomCrashValue = 2;
@@ -31,11 +29,6 @@ function CrashGameContent() {
     let time = 0;
 
     const interval = setInterval(() => {
-      if (isCrashed || isCashedOut) {
-        clearInterval(interval);
-        return;
-      }
-
       increment += increment * 0.015;
       time += 1;
 
@@ -51,17 +44,16 @@ function CrashGameContent() {
 
       if (increment >= targetValue) {
         clearInterval(interval);
-        setIsCrashed(true);
       }
     }, 300);
   };
 
-  const handleCashOut = () => {
-    if (!isCrashed) {
-      setIsCashedOut(true);
-      alert(`You cashed out at ${multiplier}x!`);
-    }
-  };
+  // const handleCashOut = () => {
+  //   if (!isCrashed) {
+  //     setIsCashedOut(true);
+  //     alert(`You cashed out at ${multiplier}x!`);
+  //   }
+  // };
 
   // const array = [
   //   { time: 0, value: 0 },

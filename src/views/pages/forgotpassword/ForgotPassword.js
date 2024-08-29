@@ -3,8 +3,12 @@ import { Dialog, DialogContent, IconButton } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorIcon from "@mui/icons-material/Error";
+import { useDispatch, useSelector } from "react-redux";
+import { closeForgotPasswordModel } from "../../../features/auth/authSlice";
 
-function ForgotPassword({ forgotPasswordModel, setForgotPasswordModel }) {
+function ForgotPassword() {
+  const dispatch = useDispatch();
+  const { isForgotPasswordModelOpen } = useSelector((state) => state.auth);
   const [values, setValues] = useState({});
   const [error, setError] = useState({});
 
@@ -37,16 +41,18 @@ function ForgotPassword({ forgotPasswordModel, setForgotPasswordModel }) {
   };
 
   const handleForgotPasswordClose = () => {
-    setForgotPasswordModel(false);
+    dispatch(closeForgotPasswordModel());
   };
 
   return (
     <Dialog
-      open={forgotPasswordModel}
+      open={isForgotPasswordModelOpen}
       onClose={handleForgotPasswordClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
-      sx={{ "& .MuiPaper-root": { borderRadius: "6px", backgroundColor: '#1a2c38' } }}
+      sx={{
+        "& .MuiPaper-root": { borderRadius: "6px", backgroundColor: "#1a2c38" },
+      }}
     >
       <div>
         <div className="flex justify-between text-white">

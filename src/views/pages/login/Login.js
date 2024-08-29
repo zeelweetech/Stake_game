@@ -12,13 +12,16 @@ import {
   handleFacebookLogin,
   handleGoogleLogin,
 } from "../../../services/FirebaseServices";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  closeLoginModel,
+  openForgotPasswordModel,
+  openRegisterModel,
+} from "../../../features/auth/authSlice";
 
-function Login({
-  setLoginModel,
-  loginModel,
-  handleOnForgotPassword,
-  setRagisterModel,
-}) {
+function Login() {
+  const dispatch = useDispatch();
+  const { isLoginModelOpen } = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
   const [values, setValues] = useState({});
   const [error, setError] = useState({});
@@ -57,6 +60,7 @@ function Login({
       await userLogin({ body: body })
         .then((response) => {
           console.log("response", response);
+          dispatch(closeLoginModel());
         })
         .catch((error) => {
           console.log("error", error);
@@ -65,7 +69,13 @@ function Login({
   };
 
   const handleClose = () => {
-    setLoginModel(false);
+    dispatch(closeLoginModel());
+  };
+
+  const handleOnForgotPassword = (e) => {
+    e.preventDefault();
+    dispatch(closeLoginModel());
+    dispatch(openForgotPasswordModel());
   };
 
   const togglePasswordVisibility = () => {
@@ -75,7 +85,7 @@ function Login({
   return (
     <div>
       <Dialog
-        open={loginModel}
+        open={isLoginModelOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -194,8 +204,8 @@ function Login({
             <Link
               className="text-white"
               onClick={() => {
-                setLoginModel(false);
-                setRagisterModel(true);
+                dispatch(closeLoginModel());
+                dispatch(openRegisterModel());
               }}
             >
               {" "}

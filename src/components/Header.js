@@ -5,25 +5,24 @@ import Login from "../views/pages/login/Login";
 import Register from "../views/pages/register/Register";
 import ForgotPassword from "../views/pages/forgotpassword/ForgotPassword";
 import VerifyTerm from "../views/pages/register/VerifyTerm";
+import { useDispatch, useSelector } from "react-redux";
+import { openLoginModel, openRegisterModel } from "../features/auth/authSlice";
 
-function Header({ openMenubar }) {
-  const [registerModel, setRagisterModel] = useState(false);
-  const [loginModel, setLoginModel] = useState(false);
-  const [forgotPasswordModel, setForgotPasswordModel] = useState(false);
-  const [verifyTermModel, setVerifyTermModel] = useState(false);
+function Header() {
+  const dispatch = useDispatch();
+  const {
+    isLoginModelOpen,
+    isRegisterModelOpen,
+    isForgotPasswordModelOpen,
+    isVerifyTermModelOpen,
+  } = useSelector((state) => state.auth);
 
   const handleOnLogin = () => {
-    setLoginModel(true);
+    dispatch(openLoginModel());
   };
 
   const handleOnRegister = () => {
-    setRagisterModel(true);
-  };
-
-  const handleOnForgotPassword = (e) => {
-    e.preventDefault();
-    setLoginModel(false);
-    setForgotPasswordModel(true);
+    dispatch(openRegisterModel());
   };
 
   return (
@@ -44,35 +43,10 @@ function Header({ openMenubar }) {
           </div>
         </div>
       </div>
-      {loginModel && (
-        <Login
-          setLoginModel={setLoginModel}
-          loginModel={loginModel}
-          handleOnForgotPassword={handleOnForgotPassword}
-          setRagisterModel={setRagisterModel}
-        />
-      )}
-      {registerModel && (
-        <Register
-          setRagisterModel={setRagisterModel}
-          registerModel={registerModel}
-          setLoginModel={setLoginModel}
-          verifyTermModel={verifyTermModel}
-          setVerifyTermModel={setVerifyTermModel}
-        />
-      )}
-      {forgotPasswordModel && (
-        <ForgotPassword
-          setForgotPasswordModel={setForgotPasswordModel}
-          forgotPasswordModel={forgotPasswordModel}
-        />
-      )}
-      {verifyTermModel && (
-        <VerifyTerm
-          verifyTermModel={verifyTermModel}
-          setVerifyTermModel={setVerifyTermModel}
-        />
-      )}
+      {isLoginModelOpen && <Login />}
+      {isRegisterModelOpen && <Register />}
+      {isForgotPasswordModelOpen && <ForgotPassword />}
+      {isVerifyTermModelOpen && <VerifyTerm />}
     </div>
   );
 }

@@ -2,16 +2,21 @@ import React from "react";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { useDispatch, useSelector } from "react-redux";
+import { closeVerifyTermModel } from "../../../features/auth/authSlice";
 
 function VerifyTerm({ verifyTermModel, setVerifyTermModel }) {
+  const dispatch = useDispatch();
+  const { isVerifyTermModelOpen } = useSelector((state) => state.auth);
+
   const handleClose = () => {
-    setVerifyTermModel(false);
+    dispatch(closeVerifyTermModel());
   };
 
   return (
     <div>
       <Dialog
-        open={verifyTermModel}
+        open={isVerifyTermModelOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -46,8 +51,12 @@ function VerifyTerm({ verifyTermModel, setVerifyTermModel }) {
             </p>
           </div>
           <div>
-            <iframe src="https://sites.google.com/view/stakew-terms/home" className="overflow-y-auto w-full h-[22rem]" title="stack"></iframe>
-          </div>  
+            <iframe
+              src="https://sites.google.com/view/stakew-terms/home"
+              className="overflow-y-auto w-full h-[22rem]"
+              title="stack"
+            ></iframe>
+          </div>
         </div>
       </Dialog>
     </div>
