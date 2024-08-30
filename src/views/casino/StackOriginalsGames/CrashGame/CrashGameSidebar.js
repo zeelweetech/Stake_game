@@ -1,5 +1,5 @@
-import { Divider } from "@mui/material";
 import React, { useState } from "react";
+import { Divider } from "@mui/material";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -8,10 +8,10 @@ import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { RiMoneyPoundCircleFill } from "react-icons/ri";
 import { RiMoneyCnyCircleFill } from "react-icons/ri";
 import { BsIncognito } from "react-icons/bs";
-import { VscLink } from "react-icons/vsc";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch } from "react-redux";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
+import { IoInfiniteSharp } from "react-icons/io5";
 
 function CrashGameSidebar() {
   const dispatch = useDispatch();
@@ -305,7 +305,7 @@ function CrashGameSidebar() {
                 </div>
                 <div className="relative flex">
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
-                    <VscLink className="text-xl" />
+                    <IoInfiniteSharp className="text-xl" />
                   </div>
                   <input
                     type="number"

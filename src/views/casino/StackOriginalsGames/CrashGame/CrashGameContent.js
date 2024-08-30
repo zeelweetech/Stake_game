@@ -11,9 +11,7 @@ import {
 
 function CrashGameContent() {
   const [data, setData] = useState([{ time: 0, value: 1 }]);
-  const [isCrashed, setIsCrashed] = useState(false);
   const [multiplier, setMultiplier] = useState(1);
-  const [isCashedOut, setIsCashedOut] = useState(false);
   console.log("data", data);
 
   useEffect(() => {

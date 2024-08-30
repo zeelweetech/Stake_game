@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import CrashGameSidebar from "./CrashGameSidebar";
-import CrashGameContent from "./CrashGameContent";
+import PlinkoGameSidebar from "./PlinkoGameSidebar";
+import PlinkoGameContent from "./PlinkoGameContent";
 import GameFooter from "../../../component/GameFooter";
+import { useSelector } from "react-redux";
 
-function CrashGame() {
+function PlinkoGame() {
+    const values = useSelector((state) => state.plinkoGame.values);
+    console.log("values", values);
+
   return (
     <div className="bg-[#1a2c38] py-12 text-white flex justify-center items-center w-full">
       <div>
         <div className="flex-row bg-center text-white flex grow w-full min-w-80 h-[41.6rem] border-b-3">
-          <div>
-            <CrashGameSidebar />
+          <div className="bg-[#213743]">
+            <PlinkoGameSidebar />
           </div>
           <div>
-            <CrashGameContent />
+            <PlinkoGameContent />
           </div>
         </div>
         <div>
@@ -24,4 +28,4 @@ function CrashGame() {
   );
 }
 
-export default CrashGame;
+export default PlinkoGame;

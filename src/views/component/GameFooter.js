@@ -4,10 +4,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import LegendToggleIcon from "@mui/icons-material/LegendToggle";
-import stackCarshLogo from "../../../../assets/svg/stackCarshLogo.svg";
+import stackCarshLogo from "../../assets/svg/stackCarshLogo.svg";
 import { Link } from "react-router-dom";
 
-function CrashGameFooter() {
+function GameFooter() {
   return (
     <div className="py-5 px-4 w-full bg-[#0f212e] rounded-b-lg">
       <div className="flex justify-between items-center">
@@ -57,4 +57,4 @@ function CrashGameFooter() {
   );
 }
 
-export default CrashGameFooter;
+export default GameFooter;

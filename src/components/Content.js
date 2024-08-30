@@ -1,11 +1,18 @@
 import React, { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import routes from "../routes";
+import Loader from "../views/component/Loader";
 
 function Content() {
   return (
     <div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="flex justify-center h-screen bg-[#1a2c38]">
+            <Loader />
+          </div>
+        }
+      >
         <Routes>
           {routes?.map((route, idx) => {
             return (

@@ -20,6 +20,7 @@ function StackOriginals({ setLoading }) {
     {
       gameImg: plinkoGame,
       gameRating: "1,082 playing",
+      route: "/casino/games/plinko",
     },
     {
       gameImg: minesGame,
@@ -47,7 +48,7 @@ function StackOriginals({ setLoading }) {
   return (
     <div>
       <div className="flex items-center mx-3 space-x-2">
-        <BsFire fontSize={20} className="text-[#b1bad3] hover:text-white"/>
+        <BsFire fontSize={20} className="text-[#b1bad3] hover:text-white" />
         <Link className="text-lg font-medium">Stack Originals</Link>
       </div>
       <div className="grid grid-cols-6 pt-4 mx-3">
