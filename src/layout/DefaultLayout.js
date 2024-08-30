@@ -35,7 +35,7 @@ function DefaultLayout() {
           openMenubar={openMenubar}
           handleDrawerToggle={handleDrawerToggle}
         />
-        <div className="flex-1 overflow-auto">
+        <div className=" overflow-auto">
           <Content />
         </div>
         {/* <Footer /> */}

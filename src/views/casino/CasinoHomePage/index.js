@@ -1,173 +1,93 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import crashGame from "../../../assets/img/crashGame.avif";
-import plinkoGame from "../../../assets/img/plinkoGame.jpeg";
-import minesGame from "../../../assets/img/minesGame.avif";
-import limboGame from "../../../assets/img/limboGame.avif";
-import dragonGame from "../../../assets/img/dragonGame.avif";
-import wheelGame from "../../../assets/img/wheelGame.avif";
-import DailyRaces from "../../../assets/img/DailyRaces.jpg";
-import WeeklyRaffle from "../../../assets/img/WeeklyRaffle.png";
-import ConquerCasino from "../../../assets/img/ConquerCasino.jpg";
-import StackEddie from "../../../assets/img/StackEddie.jpg";
-import ChaosCollecter from "../../../assets/img/ChaosCollecter.jpg";
-import LevelUp from "../../../assets/img/LevelUp.jpg";
-import MultiplierRace from "../../../assets/img/MultiplierRace.jpg";
+import React, { useState } from "react";
 import Loader from "../../component/Loader";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
-import { Navigation } from 'swiper/modules';
+import SlideBar from "./SlideBar";
+import StackOriginals from "./StackOriginals";
+import SearchIcon from "@mui/icons-material/Search";
+import { TbCherryFilled } from "react-icons/tb";
+import { BsFire } from "react-icons/bs";
+import Filter7Icon from "@mui/icons-material/Filter7";
+import { FaGift } from "react-icons/fa6";
+import { IoIosRocket } from "react-icons/io";
+import { BsBookmarkStarFill } from "react-icons/bs";
+import InboxIcon from "@mui/icons-material/Inbox";
 
 function CasinoHomePage() {
+  const [stackMenu, setStackMenu] = useState("Lobby");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
-  const stackGame = [
+  const menuItems = [
+    { label: "Lobby", icon: <TbCherryFilled color="#b1bad3" fontSize={15} /> },
     {
-      gameImg: crashGame,
-      gameRating: "3,733 playing",
-      route: "/casino/games/crash",
+      label: "Stack Originals",
+      icon: <BsFire color="#b1bad3" fontSize={15} />,
+    },
+    { label: "Slots", icon: <Filter7Icon className="text-[#b1bad3]" /> },
+    { label: "Live Casino", icon: <InboxIcon className="text-[#b1bad3]" /> },
+    { label: "Game Shows", icon: <FaGift color="#b1bad3" fontSize={15} /> },
+    {
+      label: "Stake Exclusives",
+      icon: <BsBookmarkStarFill color="#b1bad3" fontSize={15} />,
     },
     {
-      gameImg: plinkoGame,
-      gameRating: "1,082 playing",
-    },
-    {
-      gameImg: minesGame,
-      gameRating: "7,635 playing",
-    },
-    {
-      gameImg: limboGame,
-      gameRating: "8,235 playing",
-    },
-    {
-      gameImg: dragonGame,
-      gameRating: "2,345 playing",
-    },
-    {
-      gameImg: wheelGame,
-      gameRating: "5,677 playing",
+      label: "New Releases",
+      icon: <IoIosRocket color="#b1bad3" fontSize={20} />,
     },
   ];
-
-  const promoGame = [
-    {
-      Game: "Daily Races",
-      gameDescription: "Play in our $100,000 Daily Races Read More",
-      gameButton: "Race Now",
-      gameImage: DailyRaces,
-    },
-    {
-      Game: "Weekly Raffle",
-      gameDescription: "Share in $75,000 each week Read More",
-      gameButton: "Learn More",
-      gameImage: WeeklyRaffle,
-    },
-    {
-      Game: "Conquer the Casino",
-      gameDescription: "Win a share in $50,000 every week Read More",
-      gameButton: "Play Now",
-      gameImage: ConquerCasino,
-    },
-    {
-      Game: "Stack vs Eddie",
-      gameDescription: "Win a share in $30,000 every week Read More",
-      gameButton: "Play Now",
-      gameImage: StackEddie,
-    },
-    {
-      Game: "Chaos Collector",
-      gameDescription: "Win a share in $10,000 every week Read More",
-      gameButton: "Play Now",
-      gameImage: ChaosCollecter,
-    },
-    {
-      Game: "The Level Up",
-      gameDescription: "Win a share in $20,000 every week Read More",
-      gameButton: "Play Now",
-      gameImage: LevelUp,
-    },
-    {
-      Game: "Multiplier Race",
-      gameDescription: "Win a share in $10,000 every week Read More",
-      gameButton: "Play Now",
-      gameImage: MultiplierRace,
-    },
-  ];
-
-  const handleAllGame = (route) => {
-    setLoading(true);
-    navigate(route);
-  };
 
   return (
     <div className="flex justify-center h-screen bg-[#1a2c38]">
       {loading ? (
         <Loader />
       ) : (
-        <div className="text-white pt-6">
-          <div className="flex justify-center items-center">
-            <div className="w-full max-w-[75rem] px-1">
-              <Swiper navigation={true} modules={[Navigation]} slidesPerView={3} className="custom-swiper">
-                {promoGame.map((Data, index) => (
-                  <SwiperSlide className="pl-2">
-                    <div
-                      key={index}
-                      className="flex justify-between items-center bg-[#213743] w-[23.9rem] h-52 pl-4 rounded-md"
-                    >
-                      <div className="flex flex-col justify-around w-44">
-                        <div>
-                          <button className="bg-white text-black text-sm font-semibold px-1 rounded-sm">
-                            Promo
-                          </button>
-                          <p className="text-lg font-semibold py-1">
-                            {Data.Game}
-                          </p>
-                          <p className="text-xs leading-5 w-36">
-                            {Data.gameDescription}
-                          </p>
-                        </div>
-                        <button className="border border-white px-6 text-xs font-semibold py-3 rounded-sm">
-                          {Data.gameButton}
-                        </button>
-                      </div>
-                      <div>
-                        <img
-                          src={Data.gameImage}
-                          className="w-48 h-48"
-                          alt="Not Found"
-                        />
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+        <div className="text-white pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10">
+          <SlideBar />
+
+          <div className="mt-8 mx-3 relative">
+            <input
+              className="border-2 rounded-full w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
+              name="password"
+              type="text"
+              placeholder="Search your game"
+            />
+            <div className="absolute left-0 top-0 pt-2.5 px-3 flex items-center cursor-pointer text-[#b1bad3]">
+              <SearchIcon />
             </div>
           </div>
 
-          
-
-          <div className="flex justify-center items-center py-10 space-x-6">
-            {stackGame.map((gameData, index) => (
-              <div key={index} className="text-center">
-                <div className="relative">
-                  <img
-                    src={gameData.gameImg}
-                    className="w-44 h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
-                    alt="Not Found"
-                    onClick={() => handleAllGame(gameData.route)}
-                  />
-                </div>
-                <div className="flex items-center mt-1">
-                  <span className="relative flex h-3 w-3 mr-1">
-                    <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-[#1fff20] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1fff20]"></span>
-                  </span>
-                  <p>{gameData.gameRating}</p>
-                </div>
-              </div>
-            ))}
+          <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 mx-3 my-7">
+            <div className="bg-[#0f212e] flex rounded-full p-[5px] flex-shrink-0 space-x-2 text-xs">
+              {menuItems.map((item) => (
+                <button
+                  key={item.label}
+                  className={`py-2 px-5 rounded-full flex justify-center space-x-1.5 items-center ${
+                    stackMenu === item.label
+                      ? "bg-[#4d718768]"
+                      : "hover:bg-[#4d718768]"
+                  }`}
+                  onClick={() => setStackMenu(item.label)}
+                >
+                  {item.icon}
+                  <p>{item.label}</p>
+                </button>
+              ))}
+            </div>
           </div>
+
+          {stackMenu === "Lobby" || stackMenu === "Stack Originals" ? (
+            <StackOriginals setLoading={setLoading} />
+          ) : stackMenu === "Slots" ? (
+            <div className="text-center pt-5">Comming As soon Slots</div>
+          ) : stackMenu === "Live Casino" ? (
+            <div className="text-center pt-5">Comming As soon Live Casino</div>
+          ) : stackMenu === "Game Shows" ? (
+            <div className="text-center pt-5">Comming As soon Game Shows</div>
+          ) : stackMenu === "Stake Exclusives" ? (
+            <div className="text-center pt-5">
+              Comming As soon Stake Exclusives
+            </div>
+          ) : (
+            <div className="text-center pt-5">Comming As soon New Releases</div>
+          )}
         </div>
       )}
     </div>

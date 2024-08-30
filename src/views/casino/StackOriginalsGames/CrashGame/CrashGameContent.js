@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { IoIosTrendingUp } from "react-icons/io";
+import { BsIncognito } from "react-icons/bs";
+import {
+  RiMoneyCnyCircleFill,
+  RiMoneyDollarCircleFill,
+  RiMoneyPoundCircleFill,
+  RiMoneyRupeeCircleFill,
+} from "react-icons/ri";
 
 function CrashGameContent() {
   const [data, setData] = useState([{ time: 0, value: 1 }]);
@@ -122,55 +129,92 @@ function CrashGameContent() {
           <IoIosTrendingUp color="white" />
         </button>
       </div>
-      <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 pr-14 relative">
-        <ResponsiveContainer width={700} height={550}>
-          <AreaChart
-            // width={700}
-            // height={550}
-            data={data}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <XAxis
-              dataKey="time"
-              tickFormatter={(tick) => `${tick}s`}
-              // interval="preserveStartEnd"
-              stroke="#B1BAD3" // Set the color of the X-axis line
-              tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
-              axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
-              domain={[0, "auto"]}
-            />
-            <YAxis
-              tickFormatter={(tick) => `${tick.toFixed(1)}x`}
-              stroke="#B1BAD3" // Set the color of the Y-axis line
-              tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
-              axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
-              domain={[1, "auto"]}
-            />
-            <Area
-              type="basis"
-              dataKey="value"
-              stroke="#fff"
-              fill="#ffa500"
-              strokeWidth={5}
-              isAnimationActive={true}
-              // animationDuration={1000}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+      <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 relative">
+        <div className="pr-32">
+          <ResponsiveContainer width={700} height={550}>
+            <AreaChart
+              // width={700}
+              // height={550}
+              data={data}
+              margin={{
+                top: 10,
+                right: 30,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <XAxis
+                dataKey="time"
+                tickFormatter={(tick) => `${tick}s`}
+                // interval="preserveStartEnd"
+                stroke="#B1BAD3" // Set the color of the X-axis line
+                tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
+                axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
+                domain={[0, "auto"]}
+              />
+              <YAxis
+                tickFormatter={(tick) => `${tick.toFixed(1)}x`}
+                stroke="#B1BAD3" // Set the color of the Y-axis line
+                tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
+                axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
+                domain={[1, "auto"]}
+              />
+              <Area
+                type="basis"
+                dataKey="value"
+                stroke="#fff"
+                fill="#ffa500"
+                strokeWidth={5}
+                isAnimationActive={true}
+                // animationDuration={1000}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
         {/* {isCrashed && <p>The plan has crashed!</p>} */}
-        <div className="absolute top-48 flex flex-col justify-center text-white font-bold">
-          <p className="text-6xl text-center">{multiplier}x</p>
-          <button className="bg-[#ffa500] text-2xl px-16 pt-2 pb-3 mt-3 rounded-md">
-            starting in
-          </button>
-          {/* <div className="flex justify-end">
-            <button className="p-2.5 bg-white rounded-full">1.56x</button>
-          </div> */}
+        <div className="absolute top-48 flex justify-between items-center w-full px-4 text-white font-bold">
+          <div className="flex-grow flex items-center justify-center abc">
+            <div className="text-center">
+              <p className="text-6xl">{multiplier}x</p>
+              <button className="bg-[#ffa500] text-2xl px-16 pt-2 pb-3 mt-3 rounded-md">
+                starting in
+              </button>
+            </div>
+          </div>
+          <div className="flex flex-col items-end space-y-1.5 xyz">
+            <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
+              <div className="flex items-center">
+                <BsIncognito />
+                <p className="text-[#b1bad3] text-xs">Hidden</p>
+                <RiMoneyPoundCircleFill color="green" size={20} />
+                <p>₹10.38</p>
+              </div>
+            </button>
+            <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
+              <div className="flex items-center">
+                <BsIncognito />
+                <p className="text-[#b1bad3] text-xs">Hidden</p>
+                <RiMoneyRupeeCircleFill color="yellow" size={20} />
+                <p>₹8,800.65</p>
+              </div>
+            </button>
+            <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
+              <div className="flex items-center">
+                <BsIncognito />
+                <p className="text-[#b1bad3] text-xs">Hidden</p>
+                <RiMoneyDollarCircleFill color="orange" size={20} />
+                <p>₹60.05</p>
+              </div>
+            </button>
+            <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
+              <div className="flex items-center">
+                <BsIncognito />
+                <p className="text-[#b1bad3] text-xs">Hidden</p>
+                <RiMoneyCnyCircleFill color="#3277a8" size={20} />
+                <p>₹143.54</p>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex justify-end items-center mb-0.5">

@@ -26,18 +26,6 @@ code {
   background: #b1bad3; 
 }
 
-.custom-swiper .swiper-button-next,
-.custom-swiper .swiper-button-prev {
-  width: 30px; 
-  height: 30px;
-  color: white;
-}
-
-.custom-swiper .swiper-button-next::after,
-.custom-swiper .swiper-button-prev::after {
-  font-size: 16px;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
