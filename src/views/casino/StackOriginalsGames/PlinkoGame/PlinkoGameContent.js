@@ -6,11 +6,27 @@ function PlinkoGameContent() {
   const sceneRef = useRef(null);
   const values = useSelector((state) => state.plinkoGame.values);
 
+  const rowXButton = {
+    8: [
+      { xValue: "0.2x" },
+      { xValue: "0.3x" },
+      { xValue: "1.5x" },
+      { xValue: "4x" },
+      { xValue: "29x" },
+    ],
+    9: [
+      { xValue: "0.2x" },
+      { xValue: "0.6x" },
+      { xValue: "2x" },
+      { xValue: "7x" },
+      { xValue: "43x" },
+    ],
+    // Add other rows similarly
+  };
+
   useEffect(() => {
-    // Create an engine
     const engine = Engine.create();
 
-    // Create a renderer
     const render = Render.create({
       element: sceneRef.current,
       engine: engine,
@@ -24,13 +40,12 @@ function PlinkoGameContent() {
 
     const worldWidth = 800;
     const startPins = 3;
-    const pinLines = values?.rows;
+    const pinLines = values?.rows || 8;
     const pinSize = 4;
     const pinGap = 30;
     const ballSize = 8;
     const ballElastity = 0.75;
 
-    // Create pins
     const pins = [];
     for (let l = 0; l < pinLines; l++) {
       const linePins = startPins + l;
@@ -47,16 +62,12 @@ function PlinkoGameContent() {
             },
           }
         );
-        console.log("pin", pin);
-
         pins.push(pin);
       }
     }
-    console.log("pins", pins);
 
     Composite.add(engine.world, pins);
 
-    // Create the initial ball
     const ball = Bodies.circle(worldWidth / 2, 0, ballSize, {
       restitution: ballElastity,
       render: {
@@ -64,12 +75,9 @@ function PlinkoGameContent() {
       },
     });
     Composite.add(engine.world, [ball]);
-    console.log("ball", ball);
 
-    // Run the renderer
     Render.run(render);
 
-    // Create and run the runner
     const runner = Runner.create();
     Runner.run(runner, engine);
 
@@ -82,12 +90,21 @@ function PlinkoGameContent() {
     };
   }, [values]);
 
+  const buttons = rowXButton[values.rows] || [];
+
   return (
     <div className="w-full h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
       <div
         className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 relative"
         ref={sceneRef}
       ></div>
+      <div className="flex flex-wrap mt-4">
+        {buttons.map((item, index) => (
+          <button key={index} className="bg-gray-700 text-white px-4 py-2 m-1 rounded">
+            {item.xValue}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
