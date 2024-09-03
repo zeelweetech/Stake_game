@@ -8,52 +8,51 @@ import {
   RiMoneyPoundCircleFill,
   RiMoneyRupeeCircleFill,
 } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { socket } from "../../../../socket";
+import { setXValue } from "../../../../features/casino/crashSlice";
 
-function CrashGameContent() {
+function CrashGameContent({ displayData }) {
+  const dispatch = useDispatch();
   const [data, setData] = useState([{ time: 0, value: 1 }]);
-  const [multiplier, setMultiplier] = useState(1);
-  console.log("data", data);
+  const [multiplier, setMultiplier] = useState(0);
+  const { gameStatusData, xValue, bettingStatus } = useSelector(
+    (state) => state.crashGame
+  );
 
   useEffect(() => {
-    startGame();
+    socket.on("endRound", (data) => {
+      dispatch(setXValue(data?.crashPoint));
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
+    socket.on("multiplierUpdate", (data) => {
+      setMultiplier(data?.multiplier?.toFixed(2));
+    });
   }, []);
 
-  const startGame = () => {
-    setMultiplier(1);
-    setData([{ time: 0, value: 1 }]);
-    const randomCrashValue = 2;
-    handlePlanData(randomCrashValue);
-  };
+  useEffect(() => {
+    setMultiplier(0);
+    setData([{ time: 0, value: 0 }]);
+  }, [bettingStatus === true]);
 
-  const generateRandomCrashValue = () => {
-    return parseFloat((Math.random() * (50 - 1.2) + 1.2).toFixed(2));
-  };
+  useEffect(() => {
+    handlePlanData(xValue);
+  }, [multiplier]);
 
   const handlePlanData = (targetValue) => {
-    let increment = 1;
-    let time = 0;
-
     const interval = setInterval(() => {
-      increment += increment * 0.015;
-      time += 1;
-
-      console.log("increment", increment);
-      console.log("time", time);
-
-      setMultiplier(increment.toFixed(2));
-
       setData((prevData) => [
         ...prevData,
-        { time: time, value: parseFloat(increment.toFixed(2)) },
+        { time: prevData.length, value: multiplier },
       ]);
 
-      if (increment >= targetValue) {
+      if (xValue === targetValue) {
         clearInterval(interval);
       }
-    }, 300);
+    }, 1000);
   };
-
-  // const handleCashOut = () => {
   //   if (!isCrashed) {
   //     setIsCashedOut(true);
   //     alert(`You cashed out at ${multiplier}x!`);
@@ -129,45 +128,41 @@ function CrashGameContent() {
       </div>
       <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 relative">
         <div className="pr-32">
-          <ResponsiveContainer width={700} height={550}>
-            <AreaChart
-              // width={700}
-              // height={550}
-              data={data}
-              margin={{
-                top: 10,
-                right: 30,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <XAxis
-                dataKey="time"
-                tickFormatter={(tick) => `${tick}s`}
-                // interval="preserveStartEnd"
-                stroke="#B1BAD3" // Set the color of the X-axis line
-                tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
-                axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
-                domain={[0, "auto"]}
-              />
-              <YAxis
-                tickFormatter={(tick) => `${tick.toFixed(1)}x`}
-                stroke="#B1BAD3" // Set the color of the Y-axis line
-                tick={{ stroke: "#B1BAD3", strokeWidth: 1 }} // Set the color and thickness of the tick marks
-                axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
-                domain={[1, "auto"]}
-              />
-              <Area
-                type="basis"
-                dataKey="value"
-                stroke="#fff"
-                fill="#ffa500"
-                strokeWidth={5}
-                isAnimationActive={true}
-                // animationDuration={1000}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+          <AreaChart
+            width={700}
+            height={550}
+            data={data}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <XAxis
+              dataKey="time"
+              tickFormatter={(tick) => (tick % 2 === 0 ? `${tick}s` : "")}
+              stroke="#B1BAD3"
+              tick={{ stroke: "#B1BAD3", strokeWidth: 1 }}
+              axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
+              domain={[0, "auto"]}
+            />
+            <YAxis
+              tickFormatter={(tick) => `${tick.toFixed(1)}x`}
+              stroke="#B1BAD3"
+              tick={{ stroke: "#B1BAD3", strokeWidth: 1 }}
+              axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
+              domain={[1, "auto"]}
+            />
+            <Area
+              type="basis"
+              dataKey="value"
+              stroke="#fff"
+              fill="#ffa500"
+              strokeWidth={5}
+              isAnimationActive={true}
+            />
+          </AreaChart>
         </div>
         {/* {isCrashed && <p>The plan has crashed!</p>} */}
         <div className="absolute top-48 flex justify-between items-center w-full px-4 text-white font-bold">

@@ -5,9 +5,6 @@ import GameFooter from "../../../component/GameFooter";
 import { useSelector } from "react-redux";
 
 function PlinkoGame() {
-    const values = useSelector((state) => state.plinkoGame.values);
-    console.log("values", values);
-
   return (
     <div className="bg-[#1a2c38] py-12 text-white flex justify-center items-center w-full">
       <div>

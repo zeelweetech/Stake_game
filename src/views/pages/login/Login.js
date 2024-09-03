@@ -18,6 +18,8 @@ import {
   openForgotPasswordModel,
   openRegisterModel,
 } from "../../../features/auth/authSlice";
+import { setCookie } from "../../../resources/utility";
+import toast from "react-hot-toast";
 
 function Login() {
   const dispatch = useDispatch();
@@ -60,6 +62,9 @@ function Login() {
       await userLogin({ body: body })
         .then((response) => {
           console.log("response", response);
+          setCookie("token", response?.token, 24);
+          localStorage.setItem("token", response?.token);
+          toast.success(response?.message);
           dispatch(closeLoginModel());
         })
         .catch((error) => {
