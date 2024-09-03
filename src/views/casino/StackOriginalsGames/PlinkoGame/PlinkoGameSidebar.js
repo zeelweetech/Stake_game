@@ -150,7 +150,7 @@ function PlinkoGameSidebar() {
               <button className="w-16 hover:bg-[#5c849e68]">2x</button>
             </div>
             <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1">
-              <label>Risk </label>
+              <label>Risk</label>
             </div>
             <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
               <select
@@ -216,6 +216,9 @@ function PlinkoGameSidebar() {
             >
               Start Autobet
             </button>
+            {/* <button className="bg-gray-400 text-2xl px-16 pt-2 pb-3 mt-3 rounded-md progress-bar">
+              starting in
+            </button> */}
           </div>
         </div>
       )}

@@ -9,9 +9,9 @@ function PlinkoGame() {
     console.log("values", values);
 
   return (
-    <div className="bg-[#1a2c38] py-12 text-white flex justify-center items-center w-full">
+    <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center w-full">
       <div>
-        <div className="flex-row bg-center text-white flex grow w-full min-w-80 h-[41.6rem] border-b-3">
+        <div className="text-white flex w-full min-w-80 h-[39rem] border-b-3">
           <div className="bg-[#213743]">
             <PlinkoGameSidebar />
           </div>
