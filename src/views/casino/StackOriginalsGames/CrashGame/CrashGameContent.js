@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import { AreaChart, Area, XAxis, YAxis } from "recharts";
 import { IoIosTrendingUp } from "react-icons/io";
 import { BsIncognito } from "react-icons/bs";
 import {
@@ -16,7 +16,7 @@ function CrashGameContent({ displayData }) {
   const dispatch = useDispatch();
   const [data, setData] = useState([{ time: 0, value: 1 }]);
   const [multiplier, setMultiplier] = useState(0);
-  const { gameStatusData, xValue, bettingStatus } = useSelector(
+  const { gameStatusData, xValue, bettingStatus, crashStatus } = useSelector(
     (state) => state.crashGame
   );
   console.log("data", data);
@@ -47,7 +47,7 @@ function CrashGameContent({ displayData }) {
     const interval = setInterval(() => {
       setData((prevData) => [
         ...prevData,
-        { time: prevData.length, value: multiplier },
+        { time: prevData.length, value: parseFloat(multiplier) },
       ]);
 
       if (xValue === targetValue) {
@@ -55,66 +55,14 @@ function CrashGameContent({ displayData }) {
       }
     }, 1000);
   };
-  //   if (!isCrashed) {
-  //     setIsCashedOut(true);
-  //     alert(`You cashed out at ${multiplier}x!`);
-  //   }
-  // };
 
-  // const array = [
-  //   { time: 0, value: 0 },
-  //   { time: 0.5, value: 0.25 },
-  //   { time: 1, value: 0.75 },
-  //   { time: 1.5, value: 0.9 },
-  //   { time: 2, value: 1 },
-  //   { time: 2.5, value: 1.25 },
-  //   { time: 3, value: 1.75 },
-  //   { time: 3.5, value: 1.9 },
-  //   { time: 4, value: 2 },
-  //   { time: 4.5, value: 2.5 },
-  //   { time: 5, value: 3 },
-  // ];
-  // const [data, setData] = useState([]);
-  // const [isCrashed, setIsCrashed] = useState(false);
-
-  // useEffect(() => {
-  //   handlePlanData(17);
-  // }, []);
-
-  // const handlePlanData = (targetValue) => {
-  //   if (!isCrashed) {
-  //     let increment = 0;
-  //     let time = 0;
-  //     const newData = [{ time: 0, value: 0 }];
-
-  //     const interval = setInterval(() => {
-  //       increment += 0.25;
-  //       time += 0.5;
-
-  //       newData.push({ time: time, value: increment });
-  //       console.log("newData", newData);
-  //       // console.log("increment", increment);
-
-  //       setData([...newData]);
-
-  //       if (increment === targetValue) {
-  //         clearInterval(interval);
-  //         setIsCrashed(true);
-  //       }
-  //     }, 500);
-  //   }
-  // };
-
-  // const customTickFormatter = (tick) => {
-  //   // Shift the labels dynamically
-  //   if (tick % 2 === 0 && tick <= 8) {
-  //     return `${tick}s`; // Show only multiples of 2 and up to 8s
-  //   } else if (tick > 8) {
-  //     // Shift the labels as time progresses beyond 8 seconds
-  //     return `${tick}s`;
-  //   }
-  //   return ""; // Return an empty string for all other ticks
-  // };
+  const getLastValueColor = () => {
+    if (data.length > 0) {
+      const lastItem = data[data.length - 1];
+      return lastItem.value === xValue ? "text-red-500" : "text-white";
+    }
+    return "text-white";
+  };
 
   return (
     <div className="w-full h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
@@ -159,21 +107,45 @@ function CrashGameContent({ displayData }) {
             <Area
               type="basis"
               dataKey="value"
-              stroke="#fff"
-              fill="#ffa500"
+              stroke={
+                data.length > 0
+                  ? data[data.length - 1].value === xValue
+                    ? "#4d718768"
+                    : "#fff"
+                  : "#fff"
+              }
+              fill={
+                data.length > 0
+                  ? data[data.length - 1].value === xValue
+                    ? "#4d718768"
+                    : "#ffa500"
+                  : "#ffa500"
+              }
               strokeWidth={5}
               isAnimationActive={true}
             />
           </AreaChart>
         </div>
-        {/* {isCrashed && <p>The plan has crashed!</p>} */}
-        <div className="absolute top-48 flex justify-between items-center w-full px-4 text-white font-bold">
+        <div className="absolute top-44 flex justify-between items-center w-full px-4 text-white font-bold">
           <div className="flex-grow flex items-center justify-center abc">
             <div className="text-center">
-              <p className="text-6xl">{multiplier}x</p>
-              <button className="bg-[#ffa500] text-2xl px-16 pt-2 pb-3 mt-3 rounded-md">
-                starting in
-              </button>
+              <p className={`text-6xl ${getLastValueColor()}`}>{multiplier}x</p>
+              {data.length > 0 ? (
+                data[data.length - 1].value === xValue ? (
+                  <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">Crashed</button>
+                ) : (
+                  <div></div>
+                )
+              ) : (
+                <div></div>
+              )}
+              {bettingStatus === true ? (
+                <button className="bg-[#4d718768] text-2xl px-16 pt-3 pb-4 mt-3 rounded-md progress-bar">
+                  starting in
+                </button>
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
           <div className="flex flex-col items-end space-y-1.5 xyz">
@@ -197,8 +169,8 @@ function CrashGameContent({ displayData }) {
               <div className="flex items-center">
                 <BsIncognito />
                 <p className="text-[#b1bad3] text-xs">Hidden</p>
-                <RiMoneyDollarCircleFill color="orange" size={20} />
-                <p>₹60.05</p>
+                <RiMoneyRupeeCircleFill color="yellow" size={20} />
+                <p>₹8,800.65</p>
               </div>
             </button>
             <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
@@ -211,13 +183,6 @@ function CrashGameContent({ displayData }) {
             </button>
           </div>
         </div>
-      </div>
-      <div className="flex justify-end items-center mb-0.5">
-        <p>Network Status</p>
-        <span className="relative flex h-3 w-3 ml-2 mt-2">
-          <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-[#1fff20] opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1fff20]"></span>
-        </span>
       </div>
     </div>
   );
