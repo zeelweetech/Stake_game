@@ -124,7 +124,7 @@ function CrashGameSidebar() {
 
   socket.on("bettingStarted", (data) => {
     // console.log("bettingStarted", data);
-    dispatch(setBettingStatus(data?.status)); 
+    dispatch(setBettingStatus(data?.status));
   });
   socket.on("bettingClosed", (data) => {
     // console.log("bettingClosed", data);
@@ -174,6 +174,24 @@ function CrashGameSidebar() {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     dispatch(setCrashValues({ ...crashValues, [name]: value }));
+  };
+
+  const handleOnIncrement = () => {
+    dispatch(
+      setCrashValues({
+        ...crashValues,
+        cashout: (parseFloat(crashValues.cashout) + 1).toFixed(2),
+      })
+    );
+  };
+
+  const handleOnDecrement = () => {
+    dispatch(
+      setCrashValues({
+        ...crashValues,
+        cashout: (parseFloat(crashValues.cashout) - 1).toFixed(2),
+      })
+    );
   };
 
   const handleOnManualBet = () => {
@@ -294,7 +312,10 @@ function CrashGameSidebar() {
               value={crashValues?.cashout}
               onChange={(e) => handleOnChange(e)}
             />
-            <button className="w-16 hover:bg-[#5c849e68]">
+            <button
+              className="w-16 hover:bg-[#5c849e68]"
+              onClick={handleOnDecrement}
+            >
               <KeyboardArrowDownIcon fontSize="small" />
             </button>
             <Divider
@@ -302,7 +323,10 @@ function CrashGameSidebar() {
               orientation="vertical"
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
-            <button className="w-16 hover:bg-[#5c849e68]">
+            <button
+              className="w-16 hover:bg-[#5c849e68]"
+              onClick={handleOnIncrement}
+            >
               <KeyboardArrowUpIcon fontSize="small" />
             </button>
           </div>
@@ -470,7 +494,7 @@ function CrashGameSidebar() {
                     value={crashValues?.cashout}
                     onChange={(e) => handleOnChange(e)}
                   />
-                  <button className="w-12 hover:bg-[#5c849e68]">
+                  <button className="w-12 hover:bg-[#5c849e68]" onClick={handleOnDecrement}>
                     <KeyboardArrowDownIcon fontSize="small" />
                   </button>
                   <Divider
@@ -478,7 +502,7 @@ function CrashGameSidebar() {
                     orientation="vertical"
                     sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
                   />
-                  <button className="w-12 hover:bg-[#5c849e68]">
+                  <button className="w-12 hover:bg-[#5c849e68]" onClick={handleOnIncrement}>
                     <KeyboardArrowUpIcon fontSize="small" />
                   </button>
                 </div>
