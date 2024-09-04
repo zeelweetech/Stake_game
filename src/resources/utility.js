@@ -18,6 +18,19 @@ export function removeCookie(name) {
 // Token Decode
 export const decodedToken = () => {
   const token = localStorage.getItem("token");
-  const decoded = jwtDecode(token);
-  return decoded;
+
+  // Check if the token exists and is a string
+  if (token && typeof token === "string") {
+    try {
+      const decoded = jwtDecode(token);
+      return decoded;
+    } catch (error) {
+      console.error("Failed to decode token:", error);
+      // Handle the error, e.g., return null or an empty object
+      return null;
+    }
+  } else {
+    console.error("Invalid token or token not found");
+    return null;
+  }
 };

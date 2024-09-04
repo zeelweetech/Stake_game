@@ -8,6 +8,7 @@ const initialState = {
   xValue: "",
   bettingStatus: "",
   crashStatus: "",
+  combinedData: [],
 };
 
 const crashGameSlice = createSlice({
@@ -35,6 +36,9 @@ const crashGameSlice = createSlice({
     setCrashStatus(state, action) {
       state.crashStatus = action.payload;
     },
+    setCombinedData(state, action) {
+      state.combinedData = action.payload;
+    },
   },
 });
 
@@ -46,6 +50,7 @@ export const {
   setXValue,
   setBettingStatus,
   setCrashStatus,
+  setCombinedData,
 } = crashGameSlice.actions;
 
 export default crashGameSlice.reducer;

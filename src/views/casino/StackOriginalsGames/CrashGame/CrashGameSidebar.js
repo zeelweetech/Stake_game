@@ -15,6 +15,7 @@ import { IoInfiniteSharp } from "react-icons/io5";
 import {
   BoardControlModel,
   setBettingStatus,
+  setCombinedData,
   setCrashStatus,
   setCrashValues,
   setGameStatusData,
@@ -118,6 +119,7 @@ function CrashGameSidebar() {
     xValue,
     bettingStatus,
     crashStatus,
+    combinedData,
   } = useSelector((state) => state.crashGame);
 
   socket.on("bettingStarted", (data) => {
@@ -133,11 +135,21 @@ function CrashGameSidebar() {
     dispatch(setGameStatusData(data));
   });
   socket.on("gameEnded", (data) => {
-    console.log("Game status received:", data);
+    console.log("gameEnded", data);
     dispatch(setCrashStatus(data));
   });
   console.log("bettingStatus", bettingStatus);
   console.log("crashStatus", crashStatus);
+  console.log("gameStatusData", gameStatusData);
+
+  useEffect(() => {
+    const playersdata = gameStatusData?.players || [];
+    dispatch(setCombinedData([...BetProfit, ...playersdata]));
+  }, [bettingStatus === false]);
+
+  useEffect(() => {
+    dispatch(setCombinedData([]));
+  }, [bettingStatus === true]);
 
   // useEffect(() => {
   //   const combinedData = [
@@ -168,11 +180,27 @@ function CrashGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      socket.emit("placeBet", {
-        userId: decoded?.userId,
-        amount: parseInt(crashValues?.betamount, 10),
-        cashoutMultiplier: parseInt(crashValues?.cashout, 10),
-      });
+      socket.emit(
+        "placeBet",
+        isSwiper === true
+          ? {
+              userId: decoded?.userId,
+              amount: parseInt(crashValues?.betamount, 10),
+              cashoutMultiplier: parseInt(crashValues?.cashout, 10),
+              betType: "Manual",
+            }
+          : {
+              userId: decoded?.userId,
+              amount: parseInt(crashValues?.betamount, 10),
+              cashoutMultiplier: parseInt(crashValues?.cashout, 10),
+              numberOfBets: parseInt(crashValues?.numberofbet, 10),
+              onWins: parseInt(crashValues?.onwin, 10),
+              onLoss: parseInt(crashValues?.onlose, 10),
+              stopOnProfit: parseInt(crashValues?.stoponprofit, 10),
+              stopOnLoss: parseInt(crashValues?.stoponloss, 10),
+              betType: "Auto",
+            }
+      );
     }
   };
 
@@ -308,24 +336,62 @@ function CrashGameSidebar() {
           <div className="flex justify-between mt-3">
             <div className="flex items-center space-x-1 font-semibold">
               <SupervisorAccountIcon className="text-[#b1bad3]" />
-              <p>320</p>
+              <p>
+                {bettingStatus === true
+                  ? 0
+                  : gameStatusData?.players
+                  ? BetProfit?.length + gameStatusData?.players?.length
+                  : BetProfit?.length}
+              </p>
             </div>
             <div className="flex items-center space-x-1 font-semibold">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-              <p>₹2,71,354.66</p>
+              <p>
+                {bettingStatus === true
+                  ? 0
+                  : gameStatusData?.players
+                  ? (
+                      BetProfit?.reduce((acc, item) => {
+                        return (
+                          acc +
+                          parseFloat(item?.Money.replace(/[^0-9.-]+/g, ""))
+                        );
+                      }, 0) +
+                      gameStatusData?.players?.reduce((acc, item) => {
+                        return acc + (item?.amount || 0);
+                      }, 0)
+                    ).toFixed(2)
+                  : BetProfit?.reduce((acc, item) => {
+                      return (
+                        acc + parseFloat(item?.Money.replace(/[^0-9.-]+/g, ""))
+                      );
+                    }, 0).toFixed(2)}
+              </p>
             </div>
           </div>
           <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 overflow-y-auto h-64">
-            {BetProfit?.map((item, index) => (
+            {console.log("combinedData", combinedData)}
+
+            {combinedData?.map((item, index) => (
               <div className="flex justify-between" key={index}>
                 <div className="flex items-center">
                   <BsIncognito />
-                  <p className="text-[#b1bad3]">Hidden</p>
+                  <p className="text-[#b1bad3]">
+                    {item.username ? item.username : "Hidden"}
+                  </p>
                 </div>
-                <div>{item?.Totalx}</div>
+                <div>
+                  {item.Totalx ? item.Totalx : `${item.cashoutMultiplier}x`}
+                </div>
                 <div className="flex items-center">
-                  {item?.CurrenciesMoneyIcon}
-                  {item?.amount}
+                  {item.CurrenciesMoneyIcon ? (
+                    <>
+                      {item.CurrenciesMoneyIcon}
+                      {item.Money}
+                    </>
+                  ) : (
+                    <>₹{item.amount}</>
+                  )}
                 </div>
               </div>
             ))}
@@ -587,13 +653,13 @@ function CrashGameSidebar() {
                 />
               </div>
               <button
-                className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
-                onClick={() => {
-                  if (!localStorage.getItem("token")) {
-                    dispatch(openRegisterModel());
-                  } else {
-                  }
-                }}
+                className={`${
+                  bettingStatus === false
+                    ? "bg-[#489649]"
+                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                onClick={() => handleOnManualBet()}
+                disabled={bettingStatus === false}
               >
                 Start Autobet
               </button>

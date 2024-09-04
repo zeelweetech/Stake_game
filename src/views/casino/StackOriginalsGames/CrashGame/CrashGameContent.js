@@ -19,6 +19,8 @@ function CrashGameContent({ displayData }) {
   const { gameStatusData, xValue, bettingStatus } = useSelector(
     (state) => state.crashGame
   );
+  console.log("data", data);
+  console.log("multiplier", multiplier);
 
   useEffect(() => {
     socket.on("endRound", (data) => {
