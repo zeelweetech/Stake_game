@@ -121,11 +121,11 @@ function CrashGameSidebar() {
   } = useSelector((state) => state.crashGame);
 
   socket.on("bettingStarted", (data) => {
-    console.log("bettingStarted", data);
-    dispatch(setBettingStatus(data?.status));
+    // console.log("bettingStarted", data);
+    dispatch(setBettingStatus(data?.status)); 
   });
   socket.on("bettingClosed", (data) => {
-    console.log("bettingClosed", data);
+    // console.log("bettingClosed", data);
     dispatch(setBettingStatus(data?.status));
   });
   socket.on("gameStatus", (data) => {
