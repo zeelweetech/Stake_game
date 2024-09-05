@@ -3,12 +3,19 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Content from "../components/Content";
 import Footer from "../components/Footer";
+import MainHeader from "../components/MainHeader";
+import { jwtDecode } from "jwt-decode";
 
 function DefaultLayout() {
   const [openMenubar, setOpenMenubar] = useState(false);
   const handleDrawerToggle = () => {
     setOpenMenubar((prevOpen) => !prevOpen);
   };
+
+  const token = localStorage.getItem("jwtToken");
+  if (token) {
+    let decoded = jwtDecode(token);
+  }
 
   return (
     <div className="flex h-screen">
@@ -31,10 +38,14 @@ function DefaultLayout() {
         }
         transition-width duration-300 ease-in-out`}
       >
-        <Header
-          openMenubar={openMenubar}
-          handleDrawerToggle={handleDrawerToggle}
-        />
+        {token ? (
+          <Header
+            openMenubar={openMenubar}
+            handleDrawerToggle={handleDrawerToggle}
+          />
+        ) : (
+          <MainHeader />
+        )}
         <div className=" overflow-auto">
           <Content />
         </div>
