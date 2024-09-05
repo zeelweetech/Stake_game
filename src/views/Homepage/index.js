@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Loader from "../component/Loader";
 import Mainbar from "./Mainbar";
-import MainPlayGame from "./MainPlayGame";
-
+import StackOriginals from "../casino/CasinoHomePage/StackOriginals";
 
 function MainHomePage() {
   const [loading, setLoading] = useState(false);
@@ -12,10 +11,10 @@ function MainHomePage() {
         <Loader />
       ) : (
         <div className="text-white">
-          <div>
-            <Mainbar />
+          <Mainbar />
+          <div className="px-44 mt-8">
+            <StackOriginals />
           </div>
-          <MainPlayGame />
         </div>
       )}
     </div>
