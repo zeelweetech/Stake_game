@@ -5,8 +5,8 @@ const token = localStorage.getItem("token");
 
 export const socket = io(URL, {
   path: "/ws",
-  //   extraHeaders: {
-  //     Authorization: `token: ${token}`,
-  //   },
+  extraHeaders: {
+    Authorization: `token: ${token}`,
+  },
   //   autoConnect: true,
 });

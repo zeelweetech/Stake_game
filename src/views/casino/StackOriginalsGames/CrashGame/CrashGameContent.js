@@ -19,8 +19,6 @@ function CrashGameContent({ displayData }) {
   const { gameStatusData, xValue, bettingStatus, crashStatus } = useSelector(
     (state) => state.crashGame
   );
-  console.log("data", data);
-  console.log("multiplier", multiplier);
 
   useEffect(() => {
     socket.on("endRound", (data) => {
@@ -132,7 +130,9 @@ function CrashGameContent({ displayData }) {
               <p className={`text-6xl ${getLastValueColor()}`}>{multiplier}x</p>
               {data.length > 0 ? (
                 data[data.length - 1].value === xValue ? (
-                  <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">Crashed</button>
+                  <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">
+                    Crashed
+                  </button>
                 ) : (
                   <div></div>
                 )

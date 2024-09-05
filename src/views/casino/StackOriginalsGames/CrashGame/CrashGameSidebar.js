@@ -4,14 +4,12 @@ import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import { RiMoneyDollarCircleFill } from "react-icons/ri";
-import { RiMoneyPoundCircleFill } from "react-icons/ri";
-import { RiMoneyCnyCircleFill } from "react-icons/ri";
 import { BsIncognito } from "react-icons/bs";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
 import { IoInfiniteSharp } from "react-icons/io5";
+import { socket } from "../../../../socket";
 import {
   BoardControlModel,
   setBettingStatus,
@@ -21,177 +19,59 @@ import {
   setGameStatusData,
   SwiperModel,
 } from "../../../../features/casino/crashSlice";
-import { socket } from "../../../../socket";
-import { decodedToken } from "../../../../resources/utility";
-
-const BetProfit = [
-  {
-    Totalx: "2.32x",
-    CurrenciesMoneyIcon: <RiMoneyRupeeCircleFill color="yellow" />,
-    Money: "₹58,000.06",
-  },
-  {
-    Totalx: "1.27x",
-    CurrenciesMoneyIcon: <RiMoneyDollarCircleFill color="orange" />,
-    Money: "₹88,000.65",
-  },
-  {
-    Totalx: "-",
-    CurrenciesMoneyIcon: <RiMoneyRupeeCircleFill color="yellow" />,
-    Money: "₹28,000.06",
-  },
-  {
-    Totalx: "3.75x",
-    CurrenciesMoneyIcon: <RiMoneyPoundCircleFill color="green" />,
-    Money: "₹34,000.06",
-  },
-  {
-    Totalx: "0.84x",
-    CurrenciesMoneyIcon: <RiMoneyCnyCircleFill color="#3277a8" />,
-    Money: "₹12,000.06",
-  },
-  {
-    Totalx: "-",
-    CurrenciesMoneyIcon: <RiMoneyPoundCircleFill color="green" />,
-    Money: "₹86,000.10",
-  },
-  {
-    Totalx: "2.00x",
-    CurrenciesMoneyIcon: <RiMoneyCnyCircleFill color="#3277a8" />,
-    Money: "₹43,000.05",
-  },
-  {
-    Totalx: "1.56x",
-    CurrenciesMoneyIcon: <RiMoneyDollarCircleFill color="orange" />,
-    Money: "₹67,000.09",
-  },
-  {
-    Totalx: "0.84x",
-    CurrenciesMoneyIcon: <RiMoneyCnyCircleFill color="#3277a8" />,
-    Money: "₹12,000.06",
-  },
-  {
-    Totalx: "-",
-    CurrenciesMoneyIcon: <RiMoneyDollarCircleFill color="orange" />,
-    Money: "₹86,000.10",
-  },
-  {
-    Totalx: "2.00x",
-    CurrenciesMoneyIcon: <RiMoneyCnyCircleFill color="#3277a8" />,
-    Money: "₹43,000.05",
-  },
-  {
-    Totalx: "1.56x",
-    CurrenciesMoneyIcon: <RiMoneyRupeeCircleFill color="yellow" />,
-    Money: "₹67,000.09",
-  },
-  {
-    Totalx: "0.84x",
-    CurrenciesMoneyIcon: <RiMoneyCnyCircleFill color="#3277a8" />,
-    Money: "₹12,000.06",
-  },
-  {
-    Totalx: "-",
-    CurrenciesMoneyIcon: <RiMoneyPoundCircleFill color="green" />,
-    Money: "₹86,000.10",
-  },
-  {
-    Totalx: "2.00x",
-    CurrenciesMoneyIcon: <RiMoneyDollarCircleFill color="orange" />,
-    Money: "₹43,000.05",
-  },
-  {
-    Totalx: "1.56x",
-    CurrenciesMoneyIcon: <RiMoneyRupeeCircleFill color="yellow" />,
-    Money: "₹67,000.09",
-  },
-];
+import {
+  decodedToken,
+  getRandomNumber,
+  shuffleArray,
+} from "../../../../resources/utility";
+import { generateRandomBetProfit } from "../../../component/GenerateRandomBetProfit";
 
 function CrashGameSidebar() {
   const dispatch = useDispatch();
   const decoded = decodedToken();
+  const BetProfit = generateRandomBetProfit();
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const {
     isSwiper,
     isboardControl,
     crashValues,
     gameStatusData,
-    xValue,
     bettingStatus,
-    crashStatus,
     combinedData,
   } = useSelector((state) => state.crashGame);
 
   socket.on("bettingStarted", (data) => {
-    // console.log("bettingStarted", data);
     dispatch(setBettingStatus(data?.status));
   });
   socket.on("bettingClosed", (data) => {
-    // console.log("bettingClosed", data);
     dispatch(setBettingStatus(data?.status));
   });
   socket.on("gameStatus", (data) => {
-    console.log("Game status received:", data);
     dispatch(setGameStatusData(data));
   });
   socket.on("gameEnded", (data) => {
-    console.log("gameEnded", data);
     dispatch(setCrashStatus(data));
   });
-  console.log("bettingStatus", bettingStatus);
-  console.log("crashStatus", crashStatus);
-  console.log("gameStatusData", gameStatusData);
+  socket.on("Insufficientfund", (data) => {
+    console.log("dataaaaaa", data);
+  });
 
   useEffect(() => {
     const playersdata = gameStatusData?.players || [];
-    dispatch(setCombinedData([...BetProfit, ...playersdata]));
+    const randomizedBetProfit = shuffleArray([...BetProfit]);
+    const randomDataLength = getRandomNumber(10, 100);
+    const limitedBetProfit = randomizedBetProfit.slice(0, randomDataLength);
+    const mergedData = [...limitedBetProfit, ...playersdata];
+    if (bettingStatus === true) {
+      dispatch(setCombinedData([]));
+    } else {
+      dispatch(setCombinedData(mergedData));
+    }
   }, [bettingStatus === false]);
-
-  useEffect(() => {
-    dispatch(setCombinedData([]));
-  }, [bettingStatus === true]);
-
-  // useEffect(() => {
-  //   const combinedData = [
-  //     ...(gameStatusData?.players || []),
-  //     ...(BetProfit || []),
-  //   ];
-
-  //   let index = 0;
-
-  //   const interval = setInterval(() => {
-  //     if (index < combinedData.length) {
-  //       setDisplayData((prev) => [...prev, combinedData[index]]);
-  //       index++;
-  //     } else {
-  //       clearInterval(interval);
-  //     }
-  //   }, 100);
-
-  //   return () => clearInterval(interval);
-  // }, [gameStatusData]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     dispatch(setCrashValues({ ...crashValues, [name]: value }));
-  };
-
-  const handleOnIncrement = () => {
-    dispatch(
-      setCrashValues({
-        ...crashValues,
-        cashout: (parseFloat(crashValues.cashout) + 1).toFixed(2),
-      })
-    );
-  };
-
-  const handleOnDecrement = () => {
-    dispatch(
-      setCrashValues({
-        ...crashValues,
-        cashout: (parseFloat(crashValues.cashout) - 1).toFixed(2),
-      })
-    );
   };
 
   const handleOnManualBet = () => {
@@ -203,13 +83,17 @@ function CrashGameSidebar() {
         isSwiper === true
           ? {
               userId: decoded?.userId,
-              amount: parseInt(crashValues?.betamount, 10),
+              amount: crashValues?.betamount
+                ? parseInt(crashValues?.betamount, 10)
+                : 0,
               cashoutMultiplier: parseInt(crashValues?.cashout, 10),
               betType: "Manual",
             }
           : {
               userId: decoded?.userId,
-              amount: parseInt(crashValues?.betamount, 10),
+              amount: crashValues?.betamount
+                ? parseInt(crashValues?.betamount, 10)
+                : 0,
               cashoutMultiplier: parseInt(crashValues?.cashout, 10),
               numberOfBets: parseInt(crashValues?.numberofbet, 10),
               onWins: parseInt(crashValues?.onwin, 10),
@@ -312,10 +196,7 @@ function CrashGameSidebar() {
               value={crashValues?.cashout}
               onChange={(e) => handleOnChange(e)}
             />
-            <button
-              className="w-16 hover:bg-[#5c849e68]"
-              onClick={handleOnDecrement}
-            >
+            <button className="w-16 hover:bg-[#5c849e68]">
               <KeyboardArrowDownIcon fontSize="small" />
             </button>
             <Divider
@@ -323,10 +204,7 @@ function CrashGameSidebar() {
               orientation="vertical"
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
-            <button
-              className="w-16 hover:bg-[#5c849e68]"
-              onClick={handleOnIncrement}
-            >
+            <button className="w-16 hover:bg-[#5c849e68]">
               <KeyboardArrowUpIcon fontSize="small" />
             </button>
           </div>
@@ -364,8 +242,8 @@ function CrashGameSidebar() {
                 {bettingStatus === true
                   ? 0
                   : gameStatusData?.players
-                  ? BetProfit?.length + gameStatusData?.players?.length
-                  : BetProfit?.length}
+                  ? combinedData?.length + gameStatusData?.players?.length
+                  : combinedData?.length}
               </p>
             </div>
             <div className="flex items-center space-x-1 font-semibold">
@@ -375,27 +253,32 @@ function CrashGameSidebar() {
                   ? 0
                   : gameStatusData?.players
                   ? (
-                      BetProfit?.reduce((acc, item) => {
+                      combinedData?.reduce((acc, item) => {
                         return (
                           acc +
-                          parseFloat(item?.Money.replace(/[^0-9.-]+/g, ""))
+                          (item?.Money
+                            ? parseFloat(item.Money.replace(/[^0-9.-]+/g, ""))
+                            : 0)
                         );
                       }, 0) +
                       gameStatusData?.players?.reduce((acc, item) => {
                         return acc + (item?.amount || 0);
                       }, 0)
                     ).toFixed(2)
-                  : BetProfit?.reduce((acc, item) => {
-                      return (
-                        acc + parseFloat(item?.Money.replace(/[^0-9.-]+/g, ""))
-                      );
-                    }, 0).toFixed(2)}
+                  : combinedData
+                      ?.reduce((acc, item) => {
+                        return (
+                          acc +
+                          (item?.Money
+                            ? parseFloat(item.Money.replace(/[^0-9.-]+/g, ""))
+                            : 0)
+                        );
+                      }, 0)
+                      .toFixed(2)}
               </p>
             </div>
           </div>
           <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 overflow-y-auto h-64">
-            {console.log("combinedData", combinedData)}
-
             {combinedData?.map((item, index) => (
               <div className="flex justify-between" key={index}>
                 <div className="flex items-center">
@@ -414,7 +297,10 @@ function CrashGameSidebar() {
                       {item.Money}
                     </>
                   ) : (
-                    <>₹{item.amount}</>
+                    <div>
+                      <RiMoneyRupeeCircleFill color="yellow" />
+                      <>₹{item.amount}</>
+                    </div>
                   )}
                 </div>
               </div>
@@ -494,7 +380,7 @@ function CrashGameSidebar() {
                     value={crashValues?.cashout}
                     onChange={(e) => handleOnChange(e)}
                   />
-                  <button className="w-12 hover:bg-[#5c849e68]" onClick={handleOnDecrement}>
+                  <button className="w-12 hover:bg-[#5c849e68]">
                     <KeyboardArrowDownIcon fontSize="small" />
                   </button>
                   <Divider
@@ -502,7 +388,7 @@ function CrashGameSidebar() {
                     orientation="vertical"
                     sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
                   />
-                  <button className="w-12 hover:bg-[#5c849e68]" onClick={handleOnIncrement}>
+                  <button className="w-12 hover:bg-[#5c849e68]">
                     <KeyboardArrowUpIcon fontSize="small" />
                   </button>
                 </div>
@@ -693,24 +579,74 @@ function CrashGameSidebar() {
               <div className="flex justify-between mt-3">
                 <div className="flex items-center space-x-1 font-semibold">
                   <SupervisorAccountIcon className="text-[#b1bad3]" />
-                  <p>371</p>
+                  <p>
+                    {bettingStatus === true
+                      ? 0
+                      : gameStatusData?.players
+                      ? combinedData?.length + gameStatusData?.players?.length
+                      : combinedData?.length}
+                  </p>
                 </div>
                 <div className="flex items-center space-x-1 font-semibold">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-                  <p>₹1,71,054.12</p>
+                  <p>
+                    {bettingStatus === true
+                      ? 0
+                      : gameStatusData?.players
+                      ? (
+                          combinedData?.reduce((acc, item) => {
+                            return (
+                              acc +
+                              (item?.Money
+                                ? parseFloat(
+                                    item.Money.replace(/[^0-9.-]+/g, "")
+                                  )
+                                : 0)
+                            );
+                          }, 0) +
+                          gameStatusData?.players?.reduce((acc, item) => {
+                            return acc + (item?.amount || 0);
+                          }, 0)
+                        ).toFixed(2)
+                      : combinedData
+                          ?.reduce((acc, item) => {
+                            return (
+                              acc +
+                              (item?.Money
+                                ? parseFloat(
+                                    item.Money.replace(/[^0-9.-]+/g, "")
+                                  )
+                                : 0)
+                            );
+                          }, 0)
+                          .toFixed(2)}
+                  </p>
                 </div>
               </div>
               <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 text-base overflow-y-auto h-[23rem]">
-                {BetProfit.map((profitData) => (
-                  <div className="flex justify-between">
+                {combinedData?.map((item, index) => (
+                  <div className="flex justify-between" key={index}>
                     <div className="flex items-center">
                       <BsIncognito />
-                      <p className="text-[#b1bad3]">Hidden</p>
+                      <p className="text-[#b1bad3]">
+                        {item.username ? item.username : "Hidden"}
+                      </p>
                     </div>
-                    <div>{profitData?.Totalx}</div>
+                    <div>
+                      {item.Totalx ? item.Totalx : `${item.cashoutMultiplier}x`}
+                    </div>
                     <div className="flex items-center">
-                      {profitData?.CurrenciesMoneyIcon}
-                      {profitData?.Money}
+                      {item.CurrenciesMoneyIcon ? (
+                        <>
+                          {item.CurrenciesMoneyIcon}
+                          {item.Money}
+                        </>
+                      ) : (
+                        <div>
+                          <RiMoneyRupeeCircleFill color="yellow" />
+                          <>₹{item.amount}</>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -732,7 +668,13 @@ function CrashGameSidebar() {
                   disabled
                 />
               </div>
-              <button className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full">
+              <button
+                className={`${
+                  bettingStatus === false
+                    ? "bg-[#489649]"
+                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+              >
                 Start Autobet
               </button>
             </div>

@@ -9,6 +9,10 @@ export const store = configureStore({
     plinkoGame: plinkoGameReducer,
     crashGame: crashGameReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // Disable serializability check
+    }),
 });
 
 export default store;
