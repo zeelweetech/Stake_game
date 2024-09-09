@@ -50,6 +50,22 @@ code {
   animation: progressBar 10s linear forwards;
 }
 
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeIn {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0; /* Start hidden */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

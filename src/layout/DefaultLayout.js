@@ -12,10 +12,7 @@ function DefaultLayout() {
     setOpenMenubar((prevOpen) => !prevOpen);
   };
 
-  const token = localStorage.getItem("jwtToken");
-  if (token) {
-    let decoded = jwtDecode(token);
-  }
+  const token = localStorage.getItem("token");
 
   return (
     <div className="flex h-screen">
@@ -39,17 +36,17 @@ function DefaultLayout() {
         transition-width duration-300 ease-in-out`}
       >
         {token ? (
+          <MainHeader />
+        ) : (
           <Header
             openMenubar={openMenubar}
             handleDrawerToggle={handleDrawerToggle}
           />
-        ) : (
-          <MainHeader />
         )}
         <div className=" overflow-auto">
           <Content />
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </div>
   );

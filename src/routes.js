@@ -12,16 +12,12 @@ const PlinkoGame = React.lazy(() =>
   import("./views/casino/StackOriginalsGames/PlinkoGame")
 );
 
-const token = localStorage.getItem("jwtToken");
-if (token) {
-  let decoded = jwtDecode(token);
-}
-
+const token = localStorage.getItem("token");
 const routes = [
   {
     path: "/",
     name: "Home",
-    element: token ? LandingBanner : Homepage,
+    element: token ? Homepage : LandingBanner,
   },
   { path: "/casino/home", name: "Casino-Home", element: CasinoHomePage },
   { path: "/casino/games/crash", name: "Crash", element: CrashGame },

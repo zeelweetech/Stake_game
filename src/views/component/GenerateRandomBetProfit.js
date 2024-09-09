@@ -13,10 +13,10 @@ const currencyIcons = [
 export const generateRandomBetProfit = () => {
   const randomData = [];
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 30; i++) {
     const totalxValue =
       Math.random() > 0.2 ? `${(Math.random() * 10).toFixed(2)}x` : "-"; // 80% chance to generate a random multiplier, 20% to get '-'
-    const randomMoney = `₹${getRandomNumber(0, 100000).toFixed(2)}`; // Money capped at ₹100,000
+    const randomMoney = `${getRandomNumber(0, 100000).toFixed(2)}`; // Money capped at ₹100,000
 
     // Randomly select a currency icon from the array
     const randomCurrencyIcon =

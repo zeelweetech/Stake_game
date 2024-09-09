@@ -66,6 +66,7 @@ function Login() {
           localStorage.setItem("token", response?.token);
           toast.success(response?.message);
           dispatch(closeLoginModel());
+          window.location.reload();
         })
         .catch((error) => {
           console.log("error", error);

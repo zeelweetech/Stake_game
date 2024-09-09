@@ -25,11 +25,14 @@ import {
   shuffleArray,
 } from "../../../../resources/utility";
 import { generateRandomBetProfit } from "../../../component/GenerateRandomBetProfit";
+import toast from "react-hot-toast";
 
 function CrashGameSidebar() {
   const dispatch = useDispatch();
   const decoded = decodedToken();
   const BetProfit = generateRandomBetProfit();
+  const [onClickStatus, setOnClickStatus] = useState(false);
+  const [autoBetOnClick, setAutoBetOnClick] = useState(false);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const {
     isSwiper,
@@ -38,36 +41,66 @@ function CrashGameSidebar() {
     gameStatusData,
     bettingStatus,
     combinedData,
+    multiplier,
+    crashStatus,
+    xValue,
   } = useSelector((state) => state.crashGame);
-
-  socket.on("bettingStarted", (data) => {
-    dispatch(setBettingStatus(data?.status));
-  });
-  socket.on("bettingClosed", (data) => {
-    dispatch(setBettingStatus(data?.status));
-  });
   socket.on("gameStatus", (data) => {
     dispatch(setGameStatusData(data));
   });
-  socket.on("gameEnded", (data) => {
-    dispatch(setCrashStatus(data));
-  });
-  socket.on("Insufficientfund", (data) => {
-    console.log("dataaaaaa", data);
-  });
 
   useEffect(() => {
-    const playersdata = gameStatusData?.players || [];
-    const randomizedBetProfit = shuffleArray([...BetProfit]);
-    const randomDataLength = getRandomNumber(10, 100);
-    const limitedBetProfit = randomizedBetProfit.slice(0, randomDataLength);
-    const mergedData = [...limitedBetProfit, ...playersdata];
-    if (bettingStatus === true) {
-      dispatch(setCombinedData([]));
-    } else {
-      dispatch(setCombinedData(mergedData));
+    socket.on("bettingStarted", (data) => {
+      dispatch(setBettingStatus(data?.status));
+    });
+    socket.on("bettingClosed", (data) => {
+      dispatch(setBettingStatus(data?.status));
+    });
+    socket.on("gameEnded", (data) => {
+      dispatch(setCrashStatus(data));
+    });
+    socket.on("Insufficientfund", (data) => {
+      console.log("Insufficientfund", data);
+      toast.error(data?.message);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (bettingStatus === false) {
+      setOnClickStatus(false);
     }
   }, [bettingStatus === false]);
+
+  useEffect(() => {
+    if (bettingStatus === true) {
+      const randomizedBetProfit = shuffleArray([...BetProfit]);
+      const randomDataLength = getRandomNumber(10, 100);
+      const limitedBetProfit = randomizedBetProfit.slice(0, randomDataLength);
+      localStorage.setItem("profiledata", JSON.stringify(limitedBetProfit));
+      const timer = setTimeout(() => {
+        dispatch(setCombinedData([]));
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+  console.log("gameStatusData?.players", gameStatusData);
+
+  useEffect(() => {
+    if (
+      gameStatusData?.players?.length > 0 ||
+      gameStatusData?.autoBets?.length > 0
+    ) {
+      const randomData = JSON.parse(localStorage.getItem("profiledata")) || [];
+      const playersdata = gameStatusData?.players || [];
+      const AutoData = gameStatusData?.autoBets || [];
+      const mergedData = [...randomData, ...playersdata, ...AutoData];
+      dispatch(setCombinedData(mergedData));
+    } else if (JSON.parse(localStorage.getItem("profiledata"))) {
+      const randomData = JSON.parse(localStorage.getItem("profiledata")) || [];
+      const mergedData = [...randomData];
+      dispatch(setCombinedData(mergedData));
+    }
+  }, [gameStatusData || JSON.parse(localStorage.getItem("profiledata"))]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -78,32 +111,60 @@ function CrashGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      socket.emit(
-        "placeBet",
-        isSwiper === true
-          ? {
-              userId: decoded?.userId,
-              amount: crashValues?.betamount
-                ? parseInt(crashValues?.betamount, 10)
-                : 0,
-              cashoutMultiplier: parseInt(crashValues?.cashout, 10),
-              betType: "Manual",
-            }
-          : {
-              userId: decoded?.userId,
-              amount: crashValues?.betamount
-                ? parseInt(crashValues?.betamount, 10)
-                : 0,
-              cashoutMultiplier: parseInt(crashValues?.cashout, 10),
-              numberOfBets: parseInt(crashValues?.numberofbet, 10),
-              onWins: parseInt(crashValues?.onwin, 10),
-              onLoss: parseInt(crashValues?.onlose, 10),
-              stopOnProfit: parseInt(crashValues?.stoponprofit, 10),
-              stopOnLoss: parseInt(crashValues?.stoponloss, 10),
-              betType: "Auto",
-            }
-      );
+      if (crashValues?.betamount && crashValues?.cashout)
+        socket.emit(
+          "placeBet",
+          isSwiper === true
+            ? {
+                userId: decoded?.userId,
+                amount: crashValues?.betamount
+                  ? parseInt(crashValues?.betamount, 10)
+                  : 0,
+                cashoutMultiplier: parseInt(crashValues?.cashout, 10),
+                betType: "Manual",
+              }
+            : {
+                userId: decoded?.userId,
+                amount: crashValues?.betamount
+                  ? parseInt(crashValues?.betamount, 10)
+                  : 0,
+                cashoutMultiplier: parseInt(crashValues?.cashout, 10),
+                numberOfBets: parseInt(crashValues?.numberofbet, 10),
+                onWins: parseInt(crashValues?.onwin, 10),
+                onLoss: parseInt(crashValues?.onlose, 10),
+                stopOnProfit: parseInt(crashValues?.stoponprofit, 10),
+                stopOnLoss: parseInt(crashValues?.stoponloss, 10),
+                betType: "Auto",
+              }
+        );
+      if (isSwiper === true) {
+        setOnClickStatus(true);
+      } else {
+        setAutoBetOnClick(true);
+      }
     }
+  };
+
+  const handleOnCancelBet = () => {
+    const BetId = gameStatusData?.players?.find((item) => {
+      return item?.userId === decoded?.userId && item?.betId;
+    });
+    socket.emit("cancelBet", {
+      userId: decoded?.userId,
+      betId: BetId?.betId,
+    });
+    setOnClickStatus(false);
+  };
+
+  const handleOnCancelAutoBet = () => {
+    const BetId = gameStatusData?.autoBets?.find((item) => {
+      return item?.userId === decoded?.userId && item?.betId;
+    });
+    socket.emit("cancelBet", {
+      userId: decoded?.userId,
+      betId: BetId?.betId,
+    });
+    setAutoBetOnClick(false);
   };
 
   return (
@@ -224,34 +285,42 @@ function CrashGameSidebar() {
               disabled
             />
           </div>
-          <button
-            className={`${
-              bettingStatus === false
-                ? "bg-[#489649]"
-                : "bg-[#1fff20] hover:bg-[#42ed45]"
-            } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-            onClick={() => handleOnManualBet()}
-            disabled={bettingStatus === false}
-          >
-            Bet
-          </button>
+          {bettingStatus === false ? (
+            <button
+              className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+              onClick={() => setOnClickStatus(false)}
+            >
+              Bet (Next Bet)
+            </button>
+          ) : onClickStatus ? (
+            <button
+              className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+              onClick={() => handleOnCancelBet()}
+            >
+              Cancel
+            </button>
+          ) : (
+            <button
+              className={`${
+                bettingStatus === false
+                  ? "bg-[#489649]"
+                  : "bg-[#1fff20] hover:bg-[#42ed45]"
+              } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+              onClick={() => handleOnManualBet()}
+              disabled={bettingStatus === false}
+            >
+              Bet
+            </button>
+          )}
           <div className="flex justify-between mt-3">
             <div className="flex items-center space-x-1 font-semibold">
               <SupervisorAccountIcon className="text-[#b1bad3]" />
-              <p>
-                {bettingStatus === true
-                  ? 0
-                  : gameStatusData?.players
-                  ? combinedData?.length + gameStatusData?.players?.length
-                  : combinedData?.length}
-              </p>
+              <p>{combinedData?.length}</p>
             </div>
             <div className="flex items-center space-x-1 font-semibold">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               <p>
-                {bettingStatus === true
-                  ? 0
-                  : gameStatusData?.players
+                {gameStatusData?.players
                   ? (
                       combinedData?.reduce((acc, item) => {
                         return (
@@ -279,32 +348,59 @@ function CrashGameSidebar() {
             </div>
           </div>
           <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 overflow-y-auto h-64">
-            {combinedData?.map((item, index) => (
-              <div className="flex justify-between" key={index}>
-                <div className="flex items-center">
-                  <BsIncognito />
-                  <p className="text-[#b1bad3]">
-                    {item.username ? item.username : "Hidden"}
-                  </p>
+            {combinedData?.length > 0 &&
+              combinedData?.map((item, index) => (
+                <div
+                  className="flex justify-between fadeIn"
+                  key={index}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="flex items-center">
+                    <BsIncognito />
+                    <p className="text-[#b1bad3]">
+                      {item.username ? item.username : "Hidden"}
+                    </p>
+                  </div>
+                  <div>
+                    {item.Totalx < multiplier
+                      ? item.Totalx
+                      : item.cashoutMultiplier < multiplier
+                      ? `${item.cashoutMultiplier}x`
+                      : "-"}
+                  </div>
+                  <div className="flex items-center">
+                    {item?.Money ? (
+                      <div
+                        className={`${
+                          item.Totalx === "-"
+                            ? "text-white"
+                            : item.Totalx < multiplier
+                            ? "text-green-500"
+                            : "text-white"
+                        } flex`}
+                      >
+                        <RiMoneyRupeeCircleFill color="yellow" />
+                        {item?.Money}
+                      </div>
+                    ) : (
+                      <div className="flex">
+                        <RiMoneyRupeeCircleFill color="yellow" />
+                        <div
+                          className={`${
+                            item.cashoutMultiplier === "-"
+                              ? "text-white"
+                              : item.cashoutMultiplier < multiplier
+                              ? "text-green-500"
+                              : "text-white"
+                          }`}
+                        >
+                          ₹{item?.amount}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  {item.Totalx ? item.Totalx : `${item.cashoutMultiplier}x`}
-                </div>
-                <div className="flex items-center">
-                  {item.CurrenciesMoneyIcon ? (
-                    <>
-                      {item.CurrenciesMoneyIcon}
-                      {item.Money}
-                    </>
-                  ) : (
-                    <div>
-                      <RiMoneyRupeeCircleFill color="yellow" />
-                      <>₹{item.amount}</>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       ) : (
@@ -562,17 +658,25 @@ function CrashGameSidebar() {
                   disabled
                 />
               </div>
-              <button
-                className={`${
-                  bettingStatus === false
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3 py-3 rounded-md font-semibold w-full`}
-                onClick={() => handleOnManualBet()}
-                disabled={bettingStatus === false}
-              >
-                Start Autobet
-              </button>
+              {autoBetOnClick ? (
+                <button
+                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => handleOnCancelAutoBet()}
+                >
+                  Cancel Autobet
+                </button>
+              ) : (
+                <button
+                  className={`${
+                    bettingStatus === false
+                      ? "bg-[#489649]"
+                      : "bg-[#1fff20] hover:bg-[#42ed45]"
+                  } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => handleOnManualBet()}
+                >
+                  Start Autobet
+                </button>
+              )}
             </div>
           ) : (
             <div>
@@ -624,32 +728,57 @@ function CrashGameSidebar() {
                 </div>
               </div>
               <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 text-base overflow-y-auto h-[23rem]">
-                {combinedData?.map((item, index) => (
-                  <div className="flex justify-between" key={index}>
-                    <div className="flex items-center">
-                      <BsIncognito />
-                      <p className="text-[#b1bad3]">
-                        {item.username ? item.username : "Hidden"}
-                      </p>
+                {combinedData?.length > 0 &&
+                  combinedData?.map((item, index) => (
+                    <div
+                      className="flex justify-between"
+                      key={index}
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <div className="flex items-center">
+                        <BsIncognito />
+                        <p className="text-[#b1bad3]">
+                          {item.username ? item.username : "Hidden"}
+                        </p>
+                      </div>
+                      <div>
+                        {item.Totalx < multiplier
+                          ? item.Totalx
+                          : item.cashoutMultiplier < multiplier
+                          ? `${item.cashoutMultiplier}x`
+                          : "-"}
+                      </div>
+                      <div className="flex items-center">
+                        {item.CurrenciesMoneyIcon ? (
+                          <div
+                            className={`${
+                              item.Totalx === "-"
+                                ? "text-white"
+                                : item.Totalx < multiplier
+                                ? "text-green-500"
+                                : "text-white"
+                            } flex`}
+                          >
+                            <RiMoneyRupeeCircleFill color="yellow" />
+                            {item.Money}
+                          </div>
+                        ) : (
+                          <div
+                            className={`${
+                              item.cashoutMultiplier === "-"
+                                ? "text-white"
+                                : item.cashoutMultiplier < multiplier
+                                ? "text-green-500"
+                                : "text-white"
+                            }`}
+                          >
+                            <RiMoneyRupeeCircleFill color="yellow" />
+                            <div>{item.amount}</div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <div>
-                      {item.Totalx ? item.Totalx : `${item.cashoutMultiplier}x`}
-                    </div>
-                    <div className="flex items-center">
-                      {item.CurrenciesMoneyIcon ? (
-                        <>
-                          {item.CurrenciesMoneyIcon}
-                          {item.Money}
-                        </>
-                      ) : (
-                        <div>
-                          <RiMoneyRupeeCircleFill color="yellow" />
-                          <>₹{item.amount}</>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1.5">
                 <label>Profit on Win</label>
@@ -668,15 +797,19 @@ function CrashGameSidebar() {
                   disabled
                 />
               </div>
-              <button
-                className={`${
-                  bettingStatus === false
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-              >
-                Start Autobet
-              </button>
+              {autoBetOnClick ? (
+                <button
+                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                >
+                  Cancel Autobet
+                </button>
+              ) : (
+                <button
+                  className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                >
+                  Start Autobet
+                </button>
+              )}
             </div>
           )}
         </div>

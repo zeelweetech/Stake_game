@@ -10,30 +10,50 @@ import {
 } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { socket } from "../../../../socket";
-import { setXValue } from "../../../../features/casino/crashSlice";
+import {
+  setMultiplier,
+  setXValue,
+} from "../../../../features/casino/crashSlice";
 
 function CrashGameContent({ displayData }) {
   const dispatch = useDispatch();
   const [data, setData] = useState([{ time: 0, value: 1 }]);
-  const [multiplier, setMultiplier] = useState(0);
-  const { gameStatusData, xValue, bettingStatus, crashStatus } = useSelector(
-    (state) => state.crashGame
-  );
+  const {
+    gameStatusData,
+    xValue,
+    bettingStatus,
+    crashStatus,
+    multiplier,
+    combinedData,
+  } = useSelector((state) => state.crashGame);
+  const [visibleData, setVisibleData] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextData = combinedData.slice(currentIndex, currentIndex + 4);
+      setVisibleData(nextData);
+      setCurrentIndex((prevIndex) => {
+        const newIndex = prevIndex + 4;
+        return newIndex >= combinedData.length ? 0 : newIndex;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex, bettingStatus === false]);
 
   useEffect(() => {
     socket.on("endRound", (data) => {
-      dispatch(setXValue(data?.crashPoint));
+      dispatch(setXValue(parseFloat(data?.crashPoint)));
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    socket.on("multiplierUpdate", (data) => {
-      setMultiplier(data?.multiplier?.toFixed(2));
-    });
-  }, []);
+  socket.on("multiplierUpdate", (data) => {
+    dispatch(setMultiplier(data?.multiplier));
+  });
 
   useEffect(() => {
-    setMultiplier(0);
+    dispatch(setMultiplier(0));
     setData([{ time: 0, value: 0 }]);
   }, [bettingStatus === true]);
 
@@ -45,9 +65,11 @@ function CrashGameContent({ displayData }) {
     const interval = setInterval(() => {
       setData((prevData) => [
         ...prevData,
-        { time: prevData.length, value: parseFloat(multiplier) },
+        {
+          time: prevData.length,
+          value: multiplier,
+        },
       ]);
-
       if (xValue === targetValue) {
         clearInterval(interval);
       }
@@ -93,28 +115,28 @@ function CrashGameContent({ displayData }) {
               stroke="#B1BAD3"
               tick={{ stroke: "#B1BAD3", strokeWidth: 1 }}
               axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
-              domain={[0, "auto"]}
+              domain={[1, 1]}
             />
             <YAxis
-              tickFormatter={(tick) => `${tick.toFixed(1)}x`}
+              tickFormatter={(tick) => `${tick}x`}
               stroke="#B1BAD3"
               tick={{ stroke: "#B1BAD3", strokeWidth: 1 }}
               axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
-              domain={[1, "auto"]}
+              domain={[1, 1]}
             />
             <Area
               type="basis"
               dataKey="value"
               stroke={
-                data.length > 0
-                  ? data[data.length - 1].value === xValue
+                data?.length > 0
+                  ? data[data.length - 1]?.value === xValue
                     ? "#4d718768"
                     : "#fff"
                   : "#fff"
               }
               fill={
-                data.length > 0
-                  ? data[data.length - 1].value === xValue
+                data?.length > 0
+                  ? data[data.length - 1]?.value === xValue
                     ? "#4d718768"
                     : "#ffa500"
                   : "#ffa500"
@@ -128,36 +150,44 @@ function CrashGameContent({ displayData }) {
           <div className="flex-grow flex items-center justify-center abc">
             <div className="text-center">
               <p className={`text-6xl ${getLastValueColor()}`}>{multiplier}x</p>
-              {data.length > 0 ? (
-                data[data.length - 1].value === xValue ? (
+              {data?.length > 0 ? (
+                data[data?.length - 1]?.value === xValue ? (
                   <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">
                     Crashed
                   </button>
                 ) : (
-                  <div></div>
+                  ""
                 )
               ) : (
-                <div></div>
+                ""
               )}
               {bettingStatus === true ? (
                 <button className="bg-[#4d718768] text-2xl px-16 pt-3 pb-4 mt-3 rounded-md progress-bar">
                   starting in
                 </button>
               ) : (
-                <div></div>
+                ""
               )}
             </div>
           </div>
           <div className="flex flex-col items-end space-y-1.5 xyz">
-            <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
-              <div className="flex items-center">
-                <BsIncognito />
-                <p className="text-[#b1bad3] text-xs">Hidden</p>
-                <RiMoneyPoundCircleFill color="green" size={20} />
-                <p>₹10.38</p>
-              </div>
-            </button>
-            <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
+            {bettingStatus === false &&
+              visibleData?.map((data, index) => (
+                <button
+                  key={index}
+                  className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full"
+                >
+                  <div className="flex items-center">
+                    <BsIncognito />
+                    <p className="text-[#b1bad3] text-xs">Hidden</p>
+                    <RiMoneyRupeeCircleFill color="yellow" size={20} />
+                    <p className="text-green-500">
+                      {data?.Money ? data?.Money : data?.amount}
+                    </p>
+                  </div>
+                </button>
+              ))}
+            {/* <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
               <div className="flex items-center">
                 <BsIncognito />
                 <p className="text-[#b1bad3] text-xs">Hidden</p>
@@ -180,7 +210,7 @@ function CrashGameContent({ displayData }) {
                 <RiMoneyCnyCircleFill color="#3277a8" size={20} />
                 <p>₹143.54</p>
               </div>
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

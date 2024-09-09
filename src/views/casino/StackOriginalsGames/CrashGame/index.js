@@ -5,7 +5,7 @@ import GameFooter from "../../../component/GameFooter";
 
 function CrashGame() {
   return (
-    <div className="bg-[#1a2c38] py-8 text-white flex justify-center items-center w-full">
+    <div className="bg-[#1a2c38] py-8 text-white flex justify-center items-center w-full h-screen">
       <div>
         <div className="flex-row bg-center text-white flex grow w-full min-w-80 h-[41.6rem] border-b-3">
           <div>

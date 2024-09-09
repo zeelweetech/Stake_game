@@ -11,6 +11,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { MdOutlineEventNote } from "react-icons/md";
 import LogoutIcon from "@mui/icons-material/Logout";
 import notification from "../assets/img/Notification.png";
+import { removeCookie } from "../resources/utility";
 
 function MainHeader() {
   const navigate = useNavigate();
@@ -26,6 +27,13 @@ function MainHeader() {
 
   const isMenuOpen = (menuType) => {
     return anchorEl?.dataset?.menuType === menuType;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    removeCookie("token");
+    navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -61,7 +69,10 @@ function MainHeader() {
               onClose={handleMenuClose}
               sx={{ mt: 1.5 }}
             >
-              <MenuItem className="flex items-center space-x-1 text-[#2f4553]">
+              <MenuItem
+                className="flex items-center space-x-1 text-[#2f4553]"
+                onClick={(e) => handleLogout(e)}
+              >
                 <LogoutIcon />
                 <p>Logout</p>
               </MenuItem>
@@ -86,7 +97,7 @@ function MainHeader() {
                 vertical: "top",
                 horizontal: "right",
               }}
-              sx={{mt: 1.5, ml: 5 }}
+              sx={{ mt: 1.5, ml: 5 }}
             >
               <div className="text-center p-3">
                 <div className="flex justify-between items-center">

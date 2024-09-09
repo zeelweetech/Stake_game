@@ -29,7 +29,6 @@ export const decodedToken = () => {
       return null;
     }
   } else {
-    console.error("Invalid token or token not found");
     return null;
   }
 };

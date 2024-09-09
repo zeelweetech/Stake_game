@@ -13,7 +13,7 @@ function MainHomePage() {
         <div className="text-white">
           <Mainbar />
           <div className="px-44 mt-8">
-            <StackOriginals />
+            <StackOriginals setLoading={setLoading} />
           </div>
         </div>
       )}

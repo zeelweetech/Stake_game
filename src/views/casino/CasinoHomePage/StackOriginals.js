@@ -59,7 +59,7 @@ function StackOriginals({ setLoading }) {
                 src={gameData.gameImg}
                 className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
                 alt="Not Found"
-                onClick={() => handleAllGame(gameData.route)}
+                onClick={() => handleAllGame(gameData?.route)}
               />
             </div>
             <div className="flex items-center mt-1">
