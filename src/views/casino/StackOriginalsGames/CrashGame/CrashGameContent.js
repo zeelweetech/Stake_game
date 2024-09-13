@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AreaChart, Area, XAxis, YAxis } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { IoIosTrendingUp } from "react-icons/io";
 import { BsIncognito } from "react-icons/bs";
 import {
@@ -85,7 +85,7 @@ function CrashGameContent({ displayData }) {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
+    <div className="w-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         <button className="p-2.5 bg-white rounded-full">7.09x</button>
         <button className="p-2.5 bg-white rounded-full">1.76x</button>
@@ -97,10 +97,11 @@ function CrashGameContent({ displayData }) {
         </button>
       </div>
       <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 relative">
-        <div className="pr-32">
+        <div className="xl:pr-32 lg:pr-20 xl:w-[53rem] lg:w-[33rem]">
+        <ResponsiveContainer width="100%" height={550}>
           <AreaChart
-            width={700}
-            height={550}
+            // width={700}
+            // height={550}
             data={data}
             margin={{
               top: 10,
@@ -145,6 +146,7 @@ function CrashGameContent({ displayData }) {
               isAnimationActive={true}
             />
           </AreaChart>
+          </ResponsiveContainer>
         </div>
         <div className="absolute top-44 flex justify-between items-center w-full px-4 text-white font-bold">
           <div className="flex-grow flex items-center justify-center abc">

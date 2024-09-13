@@ -10,19 +10,23 @@ function PlinkoGameContent() {
   useEffect(() => {
     const engine = Engine?.create();
 
+    const { width, height } = sceneRef.current.getBoundingClientRect();
     const render = Render?.create({
       element: sceneRef.current,
       engine: engine,
       options: {
+        width: width,
+        height: height,
         wireframes: false,
         background: "#0f212e",
+        // Padding: '0px 10px'
       },
     });
 
-    const worldWidth = 860;
+    const worldWidth = width * 1.1;
     const startPins = 3;
     const pinLines = values?.rows || 8;
-    const maxRenderHeight = 600;
+    const maxRenderHeight = height;
     const margin = 50;
     const availableHeight = maxRenderHeight - margin;
     const pinGap = availableHeight / pinLines;
@@ -37,7 +41,7 @@ function PlinkoGameContent() {
       for (let i = 0; i < linePins; i++) {
         const pin = Bodies?.circle(
           worldWidth / 2 - lineWidth / 2 + i * pinGap,
-          margin / 2 + l * pinGap, // starting y-position with margin
+          margin / 2 + l * pinGap,
           pinSize,
           {
             isStatic: true,
@@ -75,152 +79,462 @@ function PlinkoGameContent() {
   }, [values]);
 
   return (
-    <div className="h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
+    <div className="h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg xl:w-[52rem] lg:w-[39.5rem]">
       <div
-        className="flex justify-center items-center mt-4"
+        className="flex justify-center items-center mt-4 w-full h-full max-w-[800px] max-h-[600px] overflow-hidden"
         ref={sceneRef}
       ></div>
       <div className="flex justify-center -mt-8">
-        {rowXButton.map((item) => (
-          <div
-            className={`${
-              values.rows === "11"
-                ? "mr-[0rem]"
-                : values.rows === "12"
-                ? "ml-[0.67rem]"
-                : values.rows === "13"
-                ? "ml-[0.3rem]"
-                : values.rows === "14"
-                ? "ml-[0.22rem]"
-                : values.rows === "15"
-                ? "ml-[0.18rem]"
-                : "ml-[0.15rem]"
-            } `}
-          >
-            {values.rows === "8"
-              ? item.rowEight?.map((data) => (
-                  <button
-                    className="text-black text-xs font-medium ml-1.5 rounded w-[4.1rem] py-1.5 shadow-lg"
-                    style={{
-                      backgroundColor: data.bgColor,
-                      borderBottomColor: data.animatBgColor || "gray",
-                      borderBottomWidth: "4px",
-                      borderStyle: "solid",
-                    }}
+        {rowXButton?.map((item) => (
+          <div>
+            {values.risk === "Low"
+              ? item.Low?.map((data) => (
+                  <div
+                    className={`${
+                      values.rows === "8"
+                        ? "xl:mr-[1.5rem] "
+                        : values.rows === "9"
+                        ? "xl:mr-5"
+                        : values.rows === "10"
+                        ? "xl:mr-3"
+                        : values.rows === "11"
+                        ? "xl:mr-[0.22rem] lg:-mr-[0.1rem]"
+                        : values.rows === "12"
+                        ? "xl:ml-[0.1rem] lg:ml-[0.4rem]"
+                        : values.rows === "13"
+                        ? "xl:ml-[0.1rem] lg:ml-[0.6rem]"
+                        : values.rows === "14"
+                        ? "xl:ml-[1px] lg:ml-[1rem]"
+                        : values.rows === "15"
+                        ? "xl:ml-[6px] lg:ml-[1.1rem]"
+                        : "xl:ml-[6px] lg:ml-6"
+                    } `}
                   >
-                    {data.xValue}
-                  </button>
+                    {values.rows === "8"
+                      ? data?.rowEight?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[4rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "9"
+                      ? data.rowNine?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-14 py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "10"
+                      ? data.rowTen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[3.1rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "11"
+                      ? data.rowEleven?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.79rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "12"
+                      ? data.rowTwelve?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.55rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "13"
+                      ? data.rowThirteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.3rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "14"
+                      ? data.rowFourteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.1rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "15"
+                      ? data.rowFifteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[1.94rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : data.rowSixteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[1.8rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))}
+                  </div>
                 ))
-              : values.rows === "9"
-              ? item.rowNine?.map((data) => (
-                  <button
-                    className="text-black text-xs font-medium ml-1.5 rounded w-14 py-1.5 shadow-lg"
-                    style={{
-                      backgroundColor: data.bgColor,
-                      borderBottomColor: data.animatBgColor || "gray",
-                      borderBottomWidth: "4px",
-                      borderStyle: "solid",
-                    }}
+              : values.risk === "Medium"
+              ? item.Medium?.map((data) => (
+                  <div
+                    className={`${
+                      values.rows === "8"
+                        ? "xl:mr-[1.5rem] "
+                        : values.rows === "9"
+                        ? "xl:mr-5"
+                        : values.rows === "10"
+                        ? "xl:mr-3"
+                        : values.rows === "11"
+                        ? "xl:mr-[0.22rem] lg:-mr-[0.1rem]"
+                        : values.rows === "12"
+                        ? "xl:ml-[0.1rem] lg:ml-[0.4rem]"
+                        : values.rows === "13"
+                        ? "xl:ml-[0.1rem] lg:ml-[0.6rem]"
+                        : values.rows === "14"
+                        ? "xl:ml-[1px] lg:ml-[1rem]"
+                        : values.rows === "15"
+                        ? "xl:ml-[6px] lg:ml-[1.1rem]"
+                        : "xl:ml-[6px] lg:ml-6"
+                    } `}
                   >
-                    {data.xValue}
-                  </button>
+                    {values.rows === "8"
+                      ? data?.rowEight?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[4rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "9"
+                      ? data.rowNine?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-14 py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "10"
+                      ? data.rowTen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[3.1rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "11"
+                      ? data.rowEleven?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.79rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "12"
+                      ? data.rowTwelve?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.55rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "13"
+                      ? data.rowThirteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.3rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "14"
+                      ? data.rowFourteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.1rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "15"
+                      ? data.rowFifteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[1.94rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : data.rowSixteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[1.8rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))}
+                  </div>
                 ))
-              : values.rows === "10"
-              ? item.rowTen?.map((data) => (
-                  <button
-                    className="text-black text-xs font-medium ml-1.5 rounded w-[3.1rem] py-1.5 shadow-lg"
-                    style={{
-                      backgroundColor: data.bgColor,
-                      borderBottomColor: data.animatBgColor || "gray",
-                      borderBottomWidth: "4px",
-                      borderStyle: "solid",
-                    }}
+              : item.High?.map((data) => (
+                  <div
+                    className={`${
+                      values.rows === "8"
+                        ? "xl:mr-[1.5rem] "
+                        : values.rows === "9"
+                        ? "xl:mr-5"
+                        : values.rows === "10"
+                        ? "xl:mr-3"
+                        : values.rows === "11"
+                        ? "xl:mr-[0.22rem] lg:-mr-[0.1rem]"
+                        : values.rows === "12"
+                        ? "xl:ml-[0.1rem] lg:ml-[0.4rem]"
+                        : values.rows === "13"
+                        ? "xl:ml-[0.1rem] lg:ml-[0.6rem]"
+                        : values.rows === "14"
+                        ? "xl:ml-[1px] lg:ml-[1rem]"
+                        : values.rows === "15"
+                        ? "xl:ml-[6px] lg:ml-[1.1rem]"
+                        : "xl:ml-[6px] lg:ml-6"
+                    } `}
                   >
-                    {data.xValue}
-                  </button>
-                ))
-              : values.rows === "11"
-              ? item.rowEleven?.map((data) => (
-                  <button
-                    className="text-black text-xs font-medium ml-1.5 rounded w-[2.79rem] py-1.5 shadow-lg"
-                    style={{
-                      backgroundColor: data.bgColor,
-                      borderBottomColor: data.animatBgColor || "gray",
-                      borderBottomWidth: "4px",
-                      borderStyle: "solid",
-                    }}
-                  >
-                    {data.xValue}
-                  </button>
-                ))
-              : values.rows === "12"
-              ? item.rowTwelve?.map((data) => (
-                  <button
-                    className="text-black text-xs font-medium ml-1.5 rounded w-[2.55rem] py-1.5 shadow-lg"
-                    style={{
-                      backgroundColor: data.bgColor,
-                      borderBottomColor: data.animatBgColor || "gray",
-                      borderBottomWidth: "4px",
-                      borderStyle: "solid",
-                    }}
-                  >
-                    {data.xValue}
-                  </button>
-                ))
-              : values.rows === "13"
-              ? item.rowThirteen?.map((data) => (
-                  <button
-                    className="text-black text-xs font-medium ml-1.5 rounded w-[2.3rem] py-1.5 shadow-lg"
-                    style={{
-                      backgroundColor: data.bgColor,
-                      borderBottomColor: data.animatBgColor || "gray",
-                      borderBottomWidth: "4px",
-                      borderStyle: "solid",
-                    }}
-                  >
-                    {data.xValue}
-                  </button>
-                ))
-              : values.rows === "14"
-              ? item.rowFourteen?.map((data) => (
-                  <button
-                    className="text-black text-xs font-medium ml-1.5 rounded w-[2.1rem] py-1.5 shadow-lg"
-                    style={{
-                      backgroundColor: data.bgColor,
-                      borderBottomColor: data.animatBgColor || "gray",
-                      borderBottomWidth: "4px",
-                      borderStyle: "solid",
-                    }}
-                  >
-                    {data.xValue}
-                  </button>
-                ))
-              : values.rows === "15"
-              ? item.rowFifteen?.map((data) => (
-                  <button
-                    className="text-black text-xs font-medium ml-1.5 rounded w-[1.94rem] py-1.5 shadow-lg"
-                    style={{
-                      backgroundColor: data.bgColor,
-                      borderBottomColor: data.animatBgColor || "gray",
-                      borderBottomWidth: "4px",
-                      borderStyle: "solid",
-                    }}
-                  >
-                    {data.xValue}
-                  </button>
-                ))
-              : item.rowSixteen?.map((data) => (
-                  <button
-                    className="text-black text-xs font-medium ml-1.5 rounded w-[1.8rem] py-1.5 shadow-lg"
-                    style={{
-                      backgroundColor: data.bgColor,
-                      borderBottomColor: data.animatBgColor || "gray",
-                      borderBottomWidth: "4px",
-                      borderStyle: "solid",
-                    }}
-                  >
-                    {data.xValue}
-                  </button>
+                    {values.rows === "8"
+                      ? data?.rowEight?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[4rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "9"
+                      ? data.rowNine?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-14 py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "10"
+                      ? data.rowTen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[3.1rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "11"
+                      ? data.rowEleven?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.79rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "12"
+                      ? data.rowTwelve?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.55rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "13"
+                      ? data.rowThirteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.3rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "14"
+                      ? data.rowFourteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[2.1rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : values.rows === "15"
+                      ? data.rowFifteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[1.94rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))
+                      : data.rowSixteen?.map((data) => (
+                          <button
+                            className="text-black text-xs font-medium ml-1.5 rounded w-[1.8rem] py-1.5 shadow-lg"
+                            style={{
+                              backgroundColor: data.bgColor,
+                              borderBottomColor: data.animatBgColor || "gray",
+                              borderBottomWidth: "4px",
+                              borderStyle: "solid",
+                            }}
+                          >
+                            {data.xValue}
+                          </button>
+                        ))}
+                  </div>
                 ))}
           </div>
         ))}
