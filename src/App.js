@@ -5,6 +5,7 @@ import DefaultLayout from "./layout/DefaultLayout";
 import VerifyTerm from "./views/pages/register/VerifyTerm";
 import { socket } from "./socket";
 import { useEffect } from "react";
+import DynamicGameRoutes from "./DynamicGameRoutes";
 
 function App() {
   useEffect(() => {
@@ -43,6 +44,11 @@ function App() {
           <Route>
             <Route path="*" name="Home" element={<DefaultLayout />} />
             <Route path="/verifyterm" element={<VerifyTerm />} />
+            <Route
+              path="/casino/games/:gameName/:id"
+              name="DynamicGame"
+              element={<DynamicGameRoutes />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

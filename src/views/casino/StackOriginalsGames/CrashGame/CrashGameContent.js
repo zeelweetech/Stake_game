@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { AreaChart, Area, XAxis, YAxis } from "recharts";
+// import { AreaChart, Area, XAxis, YAxis } from "recharts";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from "chart.js";
+
 import { IoIosTrendingUp } from "react-icons/io";
 import { BsIncognito } from "react-icons/bs";
 import {
@@ -14,33 +27,85 @@ import {
   setMultiplier,
   setXValue,
 } from "../../../../features/casino/crashSlice";
+import { getRandomFiveData } from "../../../../services/CasinoServices";
 
-function CrashGameContent({ displayData }) {
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
+
+function CrashGameContent() {
   const dispatch = useDispatch();
-  const [data, setData] = useState([{ time: 0, value: 1 }]);
-  const {
-    gameStatusData,
-    xValue,
-    bettingStatus,
-    crashStatus,
-    multiplier,
-    combinedData,
-  } = useSelector((state) => state.crashGame);
+  // const [data, setData] = useState([{ time: 0, value: 1 }]);
+  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
+  const { xValue, bettingStatus, multiplier, combinedData, crashStatus } =
+    useSelector((state) => state.crashGame);
   const [visibleData, setVisibleData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [topXData, setTopXData] = useState();
+  socket.on("multiplierUpdate", (data) => {
+    dispatch(setMultiplier(data?.multiplier));
+  });
+  console.log("chartData", chartData);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const nextData = combinedData.slice(currentIndex, currentIndex + 4);
-      setVisibleData(nextData);
-      setCurrentIndex((prevIndex) => {
-        const newIndex = prevIndex + 4;
-        return newIndex >= combinedData.length ? 0 : newIndex;
-      });
-    }, 1000);
+    if (bettingStatus === true) {
+      GetRendomFiveData();
+    }
+  }, [bettingStatus === true]);
 
-    return () => clearInterval(interval);
-  }, [currentIndex, bettingStatus === false]);
+  useEffect(() => {
+    GetRendomFiveData();
+  }, []);
+
+  const GetRendomFiveData = async () => {
+    await getRandomFiveData()
+      .then((response) => {
+        setTopXData(response?.data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  console.log("multiplier", multiplier, xValue);
+
+  useEffect(() => {
+    if (bettingStatus === false) {
+      const interval = setInterval(() => {
+        const nextData = combinedData.filter((item) => {
+          return (
+            item?.cashoutMultiplier < multiplier ||
+            item?.multiplier < multiplier
+          );
+        });
+
+        if (nextData.length > 0) {
+          const data = nextData.slice(currentIndex, currentIndex + 4);
+          setVisibleData(data);
+
+          setCurrentIndex((prevIndex) => {
+            const newIndex = prevIndex + 4;
+            return newIndex >= nextData.length ? 0 : newIndex;
+          });
+        }
+      }, 300);
+
+      return () => clearInterval(interval);
+    }
+  }, [bettingStatus === false, multiplier, currentIndex]);
+
+  useEffect(() => {
+    if (bettingStatus) {
+      setVisibleData([]);
+    }
+  }, [bettingStatus]);
 
   useEffect(() => {
     socket.on("endRound", (data) => {
@@ -48,57 +113,130 @@ function CrashGameContent({ displayData }) {
     });
   }, [dispatch]);
 
-  socket.on("multiplierUpdate", (data) => {
-    dispatch(setMultiplier(data?.multiplier));
-  });
-
   useEffect(() => {
     dispatch(setMultiplier(0));
-    setData([{ time: 0, value: 0 }]);
+    // setData([{ time: 0, value: 0 }]);
+    setChartData({ labels: [], datasets: [{ data: [] }] });
   }, [bettingStatus === true]);
 
+  // Update chart data on multiplier change
   useEffect(() => {
-    handlePlanData(xValue);
+    if (!bettingStatus) {
+      setChartData((prevData) => ({
+        labels: [...prevData.labels, prevData.labels.length],
+        datasets: [
+          {
+            data: [...prevData.datasets[0].data, multiplier],
+            borderColor: "white",
+            backgroundColor:
+              chartData.datasets[0]?.data[
+                chartData.datasets[0].data.length - 1
+              ] === xValue
+                ? "#4d718768"
+                : "#ffa500",
+            fill: true,
+            // lineTension: 0.4,
+            borderWidth: 5,
+            pointRadius: 0,
+          },
+        ],
+      }));
+    }
   }, [multiplier]);
 
-  const handlePlanData = (targetValue) => {
-    const interval = setInterval(() => {
-      setData((prevData) => [
-        ...prevData,
-        {
-          time: prevData.length,
-          value: multiplier,
-        },
-      ]);
-      if (xValue === targetValue) {
-        clearInterval(interval);
-      }
-    }, 1000);
-  };
+  // useEffect(() => {
+  //   handlePlanData(xValue);
+  // }, [multiplier]);
+
+  // const handlePlanData = (targetValue) => {
+  //   const interval = setInterval(() => {
+  //     setData((prevData) => [
+  //       ...prevData,
+  //       {
+  //         time: prevData.length,
+  //         value: multiplier,
+  //       },
+  //     ]);
+  //     if (xValue === targetValue) {
+  //       clearInterval(interval);
+  //     }
+  //   }, 1000);
+  // };
 
   const getLastValueColor = () => {
-    if (data.length > 0) {
-      const lastItem = data[data.length - 1];
-      return lastItem.value === xValue ? "text-red-500" : "text-white";
-    }
-    return "text-white";
+    const lastValue =
+      chartData.datasets[0]?.data[chartData.datasets[0].data.length - 1];
+    return lastValue === xValue ? "text-red-500" : "text-white";
+  };
+
+  // Chart.js options
+  const chartOptions = {
+    scales: {
+      x: {
+        ticks: { color: "white", font: { size: 18 } },
+        grid: { display: false },
+        min: 1,
+      },
+      y: {
+        ticks: { color: "white", font: { size: 18 }, stepSize: 1 },
+        min: 1,
+        grid: { display: false },
+      },
+    },
+    plugins: { legend: { display: false } },
+    maintainAspectRatio: false,
+    responsive: true,
   };
 
   return (
     <div className="w-full h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
-        <button className="p-2.5 bg-white rounded-full">7.09x</button>
-        <button className="p-2.5 bg-white rounded-full">1.76x</button>
-        <button className="p-2.5 bg-white rounded-full">1.56x</button>
-        <button className="p-2.5 bg-[#1fff20] rounded-full">45.87x</button>
-        <button className="p-2.5 bg-[#1fff20] rounded-full">3.15x</button>
+        {topXData?.length > 0 &&
+          [...topXData].reverse()?.map((item, index) => {
+            return (
+              <div key={index}>
+                <button
+                  className={`p-2.5 ${
+                    item?.crashPoint > 3 ? "bg-[#1fff20]" : "bg-white"
+                  } rounded-full`}
+                >{`${item?.crashPoint}x`}</button>
+              </div>
+            );
+          })}
+        {/* <button
+          className={`p-2.5 ${
+            TopXData?.[3] > 3 ? "bg-[#1fff20]" : "bg-white"
+          } rounded-full`}
+        >{`${crashStatus?.lastPulls?.length > 0 ? TopXData?.[3] : 1}x`}</button>
+        <button
+          className={`p-2.5 ${
+            TopXData?.[2] > 3 ? "bg-[#1fff20]" : "bg-white"
+          } rounded-full`}
+        >{`${crashStatus?.lastPulls?.length > 0 ? TopXData?.[2] : 1}x`}</button>
+        <button
+          className={`p-2.5 ${
+            TopXData?.[1] > 3 ? "bg-[#1fff20]" : "bg-white"
+          } rounded-full`}
+        >{`${crashStatus?.lastPulls?.length > 0 ? TopXData?.[1] : 1}x`}</button>
+        <button
+          className={`p-2.5 ${
+            TopXData?.[0] > 3 ? "bg-[#1fff20]" : "bg-white"
+          } rounded-full`}
+        >{`${
+          crashStatus?.lastPulls?.length > 0
+            ? crashStatus?.lastPulls?.map((item) => {
+                return item;
+              })?.[0]
+            : 1
+        }x`}</button> */}
         <button className="px-2.5 py-2.5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
           <IoIosTrendingUp color="white" />
         </button>
       </div>
       <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 relative">
-        <div className="pr-32">
-          <AreaChart
+        <div className="pr-32" style={{ width: "700px", height: "550px" }}>
+          <Line id="multiplier-chart" data={chartData} options={chartOptions} />
+          {/* <AreaChart
             width={700}
             height={550}
             data={data}
@@ -144,73 +282,43 @@ function CrashGameContent({ displayData }) {
               strokeWidth={5}
               isAnimationActive={true}
             />
-          </AreaChart>
+          </AreaChart> */}
         </div>
         <div className="absolute top-44 flex justify-between items-center w-full px-4 text-white font-bold">
           <div className="flex-grow flex items-center justify-center abc">
             <div className="text-center">
               <p className={`text-6xl ${getLastValueColor()}`}>{multiplier}x</p>
-              {data?.length > 0 ? (
-                data[data?.length - 1]?.value === xValue ? (
-                  <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">
-                    Crashed
-                  </button>
-                ) : (
-                  ""
-                )
-              ) : (
-                ""
+
+              {chartData.datasets[0]?.data[
+                chartData.datasets[0].data.length - 1
+              ] === xValue && (
+                <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">
+                  Crashed
+                </button>
               )}
-              {bettingStatus === true ? (
+              {bettingStatus && (
                 <button className="bg-[#4d718768] text-2xl px-16 pt-3 pb-4 mt-3 rounded-md progress-bar">
                   starting in
                 </button>
-              ) : (
-                ""
               )}
             </div>
           </div>
           <div className="flex flex-col items-end space-y-1.5 xyz">
-            {bettingStatus === false &&
-              visibleData?.map((data, index) => (
-                <button
-                  key={index}
-                  className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full"
-                >
-                  <div className="flex items-center">
-                    <BsIncognito />
-                    <p className="text-[#b1bad3] text-xs">Hidden</p>
-                    <RiMoneyRupeeCircleFill color="yellow" size={20} />
-                    <p className="text-green-500">
-                      {data?.Money ? data?.Money : data?.amount}
-                    </p>
-                  </div>
-                </button>
-              ))}
-            {/* <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
-              <div className="flex items-center">
-                <BsIncognito />
-                <p className="text-[#b1bad3] text-xs">Hidden</p>
-                <RiMoneyRupeeCircleFill color="yellow" size={20} />
-                <p>₹8,800.65</p>
-              </div>
-            </button>
-            <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
-              <div className="flex items-center">
-                <BsIncognito />
-                <p className="text-[#b1bad3] text-xs">Hidden</p>
-                <RiMoneyRupeeCircleFill color="yellow" size={20} />
-                <p>₹8,800.65</p>
-              </div>
-            </button>
-            <button className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full">
-              <div className="flex items-center">
-                <BsIncognito />
-                <p className="text-[#b1bad3] text-xs">Hidden</p>
-                <RiMoneyCnyCircleFill color="#3277a8" size={20} />
-                <p>₹143.54</p>
-              </div>
-            </button> */}
+            {visibleData?.length > 0
+              ? visibleData?.map((data, index) => (
+                  <button
+                    key={index}
+                    className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full"
+                  >
+                    <div className="flex items-center">
+                      <BsIncognito />
+                      <p className="text-[#b1bad3] text-xs">Hidden</p>
+                      <RiMoneyRupeeCircleFill color="yellow" size={20} />
+                      <p className="text-green-500">{data?.amount}</p>
+                    </div>
+                  </button>
+                ))
+              : ""}
           </div>
         </div>
       </div>

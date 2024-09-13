@@ -3,7 +3,7 @@ import { signInWithPopup } from "firebase/auth";
 import axios from "axios"; // To send the API request
 import toast from "react-hot-toast";
 
-export const handleGoogleLogin = async () => {
+export async function handleGoogleLogin() {
   try {
     // Firebase authentication with Google
     const result = await signInWithPopup(auth, googleProvider);
@@ -21,9 +21,9 @@ export const handleGoogleLogin = async () => {
     console.error("Google Login Failed:", error);
     throw error;
   }
-};
+}
 
-export const handleFacebookLogin = async () => {
+export async function handleFacebookLogin() {
   try {
     // Firebase authentication with Facebook
     const result = await signInWithPopup(auth, facebookProvider);
@@ -48,9 +48,9 @@ export const handleFacebookLogin = async () => {
     console.error("Facebook Login Failed:", error);
     // throw error;
   }
-};
+}
 
-const sendDataToApi = async (firebaseUid) => {
+export async function sendDataToApi(firebaseUid) {
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_LOCAL_URL}/user/firebaseLogin`,
@@ -60,4 +60,4 @@ const sendDataToApi = async (firebaseUid) => {
   } catch (error) {
     console.error("Failed to send data to API:", error);
   }
-};
+}

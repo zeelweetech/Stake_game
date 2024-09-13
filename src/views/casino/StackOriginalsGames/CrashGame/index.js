@@ -4,6 +4,8 @@ import CrashGameContent from "./CrashGameContent";
 import GameFooter from "../../../component/GameFooter";
 
 function CrashGame() {
+  console.log('crash game getting rendered***');
+  
   return (
     <div className="bg-[#1a2c38] py-8 text-white flex justify-center items-center w-full h-screen">
       <div>

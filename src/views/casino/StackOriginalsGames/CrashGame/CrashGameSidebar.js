@@ -26,6 +26,7 @@ import {
 } from "../../../../resources/utility";
 import { generateRandomBetProfit } from "../../../component/GenerateRandomBetProfit";
 import toast from "react-hot-toast";
+import { getRandomData } from "../../../../services/CasinoServices";
 
 function CrashGameSidebar() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function CrashGameSidebar() {
   const BetProfit = generateRandomBetProfit();
   const [onClickStatus, setOnClickStatus] = useState(false);
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
+  const [randomData, setRandomData] = useState([]);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const {
     isSwiper,
@@ -45,9 +47,7 @@ function CrashGameSidebar() {
     crashStatus,
     xValue,
   } = useSelector((state) => state.crashGame);
-  socket.on("gameStatus", (data) => {
-    dispatch(setGameStatusData(data));
-  });
+  console.log("gameStatusData", gameStatusData);
 
   useEffect(() => {
     socket.on("bettingStarted", (data) => {
@@ -59,11 +59,50 @@ function CrashGameSidebar() {
     socket.on("gameEnded", (data) => {
       dispatch(setCrashStatus(data));
     });
+    socket.on("gameStatus", (data) => {
+      dispatch(setGameStatusData(data));
+    });
     socket.on("Insufficientfund", (data) => {
-      console.log("Insufficientfund", data);
+      toast.error(data?.message);
+    });
+    socket.on("inActiveUser", (data) => {
+      console.log("data*****", data);
       toast.error(data?.message);
     });
   }, []);
+  // console.log("gameStatusData?.autoBets", gameStatusData?.autoBets);
+  // console.log("gameStatusData?.players", gameStatusData?.players);
+
+  useEffect(() => {
+    const data = async () => {
+      try {
+        const res = await getRandomData();
+        setRandomData(res?.users);
+      } catch (err) {
+        console.log("error", err);
+      }
+    };
+    data();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const res = await getRandomData();
+      setRandomData([]);
+
+      setTimeout(() => {
+        setRandomData(res?.users);
+      }, 200);
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
+  useEffect(() => {
+    if (bettingStatus) {
+      fetchData();
+    }
+  }, [bettingStatus]);
 
   useEffect(() => {
     if (bettingStatus === false) {
@@ -72,35 +111,19 @@ function CrashGameSidebar() {
   }, [bettingStatus === false]);
 
   useEffect(() => {
-    if (bettingStatus === true) {
-      const randomizedBetProfit = shuffleArray([...BetProfit]);
-      const randomDataLength = getRandomNumber(10, 100);
-      const limitedBetProfit = randomizedBetProfit.slice(0, randomDataLength);
-      localStorage.setItem("profiledata", JSON.stringify(limitedBetProfit));
-      const timer = setTimeout(() => {
-        dispatch(setCombinedData([]));
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
-  console.log("gameStatusData?.players", gameStatusData);
-
-  useEffect(() => {
     if (
       gameStatusData?.players?.length > 0 ||
       gameStatusData?.autoBets?.length > 0
     ) {
-      const randomData = JSON.parse(localStorage.getItem("profiledata")) || [];
       const playersdata = gameStatusData?.players || [];
       const AutoData = gameStatusData?.autoBets || [];
-      const mergedData = [...randomData, ...playersdata, ...AutoData];
+      const mergedData = [...playersdata, ...AutoData, ...randomData];
       dispatch(setCombinedData(mergedData));
-    } else if (JSON.parse(localStorage.getItem("profiledata"))) {
-      const randomData = JSON.parse(localStorage.getItem("profiledata")) || [];
+    } else if (randomData) {
       const mergedData = [...randomData];
       dispatch(setCombinedData(mergedData));
     }
-  }, [gameStatusData || JSON.parse(localStorage.getItem("profiledata"))]);
+  }, [gameStatusData, randomData]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -111,37 +134,44 @@ function CrashGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      if (crashValues?.betamount && crashValues?.cashout)
-        socket.emit(
-          "placeBet",
-          isSwiper === true
-            ? {
-                userId: decoded?.userId,
-                amount: crashValues?.betamount
-                  ? parseInt(crashValues?.betamount, 10)
-                  : 0,
-                cashoutMultiplier: parseInt(crashValues?.cashout, 10),
-                betType: "Manual",
-              }
-            : {
-                userId: decoded?.userId,
-                amount: crashValues?.betamount
-                  ? parseInt(crashValues?.betamount, 10)
-                  : 0,
-                cashoutMultiplier: parseInt(crashValues?.cashout, 10),
-                numberOfBets: parseInt(crashValues?.numberofbet, 10),
-                onWins: parseInt(crashValues?.onwin, 10),
-                onLoss: parseInt(crashValues?.onlose, 10),
-                stopOnProfit: parseInt(crashValues?.stoponprofit, 10),
-                stopOnLoss: parseInt(crashValues?.stoponloss, 10),
-                betType: "Auto",
-              }
-        );
-      if (isSwiper === true) {
-        setOnClickStatus(true);
-      } else {
-        setAutoBetOnClick(true);
-      }
+      socket.emit("placeBet", {
+        userId: decoded?.userId,
+        amount: crashValues?.betamount
+          ? parseInt(crashValues?.betamount, 10)
+          : 0,
+        cashoutMultiplier: crashValues?.cashout
+          ? parseInt(crashValues?.cashout, 10)
+          : 1.01,
+        betType: "Manual",
+      });
+      dispatch(setCrashValues({}));
+      setOnClickStatus(true);
+    }
+  };
+
+  const handleOnAutoBet = () => {
+    if (!localStorage.getItem("token")) {
+      dispatch(openRegisterModel());
+    } else {
+      socket.emit("placeBet", {
+        userId: decoded?.userId,
+        amount: crashValues?.betamount
+          ? parseInt(crashValues?.betamount, 10)
+          : 0,
+        cashoutMultiplier: crashValues?.cashout
+          ? parseInt(crashValues?.cashout, 10)
+          : 1.01,
+        numberOfBets: crashValues?.numberofbet
+          ? parseInt(crashValues?.numberofbet, 10)
+          : 1,
+        onWins: parseInt(crashValues?.onwin, 10),
+        onLoss: parseInt(crashValues?.onlose, 10),
+        stopOnProfit: parseInt(crashValues?.stoponprofit, 10),
+        stopOnLoss: parseInt(crashValues?.stoponloss, 10),
+        betType: "Auto",
+      });
+      dispatch(setCrashValues({}));
+      setAutoBetOnClick(true);
     }
   };
 
@@ -149,6 +179,7 @@ function CrashGameSidebar() {
     const BetId = gameStatusData?.players?.find((item) => {
       return item?.userId === decoded?.userId && item?.betId;
     });
+
     socket.emit("cancelBet", {
       userId: decoded?.userId,
       betId: BetId?.betId,
@@ -160,6 +191,7 @@ function CrashGameSidebar() {
     const BetId = gameStatusData?.autoBets?.find((item) => {
       return item?.userId === decoded?.userId && item?.betId;
     });
+
     socket.emit("cancelBet", {
       userId: decoded?.userId,
       betId: BetId?.betId,
@@ -320,76 +352,46 @@ function CrashGameSidebar() {
             <div className="flex items-center space-x-1 font-semibold">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               <p>
-                {gameStatusData?.players
-                  ? (
-                      combinedData?.reduce((acc, item) => {
-                        return (
-                          acc +
-                          (item?.Money
-                            ? parseFloat(item.Money.replace(/[^0-9.-]+/g, ""))
-                            : 0)
-                        );
-                      }, 0) +
-                      gameStatusData?.players?.reduce((acc, item) => {
-                        return acc + (item?.amount || 0);
-                      }, 0)
-                    ).toFixed(2)
-                  : combinedData
-                      ?.reduce((acc, item) => {
-                        return (
-                          acc +
-                          (item?.Money
-                            ? parseFloat(item.Money.replace(/[^0-9.-]+/g, ""))
-                            : 0)
-                        );
-                      }, 0)
-                      .toFixed(2)}
+                {combinedData
+                  ?.reduce((acc, item) => {
+                    const amount = item?.amount ? String(item?.amount) : "0";
+                    const parsedAmount = parseFloat(
+                      amount.replace(/[^0-9.-]+/g, "")
+                    );
+                    return acc + (isNaN(parsedAmount) ? 0 : parsedAmount);
+                  }, 0)
+                  .toFixed(2)}
               </p>
             </div>
           </div>
           <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 overflow-y-auto h-64">
-            {combinedData?.length > 0 &&
-              combinedData?.map((item, index) => (
-                <div
-                  className="flex justify-between fadeIn"
-                  key={index}
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="flex items-center">
-                    <BsIncognito />
-                    <p className="text-[#b1bad3]">
-                      {item.username ? item.username : "Hidden"}
-                    </p>
-                  </div>
-                  <div>
-                    {item.Totalx < multiplier
-                      ? item.Totalx
-                      : item.cashoutMultiplier < multiplier
-                      ? `${item.cashoutMultiplier}x`
-                      : "-"}
-                  </div>
-                  <div className="flex items-center">
-                    {item?.Money ? (
-                      <div
-                        className={`${
-                          item.Totalx === "-"
-                            ? "text-white"
-                            : item.Totalx < multiplier
-                            ? "text-green-500"
-                            : "text-white"
-                        } flex`}
-                      >
-                        <RiMoneyRupeeCircleFill color="yellow" />
-                        {item?.Money}
-                      </div>
-                    ) : (
+            {combinedData?.length > 0
+              ? combinedData?.map((item, index) => (
+                  <div
+                    className="flex justify-between fadeIn"
+                    key={index}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="flex items-center">
+                      <BsIncognito />
+                      <p className="text-[#b1bad3]">{item.username}</p>
+                    </div>
+                    <div>
+                      {item?.multiplier < multiplier
+                        ? item?.multiplier
+                        : item?.cashoutMultiplier < multiplier
+                        ? `${item?.cashoutMultiplier}x`
+                        : "-"}
+                    </div>
+                    <div className="flex items-center">
                       <div className="flex">
                         <RiMoneyRupeeCircleFill color="yellow" />
                         <div
                           className={`${
-                            item.cashoutMultiplier === "-"
+                            item.cashoutMultiplier || item?.multiplier === "-"
                               ? "text-white"
-                              : item.cashoutMultiplier < multiplier
+                              : item.cashoutMultiplier < multiplier ||
+                                item?.multiplier < multiplier
                               ? "text-green-500"
                               : "text-white"
                           }`}
@@ -397,10 +399,10 @@ function CrashGameSidebar() {
                           ₹{item?.amount}
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              : ""}
           </div>
         </div>
       ) : (
@@ -672,7 +674,7 @@ function CrashGameSidebar() {
                       ? "bg-[#489649]"
                       : "bg-[#1fff20] hover:bg-[#42ed45]"
                   } text-black mt-3 py-3 rounded-md font-semibold w-full`}
-                  onClick={() => handleOnManualBet()}
+                  onClick={() => handleOnAutoBet()}
                 >
                   Start Autobet
                 </button>
@@ -683,102 +685,65 @@ function CrashGameSidebar() {
               <div className="flex justify-between mt-3">
                 <div className="flex items-center space-x-1 font-semibold">
                   <SupervisorAccountIcon className="text-[#b1bad3]" />
-                  <p>
-                    {bettingStatus === true
-                      ? 0
-                      : gameStatusData?.players
-                      ? combinedData?.length + gameStatusData?.players?.length
-                      : combinedData?.length}
-                  </p>
+                  <p>{combinedData?.length}</p>
                 </div>
                 <div className="flex items-center space-x-1 font-semibold">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                   <p>
-                    {bettingStatus === true
-                      ? 0
-                      : gameStatusData?.players
-                      ? (
-                          combinedData?.reduce((acc, item) => {
-                            return (
-                              acc +
-                              (item?.Money
-                                ? parseFloat(
-                                    item.Money.replace(/[^0-9.-]+/g, "")
-                                  )
-                                : 0)
-                            );
-                          }, 0) +
-                          gameStatusData?.players?.reduce((acc, item) => {
-                            return acc + (item?.amount || 0);
-                          }, 0)
-                        ).toFixed(2)
-                      : combinedData
-                          ?.reduce((acc, item) => {
-                            return (
-                              acc +
-                              (item?.Money
-                                ? parseFloat(
-                                    item.Money.replace(/[^0-9.-]+/g, "")
-                                  )
-                                : 0)
-                            );
-                          }, 0)
-                          .toFixed(2)}
+                    {combinedData
+                      ?.reduce((acc, item) => {
+                        const amount = item?.amount
+                          ? String(item?.amount)
+                          : "0";
+                        const parsedAmount = parseFloat(
+                          amount.replace(/[^0-9.-]+/g, "")
+                        );
+                        return acc + (isNaN(parsedAmount) ? 0 : parsedAmount);
+                      }, 0)
+                      .toFixed(2)}
                   </p>
                 </div>
               </div>
               <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 text-base overflow-y-auto h-[23rem]">
-                {combinedData?.length > 0 &&
-                  combinedData?.map((item, index) => (
-                    <div
-                      className="flex justify-between"
-                      key={index}
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <div className="flex items-center">
-                        <BsIncognito />
-                        <p className="text-[#b1bad3]">
-                          {item.username ? item.username : "Hidden"}
-                        </p>
-                      </div>
-                      <div>
-                        {item.Totalx < multiplier
-                          ? item.Totalx
-                          : item.cashoutMultiplier < multiplier
-                          ? `${item.cashoutMultiplier}x`
-                          : "-"}
-                      </div>
-                      <div className="flex items-center">
-                        {item.CurrenciesMoneyIcon ? (
+                {combinedData?.length > 0
+                  ? combinedData?.map((item, index) => (
+                      <div
+                        className="flex justify-between"
+                        key={index}
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                      >
+                        <div className="flex items-center">
+                          <BsIncognito />
+                          <p className="text-[#b1bad3]">{item.username}</p>
+                        </div>
+                        <div>
+                          {item?.multiplier < multiplier
+                            ? item?.multiplier
+                            : item?.cashoutMultiplier < multiplier
+                            ? `${item?.cashoutMultiplier}x`
+                            : "-"}
+                        </div>
+                        <div className="flex items-center">
                           <div
                             className={`${
-                              item.Totalx === "-"
+                              item?.cashoutMultiplier ||
+                              item?.multiplier === "-"
                                 ? "text-white"
-                                : item.Totalx < multiplier
-                                ? "text-green-500"
-                                : "text-white"
-                            } flex`}
-                          >
-                            <RiMoneyRupeeCircleFill color="yellow" />
-                            {item.Money}
-                          </div>
-                        ) : (
-                          <div
-                            className={`${
-                              item.cashoutMultiplier === "-"
-                                ? "text-white"
-                                : item.cashoutMultiplier < multiplier
+                                : item?.cashoutMultiplier ||
+                                  item?.multiplier < multiplier
                                 ? "text-green-500"
                                 : "text-white"
                             }`}
                           >
-                            <RiMoneyRupeeCircleFill color="yellow" />
-                            <div>{item.amount}</div>
+                            <div className="flex">
+                              <RiMoneyRupeeCircleFill color="yellow" />{" "}
+                              <div>{item?.amount}</div>
+                            </div>
                           </div>
-                        )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  : ""}
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1.5">
                 <label>Profit on Win</label>
@@ -800,12 +765,14 @@ function CrashGameSidebar() {
               {autoBetOnClick ? (
                 <button
                   className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => handleOnCancelAutoBet()}
                 >
                   Cancel Autobet
                 </button>
               ) : (
                 <button
                   className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => handleOnAutoBet()}
                 >
                   Start Autobet
                 </button>

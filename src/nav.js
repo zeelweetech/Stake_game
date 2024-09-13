@@ -12,14 +12,14 @@ const nav = [
       color: "info",
     },
   },
-  {
-    name: "Users",
-    to: "/users",
-    icon: <GroupIcon />,
-    badge: {
-      color: "info",
-    },
-  },
+  // {
+  //   name: "Users",
+  //   to: "/users",
+  //   icon: <GroupIcon />,
+  //   badge: {
+  //     color: "info",
+  //   },
+  // },
 ];
 
 export default nav;
