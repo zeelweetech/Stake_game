@@ -15,6 +15,7 @@ function SlideBar() {
     isBeginning: true,
     isEnd: false,
   });
+
   const promoGame = [
     {
       Game: "Daily Races",
@@ -62,81 +63,83 @@ function SlideBar() {
 
   return (
     <div className="w-full max-w-screen-xl relative">
-      <div
-        className="swiper-button-prev text-base"
-        style={{
-          display: swiperState.isBeginning ? "none" : "block",
-          fontSize: "10px",
-          position: "absolute",
-          color: "white",
-          top: "50%",
-          left: "-30px",
-        }}
-      ></div>
-      <Swiper
-        navigation={{
-          prevEl: swiperState.isBeginning ? ".swiper-button-prev" : null,
-          nextEl: swiperState.isEnd ? null : ".swiper-button-next",
-        }}
-        modules={[Navigation]}
-        slidesPerView={3}
-        slidesPerGroup={3}
-        onSlideChange={(swiper) => {
-          setSwiperState({
-            isBeginning: swiper.isBeginning,
-            isEnd: swiper.isEnd,
-          });
-        }}
-        breakpoints={{
-          1280: {
-            slidesPerView: 3,
-            slidesPerGroup: 3,
-          },
-          1024: {
-            slidesPerView: 2,
-            slidesPerGroup: 2,
-          },
-        }}
-      >
-        {promoGame.map((Data, index) => (
-          <SwiperSlide key={index} className="pl-2">
-            <div className="flex justify-between items-center bg-[#213743] w-full h-52 pl-4 rounded-md hover:cursor-pointer">
-              <div className="flex flex-col space-y-8 justify-around w-44">
-                <div>
-                  <button className="bg-white text-black text-sm font-semibold px-1 rounded-sm">
-                    Promo
+      <div className="flex items-center">
+        {/* Previous Button */}
+        <div
+          className="swiper-button-prev text-base"
+          style={{
+            display: swiperState.isBeginning ? "none" : "block",
+            fontSize: "10px",
+            color: "white",
+            marginRight: "10px",
+          }}
+        >
+          Prev
+        </div>
+
+        {/* Swiper Slides */}
+        <Swiper
+          navigation={true}
+          modules={[Navigation]}
+          slidesPerView={3}
+          slidesPerGroup={3}
+          onSlideChange={(swiper) => {
+            setSwiperState({
+              isBeginning: swiper.isBeginning,
+              isEnd: swiper.isEnd,
+            });
+          }}
+          breakpoints={{
+            1536: {
+              slidesPerView: 4,
+              slidesPerGroup: 4,
+            },
+            1280: {
+              slidesPerView: 3,
+              slidesPerGroup: 3,
+            },
+            1024: {
+              slidesPerView: 2,
+              slidesPerGroup: 2,
+            },
+          }}
+        >
+          {promoGame.map((Data, index) => (
+            <SwiperSlide key={index} className="pl-2">
+              <div className="flex justify-between items-center bg-[#213743] w-full h-52 pl-4 rounded-md hover:cursor-pointer">
+                <div className="flex flex-col space-y-8 justify-around w-44">
+                  <div>
+                    <button className="bg-white text-black text-sm font-semibold px-1 rounded-sm">
+                      Promo
+                    </button>
+                    <p className="text-lg font-semibold py-1">{Data.Game}</p>
+                    <p className="text-xs leading-5 w-36">{Data.gameDescription}</p>
+                  </div>
+                  <button className="border border-white w-28 hover:bg-[#8aaec22c] text-xs font-semibold py-3 rounded-sm">
+                    {Data.gameButton}
                   </button>
-                  <p className="text-lg font-semibold py-1">{Data.Game}</p>
-                  <p className="text-xs leading-5 w-36">
-                    {Data.gameDescription}
-                  </p>
                 </div>
-                <button className="border border-white w-28 hover:bg-[#8aaec22c] text-xs font-semibold py-3 rounded-sm">
-                  {Data.gameButton}
-                </button>
+                <div>
+                  <img src={Data.gameImage} className="w-48 h-48" alt="Not Found" />
+                </div>
               </div>
-              <div>
-                <img
-                  src={Data.gameImage}
-                  className="w-48 h-48"
-                  alt="Not Found"
-                />
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <div
-        className="swiper-button-next"
-        style={{
-          display: swiperState.isEnd ? "none" : "block",
-          fontSize: "10px",
-          position: "absolute",
-          top: "50%",
-          color: "white",
-          right: "-40px",
-        }}
-      ></div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        {/* Next Button */}
+        <div
+          className={`swiper-button-next`}
+          style={{
+            display: swiperState.isEnd ? "none" : "block",
+            fontSize: "10px",
+            color: "white",
+            marginLeft: "10px",
+          }}
+        >
+          Next
+        </div>
+      </div>
     </div>
   );
 }

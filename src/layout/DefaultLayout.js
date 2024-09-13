@@ -43,7 +43,7 @@ function DefaultLayout() {
             handleDrawerToggle={handleDrawerToggle}
           />
         )}
-        <div className=" overflow-auto">
+        <div className="overflow-auto">
           <Content />
         </div>
         <Footer />

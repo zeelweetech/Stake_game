@@ -7,6 +7,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import StackCasino from "../../assets/img/StackCasino.png";
 import SportBook from "../../assets/img/SportBook.png";
 import casinoCard from "../../assets/img/card.png";
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import { Tooltip } from "recharts";
 
 function Mainbar() {
@@ -95,8 +96,11 @@ function Mainbar() {
                 }}
               />
               <div className="flex items-center px-4 py-2.5 space-x-2">
-                <img src={casinoCard} className="w-4 h-4" alt="Not Found" />
-                <p>Casino</p>
+                <SportsBasketballIcon
+                  className="text-[#b1bad3]"
+                  sx={{ fontSize: 20 }}
+                />
+                <p>sportsbook</p>
               </div>
             </div>
           </div>

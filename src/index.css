@@ -63,7 +63,7 @@ code {
 
 .fadeIn {
   animation: fadeInUp 0.5s ease forwards;
-  opacity: 0; /* Start hidden */
+  opacity: 0;
 }
 
 @tailwind base;

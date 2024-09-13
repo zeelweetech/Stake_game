@@ -189,7 +189,7 @@ function CrashGameContent() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
+    <div className="w-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
@@ -236,6 +236,8 @@ function CrashGameContent() {
       <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 relative">
         <div className="pr-32" style={{ width: "700px", height: "550px" }}>
           <Line id="multiplier-chart" data={chartData} options={chartOptions} />
+          {/* <ResponsiveContainer width="100%" height={550}> */}
+
           {/* <AreaChart
             width={700}
             height={550}
@@ -283,6 +285,7 @@ function CrashGameContent() {
               isAnimationActive={true}
             />
           </AreaChart> */}
+          {/* </ResponsiveContainer> */}
         </div>
         <div className="absolute top-44 flex justify-between items-center w-full px-4 text-white font-bold">
           <div className="flex-grow flex items-center justify-center abc">
