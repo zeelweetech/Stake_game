@@ -8,6 +8,7 @@ import dragonGame from "../../../assets/img/dragonGame.avif";
 import wheelGame from "../../../assets/img/wheelGame.avif";
 import { BsFire } from "react-icons/bs";
 import { getAllGames } from "../../../services/GameServices";
+import { CrashSocket } from "../../../socket";
 
 function StackOriginals({ setLoading }) {
   const navigate = useNavigate();
@@ -16,15 +17,18 @@ function StackOriginals({ setLoading }) {
   const handleAllGame = (gameName, id) => {
     setLoading(true);
     // navigate(`/casino/games/${gameName}/${id}`);
-    if (gameName === "crash") {
+    if (gameName === "Crash") {
       navigate("/casino/games/crash");
+      CrashSocket.emit("joinGame", {
+        gameId: id,
+      });
     } else if (gameName === "Plinko") {
       navigate("/casino/games/plinko");
     } else if (gameName === "Miens") {
       navigate("/");
     } else if (gameName === "Limbo") {
       navigate("/");
-    } else if (gameName === "wheel") {
+    } else if (gameName === "Wheel") {
       navigate("/");
     } else if (gameName === "Dragon Tower") {
       navigate("/");

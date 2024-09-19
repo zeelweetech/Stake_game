@@ -6,8 +6,8 @@ import crashGameReducer from "../features/casino/crashSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    plinkoGame: plinkoGameReducer,
     crashGame: crashGameReducer,
+    plinkoGame: plinkoGameReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

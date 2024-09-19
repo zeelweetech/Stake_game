@@ -3,26 +3,26 @@ import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DefaultLayout from "./layout/DefaultLayout";
 import VerifyTerm from "./views/pages/register/VerifyTerm";
-import { socket } from "./socket";
+import { CrashSocket } from "./socket";
 import { useEffect } from "react";
 import DynamicGameRoutes from "./DynamicGameRoutes";
 
 function App() {
   useEffect(() => {
-    socket.on("connect", () => {
+    CrashSocket.on("connect", () => {
       console.log("sokect connected");
     });
 
-    socket.on("disconnect", () => {
+    CrashSocket.on("disconnect", () => {
       console.log("Disconnected from server");
     });
 
-    socket.on("connect_error", (error) => {
+    CrashSocket.on("connect_error", (error) => {
       console.error("Connection Error:", error);
     });
 
     return () => {
-      socket.off("message");
+      CrashSocket.off("message");
     };
   }, []);
 

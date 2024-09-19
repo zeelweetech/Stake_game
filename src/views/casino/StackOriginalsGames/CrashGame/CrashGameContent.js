@@ -22,7 +22,7 @@ import {
   RiMoneyRupeeCircleFill,
 } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { socket } from "../../../../socket";
+import { CrashSocket } from "../../../../socket";
 import {
   setMultiplier,
   setXValue,
@@ -50,10 +50,9 @@ function CrashGameContent() {
   const [visibleData, setVisibleData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [topXData, setTopXData] = useState();
-  socket.on("multiplierUpdate", (data) => {
+  CrashSocket.on("multiplierUpdate", (data) => {
     dispatch(setMultiplier(data?.multiplier));
   });
-  console.log("chartData", chartData);
 
   useEffect(() => {
     if (bettingStatus === true) {
@@ -74,7 +73,6 @@ function CrashGameContent() {
         console.log("error", error);
       });
   };
-  console.log("multiplier", multiplier, xValue);
 
   useEffect(() => {
     if (bettingStatus === false) {
@@ -108,7 +106,7 @@ function CrashGameContent() {
   }, [bettingStatus]);
 
   useEffect(() => {
-    socket.on("endRound", (data) => {
+    CrashSocket.on("endRound", (data) => {
       dispatch(setXValue(parseFloat(data?.crashPoint)));
     });
   }, [dispatch]);
