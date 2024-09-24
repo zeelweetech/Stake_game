@@ -5,15 +5,33 @@ import { IoInfiniteSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
 import { setValues } from "../../../../features/casino/plinkoSlice";
+import { PlinkoSocket } from "../../../../socket";
+import { decodedToken } from "../../../../resources/utility";
 
 function PlinkoGameSidebar() {
   const dispatch = useDispatch();
+  const decoded = decodedToken();
   const [isManual, setIsManual] = useState(true);
-  const values = useSelector((state) => state.plinkoGame.values);
+  const { values } = useSelector((state) => state.plinkoGame);
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
     dispatch(setValues({ ...values, [name]: value }));
+  };
+  console.log("values", values);
+
+  const handleOnManualBet = (e) => {
+    if (!localStorage.getItem("token")) {
+      dispatch(openRegisterModel());
+    } else {
+      console.log("*******");
+      PlinkoSocket.emit("plinkoPlaceBet", {
+        userId: decoded?.userId,
+        betAmount: values?.betamount,
+        rows: values?.rows,
+        riskLevel: "medium",
+      });
+    }
   };
 
   return (
@@ -80,9 +98,9 @@ function PlinkoGameSidebar() {
               onChange={(e) => handleOnChange(e)}
               className="w-full px-2 py-2 rounded-s-md text-white bg-[#0f212e]"
             >
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
             </select>
           </div>
           <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
@@ -109,11 +127,7 @@ function PlinkoGameSidebar() {
           </div>
           <button
             className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full"
-            onClick={() => {
-              if (!localStorage.getItem("token")) {
-                dispatch(openRegisterModel());
-              }
-            }}
+            onClick={() => handleOnManualBet()}
           >
             Bet
           </button>

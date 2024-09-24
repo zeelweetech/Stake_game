@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 
 // const ChatURL = "http://192.168.29.203:3002";
 const CrashURL = "http://192.168.29.203:3003";
-// const PlinkoURL = "http://192.168.29.203:3004";
+const PlinkoURL = "http://192.168.29.203:3004";
 // const MineURL = "http://192.168.29.203:3005";
 // const WheelURL = "http://192.168.29.203:3006";
 // const LimboURL = "http://192.168.29.203:3007";
@@ -17,6 +17,8 @@ const token = localStorage.getItem("token");
 //   },
 // });
 
+console.log("*********");
+
 export const CrashSocket = io(CrashURL, {
   path: "/ws",
   extraHeaders: {
@@ -24,12 +26,12 @@ export const CrashSocket = io(CrashURL, {
   },
 });
 
-// export const PlinkoSocket = io(PlinkoURL, {
-//   path: "/ws",
-//   extraHeaders: {
-//     Authorization: `token: ${token}`,
-//   },
-// });
+export const PlinkoSocket = io(PlinkoURL, {
+  path: "/ws",
+  extraHeaders: {
+    Authorization: `token: ${token}`,
+  },
+});
 
 // export const MineSocket = io(MineURL, {
 //   path: "/ws",

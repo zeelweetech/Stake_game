@@ -1,12 +1,34 @@
-import React, { useState } from "react";
-// import CrashGameSidebar from "./CrashGameSidebar";
-// import CrashGameContent from "./CrashGameContent";
+import React, { useEffect, useState } from "react";
 import GameFooter from "../../../component/GameFooter";
 import CrashGameContent from "./CrashGameContent";
 import CrashGameSidebar from "./CrashGameSidebar";
+import { CrashSocket } from "../../../../socket";
 
 function CrashGame() {
-  console.log("crash game getting rendered***");
+  useEffect(() => {
+    CrashSocket.connect();
+    console.log("&&&&&&&&&");
+
+    CrashSocket.on("connect", () => {
+      console.log("Crash sokect connected");
+    });
+
+    CrashSocket.on("disconnect", () => {
+      console.log("Disconnected from server");
+    });
+
+    CrashSocket.on("connect_error", (error) => {
+      console.error("Connection Error:", error);
+    });
+
+    return () => {
+      CrashSocket.off("message");
+      CrashSocket.off("connect");
+      CrashSocket.off("disconnect");
+      CrashSocket.off("connect_error");
+      CrashSocket.disconnect();
+    };
+  }, []);
 
   return (
     <div className="bg-[#1a2c38] py-8 text-white flex justify-center items-center w-full">

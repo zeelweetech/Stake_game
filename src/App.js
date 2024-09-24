@@ -8,23 +8,23 @@ import { useEffect } from "react";
 import DynamicGameRoutes from "./DynamicGameRoutes";
 
 function App() {
-  useEffect(() => {
-    CrashSocket.on("connect", () => {
-      console.log("sokect connected");
-    });
+  // useEffect(() => {
+  //   CrashSocket.on("connect", () => {
+  //     console.log("sokect connected");
+  //   });
 
-    CrashSocket.on("disconnect", () => {
-      console.log("Disconnected from server");
-    });
+  //   CrashSocket.on("disconnect", () => {
+  //     console.log("Disconnected from server");
+  //   });
 
-    CrashSocket.on("connect_error", (error) => {
-      console.error("Connection Error:", error);
-    });
+  //   CrashSocket.on("connect_error", (error) => {
+  //     console.error("Connection Error:", error);
+  //   });
 
-    return () => {
-      CrashSocket.off("message");
-    };
-  }, []);
+  //   return () => {
+  //     CrashSocket.off("message");
+  //   };
+  // }, []);
 
   return (
     <>

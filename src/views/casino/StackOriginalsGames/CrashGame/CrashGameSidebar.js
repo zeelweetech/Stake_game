@@ -19,19 +19,13 @@ import {
   setGameStatusData,
   SwiperModel,
 } from "../../../../features/casino/crashSlice";
-import {
-  decodedToken,
-  getRandomNumber,
-  shuffleArray,
-} from "../../../../resources/utility";
-import { generateRandomBetProfit } from "../../../component/GenerateRandomBetProfit";
+import { decodedToken } from "../../../../resources/utility";
 import toast from "react-hot-toast";
 import { getRandomData } from "../../../../services/CasinoServices";
 
 const CrashGameSidebar = () => {
   const dispatch = useDispatch();
   const decoded = decodedToken();
-  const BetProfit = generateRandomBetProfit();
   const [onClickStatus, setOnClickStatus] = useState(false);
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
   const [betAmount, setBetAmount] = useState();
@@ -45,11 +39,7 @@ const CrashGameSidebar = () => {
     bettingStatus,
     combinedData,
     multiplier,
-    crashStatus,
-    xValue,
   } = useSelector((state) => state.crashGame);
-  console.log("gameStatusData****", gameStatusData);
-
   useEffect(() => {
     CrashSocket.on("bettingStarted", (data) => {
       dispatch(setBettingStatus(data?.status));
@@ -67,8 +57,6 @@ const CrashGameSidebar = () => {
         data?.autoBets?.filter((item) => {
           return item?.userId === decoded?.userId;
         })?.[0];
-      console.log("betData*****", betData);
-
       setBetAmount(betData);
     });
     CrashSocket.on("Insufficientfund", (data) => {
@@ -78,8 +66,6 @@ const CrashGameSidebar = () => {
       toast.error(data?.message);
     });
   }, []);
-  // console.log("gameStatusData?.autoBets", gameStatusData?.autoBets);
-  // console.log("gameStatusData?.players", gameStatusData?.players);
 
   useEffect(() => {
     if (!betAmount?.amount) {

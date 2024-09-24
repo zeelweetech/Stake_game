@@ -66,6 +66,15 @@ code {
   opacity: 0;
 }
 
+.multiplier-label {
+  position: absolute;
+  color: white; /* Adjust text color as needed */
+  font-size: 10px;
+  text-align: center;
+  width: 40px; /* Width of each label container */
+  transform: translateX(-50%); /* Center the text */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -201,32 +201,6 @@ function CrashGameContent() {
               </div>
             );
           })}
-        {/* <button
-          className={`p-2.5 ${
-            TopXData?.[3] > 3 ? "bg-[#1fff20]" : "bg-white"
-          } rounded-full`}
-        >{`${crashStatus?.lastPulls?.length > 0 ? TopXData?.[3] : 1}x`}</button>
-        <button
-          className={`p-2.5 ${
-            TopXData?.[2] > 3 ? "bg-[#1fff20]" : "bg-white"
-          } rounded-full`}
-        >{`${crashStatus?.lastPulls?.length > 0 ? TopXData?.[2] : 1}x`}</button>
-        <button
-          className={`p-2.5 ${
-            TopXData?.[1] > 3 ? "bg-[#1fff20]" : "bg-white"
-          } rounded-full`}
-        >{`${crashStatus?.lastPulls?.length > 0 ? TopXData?.[1] : 1}x`}</button>
-        <button
-          className={`p-2.5 ${
-            TopXData?.[0] > 3 ? "bg-[#1fff20]" : "bg-white"
-          } rounded-full`}
-        >{`${
-          crashStatus?.lastPulls?.length > 0
-            ? crashStatus?.lastPulls?.map((item) => {
-                return item;
-              })?.[0]
-            : 1
-        }x`}</button> */}
         <button className="px-2.5 py-2.5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
           <IoIosTrendingUp color="white" />
         </button>
@@ -235,7 +209,6 @@ function CrashGameContent() {
         <div className="pr-32" style={{ width: "700px", height: "550px" }}>
           <Line id="multiplier-chart" data={chartData} options={chartOptions} />
           {/* <ResponsiveContainer width="100%" height={550}> */}
-
           {/* <AreaChart
             width={700}
             height={550}
