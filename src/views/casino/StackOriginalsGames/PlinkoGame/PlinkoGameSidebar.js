@@ -18,13 +18,11 @@ function PlinkoGameSidebar() {
     const { value, name } = e.target;
     dispatch(setValues({ ...values, [name]: value }));
   };
-  console.log("values", values);
 
   const handleOnManualBet = (e) => {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      console.log("*******");
       PlinkoSocket.emit("plinkoPlaceBet", {
         userId: decoded?.userId,
         betAmount: values?.betamount,

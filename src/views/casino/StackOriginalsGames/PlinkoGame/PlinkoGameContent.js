@@ -23,8 +23,6 @@ function PlinkoGameContent() {
   const sceneRef = useRef(null);
   const dispatch = useDispatch();
   const engine = Engine.create();
-  const [lines, setLines] = useState(16);
-  const [lastMultipliers, setLastMultipliers] = useState([]);
   const { finalMultiplier, values } = useSelector((state) => state.plinkoGame);
   const {
     pins: pinsConfig,
@@ -39,7 +37,6 @@ function PlinkoGameContent() {
   PlinkoSocket.on("plinkoBetResult", (data) => {
     dispatch(setFinalMultiplier(data?.finalMultiplier));
   });
-  console.log("values?.rows", values?.rows);
 
   useEffect(() => {
     engine.gravity.y = engineConfig.engineGravity;
@@ -192,8 +189,8 @@ function PlinkoGameContent() {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
-    canvas.width = 22; // Set canvas width
-    canvas.height = 22; // Set canvas height
+    canvas.width = 20; // Set canvas width
+    canvas.height = 20; // Set canvas height
 
     ctx.fillStyle = "orange"; // Background color
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -287,7 +284,7 @@ function PlinkoGameContent() {
       className="h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg xl:w-[52rem] lg:w-[39.5rem]"
     >
       <div
-        className="flex justify-center items-center mt-4 w-full h-full max-w-[900px] max-h-[800px] overflow-hidden"
+        className="flex justify-center items-center mt-4  overflow-hidden"
         ref={sceneRef}
       ></div>
     </div>

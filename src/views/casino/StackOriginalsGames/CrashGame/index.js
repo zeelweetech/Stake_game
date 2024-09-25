@@ -7,18 +7,17 @@ import { CrashSocket } from "../../../../socket";
 function CrashGame() {
   useEffect(() => {
     CrashSocket.connect();
-    console.log("&&&&&&&&&");
 
     CrashSocket.on("connect", () => {
       console.log("Crash sokect connected");
     });
 
     CrashSocket.on("disconnect", () => {
-      console.log("Disconnected from server");
+      console.log("Crash Disconnected from server");
     });
 
     CrashSocket.on("connect_error", (error) => {
-      console.error("Connection Error:", error);
+      console.error("Crash Connection Error:", error);
     });
 
     return () => {

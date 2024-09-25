@@ -2,24 +2,22 @@ import React, { useEffect, useState } from "react";
 import PlinkoGameSidebar from "./PlinkoGameSidebar";
 import PlinkoGameContent from "./PlinkoGameContent";
 import GameFooter from "../../../component/GameFooter";
-import { useSelector } from "react-redux";
 import { PlinkoSocket } from "../../../../socket";
 
 function PlinkoGame() {
   useEffect(() => {
     PlinkoSocket.connect();
-    console.log("&&&&&&&&&");
 
     PlinkoSocket.on("connect", () => {
       console.log("Plinko sokect connected");
     });
 
     PlinkoSocket.on("disconnect", () => {
-      console.log("Disconnected from server");
+      console.log("Plinko Disconnected from server");
     });
 
     PlinkoSocket.on("connect_error", (error) => {
-      console.error("Connection Error:", error);
+      console.error("Plinko Connection Error:", error);
     });
 
     return () => {
