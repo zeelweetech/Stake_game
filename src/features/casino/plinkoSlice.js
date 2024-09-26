@@ -2,8 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   values: {
+    betamount: "",
     risk: "medium",
     rows: 16,
+    numberofbets: "",
   },
   score: 0,
   balls: [],

@@ -12,7 +12,10 @@ function PlinkoGameSidebar() {
   const dispatch = useDispatch();
   const decoded = decodedToken();
   const [isManual, setIsManual] = useState(true);
-  const { values } = useSelector((state) => state.plinkoGame);
+  const {
+    values = { betamount: "", risk: "medium", rows: 16, numberofbets: "" },
+  } = useSelector((state) => state.plinkoGame);
+  console.log("values", values);
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
@@ -27,7 +30,7 @@ function PlinkoGameSidebar() {
         userId: decoded?.userId,
         betAmount: values?.betamount,
         rows: values?.rows,
-        riskLevel: "medium",
+        riskLevel: values?.risk,
       });
     }
   };

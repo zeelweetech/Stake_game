@@ -11,282 +11,46 @@ import {
   World,
 } from "matter-js";
 import { useDispatch, useSelector } from "react-redux";
-import { HighRow, LowRow, MediumRow, rowXButton } from "./RowXButton";
 import { config } from "./config";
 import { getMultiplierByLinesQnt } from "./config/multipliers";
 import { getRandomNumber } from "../../../../resources/utility";
 import { PlinkoSocket } from "../../../../socket";
 import { setFinalMultiplier } from "../../../../features/casino/plinkoSlice";
 import { MultiplierValues } from "./@types";
+import BallManager from "./game/classes/BallManager";
 
 function PlinkoGameContent() {
-  const sceneRef = useRef(null);
   const dispatch = useDispatch();
-  const engine = Engine.create();
+  const canvasRef = useRef();
+  const [ballManager, setBallManager] = useState();
   const { finalMultiplier, values } = useSelector((state) => state.plinkoGame);
-  const {
-    pins: pinsConfig,
-    colors: colorsConfig,
-    ball: ballConfig,
-    engine: engineConfig,
-    world: worldConfig,
-  } = config;
-  const worldWidth = worldConfig.width;
-  const worldHeight = worldConfig.height;
 
   PlinkoSocket.on("plinkoBetResult", (data) => {
-    dispatch(setFinalMultiplier(data?.finalMultiplier));
+    console.log("data", data);
+    dispatch(setFinalMultiplier(data?.point));
   });
 
   useEffect(() => {
-    engine.gravity.y = engineConfig.engineGravity;
-    const element = sceneRef.current;
-    const render = Render.create({
-      element: element,
-      bounds: {
-        max: {
-          y: worldHeight,
-          x: worldWidth,
-        },
-        min: {
-          y: 0,
-          x: 0,
-        },
-      },
-      options: {
-        background: colorsConfig.background,
-        hasBounds: true,
-        width: worldWidth,
-        height: worldHeight,
-        wireframes: false,
-      },
-      engine,
-    });
-    const runner = Runner.create();
-    Runner.run(runner, engine);
-    Render.run(render);
-    return () => {
-      World.clear(engine.world, true);
-      Engine.clear(engine);
-      render.canvas.remove();
-      render.textures = {};
-    };
-  }, [values?.rows]);
-
-  const pins = [];
-
-  for (let l = 0; l < values?.rows; l++) {
-    const linePins = pinsConfig.startPins + l;
-    const lineWidth = linePins * pinsConfig.pinGap;
-    for (let i = 0; i < linePins; i++) {
-      const pinX =
-        worldWidth / 2 -
-        lineWidth / 2 +
-        i * pinsConfig.pinGap +
-        pinsConfig.pinGap / 2;
-
-      const pinY =
-        worldWidth / values?.rows + l * pinsConfig.pinGap + pinsConfig.pinGap;
-
-      const pin = Bodies.circle(pinX, pinY, pinsConfig.pinSize, {
-        label: `pin-${i}`,
-        render: {
-          fillStyle: "white",
-        },
-        isStatic: true,
-      });
-      pins.push(pin);
-    }
-  }
-
-  const addBall = useCallback(
-    (ballValue) => {
-      const multiplierBody = multipliersBodies?.find((multiplier) => {
-        return Number(multiplier?.label?.split("-")[1]) === ballValue;
-      });
-      console.log("multiplierBody", multiplierBody);
-
-      if (!multiplierBody) {
-        console.error("Multiplier body not found for");
-        return;
-      }
-
-      const ballX = multiplierBody.position.x;
-
-      // const minBallX =
-      //   worldWidth / 2 - pinsConfig.pinSize * 3 + pinsConfig.pinGap;
-      // const maxBallX =
-      //   worldWidth / 2 -
-      //   pinsConfig.pinSize * 3 -
-      //   pinsConfig.pinGap +
-      //   pinsConfig.pinGap / 2;
-
-      // const ballX = getRandomNumber(minBallX, maxBallX);
-      const ball = Bodies.circle(ballX, 20, ballConfig.ballSize, {
-        restitution: 1,
-        friction: 0.6,
-        label: `ball-${ballValue}`,
-        id: new Date().getTime(),
-        frictionAir: 0.05,
-        collisionFilter: {
-          group: -1,
-        },
-        render: {
-          fillStyle: "red",
-        },
-        isStatic: false,
-      });
-      Composite.add(engine.world, ball);
-    },
-    [values?.rows]
-  );
-
-  const leftWall = Bodies.rectangle(
-    worldWidth / 3 - pinsConfig.pinSize * pinsConfig.pinGap - pinsConfig.pinGap,
-    worldWidth / 2 - pinsConfig.pinSize,
-    worldWidth * 2,
-    40,
-    {
-      angle: 90,
-      render: {
-        visible: false,
-      },
-      isStatic: true,
-    }
-  );
-  const rightWall = Bodies.rectangle(
-    worldWidth -
-      pinsConfig.pinSize * pinsConfig.pinGap -
-      pinsConfig.pinGap -
-      pinsConfig.pinGap / 2,
-    worldWidth / 2 - pinsConfig.pinSize,
-    worldWidth * 2,
-    40,
-    {
-      angle: -90,
-      render: {
-        visible: false,
-      },
-      isStatic: true,
-    }
-  );
-  const floor = Bodies.rectangle(0, worldWidth + 10, worldWidth * 10, 40, {
-    label: "block-1",
-    render: {
-      visible: false,
-    },
-    isStatic: true,
-  });
-
-  const multipliers = getMultiplierByLinesQnt(values?.rows);
-
-  const multipliersBodies = [];
-
-  let lastMultiplierX =
-    worldWidth / 2 - (pinsConfig.pinGap / 2) * values?.rows - pinsConfig.pinGap;
-
-  function generateTextTexture(text) {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = 20; // Set canvas width
-    canvas.height = 20; // Set canvas height
-
-    ctx.fillStyle = "orange"; // Background color
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "black"; // Text color
-    ctx.font = "12px Arial"; // Font size and style
-    ctx.fillText(text, 2, 10); // Text and position
-
-    return canvas.toDataURL(); // Convert canvas to image data URL
-  }
-
-  multipliers?.forEach((multiplier) => {
-    const blockSize = 20; // height and width
-    const multiplierBody = Bodies.rectangle(
-      lastMultiplierX + 20,
-      worldWidth / values?.rows +
-        values?.rows * pinsConfig.pinGap +
-        pinsConfig.pinGap,
-      blockSize,
-      blockSize,
-      {
-        label: multiplier.label,
-        isStatic: true,
-        render: {
-          // visible: false,
-          fillStyle: "orange", // Color of the rectangle
-          // text: {
-          //   content: Number(multiplier?.label.split("-")[1]), // Set the text as the label
-          //   color: "black", // Color of the text
-          //   size: 10, // Size of the text
-          // },
-          sprite: {
-            xScale: 1,
-            yScale: 1,
-            texture: generateTextTexture(multiplier?.label.split("-")[1]),
-          },
-        },
-      }
-    );
-
-    lastMultiplierX += pinsConfig.pinGap;
-    multipliersBodies.push(multiplierBody);
-  });
-
-  Composite.add(engine.world, [
-    ...pins,
-    ...multipliersBodies,
-    leftWall,
-    rightWall,
-    floor,
-  ]);
-
-  function bet(betValue) {
-    addBall(betValue);
-  }
-
-  useEffect(() => {
-    if (finalMultiplier) {
-      bet(finalMultiplier);
+    if (ballManager) {
+      ballManager.addBall(finalMultiplier);
     }
   }, [finalMultiplier]);
-  console.log("finalMultiplier**", finalMultiplier);
 
-  async function onCollideWithMultiplier(ball, multiplier) {
-    ball.collisionFilter.group = 2;
-    World.remove(engine.world, ball);
-    // removeInGameBall();
-    const ballValue = ball.label.split("-")[1];
-    const multiplierValue = MultiplierValues;
-    // setLastMultipliers((prev) => [multiplierValue, prev[0], prev[1], prev[2]]);
-
-    if (+ballValue <= 0) return;
-  }
-
-  async function onBodyCollision(event) {
-    const pairs = event.pairs;
-    for (const pair of pairs) {
-      const { bodyA, bodyB } = pair;
-
-      if (bodyB.label.includes("ball") && bodyA.label.includes("block")) {
-        await onCollideWithMultiplier(bodyB, bodyA);
-      }
+  useEffect(() => {
+    if (canvasRef.current) {
+      const ballManager = new BallManager(canvasRef.current, values);
+      setBallManager(ballManager);
     }
-  }
-
-  Events.on(engine, "collisionActive", onBodyCollision);
+  }, [canvasRef, values]);
 
   return (
     <div
       div
       className="h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg xl:w-[52rem] lg:w-[39.5rem]"
     >
-      <div
-        className="flex justify-center items-center mt-4  overflow-hidden"
-        ref={sceneRef}
-      ></div>
+      <div className="flex justify-center items-center mt-4  overflow-hidden">
+        <canvas ref={canvasRef} width="800" height="710"></canvas>
+      </div>
     </div>
   );
 }
@@ -854,3 +618,279 @@ export default PlinkoGameContent;
 //     </div>
 //   </div>
 // );
+
+// function PlinkoGameContent() {
+//   const sceneRef = useRef(null);
+//   const dispatch = useDispatch();
+//   const engine = Engine.create();
+//   const { finalMultiplier, values } = useSelector((state) => state.plinkoGame);
+//   const {
+//     pins: pinsConfig,
+//     colors: colorsConfig,
+//     ball: ballConfig,
+//     engine: engineConfig,
+//     world: worldConfig,
+//   } = config;
+//   const worldWidth = worldConfig.width;
+//   const worldHeight = worldConfig.height;
+
+//   PlinkoSocket.on("plinkoBetResult", (data) => {
+//     console.log("data", data);
+
+//     dispatch(setFinalMultiplier(data?.finalMultiplier));
+//   });
+
+//   useEffect(() => {
+//     engine.gravity.y = engineConfig.engineGravity;
+//     const element = sceneRef.current;
+//     const render = Render.create({
+//       element: element,
+//       bounds: {
+//         max: {
+//           y: worldHeight,
+//           x: worldWidth,
+//         },
+//         min: {
+//           y: 0,
+//           x: 0,
+//         },
+//       },
+//       options: {
+//         background: colorsConfig.background,
+//         hasBounds: true,
+//         width: worldWidth,
+//         height: worldHeight,
+//         wireframes: false,
+//       },
+//       engine,
+//     });
+//     const runner = Runner.create();
+//     Runner.run(runner, engine);
+//     Render.run(render);
+//     return () => {
+//       World.clear(engine.world, true);
+//       Engine.clear(engine);
+//       render.canvas.remove();
+//       render.textures = {};
+//     };
+//   }, [values?.rows]);
+
+//   const pins = [];
+
+//   for (let l = 0; l < values?.rows; l++) {
+//     const linePins = pinsConfig.startPins + l;
+//     const lineWidth = linePins * pinsConfig.pinGap;
+//     for (let i = 0; i < linePins; i++) {
+//       const pinX =
+//         worldWidth / 2 -
+//         lineWidth / 2 +
+//         i * pinsConfig.pinGap +
+//         pinsConfig.pinGap / 2;
+
+//       const pinY =
+//         worldWidth / values?.rows + l * pinsConfig.pinGap + pinsConfig.pinGap;
+
+//       const pin = Bodies.circle(pinX, pinY, pinsConfig.pinSize, {
+//         label: `pin-${i}`,
+//         render: {
+//           fillStyle: "white",
+//         },
+//         isStatic: true,
+//       });
+//       pins.push(pin);
+//     }
+//   }
+
+//   const addBall = useCallback(
+//     (ballValue) => {
+//       const multiplierBody = multipliersBodies?.find((multiplier) => {
+//         return Number(multiplier?.label?.split("-")[1]) === ballValue;
+//       });
+//       console.log("multiplierBody", multiplierBody);
+
+//       if (!multiplierBody) {
+//         console.error("Multiplier body not found for");
+//         return;
+//       }
+
+//       const ballX = multiplierBody.position.x;
+
+//       // const minBallX =
+//       //   worldWidth / 2 - pinsConfig.pinSize * 3 + pinsConfig.pinGap;
+//       // const maxBallX =
+//       //   worldWidth / 2 -
+//       //   pinsConfig.pinSize * 3 -
+//       //   pinsConfig.pinGap +
+//       //   pinsConfig.pinGap / 2;
+
+//       // const ballX = getRandomNumber(minBallX, maxBallX);
+//       const ball = Bodies.circle(ballX, 20, ballConfig.ballSize, {
+//         restitution: 1,
+//         friction: 0.6,
+//         label: `ball-${ballValue}`,
+//         id: new Date().getTime(),
+//         frictionAir: 0.05,
+//         collisionFilter: {
+//           group: -1,
+//         },
+//         render: {
+//           fillStyle: "red",
+//         },
+//         isStatic: false,
+//       });
+//       Composite.add(engine.world, ball);
+//     },
+//     [values?.rows]
+//   );
+
+//   const leftWall = Bodies.rectangle(
+//     worldWidth / 3 - pinsConfig.pinSize * pinsConfig.pinGap - pinsConfig.pinGap,
+//     worldWidth / 2 - pinsConfig.pinSize,
+//     worldWidth * 2,
+//     40,
+//     {
+//       angle: 90,
+//       render: {
+//         visible: false,
+//       },
+//       isStatic: true,
+//     }
+//   );
+//   const rightWall = Bodies.rectangle(
+//     worldWidth -
+//       pinsConfig.pinSize * pinsConfig.pinGap -
+//       pinsConfig.pinGap -
+//       pinsConfig.pinGap / 2,
+//     worldWidth / 2 - pinsConfig.pinSize,
+//     worldWidth * 2,
+//     40,
+//     {
+//       angle: -90,
+//       render: {
+//         visible: false,
+//       },
+//       isStatic: true,
+//     }
+//   );
+//   const floor = Bodies.rectangle(0, worldWidth + 10, worldWidth * 10, 40, {
+//     label: "block-1",
+//     render: {
+//       visible: false,
+//     },
+//     isStatic: true,
+//   });
+
+//   const multipliers = getMultiplierByLinesQnt(values?.rows);
+
+//   const multipliersBodies = [];
+
+//   let lastMultiplierX =
+//     worldWidth / 2 - (pinsConfig.pinGap / 2) * values?.rows - pinsConfig.pinGap;
+
+//   function generateTextTexture(text) {
+//     const canvas = document.createElement("canvas");
+//     const ctx = canvas.getContext("2d");
+
+//     canvas.width = 20; // Set canvas width
+//     canvas.height = 20; // Set canvas height
+
+//     ctx.fillStyle = "orange"; // Background color
+//     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+//     ctx.fillStyle = "black"; // Text color
+//     ctx.font = "12px Arial"; // Font size and style
+//     ctx.fillText(text, 2, 10); // Text and position
+
+//     return canvas.toDataURL(); // Convert canvas to image data URL
+//   }
+
+//   multipliers?.forEach((multiplier) => {
+//     const blockSize = 20; // height and width
+//     const multiplierBody = Bodies.rectangle(
+//       lastMultiplierX + 20,
+//       worldWidth / values?.rows +
+//         values?.rows * pinsConfig.pinGap +
+//         pinsConfig.pinGap,
+//       blockSize,
+//       blockSize,
+//       {
+//         label: multiplier.label,
+//         isStatic: true,
+//         render: {
+//           // visible: false,
+//           fillStyle: "orange", // Color of the rectangle
+//           // text: {
+//           //   content: Number(multiplier?.label.split("-")[1]), // Set the text as the label
+//           //   color: "black", // Color of the text
+//           //   size: 10, // Size of the text
+//           // },
+//           sprite: {
+//             xScale: 1,
+//             yScale: 1,
+//             texture: generateTextTexture(multiplier?.label.split("-")[1]),
+//           },
+//         },
+//       }
+//     );
+
+//     lastMultiplierX += pinsConfig.pinGap;
+//     multipliersBodies.push(multiplierBody);
+//   });
+
+//   Composite.add(engine.world, [
+//     ...pins,
+//     ...multipliersBodies,
+//     leftWall,
+//     rightWall,
+//     floor,
+//   ]);
+
+//   function bet(betValue) {
+//     addBall(betValue);
+//   }
+
+//   useEffect(() => {
+//     if (finalMultiplier) {
+//       bet(finalMultiplier);
+//     }
+//   }, [finalMultiplier]);
+//   console.log("finalMultiplier**", finalMultiplier);
+
+//   async function onCollideWithMultiplier(ball, multiplier) {
+//     ball.collisionFilter.group = 2;
+//     World.remove(engine.world, ball);
+//     // removeInGameBall();
+//     const ballValue = ball.label.split("-")[1];
+//     const multiplierValue = MultiplierValues;
+//     // setLastMultipliers((prev) => [multiplierValue, prev[0], prev[1], prev[2]]);
+
+//     if (+ballValue <= 0) return;
+//   }
+
+//   async function onBodyCollision(event) {
+//     const pairs = event.pairs;
+//     for (const pair of pairs) {
+//       const { bodyA, bodyB } = pair;
+
+//       if (bodyB.label.includes("ball") && bodyA.label.includes("block")) {
+//         await onCollideWithMultiplier(bodyB, bodyA);
+//       }
+//     }
+//   }
+
+//   Events.on(engine, "collisionActive", onBodyCollision);
+
+//   return (
+//     <div
+//       div
+//       className="h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg xl:w-[52rem] lg:w-[39.5rem]"
+//     >
+//       <div
+//         className="flex justify-center items-center mt-4  overflow-hidden"
+//         ref={sceneRef}
+//       ></div>
+//     </div>
+//   );
+// }
+
+// export default PlinkoGameContent;
