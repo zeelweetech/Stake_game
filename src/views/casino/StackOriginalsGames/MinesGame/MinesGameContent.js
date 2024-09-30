@@ -44,7 +44,7 @@ function MinesGameContent() {
   };
 
   return (
-    <div className="bg-[#0f212e] h-full flex items-center justify-center px-36">
+    <div className="bg-[#0f212e] h-full flex items-center justify-center px-36 ">
       <div className="grid grid-cols-5 gap-2.5">
         {images.map((img, index) => (
           <div
