@@ -9,7 +9,7 @@ import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
 import { IoInfiniteSharp } from "react-icons/io5";
-import { socket } from "../../../../socket";
+import { CrashSocket } from "../../../../socket";
 import {
   BoardControlModel,
   setBettingStatus,
@@ -19,21 +19,16 @@ import {
   setGameStatusData,
   SwiperModel,
 } from "../../../../features/casino/crashSlice";
-import {
-  decodedToken,
-  getRandomNumber,
-  shuffleArray,
-} from "../../../../resources/utility";
-import { generateRandomBetProfit } from "../../../component/GenerateRandomBetProfit";
+import { decodedToken } from "../../../../resources/utility";
 import toast from "react-hot-toast";
 import { getRandomData } from "../../../../services/CasinoServices";
 
-function CrashGameSidebar() {
+const CrashGameSidebar = () => {
   const dispatch = useDispatch();
   const decoded = decodedToken();
-  const BetProfit = generateRandomBetProfit();
   const [onClickStatus, setOnClickStatus] = useState(false);
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
+  const [betAmount, setBetAmount] = useState();
   const [randomData, setRandomData] = useState([]);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const {
@@ -44,34 +39,50 @@ function CrashGameSidebar() {
     bettingStatus,
     combinedData,
     multiplier,
-    crashStatus,
-    xValue,
   } = useSelector((state) => state.crashGame);
-  console.log("gameStatusData", gameStatusData);
-
   useEffect(() => {
-    socket.on("bettingStarted", (data) => {
+    CrashSocket.on("bettingStarted", (data) => {
       dispatch(setBettingStatus(data?.status));
     });
-    socket.on("bettingClosed", (data) => {
+    CrashSocket.on("bettingClosed", (data) => {
       dispatch(setBettingStatus(data?.status));
     });
-    socket.on("gameEnded", (data) => {
+    CrashSocket.on("gameEnded", (data) => {
       dispatch(setCrashStatus(data));
     });
-    socket.on("gameStatus", (data) => {
+    CrashSocket.on("gameStatus", (data) => {
       dispatch(setGameStatusData(data));
+      const betData =
+        data?.autoBets?.length > 0 &&
+        data?.autoBets?.filter((item) => {
+          return item?.userId === decoded?.userId;
+        })?.[0];
+      setBetAmount(betData);
     });
-    socket.on("Insufficientfund", (data) => {
+    CrashSocket.on("Insufficientfund", (data) => {
       toast.error(data?.message);
     });
-    socket.on("inActiveUser", (data) => {
-      console.log("data*****", data);
+    CrashSocket.on("inActiveUser", (data) => {
       toast.error(data?.message);
     });
   }, []);
-  // console.log("gameStatusData?.autoBets", gameStatusData?.autoBets);
-  // console.log("gameStatusData?.players", gameStatusData?.players);
+
+  useEffect(() => {
+    if (!betAmount?.amount) {
+      dispatch(
+        setCrashValues({
+          betamount: "",
+          cashout: "",
+          numberofbet: "",
+          onwin: "",
+          onlose: "",
+          stoponprofit: "",
+          stoponloss: "",
+        })
+      );
+      setAutoBetOnClick(false);
+    }
+  }, [!betAmount?.amount]);
 
   useEffect(() => {
     const data = async () => {
@@ -134,7 +145,7 @@ function CrashGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      socket.emit("placeBet", {
+      CrashSocket.emit("placeBet", {
         userId: decoded?.userId,
         amount: crashValues?.betamount
           ? parseInt(crashValues?.betamount, 10)
@@ -144,7 +155,12 @@ function CrashGameSidebar() {
           : 1.01,
         betType: "Manual",
       });
-      dispatch(setCrashValues({}));
+      dispatch(
+        setCrashValues({
+          betamount: "",
+          cashout: "",
+        })
+      );
       setOnClickStatus(true);
     }
   };
@@ -153,7 +169,7 @@ function CrashGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      socket.emit("placeBet", {
+      CrashSocket.emit("placeBet", {
         userId: decoded?.userId,
         amount: crashValues?.betamount
           ? parseInt(crashValues?.betamount, 10)
@@ -170,7 +186,6 @@ function CrashGameSidebar() {
         stopOnLoss: parseInt(crashValues?.stoponloss, 10),
         betType: "Auto",
       });
-      dispatch(setCrashValues({}));
       setAutoBetOnClick(true);
     }
   };
@@ -180,7 +195,7 @@ function CrashGameSidebar() {
       return item?.userId === decoded?.userId && item?.betId;
     });
 
-    socket.emit("cancelBet", {
+    CrashSocket.emit("cancelBet", {
       userId: decoded?.userId,
       betId: BetId?.betId,
     });
@@ -192,11 +207,22 @@ function CrashGameSidebar() {
       return item?.userId === decoded?.userId && item?.betId;
     });
 
-    socket.emit("cancelBet", {
+    CrashSocket.emit("cancelBet", {
       userId: decoded?.userId,
       betId: BetId?.betId,
     });
     setAutoBetOnClick(false);
+    dispatch(
+      setCrashValues({
+        betamount: "",
+        cashout: "",
+        numberofbet: "",
+        onwin: "",
+        onlose: "",
+        stoponprofit: "",
+        stoponloss: "",
+      })
+    );
   };
 
   return (
@@ -451,7 +477,11 @@ function CrashGameSidebar() {
                     placeholder="0.00"
                     step="0.01"
                     name="betamount"
-                    value={crashValues?.betamount}
+                    value={
+                      betAmount?.amount
+                        ? betAmount?.amount
+                        : crashValues?.betamount
+                    }
                     onChange={(e) => handleOnChange(e)}
                   />
                 </div>
@@ -500,7 +530,11 @@ function CrashGameSidebar() {
                     placeholder="0"
                     min={0}
                     name="numberofbet"
-                    value={crashValues?.numberofbet}
+                    value={
+                      betAmount?.placedBets
+                        ? crashValues?.numberofbet - betAmount?.placedBets
+                        : crashValues?.numberofbet
+                    }
                     onChange={(e) => handleOnChange(e)}
                   />
                 </div>
@@ -783,6 +817,6 @@ function CrashGameSidebar() {
       )}
     </div>
   );
-}
+};
 
 export default CrashGameSidebar;

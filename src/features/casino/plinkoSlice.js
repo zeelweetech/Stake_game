@@ -2,13 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   values: {
-    risk: "Medium",
+    betamount: "",
+    risk: "medium",
     rows: 16,
+    numberofbets: "",
   },
   score: 0,
   balls: [],
   pins: [],
   gameStatus: "idle",
+  finalMultiplier: "",
+  stopAutoBet: false,
 };
 
 const plinkoGameSlice = createSlice({
@@ -17,6 +21,12 @@ const plinkoGameSlice = createSlice({
   reducers: {
     setValues(state, action) {
       state.values = action.payload;
+    },
+    setFinalMultiplier(state, action) {
+      state.finalMultiplier = action.payload;
+    },
+    setStopAutoBet(state, action) {
+      state.stopAutoBet = action.payload;
     },
     // startGame(state) {
     //   state.gameStatus = "running";
@@ -35,6 +45,7 @@ const plinkoGameSlice = createSlice({
   },
 });
 
-export const { setValues } = plinkoGameSlice.actions;
+export const { setValues, setFinalMultiplier, setStopAutoBet } =
+  plinkoGameSlice.actions;
 
 export default plinkoGameSlice.reducer;

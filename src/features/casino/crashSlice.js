@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { io } from "socket.io-client";
+const CrashURL = "http://192.168.29.203:3003";
+const token = localStorage.getItem("token");
 
 const initialState = {
   isSwiper: true,
@@ -10,6 +13,8 @@ const initialState = {
   crashStatus: "",
   combinedData: [],
   multiplier: 0,
+  socket: null,
+  isSocketConnected: false,
 };
 
 const crashGameSlice = createSlice({
@@ -43,6 +48,37 @@ const crashGameSlice = createSlice({
     setMultiplier(state, action) {
       state.multiplier = action.payload;
     },
+    connectSocket: (state) => {
+      if (!state.socket) {
+        state.socket = io(CrashURL, {
+          path: "/ws",
+          extraHeaders: {
+            Authorization: `token: ${token}`,
+          },
+        });
+
+        state.socket.on("connect", () => {
+          state.isSocketConnected = true;
+          console.log("Crash socket connected");
+        });
+
+        state.socket.on("disconnect", () => {
+          state.isSocketConnected = false;
+          console.log("Crash socket disconnected");
+        });
+
+        state.socket.on("connect_error", (error) => {
+          console.error("Crash socket connection error:", error);
+        });
+      }
+    },
+    disconnectSocket: (state) => {
+      if (state.socket) {
+        state.socket.disconnect();
+        state.socket = null;
+        state.isSocketConnected = false;
+      }
+    },
   },
 });
 
@@ -56,6 +92,8 @@ export const {
   setCrashStatus,
   setCombinedData,
   setMultiplier,
+  connectSocket,
+  disconnectSocket,
 } = crashGameSlice.actions;
 
 export default crashGameSlice.reducer;

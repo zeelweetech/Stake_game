@@ -27,7 +27,7 @@ function DefaultLayout() {
         />
       </div>
       <div
-        className={`flex flex-col fixed top-0 right-0 bg-white z-50 h-full
+        className={`flex flex-col fixed top-0 right-0 bg-[#1a2c38] z-50 h-full
         ${
           openMenubar
             ? "w-[calc(100%-14%)] md:w-[calc(100%-19%)] lg:w-[calc(100%-15%)]"

@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import crashGame from "../../../assets/img/crashGame.avif";
-import plinkoGame from "../../../assets/img/plinkoGame.jpeg";
-import minesGame from "../../../assets/img/minesGame.avif";
-import limboGame from "../../../assets/img/limboGame.avif";
-import dragonGame from "../../../assets/img/dragonGame.avif";
-import wheelGame from "../../../assets/img/wheelGame.avif";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BsFire } from "react-icons/bs";
 import { getAllGames } from "../../../services/GameServices";
 
@@ -15,20 +9,7 @@ function StackOriginals({ setLoading }) {
 
   const handleAllGame = (gameName, id) => {
     setLoading(true);
-    // navigate(`/casino/games/${gameName}/${id}`);
-    if (gameName === "crash") {
-      navigate("/casino/games/crash");
-    } else if (gameName === "Plinko") {
-      navigate("/casino/games/plinko");
-    } else if (gameName === "Miens") {
-      navigate("/");
-    } else if (gameName === "Limbo") {
-      navigate("/");
-    } else if (gameName === "wheel") {
-      navigate("/");
-    } else if (gameName === "Dragon Tower") {
-      navigate("/");
-    }
+    navigate(`/casino/${gameName}/${id}`);
   };
 
   useEffect(() => {
