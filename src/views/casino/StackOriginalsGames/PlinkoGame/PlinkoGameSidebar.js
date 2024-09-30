@@ -4,7 +4,10 @@ import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { IoInfiniteSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
-import { setValues } from "../../../../features/casino/plinkoSlice";
+import {
+  setStopAutoBet,
+  setValues,
+} from "../../../../features/casino/plinkoSlice";
 import { PlinkoSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 
@@ -14,15 +17,15 @@ function PlinkoGameSidebar() {
   const [isManual, setIsManual] = useState(true);
   const {
     values = { betamount: "", risk: "medium", rows: 16, numberofbets: "" },
+    stopAutoBet,
   } = useSelector((state) => state.plinkoGame);
-  console.log("values", values);
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
     dispatch(setValues({ ...values, [name]: value }));
   };
 
-  const handleOnManualBet = (e) => {
+  const handleOnBet = (name) => {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
@@ -31,8 +34,20 @@ function PlinkoGameSidebar() {
         betAmount: values?.betamount,
         rows: values?.rows,
         riskLevel: values?.risk,
+        autoBetCount: name === "autoBet" && values?.numberofbets,
       });
+      if (name === "manualBet") {
+      } else if (name === "autoBet") {
+        dispatch(setStopAutoBet(true));
+      }
     }
+  };
+
+  const handleOnStopAutoBet = () => {
+    console.log("OOOOOOOOOOOONNNNNNNNNNNNNNNNNNN");
+
+    PlinkoSocket.emit("stopAutoBet", { userId: decoded?.userId });
+    dispatch(setStopAutoBet(false));
   };
 
   return (
@@ -80,13 +95,37 @@ function PlinkoGameSidebar() {
                 className="w-48 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
               />
             </div>
-            <button className="w-16 text-xs hover:bg-[#5c849e68]">1/2</button>
+            <button
+              className="w-16 text-xs hover:bg-[#5c849e68]"
+              onClick={() =>
+                dispatch(
+                  setValues({
+                    ...values,
+                    betamount: values?.betamount / 2,
+                  })
+                )
+              }
+            >
+              1/2
+            </button>
             <Divider
               flexItem
               orientation="vertical"
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
-            <button className="w-16 text-xs hover:bg-[#5c849e68]">2x</button>
+            <button
+              className="w-16 text-xs hover:bg-[#5c849e68]"
+              onClick={() =>
+                dispatch(
+                  setValues({
+                    ...values,
+                    betamount: values?.betamount * 2,
+                  })
+                )
+              }
+            >
+              2x
+            </button>
           </div>
           <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1">
             <label>Risk </label>
@@ -128,7 +167,7 @@ function PlinkoGameSidebar() {
           </div>
           <button
             className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full"
-            onClick={() => handleOnManualBet()}
+            onClick={() => handleOnBet("manualBet")}
           >
             Bet
           </button>
@@ -175,9 +214,9 @@ function PlinkoGameSidebar() {
                 onChange={(e) => handleOnChange(e)}
                 className="w-full px-2 py-2 rounded-s-md text-white bg-[#0f212e]"
               >
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
               </select>
             </div>
             <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
@@ -221,16 +260,21 @@ function PlinkoGameSidebar() {
                 />
               </div>
             </div>
-            <button
-              className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
-              onClick={() => {
-                if (!localStorage.getItem("token")) {
-                  dispatch(openRegisterModel());
-                }
-              }}
-            >
-              Start Autobet
-            </button>
+            {stopAutoBet ? (
+              <button
+                className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
+                onClick={() => handleOnStopAutoBet()}
+              >
+                Stop Autobet
+              </button>
+            ) : (
+              <button
+                className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
+                onClick={() => handleOnBet("autoBet")}
+              >
+                Start Autobet
+              </button>
+            )}
             {/* <button className="bg-gray-400 text-2xl px-16 pt-2 pb-3 mt-3 rounded-md progress-bar">
               starting in
             </button> */}

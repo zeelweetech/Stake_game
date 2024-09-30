@@ -5,7 +5,7 @@ import {
   obstacleRadius,
   sinkWidth,
 } from "../constants";
-import { Obstacle, Sink, createObstacles, createSinks } from "../objects";
+import { createObstacles, createSinks } from "../objects";
 import { pad, unpad } from "../padding";
 import Ball from "./Ball";
 
@@ -41,6 +41,8 @@ export default class BallManager {
       (index) => {
         this.balls = this.balls.filter((ball) => ball !== newBall);
         this.onFinish?.(index, startX);
+        console.log("&&&&&&&&");
+        
       }
     );
     this.balls.push(newBall);
@@ -86,7 +88,7 @@ export default class BallManager {
     for (let i = 0; i < this.sinks.length; i++) {
       this.ctx.fillStyle = this.getColor(i).background;
       const sink = this.sinks[i];
-      this.ctx.font = "normal 13px Arial";
+      this.ctx.font = "normal 11px Arial";
       this.ctx.fillRect(
         sink.x,
         sink.y - sink.height / 2,
