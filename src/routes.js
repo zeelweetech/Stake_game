@@ -1,5 +1,6 @@
 import React from "react";
 import { jwtDecode } from "jwt-decode";
+import { element } from "prop-types";
 const LandingBanner = React.lazy(() => import("./views/lendingpage/index"));
 const Homepage = React.lazy(() => import("./views/Homepage/index"));
 const CasinoHomePage = React.lazy(() =>
@@ -12,6 +13,7 @@ const CrashGame = React.lazy(() =>
 const PlinkoGame = React.lazy(() =>
   import("./views/casino/StackOriginalsGames/PlinkoGame")
 );
+const MinesGame = React.lazy(() => import("./views/casino/StackOriginalsGames/MinesGame"))
 
 const token = localStorage.getItem("token");
 const routes = [
@@ -29,6 +31,7 @@ const routes = [
   // },
   { path: "/casino/games/crash", name: "Crash", element: CrashGame },
   { path: "/casino/games/plinko", name: "Plinko", element: PlinkoGame },
+  {path: "/casino/games/mines", name: "Mines", element: MinesGame }
 ];
 
 export default routes;
