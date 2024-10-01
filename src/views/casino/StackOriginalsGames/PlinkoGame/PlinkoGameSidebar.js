@@ -5,6 +5,7 @@ import { IoInfiniteSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
 import {
+  setCompleteBetStatus,
   setStopAutoBet,
   setValues,
 } from "../../../../features/casino/plinkoSlice";
@@ -18,6 +19,8 @@ function PlinkoGameSidebar() {
   const {
     values = { betamount: "", risk: "medium", rows: 16, numberofbets: "" },
     stopAutoBet,
+    completeBetStatus,
+    finalMultiplier,
   } = useSelector((state) => state.plinkoGame);
 
   const handleOnChange = (e) => {
@@ -36,6 +39,7 @@ function PlinkoGameSidebar() {
         riskLevel: values?.risk,
         autoBetCount: name === "autoBet" && values?.numberofbets,
       });
+      dispatch(setCompleteBetStatus(true));
       if (name === "manualBet") {
       } else if (name === "autoBet") {
         dispatch(setStopAutoBet(true));
@@ -44,10 +48,9 @@ function PlinkoGameSidebar() {
   };
 
   const handleOnStopAutoBet = () => {
-    console.log("OOOOOOOOOOOONNNNNNNNNNNNNNNNNNN");
-
     PlinkoSocket.emit("stopAutoBet", { userId: decoded?.userId });
     dispatch(setStopAutoBet(false));
+    dispatch(setCompleteBetStatus(false));
   };
 
   return (
@@ -92,11 +95,16 @@ function PlinkoGameSidebar() {
                 name="betamount"
                 value={values?.betamount}
                 onChange={(e) => handleOnChange(e)}
-                className="w-48 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
+                className={`w-48 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e] ${
+                  completeBetStatus && "cursor-not-allowed"
+                }`}
+                disabled={completeBetStatus}
               />
             </div>
             <button
-              className="w-16 text-xs hover:bg-[#5c849e68]"
+              className={`w-16 text-xs hover:bg-[#5c849e68] ${
+                completeBetStatus && "cursor-not-allowed"
+              }`}
               onClick={() =>
                 dispatch(
                   setValues({
@@ -105,6 +113,7 @@ function PlinkoGameSidebar() {
                   })
                 )
               }
+              disabled={completeBetStatus}
             >
               1/2
             </button>
@@ -114,7 +123,9 @@ function PlinkoGameSidebar() {
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
             <button
-              className="w-16 text-xs hover:bg-[#5c849e68]"
+              className={`w-16 text-xs hover:bg-[#5c849e68] ${
+                completeBetStatus && "cursor-not-allowed"
+              }`}
               onClick={() =>
                 dispatch(
                   setValues({
@@ -123,6 +134,7 @@ function PlinkoGameSidebar() {
                   })
                 )
               }
+              disabled={completeBetStatus}
             >
               2x
             </button>
@@ -136,7 +148,10 @@ function PlinkoGameSidebar() {
               name="risk"
               value={values?.risk}
               onChange={(e) => handleOnChange(e)}
-              className="w-full px-2 py-2 rounded-s-md text-white bg-[#0f212e]"
+              className={`w-full px-2 py-2 rounded-s-md text-white bg-[#0f212e] ${
+                completeBetStatus && "cursor-not-allowed"
+              }`}
+              disabled={completeBetStatus}
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -152,7 +167,10 @@ function PlinkoGameSidebar() {
               name="rows"
               value={values?.rows}
               onChange={(e) => handleOnChange(e)}
-              className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+              className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] ${
+                completeBetStatus && "cursor-not-allowed"
+              }`}
+              disabled={completeBetStatus}
             >
               <option value={8}>8</option>
               <option value={9}>9</option>
@@ -192,16 +210,47 @@ function PlinkoGameSidebar() {
                   name="betamount"
                   value={values?.betamount}
                   onChange={(e) => handleOnChange(e)}
-                  className="w-48 pr-9 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
+                  className={`w-48 pr-9 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e] ${
+                    completeBetStatus && "cursor-not-allowed"
+                  }`}
+                  disabled={completeBetStatus}
                 />
               </div>
-              <button className="w-16 hover:bg-[#5c849e68]">1/2</button>
+              <button
+                className={`w-16 hover:bg-[#5c849e68] ${
+                  completeBetStatus && "cursor-not-allowed"
+                }`}
+                onClick={() =>
+                  dispatch(
+                    setValues({
+                      ...values,
+                      betamount: values?.betamount / 2,
+                    })
+                  )
+                }
+                disabled={completeBetStatus}
+              >
+                1/2
+              </button>
               <Divider
                 flexItem
                 orientation="vertical"
                 sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
               />
-              <button className="w-16 hover:bg-[#5c849e68]">2x</button>
+              <button
+                className={`w-16 hover:bg-[#5c849e68]`}
+                onClick={() =>
+                  dispatch(
+                    setValues({
+                      ...values,
+                      betamount: values?.betamount * 2,
+                    })
+                  )
+                }
+                disabled={completeBetStatus}
+              >
+                2x
+              </button>
             </div>
             <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1">
               <label>Risk</label>
@@ -212,7 +261,8 @@ function PlinkoGameSidebar() {
                 name="risk"
                 value={values?.risk}
                 onChange={(e) => handleOnChange(e)}
-                className="w-full px-2 py-2 rounded-s-md text-white bg-[#0f212e]"
+                className={`w-full px-2 py-2 rounded-s-md text-white bg-[#0f212e]`}
+                disabled={completeBetStatus}
               >
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
@@ -228,7 +278,8 @@ function PlinkoGameSidebar() {
                 name="rows"
                 value={values?.rows}
                 onChange={(e) => handleOnChange(e)}
-                className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]`}
+                disabled={completeBetStatus}
               >
                 <option value={8}>8</option>
                 <option value={9}>9</option>
@@ -254,9 +305,14 @@ function PlinkoGameSidebar() {
                   placeholder="0"
                   min={0}
                   name="numberofbets"
-                  value={values?.numberofbets}
+                  value={
+                    finalMultiplier?.remainingBets
+                      ? finalMultiplier?.remainingBets
+                      : values?.numberofbets
+                  }
                   onChange={(e) => handleOnChange(e)}
-                  className="w-full pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]"
+                  className={`w-full pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]`}
+                  disabled={completeBetStatus}
                 />
               </div>
             </div>
@@ -275,9 +331,6 @@ function PlinkoGameSidebar() {
                 Start Autobet
               </button>
             )}
-            {/* <button className="bg-gray-400 text-2xl px-16 pt-2 pb-3 mt-3 rounded-md progress-bar">
-              starting in
-            </button> */}
           </div>
         </div>
       )}

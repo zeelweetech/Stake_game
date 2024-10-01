@@ -17,13 +17,13 @@ function PlinkoGameContent() {
 
   useEffect(() => {
     if (ballManager) {
-      ballManager.addBall(finalMultiplier?.point);
+      ballManager.addBall(finalMultiplier);
     }
   }, [finalMultiplier?.point]);
 
   useEffect(() => {
     if (canvasRef.current) {
-      const ballManager = new BallManager(canvasRef.current, values);
+      const ballManager = new BallManager(canvasRef.current, values, dispatch);
       setBallManager(ballManager);
     }
   }, [canvasRef, values]);

@@ -47,6 +47,7 @@ export const createSinks = (values) => {
     const width = sinkWidth;
     const height = width;
     sinks.push({ x, y, width, height, multiplier: MULTIPLIERS[i] });
+    console.log("MULTIPLIERS[i]", MULTIPLIERS[i]);
   }
 
   return sinks;

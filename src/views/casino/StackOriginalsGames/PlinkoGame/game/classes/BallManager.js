@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+import { setCompleteBetStatus } from "../../../../../../features/casino/plinkoSlice";
 import {
   HEIGHT,
   WIDTH,
@@ -8,7 +10,6 @@ import {
 import { createObstacles, createSinks } from "../objects";
 import { pad, unpad } from "../padding";
 import Ball from "./Ball";
-
 export default class BallManager {
   balls;
   canvasRef;
@@ -18,7 +19,8 @@ export default class BallManager {
   requestId;
   onFinish;
   selectedValues;
-  constructor(canvasRef, selectedValues, onFinish) {
+  dispatch;
+  constructor(canvasRef, selectedValues, dispatch, onFinish) {
     this.balls = [];
     this.canvasRef = canvasRef;
     this.selectedValues = selectedValues;
@@ -27,11 +29,14 @@ export default class BallManager {
     this.sinks = createSinks(this.selectedValues);
     this.update();
     this.onFinish = onFinish;
+    this.dispatch = dispatch;
   }
 
   addBall(startX) {
+    console.log("startX", startX?.point, startX?.multiplier);
+
     const newBall = new Ball(
-      startX || pad(WIDTH / 2 + 13),
+      startX?.point || pad(WIDTH / 2 + 13),
       pad(50),
       ballRadius,
       "red",
@@ -40,9 +45,12 @@ export default class BallManager {
       this.sinks,
       (index) => {
         this.balls = this.balls.filter((ball) => ball !== newBall);
-        this.onFinish?.(index, startX);
-        console.log("&&&&&&&&");
-        
+        this.onFinish?.(index, startX?.point);
+        this.dispatch(setCompleteBetStatus(false));
+        const data = this.sinks?.find((item) => {
+          return item?.multiplier === startX?.multiplier;
+        });
+        console.log("^^^^^^^^^", data);
       }
     );
     this.balls.push(newBall);
