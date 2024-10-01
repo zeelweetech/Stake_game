@@ -7,6 +7,7 @@ const initialState = {
     rows: 16,
     numberofbets: "",
   },
+  lastMultipliers: [],
   score: 0,
   balls: [],
   pins: [],
@@ -28,6 +29,9 @@ const plinkoGameSlice = createSlice({
     setStopAutoBet(state, action) {
       state.stopAutoBet = action.payload;
     },
+    setLastMultipliers(state, action) {
+      state.lastMultipliers = action.payload
+    },
     // startGame(state) {
     //   state.gameStatus = "running";
     //   state.balls = [];
@@ -45,7 +49,7 @@ const plinkoGameSlice = createSlice({
   },
 });
 
-export const { setValues, setFinalMultiplier, setStopAutoBet } =
+export const { setValues, setFinalMultiplier, setStopAutoBet, setLastMultipliers } =
   plinkoGameSlice.actions;
 
 export default plinkoGameSlice.reducer;
