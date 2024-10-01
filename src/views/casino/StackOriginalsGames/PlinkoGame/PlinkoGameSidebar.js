@@ -54,12 +54,12 @@ function PlinkoGameSidebar() {
   };
 
   return (
-    <div className="w-80 flex flex-col p-3 bg-[#213743] rounded-tl-lg">
+    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
             <button
-              className={`py-2 w-[8.6rem] rounded-full ${
+              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] rounded-full ${
                 isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => setIsManual(true)}
@@ -67,7 +67,7 @@ function PlinkoGameSidebar() {
               Manual
             </button>
             <button
-              className={`py-2 w-[8.6rem] rounded-full ${
+              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] rounded-full ${
                 !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => setIsManual(false)}
@@ -95,7 +95,7 @@ function PlinkoGameSidebar() {
                 name="betamount"
                 value={values?.betamount}
                 onChange={(e) => handleOnChange(e)}
-                className={`w-48 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e] ${
+                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e] ${
                   completeBetStatus && "cursor-not-allowed"
                 }`}
                 disabled={completeBetStatus}
