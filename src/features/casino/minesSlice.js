@@ -1,14 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  // value: {
-  //   betamount: "",
-  //   rows: 1,
-  //   numberofbet: "",
-  //   onwin: "",
-  //   onlose: ""
-  // },
-  mineValue: '',
+  mineValue: {
+    betamount: "",
+    mines: 1,
+  },
   bettingStatus: "",
 };
 

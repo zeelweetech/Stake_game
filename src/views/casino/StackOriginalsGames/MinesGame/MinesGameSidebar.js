@@ -20,12 +20,12 @@ function MinesGameSidebar() {
   };
 
   return (
-    <div className="w-80 flex flex-col p-3 bg-[#213743] rounded-tl-lg">
+    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
             <button
-              className={`py-2 w-[8.6rem] rounded-full ${
+              className={`py-2 xl:w-[8.6rem] lg:w-[7.05rem] rounded-full ${
                 isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => setIsManual(true)}
@@ -33,7 +33,7 @@ function MinesGameSidebar() {
               Manual
             </button>
             <button
-              className={`py-2 w-[8.6rem] rounded-full ${
+              className={`py-2 xl:w-[8.6rem] lg:w-[7.1rem] rounded-full ${
                 !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => setIsManual(false)}
@@ -61,7 +61,7 @@ function MinesGameSidebar() {
                 name="betamount"
                 value={mineValue?.betamount}
                 onChange={(e) => handleOnChange(e)}
-                className="w-48 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
+                className="xl:w-48 lg:w-36 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
               />
             </div>
             <button className="w-16 text-xs hover:bg-[#5c849e68]">1/2</button>
@@ -78,8 +78,8 @@ function MinesGameSidebar() {
           <div className="relative flex">
             <select
               type="select"
-              name="rows"
-              value={mineValue?.rows}
+              name="mines"
+              value={mineValue?.mines}
               onChange={(e) => handleOnChange(e)}
               className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
             >
@@ -132,12 +132,12 @@ function MinesGameSidebar() {
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div>
               <input
-                className="w-48 pr-9 pl-2 py-1 rounded-s-md text-white bg-[#0f212e]"
+                className="xl:w-48 lg:w-40 pr-9 pl-2 py-1 rounded-s-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
                 name="betamount"
-                // value={crashValues?.betamount}
+                // value={crashValues?.betamount} 
                 onChange={(e) => handleOnChange(e)}
               />
             </div>
@@ -155,8 +155,8 @@ function MinesGameSidebar() {
           <div className="relative flex">
             <select
               type="select"
-              name="rows"
-              value={mineValue?.rows}
+              name="mines"
+              value={mineValue?.mines}
               onChange={(e) => handleOnChange(e)}
               className="w-full px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
             >

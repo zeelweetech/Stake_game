@@ -28,6 +28,7 @@ import {
   setXValue,
 } from "../../../../features/casino/crashSlice";
 import { getRandomFiveData } from "../../../../services/CasinoServices";
+import { ResponsiveContainer } from "recharts";
 
 // Register Chart.js components
 ChartJS.register(
@@ -187,7 +188,7 @@ function CrashGameContent() {
   };
 
   return (
-    <div className="w-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
+    <div className="xl:w-[52rem] lg:w-[37rem] flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
@@ -206,10 +207,15 @@ function CrashGameContent() {
         </button>
       </div>
       <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 relative">
-        <div className="pr-32" style={{ width: "700px", height: "550px" }}>
-          <Line id="multiplier-chart" data={chartData} options={chartOptions} />
-          {/* <ResponsiveContainer width="100%" height={550}> */}
-          {/* <AreaChart
+        {/* <ResponsiveContainer width="100%" height={550}> */}
+          <div className="xl:pl-4 lg:pl-2 xl:pr-32 lg:pr-16 " style={{ width: "100%", height: "550px" }}>
+            <Line
+              id="multiplier-chart"
+              data={chartData}
+              options={chartOptions}
+            />
+            {/* <ResponsiveContainer width="100%" height={550}> */}
+            {/* <AreaChart
             width={700}
             height={550}
             data={data}
@@ -256,45 +262,47 @@ function CrashGameContent() {
               isAnimationActive={true}
             />
           </AreaChart> */}
-          {/* </ResponsiveContainer> */}
-        </div>
-        <div className="absolute top-44 flex justify-between items-center w-full px-4 text-white font-bold">
-          <div className="flex-grow flex items-center justify-center abc">
-            <div className="text-center">
-              <p className={`text-6xl ${getLastValueColor()}`}>{multiplier}x</p>
-
-              {chartData.datasets[0]?.data[
-                chartData.datasets[0].data.length - 1
-              ] === xValue && (
-                <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">
-                  Crashed
-                </button>
-              )}
-              {bettingStatus && (
-                <button className="bg-[#4d718768] text-2xl px-16 pt-3 pb-4 mt-3 rounded-md progress-bar">
-                  starting in
-                </button>
-              )}
+            {/* </ResponsiveContainer> */}
+          </div>
+          <div className="absolute top-44 flex justify-between items-center w-full px-4 text-white font-bold">
+            <div className="flex-grow flex items-center justify-center">
+              <div className="text-center">
+                <p className={`text-6xl ${getLastValueColor()}`}>
+                  {multiplier}x
+                </p>
+                {chartData.datasets[0]?.data[
+                  chartData.datasets[0].data.length - 1
+                ] === xValue && (
+                  <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">
+                    Crashed
+                  </button>
+                )}
+                {bettingStatus && (
+                  <button className="bg-[#4d718768] text-2xl px-16 pt-3 pb-4 mt-3 rounded-md progress-bar">
+                    starting in
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col items-end space-y-1.5">
+              {visibleData?.length > 0
+                ? visibleData?.map((data, index) => (
+                    <button
+                      key={index}
+                      className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full"
+                    >
+                      <div className="flex items-center">
+                        <BsIncognito />
+                        <p className="text-[#b1bad3] text-xs">Hidden</p>
+                        <RiMoneyRupeeCircleFill color="yellow" size={20} />
+                        <p className="text-green-500">{data?.amount}</p>
+                      </div>
+                    </button>
+                  ))
+                : ""}
             </div>
           </div>
-          <div className="flex flex-col items-end space-y-1.5 xyz">
-            {visibleData?.length > 0
-              ? visibleData?.map((data, index) => (
-                  <button
-                    key={index}
-                    className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full"
-                  >
-                    <div className="flex items-center">
-                      <BsIncognito />
-                      <p className="text-[#b1bad3] text-xs">Hidden</p>
-                      <RiMoneyRupeeCircleFill color="yellow" size={20} />
-                      <p className="text-green-500">{data?.amount}</p>
-                    </div>
-                  </button>
-                ))
-              : ""}
-          </div>
-        </div>
+        {/* </ResponsiveContainer> */}
       </div>
     </div>
   );
