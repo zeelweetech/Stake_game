@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import Loader from "../component/Loader";
 import Mainbar from "./Mainbar";
 import StackOriginals from "../casino/CasinoHomePage/StackOriginals";
+import Slots from "../casino/CasinoHomePage/Slots";
+import LiveCasino from "../casino/CasinoHomePage/LiveCasino";
+import GameShows from "../casino/CasinoHomePage/GameShows";
+import Exclusives from "../casino/CasinoHomePage/Exclusives";
 
 function MainHomePage() {
   const [loading, setLoading] = useState(false);
@@ -14,6 +18,10 @@ function MainHomePage() {
           <Mainbar />
           <div className="px-44 mt-8">
             <StackOriginals setLoading={setLoading} />
+            <Slots />
+            <LiveCasino />
+            <GameShows/>
+            <Exclusives/>
           </div>
         </div>
       )}
