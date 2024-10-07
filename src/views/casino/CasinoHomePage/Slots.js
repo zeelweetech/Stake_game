@@ -1,38 +1,35 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import { Navigation } from 'swiper';
-// import 'swiper/css';
-// import 'swiper/css/navigation';
 import Filter7Icon from "@mui/icons-material/Filter7";
-import crashGame from "../../../assets/img/crashGame.avif";
-import plinkoGame from "../../../assets/img/plinkoGame.jpeg";
-import minesGame from "../../../assets/img/minesGame.avif";
-import limboGame from "../../../assets/img/limboGame.avif";
-import wheelGame from "../../../assets/img/wheelGame.avif";
-import dragonGame from "../../../assets/img/dragonGame.avif";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Box, Divider } from "@mui/material";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
-function Slots() {
+function Slots({ allGames, isLobby }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const slotsGames = [
-    { slotImg: crashGame, gameRating: "67589" },
-    { slotImg: plinkoGame, gameRating: "67589" },
-    { slotImg: minesGame, gameRating: "67589" },
-    { slotImg: limboGame, gameRating: "67589" },
-    { slotImg: wheelGame, gameRating: "67589" },
-    { slotImg: dragonGame, gameRating: "67589" },
-    { slotImg: dragonGame, gameRating: "67589" },
-  ];
+  const swiperRef = useRef(null);
+  const navButtonsRef = useRef(null);
 
   const handleAllGame = (gameName, id) => {
     setLoading(true);
     navigate(`/casino/${gameName}/${id}`);
   };
+
+  useEffect(() => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      const prevButton = navButtonsRef.current.querySelector(".prev-arrow");
+      const nextButton = navButtonsRef.current.querySelector(".next-arrow");
+      swiperRef.current.swiper.params.navigation.prevEl = prevButton;
+      swiperRef.current.swiper.params.navigation.nextEl = nextButton;
+      swiperRef.current.swiper.navigation.init();
+      swiperRef.current.swiper.navigation.update();
+    }
+  }, []);
 
   return (
     <div>
@@ -44,69 +41,97 @@ function Slots() {
           />
           <Link className="text-lg font-medium">Slots</Link>
         </div>
-        <div className="relative mr-8">
-          <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              border: "1px solid",
-              borderColor: "#b1bad3",
-              borderRadius: 2,
-              bgcolor: "#1a2c38",
-              color: "#b1bad3",
-              "& svg": {
-                m: 1,
-              },
-            }}
-          >
-            <ArrowBackIosIcon fontSize='small'/>
-            <Divider
-              orientation="vertical"
-              variant="middle"
-              flexItem
-              sx={{ borderColor: "#b1bad3" }}
-            />
-            <ArrowForwardIosIcon fontSize='small'/>
-          </Box>
-        </div>
+        {isLobby && (
+          <div ref={navButtonsRef}>
+            <Box
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                border: "1px solid",
+                borderColor: "#b1bad3",
+                borderRadius: 2,
+                bgcolor: "#1a2c38",
+                color: "#b1bad3",
+                "& svg": {
+                  m: 1,
+                },
+              }}
+            >
+              <ArrowBackIosIcon
+                fontSize="small"
+                className="cursor-pointer prev-arrow"
+              />
+              <Divider
+                orientation="vertical"
+                variant="middle"
+                flexItem
+                sx={{ borderColor: "#b1bad3" }}
+              />
+              <ArrowForwardIosIcon
+                fontSize="small"
+                className="cursor-pointer next-arrow"
+              />
+            </Box>
+          </div>
+        )}
       </div>
 
-      <div className="relative">
-        {/* Swiper container */}
-        {/* <Swiper
-          modules={[Navigation]}
-          spaceBetween={20}
-          slidesPerView={4}
-          navigation={{
-            prevEl: '.swiper-button-prev',
-            nextEl: '.swiper-button-next',
-          }}
-          className="mx-3 pt-4"
-        > */}
-        <div className="grid grid-cols-6 pt-4 mx-3">
-          {slotsGames.map((slots, index) => (
-            // <SwiperSlide key={index} className="text-center">
-            <div key={index} className="text-center">
-              <div className="relative">
-                <img
-                  src={slots.slotImg}
-                  className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
-                  alt="Not Found"
-                  onClick={() => handleAllGame(slots?.gameName, slots?.id)}
-                />
-              </div>
-              <div className="flex items-center mt-1 justify-center">
-                <span className="relative flex h-3 w-3 mr-1">
-                  <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-[#1fff20] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1fff20]"></span>
-                </span>
-                <p>{slots.gameRating}</p>
-              </div>
-            </div>
-            // </SwiperSlide>
-          ))}
-        </div>
-        {/* </Swiper> */}
+      <div className="relative mt-3">
+        {isLobby ? (
+          <Swiper
+            slidesPerView={6}
+            slidesPerGroup={6}
+            navigation
+            modules={[Navigation]}
+            ref={swiperRef}
+          >
+            {allGames?.games?.map((slots, index) =>
+              slots?.gameType === "Slots" ? (
+                <SwiperSlide key={index}>
+                  <div className="text-center">
+                    <img
+                      src={slots.gameImage}
+                      className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
+                      alt="Not Found"
+                      onClick={() => handleAllGame(slots?.gameName, slots?.id)}
+                    />
+                    <div className="flex items-center mt-1">
+                      <span className="relative flex h-3 w-3 mr-1">
+                        <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-[#1fff20] opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1fff20]"></span>
+                      </span>
+                      <p>{slots?.gameRating}</p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ) : null
+            )}
+          </Swiper>
+        ) : (
+          <div className="grid grid-cols-6 gap-x-4 gap-y-5">
+            {allGames?.games?.map((slots, index) =>
+              slots?.gameType === "Slots" ? (
+                <div key={index}>
+                  <div className="text-center">
+                    <img
+                      src={slots.gameImage}
+                      className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
+                      alt="Not Found"
+                      onClick={() => handleAllGame(slots?.gameName, slots?.id)}
+                    />
+                    <div className="flex items-center mt-1">
+                      <span className="relative flex h-3 w-3 mr-1">
+                        <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-[#1fff20] opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1fff20]"></span>
+                      </span>
+                      <p>{slots?.gameRating}</p>
+                    </div>
+                  </div>
+                </div>
+              ) : null
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

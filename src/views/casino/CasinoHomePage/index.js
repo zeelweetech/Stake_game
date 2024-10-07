@@ -21,6 +21,8 @@ function CasinoHomePage() {
   const [loading, setLoading] = useState(false);
   const [allGames, setAllGames] = useState();
 
+  const isLobby = stackMenu === "Lobby";
+
   const menuItems = [
     { label: "Lobby", icon: <TbCherryFilled color="#b1bad3" fontSize={15} /> },
     {
@@ -98,22 +100,22 @@ function CasinoHomePage() {
 
           {stackMenu === "Lobby" ? (
             <div>
-              <StackOriginals allGames={allGames} setLoading={setLoading} />
-              <Slots setLoading={setLoading} />
-              <LiveCasino setLoading={setLoading} />
-              <GameShows setLoading={setLoading} />
-              <Exclusives setLoading={setLoading} />
+              <StackOriginals allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
+              <Slots allGames={allGames} setLoading={setLoading} isLobby={isLobby}/>
+              <LiveCasino allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
+              <GameShows allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
+              <Exclusives allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
             </div>
           ) : stackMenu === "Stack Originals" ? (
-            <StackOriginals allGames={allGames} setLoading={setLoading} />
+            <StackOriginals allGames={allGames} setLoading={setLoading} isLobby={false} />
           ) : stackMenu === "Slot" ? (
-            <Slots setLoading={setLoading} />
+            <Slots allGames={allGames} setLoading={setLoading} isLobby={false}/>
           ) : stackMenu === "Live Casino" ? (
-            <LiveCasino setLoading={setLoading} />
+            <LiveCasino allGames={allGames} setLoading={setLoading} isLobby={false} />
           ) : stackMenu === "Game Shows" ? (
-            <GameShows setLoading={setLoading} />
+            <GameShows allGames={allGames} setLoading={setLoading} isLobby={false} />
           ) : stackMenu === "Stake Exclusives" ? (
-            <Exclusives setLoading={setLoading} />
+            <Exclusives allGames={allGames} setLoading={setLoading} isLobby={false} />
           ) : (
             <div className="text-center pt-5">Comming As soon New Releases</div>
           )}
