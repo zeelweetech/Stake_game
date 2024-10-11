@@ -4,6 +4,7 @@ import CrashGame from "./CrashGame";
 import PlinkoGame from "./PlinkoGame";
 import HomePage from "../../Homepage";
 import MinesGame from "./MinesGame";
+import LimboGame from "./LimboGame";
 
 function GameContainer() {
   const { gameName } = useParams();
@@ -13,11 +14,11 @@ function GameContainer() {
       case "Crash":
         return <CrashGame />;
       case "Plinko":
-        return <PlinkoGame />;  
-        case "Miens":
-          return <MinesGame />;
-      //   case "Limbo":
-      //     return <HomePage />;
+        return <PlinkoGame />;
+      case "Miens":
+        return <MinesGame />;
+      case "Limbo":
+        return <LimboGame />;
       //   case "Wheel":
       //     return <HomePage />;
       //   case "Dragon Tower":
