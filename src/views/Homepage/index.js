@@ -37,7 +37,7 @@ function MainHomePage() {
       ) : (
         <div className="text-white">
           <Mainbar />
-          <div className="px-44 mt-8">
+          <div className="xl:px-44 lg:px-14 mt-8">
             <StackOriginals allGames={allGames} setLoading={setLoading}/>
             <Slots allGames={allGames}/>
             <LiveCasino allGames={allGames}/>

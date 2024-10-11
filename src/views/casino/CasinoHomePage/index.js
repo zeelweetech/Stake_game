@@ -57,8 +57,6 @@ function CasinoHomePage() {
       });
   };
 
-  console.log('allGames ++++++++ ', allGames);
-
   return (
     <div className="flex justify-center h-screen bg-[#1a2c38]">
       {loading ? (

@@ -1,23 +1,62 @@
 import React, { useState } from "react";
-import { Divider } from "@mui/material";
+import { Divider, TextField } from "@mui/material";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { IoInfiniteSharp } from "react-icons/io5";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
-import { openRegisterModel } from "../../../../features/auth/authSlice";
-import {setMineValue} from "../../../../features/casino/minesSlice"
+import {
+  setGameBet,
+  setGamesOver,
+  setMineValue,
+} from "../../../../features/casino/minesSlice";
+import { MineSocket } from "../../../../socket";
+import { decodedToken } from "../../../../resources/utility";
+import { useParams } from "react-router-dom";
 
 function MinesGameSidebar() {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
-  const { bettingStatus, mineValue} = useSelector((state) => state.minesGame);
+  const [showFields, setShowFields] = useState(false);
+  const { bettingStatus, mineValue, gameBet, tileSelect } = useSelector(
+    (state) => state.minesGame
+  );
+  const decoded = decodedToken();
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
-    dispatch(setMineValue({ ...mineValue, [name]: value }))
+    dispatch(setMineValue({ ...mineValue, [name]: value }));
   };
+
+  const onStartGame = () => {
+    dispatch(setGameBet(true));
+    dispatch(setGamesOver(false));
+  };
+
+  const handleBetClick = () => {
+    if (!gameBet) {
+      onStartGame(mineValue.betamount);
+      setShowFields(true);
+
+      MineSocket.emit("minePlaceBet", {
+        userId: decoded?.userId.toString(),
+        gameId: id,
+        totalMines: mineValue?.mines,
+        betAmount: mineValue?.betamount,
+      });
+    } else {
+      dispatch(setGamesOver(true));
+      dispatch(setGameBet(false));
+      setShowFields(false);
+      MineSocket.emit("cashout", {
+        userId: decoded?.userId.toString(),
+        gameId: id,
+      });
+    }
+  };
+  const gems = 25 - mineValue?.mines || 0;
 
   return (
     <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
@@ -72,52 +111,87 @@ function MinesGameSidebar() {
             />
             <button className="w-16 text-xs hover:bg-[#5c849e68]">2x</button>
           </div>
-          <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
-            <label>Mines</label>
-          </div>
-          <div className="relative flex">
-            <select
-              type="select"
-              name="mines"
-              value={mineValue?.mines}
-              onChange={(e) => handleOnChange(e)}
-              className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
-            >
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-              <option value={7}>7</option>
-              <option value={8}>8</option>
-              <option value={9}>9</option>
-              <option value={10}>10</option>
-              <option value={11}>11</option>
-              <option value={12}>12</option>
-              <option value={13}>13</option>
-              <option value={14}>14</option>
-              <option value={15}>15</option>
-              <option value={16}>16</option>
-              <option value={17}>17</option>
-              <option value={18}>18</option>
-              <option value={19}>19</option>
-              <option value={20}>20</option>
-              <option value={21}>21</option>
-              <option value={22}>22</option>
-              <option value={23}>23</option>
-              <option value={24}>24</option>
-            </select>
-          </div>
+
+          {showFields ? (
+            <div>
+              <div className="flex space-x-2">
+                <div>
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                    <label>Mines</label>
+                  </div>
+                  <div className="bg-[#2f4553] border border-[#0e2433] xl:w-36 lg:w-[7.4rem] p-2 mt-2.5">
+                    {mineValue?.mines}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                    <label>Gems</label>
+                  </div>
+                  <div className="bg-[#2f4553] border border-[#0e2433] xl:w-36 lg:w-[7.4rem] p-2 mt-2.5">
+                    {gems}
+                  </div>
+                </div>
+              </div>
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                <label>Total Profit ({tileSelect?.multiplier ? tileSelect?.multiplier : '0.00'})</label>
+                <label>$0.00</label>
+              </div>
+              <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
+                <p>0.000000000</p>
+                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+              </div>
+              <button className="bg-[#2f4553] border border-[#0e2433] w-full p-2 mt-2.5">
+                Pick random tile
+              </button>
+            </div>
+          ) : (
+            <div>
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                <label>Mines</label>
+              </div>
+              <div className="relative flex">
+                <select
+                  type="select"
+                  name="mines"
+                  value={mineValue?.mines}
+                  onChange={(e) => handleOnChange(e)}
+                  className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                >
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                  <option value={6}>6</option>
+                  <option value={7}>7</option>
+                  <option value={8}>8</option>
+                  <option value={9}>9</option>
+                  <option value={10}>10</option>
+                  <option value={11}>11</option>
+                  <option value={12}>12</option>
+                  <option value={13}>13</option>
+                  <option value={14}>14</option>
+                  <option value={15}>15</option>
+                  <option value={16}>16</option>
+                  <option value={17}>17</option>
+                  <option value={18}>18</option>
+                  <option value={19}>19</option>
+                  <option value={20}>20</option>
+                  <option value={21}>21</option>
+                  <option value={22}>22</option>
+                  <option value={23}>23</option>
+                  <option value={24}>24</option>
+                </select>
+              </div>
+            </div>
+          )}
           <button
-            className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full"
-            onClick={() => {
-              if (!localStorage.getItem("token")) {
-                dispatch(openRegisterModel());
-              }
-            }}
+            className={`${
+              gameBet ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
+            } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+            onClick={handleBetClick}
           >
-            Bet
+            {gameBet ? "Cashout" : "Bet"}
           </button>
         </div>
       ) : (
@@ -137,7 +211,7 @@ function MinesGameSidebar() {
                 placeholder="0.00"
                 step="0.01"
                 name="betamount"
-                // value={crashValues?.betamount} 
+                // value={crashValues?.betamount}
                 onChange={(e) => handleOnChange(e)}
               />
             </div>

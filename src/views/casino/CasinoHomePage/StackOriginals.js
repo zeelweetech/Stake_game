@@ -8,16 +8,26 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { decodedToken } from "../../../resources/utility";
+import { MineSocket } from "../../../socket";
 
 function StackOriginals({ allGames, isLobby }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const swiperRef = useRef(null);
   const navButtonsRef = useRef(null);
+  const decoded = decodedToken();
 
   const handleAllGame = (gameName, id) => {
     setLoading(true);
     navigate(`/casino/${gameName}/${id}`);
+
+    if(gameName === "Miens") {
+      MineSocket.emit("joinGame", {
+        userId: decoded?.userId,
+        gameId: id,
+      });
+    }
   };
 
   useEffect(() => {
