@@ -1,22 +1,33 @@
 import React, { useState } from "react";
-import { Divider } from "@mui/material";
+import { Divider, TextField } from "@mui/material";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { IoInfiniteSharp } from "react-icons/io5";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
-import {setMineValue} from "../../../../features/casino/minesSlice"
+import { setMineValue } from "../../../../features/casino/minesSlice";
 
 function MinesGameSidebar() {
   const dispatch = useDispatch();
   const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
-  const { bettingStatus, mineValue} = useSelector((state) => state.minesGame);
+  const [showFields, setShowFields] = useState(false);
+  const { bettingStatus, mineValue } = useSelector((state) => state.minesGame);
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
-    dispatch(setMineValue({ ...mineValue, [name]: value }))
+    dispatch(setMineValue({ ...mineValue, [name]: value }));
+  };
+
+  const handleBetClick = () => {
+    if (!gameStarted) {
+      onStartGame(mineValue.betamount);
+      setShowFields(true);
+    } else {
+      onCashOut();
+      setShowFields(false);
+    }
   };
 
   return (
@@ -109,6 +120,50 @@ function MinesGameSidebar() {
               <option value={24}>24</option>
             </select>
           </div>
+          {showFields ? (
+            <div>
+              <div className="flex space-x-2">
+                <div>
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                    <label>Mines</label>
+                  </div>
+                  <TextField
+                    id="outlined-basic"
+                    type="number"
+                    size="small"
+                    value={mineValue?.mines}
+                    variant="outlined"
+                    className="bg-[#2f4553] border border-[#0e2433]"
+                  />
+                </div>
+                <div>
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                    <label>Gems</label>
+                  </div>
+                  <TextField
+                    id="outlined-basic"
+                    type="number"
+                    size="small"
+                    variant="outlined"
+                    className="bg-[#2f4553] border border-[#0e2433]"
+                  />
+                </div>
+              </div>
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                <label>Total Profit (0.00x)</label>
+                <label>$0.00</label>
+              </div>
+              <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
+                <p>0.000000000</p>
+                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+              </div>
+              <button className="bg-[#2f4553] border border-[#0e2433] w-full p-2 mt-2.5">
+                Pick random tile
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
           <button
             className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full"
             onClick={() => {
@@ -137,7 +192,7 @@ function MinesGameSidebar() {
                 placeholder="0.00"
                 step="0.01"
                 name="betamount"
-                // value={crashValues?.betamount} 
+                // value={crashValues?.betamount}
                 onChange={(e) => handleOnChange(e)}
               />
             </div>
