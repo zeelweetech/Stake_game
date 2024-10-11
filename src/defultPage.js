@@ -34,11 +34,11 @@ function DefultPage() {
 
   return (
     <div className="bg-white flex flex-col justify-center item-center h-screen">
-      <div className="flex space-x-2 justify-center">
+      <div className="flex space-x-4 justify-center item-center">
         <div className="mb-1 relative">
           <label className="text-xl font-bold p-2">Password* :</label>
           <input
-            className={`border-2 rounded w-50 border-gray-600`}
+            className={`border-2 rounded w-50 p-2 border-gray-600`}
             type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
@@ -46,14 +46,14 @@ function DefultPage() {
             onChange={(e) => handleOnChange(e)}
           />
           <div
-            className="absolute inset-y-0 right-0 mt-7 pr-3 flex items-center cursor-pointer text-[#b1bad3]"
+            className="absolute inset-y-0 right-0 mt-1 pr-3 flex items-center cursor-pointer text-[#b1bad3]"
             onClick={togglePasswordVisibility}
           >
             {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
           </div>
         </div>
         <button
-          className="bg-green-500 p-2 text-xl font-semibold hover:bg-green  -400"
+          className="bg-green-500 rounded p-2 text-xl font-semibold hover:bg-green-400 "
           onClick={(e) => handleOnSubmit(e)}
         >
           Submit
