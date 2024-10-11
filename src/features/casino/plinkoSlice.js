@@ -7,7 +7,6 @@ const initialState = {
     rows: 16,
     numberofbets: "",
   },
-  lastMultipliers: [],
   score: 0,
   balls: [],
   pins: [],
@@ -15,6 +14,7 @@ const initialState = {
   finalMultiplier: "",
   stopAutoBet: false,
   completeBetStatus: false,
+  lastMultipliers: [],
 };
 
 const plinkoGameSlice = createSlice({

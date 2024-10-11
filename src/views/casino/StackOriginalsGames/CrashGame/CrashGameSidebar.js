@@ -485,13 +485,37 @@ const CrashGameSidebar = () => {
                     onChange={(e) => handleOnChange(e)}
                   />
                 </div>
-                <button className="w-16 hover:bg-[#5c849e68]">1/2</button>
+                <button
+                  className="w-16 hover:bg-[#5c849e68]"
+                  onClick={() =>
+                    dispatch(
+                      setCrashValues({
+                        ...crashValues,
+                        betamount: crashValues?.betamount / 2,
+                      })
+                    )
+                  }
+                >
+                  1/2
+                </button>
                 <Divider
                   flexItem
                   orientation="vertical"
                   sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
                 />
-                <button className="w-16 hover:bg-[#5c849e68]">2x</button>
+                <button
+                  className="w-16 hover:bg-[#5c849e68]"
+                  onClick={() =>
+                    dispatch(
+                      setCrashValues({
+                        ...crashValues,
+                        betamount: crashValues?.betamount * 2,
+                      })
+                    )
+                  }
+                >
+                  2x
+                </button>
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold mt-3 mb-1">
                 <label>Cashout At</label>
