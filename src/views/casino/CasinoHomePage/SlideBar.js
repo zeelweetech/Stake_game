@@ -64,20 +64,6 @@ function SlideBar() {
   return (
     <div className="w-full max-w-screen-xl relative">
       <div className="flex items-center">
-        {/* Previous Button */}
-        <div
-          className="swiper-button-prev text-base"
-          style={{
-            display: swiperState.isBeginning ? "none" : "block",
-            fontSize: "10px",
-            color: "white",
-            marginRight: "10px",
-          }}
-        >
-          Prev
-        </div>
-
-        {/* Swiper Slides */}
         <Swiper
           navigation={true}
           modules={[Navigation]}
@@ -126,19 +112,6 @@ function SlideBar() {
             </SwiperSlide>
           ))}
         </Swiper>
-
-        {/* Next Button */}
-        <div
-          className={`swiper-button-next`}
-          style={{
-            display: swiperState.isEnd ? "none" : "block",
-            fontSize: "10px",
-            color: "white",
-            marginLeft: "10px",
-          }}
-        >
-          Next
-        </div>
       </div>
     </div>
   );

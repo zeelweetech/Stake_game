@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BsFire } from "react-icons/bs";
+import { BsBookmarkStarFill } from "react-icons/bs";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Box, Divider } from "@mui/material";
@@ -9,7 +9,7 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-function StackOriginals({ allGames, isLobby }) {
+function Exclusives({ allGames, isLobby }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const swiperRef = useRef(null);
@@ -35,11 +35,11 @@ function StackOriginals({ allGames, isLobby }) {
     <div>
       <div className="flex justify-between items-center">
         <div className="flex items-center mx-3 mt-8 space-x-2">
-          <BsFire
-            fontSize={20}
+          <BsBookmarkStarFill
+            fontSize="small"
             className="text-[#b1bad3] hover:text-white"
           />
-          <Link className="text-lg font-medium">Stack Originals</Link>
+          <Link className="text-lg font-medium">Stake Exclusives</Link>
         </div>
         {isLobby && (
           <div ref={navButtonsRef}>
@@ -85,22 +85,22 @@ function StackOriginals({ allGames, isLobby }) {
             modules={[Navigation]}
             ref={swiperRef}
           >
-            {allGames?.games?.map((gameData, index) =>
-              gameData?.gameType === "casino" || gameData?.gameType === "Casino" ? (
+            {allGames?.games?.map((exclusives, index) =>
+              exclusives?.gameType === "StackExclusives" ? (
                 <SwiperSlide key={index}>
                   <div className="text-center">
                     <img
-                      src={gameData.gameImage}
+                      src={exclusives.gameImage}
                       className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
                       alt="Not Found"
-                      onClick={() => handleAllGame(gameData?.gameName, gameData?.id)}
+                      onClick={() => handleAllGame(exclusives?.gameName, exclusives?.id)}
                     />
                     <div className="flex items-center mt-1">
                       <span className="relative flex h-3 w-3 mr-1">
                         <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-[#1fff20] opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1fff20]"></span>
                       </span>
-                      <p>{gameData?.gameRating}</p>
+                      <p>{exclusives?.gameRating}</p>
                     </div>
                   </div>
                 </SwiperSlide>
@@ -109,22 +109,22 @@ function StackOriginals({ allGames, isLobby }) {
           </Swiper>
         ) : (
           <div className="grid grid-cols-6 gap-x-4 gap-y-5">
-            {allGames?.games?.map((gameData, index) =>
-              gameData?.gameType === "casino" || gameData?.gameType === "Casino" ? (
+            {allGames?.games?.map((exclusives, index) =>
+              exclusives?.gameType === "StackExclusives" ? (
                 <div key={index}>
                   <div className="text-center">
                     <img
-                      src={gameData.gameImage}
+                      src={exclusives.gameImage}
                       className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
                       alt="Not Found"
-                      onClick={() => handleAllGame(gameData?.gameName, gameData?.id)}
+                      onClick={() => handleAllGame(exclusives?.gameName, exclusives?.id)}
                     />
                     <div className="flex items-center mt-1">
                       <span className="relative flex h-3 w-3 mr-1">
                         <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-[#1fff20] opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1fff20]"></span>
                       </span>
-                      <p>{gameData?.gameRating}</p>
+                      <p>{exclusives?.gameRating}</p>
                     </div>
                   </div>
                 </div>
@@ -137,4 +137,6 @@ function StackOriginals({ allGames, isLobby }) {
   );
 }
 
-export default StackOriginals;
+export default Exclusives;
+
+

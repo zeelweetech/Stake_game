@@ -68,11 +68,11 @@ code {
 
 .multiplier-label {
   position: absolute;
-  color: white; /* Adjust text color as needed */
+  color: white; 
   font-size: 10px;
   text-align: center;
-  width: 40px; /* Width of each label container */
-  transform: translateX(-50%); /* Center the text */
+  width: 40px; 
+  transform: translateX(-50%); 
 }
 
 @keyframes fadeIn {
@@ -89,6 +89,28 @@ code {
 .fade-in {
   animation: fadeIn 0.5s ease-in-out;
 }
+
+@keyframes zoomInOut {
+  0%, 100% {
+    transform: scale(1);
+    /* background: #071824; */
+  }
+  0%, 70% {
+    background: #2f4553;
+  }
+  70%, 100% {
+    background: #071824;
+  }
+  50% {
+    transform: scale(0.9);
+    /* background: #2f4553; */
+  }
+}
+
+.zoom-in-out {
+  animation: zoomInOut 2s ease-in-out;
+}
+
 
 @tailwind base;
 @tailwind components;

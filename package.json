@@ -31,7 +31,7 @@
     "recharts": "^2.12.7",
     "socket.io-client": "^4.7.5",
     "styled-components": "^6.1.12",
-    "swiper": "^11.1.10",
+    "swiper": "^11.1.14",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

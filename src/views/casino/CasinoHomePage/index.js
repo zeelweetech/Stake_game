@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "../../component/Loader";
 import SlideBar from "./SlideBar";
 import StackOriginals from "./StackOriginals";
@@ -10,10 +10,18 @@ import { FaGift } from "react-icons/fa6";
 import { IoIosRocket } from "react-icons/io";
 import { BsBookmarkStarFill } from "react-icons/bs";
 import InboxIcon from "@mui/icons-material/Inbox";
+import Slots from "./Slots";
+import LiveCasino from "./LiveCasino";
+import GameShows from "./GameShows";
+import Exclusives from "./Exclusives";
+import { getAllGames } from "../../../services/GameServices";
 
 function CasinoHomePage() {
   const [stackMenu, setStackMenu] = useState("Lobby");
   const [loading, setLoading] = useState(false);
+  const [allGames, setAllGames] = useState();
+
+  const isLobby = stackMenu === "Lobby";
 
   const menuItems = [
     { label: "Lobby", icon: <TbCherryFilled color="#b1bad3" fontSize={15} /> },
@@ -21,7 +29,7 @@ function CasinoHomePage() {
       label: "Stack Originals",
       icon: <BsFire color="#b1bad3" fontSize={15} />,
     },
-    { label: "Slots", icon: <Filter7Icon className="text-[#b1bad3]" /> },
+    { label: "Slot", icon: <Filter7Icon className="text-[#b1bad3]" /> },
     { label: "Live Casino", icon: <InboxIcon className="text-[#b1bad3]" /> },
     { label: "Game Shows", icon: <FaGift color="#b1bad3" fontSize={15} /> },
     {
@@ -33,6 +41,23 @@ function CasinoHomePage() {
       icon: <IoIosRocket color="#b1bad3" fontSize={20} />,
     },
   ];
+
+  useEffect(() => {
+    GetAllGames();
+  }, []);
+
+  const GetAllGames = async () => {
+    await getAllGames()
+      .then((response) => {
+        console.log("response", response);
+        setAllGames(response);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  console.log('allGames ++++++++ ', allGames);
 
   return (
     <div className="flex justify-center h-screen bg-[#1a2c38]">
@@ -73,18 +98,24 @@ function CasinoHomePage() {
             </div>
           </div>
 
-          {stackMenu === "Lobby" || stackMenu === "Stack Originals" ? (
-            <StackOriginals setLoading={setLoading} />
-          ) : stackMenu === "Slots" ? (
-            <div className="text-center pt-5">Comming As soon Slots</div>
-          ) : stackMenu === "Live Casino" ? (
-            <div className="text-center pt-5">Comming As soon Live Casino</div>
-          ) : stackMenu === "Game Shows" ? (
-            <div className="text-center pt-5">Comming As soon Game Shows</div>
-          ) : stackMenu === "Stake Exclusives" ? (
-            <div className="text-center pt-5">
-              Comming As soon Stake Exclusives
+          {stackMenu === "Lobby" ? (
+            <div>
+              <StackOriginals allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
+              <Slots allGames={allGames} setLoading={setLoading} isLobby={isLobby}/>
+              <LiveCasino allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
+              <GameShows allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
+              <Exclusives allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
             </div>
+          ) : stackMenu === "Stack Originals" ? (
+            <StackOriginals allGames={allGames} setLoading={setLoading} isLobby={false} />
+          ) : stackMenu === "Slot" ? (
+            <Slots allGames={allGames} setLoading={setLoading} isLobby={false}/>
+          ) : stackMenu === "Live Casino" ? (
+            <LiveCasino allGames={allGames} setLoading={setLoading} isLobby={false} />
+          ) : stackMenu === "Game Shows" ? (
+            <GameShows allGames={allGames} setLoading={setLoading} isLobby={false} />
+          ) : stackMenu === "Stake Exclusives" ? (
+            <Exclusives allGames={allGames} setLoading={setLoading} isLobby={false} />
           ) : (
             <div className="text-center pt-5">Comming As soon New Releases</div>
           )}

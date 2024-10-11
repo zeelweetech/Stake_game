@@ -3,12 +3,14 @@ import { useSelector } from "react-redux";
 import DiamondEffect from "../../../../assets/Sound/winSound.wav";
 import bombIcon from "../../../../assets/img/bomb.svg";
 import diamondIcon from "../../../../assets/img/Diamond.png";
+import bombAnimation from "../../../../assets/Animation/bombAnimation.webp";
 
 function MinesGameContent() {
   const [gameOver, setGameOver] = useState(false);
   const [randomMines, setRandomMines] = useState([]);
   const [images, setImages] = useState(Array(25).fill(null));
   const [revealed, setRevealed] = useState(Array(25).fill(false));
+  const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
   const { mineValue } = useSelector((state) => state.minesGame);
 
   useEffect(() => {
@@ -29,6 +31,7 @@ function MinesGameContent() {
     setGameOver(false);
     setImages(Array(25).fill(null));
     setRevealed(Array(25).fill(false));
+    setZoomClass(Array(25).fill(false));
   };
 
   const handleClick = (index) => {
@@ -36,17 +39,30 @@ function MinesGameContent() {
 
     const newImages = [...images];
     const newRevealed = [...revealed];
+    const newZoomClass = [...zoomClass];
 
     if (randomMines.includes(index)) {
-      setGameOver(true);
-      newImages[index] = bombIcon;
-      newRevealed[index] = true;
-      revealAll(newImages);
+      // setTimeout(() => {
+        setGameOver(true);
+        newImages[index] = bombIcon;
+        newRevealed[index] = true;
+        // newZoomClass[index] = true;
+        // const Animations = new Animation(bombAnimation)
+        // Animations.apply()
+        // setZoomClass(newZoomClass);
+        revealAll(newImages);
+      // }, 100);
     } else {
-      newImages[index] = diamondIcon;
-      const sound = new Audio(DiamondEffect);
-      sound.play();
-      newRevealed[index] = true;
+      setTimeout(() => {
+        newImages[index] = diamondIcon;
+        const sound = new Audio(DiamondEffect);
+        sound.play();
+        newRevealed[index] = true;
+        newZoomClass[index] = true;
+        setZoomClass(newZoomClass);
+        setImages(newImages);
+        setRevealed(newRevealed);
+      }, 100);
     }
 
     setImages(newImages);
@@ -78,14 +94,27 @@ function MinesGameContent() {
         {images.map((img, index) => (
           <div
             key={index}
-            className="flex justify-center items-center xl:w-28 lg:w-[6.5rem] xl:h-28 lg:h-[6.5rem] bg-[#2f4553] rounded-lg hover:-translate-y-1.5 hover:bg-[#688a9f]"
+            className={`flex justify-center items-center xl:w-28 lg:w-[6.5rem] xl:h-28 lg:h-[6.5rem] bg-[#2f4553] rounded-lg hover:-translate-y-1.5 hover:bg-[#688a9f] ${
+              zoomClass[index] ? "zoom-in-out" : ""
+            }`}
+            // className="flex justify-center items-center xl:w-28 lg:w-[6.5rem] xl:h-28 lg:h-[6.5rem] bg-[#2f4553] rounded-lg hover:-translate-y-1.5 hover:bg-[#688a9f]"
             onClick={() => handleClick(index)}
             style={{
-              opacity: revealed[index] ? 1 : gameOver ? 0.3 : 1,
+              // backgroundColor: revealed[index] ? "#071824" : "#2f4553",
+              backgroundColor: revealed[index] || gameOver ? "#071824" : "#2f4553",
+              opacity: revealed[index] ? 1 : gameOver ? 0.8 : 1,
               cursor: revealed[index] ? "default" : "pointer",
             }}
           >
-            {img && <img height={80} className="flex justify-center items-center" width={80} src={img} alt="Icon" />}
+            {img && ( 
+              <img
+                height={90}
+                width={90}
+                className="flex justify-center items-center"
+                src={img}
+                alt="Icon"
+              />
+            )}
           </div>
         ))}
       </div>
