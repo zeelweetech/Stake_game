@@ -5,7 +5,7 @@ const CrashURL = "http://192.168.29.203:3003";
 const PlinkoURL = "http://192.168.29.203:3004";
 const MineURL = "http://192.168.29.203:3005";
 // const WheelURL = "http://192.168.29.203:3006";
-// const LimboURL = "http://192.168.29.203:3007";
+const LimboURL = "http://192.168.29.203:3007";
 // const DragonTowerURL = "http://192.168.29.203:3008";
 
 const token = localStorage.getItem("token");
@@ -16,8 +16,6 @@ const token = localStorage.getItem("token");
 //     Authorization: `token: ${token}`,
 //   },
 // });
-
-console.log("*********");
 
 export const CrashSocket = io(CrashURL, {
   path: "/ws",
@@ -47,12 +45,12 @@ export const MineSocket = io(MineURL, {
 //   },
 // });
 
-// export const LimboSocket = io(LimboURL, {
-//   path: "/ws",
-//   extraHeaders: {
-//     Authorization: `token: ${token}`,
-//   },
-// });
+export const LimboSocket = io(LimboURL, {
+  path: "/ws",
+  extraHeaders: {
+    Authorization: `token: ${token}`,
+  },
+});
 
 // export const DragonTowerSocket = io(DragonTowerURL, {
 //   path: "/ws",

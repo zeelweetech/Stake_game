@@ -11,6 +11,7 @@ import {
 } from "../../../../features/casino/plinkoSlice";
 import { PlinkoSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
+import toast from "react-hot-toast";
 
 function PlinkoGameSidebar() {
   const dispatch = useDispatch();
@@ -316,6 +317,7 @@ function PlinkoGameSidebar() {
                 />
               </div>
             </div>
+            {console.log("values", values)}
             {stopAutoBet ? (
               <button
                 className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
@@ -326,7 +328,11 @@ function PlinkoGameSidebar() {
             ) : (
               <button
                 className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
-                onClick={() => handleOnBet("autoBet")}
+                onClick={() =>
+                  values?.numberofbets === "" || 0
+                    ? toast.error("Please enter a number of bets")
+                    : handleOnBet("autoBet")
+                }
               >
                 Start Autobet
               </button>

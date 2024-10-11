@@ -1,5 +1,9 @@
 import { useDispatch } from "react-redux";
-import { setCompleteBetStatus } from "../../../../../../features/casino/plinkoSlice";
+import {
+  setCompleteBetStatus,
+  setLastMultipliers,
+  setStopAutoBet,
+} from "../../../../../../features/casino/plinkoSlice";
 import {
   HEIGHT,
   WIDTH,
@@ -32,7 +36,7 @@ export default class BallManager {
     this.dispatch = dispatch;
   }
 
-  addBall(startX) {
+  addBall(startX, lastMultipliers) {
     console.log("startX", startX?.point, startX?.multiplier);
 
     const newBall = new Ball(
@@ -50,7 +54,19 @@ export default class BallManager {
         const data = this.sinks?.find((item) => {
           return item?.multiplier === startX?.multiplier;
         });
-        console.log("^^^^^^^^^", data);
+        // Get the current lastMultipliers array from the Redux state
+        const currentMultipliers = Array.isArray(lastMultipliers)
+          ? lastMultipliers
+          : [];
+
+        // Add the new data and limit the array to the last 4 items
+        const updatedMultipliers = [...currentMultipliers, data].slice(-4);
+
+        // Dispatch the updated array
+        this.dispatch(setLastMultipliers(updatedMultipliers));
+        if (startX?.remainingBets === 1) {
+          this.dispatch(setStopAutoBet(false));
+        }
       }
     );
     this.balls.push(newBall);

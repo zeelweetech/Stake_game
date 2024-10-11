@@ -112,7 +112,45 @@ function MinesGameSidebar() {
             <button className="w-16 text-xs hover:bg-[#5c849e68]">2x</button>
           </div>
 
-          {showFields ? (
+          <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+            <label>Mines</label>
+          </div>
+          <div className="relative flex">
+            <select
+              type="select"
+              name="mines"
+              value={mineValue?.mines}
+              onChange={(e) => handleOnChange(e)}
+              className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={6}>6</option>
+              <option value={7}>7</option>
+              <option value={8}>8</option>
+              <option value={9}>9</option>
+              <option value={10}>10</option>
+              <option value={11}>11</option>
+              <option value={12}>12</option>
+              <option value={13}>13</option>
+              <option value={14}>14</option>
+              <option value={15}>15</option>
+              <option value={16}>16</option>
+              <option value={17}>17</option>
+              <option value={18}>18</option>
+              <option value={19}>19</option>
+              <option value={20}>20</option>
+              <option value={21}>21</option>
+              <option value={22}>22</option>
+              <option value={23}>23</option>
+              <option value={24}>24</option>
+            </select>
+          </div>
+
+          {showFields && (
             <div>
               <div className="flex space-x-2">
                 <div>
@@ -122,6 +160,13 @@ function MinesGameSidebar() {
                   <div className="bg-[#2f4553] border border-[#0e2433] xl:w-36 lg:w-[7.4rem] p-2 mt-2.5">
                     {mineValue?.mines}
                   </div>
+                  <TextField
+                    type="number"
+                    size="small"
+                    value={mineValue?.mines}
+                    variant="outlined"
+                    className="bg-[#2f4553] border border-[#0e2433]"
+                  />
                 </div>
                 <div>
                   <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
@@ -133,7 +178,16 @@ function MinesGameSidebar() {
                 </div>
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
-                <label>Total Profit ({tileSelect?.multiplier ? tileSelect?.multiplier : '0.00'})</label>
+                <label>Total Profit ({tileSelect?.multiplier || "0.00"})</label>
+                <TextField
+                  type="number"
+                  size="small"
+                  variant="outlined"
+                  className="bg-[#2f4553] border border-[#0e2433]"
+                />
+              </div>
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                <label>Total Profit (0.00x)</label>
                 <label>$0.00</label>
               </div>
               <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
@@ -143,46 +197,6 @@ function MinesGameSidebar() {
               <button className="bg-[#2f4553] border border-[#0e2433] w-full p-2 mt-2.5">
                 Pick random tile
               </button>
-            </div>
-          ) : (
-            <div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
-                <label>Mines</label>
-              </div>
-              <div className="relative flex">
-                <select
-                  type="select"
-                  name="mines"
-                  value={mineValue?.mines}
-                  onChange={(e) => handleOnChange(e)}
-                  className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
-                >
-                  <option value={1}>1</option>
-                  <option value={2}>2</option>
-                  <option value={3}>3</option>
-                  <option value={4}>4</option>
-                  <option value={5}>5</option>
-                  <option value={6}>6</option>
-                  <option value={7}>7</option>
-                  <option value={8}>8</option>
-                  <option value={9}>9</option>
-                  <option value={10}>10</option>
-                  <option value={11}>11</option>
-                  <option value={12}>12</option>
-                  <option value={13}>13</option>
-                  <option value={14}>14</option>
-                  <option value={15}>15</option>
-                  <option value={16}>16</option>
-                  <option value={17}>17</option>
-                  <option value={18}>18</option>
-                  <option value={19}>19</option>
-                  <option value={20}>20</option>
-                  <option value={21}>21</option>
-                  <option value={22}>22</option>
-                  <option value={23}>23</option>
-                  <option value={24}>24</option>
-                </select>
-              </div>
             </div>
           )}
           <button
