@@ -6,17 +6,55 @@ import {
   setLimboStatusData,
   setValues,
 } from "../../../../features/casino/limboSlice";
+import {
+  getGameRandomFiveData,
+  getRandomFiveData,
+} from "../../../../services/CasinoServices";
+import { decodedToken } from "../../../../resources/utility";
+import { IoIosTrendingUp } from "react-icons/io";
+import { useParams } from "react-router-dom";
 
 function LimboGameContent() {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const [displayedMultiplier, setDisplayedMultiplier] = useState(1.0);
   const { values, limboStatusData } = useSelector((state) => state.limboGame);
+  const [topXData, setTopXData] = useState();
 
   LimboSocket.on("limbobetResult", (data) => {
     console.log("data", data);
     dispatch(setLimboStatusData(data));
   });
   console.log("limboStatusData", limboStatusData);
+
+  useEffect(() => {
+    if (
+      Math.floor(displayedMultiplier) ===
+      Math.floor(limboStatusData.actualMultiplier)
+    ) {
+      GetRendomFiveData();
+      setDisplayedMultiplier(1.0)
+    }
+  }, [
+    Math.floor(displayedMultiplier) ===
+      Math.floor(limboStatusData.actualMultiplier),
+  ]);
+
+  useEffect(() => {
+    GetRendomFiveData();
+  }, []);
+
+  const GetRendomFiveData = async () => {
+    await getGameRandomFiveData({ id: id })
+      .then((response) => {
+        console.log("resssss", response);
+
+        setTopXData(response?.data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
 
   useEffect(() => {
     if (limboStatusData?.actualMultiplier) {
@@ -70,23 +108,26 @@ function LimboGameContent() {
 
   return (
     <div className="xl:w-[52rem] lg:w-[37rem] h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
-      {/* <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
+      <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
             return (
               <div key={index}>
                 <button
                   className={`p-2.5 ${
-                    item?.crashPoint > 3 ? "bg-[#1fff20]" : "bg-white"
+                    limboStatusData.selectedMultiplier <
+                    limboStatusData.actualMultiplier
+                      ? "bg-[#1fff20]"
+                      : "bg-white"
                   } rounded-full`}
-                >{`${item?.crashPoint}x`}</button>
+                >{`${item?.multiplier}x`}</button>
               </div>
             );
           })}
         <button className="px-2.5 py-2.5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
           <IoIosTrendingUp color="white" />
         </button>
-      </div> */}
+      </div>
       <div className="flex-grow flex items-center justify-center">
         <p className={`text-9xl font-bold ${getLastValueColor()}`}>
           {displayedMultiplier}x

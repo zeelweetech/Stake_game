@@ -31,3 +31,19 @@ export async function getRandomFiveData() {
     throw error;
   }
 }
+
+export async function getGameRandomFiveData({ id: id }) {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_LOCAL_URL}/game/LastFiveCrashPoints/${id}`,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

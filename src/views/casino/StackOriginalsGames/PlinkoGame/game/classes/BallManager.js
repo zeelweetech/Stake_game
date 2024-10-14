@@ -37,8 +37,6 @@ export default class BallManager {
   }
 
   addBall(startX, lastMultipliers) {
-    console.log("startX", startX?.point, startX?.multiplier);
-
     const newBall = new Ball(
       startX?.point || pad(WIDTH / 2 + 13),
       pad(50),
