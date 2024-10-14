@@ -4,31 +4,59 @@ import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { IoInfiniteSharp } from "react-icons/io5";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
-import { openRegisterModel } from "../../../../features/auth/authSlice";
-import { setMineValue } from "../../../../features/casino/minesSlice";
+import {
+  setGameBet,
+  setGamesOver,
+  setMineValue,
+} from "../../../../features/casino/minesSlice";
+import { MineSocket } from "../../../../socket";
+import { decodedToken } from "../../../../resources/utility";
+import { useParams } from "react-router-dom";
 
 function MinesGameSidebar() {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
   const [showFields, setShowFields] = useState(false);
-  const { bettingStatus, mineValue } = useSelector((state) => state.minesGame);
+  const { bettingStatus, mineValue, gameBet, tileSelect } = useSelector(
+    (state) => state.minesGame
+  );
+  const decoded = decodedToken();
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
     dispatch(setMineValue({ ...mineValue, [name]: value }));
   };
 
-  // const handleBetClick = () => {
-  //   if (!gameStarted) {
-  //     onStartGame(mineValue.betamount);
-  //     setShowFields(true);
-  //   } else {
-  //     onCashOut();
-  //     setShowFields(false);
-  //   }
-  // };
+  const onStartGame = () => {
+    dispatch(setGameBet(true));
+    dispatch(setGamesOver(false));
+  };
+
+  const handleBetClick = () => {
+    if (!gameBet) {
+      onStartGame(mineValue.betamount);
+      setShowFields(true);
+
+      MineSocket.emit("minePlaceBet", {
+        userId: decoded?.userId.toString(),
+        gameId: id,
+        totalMines: mineValue?.mines,
+        betAmount: mineValue?.betamount,
+      });
+    } else {
+      dispatch(setGamesOver(true));
+      dispatch(setGameBet(false));
+      setShowFields(false);
+      MineSocket.emit("cashout", {
+        userId: decoded?.userId.toString(),
+        gameId: id,
+      });
+    }
+  };
+  const gems = 25 - mineValue?.mines || 0;
 
   return (
     <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
@@ -83,6 +111,7 @@ function MinesGameSidebar() {
             />
             <button className="w-16 text-xs hover:bg-[#5c849e68]">2x</button>
           </div>
+
           <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
             <label>Mines</label>
           </div>
@@ -120,15 +149,18 @@ function MinesGameSidebar() {
               <option value={24}>24</option>
             </select>
           </div>
-          {showFields ? (
+
+          {showFields && (
             <div>
               <div className="flex space-x-2">
                 <div>
                   <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
                     <label>Mines</label>
                   </div>
+                  <div className="bg-[#2f4553] border border-[#0e2433] xl:w-36 lg:w-[7.4rem] p-2 mt-2.5">
+                    {mineValue?.mines}
+                  </div>
                   <TextField
-                    id="outlined-basic"
                     type="number"
                     size="small"
                     value={mineValue?.mines}
@@ -140,14 +172,19 @@ function MinesGameSidebar() {
                   <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
                     <label>Gems</label>
                   </div>
-                  <TextField
-                    id="outlined-basic"
-                    type="number"
-                    size="small"
-                    variant="outlined"
-                    className="bg-[#2f4553] border border-[#0e2433]"
-                  />
+                  <div className="bg-[#2f4553] border border-[#0e2433] xl:w-36 lg:w-[7.4rem] p-2 mt-2.5">
+                    {gems}
+                  </div>
                 </div>
+              </div>
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                <label>Total Profit ({tileSelect?.multiplier || "0.00"})</label>
+                <TextField
+                  type="number"
+                  size="small"
+                  variant="outlined"
+                  className="bg-[#2f4553] border border-[#0e2433]"
+                />
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
                 <label>Total Profit (0.00x)</label>
@@ -161,18 +198,14 @@ function MinesGameSidebar() {
                 Pick random tile
               </button>
             </div>
-          ) : (
-            ""
           )}
           <button
-            className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full"
-            onClick={() => {
-              if (!localStorage.getItem("token")) {
-                dispatch(openRegisterModel());
-              }
-            }}
+            className={`${
+              gameBet ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
+            } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+            onClick={handleBetClick}
           >
-            Bet
+            {gameBet ? "Cashout" : "Bet"}
           </button>
         </div>
       ) : (

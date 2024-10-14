@@ -15,7 +15,7 @@ function Mainbar() {
   return (
     <div className="w-full">
       <div
-        className="h-80 w-[96.8rem] flex justify-evenly items-center"
+        className="h-80 xl:w-[95.7rem] lg:w-full flex justify-evenly items-center"
         style={{
           backgroundImage: `url(${mainbarBGimage})`,
           backgroundSize: "cover",

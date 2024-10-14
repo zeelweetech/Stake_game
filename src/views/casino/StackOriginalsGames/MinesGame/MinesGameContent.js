@@ -80,8 +80,9 @@ function MinesGameContent() {
     newRevealed[clickedMine] = true;
 
     remainingMines.forEach((mineIndex) => {
-    newImages[mineIndex] = bombIcon;
-    newRevealed[mineIndex] = true;
+      newImages[mineIndex] = bombIcon;
+      newRevealed[mineIndex] = true;
+
     });
 
     revealAll(newImages);
