@@ -8,8 +8,10 @@ const initialState = {
   bettingStatus: "",
   gameBet: false,
   gamesOver: false,
-  tileSelect: '',
-  gameStart: ''
+  tileSelect: "",
+  gameStart: "",
+  minesBetStatus: false,
+  restored : ""
 };
 
 const minesGameSlice = createSlice({
@@ -33,10 +35,25 @@ const minesGameSlice = createSlice({
     },
     setTileSelect(state, action) {
       state.tileSelect = action.payload;
+    },
+    setMinesBetStatus(state, action) {
+      state.minesBetStatus = action.payload;
+    },
+    setRestored(state, action) {
+      state.restored = action.payload
     }
   },
 });
 
-export const { setMineValue, setBettingStatus, setGameBet, setGamesOver, setTileSelect, setGameStart } = minesGameSlice.actions;
+export const {
+  setMineValue,
+  setBettingStatus,
+  setGameBet,
+  setGamesOver,
+  setTileSelect,
+  setGameStart,
+  setMinesBetStatus,
+  setRestored,
+} = minesGameSlice.actions;
 
 export default minesGameSlice.reducer;

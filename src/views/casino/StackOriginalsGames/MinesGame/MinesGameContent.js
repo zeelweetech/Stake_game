@@ -10,6 +10,7 @@ import {
   setGameBet,
   setTileSelect,
   setGameStart,
+  setRestored,
 } from "../../../../features/casino/minesSlice";
 
 function MinesGameContent() {
@@ -18,16 +19,38 @@ function MinesGameContent() {
   const [images, setImages] = useState(Array(25).fill(null));
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
-  const { mineValue, gameBet, gamesOver, gameStart } = useSelector(
-    (state) => state.minesGame
-  );
+  const { gamesOver, gameStart, restored } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
 
   useEffect(() => {
-    MineSocket.on("gameRestored", (data) => {
-      console.log("gameRestored data", data);
+    MineSocket.emit("joinGame", {
+      userId: decoded?.userId,
+      gameId: id,
     });
-  });
+
+    MineSocket.on("gameRestored", (data) => {
+      console.log("gameRestored data *-*-*-*-*--*-*", data);
+      dispatch(setRestored(data))
+
+      const newImages = [...images];
+      const newRevealed = [...revealed];
+
+    data.mineLocations.forEach(({ tileIndex, isMine, selected }) => {
+      if (selected === 1) {
+        newImages[tileIndex] = diamondIcon; 
+        newRevealed[tileIndex] = true; 
+      }
+      
+      if (isMine) {
+        newImages[tileIndex] = bombIcon;
+        newRevealed[tileIndex] = true;
+      }
+    });
+
+    setImages(newImages);
+    setRevealed(newRevealed);
+    });
+  }, []);
 
   MineSocket.on("gameStarted", (data) => {
     console.log("gameStarted data", data);
@@ -82,7 +105,6 @@ function MinesGameContent() {
     remainingMines.forEach((mineIndex) => {
       newImages[mineIndex] = bombIcon;
       newRevealed[mineIndex] = true;
-
     });
 
     revealAll(newImages);
