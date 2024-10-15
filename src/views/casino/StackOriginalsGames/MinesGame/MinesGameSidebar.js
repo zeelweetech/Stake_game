@@ -26,6 +26,7 @@ function MinesGameSidebar() {
     gameBet,
     minesBetStatus,
     tileSelect,
+    restored,
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
 
@@ -38,6 +39,10 @@ function MinesGameSidebar() {
     dispatch(setGameBet(true));
     dispatch(setGamesOver(false));
   };
+
+  MineSocket.on("cashoutSuccess", (data) => {
+    console.log("cashoutSuccess data", data);
+  });
 
   const handleBetClick = () => {
     if (!gameBet) {
@@ -60,7 +65,7 @@ function MinesGameSidebar() {
       });
     }
   };
-  
+
   const gems = 25 - mineValue?.mines || 0;
 
   const pickRandomTile = () => {
@@ -71,6 +76,8 @@ function MinesGameSidebar() {
       tileIndex: index,
     });
   };
+
+  console.log("restored -*/--/-/-*/*-/**-/*-/+--*/*", restored);
 
   return (
     <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
@@ -159,7 +166,7 @@ function MinesGameSidebar() {
             </button>
           </div>
 
-          {showFields ? (
+          {showFields || restored?.mineLocations?.length > 0  ? (
             <div>
               <div className="flex space-x-2">
                 <div>
@@ -180,7 +187,10 @@ function MinesGameSidebar() {
                 </div>
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
-                <label>Total Profit ({tileSelect?.multiplier ? tileSelect?.multiplier : '0.00'}x)</label>
+                <label>
+                  Total Profit (
+                  {tileSelect?.multiplier ? tileSelect?.multiplier : "0.00"}x)
+                </label>
                 <label>$0.00</label>
               </div>
               <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
@@ -244,7 +254,7 @@ function MinesGameSidebar() {
             onClick={handleBetClick}
           >
             {gameBet ? "Cashout" : "Bet"}
-          </button>
+          </button> 
         </div>
       ) : (
         <div>

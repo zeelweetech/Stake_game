@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   mineValue: {
-    betamount: "",
+    betamount: 0,
     mines: 1,
   },
   bettingStatus: "",
@@ -11,7 +11,8 @@ const initialState = {
   tileSelect: "",
   gameStart: "",
   minesBetStatus: false,
-  restored : ""
+  restored : "",
+  images: Array(25).fill(null),
 };
 
 const minesGameSlice = createSlice({
@@ -41,6 +42,9 @@ const minesGameSlice = createSlice({
     },
     setRestored(state, action) {
       state.restored = action.payload
+    },
+    setImages(state, action) {
+      state.images = action.payload
     }
   },
 });
@@ -54,6 +58,7 @@ export const {
   setGameStart,
   setMinesBetStatus,
   setRestored,
+  setImages
 } = minesGameSlice.actions;
 
 export default minesGameSlice.reducer;

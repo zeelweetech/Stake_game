@@ -86,8 +86,26 @@ code {
   }
 }
 
+/* .tile {
+  transition: opacity 0.5s ease;
+}
+
 .fade-in {
-  animation: fadeIn 0.5s ease-in-out;
+  opacity: 1;
+}
+.fade-out {
+  opacity: 0.5; 
+} */
+
+.reveal {
+  transition: opacity 1s ease, transform 1s ease;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hidden {
+  opacity: 0;
+  transform: scale(1);
 }
 
 @keyframes zoomInOut {
