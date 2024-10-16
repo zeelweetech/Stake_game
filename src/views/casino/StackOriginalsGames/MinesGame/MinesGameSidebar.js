@@ -77,8 +77,6 @@ function MinesGameSidebar() {
     });
   };
 
-  console.log("restored -*/--/-/-*/*-/**-/*-/+--*/*", restored);
-
   return (
     <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
