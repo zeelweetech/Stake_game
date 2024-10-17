@@ -11,10 +11,9 @@ const initialState = {
   tileSelect: "",
   gameStart: "",
   minesBetStatus: false,
-  restored : "",
-  images: Array(25).fill(null),
-  revealed: Array(25).fill(false),
-  zoomClass: Array(25).fill(false),
+  restored: "",
+  restoredMultiplier: "",
+  showFields: false
 };
 
 const minesGameSlice = createSlice({
@@ -45,14 +44,11 @@ const minesGameSlice = createSlice({
     setRestored(state, action) {
       state.restored = action.payload
     },
-    setImages(state, action) {
-      state.images = action.payload;
+    setRestoredMultiplier(state, action) {
+      state.restoredMultiplier = action.payload
     },
-    setRevealed(state, action) {
-      state.revealed = action.payload;
-    },
-    setZoomClass(state, action) {
-      state.zoomClass = action.payload;
+    setShowFields(state, action) {
+      state.showFields = action.payload
     },
   },
 });
@@ -66,9 +62,8 @@ export const {
   setGameStart,
   setMinesBetStatus,
   setRestored,
-  setImages,
-  setRevealed,
-  setZoomClass
+  setRestoredMultiplier,
+  setShowFields
 } = minesGameSlice.actions;
 
 export default minesGameSlice.reducer;
