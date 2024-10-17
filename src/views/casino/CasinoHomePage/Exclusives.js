@@ -76,7 +76,7 @@ function Exclusives({ allGames, isLobby }) {
         )}
       </div>
 
-      <div className="relative mt-3">
+      <div className=" ml-2 mr-2 relative mt-3">
         {isLobby ? (
           <Swiper
             slidesPerView={6}
@@ -84,6 +84,33 @@ function Exclusives({ allGames, isLobby }) {
             navigation
             modules={[Navigation]}
             ref={swiperRef}
+            spaceBetween={15}  
+            breakpoints={{
+              320: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+              },
+              375: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+              },
+              425: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+              },
+              640: {
+                slidesPerView: 2,
+                slidesPerGroup: 2,
+              },
+              768: {
+                slidesPerView: 4,
+                slidesPerGroup: 4,
+              },
+              1024: {
+                slidesPerView: 6,
+                slidesPerGroup: 6,
+              },
+            }}
           >
             {allGames?.games?.map((exclusives, index) =>
               exclusives?.gameType === "StackExclusives" ? (
@@ -92,7 +119,7 @@ function Exclusives({ allGames, isLobby }) {
                     <img
                       src={exclusives.gameImage}
                       className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
-                      alt="Not Found"
+                      alt={exclusives?.gameName || "Game Image"} 
                       onClick={() => handleAllGame(exclusives?.gameName, exclusives?.id)}
                     />
                     <div className="flex items-center mt-1">
@@ -108,7 +135,7 @@ function Exclusives({ allGames, isLobby }) {
             )}
           </Swiper>
         ) : (
-          <div className="grid grid-cols-6 gap-x-4 gap-y-5">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0">
             {allGames?.games?.map((exclusives, index) =>
               exclusives?.gameType === "StackExclusives" ? (
                 <div key={index}>
@@ -116,7 +143,7 @@ function Exclusives({ allGames, isLobby }) {
                     <img
                       src={exclusives.gameImage}
                       className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
-                      alt="Not Found"
+                      alt={exclusives?.gameName || "Game Image"} // Improved accessibility
                       onClick={() => handleAllGame(exclusives?.gameName, exclusives?.id)}
                     />
                     <div className="flex items-center mt-1">
@@ -138,5 +165,3 @@ function Exclusives({ allGames, isLobby }) {
 }
 
 export default Exclusives;
-
-

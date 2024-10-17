@@ -86,7 +86,7 @@ function StackOriginals({ allGames, isLobby }) {
         )}
       </div>
 
-      <div className="relative mt-3">
+      <div className=" ml-2 mr-2 relative mt-3">
         {isLobby ? (
           <Swiper
             slidesPerView={6}
@@ -94,6 +94,33 @@ function StackOriginals({ allGames, isLobby }) {
             navigation
             modules={[Navigation]}
             ref={swiperRef}
+            spaceBetween={15}  
+            breakpoints={{
+              320: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+              },
+              375: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+              },
+              425: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+              },
+              640: {
+                slidesPerView: 2,
+                slidesPerGroup: 2,
+              },
+              768: {
+                slidesPerView: 4,
+                slidesPerGroup: 4,
+              },
+              1024: {
+                slidesPerView: 6,
+                slidesPerGroup: 6,
+              },
+            }}
           >
             {allGames?.games?.map((gameData, index) =>
               gameData?.gameType === "casino" || gameData?.gameType === "Casino" ? (
@@ -118,7 +145,7 @@ function StackOriginals({ allGames, isLobby }) {
             )}
           </Swiper>
         ) : (
-          <div className="grid grid-cols-6 gap-x-4 gap-y-5">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0">
             {allGames?.games?.map((gameData, index) =>
               gameData?.gameType === "casino" || gameData?.gameType === "Casino" ? (
                 <div key={index}>
