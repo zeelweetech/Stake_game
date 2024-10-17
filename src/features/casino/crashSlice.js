@@ -12,7 +12,7 @@ const initialState = {
   bettingStatus: "",
   crashStatus: "",
   combinedData: [],
-  multiplier: 0,
+  multiplier: 1,
   socket: null,
   isSocketConnected: false,
 };

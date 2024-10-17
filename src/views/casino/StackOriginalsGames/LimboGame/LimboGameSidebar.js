@@ -8,6 +8,7 @@ import { openRegisterModel } from "../../../../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { LimboSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
+import toast from "react-hot-toast";
 
 function LimboGameSidebar() {
   const dispatch = useDispatch();
@@ -15,6 +16,13 @@ function LimboGameSidebar() {
   const { isSwiper, values } = useSelector((state) => state.limboGame);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   console.log("values", values);
+
+  LimboSocket.on("Insufficientfund", (data) => {
+    toast.error(data?.message);
+  });
+  LimboSocket.on("WalletNotFound", (data) => {
+    toast.error(data?.message);
+  });
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +35,7 @@ function LimboGameSidebar() {
     } else {
       LimboSocket.emit("limboPlaceBet", {
         userId: decoded?.userId,
-        betAmount: values?.betamount,
+        betAmount: values?.betamount ? values?.betamount : 0,
         multiplier: values?.multiplier ? values?.multiplier : 2,
         betType: "Manual",
       });
@@ -45,9 +53,11 @@ function LimboGameSidebar() {
     } else {
       LimboSocket.emit("limboPlaceBet", {
         userId: decoded?.userId,
-        betAmount: values?.betamount,
+        betAmount: values?.betamount ? values?.betamount : 0,
         multiplier: values?.multiplier ? values?.multiplier : 2,
-        autoBetCount: values?.numberofbet,
+        autoBetCount: values?.numberofbet
+          ? parseInt(values?.numberofbet, 10)
+          : 1,
         onWins: parseInt(values?.onwin, 10),
         onLoss: parseInt(values?.onlose, 10),
         stopOnProfit: parseInt(values?.stoponprofit, 10),
@@ -57,6 +67,11 @@ function LimboGameSidebar() {
       dispatch(
         setValues({
           betamount: "",
+          autoBetCount: "",
+          onWins: "",
+          onLoss: "",
+          stopOnProfit: "",
+          stopOnLoss: "",
         })
       );
     }

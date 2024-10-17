@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import { AreaChart, Area, XAxis, YAxis } from "recharts";
 import { Line } from "react-chartjs-2";
 import {
@@ -11,6 +11,8 @@ import {
   Tooltip,
   Legend,
   Filler,
+  Chart,
+  LineController,
 } from "chart.js";
 
 import { IoIosTrendingUp } from "react-icons/io";
@@ -24,6 +26,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { CrashSocket } from "../../../../socket";
 import {
+  setCrashStatus,
   setMultiplier,
   setXValue,
 } from "../../../../features/casino/crashSlice";
@@ -39,7 +42,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Filler
+  Filler,
+  LineController
 );
 
 function CrashGameContent() {
@@ -51,9 +55,13 @@ function CrashGameContent() {
   const [visibleData, setVisibleData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [topXData, setTopXData] = useState();
-  CrashSocket.on("multiplierUpdate", (data) => {
-    dispatch(setMultiplier(data?.multiplier));
-  });
+  const chartRef = useRef(null);
+  const chartInstance = useRef(null);
+  const [chartRefData, setChartRefData] = useState();
+
+  // CrashSocket.on("multiplierUpdate", (data) => {
+  //   dispatch(setMultiplier(data?.multiplier));
+  // });
 
   useEffect(() => {
     if (bettingStatus === true) {
@@ -113,60 +121,159 @@ function CrashGameContent() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(setMultiplier(0));
-    // setData([{ time: 0, value: 0 }]);
+    dispatch(setMultiplier(1));
     setChartData({ labels: [], datasets: [{ data: [] }] });
+    chartRefData?.update();
   }, [bettingStatus === true]);
 
-  // Update chart data on multiplier change
   useEffect(() => {
-    if (!bettingStatus) {
-      setChartData((prevData) => ({
-        labels: [...prevData.labels, prevData.labels.length + 1],
-        datasets: [
-          {
-            data: [...prevData.datasets[0].data, multiplier],
-            borderColor: "rgba(255, 255, 255, 1)",
-            backgroundColor: (ctx) => {
-              const gradient = ctx.chart.ctx.createLinearGradient(0, 0, 0, 400);
-              gradient.addColorStop(0, "rgba(255, 165, 0, 0.5)"); // Bright orange
-              gradient.addColorStop(1, "rgba(255, 165, 0, 0)"); // Transparent
-              return gradient;
-            },
-            // chartData.datasets[0]?.data[
-            //   chartData.datasets[0].data.length - 1
-            // ] === xValue
-            //   ? "#4d718768"
-            //   : "#ffa500",
-            fill: true,
-            tension: 0.6,
-            // lineTension: 0.4,
-            borderWidth: 6,
-            pointRadius: 0,
-          },
-        ],
-      }));
+    const ctx = chartRef.current.getContext("2d");
+
+    // Destroy existing chart instance if it exists to avoid conflicts
+    if (chartInstance.current) {
+      chartInstance.current.destroy();
     }
-  }, [multiplier]);
 
+    // Create gradient fill for the chart background
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(1, "rgba(255, 165, 0, 0.5)");
+    gradient.addColorStop(0, "rgba(255, 165, 0, 0)");
+
+    const data = {
+      labels: [1],
+      datasets: [
+        {
+          label: "Smooth Curved Line",
+          data: [1],
+          borderColor: "rgba(255, 255, 255, 1)",
+          borderWidth: 6,
+          fill: true,
+          backgroundColor: gradient,
+          tension: 0.5,
+          pointRadius: 0,
+          pointBackgroundColor: "rgba(255, 255, 255, 1)",
+        },
+      ],
+    };
+
+    chartInstance.current = new Chart(ctx, {
+      type: "line",
+      data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            title: { display: true, text: "Seconds", color: "#fff" },
+            ticks: { color: "#fff" },
+            grid: { display: false },
+            min: 2,
+          },
+          y: {
+            title: { display: true, text: "Multiplier", color: "#fff" },
+            ticks: { color: "#fff" },
+            grid: { display: false },
+            min: 1,
+          },
+        },
+        animation: { duration: 0 },
+        plugins: { legend: { display: false } },
+      },
+    });
+
+    // Listen for multiplier updates from the server
+    CrashSocket.on("multiplierUpdate", (data) => {
+      const xValue = chartInstance.current.data.labels.length + 1;
+      const newMultiplier = parseFloat(data.multiplier);
+
+      if (!isNaN(newMultiplier)) {
+        const lastMultiplier =
+          chartInstance.current.data.datasets[0].data[
+            chartInstance.current.data.datasets[0].data.length - 1
+          ];
+        const smoothMultiplier = lastMultiplier * 0.9 + newMultiplier * 0.1;
+
+        let tempDataSet = {
+          ...chartInstance.current.data.datasets[0],
+          data: [
+            ...chartInstance.current.data.datasets[0].data,
+            smoothMultiplier,
+          ],
+        };
+
+        let tempData = {
+          ...chartInstance.current.data,
+          datasets: [tempDataSet],
+        };
+
+        chartInstance.current.data = tempData;
+        chartInstance.current.data.labels.push(xValue);
+        chartInstance.current.options.scales.y.max = Math.max(
+          ...data.multipliers
+        );
+
+        chartInstance.current.data.datasets[0].pointRadius =
+          chartInstance.current.data.datasets[0].data.map((val, index) =>
+            index === chartInstance.current.data.datasets[0].data.length - 1
+              ? 6
+              : 0
+          );
+
+        dispatch(setMultiplier(newMultiplier));
+        chartInstance.current.update("silent");
+      } else {
+        console.error("Invalid multiplier:", data);
+      }
+    });
+    setChartRefData(chartInstance.current);
+    CrashSocket.on("gameEnded", () => {
+      chartInstance.current.data.labels = [1];
+      chartInstance.current.data.datasets[0].data = [1];
+      // if (bettingStatus === true) {
+      //   chartInstance.current.update();
+      // }
+      // dispatch(setMultiplier(1));
+      dispatch(setCrashStatus(data));
+    });
+
+    // Cleanup: Destroy the chart and CrashSocket listeners on component unmount
+    return () => {
+      chartInstance.current.destroy();
+      CrashSocket.off("multiplierUpdate");
+      CrashSocket.off("gameEnded");
+    };
+  }, []);
+
+  // Update chart data on multiplier change
   // useEffect(() => {
-  //   handlePlanData(xValue);
+  //   if (!bettingStatus) {
+  //     setChartData((prevData) => ({
+  //       labels: [...prevData.labels, prevData.labels.length + 1],
+  //       datasets: [
+  //         {
+  //           data: [...prevData.datasets[0].data, multiplier],
+  //           borderColor: "rgba(255, 255, 255, 1)",
+  //           backgroundColor: (ctx) => {
+  //             const gradient = ctx.chart.ctx.createLinearGradient(0, 0, 0, 400);
+  //             gradient.addColorStop(0, "rgba(255, 165, 0, 0.5)"); // Bright orange
+  //             gradient.addColorStop(1, "rgba(255, 165, 0, 0)"); // Transparent
+  //             return gradient;
+  //           },
+  //           // chartData.datasets[0]?.data[
+  //           //   chartData.datasets[0].data.length - 1
+  //           // ] === xValue
+  //           //   ? "#4d718768"
+  //           //   : "#ffa500",
+  //           fill: true,
+  //           tension: 0.6,
+  //           // lineTension: 0.4,
+  //           borderWidth: 6,
+  //           pointRadius: 0,
+  //         },
+  //       ],
+  //     }));
+  //   }
   // }, [multiplier]);
-
-  // const handlePlanData = (targetValue) => {
-  //   const interval = setInterval(() => {
-  //     setData((prevData) => [
-  //       ...prevData,
-  //       {
-  //         time: prevData.length,
-  //         value: multiplier,
-  //       },
-  //     ]);
-  //     if (xValue === targetValue) {
-  //       clearInterval(interval);
-  //     }
-  //   }, 1000);
-  // };
 
   const getLastValueColor = () => {
     const lastValue =
@@ -175,26 +282,26 @@ function CrashGameContent() {
   };
 
   // Chart.js options
-  const chartOptions = {
-    scales: {
-      x: {
-        ticks: { color: "white", font: { size: 18 } },
-        grid: { display: false },
-        min: 1,
-      },
-      y: {
-        ticks: { color: "white", font: { size: 18 } },
-        min: 1,
-        grid: { display: false },
-      },
-    },
-    plugins: { legend: { display: false } },
-    maintainAspectRatio: false,
-    responsive: true,
-    animation: {
-      duration: 0, // Disable default animation for immediate updates
-    },
-  };
+  // const chartOptions = {
+  //   scales: {
+  //     x: {
+  //       ticks: { color: "white", font: { size: 18 } },
+  //       grid: { display: false },
+  //       min: 1,
+  //     },
+  //     y: {
+  //       ticks: { color: "white", font: { size: 18 } },
+  //       min: 1,
+  //       grid: { display: false },
+  //     },
+  //   },
+  //   plugins: { legend: { display: false } },
+  //   maintainAspectRatio: false,
+  //   responsive: true,
+  //   animation: {
+  //     duration: 0, // Disable default animation for immediate updates
+  //   },
+  // };
 
   return (
     <div className="xl:w-[52rem] lg:w-[37rem] flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
@@ -207,7 +314,7 @@ function CrashGameContent() {
                   className={`p-2.5 ${
                     item?.crashPoint > 3 ? "bg-[#1fff20]" : "bg-white"
                   } rounded-full`}
-                >{`${item?.crashPoint}x`}</button>
+                >{`${item?.crashPoint}`}</button>
               </div>
             );
           })}
@@ -221,7 +328,13 @@ function CrashGameContent() {
           className="xl:pl-4 lg:pl-2 xl:pr-32 lg:pr-16 "
           style={{ width: "100%", height: "550px" }}
         >
-          <Line id="multiplier-chart" data={chartData} options={chartOptions} />
+          {console.log("chartData***", chartData)}
+          <canvas
+            ref={chartRef}
+            style={{ width: "400px", height: "550px" }}
+          ></canvas>
+          {/* <Line id="multiplier-chart" data={chartData} options={chartOptions} /> */}
+
           {/* <ResponsiveContainer width="100%" height={550}> */}
           {/* <AreaChart
             width={700}

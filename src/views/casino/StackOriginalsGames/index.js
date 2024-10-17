@@ -5,6 +5,7 @@ import PlinkoGame from "./PlinkoGame";
 import HomePage from "../../Homepage";
 import MinesGame from "./MinesGame";
 import LimboGame from "./LimboGame";
+import WheelGame from "./WheelGame";
 
 function GameContainer() {
   const { gameName } = useParams();
@@ -19,8 +20,8 @@ function GameContainer() {
         return <MinesGame />;
       case "Limbo":
         return <LimboGame />;
-      //   case "Wheel":
-      //     return <HomePage />;
+      case "Wheel":
+        return <WheelGame />;
       //   case "Dragon Tower":
       //     return <HomePage />;
       default:

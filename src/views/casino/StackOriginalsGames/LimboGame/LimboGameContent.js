@@ -33,7 +33,7 @@ function LimboGameContent() {
       Math.floor(limboStatusData.actualMultiplier)
     ) {
       GetRendomFiveData();
-      setDisplayedMultiplier(1.0)
+      setDisplayedMultiplier(1.0);
     }
   }, [
     Math.floor(displayedMultiplier) ===
@@ -97,9 +97,7 @@ function LimboGameContent() {
   };
 
   const getLastValueColor = () => {
-    return Math.floor(limboStatusData?.actualMultiplier) ===
-      values?.multiplier ||
-      Math.floor(limboStatusData?.actualMultiplier) > values?.multiplier
+    return Math.floor(limboStatusData?.actualMultiplier) > values?.multiplier
       ? "text-green-500"
       : Math.floor(limboStatusData?.actualMultiplier) < values?.multiplier
       ? "text-red-500"

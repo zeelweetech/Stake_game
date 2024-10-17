@@ -47,9 +47,9 @@ const CrashGameSidebar = () => {
     CrashSocket.on("bettingClosed", (data) => {
       dispatch(setBettingStatus(data?.status));
     });
-    CrashSocket.on("gameEnded", (data) => {
-      dispatch(setCrashStatus(data));
-    });
+    // CrashSocket.on("gameEnded", (data) => {
+    //   dispatch(setCrashStatus(data));
+    // });
     CrashSocket.on("gameStatus", (data) => {
       dispatch(setGameStatusData(data));
       const betData =

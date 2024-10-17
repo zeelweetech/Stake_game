@@ -16,6 +16,8 @@ import toast from "react-hot-toast";
 function PlinkoGameSidebar() {
   const dispatch = useDispatch();
   const decoded = decodedToken();
+  console.log("hjhjhjhjhjhjhjh ==== ", decoded);
+
   const [isManual, setIsManual] = useState(true);
   const {
     values = { betamount: "", risk: "medium", rows: 16, numberofbets: "" },
@@ -33,9 +35,10 @@ function PlinkoGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
+      console.log("sqikudfguygsdf === ", decoded);
       PlinkoSocket.emit("plinkoPlaceBet", {
-        userId: decoded?.userId,
-        betAmount: values?.betamount,
+        userId: decoded.userId,
+        betAmount: values?.betamount ? values?.betamount : 0,
         rows: values?.rows,
         riskLevel: values?.risk,
         autoBetCount: name === "autoBet" && values?.numberofbets,
@@ -186,7 +189,9 @@ function PlinkoGameSidebar() {
           </div>
           <button
             className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full"
-            onClick={() => handleOnBet("manualBet")}
+            onClick={() => {
+              handleOnBet("manualBet");
+            }}
           >
             Bet
           </button>
