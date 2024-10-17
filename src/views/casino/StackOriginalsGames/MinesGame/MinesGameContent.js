@@ -11,6 +11,11 @@ import {
   setTileSelect,
   setGameStart,
   setRestored,
+  setRestoredMultiplier,
+  setResultImage,
+  setResultRevealed,
+  setClickedMines,
+  setRemainingMiness,
   // setImages,
 } from "../../../../features/casino/minesSlice";
 
@@ -33,7 +38,8 @@ function MinesGameContent() {
 
     MineSocket.on("gameRestored", (data, currentMultiplier) => {
       console.log("gameRestored data *-*-*-*-*--*-*", data, currentMultiplier);
-      dispatch(setRestored(data, currentMultiplier));
+      dispatch(setRestored(data));
+      dispatch(setRestoredMultiplier(currentMultiplier))
 
       const newImages = [...images];
       const newRevealed = [...revealed];
@@ -98,15 +104,20 @@ function MinesGameContent() {
   MineSocket.on("gameOver", (data) => {
     console.log("gameOver data", data);
     const { clickedMine, remainingMines } = data;
-
     handleGameOver(clickedMine, remainingMines);
+
+    dispatch(setClickedMines(clickedMine))
+    dispatch(setRemainingMiness(remainingMines))
   });
 
   const handleGameOver = (clickedMine, remainingMines) => {
     const newImages = [...images];
     const newRevealed = [...revealed];
 
-    newImages[clickedMine] = { icon: bombIcon, size: 90, opacity: 1 };
+    dispatch(setResultImage(images))
+    dispatch(setResultRevealed(revealed))
+
+    newImages[clickedMine] = { icon: bombIcon, size: 90, opacity: 1, className: 'bomb-blast' };
     newRevealed[clickedMine] = true;
 
       remainingMines.forEach((mineIndex) => {
@@ -157,13 +168,13 @@ function MinesGameContent() {
 
   return (
     <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[52rem] lg:w-[37rem]">
-      <div className="">
+      {/* <div className="">
         {tileSelect && !gameBet && (
           <div className="mt-4 text-yellow-300">
             Multiplier: {tileSelect.multiplier}
           </div>
         )}
-      </div>
+      </div> */}
       <div className="grid grid-cols-5 gap-2.5">
         {images.map((img, index) => (
           <div
@@ -187,7 +198,7 @@ function MinesGameContent() {
                 }}
                 className={`flex justify-center items-center ${
                   revealed[index] || gamesOver ? "reveal-animation" : "hidden"
-                }`}
+                } ${img.className || ''}`}
                 src={img.icon}
                 alt="Icon"
               />

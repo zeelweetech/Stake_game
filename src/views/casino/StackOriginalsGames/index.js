@@ -15,7 +15,7 @@ function GameContainer() {
         return <CrashGame />;
       case "Plinko":
         return <PlinkoGame />;
-      case "Miens":
+      case "Mines":
         return <MinesGame />;
       case "Limbo":
         return <LimboGame />;
