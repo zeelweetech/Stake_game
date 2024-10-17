@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import bombIcon from "../../../../assets/img/bomb.svg";
 import diamondIcon from "../../../../assets/img/Diamond.png";
 import { decodedToken } from "../../../../resources/utility";
@@ -12,12 +13,9 @@ import {
   setGameStart,
   setRestored,
   setRestoredMultiplier,
-  setResultImage,
-  setResultRevealed,
-  setClickedMines,
-  setRemainingMiness,
-  // setImages,
+  setShowFields,
 } from "../../../../features/casino/minesSlice";
+import toast from "react-hot-toast";
 
 function MinesGameContent() {
   const { id } = useParams();
@@ -25,9 +23,14 @@ function MinesGameContent() {
   const [images, setImages] = useState(Array(25).fill(null));
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
-  const { gamesOver, gameStart, tileSelect, gameBet } = useSelector(
-    (state) => state.minesGame
-  );
+  const [cashoutResult, setCashoutResult] = useState(null);
+  const {
+    gamesOver,
+    gameStart,
+    tileSelect,
+    mineValue,
+    gameBet,
+  } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
 
   useEffect(() => {
@@ -39,7 +42,7 @@ function MinesGameContent() {
     MineSocket.on("gameRestored", (data, currentMultiplier) => {
       console.log("gameRestored data *-*-*-*-*--*-*", data, currentMultiplier);
       dispatch(setRestored(data));
-      dispatch(setRestoredMultiplier(currentMultiplier))
+      dispatch(setRestoredMultiplier(currentMultiplier));
 
       const newImages = [...images];
       const newRevealed = [...revealed];
@@ -61,6 +64,11 @@ function MinesGameContent() {
     });
   }, []);
 
+  MineSocket.on("Insufficientfund", (fundData) => {
+    console.log('Insufficientfund data : ', fundData);
+    toast.apply('Insufficientfund data')
+  })
+
   MineSocket.on("gameStarted", (data) => {
     console.log("gameStarted data", data);
     dispatch(setGameStart(data));
@@ -79,10 +87,6 @@ function MinesGameContent() {
   const handleTileSelection = (index, isBomb) => {
     const newImages = [...images];
     const newRevealed = [...revealed];
-    // const newZoomClass = [...zoomClass];
-
-    // newZoomClass[index] = true;
-    // setZoomClass(newZoomClass);
 
     setTimeout(() => {
       newImages[index] = isBomb
@@ -105,27 +109,27 @@ function MinesGameContent() {
     console.log("gameOver data", data);
     const { clickedMine, remainingMines } = data;
     handleGameOver(clickedMine, remainingMines);
-
-    dispatch(setClickedMines(clickedMine))
-    dispatch(setRemainingMiness(remainingMines))
+    dispatch(setShowFields(false))
   });
 
   const handleGameOver = (clickedMine, remainingMines) => {
     const newImages = [...images];
     const newRevealed = [...revealed];
 
-    dispatch(setResultImage(images))
-    dispatch(setResultRevealed(revealed))
-
-    newImages[clickedMine] = { icon: bombIcon, size: 90, opacity: 1, className: 'bomb-blast' };
+    newImages[clickedMine] = {
+      icon: bombIcon,
+      size: 90,
+      opacity: 1,
+      className: "bomb-blast",
+    };
     newRevealed[clickedMine] = true;
 
-      remainingMines.forEach((mineIndex) => {
-        if (mineIndex !== clickedMine) {
-          newImages[mineIndex] = { icon: bombIcon, size: 60, opacity: 0.5 };
-          newRevealed[mineIndex] = true;
-        }
-      });
+    remainingMines.forEach((mineIndex) => {
+      if (mineIndex !== clickedMine) {
+        newImages[mineIndex] = { icon: bombIcon, size: 60, opacity: 0.5 };
+        newRevealed[mineIndex] = true;
+      }
+    });
 
     setTimeout(() => {
       revealAll(newImages);
@@ -135,6 +139,47 @@ function MinesGameContent() {
       dispatch(setGamesOver(true));
       dispatch(setGameBet(false));
     }, 1000);
+  };
+
+  MineSocket.on("cashoutSuccess", (data) => {
+    console.log("cashoutSuccess data", data);
+    setCashoutResult(data);
+    // console.log('tileSelect *******', tileSelect);
+    // console.log('mineValue *-/-/-*/*-*-/*-/-', mineValue?.mines);
+
+    const newImages = Array(25).fill(null);
+    const newRevealed = Array(25).fill(false);
+
+    const bombPositions = placeBombs(
+      25,
+      mineValue?.mines,
+      tileSelect.tileIndex
+    );
+    bombPositions.forEach((index) => {
+      newImages[index] = { icon: bombIcon, size: 60, opacity: 0.5 };
+      newRevealed[index] = true;
+    });
+
+    for (let i = 0; i < 25; i++) {
+      if (!bombPositions.includes(i)) {
+        newImages[i] = { icon: diamondIcon, size: 90, opacity: 0.5 };
+        newRevealed[i] = true;
+      }
+    }
+
+    setImages(newImages);
+    setRevealed(newRevealed);
+  });
+
+  const placeBombs = (totalTiles, bombCount, selectedTileIndex) => {
+    const bombPositions = new Set();
+    while (bombPositions.size < bombCount) {
+      const randomIndex = Math.floor(Math.random() * totalTiles);
+      if (randomIndex !== selectedTileIndex) {
+        bombPositions.add(randomIndex);
+      }
+    }
+    return Array.from(bombPositions);
   };
 
   const revealAll = (newImages) => {
@@ -167,15 +212,17 @@ function MinesGameContent() {
   };
 
   return (
-    <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[52rem] lg:w-[37rem]">
-      {/* <div className="">
-        {tileSelect && !gameBet && (
-          <div className="mt-4 text-yellow-300">
-            Multiplier: {tileSelect.multiplier}
+    <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[52rem] lg:w-[36.8rem]">
+      {cashoutResult && (
+        <div className="mt-4 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
+          <p className="text-3xl font-medium">{cashoutResult.multiplier}x</p>
+          <div className="flex items-center justify-center space-x-1">
+            <p>0.00000000</p>
+            <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
           </div>
-        )}
-      </div> */}
-      <div className="grid grid-cols-5 gap-2.5">
+        </div>
+      )}
+      <div className="grid grid-cols-5 gap-2.5 relative z-10">
         {images.map((img, index) => (
           <div
             key={index}
@@ -198,7 +245,7 @@ function MinesGameContent() {
                 }}
                 className={`flex justify-center items-center ${
                   revealed[index] || gamesOver ? "reveal-animation" : "hidden"
-                } ${img.className || ''}`}
+                } ${img.className || ""}`}
                 src={img.icon}
                 alt="Icon"
               />

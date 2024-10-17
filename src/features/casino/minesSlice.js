@@ -13,10 +13,7 @@ const initialState = {
   minesBetStatus: false,
   restored: "",
   restoredMultiplier: "",
-  resultImage: '',
-  resultRevealed: '',
-  clickedMines: '',
-  remainingMiness: ''
+  showFields: false
 };
 
 const minesGameSlice = createSlice({
@@ -50,18 +47,9 @@ const minesGameSlice = createSlice({
     setRestoredMultiplier(state, action) {
       state.restoredMultiplier = action.payload
     },
-    setResultImage(state, action) {
-      state.resultImage = action.payload
+    setShowFields(state, action) {
+      state.showFields = action.payload
     },
-    setResultRevealed(state, action) {
-      state.resultRevealed = action.payload
-    },
-    setClickedMines(state, action) {
-      state.clickedMines = action.payload
-    },
-    setRemainingMiness(state, action) {
-      state.remainingMiness = action.payload
-    }
   },
 });
 
@@ -75,10 +63,7 @@ export const {
   setMinesBetStatus,
   setRestored,
   setRestoredMultiplier,
-  setResultImage,
-  setResultRevealed,
-  setClickedMines,
-  setRemainingMiness
+  setShowFields
 } = minesGameSlice.actions;
 
 export default minesGameSlice.reducer;
