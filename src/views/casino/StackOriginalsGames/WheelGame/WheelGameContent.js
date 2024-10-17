@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 
-function WheelGameContent() {
-  return <div>WheelGameContent</div>;
-}
+// function WheelGameContent() {
+//   return <div>WheelGameContent</div>;
+// }
 
-export default WheelGameContent;
+// export default WheelGameContent;
