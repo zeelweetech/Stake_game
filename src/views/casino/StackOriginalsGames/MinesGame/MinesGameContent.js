@@ -30,6 +30,7 @@ function MinesGameContent() {
     tileSelect,
     mineValue,
     gameBet,
+    restored
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
 
@@ -48,12 +49,10 @@ function MinesGameContent() {
       const newRevealed = [...revealed];
 
       data.mineLocations.forEach(({ tileIndex, isMine, selected }) => {
-        if (selected === 1) {
+        if (selected === 1 && !isMine) {
           newImages[tileIndex] = { icon: diamondIcon, size: 100 };
           newRevealed[tileIndex] = true;
-        }
-
-        if (isMine) {
+        } else if (isMine) {
           newImages[tileIndex] = { icon: bombIcon, size: 100 };
           newRevealed[tileIndex] = true;
         }
@@ -101,7 +100,7 @@ function MinesGameContent() {
         dispatch(setGameBet(false));
         revealAll(newImages);
       }
-    }, 900);
+    }, 800);
   };
 
   // game Over event
@@ -141,11 +140,27 @@ function MinesGameContent() {
     }, 1000);
   };
 
+  const revealAll = (newImages) => {
+    const newRevealed = [...revealed];
+
+    for (let i = 0; i < 25; i++) {
+      if (!newRevealed[i]) {
+        newImages[i] = newImages[i] || {
+          icon: diamondIcon,
+          size: 80,
+          opacity: 0.5,
+        };
+        newRevealed[i] = true;
+      }
+    }
+
+    setImages(newImages);
+    setRevealed(newRevealed);
+  };
+
   MineSocket.on("cashoutSuccess", (data) => {
     console.log("cashoutSuccess data", data);
     setCashoutResult(data);
-    // console.log('tileSelect *******', tileSelect);
-    // console.log('mineValue *-/-/-*/*-*-/*-/-', mineValue?.mines);
 
     const newImages = Array(25).fill(null);
     const newRevealed = Array(25).fill(false);
@@ -173,31 +188,13 @@ function MinesGameContent() {
 
   const placeBombs = (totalTiles, bombCount, selectedTileIndex) => {
     const bombPositions = new Set();
-    while (bombPositions.size < bombCount) {
+    while (bombPositions.size < (restored?.mines ? restored?.mines : bombCount)) {
       const randomIndex = Math.floor(Math.random() * totalTiles);
       if (randomIndex !== selectedTileIndex) {
         bombPositions.add(randomIndex);
       }
     }
     return Array.from(bombPositions);
-  };
-
-  const revealAll = (newImages) => {
-    const newRevealed = [...revealed];
-
-    for (let i = 0; i < 25; i++) {
-      if (!newRevealed[i]) {
-        newImages[i] = newImages[i] || {
-          icon: diamondIcon,
-          size: 80,
-          opacity: 0.5,
-        };
-        newRevealed[i] = true;
-      }
-    }
-
-    setImages(newImages);
-    setRevealed(newRevealed);
   };
 
   const handleClick = (index) => {
@@ -213,9 +210,9 @@ function MinesGameContent() {
 
   return (
     <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[52rem] lg:w-[36.8rem]">
-      {cashoutResult && (
+      {cashoutResult && !gameBet && (
         <div className="mt-4 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
-          <p className="text-3xl font-medium">{cashoutResult.multiplier}x</p>
+          <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
             <p>0.00000000</p>
             <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />

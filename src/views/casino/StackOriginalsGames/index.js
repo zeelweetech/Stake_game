@@ -2,10 +2,10 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import CrashGame from "./CrashGame";
 import PlinkoGame from "./PlinkoGame";
-import HomePage from "../../Homepage";
 import MinesGame from "./MinesGame";
 import LimboGame from "./LimboGame";
 import WheelGame from "./WheelGame";
+import DragonTowerGame from "./DragonTowerGame";
 
 function GameContainer() {
   const { gameName } = useParams();
@@ -22,8 +22,8 @@ function GameContainer() {
         return <LimboGame />;
       case "Wheel":
         return <WheelGame />;
-      //   case "Dragon Tower":
-      //     return <HomePage />;
+      case "DragonTower":
+        return <DragonTowerGame />;
       default:
         break;
     }
