@@ -125,7 +125,6 @@
 
 // export default CasinoHomePage;
 
-
 import React, { useEffect, useState } from "react";
 import Loader from "../../component/Loader";
 import SlideBar from "./SlideBar";
@@ -143,37 +142,60 @@ import LiveCasino from "./LiveCasino";
 import GameShows from "./GameShows";
 import Exclusives from "./Exclusives";
 import { getAllGames } from "../../../services/GameServices";
+import { decodedToken } from "../../../resources/utility";
+import { getWallet } from "../../../services/LoginServices";
+import { useDispatch } from "react-redux";
+import { setWallet } from "../../../features/auth/authSlice";
 
 function CasinoHomePage() {
   const [stackMenu, setStackMenu] = useState("Lobby");
   const [loading, setLoading] = useState(false);
   const [allGames, setAllGames] = useState();
+  const decoded = decodedToken();
+  const dispatch = useDispatch();
 
   const isLobby = stackMenu === "Lobby";
 
   const menuItems = [
     { label: "Lobby", icon: <TbCherryFilled color="#b1bad3" fontSize={15} /> },
-    { label: "Stack Originals", icon: <BsFire color="#b1bad3" fontSize={15} /> },
+    {
+      label: "Stack Originals",
+      icon: <BsFire color="#b1bad3" fontSize={15} />,
+    },
     { label: "Slot", icon: <Filter7Icon className="text-[#b1bad3]" /> },
     { label: "Live Casino", icon: <InboxIcon className="text-[#b1bad3]" /> },
     { label: "Game Shows", icon: <FaGift color="#b1bad3" fontSize={15} /> },
-    { label: "Stake Exclusives", icon: <BsBookmarkStarFill color="#b1bad3" fontSize={15} /> },
-    { label: "New Releases", icon: <IoIosRocket color="#b1bad3" fontSize={20} /> },
+    {
+      label: "Stake Exclusives",
+      icon: <BsBookmarkStarFill color="#b1bad3" fontSize={15} />,
+    },
+    {
+      label: "New Releases",
+      icon: <IoIosRocket color="#b1bad3" fontSize={20} />,
+    },
   ];
 
   useEffect(() => {
     GetAllGames();
+    GetWalletData();
   }, []);
 
   const GetAllGames = async () => {
     await getAllGames()
       .then((response) => {
-        console.log("response", response);
         setAllGames(response);
       })
       .catch((error) => {
         console.log("error", error);
       });
+  };
+
+  const GetWalletData = async () => {
+    await getWallet({ id: decoded?.userId })
+      .then((res) => {
+        dispatch(setWallet(res?.currentAmount));
+      })
+      .catch((err) => {});
   };
 
   return (
@@ -219,22 +241,62 @@ function CasinoHomePage() {
           <div className="flex flex-col space-y-6">
             {stackMenu === "Lobby" ? (
               <>
-                <StackOriginals allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
-                <Slots allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
-                <LiveCasino allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
-                <GameShows allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
-                <Exclusives allGames={allGames} setLoading={setLoading} isLobby={isLobby} />
+                <StackOriginals
+                  allGames={allGames}
+                  setLoading={setLoading}
+                  isLobby={isLobby}
+                />
+                <Slots
+                  allGames={allGames}
+                  setLoading={setLoading}
+                  isLobby={isLobby}
+                />
+                <LiveCasino
+                  allGames={allGames}
+                  setLoading={setLoading}
+                  isLobby={isLobby}
+                />
+                <GameShows
+                  allGames={allGames}
+                  setLoading={setLoading}
+                  isLobby={isLobby}
+                />
+                <Exclusives
+                  allGames={allGames}
+                  setLoading={setLoading}
+                  isLobby={isLobby}
+                />
               </>
             ) : stackMenu === "Stack Originals" ? (
-              <StackOriginals allGames={allGames} setLoading={setLoading} isLobby={false} />
+              <StackOriginals
+                allGames={allGames}
+                setLoading={setLoading}
+                isLobby={false}
+              />
             ) : stackMenu === "Slot" ? (
-              <Slots allGames={allGames} setLoading={setLoading} isLobby={false} />
+              <Slots
+                allGames={allGames}
+                setLoading={setLoading}
+                isLobby={false}
+              />
             ) : stackMenu === "Live Casino" ? (
-              <LiveCasino allGames={allGames} setLoading={setLoading} isLobby={false} />
+              <LiveCasino
+                allGames={allGames}
+                setLoading={setLoading}
+                isLobby={false}
+              />
             ) : stackMenu === "Game Shows" ? (
-              <GameShows allGames={allGames} setLoading={setLoading} isLobby={false} />
+              <GameShows
+                allGames={allGames}
+                setLoading={setLoading}
+                isLobby={false}
+              />
             ) : stackMenu === "Stake Exclusives" ? (
-              <Exclusives allGames={allGames} setLoading={setLoading} isLobby={false} />
+              <Exclusives
+                allGames={allGames}
+                setLoading={setLoading}
+                isLobby={false}
+              />
             ) : (
               <div className="text-center pt-5">Coming Soon: New Releases</div>
             )}

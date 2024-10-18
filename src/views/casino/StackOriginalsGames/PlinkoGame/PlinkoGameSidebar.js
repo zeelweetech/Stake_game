@@ -16,7 +16,6 @@ import toast from "react-hot-toast";
 function PlinkoGameSidebar() {
   const dispatch = useDispatch();
   const decoded = decodedToken();
-  console.log("hjhjhjhjhjhjhjh ==== ", decoded);
 
   const [isManual, setIsManual] = useState(true);
   const {

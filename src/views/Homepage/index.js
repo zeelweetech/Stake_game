@@ -7,27 +7,41 @@ import LiveCasino from "../casino/CasinoHomePage/LiveCasino";
 import GameShows from "../casino/CasinoHomePage/GameShows";
 import Exclusives from "../casino/CasinoHomePage/Exclusives";
 import { getAllGames } from "../../services/GameServices";
+import { getWallet } from "../../services/LoginServices";
+import { setWallet } from "../../features/auth/authSlice";
+import { decodedToken } from "../../resources/utility";
+import { useDispatch } from "react-redux";
 
 function MainHomePage() {
   // const [stackMenu, setStackMenu] = useState("Lobby");
   const [loading, setLoading] = useState(false);
   const [allGames, setAllGames] = useState();
+  const decoded = decodedToken();
+  const dispatch = useDispatch();
 
   // const isLobby = stackMenu === "Lobby";
 
   useEffect(() => {
     GetAllGames();
+    GetWalletData();
   }, []);
 
   const GetAllGames = async () => {
     await getAllGames()
       .then((response) => {
-        console.log("response", response);
         setAllGames(response);
       })
       .catch((error) => {
         console.log("error", error);
       });
+  };
+
+  const GetWalletData = async () => {
+    await getWallet({ id: decoded?.userId })
+      .then((res) => {
+        dispatch(setWallet(res?.currentAmount));
+      })
+      .catch((err) => {});
   };
 
   return (
@@ -38,11 +52,11 @@ function MainHomePage() {
         <div className="text-white">
           <Mainbar />
           <div className="xl:px-44 lg:px-14 mt-8">
-            <StackOriginals allGames={allGames} setLoading={setLoading}/>
-            <Slots allGames={allGames}/>
-            <LiveCasino allGames={allGames}/>
-            <GameShows allGames={allGames}/>
-            <Exclusives allGames={allGames}/>
+            <StackOriginals allGames={allGames} setLoading={setLoading} />
+            <Slots allGames={allGames} />
+            <LiveCasino allGames={allGames} />
+            <GameShows allGames={allGames} />
+            <Exclusives allGames={allGames} />
           </div>
         </div>
       )}

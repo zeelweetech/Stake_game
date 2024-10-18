@@ -4,6 +4,7 @@ import plinkoGameReducer from "../features/casino/plinkoSlice";
 import crashGameReducer from "../features/casino/crashSlice";
 import minesGameReducer from "../features/casino/minesSlice";
 import limboGameReducer from "../features/casino/limboSlice";
+import WheelGameReducer from "../features/casino/wheelSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     minesGame: minesGameReducer,
     plinkoGame: plinkoGameReducer,
     limboGame: limboGameReducer,
+    wheelGame: WheelGameReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

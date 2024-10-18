@@ -14,6 +14,7 @@ import {
 import { createObstacles, createSinks } from "../objects";
 import { pad, unpad } from "../padding";
 import Ball from "./Ball";
+import { PlinkoSocket } from "../../../../../../socket";
 export default class BallManager {
   balls;
   canvasRef;
@@ -36,7 +37,7 @@ export default class BallManager {
     this.dispatch = dispatch;
   }
 
-  addBall(startX, lastMultipliers) {
+  addBall(startX, lastMultipliers, decoded) {
     const newBall = new Ball(
       startX?.point || pad(WIDTH / 2 + 13),
       pad(50),
@@ -65,6 +66,10 @@ export default class BallManager {
         if (startX?.remainingBets === 1) {
           this.dispatch(setStopAutoBet(false));
         }
+        PlinkoSocket.emit("betCompleted", {
+          betId: startX?.betId,
+          userId: decoded?.userId,
+        });
       }
     );
     this.balls.push(newBall);

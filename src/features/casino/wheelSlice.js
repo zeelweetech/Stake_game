@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   wheelValue: {
     betamount: 0,
-    mines: 1,
   },
 };
 
@@ -17,6 +16,6 @@ const WheelGameSlice = createSlice({
   },
 });
 
-export const { setMineValue } = WheelGameSlice.actions;
+export const { setWheelValue } = WheelGameSlice.actions;
 
 export default WheelGameSlice.reducer;

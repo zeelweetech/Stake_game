@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import stakeLogo from "../assets/img/stakeLogo.png";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
@@ -12,10 +12,12 @@ import { MdOutlineEventNote } from "react-icons/md";
 import LogoutIcon from "@mui/icons-material/Logout";
 import notification from "../assets/img/Notification.png";
 import { removeCookie } from "../resources/utility";
+import { useSelector } from "react-redux";
 
 function MainHeader() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
+  const { wallet } = useSelector((state) => state.auth);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -48,17 +50,22 @@ function MainHeader() {
           />
           <div className="flex items-center md:space-x-0">
             <button className="flex items-center bg-transparent md:bg-[#0f212e] md:bg-#0f212e blockhidden  space-x-1 px-2 md:px-5 py-2 md:py-3 rounded-s-md text-white font-medium">
-              <p className="text-sm md:text-base md:block hidden">₹0.00</p>
-              <RiMoneyRupeeCircleFill color="yellow" className="text-lg md:text-xl md:block hidden" />
+              <p className="text-sm md:text-base md:block hidden">₹{wallet}</p>
+              <RiMoneyRupeeCircleFill
+                color="yellow"
+                className="text-lg md:text-xl md:block hidden"
+              />
             </button>
             <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-4 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base">
-              Wallet 
+              Wallet
             </button>
           </div>
           <div className="text-white flex items-center space-x-0.4 md:space-x-6">
             <button className="flex items-center space-x-1.5 font-medium">
               <IoMdSearch className="text-sm w-10 h-6 md:text-base md:block hidden " />
-              <p className="hidden md:block text-sm md:text-base md:space-x-1">Search</p>
+              <p className="hidden md:block text-sm md:text-base md:space-x-1">
+                Search
+              </p>
             </button>
 
             <IconButton onClick={handleMenuOpen} data-menu-type="profile">
@@ -78,7 +85,6 @@ function MainHeader() {
                 <p>Logout</p>
               </MenuItem>
             </Menu>
-
 
             <IconButton onClick={handleMenuOpen} data-menu-type="notifications">
               <Badge color="success" variant="dot">
@@ -121,13 +127,21 @@ function MainHeader() {
                     alt="Not Found"
                   />
                 </div>
-                <p className="text-white font-medium text-sm">No Notifications Available</p>
-                <p className="text-[#b1bad3]">Your interactions will be visible here</p>
+                <p className="text-white font-medium text-sm">
+                  No Notifications Available
+                </p>
+                <p className="text-[#b1bad3]">
+                  Your interactions will be visible here
+                </p>
               </div>
             </Menu>
 
             <IconButton onClick={handleMenuOpen} data-menu-type="chat">
-              <IoIosChatboxes color="white" size={18} className="mt-1.5 md:mt-0" />
+              <IoIosChatboxes
+                color="white"
+                size={18}
+                className="mt-1.5 md:mt-0"
+              />
             </IconButton>
             <Menu
               anchorEl={anchorEl}

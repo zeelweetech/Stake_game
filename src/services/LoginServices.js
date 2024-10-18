@@ -29,3 +29,17 @@ export async function userRegister({ body: body }) {
     throw error;
   }
 }
+
+/**
+ * WALLET
+ */
+export async function getWallet({ id: id }) {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_LOCAL_URL}/wallet/get/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

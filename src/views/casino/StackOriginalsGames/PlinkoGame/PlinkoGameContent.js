@@ -6,9 +6,12 @@ import {
   setLastMultipliers,
 } from "../../../../features/casino/plinkoSlice";
 import BallManager from "./game/classes/BallManager";
+import { decodedToken } from "../../../../resources/utility";
+import { setWallet } from "../../../../features/auth/authSlice";
 
 function PlinkoGameContent() {
   const dispatch = useDispatch();
+  const decoded = decodedToken();
   const canvasRef = useRef();
   const [ballManager, setBallManager] = useState();
   const { finalMultiplier, values, lastMultipliers } = useSelector(
@@ -19,9 +22,14 @@ function PlinkoGameContent() {
     dispatch(setFinalMultiplier(data));
   });
 
+  PlinkoSocket.on("walletBalance", (data) => {
+    console.log("data", data);
+    dispatch(setWallet(data?.walletBalance));
+  });
+
   useEffect(() => {
     if (ballManager) {
-      ballManager.addBall(finalMultiplier, lastMultipliers);
+      ballManager.addBall(finalMultiplier, lastMultipliers, decoded);
     }
   }, [finalMultiplier?.point]);
 

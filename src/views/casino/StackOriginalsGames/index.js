@@ -20,8 +20,8 @@ function GameContainer() {
         return <MinesGame />;
       case "Limbo":
         return <LimboGame />;
-      // case "Wheel":
-      //   return <WheelGame />;
+      case "Wheel":
+        return <WheelGame />;
       //   case "Dragon Tower":
       //     return <HomePage />;
       default:
