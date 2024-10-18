@@ -52,9 +52,9 @@ export const LimboSocket = io(process.env.REACT_APP_LIMBO_URL, {
   },
 });
 
-// export const DragonTowerSocket = io(DragonTowerURL, {
-//   path: "/ws",
-//   extraHeaders: {
-//     Authorization: `token: ${token}`,
-//   },
-// });
+export const DragonTowerSocket = io(process.env.REACT_APP_DRAGONTOWER_URL, {
+  path: "/ws",
+  extraHeaders: {
+    Authorization: `token: ${token}`,
+  },
+});
