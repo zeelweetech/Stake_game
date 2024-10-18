@@ -66,32 +66,32 @@ function Mainbar() {
         </div>
 
         <div className="flex md:flex-row space-x-2  md:space-x-5 md:space-y-0">
-          <div className="bg-[#1a2c38] hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px]">
+          <div className="bg-[#1a2c38] hover:cursor-pointer  transition-transform duration-300 hover:translate-y-[-8px]">
             <img
               src={StackCasino}
-              className="w-full md:w-80 h-40 md:h-56"
+              className=" md:w-80 h-40 md:h-56  "
               alt="Not Found"
               style={{
                 border: "3px solid transparent",
                 borderImage: "linear-gradient(to bottom, #017aff, transparent) 1",
               }}
             />
-            <div className="flex items-center px-3 py-2.5 space-x-2">
-              <img src={casinoCard} className="w-4 h-4" alt="Not Found" />
+            <div className="flex items-center px-3 py-2.5 space-x-">
+              <img src={casinoCard} className="w-4 h-4 " alt="Not Found" />
               <p>Casino</p>
             </div>
           </div>
           <div className="bg-[#1a2c38] hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px]">
             <img
               src={SportBook}
-              className="w-full md:w-80 h-40 md:h-56 "
+              className="md:w-80 h-40 md:h-56 "
               alt="Not Found"
               style={{
                 border: "3px solid transparent",
                 borderImage: "linear-gradient(to bottom, #00ca51, transparent) 1",
               }}
             />
-            <div className="flex items-center px-4 py-2.5 space-x-2">
+            <div className="flex items-center px-4 py-1 space-x-2">
               <SportsBasketballIcon
                 className="text-[#b1bad3]"
                 sx={{ fontSize: 20 }}
