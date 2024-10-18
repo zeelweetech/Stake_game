@@ -226,8 +226,8 @@ const CrashGameSidebar = () => {
   };
 
   return (
-    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
-      <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
+    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3  bg-[#213743] rounded-tl-lg">
+      {/* <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
             <button
@@ -248,7 +248,30 @@ const CrashGameSidebar = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
+      <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
+  <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
+    <div className="flex space-x-2">
+      <button
+        className={`py-2 w-[5rem] sm:w-[6.68rem] xl:w-[8.6rem] rounded-full ${
+          isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+        }`}
+        onClick={() => dispatch(SwiperModel(true))}
+      >
+        Manual
+      </button>
+      <button
+        className={`py-2 w-[5rem] sm:w-[6.68rem] xl:w-[8.6rem] rounded-full ${
+          !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+        }`}
+        onClick={() => dispatch(SwiperModel(false))}
+      >
+        Auto
+      </button>
+    </div>
+  </div>
+</div>
+
       {isSwiper ? (
         <div>
           <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">

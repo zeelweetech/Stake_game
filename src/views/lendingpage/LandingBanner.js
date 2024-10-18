@@ -28,13 +28,13 @@ function LandingBanner() {
   return (
     <div className="bg-[#0f212e] p-4">
       <div className="flex flex-col lg:flex-row justify-evenly items-center lg:space-x-4 space-y-8 lg:space-y-0 flex-wrap">
-        {/* Text and Button Section */}
+        
         <div className="space-y-4 text-center lg:text-left">
           <p className="text-white font-semibold text-lg lg:text-2xl md:mt-6">
             Play Smarter
           </p>
           <button
-            className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-full px-8 py-2.5 w-full lg:w-auto text-sm md:text-base lg:text-lg"
+            className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-full px-6 py-2.5 w-full lg:w-auto text-sm md:text-base lg:text-lg"
             onClick={handleOnRegister}
           >
             Register instantly
@@ -61,7 +61,7 @@ function LandingBanner() {
           </div>
         </div>
 
-        {/* Image Section */}
+   
         <div className="w-full lg:w-auto">
           <img
             src={Stakermen}
@@ -71,7 +71,6 @@ function LandingBanner() {
         </div>
       </div>
 
-      {/* Modals Section */}
       {loginModel && (
         <Login
           setLoginModel={setLoginModel}

@@ -304,126 +304,79 @@ function CrashGameContent() {
   // };
 
   return (
-    <div className="xl:w-[52rem] lg:w-[37rem] flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
-      <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
-        {topXData?.length > 0 &&
-          [...topXData].reverse()?.map((item, index) => {
-            return (
-              <div key={index}>
-                <button
-                  className={`p-2.5 ${
-                    item?.crashPoint > 3 ? "bg-[#1fff20]" : "bg-white"
-                  } rounded-full`}
-                >{`${item?.crashPoint}`}</button>
-              </div>
-            );
-          })}
-        <button className="px-2.5 py-2.5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
-          <IoIosTrendingUp color="white" />
-        </button>
-      </div>
-      <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 relative">
-        {/* <ResponsiveContainer width="100%" height={550}> */}
-        <div
-          className="xl:pl-4 lg:pl-2 xl:pr-32 lg:pr-16 "
-          style={{ width: "100%", height: "550px" }}
-        >
-          {console.log("chartData***", chartData)}
-          <canvas
-            ref={chartRef}
-            style={{ width: "400px", height: "550px" }}
-          ></canvas>
-          {/* <Line id="multiplier-chart" data={chartData} options={chartOptions} /> */}
+  
+    <div className="xl:w-[52rem] lg:w-[37rem] w-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg p-4">
+  <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
+    {topXData?.length > 0 &&
+      [...topXData].reverse()?.map((item, index) => {
+        return (
+          <div key={index}>
+            <button
+              className={`p-2.5 ${
+                item?.crashPoint > 3 ? "bg-[#1fff20]" : "bg-white"
+              } rounded-full text-xs`}
+            >
+              {`${item?.crashPoint}`}
+            </button>
+          </div>
+        );
+      })}
+    <button className="px-2.5 py-2.5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
+      <IoIosTrendingUp color="white" />
+    </button>
+  </div>
+  
+  <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 relative">
+    <div
+      className="xl:pl-4 lg:pl-2 xl:pr-32 lg:pr-16 w-full"
+      style={{ height: "550px" }}
+    >
+      {console.log("chartData***", chartData)}
+      <canvas
+        ref={chartRef}
+        style={{ width: "100%", height: "100%" }}
+      ></canvas>
+    </div>
 
-          {/* <ResponsiveContainer width="100%" height={550}> */}
-          {/* <AreaChart
-            width={700}
-            height={550}
-            data={data}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <XAxis
-              dataKey="time"
-              tickFormatter={(tick) => (tick % 2 === 0 ? `${tick}s` : "")}
-              stroke="#B1BAD3"
-              tick={{ stroke: "#B1BAD3", strokeWidth: 1 }}
-              axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
-              domain={[1, 1]}
-            />
-            <YAxis
-              tickFormatter={(tick) => `${tick}x`}
-              stroke="#B1BAD3"
-              tick={{ stroke: "#B1BAD3", strokeWidth: 1 }}
-              axisLine={{ stroke: "#B1BAD3", strokeWidth: 2 }}
-              domain={[1, 1]}
-            />
-            <Area
-              type="basis"
-              dataKey="value"
-              stroke={
-                data?.length > 0
-                  ? data[data.length - 1]?.value === xValue
-                    ? "#4d718768"
-                    : "#fff"
-                  : "#fff"
-              }
-              fill={
-                data?.length > 0
-                  ? data[data.length - 1]?.value === xValue
-                    ? "#4d718768"
-                    : "#ffa500"
-                  : "#ffa500"
-              }
-              strokeWidth={5}
-              isAnimationActive={true}
-            />
-          </AreaChart> */}
-          {/* </ResponsiveContainer> */}
+    <div className="absolute top-44 flex flex-col items-center w-full px-4 text-white font-bold">
+      <div className="flex-grow flex items-center justify-center">
+        <div className="text-center">
+          <p className={`text-6xl ${getLastValueColor()}`}>{multiplier}x</p>
+          {chartData.datasets[0]?.data[chartData.datasets[0].data.length - 1] === xValue && (
+            <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">
+              Crashed
+            </button>
+          )}
+          {bettingStatus && (
+            <button className="bg-[#4d718768] text-2xl px-8 pt-3 pb-4 mt-3 rounded-md progress-bar justify-items-center">
+              starting in
+            </button>
+          )}
         </div>
-        <div className="absolute top-44 flex justify-between items-center w-full px-4 text-white font-bold">
-          <div className="flex-grow flex items-center justify-center">
-            <div className="text-center">
-              <p className={`text-6xl ${getLastValueColor()}`}>{multiplier}x</p>
-              {chartData.datasets[0]?.data[
-                chartData.datasets[0].data.length - 1
-              ] === xValue && (
-                <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">
-                  Crashed
-                </button>
-              )}
-              {bettingStatus && (
-                <button className="bg-[#4d718768] text-2xl px-16 pt-3 pb-4 mt-3 rounded-md progress-bar">
-                  starting in
-                </button>
-              )}
-            </div>
-          </div>
-          <div className="flex flex-col items-end space-y-1.5">
-            {visibleData?.length > 0
-              ? visibleData?.map((data, index) => (
-                  <button
-                    key={index}
-                    className="py-2 px-3 border-2 border-[#4d718768] bg-[#213743] rounded-full"
-                  >
-                    <div className="flex items-center">
-                      <BsIncognito />
-                      <p className="text-[#b1bad3] text-xs">Hidden</p>
-                      <RiMoneyRupeeCircleFill color="yellow" size={20} />
-                      <p className="text-green-500">{data?.amount}</p>
-                    </div>
-                  </button>
-                ))
-              : ""}
-          </div>
-        </div>
-        {/* </ResponsiveContainer> */}
+      </div>
+      <div className="flex flex-col items-end space-y-1.5 ml-32">
+        {visibleData?.length > 0 ? (
+          visibleData?.map((data, index) => (
+            <button
+              key={index}
+              className="py-2 px-3  border-2 border-[#4d718768] bg-[#213743] rounded-full"
+            >
+              <div className="flex items-center ">
+                <BsIncognito />
+                <p className="text-[#b1bad3] text-xs ">Hidden</p>
+                <RiMoneyRupeeCircleFill color="yellow" size={20} />
+                <p className="text-green-500">{data?.amount}</p>
+              </div>
+            </button>
+          ))
+        ) : (
+          ""
+        )}
       </div>
     </div>
+  </div>
+</div>
+
   );
 }
 
