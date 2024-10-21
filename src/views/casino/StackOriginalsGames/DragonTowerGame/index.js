@@ -26,7 +26,7 @@ function DragonTowerGame() {
   return (
     <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center w-full">
       <div>
-        <div className="text-white flex w-full min-w-80 h-[39rem] border-b-3">
+        <div className="text-white flex w-full min-w-80 h-[45.8rem] border-b-3">
           <div className="bg-[#213743]">
             <DragonSidebar />
           </div>

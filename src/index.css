@@ -136,6 +136,11 @@ code {
   animation: bomb-blast 0.5s infinite; /* Adjust duration as needed */
 }
 
+
+.dragonBackImage {
+  background-image: url("../src/assets/img/dragonTower.png");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

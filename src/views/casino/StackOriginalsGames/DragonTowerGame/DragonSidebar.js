@@ -101,14 +101,12 @@ function DragonSidebar() {
                 name="betamount"
                 value={values?.betamount || ""}
                 onChange={(e) => handleOnChange(e)}
-                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]`}
-                // ${minesBetStatus && "cursor-not-allowed"}
-                // disabled={minesBetStatus}
+                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e] ${showRandomField && 'cursor-not-allowed opacity-80'}`}
+                disabled={showRandomField}
               />
             </div>
             <button
-              className={`w-16 text-xs hover:bg-[#5c849e68]`}
-              //   ${minesBetStatus && "cursor-not-allowed"}
+              className={`w-16 text-xs ${showRandomField ? 'cursor-not-allowed opacity-80' : 'hover:bg-[#5c849e68]'}`}
               onClick={() =>
                 dispatch(
                   setValues({
@@ -117,7 +115,7 @@ function DragonSidebar() {
                   })
                 )
               }
-              //   disabled={minesBetStatus}
+              disabled={showRandomField}
             >
               1/2
             </button>
@@ -127,8 +125,7 @@ function DragonSidebar() {
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
             <button
-              className={`w-16 text-xs hover:bg-[#5c849e68]`}
-              //   ${minesBetStatus && "cursor-not-allowed"}
+              className={`w-16 text-xs ${showRandomField ? 'cursor-not-allowed opacity-80' : 'hover:bg-[#5c849e68]'}`}
               onClick={() =>
                 dispatch(
                   setValues({
@@ -137,7 +134,7 @@ function DragonSidebar() {
                   })
                 )
               }
-              //   disabled={minesBetStatus}
+              disabled={showRandomField}
             >
               2x
             </button>
@@ -153,7 +150,8 @@ function DragonSidebar() {
                 name="difficulty"
                 value={values?.difficulty}
                 onChange={(e) => handleOnChange(e)}
-                className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] ${showRandomField && 'cursor-not-allowed opacity-80'}`}
+                disabled={showRandomField}
               >
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
@@ -167,7 +165,7 @@ function DragonSidebar() {
           {showRandomField && (
             <div>
               <button
-                className="bg-[#2f4553] border border-[#0e2433] w-full p-2 mt-2.5"
+                className="bg-[#2f4553] hover:bg-[#5c849e68] border border-[#0e2433] w-full p-2 mt-2.5"
                 onClick={pickRandomTile}
               >
                 Pick random tile
