@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PlinkoSocket } from "../../../../socket";
 import {
@@ -14,9 +14,25 @@ function PlinkoGameContent() {
   const decoded = decodedToken();
   const canvasRef = useRef();
   const [ballManager, setBallManager] = useState();
+  const [isMdScreen, setIsMdScreen] = useState(false); 
   const { finalMultiplier, values, lastMultipliers } = useSelector(
     (state) => state.plinkoGame
   );
+
+  useEffect(() => {
+    const mdQuery = window.matchMedia("(min-width: 768px) and (max-width: 1023px)");
+
+    const handleScreenChange = () => {
+      setIsMdScreen(mdQuery.matches);
+    };
+
+    handleScreenChange();
+    mdQuery.addListener(handleScreenChange);
+
+    return () => {
+      mdQuery.removeListener(handleScreenChange);
+    };
+  }, []);
 
   PlinkoSocket.on("plinkoBetResult", (data) => {
     dispatch(setFinalMultiplier(data));
@@ -48,13 +64,11 @@ function PlinkoGameContent() {
         ?.map((data, index) => (
           <button
             key={index}
-            className={`xl:w-16 lg:w-12 py-3.5 text-black text-bold border-b border-black ${
+            className={`xl:w-16 lg:w-12 py-3 text-black font-bold border-b border-black ${
               data?.multiplier <= 1
                 ? "bg-amber-300"
-                : data?.multiplier === 2 || 3 || 5
+                : data?.multiplier === 2 || data?.multiplier === 3 || data?.multiplier === 5
                 ? "bg-amber-500"
-                : data?.multiplier > 5
-                ? "bg-red-600"
                 : "bg-red-600"
             } ${
               index === 0 ? "rounded-t-xl" : index === 3 ? "rounded-b-xl" : ""
@@ -69,19 +83,27 @@ function PlinkoGameContent() {
   };
 
   return (
-    <div className="h-full flex justify-center items-center select-none relative bg-[#0f212e] rounded-tr-lg xl:w-[52rem] lg:w-[35rem]">
-      <div className="flex justify-center items-center mt-4 overflow-hidden absolute">
-        <canvas
-          className="xl:w-[90vw] xl:h-[90vh] xl:max-w-[800px] xl:max-h-[710px] lg:w-[90vw] lg:h-[80vh] lg:max-w-[592px] lg:max-h-[710px]"
-          ref={canvasRef}
-          width="800"
-          height="710"
-        ></canvas>
-      </div>
-      <div className="flex flex-col relative xl:left-[21rem] xl:-top-40 lg:left-56 lg:-top-44">
-        {renderMultiplierButtons()}
-      </div>
-    </div>
+    <div
+  className={`bg-[#0f212e] h-full ml-2 flex flex-col md:flex-row justify-center items-center select-none relative rounded-tr-lg 
+    ${isMdScreen ? "md:mx-40 md:h-96 mt-4 rounded-t-lg "  : "md:mx-0"} 
+    max-sm:h-72 mt-3 rounded-t-lg`}
+>
+  <div className=" flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
+    <canvas
+      className="xl:w-[90vw] xl:h-[90vh] xl:max-w-[800px] xl:max-h-[700px] 
+                 lg:w-[90vw] lg:h-[80vh] lg:max-w-[592px] lg:max-h-[710px] 
+                 md:w-[80vw] md:h-[70vh] sm:w-[75vw] sm:h-[60vh] 
+                 max-w-[320px] max-h-[350px]"
+      ref={canvasRef}
+      width="800"
+      height="710"
+    ></canvas>  
+  </div>
+  <div className="flex flex-col max-sm:mb-10  max-sm:ml-[18rem] max-sm:w-10 relative xl:left-[19rem] xl:-top-40 lg:left-30 lg:-top-40 md:left-[16rem] md:-top-[36rem] max-left-[8rem] max-top-[28rem]">
+    {renderMultiplierButtons()}
+  </div>
+</div>
+
   );
 }
 

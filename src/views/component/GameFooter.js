@@ -11,7 +11,7 @@ function GameFooter() {
   return (
     <div className="py-5 px-4 w-full bg-[#0f212e] rounded-b-lg">
       <div className="flex justify-between items-center">
-        <div className="space-x-9 text-[#b1bad3]">
+        <div className="space-x-9  text-[#b1bad3]">
           <Tooltip
             title="Game Settings"
             placement="top"
@@ -47,7 +47,12 @@ function GameFooter() {
           />
         </div>
         <div>
-          <img src={stackCarshLogo} alt="Not Found" />
+          {/* Adjust the image size for different screen sizes */}
+          <img
+            src={stackCarshLogo}
+            alt="Not Found"
+            className="hidden sm:block w-16 sm:w-24 md:w-28"
+          />
         </div>
         <div>
           <Link className="text-[#b1bad3] hover:text-white">Fairness</Link>
