@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import Loader from "../../component/Loader";
 import SlideBar from "./SlideBar";

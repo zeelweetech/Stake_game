@@ -6,17 +6,75 @@ import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { Divider } from "@mui/material";
 import { IoInfiniteSharp } from "react-icons/io5";
 import PercentIcon from "@mui/icons-material/Percent";
+import { openRegisterModel } from "../../../../features/auth/authSlice";
+import { WheelSocket } from "../../../../socket";
+import { useParams } from "react-router-dom";
+import { WidthWide } from "@mui/icons-material";
 
 function WheelGameSidebar() {
   const dispatch = useDispatch();
   const decoded = decodedToken();
+  const { id } = useParams();
   const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
-  const { wheelValue } = useSelector((state) => state.minesGame);
+  const { wheelValue } = useSelector((state) => state.wheelGame);
+  console.log("wheelValue", wheelValue);
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
     dispatch(setWheelValue({ ...wheelValue, [name]: value }));
+  };
+
+  const handleOnManualBet = () => {
+    if (!localStorage.getItem("token")) {
+      dispatch(openRegisterModel());
+    } else {
+      WheelSocket.emit("manualBet", {
+        userId: decoded?.userId,
+        gameId: id,
+        betAmount: wheelValue?.betamount
+          ? parseInt(wheelValue?.betamount, 10)
+          : 0,
+        risk: wheelValue?.risk,
+        segment: wheelValue?.segments,
+      });
+      dispatch(
+        setWheelValue({
+          betamount: "",
+        })
+      );
+    }
+  };
+
+  const handleOnAutoBet = () => {
+    if (!localStorage.getItem("token")) {
+      dispatch(openRegisterModel());
+    } else {
+      WheelSocket.emit("autoBet", {
+        userId: decoded?.userId,
+        gameId: id,
+        betAmount: wheelValue?.betamount
+          ? parseInt(wheelValue?.betamount, 10)
+          : 0,
+        risk: wheelValue?.risk,
+        segment: wheelValue?.segments,
+        numberOfBets: parseInt(wheelValue?.numberofbet, 10),
+        onWin: parseInt(wheelValue?.onwin, 10),
+        onLoss: parseInt(wheelValue?.onloss, 10),
+        stopOnLoss: parseInt(wheelValue?.stoponloss, 10),
+        stopOnProfit: parseInt(wheelValue?.stoponprofit, 10),
+      });
+      dispatch(
+        setWheelValue({
+          betamount: "",
+          numberofbet: "",
+          stoponloss: "",
+          stoponprofit: "",
+          onwin: "",
+          onloss: "",
+        })
+      );
+    }
   };
 
   return (
@@ -149,6 +207,7 @@ function WheelGameSidebar() {
             className={`${"bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
             // onClick={handleBetClick}
             // gameBet ? "bg-[#489649]" :
+            onClick={() => handleOnManualBet()}
           >
             {/* {gameBet ? "Cashout" : "Bet"} */}
             Bet
@@ -418,7 +477,7 @@ function WheelGameSidebar() {
               //   :
               "bg-[#1fff20] hover:bg-[#42ed45]"
             } text-black mt-3 py-3 rounded-md font-semibold w-full`}
-            // onClick={() => handleOnAutoBet()}
+            onClick={() => handleOnAutoBet()}
           >
             Start Autobet
           </button>

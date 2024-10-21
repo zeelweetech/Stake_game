@@ -305,7 +305,7 @@ function CrashGameContent() {
 
   return (
   
-    <div className="xl:w-[52rem] lg:w-[37rem] w-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg p-4">
+    <div className="xl:w-[52rem] lg:w-[37rem] w-full md:w-full  flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg p-4 ">
   <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
     {topXData?.length > 0 &&
       [...topXData].reverse()?.map((item, index) => {
@@ -361,7 +361,7 @@ function CrashGameContent() {
               key={index}
               className="py-2 px-3  border-2 border-[#4d718768] bg-[#213743] rounded-full"
             >
-              <div className="flex items-center ">
+              <div className="flex items-cente ">
                 <BsIncognito />
                 <p className="text-[#b1bad3] text-xs ">Hidden</p>
                 <RiMoneyRupeeCircleFill color="yellow" size={20} />

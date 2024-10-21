@@ -3,18 +3,31 @@ import PlinkoGameSidebar from "./PlinkoGameSidebar";
 import PlinkoGameContent from "./PlinkoGameContent";
 import GameFooter from "../../../component/GameFooter";
 import { PlinkoSocket } from "../../../../socket";
-// import { PlinkoSocket } from "../../../../socket";
 
 function PlinkoGame() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   useEffect(() => {
     PlinkoSocket.connect();
 
     PlinkoSocket.on("connect", () => {
-      console.log("Plinko sokect connected");
+      console.log("Plinko socket connected");
     });
 
     PlinkoSocket.on("disconnect", () => {
-      console.log("Plinko Disconnected from server");
+      console.log("Plinko disconnected from server");
     });
 
     PlinkoSocket.on("connect_error", (error) => {
@@ -31,18 +44,25 @@ function PlinkoGame() {
   }, []);
 
   return (
-    <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center w-full">
-      <div>
-        <div className="text-white flex w-full min-w-80 h-[39rem] border-b-3">
-          <div className="bg-[#213743]">
-            <PlinkoGameSidebar />
-          </div>
-          <div>
+    <div className=" bg-[#1a2c38]  text-white flex justify-center items-center w-full h-full">
+      <div className="w-full max-w-screen-lg">
+        <div className={`flex  w-full min-w-80 h-[39rem] border-b-3`}>
+          {!isMobile && (
+            <div className="flex-row bg-[#213743]">
+              <PlinkoGameSidebar />
+            </div>
+          )}
+          <div className="flex-grow">
             <PlinkoGameContent />
           </div>
         </div>
+        {isMobile && (
+          <div className="flex flex-col">
+            <PlinkoGameSidebar />
+          </div>
+        )}
         <div>
-          <hr className="border-2 border-[#213743]"></hr>
+          <hr className="border-2 border-[#213743] " />
           <GameFooter />
         </div>
       </div>
@@ -51,3 +71,4 @@ function PlinkoGame() {
 }
 
 export default PlinkoGame;
+

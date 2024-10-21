@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { IoInfiniteSharp } from "react-icons/io5";
@@ -16,14 +16,30 @@ import toast from "react-hot-toast";
 function PlinkoGameSidebar() {
   const dispatch = useDispatch();
   const decoded = decodedToken();
-
   const [isManual, setIsManual] = useState(true);
+  const [isMdScreen, setIsMdScreen] = useState(false); 
   const {
     values = { betamount: "", risk: "medium", rows: 16, numberofbets: "" },
     stopAutoBet,
     completeBetStatus,
     finalMultiplier,
   } = useSelector((state) => state.plinkoGame);
+  useEffect(() => {
+   
+    const mdQuery = window.matchMedia("(min-width: 768px) and (max-width: 1023px)");
+
+    const handleScreenChange = () => {
+      setIsMdScreen(mdQuery.matches);
+    };
+
+    
+    handleScreenChange();
+    mdQuery.addListener(handleScreenChange);
+
+    return () => {
+      mdQuery.removeListener(handleScreenChange);
+    };
+  }, []);
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
@@ -57,7 +73,9 @@ function PlinkoGameSidebar() {
   };
 
   return (
-    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
+    <div className={`ml-2 xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-b-lg ${
+      isMdScreen ? "md:mx-40" : "md:mx-0"  
+    }`}>
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">

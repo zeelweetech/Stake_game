@@ -9,11 +9,11 @@ function WheelGame() {
     WheelSocket.connect();
 
     WheelSocket.on("connect", () => {
-      console.log("Mine sokect connected");
+      console.log("wheel sokect connected");
     });
 
     WheelSocket.on("disconnect", () => {
-      console.log("Mine Disconnected from server");
+      console.log("wheel Disconnected from server");
     });
 
     return () => {

@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   wheelValue: {
     betamount: 0,
+    risk: "medium",
+    segments: 30,
   },
 };
 

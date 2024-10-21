@@ -1,3 +1,5 @@
+import { Style } from "@mui/icons-material";
+
 const LowRow = {
   row8: [
     { xValue: 5.6, bgColor: "#ff003f", animatBgColor: "#9d0027" },
