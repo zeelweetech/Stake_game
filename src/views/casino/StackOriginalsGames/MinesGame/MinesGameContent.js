@@ -24,6 +24,7 @@ function MinesGameContent() {
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
   const [cashoutResult, setCashoutResult] = useState(null);
+  const [cashoutVisible, setCashoutVisible] = useState(false);
   const {
     gamesOver,
     gameStart,
@@ -74,6 +75,7 @@ function MinesGameContent() {
     setImages(Array(25).fill(null));
     setRevealed(Array(25).fill(false));
     setZoomClass(Array(25).fill(false));
+    setCashoutVisible(false);
   });
 
   // game tile selected event
@@ -109,6 +111,7 @@ function MinesGameContent() {
     const { clickedMine, remainingMines } = data;
     handleGameOver(clickedMine, remainingMines);
     dispatch(setShowFields(false))
+    setCashoutVisible(false);
   });
 
   const handleGameOver = (clickedMine, remainingMines) => {
@@ -161,6 +164,7 @@ function MinesGameContent() {
   MineSocket.on("cashoutSuccess", (data) => {
     console.log("cashoutSuccess data", data);
     setCashoutResult(data);
+    setCashoutVisible(true);
 
     const newImages = Array(25).fill(null);
     const newRevealed = Array(25).fill(false);
@@ -210,7 +214,7 @@ function MinesGameContent() {
 
   return (
     <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[52rem] lg:w-[36.8rem]">
-      {cashoutResult && !gameBet && (
+      {cashoutVisible && !gameBet && (
         <div className="mt-4 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
