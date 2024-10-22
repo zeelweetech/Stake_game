@@ -7,7 +7,7 @@ import LiveCasino from "../casino/CasinoHomePage/LiveCasino";
 import GameShows from "../casino/CasinoHomePage/GameShows";
 import Exclusives from "../casino/CasinoHomePage/Exclusives";
 import { getAllGames } from "../../services/GameServices";
-import { getWallet } from "../../services/LoginServices";
+import { getWallet, updateWallet } from "../../services/LoginServices";
 import { setWallet } from "../../features/auth/authSlice";
 import { decodedToken } from "../../resources/utility";
 import { useDispatch } from "react-redux";
@@ -23,6 +23,7 @@ function MainHomePage() {
 
   useEffect(() => {
     GetAllGames();
+    UpdateWalletData();
     GetWalletData();
   }, []);
 
@@ -41,6 +42,12 @@ function MainHomePage() {
       .then((res) => {
         dispatch(setWallet(res?.currentAmount));
       })
+      .catch((err) => {});
+  };
+
+  const UpdateWalletData = async () => {
+    await updateWallet({ userId: decoded?.userId })
+      .then((res) => {})
       .catch((err) => {});
   };
 

@@ -16,7 +16,7 @@ import GameShows from "./GameShows";
 import Exclusives from "./Exclusives";
 import { getAllGames } from "../../../services/GameServices";
 import { decodedToken } from "../../../resources/utility";
-import { getWallet } from "../../../services/LoginServices";
+import { getWallet, updateWallet } from "../../../services/LoginServices";
 import { useDispatch } from "react-redux";
 import { setWallet } from "../../../features/auth/authSlice";
 
@@ -50,6 +50,7 @@ function CasinoHomePage() {
 
   useEffect(() => {
     GetAllGames();
+    UpdateWalletData();
     GetWalletData();
   }, []);
 
@@ -68,6 +69,12 @@ function CasinoHomePage() {
       .then((res) => {
         dispatch(setWallet(res?.currentAmount));
       })
+      .catch((err) => {});
+  };
+
+  const UpdateWalletData = async () => {
+    await updateWallet({ userId: decoded?.userId })
+      .then((res) => {})
       .catch((err) => {});
   };
 

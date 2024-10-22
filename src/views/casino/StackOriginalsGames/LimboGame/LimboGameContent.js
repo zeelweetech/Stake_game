@@ -22,7 +22,6 @@ function LimboGameContent() {
   const [topXData, setTopXData] = useState();
 
   LimboSocket.on("limbobetResult", (data) => {
-    console.log("data", data);
     dispatch(setLimboStatusData(data));
   });
   console.log("limboStatusData", limboStatusData);
@@ -33,7 +32,13 @@ function LimboGameContent() {
       Math.floor(limboStatusData.actualMultiplier)
     ) {
       GetRendomFiveData();
-      setDisplayedMultiplier(1.0);
+      const timeout = setTimeout(() => {
+        setDisplayedMultiplier(1.0);
+      }, 1000);
+
+      return () => {
+        clearTimeout(timeout); // Clear timeout when component unmounts or value changes
+      };
     }
   }, [
     Math.floor(displayedMultiplier) ===
@@ -58,20 +63,41 @@ function LimboGameContent() {
 
   useEffect(() => {
     if (limboStatusData?.actualMultiplier) {
-      let currentMultiplier = 1.0;
+      const totalDuration = 1000; // 2 seconds
       const targetMultiplier = parseFloat(limboStatusData.actualMultiplier);
+      const incrementCount = totalDuration / 5; // 5 ms interval for smooth transition
+      const incrementValue = targetMultiplier / incrementCount; // Calculate how much to increment each step
 
+      let currentMultiplier = 1.0;
       const interval = setInterval(() => {
         if (currentMultiplier < targetMultiplier) {
-          currentMultiplier += 0.01; // Increment by 0.01
+          currentMultiplier += incrementValue;
           setDisplayedMultiplier(currentMultiplier.toFixed(2));
         } else {
           clearInterval(interval);
         }
-      }, 5);
-      return () => clearInterval(interval);
+      }, 5); // Update every 5 milliseconds for smooth animation
+
+      return () => clearInterval(interval); // Cleanup the interval on unmount
     }
   }, [limboStatusData?.actualMultiplier]);
+
+  // useEffect(() => {
+  //   if (limboStatusData?.actualMultiplier) {
+  //     let currentMultiplier = 1.0;
+  //     const targetMultiplier = parseFloat(limboStatusData.actualMultiplier);
+
+  //     const interval = setInterval(() => {
+  //       if (currentMultiplier < targetMultiplier) {
+  //         currentMultiplier += 0.01; // Increment by 0.01
+  //         setDisplayedMultiplier(currentMultiplier.toFixed(2));
+  //       } else {
+  //         clearInterval(interval);
+  //       }
+  //     }, 5);
+  //     return () => clearInterval(interval);
+  //   }
+  // }, [limboStatusData?.actualMultiplier]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -97,9 +123,9 @@ function LimboGameContent() {
   };
 
   const getLastValueColor = () => {
-    return Math.floor(limboStatusData?.actualMultiplier) > values?.multiplier
+    return Math.floor(displayedMultiplier) > parseInt(values?.multiplier, 10)
       ? "text-green-500"
-      : Math.floor(limboStatusData?.actualMultiplier) < values?.multiplier
+      : Math.floor(displayedMultiplier) < parseInt(values?.multiplier, 10)
       ? "text-red-500"
       : "text-white";
   };

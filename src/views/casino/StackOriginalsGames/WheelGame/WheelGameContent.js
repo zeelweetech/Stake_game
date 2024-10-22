@@ -1,53 +1,63 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Pie } from "react-chartjs-2";
+import { Doughnut, Pie } from "react-chartjs-2";
 import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 import { IoArrowUndo } from "react-icons/io5";
 import { WheelSocket } from "../../../../socket";
+import { RowByRisk } from "./WheelJason";
+import { useDispatch, useSelector } from "react-redux";
+import { setFinaMultiplier } from "../../../../features/casino/wheelSlice";
+import toast from "react-hot-toast";
 Chart.register(ArcElement, Tooltip, Legend);
 
 function WheelGameContent() {
-  const [finalValue, setFinalValue] = useState(
-    "Click On The Spin Button To Start"
-  );
+  const dispatch = useDispatch();
+  const [finalValue, setFinalValue] = useState();
   const [isSpinning, setIsSpinning] = useState(false);
   const myChartRef = useRef(null);
+  const { wheelValue, finalmultiplier } = useSelector(
+    (state) => state.wheelGame
+  );
 
   WheelSocket.on("manualBetResult", (data) => {
-    console.log("manal bet data", data);
+    dispatch(setFinaMultiplier(data));
   });
+  console.log("finalmultiplier", finalmultiplier?.multiplier);
 
   WheelSocket.on("autoBetResult", (data) => {
     console.log("auto bet data", data);
+    dispatch(setFinaMultiplier(data));
+  });
+
+  WheelSocket.on("Insufficientfund", (data) => {
+    toast.error(data?.message);
   });
 
   // Object that stores values of minimum and maximum angle for a value
-  const rotationValues = [
-    { minDegree: 0, maxDegree: 30, value: 2 },
-    { minDegree: 31, maxDegree: 90, value: 1 },
-    { minDegree: 91, maxDegree: 150, value: 6 },
-    { minDegree: 151, maxDegree: 210, value: 5 },
-    { minDegree: 211, maxDegree: 270, value: 4 },
-    { minDegree: 271, maxDegree: 330, value: 3 },
-    { minDegree: 331, maxDegree: 360, value: 2 },
-  ];
+  const selectionByRisk = RowByRisk[wheelValue?.risk];
+  const rotationValues =
+    selectionByRisk[`segment${parseInt(wheelValue?.segments, 10)}`];
+  console.log("rotationValues", rotationValues);
 
   // Size of each piece
   const data = {
-    labels: [1, 2, 3, 4, 5, 6, 7],
+    labels: rotationValues?.map((item) => {
+      return item?.xvalue;
+    }),
+
     datasets: [
       {
-        data: [16, 16, 16, 16, 16, 16, 16],
-        backgroundColor: [
-          "#8b35bc",
-          "#b163da",
-          "#8b35bc",
-          "#b163da",
-          "#8b35bc",
-          "#b163da",
-        ],
+        data: rotationValues?.map((item, index, array) => {
+          return array.length / 360;
+        }),
+
+        backgroundColor: rotationValues?.map((item) => {
+          return item?.backgroundColor;
+        }),
       },
     ],
   };
+
+  console.log("data****", data);
 
   const options = {
     responsive: true,
@@ -56,7 +66,7 @@ function WheelGameContent() {
       tooltip: false,
       legend: { display: false },
       datalabels: {
-        color: "#ffffff",
+        color: "#0d0c0c",
         formatter: (_, context) => context.chart.data.labels[context.dataIndex],
         font: { size: 24 },
       },
@@ -67,63 +77,125 @@ function WheelGameContent() {
   let count = 0;
   let resultValue = 101;
 
-  useEffect(() => {}, []);
+  // const getTargetAngle = (multiplier) => {
+  //   // Find the segment corresponding to the multiplier
+  //   const segmentIndex = rotationValues.findIndex(
+  //     (item) => item.xvalue === multiplier
+  //   );
+  //   if (segmentIndex !== -1) {
+  //     // Calculate the angle based on the segment index
+  //     const totalSegments = rotationValues.length;
+  //     const anglePerSegment = 360 / totalSegments;
+  //     const targetAngle = segmentIndex * anglePerSegment;
+  //     return targetAngle;
+  //   }
+  //   return null; // Return null if not found
+  // };
 
   // Spin logic
-  const handleSpinClick = () => {
-    setIsSpinning(true);
-    setFinalValue("Good Luck!");
-    let randomDegree = Math.floor(Math.random() * (355 - 0 + 1) + 0);
-    const rotationInterval = setInterval(() => {
-      if (!myChartRef.current) return;
-      const chart = myChartRef.current;
+  // useEffect(() => {
+  //   if (finalmultiplier?.multiplier) {
+  //     setIsSpinning(true);
+  //     setFinalValue("Good Luck!");
+  //     let spinRounds = 3; // Number of full spins
+  //     let randomDegree = Math.floor(Math.random() * 360); // Random degree for spin
+  //     const targetAngle = getTargetAngle(finalmultiplier?.multiplier); // Get target angle
 
-      // Spin logic
-      chart.options.rotation = chart.options.rotation + resultValue;
-      chart.update();
+  //     if (targetAngle !== null) {
+  //       const rotationInterval = setInterval(() => {
+  //         if (!myChartRef.current) return;
+  //         const chart = myChartRef.current;
 
-      if (chart.options.rotation >= 360) {
-        count += 1;
-        resultValue -= 5;
-        chart.options.rotation = 0;
-      } else if (count > 15 && chart.options.rotation === randomDegree) {
-        valueGenerator(randomDegree);
-        clearInterval(rotationInterval);
-        count = 0;
-        resultValue = 101;
-        setIsSpinning(false);
-      }
-    }, 10);
-  };
+  //         // Spin logic
+  //         chart.options.rotation = (chart.options.rotation + resultValue) % 360; // Ensure rotation wraps around
+  //         chart.update();
+  //         console.log("rotation**", chart.options.rotation);
+
+  //         // Stop condition
+  //         if (
+  //           spinRounds > 0 ||
+  //           (chart.options.rotation >= targetAngle &&
+  //             chart.options.rotation < targetAngle + 10)
+  //         ) {
+  //           if (chart.options.rotation >= 360) {
+  //             spinRounds -= 1; // Reduce the number of spin rounds
+  //             chart.options.rotation = 0; // Reset to 0
+  //           }
+
+  //           // If we reach the target angle after some rounds
+  //           if (
+  //             chart.options.rotation >= targetAngle &&
+  //             chart.options.rotation < targetAngle + 10
+  //           ) {
+  //             valueGenerator(chart.options.rotation);
+  //             clearInterval(rotationInterval);
+  //             setIsSpinning(false);
+  //             // Optionally dispatch something here if needed
+  //           }
+  //         }
+  //       }, 10);
+  //     }
+  //   }
+  // }, [finalmultiplier?.multiplier]);
+
+  useEffect(() => {
+    if (finalmultiplier?.multiplier) {
+      setIsSpinning(true);
+      setFinalValue("Good Luck!");
+      let randomDegree = Math.floor(Math.random() * (355 - 0 + 1) + 0);
+      const rotationInterval = setInterval(() => {
+        if (!myChartRef.current) return;
+        const chart = myChartRef.current;
+
+        // Spin logic
+        chart.options.rotation = chart.options.rotation + resultValue;
+        chart.update();
+        console.log("rotation**", chart.options.rotation);
+
+        if (chart.options.rotation >= 360) {
+          count += 1;
+          resultValue -= 5;
+          chart.options.rotation = 0;
+        } else if (count > 15 && chart.options.rotation === randomDegree) {
+          valueGenerator(randomDegree);
+          clearInterval(rotationInterval);
+          count = 0;
+          resultValue = 101;
+          setIsSpinning(false);
+          // dispatch(setFinaMultiplier());
+        }
+      }, 10);
+    }
+  }, [finalmultiplier?.multiplier]);
 
   const valueGenerator = (angleValue) => {
     for (let i of rotationValues) {
       if (angleValue >= i.minDegree && angleValue <= i.maxDegree) {
-        setFinalValue(`Value: ${i.value}`);
+        setFinalValue(`Value: ${i.xvalue}`);
         break;
       }
     }
   };
 
   return (
-    <div className="flex justify-center items-cente h-full">
-      <div className="w-96 p-10  relative">
+    <div className="bg-[#0f212e] flex flex-col justify-center items-center h-full xl:w-[52rem] lg:w-[36.8rem]">
+      <div className="p-10 relative">
         <div className="relative">
-          <Pie data={data} options={options} ref={myChartRef} />
+          <Doughnut
+            data={data}
+            options={options}
+            ref={myChartRef}
+            className="w-[30rem] h-[30rem]"
+          />
           <button
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-400 hover:bg-yellow-300 text-orange-700 font-semibold text-xl uppercase px-4 py-2"
-            onClick={handleSpinClick}
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0f212e] text-white font-semibold text-xl uppercase w-32 h-32 border-2 border-[#2f4553]"
+            // onClick={handleSpinClick}
             disabled={isSpinning}
           >
-            {isSpinning ? "Spinning..." : "Spin"}
+            {isSpinning ? "" : `${finalmultiplier?.multiplier || 0}x`}
           </button>
-          {/* <img
-            src="https://cutewallpaper.org/24/yellow-arrow-png/155564497.jpg"
-            alt="spinner arrow"
-            className="absolute top-1/2 right-0 transform -translate-y-1/2 w-16"
-          /> */}
           <IoArrowUndo
-            className="absolute top-1/2 right-0 transform -translate-y-1/2 w-24 ml-6"
+            className="absolute top-1/2 right-0 transform -translate-y-1/2 text-3xl ml-6 text-black"
             style={{ width: "50px" }}
           />
         </div>

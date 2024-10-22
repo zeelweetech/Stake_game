@@ -43,3 +43,17 @@ export async function getWallet({ id: id }) {
     throw error;
   }
 }
+
+/**
+ * UPDATE WALLET
+ */
+export async function updateWallet({ userId: userId }) {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_LOCAL_URL}/wallet/update/${userId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -36,13 +36,13 @@ function WheelGameSidebar() {
           ? parseInt(wheelValue?.betamount, 10)
           : 0,
         risk: wheelValue?.risk,
-        segment: wheelValue?.segments,
+        segment: parseInt(wheelValue?.segments, 10),
       });
-      dispatch(
-        setWheelValue({
-          betamount: "",
-        })
-      );
+      // dispatch(
+      //   setWheelValue({
+      //     betamount: "",
+      //   })
+      // );
     }
   };
 
@@ -57,23 +57,23 @@ function WheelGameSidebar() {
           ? parseInt(wheelValue?.betamount, 10)
           : 0,
         risk: wheelValue?.risk,
-        segment: wheelValue?.segments,
+        segment: parseInt(wheelValue?.segments, 10),
         numberOfBets: parseInt(wheelValue?.numberofbet, 10),
         onWin: parseInt(wheelValue?.onwin, 10),
         onLoss: parseInt(wheelValue?.onloss, 10),
         stopOnLoss: parseInt(wheelValue?.stoponloss, 10),
         stopOnProfit: parseInt(wheelValue?.stoponprofit, 10),
       });
-      dispatch(
-        setWheelValue({
-          betamount: "",
-          numberofbet: "",
-          stoponloss: "",
-          stoponprofit: "",
-          onwin: "",
-          onloss: "",
-        })
-      );
+      // dispatch(
+      //   setWheelValue({
+      //     betamount: "",
+      //     numberofbet: "",
+      //     stoponloss: "",
+      //     stoponprofit: "",
+      //     onwin: "",
+      //     onloss: "",
+      //   })
+      // );
     }
   };
 

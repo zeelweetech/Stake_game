@@ -24,14 +24,8 @@ function MinesGameContent() {
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
   const [cashoutResult, setCashoutResult] = useState(null);
-  const {
-    gamesOver,
-    gameStart,
-    tileSelect,
-    mineValue,
-    gameBet,
-    restored
-  } = useSelector((state) => state.minesGame);
+  const { gamesOver, gameStart, tileSelect, mineValue, gameBet, restored } =
+    useSelector((state) => state.minesGame);
   const decoded = decodedToken();
 
   useEffect(() => {
@@ -41,7 +35,6 @@ function MinesGameContent() {
     });
 
     MineSocket.on("gameRestored", (data, currentMultiplier) => {
-      console.log("gameRestored data *-*-*-*-*--*-*", data, currentMultiplier);
       dispatch(setRestored(data));
       dispatch(setRestoredMultiplier(currentMultiplier));
 
@@ -64,12 +57,10 @@ function MinesGameContent() {
   }, []);
 
   MineSocket.on("Insufficientfund", (fundData) => {
-    console.log('Insufficientfund data : ', fundData);
-    toast.apply('Insufficientfund data')
-  })
+    toast.apply("Insufficientfund data");
+  });
 
   MineSocket.on("gameStarted", (data) => {
-    console.log("gameStarted data", data);
     dispatch(setGameStart(data));
     setImages(Array(25).fill(null));
     setRevealed(Array(25).fill(false));
@@ -78,7 +69,6 @@ function MinesGameContent() {
 
   // game tile selected event
   MineSocket.on("tileSelected", (data) => {
-    console.log("tileSelected data", data);
     dispatch(setTileSelect(data));
     handleTileSelection(data.tileIndex, data.isBomb);
   });
@@ -105,10 +95,9 @@ function MinesGameContent() {
 
   // game Over event
   MineSocket.on("gameOver", (data) => {
-    console.log("gameOver data", data);
     const { clickedMine, remainingMines } = data;
     handleGameOver(clickedMine, remainingMines);
-    dispatch(setShowFields(false))
+    dispatch(setShowFields(false));
   });
 
   const handleGameOver = (clickedMine, remainingMines) => {
@@ -159,7 +148,6 @@ function MinesGameContent() {
   };
 
   MineSocket.on("cashoutSuccess", (data) => {
-    console.log("cashoutSuccess data", data);
     setCashoutResult(data);
 
     const newImages = Array(25).fill(null);
@@ -188,7 +176,9 @@ function MinesGameContent() {
 
   const placeBombs = (totalTiles, bombCount, selectedTileIndex) => {
     const bombPositions = new Set();
-    while (bombPositions.size < (restored?.mines ? restored?.mines : bombCount)) {
+    while (
+      bombPositions.size < (restored?.mines ? restored?.mines : bombCount)
+    ) {
       const randomIndex = Math.floor(Math.random() * totalTiles);
       if (randomIndex !== selectedTileIndex) {
         bombPositions.add(randomIndex);

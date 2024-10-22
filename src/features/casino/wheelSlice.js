@@ -5,6 +5,7 @@ const initialState = {
     betamount: 0,
     risk: "medium",
     segments: 30,
+    finalmultiplier: "",
   },
 };
 
@@ -15,9 +16,12 @@ const WheelGameSlice = createSlice({
     setWheelValue(state, action) {
       state.wheelValue = action.payload;
     },
+    setFinaMultiplier(state, action) {
+      state.finalmultiplier = action.payload;
+    },
   },
 });
 
-export const { setWheelValue } = WheelGameSlice.actions;
+export const { setWheelValue, setFinaMultiplier } = WheelGameSlice.actions;
 
 export default WheelGameSlice.reducer;
