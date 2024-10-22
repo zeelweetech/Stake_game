@@ -343,7 +343,13 @@ function CrashGameContent() {
         <div className="absolute top-44 flex flex-col items-center w-full px-4 text-white font-bold">
           <div className="flex-grow flex items-center justify-center">
             <div className="text-center">
-              <p className={`text-6xl ${multiplier === xValue ? "text-red-500" : "text-white"}`}>{multiplier}x</p>
+              <p
+                className={`text-6xl ${
+                  multiplier === xValue ? "text-red-500" : "text-white"
+                }`}
+              >
+                {multiplier}x
+              </p>
               {multiplier === xValue && (
                 <button className="bg-[#4d718768] text-xl shadow-lg px-12 pt-2 pb-3 mt-3 rounded-md">
                   Crashed
@@ -356,7 +362,7 @@ function CrashGameContent() {
               )}
             </div>
           </div>
-          <div className="flex flex-col items-end space-y-1.5 ml-32">
+          <div className="flex flex-col items-end space-y-1.5 ml-32 md:ml-[39rem]">
             {visibleData?.length > 0
               ? visibleData?.map((data, index) => (
                   <button
@@ -375,6 +381,25 @@ function CrashGameContent() {
           </div>
         </div>
       </div>
+      {/* <div className="flex flex-col items-end space-y-1.5 md:ml-[39rem]">
+        {visibleData?.length > 0 ? (
+          visibleData?.map((data, index) => (
+            <button
+              key={index}
+              className="py-2 px-3  border-2 border-[#4d718768] bg-[#213743] rounded-full"
+            >
+              <div className="flex items-center ">
+                <BsIncognito />
+                <p className="text-[#b1bad3] text-xs ">Hidden</p>
+                <RiMoneyRupeeCircleFill color="yellow" size={20} />
+                <p className="text-green-500">{data?.amount}</p>
+              </div>
+            </button>
+          ))
+        ) : (
+          ""
+        )}
+      </div> */}
     </div>
   );
 }
