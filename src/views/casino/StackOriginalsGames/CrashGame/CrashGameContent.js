@@ -354,14 +354,14 @@ function CrashGameContent() {
           )}
         </div>
       </div>
-      <div className="flex flex-col items-end space-y-1.5 ml-32">
+      <div className="flex flex-col items-end space-y-1.5 md:ml-[39rem]">
         {visibleData?.length > 0 ? (
           visibleData?.map((data, index) => (
             <button
               key={index}
               className="py-2 px-3  border-2 border-[#4d718768] bg-[#213743] rounded-full"
             >
-              <div className="flex items-cente ">
+              <div className="flex items-center ">
                 <BsIncognito />
                 <p className="text-[#b1bad3] text-xs ">Hidden</p>
                 <RiMoneyRupeeCircleFill color="yellow" size={20} />
