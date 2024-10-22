@@ -9,7 +9,7 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { decodedToken } from "../../../resources/utility";
-import { MineSocket } from "../../../socket";
+import { DragonTowerSocket, MineSocket } from "../../../socket";
 
 function StackOriginals({ allGames, isLobby }) {
   const [loading, setLoading] = useState(false);
@@ -22,8 +22,13 @@ function StackOriginals({ allGames, isLobby }) {
     setLoading(true);
     navigate(`/casino/${gameName}/${id}`);
 
-    if(gameName === "Miens") {
+    if (gameName === "Mines") {
       MineSocket.emit("joinGame", {
+        userId: decoded?.userId,
+        gameId: id,
+      });
+    } else if (gameName === "DragonTower") {
+      DragonTowerSocket.emit("joinGame", {
         userId: decoded?.userId,
         gameId: id,
       });
@@ -45,10 +50,7 @@ function StackOriginals({ allGames, isLobby }) {
     <div>
       <div className="flex justify-between items-center">
         <div className="flex items-center mx-3 mt-8 space-x-2">
-          <BsFire
-            fontSize={20}
-            className="text-[#b1bad3] hover:text-white"
-          />
+          <BsFire fontSize={20} className="text-[#b1bad3] hover:text-white" />
           <Link className="text-lg font-medium">Stack Originals</Link>
         </div>
         {isLobby && (
@@ -94,7 +96,7 @@ function StackOriginals({ allGames, isLobby }) {
             navigation
             modules={[Navigation]}
             ref={swiperRef}
-            spaceBetween={15}  
+            spaceBetween={15}
             breakpoints={{
               320: {
                 slidesPerView: 3,
@@ -123,14 +125,17 @@ function StackOriginals({ allGames, isLobby }) {
             }}
           >
             {allGames?.games?.map((gameData, index) =>
-              gameData?.gameType === "casino" || gameData?.gameType === "Casino" ? (
+              gameData?.gameType === "casino" ||
+              gameData?.gameType === "Casino" ? (
                 <SwiperSlide key={index}>
                   <div className="text-center">
                     <img
                       src={gameData.gameImage}
                       className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
                       alt="Not Found"
-                      onClick={() => handleAllGame(gameData?.gameName, gameData?.id)}
+                      onClick={() =>
+                        handleAllGame(gameData?.gameName, gameData?.id)
+                      }
                     />
                     <div className="flex items-center mt-1">
                       <span className="relative flex h-3 w-3 mr-1">
@@ -147,14 +152,17 @@ function StackOriginals({ allGames, isLobby }) {
         ) : (
           <div className="grid grid-cols-3 md:grid-cols-6 gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0">
             {allGames?.games?.map((gameData, index) =>
-              gameData?.gameType === "casino" || gameData?.gameType === "Casino" ? (
+              gameData?.gameType === "casino" ||
+              gameData?.gameType === "Casino" ? (
                 <div key={index}>
                   <div className="text-center">
                     <img
                       src={gameData.gameImage}
                       className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
                       alt="Not Found"
-                      onClick={() => handleAllGame(gameData?.gameName, gameData?.id)}
+                      onClick={() =>
+                        handleAllGame(gameData?.gameName, gameData?.id)
+                      }
                     />
                     <div className="flex items-center mt-1">
                       <span className="relative flex h-3 w-3 mr-1">

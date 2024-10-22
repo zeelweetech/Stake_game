@@ -6,37 +6,23 @@ import mediumEgg from "../../../../assets/img/mediumEgg.svg";
 import masterEgg from "../../../../assets/img/masterEgg.svg";
 import expertEgg from "../../../../assets/img/expertEgg.svg";
 import hardEgg from "../../../../assets/img/hardEgg.svg";
-import { useSelector } from "react-redux";
+import easySkull from "../../../../assets/svg/easySkull.svg";
+import mediumSkull from "../../../../assets/svg/mediumSkull.svg";
+import masterSkull from "../../../../assets/svg/masterSkull.svg";
+import expertSkull from "../../../../assets/svg/expertSkull.svg";
+import hardSkull from "../../../../assets/svg/hardSkull.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { DragonTowerSocket } from "../../../../socket";
+import { useParams } from "react-router-dom";
+import { decodedToken } from "../../../../resources/utility";
+import { setRestodMultiplier, setRestor, setShowRandomField, setTileSelected } from "../../../../features/casino/dragonTowerSlice";
 
 function DragonContent() {
-  const [boxArray, setBoxArray] = useState([]);
+  const { id } = useParams();
+  const dispatch = useDispatch()
   const [clickedBoxes, setClickedBoxes] = useState({});
   const { values, gameBet } = useSelector((state) => state.dragonTowerGame);
-
-  useEffect(() => {
-    const rows = 9;
-    let boxesPerRow = 4;
-
-    switch (values.difficulty) {
-      case "easy":
-      case "master":
-        boxesPerRow = 4;
-        break;
-      case "medium":
-      case "expert":
-        boxesPerRow = 3;
-        break;
-      case "hard":
-        boxesPerRow = 2;
-        break;
-      default:
-        boxesPerRow = 4;
-        break;
-    }
-
-    const newArray = Array(rows).fill(Array(boxesPerRow).fill(null));
-    setBoxArray(newArray);
-  }, [values.difficulty]);
+  const decoded = decodedToken();
 
   const EggImages = (difficulty) => {
     switch (difficulty) {
@@ -57,6 +43,17 @@ function DragonContent() {
 
   const handleBoxClick = (rowIndex, boxIndex) => {
     if (gameBet) {
+      if (clickedBoxes[rowIndex] !== undefined) {
+        return;
+      }
+
+      DragonTowerSocket.emit("selectTile", {
+        userId: decoded?.userId.toString(),
+        gameId: id,
+        tileIndex: boxIndex,
+        tileStep: rowIndex,
+      });
+
       console.log("rowIndex ::::::::::", rowIndex);
       console.log("boxIndex  ************", boxIndex);
       setClickedBoxes((prev) => ({
@@ -65,6 +62,65 @@ function DragonContent() {
       }));
     }
   };
+
+  const getBoxesPerRow = () => {
+    switch (values.difficulty) {
+      case "easy":
+      case "master":
+        return 4;
+      case "medium":
+      case "expert":
+        return 3;
+      case "hard":
+        return 2;
+      default:
+        return 4;
+    }
+  };
+
+  const boxesPerRow = getBoxesPerRow();
+  const rows = 9;
+
+  useEffect(() => {
+    DragonTowerSocket.emit("joinGame", {
+      userId: decoded?.userId,
+      gameId: id,
+    });
+
+    DragonTowerSocket.on("gameRestored", (data, currentMultiplier) => {
+      console.log("gameRestored data *-*-*-*-*--*-*", data, currentMultiplier);
+      dispatch(setRestor(data));
+      dispatch(setRestodMultiplier(currentMultiplier));
+    });
+  }, []);
+
+  DragonTowerSocket.on("walletBalance", (data) => {
+    console.log("walletBalance data", data);
+    // dispatch(setWallet(data?.walletBalance));
+  });
+
+  
+  DragonTowerSocket.on("gameStarted", (data) => {
+    console.log("gameStarted data", data);
+    // dispatch(setGameStart(data));
+  });
+
+  DragonTowerSocket.on("tileSelected", (data) => {
+    console.log("tileSelected data", data);
+    dispatch(setTileSelected(data));
+    // handleTileSelection(data.tileIndex, data.isBomb);
+  });
+
+  DragonTowerSocket.on("gameOver", (data) => {
+    console.log("gameOver data", data);
+    const { multiplier } = data;
+    // handleGameOver(clickedMine, remainingMines);
+    dispatch(setShowRandomField(false))
+  });
+
+  DragonTowerSocket.on("cashoutSuccess", (data) => {
+    console.log("cashoutSuccess data", data);
+  })
 
   return (
     <div className="flex flex-col items-center bg-cover">
@@ -81,31 +137,42 @@ function DragonContent() {
           <div
             className={`flex flex-col gap-3 bg-[#182433] lg:w-[28.9rem] xl:w-[30.6rem] p-3 mt-[-31.5rem] border-2 border-gray-800 shadow-lg`}
           >
-            {boxArray.reverse().map((row, rowIndex) => (
-              <div key={rowIndex} className="flex gap-3">
-                {row.map((_, boxIndex) => (
-                  <div
-                    key={`${rowIndex}-${boxIndex}`}
-                    className={`bg-[#213743] hover:cursor-pointer rounded-md w-full h-10 flex justify-center items-center ${
-                      clickedBoxes[rowIndex] === boxIndex
-                        ? "bg-[#00e701] text-[#00b801]"
-                        : ""
-                    }`}
-                    onClick={() => handleBoxClick(rowIndex, boxIndex)}
-                  >
-                    <img
-                      src={
-                        clickedBoxes[rowIndex] === boxIndex
-                          ? eggImageSrc
-                          : Boxsvg
-                      }
-                      alt="Not Found"
-                      className="w-auto h-full object-cover rounded-md"
-                    />
+            {(() => {
+              const rowElements = [];
+              for (let rowIndex = rows - 1; rowIndex >= 0; rowIndex--) {
+                const boxElements = [];
+                for (let boxIndex = 0; boxIndex < boxesPerRow; boxIndex++) {
+                  boxElements.push(
+                    <div
+                      key={`${rowIndex}-${boxIndex}`}
+                      className={`hover:cursor-pointer rounded-md w-full h-10 flex justify-center items-center ${
+                        (gameBet && rowIndex === 0) ||
+                        clickedBoxes[rowIndex - 1] !== undefined
+                          ? "bg-[#00e701] text-[#00b801]"
+                          : "cursor-not-allowed bg-[#213743]"
+                      }`}
+                      onClick={() => handleBoxClick(rowIndex, boxIndex)}
+                    >
+                      <img
+                        src={
+                          clickedBoxes[rowIndex] === boxIndex
+                            ? eggImageSrc
+                            : Boxsvg
+                        }
+                        alt="Not Found"
+                        className="w-auto h-full object-cover rounded-md"
+                      />
+                    </div>
+                  );
+                }
+                rowElements.push(
+                  <div key={rowIndex} className="flex gap-3">
+                    {boxElements}
                   </div>
-                ))}
-              </div>
-            ))}
+                );
+              }
+              return rowElements;
+            })()}
           </div>
         </div>
       </div>
@@ -114,3 +181,4 @@ function DragonContent() {
 }
 
 export default DragonContent;
+

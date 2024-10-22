@@ -9,10 +9,13 @@ import {
   setShowRandomField,
   setValues,
 } from "../../../../features/casino/dragonTowerSlice";
-// import { setShowFields } from "../../../../features/casino/dragonTowerSlice";
+import { DragonTowerSocket } from "../../../../socket";
+import { decodedToken } from "../../../../resources/utility";
+import { useParams } from "react-router-dom";
 
 function DragonSidebar() {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
@@ -21,7 +24,11 @@ function DragonSidebar() {
     bettingStatus,
     showRandomField,
     gameBet,
+    tileSelected,
+    restor,
+    restorMultiplier
   } = useSelector((state) => state.dragonTowerGame);
+  const decoded = decodedToken();
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
@@ -33,30 +40,31 @@ function DragonSidebar() {
       // dispatch(setGamesOver(true));
       dispatch(setGameBet(false));
       dispatch(setShowRandomField(false));
-      // MineSocket.emit("cashout", {
-      //   userId: decoded?.userId.toString(),
-      //   gameId: id,
-      // });
+      DragonTowerSocket.emit("cashout", {
+        userId: decoded?.userId.toString(),
+        gameId: id,
+      });
     } else {
       dispatch(setGameBet(true));
       dispatch(setShowRandomField(true));
 
-      // MineSocket.emit("minePlaceBet", {
-      //   userId: decoded?.userId.toString(),
-      //   gameId: id,
-      //   totalMines: mineValue?.mines,
-      //   betAmount: mineValue?.betamount,
-      // });
+      DragonTowerSocket.emit("dragonTowerPlaceBet", {
+        userId: decoded?.userId.toString(),
+        gameId: id,
+        betAmount: values?.betamount,
+        difficulty: values?.difficulty,
+        betType: "Manual",
+      });
     }
   };
 
   const pickRandomTile = () => {
     const index = Math.floor(Math.random() * 25);
-    // MineSocket.emit("selectTile", {
-    //   userId: decoded?.userId.toString(),
-    //   gameId: id,
-    //   tileIndex: index,
-    // });
+    DragonTowerSocket.emit("selectTile", {
+      userId: decoded?.userId.toString(),
+      gameId: id,
+      tileIndex: index,
+    });
   };
 
   return (
@@ -101,12 +109,18 @@ function DragonSidebar() {
                 name="betamount"
                 value={values?.betamount || ""}
                 onChange={(e) => handleOnChange(e)}
-                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e] ${showRandomField && 'cursor-not-allowed opacity-80'}`}
+                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e] ${
+                  showRandomField && "cursor-not-allowed opacity-80"
+                }`}
                 disabled={showRandomField}
               />
             </div>
             <button
-              className={`w-16 text-xs ${showRandomField ? 'cursor-not-allowed opacity-80' : 'hover:bg-[#5c849e68]'}`}
+              className={`w-16 text-xs ${
+                showRandomField
+                  ? "cursor-not-allowed opacity-80"
+                  : "hover:bg-[#5c849e68]"
+              }`}
               onClick={() =>
                 dispatch(
                   setValues({
@@ -125,7 +139,11 @@ function DragonSidebar() {
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
             <button
-              className={`w-16 text-xs ${showRandomField ? 'cursor-not-allowed opacity-80' : 'hover:bg-[#5c849e68]'}`}
+              className={`w-16 text-xs ${
+                showRandomField
+                  ? "cursor-not-allowed opacity-80"
+                  : "hover:bg-[#5c849e68]"
+              }`}
               onClick={() =>
                 dispatch(
                   setValues({
@@ -150,7 +168,9 @@ function DragonSidebar() {
                 name="difficulty"
                 value={values?.difficulty}
                 onChange={(e) => handleOnChange(e)}
-                className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] ${showRandomField && 'cursor-not-allowed opacity-80'}`}
+                className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] ${
+                  showRandomField && "cursor-not-allowed opacity-80"
+                }`}
                 disabled={showRandomField}
               >
                 <option value="easy">Easy</option>
@@ -162,6 +182,7 @@ function DragonSidebar() {
             </div>
           </div>
 
+          {/* showRandomField || restor?.restoreData?.length > 0 || */}
           {showRandomField && (
             <div>
               <button
@@ -171,11 +192,19 @@ function DragonSidebar() {
                 Pick random tile
               </button>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
-                <label>Total Profit</label>
+                <label>
+                  Total Profit (
+                  {tileSelected?.multiplier
+                    ? tileSelected?.multiplier
+                    : restor?.restoreData?.length > 0
+                    ? restorMultiplier
+                    : "1.00"}x
+                  )
+                </label>
                 <label>$0.00</label>
               </div>
               <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
-                <p>0.000000000</p>
+                <p>{(values?.betamount ? values?.betamount : restor?.restoreData?.length > 0 ? restor?.betAmount : 0) * (tileSelected?.multiplier ? tileSelected?.multiplier : tileSelected?.mineLocations?.length > 0 ? restorMultiplier : 0.00)}</p>
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div>
             </div>

@@ -8,6 +8,9 @@ const initialState = {
   showRandomField: false,
   gameBet: false,
   bettingStatus: "",
+  tileSelected: "",
+  restor: "",
+  restorMultiplier: "",
 };
 
 const dragonTowerGameSlice = createSlice({
@@ -26,9 +29,18 @@ const dragonTowerGameSlice = createSlice({
     setGameBet(state, action) {
       state.gameBet = action.payload;
     },
+    setTileSelected(state, action) {
+      state.tileSelected = action.payload;
+    },
+    setRestor(state, action) {
+      state.restor = action.payload
+    },
+    setRestodMultiplier(state, action) {
+      state.restorMultiplier = action.payload
+    },
   },
 });
 
-export const { setValues, setBettingStatus, setShowRandomField, setGameBet } = dragonTowerGameSlice.actions;
+export const { setValues, setBettingStatus, setShowRandomField, setGameBet, setTileSelected, setRestor, setRestodMultiplier } = dragonTowerGameSlice.actions;
 
 export default dragonTowerGameSlice.reducer;
