@@ -5,6 +5,20 @@ import MinesGameContent from "./MinesGameContent";
 import { MineSocket } from "../../../../socket";
 
 function MinesGame() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  
   useEffect(() => {
     MineSocket.connect();
 
@@ -24,23 +38,43 @@ function MinesGame() {
   });
 
   return (
-    <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center w-full">
-      <div>
-        <div className="text-white flex w-full min-w-80 h-[39rem] border-b-3">
-          <div className="bg-[#213743]">
+
+    <div className="mt-5 bg-[#1a2c38] flex justify-center items-center text-white w-full h-full">
+    <div className="w-full max-w-screen-lg">
+      <div
+        className={`flex w-full min-w-70  ${
+          isMobile ? "h-[24rem]" : "h-[39rem]"
+        } border-b-3`}
+      >
+        {!isMobile && (
+          <div className="flex-row bg-[#213743]">
             <MinesGameSidebar/>
           </div>
-          <div>
-            <MinesGameContent/>
-          </div>
-        </div>
-        <div>
-          <hr className="border-2 border-[#213743]"></hr>
-          <GameFooter />
+        )}
+        <div className="flex-grow">
+          <MinesGameContent/>
         </div>
       </div>
+
+      {isMobile && (
+        <div className="flex flex-col">
+          <MinesGameSidebar/>
+        </div>
+      )}
+      <div
+        className={`${
+          isMobile ? "h-[12rem]" : "h-[15rem]"
+        } border-t-2 border-[#213743]`}
+      >
+        <hr className="border-2 border-[#213743]" />
+        <GameFooter />
+      </div>
     </div>
+  </div>
   );
 }
 
 export default MinesGame;
+
+
+

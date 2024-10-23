@@ -108,11 +108,10 @@ function PlinkoGameContent() {
       height="710"
     ></canvas>  
   </div>
-  <div className="flex flex-col max-sm:mb-36 max-sm:  max-sm:ml-[19rem] max-sm:w-10 relative xl:left-[19rem] xl:-top-40 lg:left-30 lg:-top-40 md:left-[16rem] md:-top-[36rem] max-left-[8rem] max-top-[28rem]">
+  <div className="flex flex-col max-sm:mb-36 max-sm:ml-[19rem] max-sm:w-10 relative xl:left-[19rem] xl:-top-40 lg:left-30 lg:-top-40 md:left-[1rem] md:-top-[1rem] max-left-[8rem] max-top-[28rem]">
     {renderMultiplierButtons()}
   </div>
 </div>
-
   );
 }
 

@@ -208,9 +208,9 @@ function MinesGameContent() {
     });
   };
 
-  return (
+  return (     
     <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[52rem] lg:w-[36.8rem]">
-      {cashoutVisible && !gameBet && (
+      {cashoutVisible && !gameBet && ( 
         <div className="mt-4 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
@@ -219,7 +219,7 @@ function MinesGameContent() {
           </div>
         </div>
       )}
-      <div className="grid grid-cols-5 gap-2.5 relative z-10">
+      <div className="grid grid-cols-5 gap-2.5 relative z-10  sm:grid-cols-3 sm:gap-2 gap-">
         {images.map((img, index) => (
           <div
             key={index}
