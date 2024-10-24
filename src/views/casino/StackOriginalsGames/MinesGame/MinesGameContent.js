@@ -207,9 +207,8 @@ function MinesGameContent() {
       betId: gameStart?.betId,
     });
   };
-
   return (     
-    <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[52rem] lg:w-[36.8rem]">
+    <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center w-auto xl:w-[52rem] xl:ml-0 lg:w-[36.8rem] lg:ml-0 md:w-[28rem] md:ml-32 max-sm:mx-3">
       {cashoutVisible && !gameBet && ( 
         <div className="mt-4 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
@@ -219,11 +218,11 @@ function MinesGameContent() {
           </div>
         </div>
       )}
-      <div className="grid grid-cols-5 gap-2.5 relative z-10  sm:grid-cols-3 sm:gap-2 gap-">
+      <div className="grid grid-cols-5 gap-2.5 relative z-10 md:grid-cols-5 ">
         {images.map((img, index) => (
           <div
             key={index}
-            className={`flex justify-center items-center xl:w-28 lg:w-[6.5rem] xl:h-28 lg:h-[6.5rem] bg-[#2f4553] rounded-lg hover:-translate-y-1.5 hover:bg-[#688a9f] ${
+            className={`flex justify-center items-center xl:w-28 lg:w-[6.5rem] xl:h-28 lg:h-[6.5rem] sm:w-[4.5rem] md:h-[4rem] bg-[#2f4553] rounded-lg hover:-translate-y-1.5 hover:bg-[#688a9f] ${
               zoomClass[index] ? "zoom-in-out" : ""
             }`}
             onClick={() => handleClick(index)}
