@@ -15,34 +15,37 @@ import { useDispatch, useSelector } from "react-redux";
 import { DragonTowerSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import { decodedToken } from "../../../../resources/utility";
-import { setRestodMultiplier, setRestor, setShowRandomField, setTileSelected } from "../../../../features/casino/dragonTowerSlice";
+import {
+  setRestodMultiplier,
+  setRestor,
+  setShowRandomField,
+  setTileSelected,
+} from "../../../../features/casino/dragonTowerSlice";
+import toast from "react-hot-toast";
 
 function DragonContent() {
   const { id } = useParams();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [clickedBoxes, setClickedBoxes] = useState({});
+  const [isGameOver, setIsGameOver] = useState(false);
   const { values, gameBet } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
-  const EggImages = (difficulty) => {
-    switch (difficulty) {
-      case "easy":
-        return easyEgg;
-      case "medium":
-        return mediumEgg;
-      case "hard":
-        return hardEgg;
-      case "master":
-        return masterEgg;
-      default:
-        return expertEgg;
-    }
-  };
+  useEffect(() => {
+    DragonTowerSocket.emit("joinGame", {
+      userId: decoded?.userId,
+      gameId: id,
+    });
 
-  const eggImageSrc = EggImages(values.difficulty);
+    DragonTowerSocket.on("gameRestored", (data, currentMultiplier) => {
+      console.log("gameRestored data *-*-*-*-*--*-*", data, currentMultiplier);
+      dispatch(setRestor(data));
+      dispatch(setRestodMultiplier(currentMultiplier));
+    });
+  }, []);
 
   const handleBoxClick = (rowIndex, boxIndex) => {
-    if (gameBet) {
+    if (gameBet && !isGameOver) {
       if (clickedBoxes[rowIndex] !== undefined) {
         return;
       }
@@ -63,6 +66,35 @@ function DragonContent() {
     }
   };
 
+  DragonTowerSocket.on("Insufficientfund", (fundData) => {
+    console.log("fundData ********", fundData);
+    toast.apply("Insufficientfund data");
+  });
+
+  DragonTowerSocket.on("gameStarted", (data) => {
+    console.log("gameStarted data", data);
+    // dispatch(setGameStart(data));
+  });
+
+  DragonTowerSocket.on("tileSelected", (data) => {
+    console.log("tileSelected data", data);
+    dispatch(setTileSelected(data));
+  });
+
+  DragonTowerSocket.on("gameOver", (data) => {
+    console.log("gameOver data", data);
+    setIsGameOver(true);
+  });
+
+  DragonTowerSocket.on("cashoutSuccess", (data) => {
+    console.log("cashoutSuccess data", data);
+  });
+
+  DragonTowerSocket.on("walletBalance", (data) => {
+    console.log("walletBalance data", data);
+    // dispatch(setWallet(data?.walletBalance));
+  });
+
   const getBoxesPerRow = () => {
     switch (values.difficulty) {
       case "easy":
@@ -81,46 +113,38 @@ function DragonContent() {
   const boxesPerRow = getBoxesPerRow();
   const rows = 9;
 
-  useEffect(() => {
-    DragonTowerSocket.emit("joinGame", {
-      userId: decoded?.userId,
-      gameId: id,
-    });
+  const EggImages = (difficulty) => {
+    switch (difficulty) {
+      case "easy":
+        return easyEgg;
+      case "medium":
+        return mediumEgg;
+      case "hard":
+        return hardEgg;
+      case "master":
+        return masterEgg;
+      default:
+        return expertEgg;
+    }
+  };
 
-    DragonTowerSocket.on("gameRestored", (data, currentMultiplier) => {
-      console.log("gameRestored data *-*-*-*-*--*-*", data, currentMultiplier);
-      dispatch(setRestor(data));
-      dispatch(setRestodMultiplier(currentMultiplier));
-    });
-  }, []);
+  const SkullImages = (difficulty) => {
+    switch (difficulty) {
+      case "easy":
+        return easySkull;
+      case "medium":
+        return mediumSkull;
+      case "hard":
+        return hardSkull;
+      case "master":
+        return masterSkull;
+      default:
+        return expertSkull;
+    }
+  };
 
-  DragonTowerSocket.on("walletBalance", (data) => {
-    console.log("walletBalance data", data);
-    // dispatch(setWallet(data?.walletBalance));
-  });
-
-  
-  DragonTowerSocket.on("gameStarted", (data) => {
-    console.log("gameStarted data", data);
-    // dispatch(setGameStart(data));
-  });
-
-  DragonTowerSocket.on("tileSelected", (data) => {
-    console.log("tileSelected data", data);
-    dispatch(setTileSelected(data));
-    // handleTileSelection(data.tileIndex, data.isBomb);
-  });
-
-  DragonTowerSocket.on("gameOver", (data) => {
-    console.log("gameOver data", data);
-    const { multiplier } = data;
-    // handleGameOver(clickedMine, remainingMines);
-    dispatch(setShowRandomField(false))
-  });
-
-  DragonTowerSocket.on("cashoutSuccess", (data) => {
-    console.log("cashoutSuccess data", data);
-  })
+  const eggImageSrc = EggImages(values.difficulty);
+  const skullImageSrc = SkullImages(values.difficulty);
 
   return (
     <div className="flex flex-col items-center bg-cover">
@@ -139,23 +163,32 @@ function DragonContent() {
           >
             {(() => {
               const rowElements = [];
+              const lastClickedRowIndex = Math.max(...Object.keys(clickedBoxes).map(Number));
               for (let rowIndex = rows - 1; rowIndex >= 0; rowIndex--) {
                 const boxElements = [];
                 for (let boxIndex = 0; boxIndex < boxesPerRow; boxIndex++) {
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
-                      className={`hover:cursor-pointer rounded-md w-full h-10 flex justify-center items-center ${
-                        (gameBet && rowIndex === 0) ||
-                        clickedBoxes[rowIndex - 1] !== undefined
+                      className={`rounded-md w-full h-10 flex justify-center items-center ${
+                        isGameOver
+                          ? "cursor-not-allowed bg-[#213743]"
+                          : (gameBet && rowIndex === 0) ||
+                            clickedBoxes[rowIndex - 1] !== undefined
                           ? "bg-[#00e701] text-[#00b801]"
                           : "cursor-not-allowed bg-[#213743]"
+                      } ${
+                        clickedBoxes[rowIndex] !== undefined
+                          ? "bg-[#213743]"
+                          : ""
                       }`}
                       onClick={() => handleBoxClick(rowIndex, boxIndex)}
                     >
                       <img
                         src={
-                          clickedBoxes[rowIndex] === boxIndex
+                          isGameOver && clickedBoxes[lastClickedRowIndex] === boxIndex && lastClickedRowIndex === rowIndex
+                            ? skullImageSrc
+                            : clickedBoxes[rowIndex] === boxIndex
                             ? eggImageSrc
                             : Boxsvg
                         }
@@ -181,4 +214,3 @@ function DragonContent() {
 }
 
 export default DragonContent;
-
