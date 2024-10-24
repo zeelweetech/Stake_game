@@ -76,12 +76,12 @@ function MinesGameSidebar() {
   const gems = 25 - mineValue?.mines || 0;
 
   return (
-    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
+    <div className=" xl:w-80 lg:w-[17.8rem] flex flex-col p-3 xl:ml-0 xl:mr-0 lg:ml-0 lg:mr-0 md:ml-32 md:mr-[8.3rem] max-sm:ml-3 max-sm:mr-3 bg-[#213743] rounded-tl-lg">
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[7.05rem] rounded-full ${
+              className={`py-2 w-[45vw] md:w-[12rem] lg:w-[7.09rem] xl:w-[8.7rem] rounded-full ${
                 isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => setIsManual(true)}
@@ -89,7 +89,7 @@ function MinesGameSidebar() {
               Manual
             </button>
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[7.1rem] rounded-full ${
+              className={`py-2 w-[43vw] md:w-[13.3rem] lg:w-[8rem] xl:w-[8.6rem] rounded-full ${
                 !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => setIsManual(false)}
@@ -117,14 +117,14 @@ function MinesGameSidebar() {
                 name="betamount"
                 value={mineValue?.betamount ? mineValue?.betamount : restored?.mineLocations?.length > 0 ? restored?.betAmount : ''}
                 onChange={(e) => handleOnChange(e)}
-                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e] ${
+                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2  md:w-[20rem] rounded-s-md text-white bg-[#0f212e] ${
                   minesBetStatus && "cursor-not-allowed"
                 }`}
                 disabled={minesBetStatus}
               />
             </div>
             <button
-              className={`w-16 text-xs hover:bg-[#5c849e68] ${
+              className={`w-16 text-xl hover:bg-[#5c849e68] ${
                 minesBetStatus && "cursor-not-allowed"
               }`}
               onClick={() =>
@@ -137,7 +137,7 @@ function MinesGameSidebar() {
               }
               disabled={minesBetStatus}
             >
-              1/2
+              ½
             </button>
             <Divider
               flexItem
@@ -145,7 +145,7 @@ function MinesGameSidebar() {
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
             <button
-              className={`w-16 text-xs hover:bg-[#5c849e68] ${
+              className={`w-16 text-base hover:bg-[#5c849e68] ${
                 minesBetStatus && "cursor-not-allowed"
               } `}
               onClick={() =>
@@ -278,7 +278,7 @@ function MinesGameSidebar() {
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div>
               <input
-                className="xl:w-48 lg:w-40 pr-9 pl-2 py-1 rounded-s-md text-white bg-[#0f212e]"
+                className="xl:w-48 xl:ml-0 lg:w-40 lg:ml-0 pr-9 pl-2 py-1 md:w-[20rem] rounded-s-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
@@ -287,13 +287,13 @@ function MinesGameSidebar() {
                 onChange={(e) => handleOnChange(e)}
               />
             </div>
-            <button className="w-16 hover:bg-[#5c849e68]">1/2</button>
+            <button className="w-16 text-xl hover:bg-[#5c849e68] ">½</button>
             <Divider
               flexItem
               orientation="vertical"
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
-            <button className="w-16 hover:bg-[#5c849e68]">2x</button>
+            <button className="w-16 text-base hover:bg-[#5c849e68]">2x</button>
           </div>
           <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">
             <label>Mines</label>
@@ -358,7 +358,7 @@ function MinesGameSidebar() {
                 onProfit.win
                   ? "bg-[#0f212e]"
                   : "bg-[#4d718768] hover:bg-[#85afca68]"
-              } px-3.5 py-1.5 rounded-md`}
+              } px-3.5 py-1.5  rounded-md`}
               onClick={() => {
                 setOnProfit({ ...onProfit, win: true });
               }}
@@ -384,18 +384,17 @@ function MinesGameSidebar() {
                   : ""
               }`}
             >
-              <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+              <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2 ">
                 <PercentIcon fontSize="small" />
               </div>
               <input
-                className="w-20 pr-5 pl-2 py-1.5 rounded-md text-white bg-[#0f212e]"
-                type="number"
-                placeholder="0"
-                name="onwin"
-                // value={crashValues?.onwin}
-                onChange={(e) => handleOnChange(e)}
-                disabled={onProfit.win}
-              />
+              className="w-20 pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[14rem]  rounded-md text-white bg-[#0f212e]"
+              type="number"
+              placeholder="0"
+              name="onwin"
+              onChange={(e) => handleOnChange(e)}
+              disabled={onProfit.win}
+            />
             </div>
           </div>
           <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">
@@ -441,7 +440,7 @@ function MinesGameSidebar() {
                 <PercentIcon fontSize="small" />
               </div>
               <input
-                className="w-20 pr-7 pl-2 py-1.5 rounded-md text-white bg-[#0f212e]"
+                className="w-20 pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[14rem]  rounded-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0"
                 name="onlose"
