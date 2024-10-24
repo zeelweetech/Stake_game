@@ -7,6 +7,8 @@ const initialState = {
     segments: 30,
     finalmultiplier: "",
   },
+  finalmultiplier: "",
+  mustSpin: false,
 };
 
 const WheelGameSlice = createSlice({
@@ -19,9 +21,13 @@ const WheelGameSlice = createSlice({
     setFinaMultiplier(state, action) {
       state.finalmultiplier = action.payload;
     },
+    setMustSpin(state, action) {
+      state.mustSpin = action.payload;
+    },
   },
 });
 
-export const { setWheelValue, setFinaMultiplier } = WheelGameSlice.actions;
+export const { setWheelValue, setFinaMultiplier, setMustSpin } =
+  WheelGameSlice.actions;
 
 export default WheelGameSlice.reducer;

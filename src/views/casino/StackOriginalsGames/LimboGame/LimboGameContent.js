@@ -123,11 +123,18 @@ function LimboGameContent() {
   };
 
   const getLastValueColor = () => {
-    return Math.floor(displayedMultiplier) > parseInt(values?.multiplier, 10)
+    return Math.floor(displayedMultiplier) ===
+      Math.floor(limboStatusData.actualMultiplier)
       ? "text-green-500"
-      : Math.floor(displayedMultiplier) < parseInt(values?.multiplier, 10)
+      : Math.floor(limboStatusData.actualMultiplier) >
+        parseInt(values?.multiplier, 10)
       ? "text-red-500"
       : "text-white";
+    // Math.floor(displayedMultiplier) > parseInt(values?.multiplier, 10)
+    //   ? "text-green-500"
+    //   : Math.floor(displayedMultiplier) < parseInt(values?.multiplier, 10)
+    //   ? "text-red-500"
+    //   : "text-white";
   };
 
   return (

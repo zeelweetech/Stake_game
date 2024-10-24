@@ -366,7 +366,8 @@ const CrashGameSidebar = () => {
               disabled
             />
           </div>
-          {bettingStatus === false ? (
+          {/* {bettingStatus === false ? ( */}
+          {multiplier > 1 ? (
             <button
               className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
               onClick={() => setOnClickStatus(false)}

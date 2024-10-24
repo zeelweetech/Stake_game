@@ -4,6 +4,7 @@ const initialState = {
   isSwiper: true,
   values: { multiplier: 2, winchance: 50 },
   limboStatusData: {},
+  stopAutoBet: false,
 };
 
 const limboGameSlice = createSlice({
@@ -19,10 +20,13 @@ const limboGameSlice = createSlice({
     setLimboStatusData: (state, action) => {
       state.limboStatusData = action.payload;
     },
+    setStopAutoBet(state, action) {
+      state.stopAutoBet = action.payload;
+    },
   },
 });
 
-export const { SwiperModel, setValues, setLimboStatusData } =
+export const { SwiperModel, setValues, setLimboStatusData, setStopAutoBet } =
   limboGameSlice.actions;
 
 export default limboGameSlice.reducer;

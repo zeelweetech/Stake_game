@@ -50,7 +50,6 @@ function PlinkoGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      console.log("sqikudfguygsdf === ", decoded);
       PlinkoSocket.emit("plinkoPlaceBet", {
         userId: decoded.userId,
         betAmount: values?.betamount ? values?.betamount : 0,

@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { setValues, SwiperModel } from "../../../../features/casino/limboSlice";
+import {
+  setStopAutoBet,
+  setValues,
+  SwiperModel,
+} from "../../../../features/casino/limboSlice";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { Divider } from "@mui/material";
 import { IoInfiniteSharp } from "react-icons/io5";
@@ -13,9 +17,10 @@ import toast from "react-hot-toast";
 function LimboGameSidebar() {
   const dispatch = useDispatch();
   const decoded = decodedToken();
-  const { isSwiper, values } = useSelector((state) => state.limboGame);
+  const { isSwiper, values, limboStatusData, stopAutoBet } = useSelector(
+    (state) => state.limboGame
+  );
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
-  console.log("values", values);
 
   LimboSocket.on("Insufficientfund", (data) => {
     toast.error(data?.message);
@@ -64,6 +69,7 @@ function LimboGameSidebar() {
         stopOnLoss: parseInt(values?.stoponloss, 10),
         betType: "Auto",
       });
+      dispatch(setStopAutoBet(true));
       dispatch(
         setValues({
           betamount: "",
@@ -75,6 +81,12 @@ function LimboGameSidebar() {
         })
       );
     }
+  };
+
+  const handleOnStopAutoBet = () => {
+    console.log("%%%%%%%");
+    LimboSocket.emit("stopAutoBet", { userId: decoded?.userId });
+    dispatch(setStopAutoBet(false));
   };
 
   return (
@@ -177,6 +189,7 @@ function LimboGameSidebar() {
               "bg-[#1fff20] hover:bg-[#42ed45]"
             } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
             onClick={() => handleOnManualBet()}
+            // disabled={limboStatusData.actualMultiplier > 1}
           >
             Bet
           </button>
@@ -392,16 +405,25 @@ function LimboGameSidebar() {
                 onChange={(e) => handleOnChange(e)}
               />
             </div>
-            <button
-              className={`${
-                // bettingStatus === false
-                //   ? "bg-[#489649]"
-                "bg-[#1fff20] hover:bg-[#42ed45]"
-              } text-black mt-3 py-3 rounded-md font-semibold w-full`}
-              onClick={() => handleOnAutoBet()}
-            >
-              Start Autobet
-            </button>
+            {stopAutoBet ? (
+              <button
+                className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
+                onClick={() => handleOnStopAutoBet()}
+              >
+                Stop Autobet
+              </button>
+            ) : (
+              <button
+                className={`${
+                  // bettingStatus === false
+                  //   ? "bg-[#489649]"
+                  "bg-[#1fff20] hover:bg-[#42ed45]"
+                } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                onClick={() => handleOnAutoBet()}
+              >
+                Start Autobet
+              </button>
+            )}
           </div>
         </div>
       )}

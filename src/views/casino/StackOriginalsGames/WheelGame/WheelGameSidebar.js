@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { decodedToken } from "../../../../resources/utility";
-import { setWheelValue } from "../../../../features/casino/wheelSlice";
+import {
+  setMustSpin,
+  setWheelValue,
+} from "../../../../features/casino/wheelSlice";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { Divider } from "@mui/material";
 import { IoInfiniteSharp } from "react-icons/io5";
@@ -38,6 +41,7 @@ function WheelGameSidebar() {
         risk: wheelValue?.risk,
         segment: parseInt(wheelValue?.segments, 10),
       });
+      dispatch(setMustSpin(false));
       // dispatch(
       //   setWheelValue({
       //     betamount: "",
