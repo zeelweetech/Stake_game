@@ -362,44 +362,25 @@ function CrashGameContent() {
               )}
             </div>
           </div>
-          <div className="flex flex-col items-end space-y-1.5 ml-32 md:ml-[39rem]">
-            {visibleData?.length > 0
-              ? visibleData?.map((data, index) => (
-                  <button
-                    key={index}
-                    className="py-2 px-3  border-2 border-[#4d718768] bg-[#213743] rounded-full"
-                  >
-                    <div className="flex items-cente ">
-                      <BsIncognito />
-                      <p className="text-[#b1bad3] text-xs ">Hidden</p>
-                      <RiMoneyRupeeCircleFill color="yellow" size={20} />
-                      <p className="text-green-500">{data?.amount}</p>
-                    </div>
-                  </button>
-                ))
-              : ""}
-          </div>
-        </div>
-      </div>
-      {/* <div className="flex flex-col items-end space-y-1.5 md:ml-[39rem]">
-        {visibleData?.length > 0 ? (
-          visibleData?.map((data, index) => (
+          <div className="flex flex-col items-end space-y-1.5 xl:ml-[26rem] xl:-mt-28 lg:ml-[11rem] lg:-mt-28 md:ml-2 sm:ml-[8rem] -mt-72 md:mt-3 min-w-[21rem]">
+          {visibleData?.length > 0
+            ? visibleData?.map((data, index) => (
             <button
               key={index}
-              className="py-2 px-3  border-2 border-[#4d718768] bg-[#213743] rounded-full"
+              className="py-2 px-3 border-2border-[#4d718768] bg-[#213743] rounded-full"
             >
-              <div className="flex items-center ">
+              <div className="flex items-center">
                 <BsIncognito />
-                <p className="text-[#b1bad3] text-xs ">Hidden</p>
+                <p className="text-[#b1bad3] text-xs">Hidden</p>
                 <RiMoneyRupeeCircleFill color="yellow" size={20} />
                 <p className="text-green-500">{data?.amount}</p>
               </div>
             </button>
-          ))
-        ) : (
-          ""
-        )}
-      </div> */}
+            ))
+            : ""}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
