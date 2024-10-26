@@ -321,13 +321,11 @@ const MediumSegments = {
     { xvalue: 0.0, backgrondColor: "#213743", minDegree: 330, maxDegree: 336 },
     { xvalue: 1.5, backgroundColor: "#1fff20", minDegree: 337, maxDegree: 343 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 344, maxDegree: 350 },
-    { xvalue: 1.5, backgroundColor: "#1fff20", minDegree: 351, maxDegree: 360 },
   ],
 };
 
 const HighSegments = {
   segment10: [
-    { xvalue: 9.9, backgroundColor: "#de2128", minDegree: 0, maxDegree: 36 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 36, maxDegree: 72 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 72, maxDegree: 108 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 108, maxDegree: 144 },
@@ -337,9 +335,9 @@ const HighSegments = {
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 252, maxDegree: 288 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 288, maxDegree: 324 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 324, maxDegree: 360 },
+    { xvalue: 9.9, backgroundColor: "#de2128", minDegree: 0, maxDegree: 36 },
   ],
   segment20: [
-    { xvalue: 19.8, backgroundColor: "#de2128", minDegree: 0, maxDegree: 18 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 18, maxDegree: 36 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 36, maxDegree: 54 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 54, maxDegree: 72 },
@@ -359,9 +357,9 @@ const HighSegments = {
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 306, maxDegree: 324 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 324, maxDegree: 342 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 342, maxDegree: 360 },
+    { xvalue: 19.8, backgroundColor: "#de2128", minDegree: 0, maxDegree: 18 },
   ],
   segment30: [
-    { xvalue: 29.7, backgroundColor: "#de2128", minDegree: 0, maxDegree: 12 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 12, maxDegree: 24 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 24, maxDegree: 36 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 36, maxDegree: 48 },
@@ -391,9 +389,9 @@ const HighSegments = {
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 324, maxDegree: 336 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 336, maxDegree: 348 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 348, maxDegree: 360 },
+    { xvalue: 29.7, backgroundColor: "#de2128", minDegree: 0, maxDegree: 12 },
   ],
   segment40: [
-    { xvalue: 39.6, backgroundColor: "#de2128", minDegree: 0, maxDegree: 9 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 9, maxDegree: 18 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 18, maxDegree: 27 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 27, maxDegree: 36 },
@@ -433,9 +431,9 @@ const HighSegments = {
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 333, maxDegree: 342 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 342, maxDegree: 351 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 351, maxDegree: 360 },
+    { xvalue: 39.6, backgroundColor: "#de2128", minDegree: 0, maxDegree: 9 },
   ],
   segment50: [
-    { xvalue: 49.5, backgroundColor: "#de2128", minDegree: 0, maxDegree: 7 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 8, maxDegree: 14 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 15, maxDegree: 21 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 22, maxDegree: 28 },
@@ -485,8 +483,7 @@ const HighSegments = {
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 330, maxDegree: 336 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 337, maxDegree: 343 },
     { xvalue: 0.0, backgroundColor: "#213743", minDegree: 344, maxDegree: 350 },
-    { xvalue: 0.0, backgroundColor: "#213743", minDegree: 351, maxDegree: 360 },
-
+    { xvalue: 49.5, backgroundColor: "#de2128", minDegree: 0, maxDegree: 7 },
   ],
 };
 

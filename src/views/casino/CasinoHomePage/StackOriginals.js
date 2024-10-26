@@ -9,7 +9,14 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { decodedToken } from "../../../resources/utility";
-import { DragonTowerSocket, MineSocket } from "../../../socket";
+import {
+  CrashSocket,
+  DragonTowerSocket,
+  LimboSocket,
+  MineSocket,
+  PlinkoSocket,
+  WheelSocket,
+} from "../../../socket";
 
 function StackOriginals({ allGames, isLobby }) {
   const [loading, setLoading] = useState(false);
@@ -21,17 +28,39 @@ function StackOriginals({ allGames, isLobby }) {
   const handleAllGame = (gameName, id) => {
     setLoading(true);
     navigate(`/casino/${gameName}/${id}`);
-
-    if (gameName === "Mines") {
-      MineSocket.emit("joinGame", {
-        userId: decoded?.userId,
-        gameId: id,
-      });
-    } else if (gameName === "DragonTower") {
-      DragonTowerSocket.emit("joinGame", {
-        userId: decoded?.userId,
-        gameId: id,
-      });
+    switch (gameName) {
+      case "Crash":
+        return CrashSocket.emit("joinGame", {
+          userId: decoded?.userId,
+          gameId: id,
+        });
+      case "Plinko":
+        return PlinkoSocket.emit("joinGame", {
+          userId: decoded?.userId,
+          gameId: id,
+        });
+      case "Mines":
+        return MineSocket.emit("joinGame", {
+          userId: decoded?.userId,
+          gameId: id,
+        });
+      case "DragonTower":
+        return DragonTowerSocket.emit("joinGame", {
+          userId: decoded?.userId,
+          gameId: id,
+        });
+      case "Limbo":
+        return LimboSocket.emit("joinGame", {
+          userId: decoded?.userId,
+          gameId: id,
+        });
+      case "Wheel":
+        return WheelSocket.emit("joinGame", {
+          userId: decoded?.userId,
+          gameId: id,
+        });
+      default:
+        break;
     }
   };
 
