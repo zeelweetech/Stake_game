@@ -66,7 +66,7 @@ function ForgotPassword() {
         </div>
         <DialogContent>
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className=" mb-4 md:mb-4">
               <label
                 className="flex text-[#b1bad3] text-sm mb-1"
                 htmlFor="username"
@@ -74,7 +74,7 @@ function ForgotPassword() {
                 Email<p className="text-red-700 ml-1">*</p>
               </label>
               <input
-                className={`border rounded w-[28rem] py-2 px-3 bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
+                className={`border rounded w-[28rem] py-2 px-3 max-sm:w-64 bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
                   error.email ? "border-[#ed4163]" : ""
                 }`}
                 name="Forgotemail"
