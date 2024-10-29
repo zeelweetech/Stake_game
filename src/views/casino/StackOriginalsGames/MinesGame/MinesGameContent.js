@@ -1,3 +1,234 @@
+// import React, { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+// import bombIcon from "../../../../assets/img/bomb.svg";
+// import diamondIcon from "../../../../assets/img/Diamond.png";
+// import { decodedToken } from "../../../../resources/utility";
+// import { MineSocket } from "../../../../socket";
+// import { useParams } from "react-router-dom";
+// import {
+//   setGamesOver,
+//   setGameBet,
+//   setTileSelect,
+//   setGameStart,
+//   setRestored,
+//   setRestoredMultiplier,
+//   setShowFields,
+// } from "../../../../features/casino/minesSlice";
+// import toast from "react-hot-toast";
+
+// function MinesGameContent() {
+//   const { id } = useParams();
+//   const dispatch = useDispatch();
+//   const [images, setImages] = useState(Array(25).fill(null));
+//   const [revealed, setRevealed] = useState(Array(25).fill(false));
+//   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
+//   const [cashoutResult, setCashoutResult] = useState(null);
+//   const [cashoutVisible, setCashoutVisible] = useState(false);
+//   const [isMobile, setIsMobile] = useState(window.innerWidth <= 425);
+//   const {
+//     gamesOver,
+//     gameStart,
+//     tileSelect,
+//     mineValue,
+//     gameBet,
+//     restored
+//   } = useSelector((state) => state.minesGame);
+//   const decoded = decodedToken();
+
+//   useEffect(() => {
+//     MineSocket.emit("joinGame", {
+//       userId: decoded?.userId,
+//       gameId: id,
+//     });
+
+//     MineSocket.on("gameRestored", (data, currentMultiplier) => {
+//       dispatch(setRestored(data));
+//       dispatch(setRestoredMultiplier(currentMultiplier));
+
+//       const newImages = [...images];
+//       const newRevealed = [...revealed];
+
+//       data.mineLocations.forEach(({ tileIndex, isMine, selected }) => {
+//         if (selected === 1 && !isMine) {
+//           newImages[tileIndex] = { icon: diamondIcon, size: isMobile ? 60 : 100 };
+//           newRevealed[tileIndex] = true;
+//         } else if (isMine) {
+//           newImages[tileIndex] = { icon: bombIcon, size: isMobile ? 60 : 100 };
+//           newRevealed[tileIndex] = true;
+//         }
+//       });
+
+//       setImages(newImages);
+//       setRevealed(newRevealed);
+//     });
+//   }, [isMobile]);
+
+//   useEffect(() => {
+//     const handleResize = () => {
+//       setIsMobile(window.innerWidth <= 425);
+//     };
+
+//     window.addEventListener("resize", handleResize);
+//     return () => {
+//       window.removeEventListener("resize", handleResize);
+//     };
+//   }, []);
+
+//   MineSocket.on("Insufficientfund", (fundData) => {
+//     toast.apply("Insufficientfund data");
+//   });
+
+//   MineSocket.on("gameStarted", (data) => {
+//     dispatch(setGameStart(data));
+//     setImages(Array(25).fill(null));
+//     setRevealed(Array(25).fill(false));
+//     setZoomClass(Array(25).fill(false));
+//     setCashoutVisible(false);
+//   });
+
+//   // game tile selected event
+//   MineSocket.on("tileSelected", (data) => {
+//     dispatch(setTileSelect(data));
+//     handleTileSelection(data.tileIndex, data.isBomb);
+//   });
+
+//   const handleTileSelection = (index, isBomb) => {
+//     const newImages = [...images];
+//     const newRevealed = [...revealed];
+
+//     setTimeout(() => {
+//       newImages[index] = isBomb
+//         ? { icon: bombIcon, size: isMobile ? 60 : 100 }
+//         : { icon: diamondIcon, size: isMobile ? 60 : 100 };
+//       newRevealed[index] = true;
+//       setImages(newImages);
+//       setRevealed(newRevealed);
+
+//       if (isBomb) {
+//         dispatch(setGamesOver(true));
+//         dispatch(setGameBet(false));
+//         revealAll(newImages);
+//       }
+//     }, 800);
+//   };
+
+//   // game Over event
+//   MineSocket.on("gameOver", (data) => {
+//     const { clickedMine, remainingMines } = data;
+//     handleGameOver(clickedMine, remainingMines);
+//     setCashoutResult(data);
+//     dispatch(setShowFields(false));
+//     setCashoutVisible(false);
+//   });
+
+//   const handleGameOver = (clickedMine, remainingMines) => {
+//     const newImages = [...images];
+//     const newRevealed = [...revealed];
+
+//     newImages[clickedMine] = {
+//       icon: bombIcon,
+//       size: isMobile ? 50 : 90,
+//       opacity: 1,
+//       className: "bomb-blast",
+//     };
+//     newRevealed[clickedMine] = true;
+
+//     remainingMines.forEach((mineIndex) => {
+//       if (mineIndex !== clickedMine) {
+//         newImages[mineIndex] = { icon: bombIcon, size: isMobile ? 40 : 60, opacity: 0.5 };
+//         newRevealed[mineIndex] = true;
+//       }
+//     });
+
+//     setTimeout(() => {
+//       revealAll(newImages);
+//       setImages(newImages);
+//       setRevealed(newRevealed);
+
+//       dispatch(setGamesOver(true));
+//       dispatch(setGameBet(false));
+//     }, 1000);
+//   };
+
+//   const revealAll = (newImages) => {
+//     const newRevealed = [...revealed];
+
+//     for (let i = 0; i < 25; i++) {
+//       if (!newRevealed[i]) {
+//         newImages[i] = newImages[i] || {
+//           icon: diamondIcon,
+//           size: isMobile ? 50 : 80,
+//           opacity: 0.5,
+//         };
+//         newRevealed[i] = true;
+//       }
+//     }
+
+//     setImages(newImages);
+//     setRevealed(newRevealed);
+//   };
+
+//   const handleClick = (index) => {
+//     if (gamesOver || revealed[index]) return;
+
+//     MineSocket.emit("selectTile", {
+//       userId: decoded?.userId.toString(),
+//       gameId: id,
+//       tileIndex: index,
+//       betId: gameStart?.betId,
+//     });
+//   };
+
+//   return (
+//     <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[44rem] xl:ml-0 lg:w-[37.5rem] lg:ml-0 md:w-[28rem] md:ml-32 max-sm:mx-3">
+//       {cashoutVisible && !gameBet && ( 
+//         <div className="mt-4 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
+//           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
+//           <div className="flex items-center justify-center space-x-1">
+//             <p>0.00000000</p>
+//             <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+//           </div>
+//         </div>
+//       )}
+//       <div className="grid grid-cols-5 gap-2.5 relative z-10 md:grid-cols-5 max-sm:w-[20rem] max-sm:h-[20rem] ">
+//         {images.map((img, index) => (
+//           <div
+//             key={index}
+//             className={`flex justify-center items-center w-14 xl:w-28 lg:w-[6.5rem] xl:h-28 lg:h-[6.5rem]  md:h-[4rem] h-14 bg-[#2f4553] rounded-lg hover:-translate-y-1.5 hover:bg-[#688a9f] ${
+//               zoomClass[index] ? "zoom-in-out" : ""
+//             }`}
+//             onClick={() => handleClick(index)}
+//             style={{
+//               backgroundColor:
+//                 revealed[index] || gamesOver ? "#071824" : "#2f4553",
+//               cursor: revealed[index] ? "default" : "pointer",
+//             }}
+//           >
+//             {img && (
+//               <img
+//                 style={{
+//                   width: img.size,
+//                   height: img.size,
+//                   opacity: img.opacity || 1,
+//                 }}
+//                 className={`flex justify-center items-center ${
+//                   revealed[index] || gamesOver ? "reveal-animation" : "hidden"
+//                 } ${img.className || ""}`}
+//                 src={img.icon}
+//                 alt="Icon"
+//               />
+//             )}
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default MinesGameContent;
+
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
@@ -25,6 +256,7 @@ function MinesGameContent() {
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 425);
   const {
     gamesOver,
     gameStart,
@@ -50,10 +282,10 @@ function MinesGameContent() {
 
       data.mineLocations.forEach(({ tileIndex, isMine, selected }) => {
         if (selected === 1 && !isMine) {
-          newImages[tileIndex] = { icon: diamondIcon, size: 100 };
+          newImages[tileIndex] = { icon: diamondIcon , size: isMobile ? 60 : 100 };
           newRevealed[tileIndex] = true;
         } else if (isMine) {
-          newImages[tileIndex] = { icon: bombIcon, size: 100 };
+          newImages[tileIndex] = { icon: bombIcon, size: isMobile ? 60 : 100 };
           newRevealed[tileIndex] = true;
         }
       });
@@ -61,6 +293,17 @@ function MinesGameContent() {
       setImages(newImages);
       setRevealed(newRevealed);
     });
+  }, [isMobile]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 425);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   MineSocket.on("Insufficientfund", (fundData) => {
@@ -72,13 +315,18 @@ function MinesGameContent() {
     setImages(Array(25).fill(null));
     setRevealed(Array(25).fill(false));
     setZoomClass(Array(25).fill(false));
-    setCashoutVisible(false);
+    setCashoutVisible(false); // Reset cashout visibility on new game
   });
 
-  // game tile selected event
   MineSocket.on("tileSelected", (data) => {
     dispatch(setTileSelect(data));
     handleTileSelection(data.tileIndex, data.isBomb);
+  });
+
+  // cashout event
+  MineSocket.on("cashout", (result) => {
+    setCashoutResult(result);
+    setCashoutVisible(true); // Show cashout section when cashout event is triggered
   });
 
   const handleTileSelection = (index, isBomb) => {
@@ -87,8 +335,8 @@ function MinesGameContent() {
 
     setTimeout(() => {
       newImages[index] = isBomb
-        ? { icon: bombIcon, size: 100 }
-        : { icon: diamondIcon, size: 100 };
+        ? { icon: bombIcon, size: isMobile ? 60 : 100 }
+        : { icon: diamondIcon, size: isMobile ? 60 : 100 };
       newRevealed[index] = true;
       setImages(newImages);
       setRevealed(newRevealed);
@@ -101,12 +349,11 @@ function MinesGameContent() {
     }, 800);
   };
 
-  // game Over event
   MineSocket.on("gameOver", (data) => {
     const { clickedMine, remainingMines } = data;
     handleGameOver(clickedMine, remainingMines);
-    dispatch(setShowFields(false))
-    setCashoutVisible(false);
+    dispatch(setShowFields(false));
+    setCashoutVisible(false); // Hide cashout if game is over without winning
   });
 
   const handleGameOver = (clickedMine, remainingMines) => {
@@ -115,7 +362,7 @@ function MinesGameContent() {
 
     newImages[clickedMine] = {
       icon: bombIcon,
-      size: 90,
+      size: isMobile ? 50 : 90,
       opacity: 1,
       className: "bomb-blast",
     };
@@ -123,7 +370,7 @@ function MinesGameContent() {
 
     remainingMines.forEach((mineIndex) => {
       if (mineIndex !== clickedMine) {
-        newImages[mineIndex] = { icon: bombIcon, size: 60, opacity: 0.5 };
+        newImages[mineIndex] = { icon: bombIcon, size: isMobile ? 40 : 60, opacity: 0.5 };
         newRevealed[mineIndex] = true;
       }
     });
@@ -145,7 +392,7 @@ function MinesGameContent() {
       if (!newRevealed[i]) {
         newImages[i] = newImages[i] || {
           icon: diamondIcon,
-          size: 80,
+          size: isMobile ? 50 : 80,
           opacity: 0.5,
         };
         newRevealed[i] = true;
@@ -154,49 +401,6 @@ function MinesGameContent() {
 
     setImages(newImages);
     setRevealed(newRevealed);
-  };
-
-  MineSocket.on("cashoutSuccess", (data) => {
-    console.log('cashoutSuccess data', data);
-    
-    setCashoutResult(data);
-    setCashoutVisible(true);
-
-    const newImages = Array(25).fill(null);
-    const newRevealed = Array(25).fill(false);
-
-    const bombPositions = placeBombs(
-      25,
-      mineValue?.mines,
-      tileSelect.tileIndex
-    );
-    bombPositions.forEach((index) => {
-      newImages[index] = { icon: bombIcon, size: 60, opacity: 0.5 };
-      newRevealed[index] = true;
-    });
-
-    for (let i = 0; i < 25; i++) {
-      if (!bombPositions.includes(i)) {
-        newImages[i] = { icon: diamondIcon, size: 90, opacity: 0.5 };
-        newRevealed[i] = true;
-      }
-    }
-
-    setImages(newImages);
-    setRevealed(newRevealed);
-  });
-
-  const placeBombs = (totalTiles, bombCount, selectedTileIndex) => {
-    const bombPositions = new Set();
-    while (
-      bombPositions.size < (restored?.mines ? restored?.mines : bombCount)
-    ) {
-      const randomIndex = Math.floor(Math.random() * totalTiles);
-      if (randomIndex !== selectedTileIndex) {
-        bombPositions.add(randomIndex);
-      }
-    }
-    return Array.from(bombPositions);
   };
 
   const handleClick = (index) => {
@@ -209,13 +413,14 @@ function MinesGameContent() {
       betId: gameStart?.betId,
     });
   };
-  return (     
+
+  return (
     <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[44rem] xl:ml-0 lg:w-[37.5rem] lg:ml-0 md:w-[28rem] md:ml-32 max-sm:mx-3">
-      {cashoutVisible && !gameBet && ( 
+      {cashoutVisible && !gamesOver && ( 
         <div className="mt-4 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
-            <p>0.00000000</p>
+            <p>{cashoutResult?.amount || "0.00000000"}</p>
             <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
           </div>
         </div>
@@ -224,7 +429,7 @@ function MinesGameContent() {
         {images.map((img, index) => (
           <div
             key={index}
-            className={`flex justify-center items-center xl:w-28 lg:w-[6.5rem] xl:h-28 lg:h-[6.5rem] sm:w-[4.5rem] md:h-[4rem] bg-[#2f4553] rounded-lg hover:-translate-y-1.5 hover:bg-[#688a9f] ${
+            className={`flex justify-center items-center w-14 xl:w-28 lg:w-[6.5rem] xl:h-28 lg:h-[6.5rem] md:h-[4rem] h-14 bg-[#2f4553] rounded-lg hover:-translate-y-1.5 hover:bg-[#688a9f] ${
               zoomClass[index] ? "zoom-in-out" : ""
             }`}
             onClick={() => handleClick(index)}
