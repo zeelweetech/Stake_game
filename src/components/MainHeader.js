@@ -56,7 +56,9 @@ function MainHeader() {
           </span>
           <div className="flex items-center md:space-x-0">
             <button className="flex items-center bg-transparent md:bg-[#0f212e] md:bg-#0f212e blockhidden  space-x-1 px-2 md:px-5 py-2 md:py-3 rounded-s-md text-white font-medium">
-              <p className="text-sm md:text-base md:block hidden">₹{wallet}</p>
+              <p className="text-sm md:text-base md:block hidden">
+                ₹{wallet ? wallet : 0}
+              </p>
               <RiMoneyRupeeCircleFill
                 color="yellow"
                 className="text-lg md:text-xl md:block hidden"
