@@ -75,7 +75,8 @@ function DragonContent() {
 
   DragonTowerSocket.on("Insufficientfund", (fundData) => {
     console.log("fundData ********", fundData);
-    toast.apply("Insufficientfund data");
+    // toast.apply("Insufficientfund data");
+    toast.error(fundData?.message)
   });
 
   DragonTowerSocket.on("gameStarted", (data) => {

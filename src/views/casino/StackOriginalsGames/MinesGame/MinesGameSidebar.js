@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Divider } from "@mui/material";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { IoInfiniteSharp } from "react-icons/io5";
@@ -13,7 +13,8 @@ import {
 import { MineSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import { useParams } from "react-router-dom";
-import { openRegisterModel } from "../../../../features/auth/authSlice";
+import { openRegisterModel, setWallet } from "../../../../features/auth/authSlice";
+import { getWallet } from "../../../../services/LoginServices";
 
 function MinesGameSidebar() {
   const dispatch = useDispatch();
@@ -29,9 +30,21 @@ function MinesGameSidebar() {
     tileSelect,
     restored,
     restoredMultiplier,
-    showFields
+    showFields,
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
+
+  useEffect(() => {
+    GetWalletData();
+  }, []);
+
+  const GetWalletData = async () => {
+    await getWallet({ id: decoded?.userId })
+      .then((res) => {
+        dispatch(setWallet(res?.currentAmount));
+      })
+      .catch((err) => {});
+  };
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
@@ -47,18 +60,18 @@ function MinesGameSidebar() {
     if (gameBet || restored?.mineLocations?.length > 0) {
       dispatch(setGamesOver(true));
       dispatch(setGameBet(false));
-      dispatch(setShowFields(false))
+      dispatch(setShowFields(false));
       MineSocket.emit("cashout", {
         userId: decoded?.userId.toString(),
         gameId: id,
       });
     } else {
-      if(!localStorage.getItem("token")) {
+      if (!localStorage.getItem("token")) {
         dispatch(openRegisterModel());
       } else {
         onStartGame(mineValue.betamount);
-        dispatch(setShowFields(true))
-  
+        dispatch(setShowFields(true));
+
         MineSocket.emit("minePlaceBet", {
           userId: decoded?.userId.toString(),
           gameId: id,
@@ -120,7 +133,13 @@ function MinesGameSidebar() {
                 placeholder="0.00"
                 min={0}
                 name="betamount"
-                value={mineValue?.betamount ? mineValue?.betamount : restored?.mineLocations?.length > 0 ? restored?.betAmount : ''}
+                value={
+                  mineValue?.betamount
+                    ? mineValue?.betamount
+                    : restored?.mineLocations?.length > 0
+                    ? restored?.betAmount
+                    : ""
+                }
                 onChange={(e) => handleOnChange(e)}
                 className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2  md:w-[20rem] rounded-s-md text-white bg-[#0f212e] ${
                   minesBetStatus && "cursor-not-allowed"
@@ -208,7 +227,18 @@ function MinesGameSidebar() {
                 <label>$0.00</label>
               </div>
               <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
-                <p>{(mineValue?.betamount ? mineValue?.betamount : restored?.mineLocations?.length > 0 ? restored?.betAmount : 0) * (tileSelect?.multiplier ? tileSelect?.multiplier : restored?.mineLocations?.length > 0 ? restoredMultiplier : 0.00)}</p>
+                <p>
+                  {(mineValue?.betamount
+                    ? mineValue?.betamount
+                    : restored?.mineLocations?.length > 0
+                    ? restored?.betAmount
+                    : 0) *
+                    (tileSelect?.multiplier
+                      ? tileSelect?.multiplier
+                      : restored?.mineLocations?.length > 0
+                      ? restoredMultiplier
+                      : 0.0)}
+                </p>
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div>
               <button
@@ -393,13 +423,13 @@ function MinesGameSidebar() {
                 <PercentIcon fontSize="small" />
               </div>
               <input
-              className="w-20 pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[14rem]  rounded-md text-white bg-[#0f212e]"
-              type="number"
-              placeholder="0"
-              name="onwin"
-              onChange={(e) => handleOnChange(e)}
-              disabled={onProfit.win}
-            />
+                className="w-20 pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[14rem]  rounded-md text-white bg-[#0f212e]"
+                type="number"
+                placeholder="0"
+                name="onwin"
+                onChange={(e) => handleOnChange(e)}
+                disabled={onProfit.win}
+              />
             </div>
           </div>
           <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">

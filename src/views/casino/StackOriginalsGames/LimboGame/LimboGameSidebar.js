@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   setStopAutoBet,
   setValues,
@@ -8,11 +8,12 @@ import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { Divider } from "@mui/material";
 import { IoInfiniteSharp } from "react-icons/io5";
 import PercentIcon from "@mui/icons-material/Percent";
-import { openRegisterModel } from "../../../../features/auth/authSlice";
+import { openRegisterModel, setWallet } from "../../../../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { LimboSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import toast from "react-hot-toast";
+import { getWallet } from "../../../../services/LoginServices";
 
 function LimboGameSidebar() {
   const dispatch = useDispatch();
@@ -21,6 +22,18 @@ function LimboGameSidebar() {
     (state) => state.limboGame
   );
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
+
+  useEffect(() => {
+    GetWalletData();
+  }, []);
+
+  const GetWalletData = async () => {
+    await getWallet({ id: decoded?.userId })
+      .then((res) => {
+        dispatch(setWallet(res?.currentAmount));
+      })
+      .catch((err) => {});
+  };
 
   LimboSocket.on("Insufficientfund", (data) => {
     toast.error(data?.message);

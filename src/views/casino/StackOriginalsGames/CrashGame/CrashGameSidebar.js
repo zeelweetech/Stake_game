@@ -7,7 +7,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import { BsIncognito } from "react-icons/bs";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
-import { openRegisterModel } from "../../../../features/auth/authSlice";
+import { openRegisterModel, setWallet } from "../../../../features/auth/authSlice";
 import { IoInfiniteSharp } from "react-icons/io5";
 import { CrashSocket } from "../../../../socket";
 import {
@@ -22,6 +22,7 @@ import {
 import { decodedToken } from "../../../../resources/utility";
 import toast from "react-hot-toast";
 import { getRandomData } from "../../../../services/CasinoServices";
+import { getWallet } from "../../../../services/LoginServices";
 
 const CrashGameSidebar = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,19 @@ const CrashGameSidebar = () => {
     combinedData,
     multiplier,
   } = useSelector((state) => state.crashGame);
+
+  useEffect(() => {
+    GetWalletData();
+  }, []);
+
+  const GetWalletData = async () => {
+    await getWallet({ id: decoded?.userId })
+      .then((res) => {
+        dispatch(setWallet(res?.currentAmount));
+      })
+      .catch((err) => {});
+  };
+
   useEffect(() => {
     CrashSocket.on("bettingStarted", (data) => {
       dispatch(setBettingStatus(data?.status));

@@ -8,15 +8,31 @@ import {
 } from "../../../../features/casino/wheelSlice";
 import toast from "react-hot-toast";
 import { Wheel } from "react-custom-roulette";
+import { decodedToken } from "../../../../resources/utility";
+import { getWallet } from "../../../../services/LoginServices";
+import { setWallet } from "../../../../features/auth/authSlice";
 
 function WheelGameContent() {
   const dispatch = useDispatch();
+  const decoded = decodedToken();
   const [isSpinning, setIsSpinning] = useState(true);
   const [segments, setSegments] = useState([]);
   const [segColors, setSegColors] = useState([]);
   const { wheelValue, finalmultiplier, mustSpin } = useSelector(
     (state) => state.wheelGame
   );
+
+  useEffect(() => {
+    GetWalletData();
+  }, []);
+
+  const GetWalletData = async () => {
+    await getWallet({ id: decoded?.userId })
+      .then((res) => {
+        dispatch(setWallet(res?.currentAmount));
+      })
+      .catch((err) => {});
+  };
 
   useEffect(() => {
     if (mustSpin) {
@@ -78,6 +94,10 @@ function WheelGameContent() {
               onStopSpinning={() => {
                 setIsSpinning(false);
                 dispatch(setMustSpin(false));
+                WheelSocket.emit("betCompleted", {
+                  betId: finalmultiplier?.betId,
+                  userId: decoded?.userId,
+                });
               }}
               // radiusLineWidth={5}
               backgroundColors={segColors}
