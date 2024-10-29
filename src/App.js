@@ -22,11 +22,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route>
-            {!status ? (
+            {/* {!status ? (
               <Route path="/" element={<DefultPage />} />
-            ) : (
+            ) : ( */}
               <Route path="*" name="Home" element={<DefaultLayout />} />
-            )}
+            {/* )} */}
             <Route path="/verifyterm" element={<VerifyTerm />} />
           </Route>
         </Routes>
