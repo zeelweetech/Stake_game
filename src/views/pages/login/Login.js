@@ -98,12 +98,13 @@ function Login() {
         sx={{
           "& .MuiPaper-root": {
             borderRadius: "6px",
+            marginBottom: "100px",
             backgroundColor: "#1a2c38",
           },
         }}
       >
         <div>
-          <div className="relative">
+          <div className="relative ">
             <DialogTitle
               id="alert-dialog-title"
               className="text-center w-full text-white"
@@ -117,7 +118,7 @@ function Login() {
           </div>
           <DialogContent>
             <form onSubmit={handleSubmit}>
-              <div className="mb-4 -mt-6">
+              <div className="mb-4">
                 <label
                   className="flex text-[#b1bad3] text-sm mb-1"
                   htmlFor="username"
@@ -125,7 +126,7 @@ function Login() {
                   Email<p className="text-red-700 ml-1">*</p>
                 </label>
                 <input
-                  className={`border rounded w-[28rem] py-2 px-3 bg-[#0f212e] text-[#b1bad3] hover:border-[#7f8798] focus:outline-[#b1bad3] ${
+                  className={`border rounded max-sm:w-[15rem] w-[28rem] py-2 px-3 bg-[#0f212e] text-[#b1bad3] hover:border-[#7f8798] focus:outline-[#b1bad3] ${
                     error?.email ? "border-[#ed4163]" : "border-gray-600"
                   }`}
                   name="email"
@@ -179,9 +180,9 @@ function Login() {
               </button>
             </form>
           </DialogContent>
-          <div className="ml-28">
-            <hr className="w-8/12 mt-1 border-[0.1px] border-[#7c85a3]"></hr>
-            <p className="bg-[#1a2c38] text-[#b1bad3] text-sm w-10 text-center -mt-3 mb-3 ml-28">
+          <div className="ml-14 md:ml-28">
+            <hr className="w-9/12 md:w-8/12 mt-1 border-[0.1px] border-[#7c85a3]"></hr>
+            <p className="bg-[#1a2c38] text-[#b1bad3] text-sm w-10 text-center -mt-3 mb-3 ml-16 md:ml-28">
               OR
             </p>
           </div>

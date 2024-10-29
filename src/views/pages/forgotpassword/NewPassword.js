@@ -1,4 +1,6 @@
+import { Dialog, DialogContent, IconButton } from "@mui/material";
 import React, { useState } from "react";
+import { ErrorIcon } from "react-hot-toast";
 
 function NewPassword() {
   const [values, setValues] = useState({});
@@ -49,7 +51,7 @@ function NewPassword() {
       <div>
         <div className="flex justify-between text-white">
           <DialogContent className="flex items-center space-x-2">
-            <SettingsIcon className="text-[#b1bad3]" />
+            <SettingsIcon className="text-[#b1bad3]"/>
             <p>Forgot Password</p>
           </DialogContent>
           <IconButton onClick={handleForgotPasswordClose}>

@@ -169,7 +169,7 @@ function Register() {
                   Email<p className="text-red-700  ml-1">*</p>
                 </label>
                 <input
-                  className={`border rounded w-[28rem] py-2 px-3 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${
+                  className={`border rounded w-[28rem] py-2 px-3 max-sm:w-64 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${
                     error?.email ? "border-[#ed4163]" : "border-gray-600"
                   }`}
                   name="email"
@@ -192,7 +192,7 @@ function Register() {
                   Username<p className="text-red-700 ml-1">*</p>
                 </label>
                 <input
-                  className={`border rounded w-[28rem] py-2 px-3 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${
+                  className={`border rounded w-[28rem] py-2 px-3 max-sm:w-64 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${
                     error?.Username ? "border-[#ed4163]" : "border-gray-600"
                   }`}
                   name="Username"
@@ -219,7 +219,7 @@ function Register() {
                     Password<p className="text-red-700 ml-1">*</p>
                   </label>
                   <input
-                    className={`border rounded hover:border-[#7f8798] w-full py-2 px-3 bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
+                    className={`border rounded hover:border-[#7f8798] w-full py-2 px-3  bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
                       error?.password ? "border-[#ed4163]" : "border-gray-600"
                     }`}
                     name="password"
@@ -271,7 +271,7 @@ function Register() {
                 </label>
                 <div className="flex space-x-3">
                   <input
-                    className={`border w-36 rounded py-2 px-3 hover:border-[#7f8798] bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
+                    className={`border w-36 rounded py-2 px-3 max-sm:w-12 hover:border-[#7f8798] bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
                       error?.day ? "border-[#ed4163]" : "border-gray-600"
                     }`}
                     name="day"
@@ -283,7 +283,7 @@ function Register() {
                     placeholder="DD"
                   />
                   <select
-                    className={`py-2 px-3 w-36 bg-[#0f212e] border rounded hover:border-[#7f8798] text-white focus:outline-[#b1bad3] ${
+                    className={`py-2 px-3 w-36  max-sm:w-[7rem] bg-[#0f212e] border rounded hover:border-[#7f8798] text-white focus:outline-[#b1bad3] ${
                       error?.month ? "border-[#ed4163]" : "border-gray-600"
                     }`}
                     name="month"
@@ -305,7 +305,7 @@ function Register() {
                     <option value="12">December</option>
                   </select>
                   <input
-                    className={`border w-36 rounded py-2 px-3 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${
+                    className={`border w-36 rounded py-2 px-3 max-sm:w-24 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${
                       error?.year ? "border-[#ed4163]" : "border-gray-600"
                     }`}
                     name="year"
