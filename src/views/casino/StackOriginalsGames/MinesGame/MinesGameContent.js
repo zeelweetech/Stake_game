@@ -269,7 +269,7 @@ function MinesGameContent() {
 
   useEffect(() => {
     MineSocket.emit("joinGame", {
-      userId: decoded?.userId,
+      userId: decoded?.userId.toString(),
       gameId: id,
     });
 

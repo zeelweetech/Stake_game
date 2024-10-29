@@ -80,7 +80,7 @@ function StackOriginals({ allGames, isLobby }) {
       <div className="flex justify-between items-center">
         <div className="flex items-center mx-3 mt-8 space-x-2">
           <BsFire fontSize={20} className="text-[#b1bad3] hover:text-white" />
-          <Link className="text-lg font-medium">Stack Originals</Link>
+          <Link className="text-lg font-medium">Listor Originals</Link>
         </div>
         {isLobby && (
           <div ref={navButtonsRef}>

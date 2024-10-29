@@ -32,14 +32,14 @@ function CasinoHomePage() {
   const menuItems = [
     { label: "Lobby", icon: <TbCherryFilled color="#b1bad3" fontSize={15} /> },
     {
-      label: "Stack Originals",
+      label: "Listor Originals",
       icon: <BsFire color="#b1bad3" fontSize={15} />,
     },
     { label: "Slot", icon: <Filter7Icon className="text-[#b1bad3]" /> },
     { label: "Live Casino", icon: <InboxIcon className="text-[#b1bad3]" /> },
     { label: "Game Shows", icon: <FaGift color="#b1bad3" fontSize={15} /> },
     {
-      label: "Stake Exclusives",
+      label: "Listor Exclusives",
       icon: <BsBookmarkStarFill color="#b1bad3" fontSize={15} />,
     },
     {
@@ -147,7 +147,7 @@ function CasinoHomePage() {
                   isLobby={isLobby}
                 />
               </>
-            ) : stackMenu === "Stack Originals" ? (
+            ) : stackMenu === "Listor Originals" ? (
               <StackOriginals
                 allGames={allGames}
                 setLoading={setLoading}
@@ -171,7 +171,7 @@ function CasinoHomePage() {
                 setLoading={setLoading}
                 isLobby={false}
               />
-            ) : stackMenu === "Stake Exclusives" ? (
+            ) : stackMenu === "Listor Exclusives" ? (
               <Exclusives
                 allGames={allGames}
                 setLoading={setLoading}

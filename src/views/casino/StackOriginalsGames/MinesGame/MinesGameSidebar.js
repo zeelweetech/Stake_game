@@ -13,6 +13,7 @@ import {
 import { MineSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import { useParams } from "react-router-dom";
+import { openRegisterModel } from "../../../../features/auth/authSlice";
 
 function MinesGameSidebar() {
   const dispatch = useDispatch();
@@ -52,15 +53,19 @@ function MinesGameSidebar() {
         gameId: id,
       });
     } else {
-      onStartGame(mineValue.betamount);
-      dispatch(setShowFields(true))
-
-      MineSocket.emit("minePlaceBet", {
-        userId: decoded?.userId.toString(),
-        gameId: id,
-        totalMines: mineValue?.mines,
-        betAmount: mineValue?.betamount,
-      });
+      if(!localStorage.getItem("token")) {
+        dispatch(openRegisterModel());
+      } else {
+        onStartGame(mineValue.betamount);
+        dispatch(setShowFields(true))
+  
+        MineSocket.emit("minePlaceBet", {
+          userId: decoded?.userId.toString(),
+          gameId: id,
+          totalMines: mineValue?.mines,
+          betAmount: mineValue?.betamount,
+        });
+      }
     }
   };
 

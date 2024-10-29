@@ -48,11 +48,14 @@ function GameFooter() {
         </div>
         <div>
           {/* Adjust the image size for different screen sizes */}
-          <img
+          {/* <img
             src={stackCarshLogo}
             alt="Not Found"
             className="hidden sm:block w-16 sm:w-24 md:w-28"
-          />
+          /> */}
+          <span className="text-[#b1bad3] text-3xl font-bold font-sans hidden sm:block w-16 sm:w-24 md:w-28">
+            Listor
+          </span>
         </div>
         <div>
           <Link className="text-[#b1bad3] hover:text-white">Fairness</Link>

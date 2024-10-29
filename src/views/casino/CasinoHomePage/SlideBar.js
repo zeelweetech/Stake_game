@@ -36,7 +36,7 @@ function SlideBar() {
       gameImage: ConquerCasino,
     },
     {
-      Game: "Stack vs Eddie",
+      Game: "Listor vs Eddie",
       gameDescription: "Win a share in $30,000 every week Read More",
       gameButton: "Play Now",
       gameImage: StackEddie,

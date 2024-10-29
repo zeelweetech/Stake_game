@@ -42,12 +42,18 @@ function MainHeader() {
     <div>
       <div className="bg-[#1a2c38] drop-shadow-2xl  ">
         <div className="flex justify-between md:justify-around items-center px-4 md:px-0 ">
-          <img
+          {/* <img
             src={stakeLogo}
             className="w-12 h-12 md:w-16 md:h-16 hover:cursor-pointer"
             alt="Not Found"
             onClick={() => navigate("/casino/home")}
-          />
+          /> */}
+          <span
+            className="text-white text-3xl font-bold font-sans hover:cursor-pointer"
+            onClick={() => navigate("/casino/home")}
+          >
+            Listor
+          </span>
           <div className="flex items-center md:space-x-0">
             <button className="flex items-center bg-transparent md:bg-[#0f212e] md:bg-#0f212e blockhidden  space-x-1 px-2 md:px-5 py-2 md:py-3 rounded-s-md text-white font-medium">
               <p className="text-sm md:text-base md:block hidden">₹{wallet}</p>

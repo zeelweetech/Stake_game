@@ -12,6 +12,7 @@ import {
 import { DragonTowerSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import { useParams } from "react-router-dom";
+import { openRegisterModel } from "../../../../features/auth/authSlice";
 
 function DragonSidebar() {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ function DragonSidebar() {
     gameBet,
     tileSelected,
     restor,
-    restorMultiplier
+    restorMultiplier,
   } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
@@ -45,16 +46,20 @@ function DragonSidebar() {
         gameId: id,
       });
     } else {
-      dispatch(setGameBet(true));
-      dispatch(setShowRandomField(true));
+      if (!localStorage.getItem("token")) {
+        dispatch(openRegisterModel());
+      } else {
+        dispatch(setGameBet(true));
+        dispatch(setShowRandomField(true));
 
-      DragonTowerSocket.emit("dragonTowerPlaceBet", {
-        userId: decoded?.userId.toString(),
-        gameId: id,
-        betAmount: values?.betamount,
-        difficulty: values?.difficulty,
-        betType: "Manual",
-      });
+        DragonTowerSocket.emit("dragonTowerPlaceBet", {
+          userId: decoded?.userId.toString(),
+          gameId: id,
+          betAmount: values?.betamount,
+          difficulty: values?.difficulty,
+          betType: "Manual",
+        });
+      }
     }
   };
 
@@ -198,13 +203,24 @@ function DragonSidebar() {
                     ? tileSelected?.multiplier
                     : restor?.restoreData?.length > 0
                     ? restorMultiplier
-                    : "1.00"}x
-                  )
+                    : "1.00"}
+                  x )
                 </label>
                 <label>$0.00</label>
               </div>
               <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
-                <p>{(values?.betamount ? values?.betamount : restor?.restoreData?.length > 0 ? restor?.betAmount : 0) * (tileSelected?.multiplier ? tileSelected?.multiplier : tileSelected?.mineLocations?.length > 0 ? restorMultiplier : 0.00)}</p>
+                <p>
+                  {(values?.betamount
+                    ? values?.betamount
+                    : restor?.restoreData?.length > 0
+                    ? restor?.betAmount
+                    : 0) *
+                    (tileSelected?.multiplier
+                      ? tileSelected?.multiplier
+                      : tileSelected?.mineLocations?.length > 0
+                      ? restorMultiplier
+                      : 0.0)}
+                </p>
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div>
             </div>

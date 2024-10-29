@@ -39,7 +39,7 @@ function Exclusives({ allGames, isLobby }) {
             fontSize="small"
             className="text-[#b1bad3] hover:text-white"
           />
-          <Link className="text-lg font-medium">Stake Exclusives</Link>
+          <Link className="text-lg font-medium">Listor Exclusives</Link>
         </div>
         {isLobby && (
           <div ref={navButtonsRef}>

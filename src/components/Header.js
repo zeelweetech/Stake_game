@@ -30,14 +30,23 @@ function Header() {
     <div>
       <div className="bg-[#1a2c38] shadow-2xl h-14">
         <div className="flex justify-between items-center px-4 lg:px-20 h-full">
-          <img
+          {/* <img
             src={stakeLogo}
             className="w-12 h-12 sm:w-16 sm:h-16 cursor-pointer"
             alt="Stake Logo"
             onClick={() => navigate("/casino/home")}
-          />
+          /> */}
+          <span
+            className="text-white text-3xl font-bold font-sans cursor-pointer"
+            onClick={() => navigate("/casino/home")}
+          >
+            Listor
+          </span>
           <div className="flex items-center space-x-4 sm:space-x-6">
-            <Link onClick={handleOnLogin} className="text-white text-sm sm:text-lg hover:underline">
+            <Link
+              onClick={handleOnLogin}
+              className="text-white text-sm sm:text-lg hover:underline"
+            >
               Sign In
             </Link>
             <button
