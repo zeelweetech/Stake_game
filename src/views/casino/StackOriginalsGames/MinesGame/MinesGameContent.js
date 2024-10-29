@@ -157,6 +157,8 @@ function MinesGameContent() {
   };
 
   MineSocket.on("cashoutSuccess", (data) => {
+    console.log('cashoutSuccess data', data);
+    
     setCashoutResult(data);
     setCashoutVisible(true);
 
