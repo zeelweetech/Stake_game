@@ -64,7 +64,8 @@ function MinesGameContent() {
   }, []);
 
   MineSocket.on("Insufficientfund", (fundData) => {
-    toast.apply("Insufficientfund data");
+    // toast.apply("Insufficientfund data");
+    toast.error(fundData?.message)
   });
 
   MineSocket.on("gameStarted", (data) => {
@@ -98,7 +99,7 @@ function MinesGameContent() {
         dispatch(setGameBet(false));
         revealAll(newImages);
       }
-    }, 800);
+    }, 500);
   };
 
   // game Over event
