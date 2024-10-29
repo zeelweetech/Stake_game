@@ -90,12 +90,12 @@ function LimboGameSidebar() {
   };
 
   return (
-    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
+    <div className="xl:w-80 xl:mx-0 lg:w-[16.8rem] lg:mx-0 md:mx-40 max-sm:mx-3 flex flex-col p-3 bg-[#213743] rounded-b-lg">
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] rounded-full ${
+              className={`py-2 w-[43vw] xl:w-[8.8rem] lg:w-[7.5rem] md:w-[10.7rem] sm:w-[0rem] max-[425px]:w-[11.1rem] max-[375px]:w-[9.5rem]  max-[320px]:w-[7.8rem] rounded-full ${
                 isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => dispatch(SwiperModel(true))}
@@ -103,7 +103,7 @@ function LimboGameSidebar() {
               Manual
             </button>
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] rounded-full ${
+              className={`py-2 w-[43vw] xl:w-[8.6rem] lg:w-[6.68rem] md:w-[10.9rem] sm:w-[0rem] max-[425px]:w-[11.1rem] max-[375px]:w-[9.5rem] max-[320px]:w-[7.9rem] rounded-full ${
                 !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => dispatch(SwiperModel(false))}
@@ -115,7 +115,7 @@ function LimboGameSidebar() {
       </div>
       {isSwiper ? (
         <div>
-          <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
+          <div className="text-[#b1bad3] flex justify-between font-semibold mt-3 mb-1">
             <label>Bet Amount</label>
             <label>$0.00</label>
           </div>
@@ -125,7 +125,7 @@ function LimboGameSidebar() {
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div>
               <input
-                className="w-48 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
+                className="xl:w-48 lg:w-40 md:w-72 max-sm:w-[15rem] max-[320px]:w-[12rem] pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0.00"
                 min={0}
@@ -197,17 +197,17 @@ function LimboGameSidebar() {
       ) : (
         <div className="text-xs">
           <div>
-            <div className="text-[#b1bad3] flex justify-between font-semibold my-1">
+            <div className="text-[#b1bad3] flex justify-between font-semibold mt-3 mb-1">
               <label>Bet Amount</label>
               <label>$0.00</label>
             </div>
-            <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+            <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768] ">
               <div className="relative flex">
                 <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div>
                 <input
-                  className="w-48 pr-9 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
+                  className="xl:w-48 lg:w-40 md:w-72 sm:w-0 max-[425px]:w-72 max-[375px]:w-64 max-[320px]:w-48 pr-9 pl-2 py-3 rounded-s-md text-xs text-white bg-[#0f212e]"
                   type="number"
                   placeholder="0.00"
                   step="0.01"
@@ -251,13 +251,13 @@ function LimboGameSidebar() {
             <div className="text-[#b1bad3] font-semibold mt-3 mb-1">
               <label>Number of Bets</label>
             </div>
-            <div className="flex justify-between mb-2">
+            <div className="flex justify-between rounded-md border-2 border-[#4d718768] bg-[#4d718768] mb-2 ">
               <div className="relative flex">
                 <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <IoInfiniteSharp className="text-xl" />
                 </div>
                 <input
-                  className="w-28 pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]"
+                  className="xl:w-[18.2rem] lg:w-[15rem] md:w-[22.5rem] max-sm:w-[23.1rem] max-[375px]:w-[20rem] max-[320px]:w-[16.5rem] pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]"
                   type="number"
                   placeholder="0"
                   min={0}
@@ -306,7 +306,7 @@ function LimboGameSidebar() {
                   <PercentIcon fontSize="small" />
                 </div>
                 <input
-                  className="w-28 pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
+                  className="xl:w-[7.9rem] lg:w-[4.7rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
                   type="number"
                   placeholder="0"
                   name="onwin"
@@ -359,7 +359,7 @@ function LimboGameSidebar() {
                   <PercentIcon fontSize="small" />
                 </div>
                 <input
-                  className="w-28 pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
+                  className="xl:w-[7.9rem] lg:w-[4.7rem]  md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem]  max-[320px]:w-[6.2rem]  pr-7 pl-2 py-2.5 rounded-md border-1 text-white bg-[#0f212e]"
                   type="number"
                   placeholder="0"
                   name="onlose"
