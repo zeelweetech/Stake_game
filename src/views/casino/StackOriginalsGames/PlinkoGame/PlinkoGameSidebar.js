@@ -97,12 +97,9 @@ function PlinkoGameSidebar() {
           </div>
         </div>
       </div>
-      
-
-
       {isManual ? (
         <div>
-          <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+          <div className= " text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
             <label>Bet Amount</label>
             <label>$0.00</label>
           </div>

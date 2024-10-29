@@ -210,7 +210,7 @@ function MinesGameContent() {
     });
   };
   return (     
-    <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center w-auto xl:w-[52rem] xl:ml-0 lg:w-[36.8rem] lg:ml-0 md:w-[28rem] md:ml-32 max-sm:mx-3">
+    <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[44rem] xl:ml-0 lg:w-[37.5rem] lg:ml-0 md:w-[28rem] md:ml-32 max-sm:mx-3">
       {cashoutVisible && !gameBet && ( 
         <div className="mt-4 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
@@ -220,7 +220,7 @@ function MinesGameContent() {
           </div>
         </div>
       )}
-      <div className="grid grid-cols-5 gap-2.5 relative z-10 md:grid-cols-5 ">
+      <div className="grid grid-cols-5 gap-2.5 relative z-10 md:grid-cols-5 max-sm:w-[20rem] max-sm:h-[20rem] ">
         {images.map((img, index) => (
           <div
             key={index}

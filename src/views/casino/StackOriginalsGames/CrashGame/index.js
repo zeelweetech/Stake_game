@@ -39,7 +39,7 @@ function CrashGame() {
   }, []);
 
   return (
-    <div className=" bg-[#1a2c38] py-8 text-white flex justify-center items-center w-full">
+    <div className=" bg-[#1a2c38] py-10 text-white flex justify-center items-center w-full">
       <div>
         {isMobile ? (
           <div className="flex flex-col">
@@ -47,7 +47,7 @@ function CrashGame() {
             <CrashGameSidebar />
           </div>
         ) : (
-          <div className="flex-row bg-center text-white flex grow w-full min-w-[30rem] h-[41.6rem] max-sm:h- border-b-3">
+          <div className="flex-row bg-center text-white flex grow w-full min-w-[30rem] h-[41.6rem] border-b-3">
             <CrashGameSidebar />
             <CrashGameContent />
           </div>

@@ -20,7 +20,7 @@ function LimboGameContent() {
   const [displayedMultiplier, setDisplayedMultiplier] = useState(1.0);
   const { values, limboStatusData } = useSelector((state) => state.limboGame);
   const [topXData, setTopXData] = useState();
-
+  
   LimboSocket.on("limbobetResult", (data) => {
     dispatch(setLimboStatusData(data));
   });
@@ -65,7 +65,8 @@ function LimboGameContent() {
     if (limboStatusData?.actualMultiplier) {
       const totalDuration = 1000; // 2 seconds
       const targetMultiplier = parseFloat(limboStatusData.actualMultiplier);
-      const incrementCount = totalDuration / 5; // 5 ms interval for smooth transition
+      const incrementCount = totalDuration / 5;
+       // 5 ms interval for smooth transition
       const incrementValue = targetMultiplier / incrementCount; // Calculate how much to increment each step
 
       let currentMultiplier = 1.0;
@@ -138,7 +139,7 @@ function LimboGameContent() {
   };
 
   return (
-    <div className="xl:w-[52rem] lg:w-[37rem] h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
+    <div className="xl:w-[52rem] xl:mx-0 lg:w-[38rem] lg:mx-0 md:mx-40  max-sm:mx-3 h-full flex flex-col justify-center select-none relative bg-[#0f212e]  rounded-t-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
@@ -173,10 +174,10 @@ function LimboGameContent() {
             </div>
             <div className="flex relative">
               <div className="cursor-text absolute flex right-4 translate-y-[4rem] pointer-events-none z-2">
-                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+                <RiMoneyRupeeCircleFill color="yellow" className="text-xl -mt-[3.2rem]"/>
               </div>
               <input
-                className="w-[23.5rem] pr-9 pl-2 py-2.5 border border-[#b1bad3] rounded-md text-white bg-[#0f212e]"
+                className="w-[23.5rem] xl:w-96 lg:w-64 md:w-40 max-sm:w-36 max-[320px]:w-32 pr-9 pl-2 py-2 border-2 border-[#2f4553] hover:border-[#557086] focus:border-[#557086]  rounded-md text-white bg-[#0f212e] outline-none"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
@@ -185,7 +186,7 @@ function LimboGameContent() {
                 max={99.99}
                 value={values?.multiplier}
                 onChange={(e) => handleOnChange(e)}
-              />
+            />
             </div>
           </div>
           <div>
@@ -193,11 +194,11 @@ function LimboGameContent() {
               <label>Win Chance</label>
             </div>
             <div className="flex">
-              <div className="cursor-text absolute flex top-1/2 left-96 translate-y-[4rem] pointer-events-none z-2">
-                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-              </div>
+              <div className="cursor-text absolute flex right-4 translate-y-[4rem] pointer-events-none z-2">
+                <RiMoneyRupeeCircleFill color="yellow" className="text-xl -mt-[3.3rem] mr-8"/>
+              </div> 
               <input
-                className="w-[23.5rem] pr-9 pl-2 py-2.5 border border-[#b1bad3] rounded-md text-white bg-[#0f212e]"
+                className="w-[23.5rem] xl:w-96 lg:w-64 md:w-40 max-sm:w-36 max-[320px]:w-32 pr-9 pl-2 py-2 border-2 border-[#2f4553] hover:border-[#557086] focus:border-[#557086] rounded-md text-white bg-[#0f212e] outline-none"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
