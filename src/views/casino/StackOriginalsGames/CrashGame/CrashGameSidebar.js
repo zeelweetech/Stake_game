@@ -7,7 +7,10 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import { BsIncognito } from "react-icons/bs";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
-import { openRegisterModel, setWallet } from "../../../../features/auth/authSlice";
+import {
+  openRegisterModel,
+  setWallet,
+} from "../../../../features/auth/authSlice";
 import { IoInfiniteSharp } from "react-icons/io5";
 import { CrashSocket } from "../../../../socket";
 import {

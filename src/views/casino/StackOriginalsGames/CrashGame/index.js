@@ -15,7 +15,7 @@ function CrashGame() {
     window.addEventListener("resize", handleResize);
 
     CrashSocket.connect();
-    
+
     CrashSocket.on("connect", () => {
       console.log("Crash socket connected");
     });
