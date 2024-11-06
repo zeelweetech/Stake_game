@@ -53,7 +53,7 @@ function GameFooter() {
             alt="Not Found"
             className="hidden sm:block w-16 sm:w-24 md:w-28"
           /> */}
-          <span className="text-[#b1bad3] text-3xl font-bold font-sans hidden sm:block w-16 sm:w-24 md:w-28">
+          <span className="text-[#b1bad3]/50 text-4xl font-extrabold italic font-sans hidden sm:block w-16 sm:w-24 md:w-28">
             Listor
           </span>
         </div>

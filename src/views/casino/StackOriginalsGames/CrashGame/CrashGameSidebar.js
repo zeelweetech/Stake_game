@@ -7,7 +7,10 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import { BsIncognito } from "react-icons/bs";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
-import { openRegisterModel, setWallet } from "../../../../features/auth/authSlice";
+import {
+  openRegisterModel,
+  setWallet,
+} from "../../../../features/auth/authSlice";
 import { IoInfiniteSharp } from "react-icons/io5";
 import { CrashSocket } from "../../../../socket";
 import {
@@ -275,7 +278,7 @@ const CrashGameSidebar = () => {
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div>
               <input
-                className="w-48 pr-9 pl-2 py-2 sm:w-60 rounded-s-md text-white bg-[#0f212e]"
+                className="w-48 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0.00"
                 min={0}
@@ -285,7 +288,7 @@ const CrashGameSidebar = () => {
               />
             </div>
             <button
-              className="w-16 hover:bg-[#5c849e68]"
+              className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
               onClick={() =>
                 dispatch(
                   setCrashValues({
@@ -303,7 +306,7 @@ const CrashGameSidebar = () => {
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
             <button
-              className="w-16 hover:bg-[#5c849e68]"
+              className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
               onClick={() =>
                 dispatch(
                   setCrashValues({
@@ -363,7 +366,7 @@ const CrashGameSidebar = () => {
               className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
               onClick={() => setOnClickStatus(false)}
             >
-              Bet (Next Bet)
+              Bet (Next Round)
             </button>
           ) : onClickStatus ? (
             <button
@@ -501,7 +504,7 @@ const CrashGameSidebar = () => {
                   />
                 </div>
                 <button
-                  className="w-16 hover:bg-[#5c849e68]"
+                  className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
                   onClick={() =>
                     dispatch(
                       setCrashValues({
@@ -519,7 +522,7 @@ const CrashGameSidebar = () => {
                   sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
                 />
                 <button
-                  className="w-16 hover:bg-[#5c849e68]"
+                  className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
                   onClick={() =>
                     dispatch(
                       setCrashValues({

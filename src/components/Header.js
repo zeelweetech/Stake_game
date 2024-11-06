@@ -28,7 +28,7 @@ function Header() {
 
   return (
     <div>
-      <div className="bg-[#1a2c38] shadow-2xl h-14">
+      <div className="bg-[#1a2c38] drop-shadow-2xl h-14">
         <div className="flex justify-between items-center px-4 lg:px-20 h-full">
           {/* <img
             src={stakeLogo}
@@ -37,7 +37,7 @@ function Header() {
             onClick={() => navigate("/casino/home")}
           /> */}
           <span
-            className="text-white text-3xl font-bold font-sans cursor-pointer"
+            className="text-white text-5xl font-extrabold italic font-sans cursor-pointer"
             onClick={() => navigate("/casino/home")}
           >
             Listor

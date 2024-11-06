@@ -49,7 +49,7 @@ function MainHeader() {
             onClick={() => navigate("/casino/home")}
           /> */}
           <span
-            className="text-white text-3xl font-bold font-sans hover:cursor-pointer"
+            className="text-white text-5xl font-extrabold italic font-sans hover:cursor-pointer"
             onClick={() => navigate("/casino/home")}
           >
             Listor
