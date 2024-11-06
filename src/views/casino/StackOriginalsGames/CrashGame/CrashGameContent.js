@@ -167,13 +167,13 @@ function CrashGameContent() {
         maintainAspectRatio: false,
         scales: {
           x: {
-            title: { display: true, text: "Seconds", color: "#fff" },
+            title: { display: true, color: "#fff" },
             ticks: { color: "#fff" },
             grid: { display: false },
             min: 2,
           },
           y: {
-            title: { display: true, text: "Multiplier", color: "#fff" },
+            title: { display: true, color: "#fff" },
             ticks: { color: "#fff" },
             grid: { display: false },
             min: 1,
@@ -307,7 +307,7 @@ function CrashGameContent() {
   // };
 
   return (
-    <div className="xl:w-[52rem] lg:w-[37rem] w-full md:w-full  flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg p-4 ">
+    <div className="xl:w-[52rem] md:w-full md:h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg p-4 ">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
@@ -327,24 +327,22 @@ function CrashGameContent() {
           <IoIosTrendingUp color="white" />
         </button>
       </div>
-
-      <div className="flex flex-col items-center justify-between flex-grow w-full item-center mt-10 relative">
+      <div className="flex flex-col items-center justify-between flex-grow w-full xl:w-[55rem] lg:w-[41rem] md:w-[25rem] item-center mt-10 relative">
         <div
-          className="xl:pl-4 lg:pl-2 xl:pr-32 lg:pr-16 w-full"
-          style={{ height: "550px" }}
+          className="xl:pl-4 lg:pl-2 xl:pr-32 lg:pr-16 xl:h-[35rem] xl:w-[55rem] xl:mr-0 lg:h-[34rem] lg:w-[40rem] lg:mr-0 md:h-[20rem] md:w-[30rem] md:ml-[2rem] md:mr-28 sm:w-[50rem] max-sm:h-[15rem] max-sm:mr-10"
+          // style={{ height: "550px" }}
         >
           {/* {console.log("chartData***", chartData)} */}
           <canvas
             ref={chartRef}
-            style={{ width: "100%", height: "100%" }}
+            // style={{ width: "100%", height: "100%" }}
           ></canvas>
         </div>
-
-        <div className="absolute top-44 flex flex-col items-center w-full px-4 text-white font-bold">
-          <div className="flex-grow flex items-center justify-center">
+        <div className="absolute xl:top-44 lg:top-44 md:t-40 flex flex-col items-center w-full px-4 text-white font-bold">
+          <div className="flex-grow flex items-center justify-center ">
             <div className="text-center">
               <p
-                className={`text-6xl ${
+                className={`text-5xl ${
                   multiplier === xValue ? "text-red-500" : "text-white"
                 }`}
               >
@@ -362,22 +360,22 @@ function CrashGameContent() {
               )}
             </div>
           </div>
-          <div className="flex flex-col items-end space-y-1.5 xl:ml-[26rem] xl:-mt-28 lg:ml-[11rem] lg:-mt-28 md:ml-2 sm:ml-[8rem] -mt-72 md:mt-3 min-w-[21rem]">
-          {visibleData?.length > 0
-            ? visibleData?.map((data, index) => (
-            <button
-              key={index}
-              className="py-2 px-3 border-2border-[#4d718768] bg-[#213743] rounded-full"
-            >
-              <div className="flex items-center">
-                <BsIncognito />
-                <p className="text-[#b1bad3] text-xs">Hidden</p>
-                <RiMoneyRupeeCircleFill color="yellow" size={20} />
-                <p className="text-green-500">{data?.amount}</p>
-              </div>
-            </button>
-            ))
-            : ""}
+          <div className="flex flex-col items-end space-y-1.5 xl:ml-[22rem] xl:-mt-28 lg:ml-[20rem] lg:-mt-28 md:ml-5 max-sm:ml-44 ">
+            {visibleData?.length > 0
+              ? visibleData?.map((data, index) => (
+                  <button
+                    key={index}
+                    className="py-1 px-1 border-2 border-[#4d718768] bg-[#213743] rounded-full"
+                  >
+                    <div className="flex items-center">
+                      <BsIncognito />
+                      <p className="text-[#b1bad3] text-xs">Hidden</p>
+                      <RiMoneyRupeeCircleFill color="yellow" size={10} />
+                      <p className="text-green-500">{data?.amount}</p>
+                    </div>
+                  </button>
+                ))
+              : ""}
           </div>
         </div>
       </div>
