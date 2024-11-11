@@ -8,7 +8,10 @@ import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { Divider } from "@mui/material";
 import { IoInfiniteSharp } from "react-icons/io5";
 import PercentIcon from "@mui/icons-material/Percent";
-import { openRegisterModel, setWallet } from "../../../../features/auth/authSlice";
+import {
+  openRegisterModel,
+  setWallet,
+} from "../../../../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { LimboSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
@@ -275,8 +278,13 @@ function LimboGameSidebar() {
                   placeholder="0"
                   min={0}
                   name="numberofbet"
-                  value={values?.numberofbet}
+                  value={
+                    values?.numberofbet
+                    // ? values?.numberofbet
+                    // : values?.numberofbet - limboStatusData?.autoBetRound
+                  }
                   onChange={(e) => handleOnChange(e)}
+                  // disabled={limboStatusData?.autoBetRound}
                 />
               </div>
             </div>

@@ -13,7 +13,10 @@ import {
 import { MineSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import { useParams } from "react-router-dom";
-import { openRegisterModel, setWallet } from "../../../../features/auth/authSlice";
+import {
+  openRegisterModel,
+  setWallet,
+} from "../../../../features/auth/authSlice";
 import { getWallet } from "../../../../services/LoginServices";
 
 function MinesGameSidebar() {
@@ -51,33 +54,29 @@ function MinesGameSidebar() {
     dispatch(setMineValue({ ...mineValue, [name]: value }));
   };
 
-  const onStartGame = () => {
-    dispatch(setGameBet(true));
-    dispatch(setGamesOver(false));
-  };
-
   const handleBetClick = () => {
     if (gameBet || restored?.mineLocations?.length > 0) {
-      dispatch(setGamesOver(true));
-      dispatch(setGameBet(false));
-      dispatch(setShowFields(false));
       MineSocket.emit("cashout", {
         userId: decoded?.userId.toString(),
         gameId: id,
       });
+      dispatch(setGamesOver(true));
+      dispatch(setGameBet(false));
+      dispatch(setShowFields(false));
     } else {
       if (!localStorage.getItem("token")) {
         dispatch(openRegisterModel());
       } else {
-        onStartGame(mineValue.betamount);
-        dispatch(setShowFields(true));
-
+        // onStartGame(mineValue.betamount);
         MineSocket.emit("minePlaceBet", {
           userId: decoded?.userId.toString(),
           gameId: id,
           totalMines: mineValue?.mines,
           betAmount: mineValue?.betamount,
         });
+        dispatch(setGameBet(true));
+        dispatch(setGamesOver(false));
+        dispatch(setShowFields(true));
       }
     }
   };
@@ -296,7 +295,7 @@ function MinesGameSidebar() {
                 ? "bg-[#489649]"
                 : "bg-[#1fff20] hover:bg-[#42ed45]"
             } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-            onClick={handleBetClick}
+            onClick={() => handleBetClick()}
           >
             {gameBet || restored?.mineLocations?.length > 0 ? "Cashout" : "Bet"}
           </button>

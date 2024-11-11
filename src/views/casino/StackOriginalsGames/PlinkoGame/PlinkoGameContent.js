@@ -61,7 +61,6 @@ function PlinkoGameContent() {
   });
 
   PlinkoSocket.on("walletBalance", (data) => {
-    console.log("data", data);
     dispatch(setWallet(data?.walletBalance));
   });
 

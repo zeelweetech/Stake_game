@@ -39,7 +39,7 @@ function MinesGame() {
 
   return (
 
-    <div className="mt-5 xl:ml-0  lg:w-11/12 lg:ml-9 bg-[#1a2c38] flex justify-center items-center text-white h-full ">
+    <div className="mt-14 xl:ml-0  lg:w-11/12 lg:ml-9 bg-[#1a2c38] flex justify-center items-center text-white h-full ">
     <div className="w-full max-w-screen-lg">
       <div
         className={`flex w-full min-w-70  ${

@@ -74,7 +74,7 @@ function MinesGameContent() {
 
   MineSocket.on("Insufficientfund", (fundData) => {
     // toast.apply("Insufficientfund data");
-    toast.error(fundData?.message)
+    toast.error(fundData?.message);
   });
 
   MineSocket.on("gameStarted", (data) => {

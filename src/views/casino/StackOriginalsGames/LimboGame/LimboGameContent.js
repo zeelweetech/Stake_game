@@ -53,7 +53,6 @@ function LimboGameContent() {
     await getGameRandomFiveData({ id: id })
       .then((response) => {
         console.log("resssss", response);
-
         setTopXData(response?.data);
       })
       .catch((error) => {
@@ -124,18 +123,26 @@ function LimboGameContent() {
   };
 
   const getLastValueColor = () => {
-    return Math.floor(displayedMultiplier) !==
-      Math.floor(limboStatusData.actualMultiplier)
-      ? "text-white"
-      : Math.floor(limboStatusData.actualMultiplier) >
-        parseInt(values?.multiplier, 10)
-      ? "text-red-500"
-      : "text-green-500";
-    // Math.floor(displayedMultiplier) > parseInt(values?.multiplier, 10)
-    //   ? "text-green-500"
-    //   : Math.floor(displayedMultiplier) < parseInt(values?.multiplier, 10)
-    //   ? "text-red-500"
-    //   : "text-white";
+    if (displayedMultiplier === 1.0) {
+      return "text-white";
+    }
+    // Get target multiplier from user input
+    const targetMultiplier = parseFloat(values?.multiplier || 2);
+    // Get actual result multiplier
+    const actualMultiplier = parseFloat(limboStatusData?.actualMultiplier);
+
+    // When animation is complete (displayed matches actual)
+    if (Math.floor(displayedMultiplier) === Math.floor(actualMultiplier)) {
+      // Win condition: actual multiplier is greater than target
+      if (actualMultiplier >= targetMultiplier) {
+        return "text-green-500";
+      }
+      // Loss condition: actual multiplier is less than target
+      else {
+        return "text-red-500";
+      }
+    }
+    return "text-white";
   };
 
   return (
@@ -147,10 +154,7 @@ function LimboGameContent() {
               <div key={index}>
                 <button
                   className={`p-2.5 ${
-                    limboStatusData.selectedMultiplier <
-                    limboStatusData.actualMultiplier
-                      ? "bg-[#1fff20]"
-                      : "bg-white"
+                    item?.isWin === true ? "bg-[#1fff20]" : "bg-white"
                   } rounded-full`}
                 >{`${item?.multiplier}x`}</button>
               </div>
