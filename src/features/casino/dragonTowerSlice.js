@@ -11,6 +11,7 @@ const initialState = {
   tileSelected: "",
   restor: "",
   restorMultiplier: "",
+  isGameOver: false,
 };
 
 const dragonTowerGameSlice = createSlice({
@@ -38,9 +39,12 @@ const dragonTowerGameSlice = createSlice({
     setRestodMultiplier(state, action) {
       state.restorMultiplier = action.payload
     },
+    setIsGameOver(state, action) {
+      state.isGameOver = action.payload
+    }
   },
 });
 
-export const { setValues, setBettingStatus, setShowRandomField, setGameBet, setTileSelected, setRestor, setRestodMultiplier } = dragonTowerGameSlice.actions;
+export const { setValues, setBettingStatus, setShowRandomField, setGameBet, setTileSelected, setRestor, setRestodMultiplier, setIsGameOver } = dragonTowerGameSlice.actions;
 
 export default dragonTowerGameSlice.reducer;

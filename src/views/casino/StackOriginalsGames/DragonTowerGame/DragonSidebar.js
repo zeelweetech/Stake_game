@@ -6,6 +6,7 @@ import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setGameBet,
+  setIsGameOver,
   setShowRandomField,
   setValues,
 } from "../../../../features/casino/dragonTowerSlice";
@@ -28,6 +29,7 @@ function DragonSidebar() {
     tileSelected,
     restor,
     restorMultiplier,
+    isGameOver
   } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
@@ -37,21 +39,18 @@ function DragonSidebar() {
   };
 
   const handleBetClick = () => {
-    if (gameBet) {
-      // dispatch(setGamesOver(true));
-      dispatch(setGameBet(false));
-      dispatch(setShowRandomField(false));
+    if (gameBet && !isGameOver) {
       DragonTowerSocket.emit("cashout", {
         userId: decoded?.userId.toString(),
         gameId: id,
       });
+      dispatch(setGameBet(false));
+      dispatch(setShowRandomField(false));
+      dispatch(setIsGameOver(true))
     } else {
       if (!localStorage.getItem("token")) {
         dispatch(openRegisterModel());
       } else {
-        dispatch(setGameBet(true));
-        dispatch(setShowRandomField(true));
-
         DragonTowerSocket.emit("dragonTowerPlaceBet", {
           userId: decoded?.userId.toString(),
           gameId: id,
@@ -59,6 +58,9 @@ function DragonSidebar() {
           difficulty: values?.difficulty,
           betType: "Manual",
         });
+        dispatch(setGameBet(true));
+        dispatch(setIsGameOver(false))
+        dispatch(setShowRandomField(true));
       }
     }
   };
@@ -228,11 +230,11 @@ function DragonSidebar() {
 
           <button
             className={`${
-              gameBet ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
+              gameBet && !isGameOver ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
             } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
             onClick={handleBetClick}
           >
-            {gameBet ? "Cashout" : "Bet"}
+            {gameBet && !isGameOver ? "Cashout" : "Bet"}
           </button>
         </div>
       ) : (

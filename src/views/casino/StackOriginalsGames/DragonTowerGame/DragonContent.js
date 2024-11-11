@@ -17,6 +17,7 @@ import { DragonTowerSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import { decodedToken } from "../../../../resources/utility";
 import {
+  setIsGameOver,
   setRestodMultiplier,
   setRestor,
   setShowRandomField,
@@ -28,14 +29,23 @@ function DragonContent() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [clickedBoxes, setClickedBoxes] = useState({});
-  const [isGameOver, setIsGameOver] = useState(false);
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
   const [gameOverResult, setGameOverResult] = useState(null);
   const [rowsIndex, setRowsIndex] = useState();
   const [boxsIndex, setBoxsIndex] = useState();
-  const { values, gameBet } = useSelector((state) => state.dragonTowerGame);
+  const { values, gameBet, isGameOver } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
+
+  const resetGame = () => {
+    setClickedBoxes({});
+    setCashoutResult(null);
+    setCashoutVisible(false);
+    setGameOverResult(null);
+    setRowsIndex(undefined);
+    setBoxsIndex(undefined);
+    dispatch(setIsGameOver(false));
+  };
 
   useEffect(() => {
     DragonTowerSocket.emit("joinGame", {
@@ -49,6 +59,77 @@ function DragonContent() {
       dispatch(setRestodMultiplier(currentMultiplier));
     });
   }, []);
+
+  DragonTowerSocket.on("Insufficientfund", (fundData) => {
+    console.log("fundData ********", fundData);
+    // toast.apply("Insufficientfund data");
+    toast.error(fundData?.message)
+  });
+
+  DragonTowerSocket.on("gameStarted", (data) => {
+    console.log("gameStarted data", data);
+    setCashoutVisible(false);
+    // dispatch(setGameStart(data));
+    resetGame()
+  });
+
+  DragonTowerSocket.on("tileSelected", (data) => {
+    console.log("tileSelected data", data);
+    dispatch(setTileSelected(data));
+  });
+
+  DragonTowerSocket.on("gameOver", (data) => {
+    console.log("gameOver data", data);
+    handleGameOverResult();
+    dispatch(setIsGameOver(true));
+    dispatch(setShowRandomField(false))
+    setCashoutVisible(false);
+  });
+
+  const handleGameOverResult = () => {
+    let maxSkullBoxes;
+
+    if (values.difficulty === "easy" || values.difficulty === "master") {
+      maxSkullBoxes = 2;
+    } else if (values.difficulty === "medium" || values.difficulty === "expert") {
+      maxSkullBoxes = 1;
+    } else if (values.difficulty === "hard") {
+      maxSkullBoxes = 0;
+    } else {
+      maxSkullBoxes = 1;
+    }
+
+    const randomEggBoxes = Array.from({ length: rows }, (_, rowIndex) => {
+      if (rowIndex < rowsIndex) {
+        const boxIndices = new Set();
+        while (boxIndices.size < maxSkullBoxes) {
+          const randomIndex = Math.floor(Math.random() * boxesPerRow);
+          if (randomIndex !== clickedBoxes[rowIndex]) {
+            boxIndices.add(randomIndex);
+          }
+        }
+        return Array.from(boxIndices);
+      }
+      return [];
+    });
+
+    setGameOverResult({
+      skullRowIndex: rowsIndex,
+      skullBoxIndex: boxsIndex,
+      eggRows: randomEggBoxes,
+    });
+  };
+
+  DragonTowerSocket.on("cashoutSuccess", (data) => {
+    console.log("cashoutSuccess data", data);
+    setCashoutResult(data);
+    setCashoutVisible(true);
+  });
+
+  DragonTowerSocket.on("walletBalance", (data) => {
+    console.log("walletBalance data", data);
+    // dispatch(setWallet(data?.walletBalance));
+  });
 
   const handleBoxClick = (rowIndex, boxIndex) => {
     if (gameBet && !isGameOver) {
@@ -71,80 +152,6 @@ function DragonContent() {
       setBoxsIndex(boxIndex);
     }
   };
-// console.log("clickedBoxes *********", clickedBoxes);
-
-  DragonTowerSocket.on("Insufficientfund", (fundData) => {
-    console.log("fundData ********", fundData);
-    // toast.apply("Insufficientfund data");
-    toast.error(fundData?.message)
-  });
-
-  DragonTowerSocket.on("gameStarted", (data) => {
-    console.log("gameStarted data", data);
-    setCashoutVisible(false);
-    // dispatch(setGameStart(data));
-  });
-
-  DragonTowerSocket.on("tileSelected", (data) => {
-    console.log("tileSelected data", data);
-    dispatch(setTileSelected(data));
-  });
-
-  DragonTowerSocket.on("gameOver", (data) => {
-    console.log("gameOver data", data);
-    setIsGameOver(true);
-    setCashoutVisible(false);
-    handleGameOverResult();
-  });
-
-  // const handleGameOverResult = () => {
-  //   console.log("rowsIndex rowsIndex", rowsIndex);
-  //   console.log("boxsIndex boxsIndex", boxsIndex);
-
-  //   const randomEggBoxes = Array.from(
-  //     { length: rows },
-  //     () => Math.floor(Math.random() * getBoxesPerRow())
-  //     // () => Math.floor(Math.random() * boxsIndex)
-  //   );
-
-  //   // setGameOverBoxes(randomEggBoxes)
-  //   setGameOverResult({
-  //     // rowsIndex,
-  //     // boxsIndex,
-  //     randomEggBoxes,
-  //   });
-  // };
-
-  const handleGameOverResult = () => {
-    const randomEggBoxes = Array.from({ length: rows }, (_, rowIndex) => {
-      // Randomly select 2 boxes per row above the selected row
-      if (rowIndex < rowsIndex) {
-        const boxIndices = new Set();
-        while (boxIndices.size < 2) {
-          boxIndices.add(Math.floor(Math.random() * boxesPerRow));
-        }
-        return Array.from(boxIndices);
-      }
-      return [];
-    });
-  
-    setGameOverResult({
-      skullRowIndex: rowsIndex,
-      skullBoxIndex: boxsIndex,
-      eggRows: randomEggBoxes,
-    });
-  };
-
-  DragonTowerSocket.on("cashoutSuccess", (data) => {
-    console.log("cashoutSuccess data", data);
-    setCashoutResult(data);
-    setCashoutVisible(true);
-  });
-
-  DragonTowerSocket.on("walletBalance", (data) => {
-    console.log("walletBalance data", data);
-    // dispatch(setWallet(data?.walletBalance));
-  });
 
   const getBoxesPerRow = () => {
     switch (values.difficulty) {
@@ -224,73 +231,41 @@ function DragonContent() {
           >
             {(() => {
               const rowElements = [];
-              const lastClickedRowIndex = Math.max(
-                ...Object.keys(clickedBoxes).map(Number)
-              );
+              // const lastClickedRowIndex = Math.max(
+              //   ...Object.keys(clickedBoxes).map(Number)
+              // );
               for (let rowIndex = rows - 1; rowIndex >= 0; rowIndex--) {
                 const boxElements = [];
                 for (let boxIndex = 0; boxIndex < boxesPerRow; boxIndex++) {
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
-                  // const isUnselected = !isSelected && isGameOver;
-                  const isGameOverEgg =
-        gameOverResult &&
-        ((rowIndex === gameOverResult.skullRowIndex &&
-          boxIndex !== gameOverResult.skullBoxIndex) ||
-          gameOverResult.eggRows[rowIndex]?.includes(boxIndex));
-
-      const imageToShow = isGameOver
-        ? rowIndex === gameOverResult.skullRowIndex &&
-          boxIndex === gameOverResult.skullBoxIndex
-          ? skullImage
-          : isGameOverEgg
-          ? eggImage
-          : Boxsvg
-        : isSelected
-        ? eggImage
-        : Boxsvg;
-                  // const isSkullPosition = isGameOver && gameOverResult?.randomEggBoxes[rowIndex] === boxIndex;
-                  // const isEggPosition = isGameOver && !isSkullPosition;
+                  const imageToShow = isGameOver
+                    ? rowIndex === gameOverResult?.skullRowIndex && boxIndex === gameOverResult?.skullBoxIndex
+                      ? skullImage
+                      : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || clickedBoxes[rowIndex] === boxIndex || rowIndex === gameOverResult?.skullRowIndex || rowIndex > gameOverResult?.skullRowIndex
+                        ? eggImage
+                        : Boxsvg
+                    : isSelected
+                      ? eggImage
+                      : Boxsvg;
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
-                      className={`rounded-md w-full h-10 flex justify-center items-center ${
-                        isGameOver
-                          ? "cursor-not-allowed bg-[#213743]"
-                          : (gameBet && rowIndex === 0) ||
-                            clickedBoxes[rowIndex - 1] !== undefined
+                      className={`rounded-md w-full h-10 flex justify-center items-center ${isGameOver
+                        ? "cursor-not-allowed bg-[#213743]"
+                        : (gameBet && rowIndex === 0) ||
+                          clickedBoxes[rowIndex - 1] !== undefined
                           ? "bg-[#00e701]"
                           : "cursor-not-allowed bg-[#213743]"
-                      } ${
-                        clickedBoxes[rowIndex] !== undefined
-                          ? "bg-[#213743]"
-                          : ""
-                      } ${
-                        isSelected ? "opacity-100 bg-[#00e701]" : "opacity-50"
-                      } ${
-                        isGameOver ? "cursor-not-allowed" : "cursor-pointer"
-                      }`}
+                        } ${clickedBoxes[rowIndex] !== undefined
+                          ? "bg-[#213743] opacity-100"
+                          : "opacity-50"
+                        } ${isSelected ? "opacity-100 bg-[#00e701]" : "opacity-50"
+                        } ${isGameOver ? "cursor-not-allowed" : "cursor-pointer"
+                        }`}
                       onClick={() => handleBoxClick(rowIndex, boxIndex)}
                     >
                       <img
-                        src={
-                          // isGameOver &&
-                          // clickedBoxes[lastClickedRowIndex] === boxIndex &&
-                          // lastClickedRowIndex === rowIndex
-                          //   ? skullImage
-                          //   : clickedBoxes[rowIndex] === boxIndex
-                          //   ? eggImage
-                          //   : Boxsvg
-                          // isGameOver &&
-                          // clickedBoxes[lastClickedRowIndex] === boxIndex &&
-                          // lastClickedRowIndex === rowIndex
-                          //   ? skullImage
-                          //   : isGameOver && isUnselected
-                          //   ? eggImage
-                          //   : isSelected
-                          //   ? eggImage
-                          //   : Boxsvg
-                          imageToShow
-                        }
+                        src={imageToShow}
                         alt="Not Found"
                         className="w-auto h-full object-cover rounded-md"
                       />

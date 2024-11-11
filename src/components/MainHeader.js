@@ -40,7 +40,7 @@ function MainHeader() {
 
   return (
     <div>
-      <div className="bg-[#1a2c38] drop-shadow-2xl  ">
+      <div className="bg-[#1a2c38] drop-shadow-2xl py-[0.30rem]">
         <div className="flex justify-between md:justify-around items-center px-4 md:px-0 ">
           {/* <img
             src={stakeLogo}

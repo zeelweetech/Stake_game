@@ -28,7 +28,7 @@ function Header() {
 
   return (
     <div>
-      <div className="bg-[#1a2c38] drop-shadow-2xl h-14">
+      <div className="bg-[#1a2c38] drop-shadow-2xl py-[0.30rem]">
         <div className="flex justify-between items-center px-4 lg:px-20 h-full">
           {/* <img
             src={stakeLogo}
