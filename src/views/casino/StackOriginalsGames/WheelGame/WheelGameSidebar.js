@@ -42,11 +42,13 @@ function WheelGameSidebar() {
         segment: parseInt(wheelValue?.segments, 10),
       });
       dispatch(setMustSpin(false));
-      // dispatch(
-      //   setWheelValue({
-      //     betamount: "",
-      //   })
-      // );
+      dispatch(
+        setWheelValue({
+          betamount: "",
+          risk: wheelValue?.risk,
+          segments: wheelValue?.segments,
+        })
+      );
     }
   };
 
@@ -68,16 +70,18 @@ function WheelGameSidebar() {
         stopOnLoss: parseInt(wheelValue?.stoponloss, 10),
         stopOnProfit: parseInt(wheelValue?.stoponprofit, 10),
       });
-      // dispatch(
-      //   setWheelValue({
-      //     betamount: "",
-      //     numberofbet: "",
-      //     stoponloss: "",
-      //     stoponprofit: "",
-      //     onwin: "",
-      //     onloss: "",
-      //   })
-      // );
+      dispatch(
+        setWheelValue({
+          betamount: "",
+          numberofbet: "",
+          stoponloss: "",
+          stoponprofit: "",
+          onwin: "",
+          onloss: "",
+          risk: wheelValue?.risk,
+          segments: wheelValue?.segments,
+        })
+      );
     }
   };
 

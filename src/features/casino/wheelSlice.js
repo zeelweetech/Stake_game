@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   wheelValue: {
-    betamount: 0,
+    betamount: "",
     risk: "medium",
     segments: 30,
-    finalmultiplier: "",
+    // finalmultiplier: "",
   },
   finalmultiplier: "",
   mustSpin: false,

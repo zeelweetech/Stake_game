@@ -82,6 +82,88 @@ function WheelGameContent() {
     setSegColors(segColors);
   }, [wheelValue]);
 
+  const lowRiskButtons = (
+    <>
+      <button className="border-b-[#406c82] border-b-8 bg-[#213743] px-20 py-3 rounded-xl">
+        0.00x
+      </button>
+      <button className="border-b-[#fcfcfc] border-b-8 bg-[#213743] px-20 py-3 rounded-xl">
+        1.20x
+      </button>
+      <button className="border-b-[#1fff20] border-b-8 bg-[#213743] px-20 py-3 rounded-xl">
+        1.50x
+      </button>
+    </>
+  );
+
+  const mediumRiskButtons = (
+    <>
+      <button
+        className={`border-b-[#406c82] bg-[#213743] border-b-8 ${
+          wheelValue?.segments === "30" || wheelValue?.segments === 30
+            ? "px-8"
+            : "px-10"
+        } py-3 rounded-xl`}
+      >
+        0.00x
+      </button>
+      <button
+        className={`border-b-[#1fff20] bg-[#213743] border-b-8 ${
+          wheelValue?.segments === "30" || wheelValue?.segments === 30
+            ? "px-8"
+            : "px-10"
+        } py-3 rounded-xl`}
+      >
+        1.50x
+      </button>
+      <button
+        className={`border-b-[#e8e225] bg-[#213743] border-b-8 ${
+          wheelValue?.segments === "30" || wheelValue?.segments === 30
+            ? "px-8"
+            : "px-10"
+        } py-3 rounded-xl`}
+      >
+        1.80x
+      </button>
+      <button
+        className={`border-b-[#9322e3] bg-[#213743] border-b-8 ${
+          wheelValue?.segments === "30" || wheelValue?.segments === 30
+            ? "px-8"
+            : "px-10"
+        } py-3 rounded-xl`}
+      >
+        2.00x
+      </button>
+      <button
+        className={`border-b-[#8e44ad] bg-[#213743] border-b-8 ${
+          wheelValue?.segments === "30" || wheelValue?.segments === 30
+            ? "px-8"
+            : "px-10"
+        } py-3 rounded-xl`}
+      >
+        3.00x
+      </button>
+      {wheelValue?.segments === "30" || wheelValue?.segments === 30 ? (
+        <button className="border-b-[#8e44ad] bg-[#213743] border-b-8 px-8 py-3 rounded-xl">
+          3.00x
+        </button>
+      ) : (
+        ""
+      )}
+    </>
+  );
+
+  const highRiskButtons = (
+    <>
+      <button className="border-b-[#f1c40f] bg-[#213743] border-b-8 px-32 py-3 rounded-xl">
+        2.00x
+      </button>
+      <button className="border-b-[#8e44ad] bg-[#213743] border-b-8 px-32 py-3 rounded-xl">
+        3.00x
+      </button>
+    </>
+  );
+
   return (
     <div className="bg-[#0f212e] flex flex-col justify-center items-center h-full xl:w-[52rem] lg:w-[36.8rem]">
       <div className="p-10 relative">
@@ -130,22 +212,10 @@ function WheelGameContent() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center space-x-4 mt-4">
-        <button className="bg-[#2c3e50] text-white px-4 py-2 rounded">
-          0.00x
-        </button>
-        <button className="bg-[#27ae60] text-white px-4 py-2 rounded">
-          1.50x
-        </button>
-        <button className="bg-[#bdc3c7] text-black px-4 py-2 rounded">
-          1.80x
-        </button>
-        <button className="bg-[#f1c40f] text-black px-4 py-2 rounded">
-          2.00x
-        </button>
-        <button className="bg-[#8e44ad] text-white px-4 py-2 rounded">
-          3.00x
-        </button>
+      <div className="flex justify-center space-x-4 mt-4 text-white">
+        {wheelValue?.risk === "low" && lowRiskButtons}
+        {wheelValue?.risk === "medium" && mediumRiskButtons}
+        {wheelValue?.risk === "high" && highRiskButtons}
       </div>
     </div>
   );
