@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { IoInfiniteSharp } from "react-icons/io5";
 import { Divider } from "@mui/material";
@@ -33,16 +33,23 @@ function DragonSidebar() {
   } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
+  useEffect(() => {
+    if (restor && restor.difficulty) {
+      dispatch(setValues({ ...values, difficulty: restor.difficulty }));
+    }
+  }, [restor, dispatch]);
+
   const handleOnChange = (e) => {
     const { value, name } = e.target;
     dispatch(setValues({ ...values, [name]: value }));
   };
 
   const handleBetClick = () => {
-    if (gameBet && !isGameOver) {
+    if (gameBet || restor?.restoreData?.length > 0) {
       DragonTowerSocket.emit("cashout", {
         userId: decoded?.userId.toString(),
         gameId: id,
+        betId: restor?.betId,
       });
       dispatch(setGameBet(false));
       dispatch(setShowRandomField(false));
@@ -190,7 +197,7 @@ function DragonSidebar() {
           </div>
 
           {/* showRandomField || restor?.restoreData?.length > 0 || */}
-          {showRandomField && (
+          {showRandomField || restor?.restoreData?.[0]?.length > 0 && (
             <div>
               <button
                 className="bg-[#2f4553] hover:bg-[#5c849e68] border border-[#0e2433] w-full p-2 mt-2.5"
@@ -203,7 +210,7 @@ function DragonSidebar() {
                   Total Profit (
                   {tileSelected?.multiplier
                     ? tileSelected?.multiplier
-                    : restor?.restoreData?.length > 0
+                    : restor?.restoreData?.[0]?.length > 0
                     ? restorMultiplier
                     : "1.00"}
                   x )
@@ -230,11 +237,11 @@ function DragonSidebar() {
 
           <button
             className={`${
-              gameBet && !isGameOver ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
+              gameBet || restor?.restoreData?.[0]?.length > 0 ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
             } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
             onClick={handleBetClick}
           >
-            {gameBet && !isGameOver ? "Cashout" : "Bet"}
+            {gameBet || restor?.restoreData?.[0]?.length > 0 ? "Cashout" : "Bet"}
           </button>
         </div>
       ) : (

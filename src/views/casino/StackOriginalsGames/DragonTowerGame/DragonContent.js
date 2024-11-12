@@ -17,6 +17,7 @@ import { DragonTowerSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import { decodedToken } from "../../../../resources/utility";
 import {
+  setGameBet,
   setIsGameOver,
   setRestodMultiplier,
   setRestor,
@@ -34,6 +35,7 @@ function DragonContent() {
   const [gameOverResult, setGameOverResult] = useState(null);
   const [rowsIndex, setRowsIndex] = useState();
   const [boxsIndex, setBoxsIndex] = useState();
+  const [restorData, setRestorData] = useState([]);
   const { values, gameBet, isGameOver } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
@@ -54,9 +56,20 @@ function DragonContent() {
     });
 
     DragonTowerSocket.on("gameRestored", (data, currentMultiplier) => {
-      console.log("gameRestored data *-*-*-*-*--*-*", data, currentMultiplier);
+      console.log("gameRestored data", data, currentMultiplier);
       dispatch(setRestor(data));
       dispatch(setRestodMultiplier(currentMultiplier));
+      setRestorData(data.restoreData);
+      setRowsIndex(data.currentStep - 1);
+
+      // dispatch(setIsGameOver(false));
+      dispatch(setGameBet(true));
+
+      const initialClickedBoxes = {};
+      for (let i = 0; i < data.currentStep; i++) {
+        initialClickedBoxes[i] = data.restoreData[i].findIndex((value) => value === 1);
+      }
+      setClickedBoxes(initialClickedBoxes);
     });
   }, []);
 
@@ -133,7 +146,7 @@ function DragonContent() {
 
   const handleBoxClick = (rowIndex, boxIndex) => {
     if (gameBet && !isGameOver) {
-      if (clickedBoxes[rowIndex] !== undefined) {
+      if (clickedBoxes[rowIndex] !== undefined || rowIndex < rowsIndex + 1) {
         return;
       }
 
@@ -216,12 +229,12 @@ function DragonContent() {
             />
           </div>
           {cashoutVisible && !gameBet && (
-            <div className="mt-4 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
+            <div className="mt-64 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
               <p className="text-3xl font-medium">
                 {cashoutResult?.multiplier}x
               </p>
               <div className="flex items-center justify-center space-x-1">
-                <p>0.00000000</p>
+                <p>{cashoutResult?.amount || "0.00000000"}</p>
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div>
             </div>
@@ -237,6 +250,8 @@ function DragonContent() {
               for (let rowIndex = rows - 1; rowIndex >= 0; rowIndex--) {
                 const boxElements = [];
                 for (let boxIndex = 0; boxIndex < boxesPerRow; boxIndex++) {
+                  const isRestoredEgg = restorData[rowIndex]?.[boxIndex] === 1;
+
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
                   const imageToShow = isGameOver
                     ? rowIndex === gameOverResult?.skullRowIndex && boxIndex === gameOverResult?.skullBoxIndex
@@ -244,9 +259,11 @@ function DragonContent() {
                       : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || clickedBoxes[rowIndex] === boxIndex || rowIndex === gameOverResult?.skullRowIndex || rowIndex > gameOverResult?.skullRowIndex
                         ? eggImage
                         : Boxsvg
-                    : isSelected
+                    : isRestoredEgg
                       ? eggImage
-                      : Boxsvg;
+                      : isSelected
+                        ? eggImage
+                        : Boxsvg;
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
