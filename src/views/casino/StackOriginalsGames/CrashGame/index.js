@@ -39,7 +39,7 @@ function CrashGame() {
   }, []);
 
   return (
-    <div className=" bg-[#1a2c38] py-10 text-white flex justify-center items-center w-full">
+    <div className=" bg-[#1a2c38] py-8 text-white flex justify-center items-center w-full">
       <div>
         {isMobile ? (
           <div className="flex flex-col">
