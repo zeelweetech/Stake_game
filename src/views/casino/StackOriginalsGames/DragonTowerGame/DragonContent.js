@@ -17,10 +17,13 @@ import { DragonTowerSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import { decodedToken } from "../../../../resources/utility";
 import {
+  setBoxsIndex,
+  setClickedBoxes,
   setGameBet,
   setIsGameOver,
   setRestodMultiplier,
   setRestor,
+  setRowsIndex,
   setShowRandomField,
   setTileSelected,
 } from "../../../../features/casino/dragonTowerSlice";
@@ -29,23 +32,21 @@ import toast from "react-hot-toast";
 function DragonContent() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [clickedBoxes, setClickedBoxes] = useState({});
+  // const [clickedBoxes, setClickedBoxes] = useState({});
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
   const [gameOverResult, setGameOverResult] = useState(null);
-  const [rowsIndex, setRowsIndex] = useState();
-  const [boxsIndex, setBoxsIndex] = useState();
   const [restorData, setRestorData] = useState([]);
-  const { values, gameBet, isGameOver } = useSelector((state) => state.dragonTowerGame);
+  const { values, gameBet, isGameOver, restor, rowsIndex, boxsIndex, clickedBoxes, } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
   const resetGame = () => {
-    setClickedBoxes({});
+    dispatch(setClickedBoxes({}))
     setCashoutResult(null);
     setCashoutVisible(false);
     setGameOverResult(null);
-    setRowsIndex(undefined);
-    setBoxsIndex(undefined);
+    dispatch(setRowsIndex(undefined));
+    dispatch(setBoxsIndex(undefined));
     dispatch(setIsGameOver(false));
   };
 
@@ -60,16 +61,17 @@ function DragonContent() {
       dispatch(setRestor(data));
       dispatch(setRestodMultiplier(currentMultiplier));
       setRestorData(data.restoreData);
-      setRowsIndex(data.currentStep - 1);
+      dispatch(setRowsIndex(data.currentStep - 1))
 
       // dispatch(setIsGameOver(false));
       dispatch(setGameBet(true));
+      // dispatch(setShowRandomField(true));
 
       const initialClickedBoxes = {};
       for (let i = 0; i < data.currentStep; i++) {
-        initialClickedBoxes[i] = data.restoreData[i].findIndex((value) => value === 1);
+        initialClickedBoxes[i] = data.restoreData[i]?.findIndex((value) => value === 1);
       }
-      setClickedBoxes(initialClickedBoxes);
+      dispatch(setClickedBoxes(initialClickedBoxes))
     });
   }, []);
 
@@ -82,7 +84,6 @@ function DragonContent() {
   DragonTowerSocket.on("gameStarted", (data) => {
     console.log("gameStarted data", data);
     setCashoutVisible(false);
-    // dispatch(setGameStart(data));
     resetGame()
   });
 
@@ -137,6 +138,7 @@ function DragonContent() {
     console.log("cashoutSuccess data", data);
     setCashoutResult(data);
     setCashoutVisible(true);
+    handleGameOverResult();
   });
 
   DragonTowerSocket.on("walletBalance", (data) => {
@@ -156,13 +158,11 @@ function DragonContent() {
         tileIndex: boxIndex,
         tileStep: rowIndex,
       });
-
-      setClickedBoxes((prev) => ({
-        ...prev,
-        [rowIndex]: boxIndex,
-      }));
-      setRowsIndex(rowIndex);
-      setBoxsIndex(boxIndex);
+      const updatedClickedBoxes = { ...clickedBoxes, [rowIndex]: boxIndex };
+      dispatch(setClickedBoxes(updatedClickedBoxes));
+      // setClickedBoxes((prev) => ({ ...prev, [rowIndex]: boxIndex }));
+      dispatch(setRowsIndex(rowIndex))
+      dispatch(setBoxsIndex(boxIndex))
     }
   };
 
