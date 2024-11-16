@@ -79,7 +79,7 @@ function PlinkoGameSidebar() {
         <div className="bg-[#0f212e] flex grow rounded-full p-[4px] flex-shrink-0">
           <div className="flex space-x-2">
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] md:w-[10.4rem] sm:w-[10.4rem]  w-36 rounded-full ${
+              className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[10.4rem] w-[10.4rem] rounded-full ${
                 isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => setIsManual(true)}
@@ -87,7 +87,7 @@ function PlinkoGameSidebar() {
               Manual
             </button>
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] md:w-[11.4rem] sm:w-[10.4rem] w-36 rounded-full ${
+              className={`py-2 xl:w-[8.8rem] lg:w-[7.2rem] md:w-[11.4rem] w-[10.4rem] rounded-full ${
                 !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => setIsManual(false)}

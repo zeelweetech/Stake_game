@@ -111,7 +111,7 @@ function LimboGameSidebar() {
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
             <button
-              className={`py-2 w-[43vw] xl:w-[8.8rem] lg:w-[7.5rem] md:w-[10.7rem] sm:w-[0rem] max-[425px]:w-[11.1rem] max-[375px]:w-[9.5rem]  max-[320px]:w-[7.8rem] rounded-full ${
+              className={`py-2 xl:w-[8.8rem] lg:w-[7.5rem] md:w-[10.7rem] w-[11rem] rounded-full ${
                 isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => dispatch(SwiperModel(true))}
@@ -119,7 +119,7 @@ function LimboGameSidebar() {
               Manual
             </button>
             <button
-              className={`py-2 w-[43vw] xl:w-[8.6rem] lg:w-[6.68rem] md:w-[10.9rem] sm:w-[0rem] max-[425px]:w-[11.1rem] max-[375px]:w-[9.5rem] max-[320px]:w-[7.9rem] rounded-full ${
+              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] md:w-[11rem] w-[10.3rem] rounded-full ${
                 !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => dispatch(SwiperModel(false))}

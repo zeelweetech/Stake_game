@@ -12,7 +12,7 @@ import PercentIcon from "@mui/icons-material/Percent";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
 import { WheelSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
-import { WidthWide } from "@mui/icons-material";
+// import { WidthWide } from "@mui/icons-material";
 
 function WheelGameSidebar() {
   const dispatch = useDispatch();
@@ -86,12 +86,12 @@ function WheelGameSidebar() {
   };
 
   return (
-    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
+    <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mx-[8rem] md:mt-32 mx-3 flex flex-col p-3 bg-[#213743] rounded-b-lg">
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 overflow-hidden">
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[7.05rem] rounded-full ${
+              className={`py-2 xl:w-[8.7rem] lg:w-[7.08rem] md:w-[12.81rem] w-[8rem] rounded-full ${
                 isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => setIsManual(true)}
@@ -99,7 +99,7 @@ function WheelGameSidebar() {
               Manual
             </button>
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[7.1rem] rounded-full ${
+              className={`py-2 xl:w-[8.65rem] lg:w-[7.1rem] md:w-[12.9rem] w-[8rem] rounded-full ${
                 !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => setIsManual(false)}
@@ -341,7 +341,7 @@ function WheelGameSidebar() {
                 onProfit.win
                   ? "bg-[#0f212e]"
                   : "bg-[#4d718768] hover:bg-[#85afca68]"
-              } px-5 py-1.5 rounded-md`}
+              } px-2 py-1.5  rounded-md`}
               onClick={() => {
                 setOnProfit({ ...onProfit, win: true });
               }}
@@ -353,7 +353,7 @@ function WheelGameSidebar() {
                 onProfit.win
                   ? "bg-[#4d718768] hover:bg-[#85afca68]"
                   : "bg-[#0f212e] rounded-md"
-              } px-[0.47rem] py-1.5`}
+              } px-[0.20rem] py-1.5`}
               onClick={() => {
                 setOnProfit({ ...onProfit, win: false });
               }}
@@ -371,7 +371,7 @@ function WheelGameSidebar() {
                 <PercentIcon fontSize="small" />
               </div>
               <input
-                className="w-28 pr-5 pl-2 py-1.5 rounded-md text-white bg-[#0f212e]"
+                className="w-28 pr-5 pl-2 py-1.5 xl:w-36 lg:w-[5.8rem] rounded-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0"
                 name="onwin"
@@ -391,7 +391,7 @@ function WheelGameSidebar() {
                   onProfit.lose
                     ? "bg-[#0f212e]"
                     : "bg-[#4d718768] hover:bg-[#85afca68]"
-                } px-5 py-1.5 rounded-md`}
+                } px-2 py-1.5 rounded-md`}
                 onClick={() => {
                   setOnProfit({ ...onProfit, lose: true });
                 }}
@@ -405,7 +405,7 @@ function WheelGameSidebar() {
                   onProfit.lose
                     ? "bg-[#4d718768] hover:bg-[#85afca68]"
                     : "bg-[#0f212e] rounded-md"
-                } px-[0.47rem] py-1.5`}
+                } px-[0.20rem] py-1.5`}
                 onClick={() => {
                   setOnProfit({ ...onProfit, lose: false });
                 }}
@@ -424,7 +424,7 @@ function WheelGameSidebar() {
                 <PercentIcon fontSize="small" />
               </div>
               <input
-                className="w-28 pr-7 pl-2 py-1.5 rounded-md text-white bg-[#0f212e]"
+                className="w-28 pr-7 pl-2 py-1.5 xl:w-36 lg:w-[5.8rem] rounded-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0"
                 name="onlose"

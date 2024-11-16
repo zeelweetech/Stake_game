@@ -1,10 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import GameFooter from "../../../component/GameFooter";
 import WheelGameContent from "./WheelGameContent";
 import WheelGameSidebar from "./WheelGameSidebar";
 import { WheelSocket } from "../../../../socket";
 
 function WheelGame() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   useEffect(() => {
     WheelSocket.connect();
 
@@ -24,22 +37,38 @@ function WheelGame() {
   });
 
   return (
-    <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center w-full">
-      <div>
-        <div className="text-white flex w-full min-w-80 h-[45rem] border-b-3">
-          <div className="bg-[#213743]">
-            <WheelGameSidebar />
+    <div className="mt-5 xl:ml-0  lg:w-11/12 lg:ml-9 bg-[#1a2c38] flex justify-center items-center text-white h-full ">
+    <div className="w-full max-w-screen-lg">
+      <div
+        className={`flex w-full min-w-70  ${
+          isMobile ? "h-[24rem]" : "h-[46rem]"
+        } border-b-3`}
+      >
+        {!isMobile && (
+          <div className="flex-row bg-[#213743]">
+            <WheelGameSidebar/>
           </div>
-          <div>
-            <WheelGameContent />
-          </div>
-        </div>
-        <div>
-          <hr className="border-2 border-[#213743]"></hr>
-          <GameFooter />
+        )}
+        <div className="flex-grow">
+          <WheelGameContent/>
         </div>
       </div>
+
+      {isMobile && (
+        <div className="flex flex-col">
+          <WheelGameSidebar/>
+        </div>
+      )}
+      <div
+        className={`${
+          isMobile ? "h-[12rem]" : "h-[15rem]"
+        } border-t-2 border-[#213743]`}
+      >
+        <hr className="border-2 border-[#213743]" />
+        <GameFooter />
+      </div>
     </div>
+  </div>
   );
 }
 

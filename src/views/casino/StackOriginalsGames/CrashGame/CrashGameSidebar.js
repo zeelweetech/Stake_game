@@ -243,12 +243,12 @@ const CrashGameSidebar = () => {
   };
 
   return (
-    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3  bg-[#213743] rounded-tl-lg">
+    <div className="flex flex-col xl:w-80 lg:w-[16.8rem] p-3  bg-[#213743] rounded-tl-lg">
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[4rem] md:w-44 sm:w-44 w-40 rounded-full ${
+              className={`py-2 xl:w-[8.7rem] lg:w-[4rem] md:w-44 w-[10.3rem] rounded-full ${
                 isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => dispatch(SwiperModel(true))}
@@ -256,7 +256,7 @@ const CrashGameSidebar = () => {
               Manual
             </button>
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] md:w-44 sm:w-44 w-40 rounded-full ${
+              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] md:w-44 w-[10.3rem] rounded-full ${
                 !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
               }`}
               onClick={() => dispatch(SwiperModel(false))}

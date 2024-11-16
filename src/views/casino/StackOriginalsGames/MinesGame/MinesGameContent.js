@@ -24,6 +24,7 @@ function MinesGameContent() {
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
   const [cashoutResult, setCashoutResult] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const {
     gamesOver,
     gameStart,
@@ -33,6 +34,18 @@ function MinesGameContent() {
     restored
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
+
+  // Resize event listener to handle mobile screen detection
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     MineSocket.emit("joinGame", {
@@ -64,9 +77,9 @@ function MinesGameContent() {
   }, []);
 
   MineSocket.on("Insufficientfund", (fundData) => {
-    console.log('Insufficientfund data : ', fundData);
-    toast.apply('Insufficientfund data')
-  })
+    console.log("Insufficientfund data:", fundData);
+    toast.apply("Insufficient funds");
+  });
 
   MineSocket.on("gameStarted", (data) => {
     console.log("gameStarted data", data);
@@ -83,32 +96,53 @@ function MinesGameContent() {
     handleTileSelection(data.tileIndex, data.isBomb);
   });
 
-  const handleTileSelection = (index, isBomb) => {
-    const newImages = [...images];
-    const newRevealed = [...revealed];
+  // const handleTileSelection = (index, isBomb) => {
+  //   const newImages = [...images];
+  //   const newRevealed = [...revealed];
 
-    setTimeout(() => {
-      newImages[index] = isBomb
-        ? { icon: bombIcon, size: 100 }
-        : { icon: diamondIcon, size: 100 };
-      newRevealed[index] = true;
-      setImages(newImages);
-      setRevealed(newRevealed);
+  //   setTimeout(() => {
+  //     newImages[index] = isBomb
+  //       ? { icon: bombIcon, size: 100 }
+  //       : { icon: diamondIcon, size: 100 };
+  //     newRevealed[index] = true;
+  //     setImages(newImages);
+  //     setRevealed(newRevealed);
 
-      if (isBomb) {
-        dispatch(setGamesOver(true));
-        dispatch(setGameBet(false));
-        revealAll(newImages);
-      }
-    }, 800);
-  };
+  //     if (isBomb) {
+  //       dispatch(setGamesOver(true));
+  //       dispatch(setGameBet(false));
+  //       revealAll(newImages);
+  //     }
+  //   }, 800);
+  // };
 
   // game Over event
+  const handleTileSelection = (index, isBomb) => {
+    setImages((prevImages) => {
+      const newImages = [...prevImages];
+      newImages[index] = isBomb
+        ? { icon: bombIcon, size: isMobile ? 60 : 100 }
+        : { icon: diamondIcon, size: isMobile ? 60 : 100 };
+      return newImages;
+    });
+  
+    setRevealed((prevRevealed) => {
+      const newRevealed = [...prevRevealed];
+      newRevealed[index] = true;
+      return newRevealed;
+    });
+  
+    if (isBomb) {
+      dispatch(setGamesOver(true));
+      dispatch(setGameBet(false));
+      revealAll();
+    }
+  }; 
   MineSocket.on("gameOver", (data) => {
     console.log("gameOver data", data);
     const { clickedMine, remainingMines } = data;
     handleGameOver(clickedMine, remainingMines);
-    dispatch(setShowFields(false))
+    dispatch(setShowFields(false));
   });
 
   const handleGameOver = (clickedMine, remainingMines) => {
@@ -117,7 +151,7 @@ function MinesGameContent() {
 
     newImages[clickedMine] = {
       icon: bombIcon,
-      size: 90,
+      size: isMobile ? 60 : 90,
       opacity: 1,
       className: "bomb-blast",
     };
@@ -157,7 +191,24 @@ function MinesGameContent() {
     setImages(newImages);
     setRevealed(newRevealed);
   };
-
+  
+  // const revealAll = () => {
+  //   setImages((prevImages) => {
+  //     const newImages = [...prevImages];
+  //     const newRevealed = Array(25).fill(true); // Reveal all tiles
+  
+  //     for (let i = 0; i < 25; i++) {
+  //       newImages[i] = newImages[i] || {
+  //         icon: diamondIcon,
+  //         size: isMobile ? 50 : 80,
+  //         opacity: 0.5,
+  //       };
+  //     }
+  
+  //     setRevealed(newRevealed);
+  //     return newImages;
+  //   });
+  // };
   MineSocket.on("cashoutSuccess", (data) => {
     console.log("cashoutSuccess data", data);
     setCashoutResult(data);
@@ -209,9 +260,9 @@ function MinesGameContent() {
   };
 
   return (
-    <div className="bg-[#0f212e] h-full flex flex-col items-center justify-center xl:w-[52rem] lg:w-[36.8rem]">
+    <div className={`bg-[#0f212e] h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? 'md:ml-32 md:mr-[8.3rem] max-sm:mx-2' : 'xl:w-[44rem] lg:w-[37.5rem]'}`}>
       {cashoutResult && !gameBet && (
-        <div className="mt-4 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
+        <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
             <p>0.00000000</p>
@@ -219,17 +270,14 @@ function MinesGameContent() {
           </div>
         </div>
       )}
-      <div className="grid grid-cols-5 gap-2.5 relative z-10">
+      <div className={`grid ${isMobile ? 'grid-cols-5 gap-1.5' : 'grid-cols-5 gap-2.5'} relative z-10`}>
         {images.map((img, index) => (
           <div
             key={index}
-            className={`flex justify-center items-center xl:w-28 lg:w-[6.5rem] xl:h-28 lg:h-[6.5rem] bg-[#2f4553] rounded-lg hover:-translate-y-1.5 hover:bg-[#688a9f] ${
-              zoomClass[index] ? "zoom-in-out" : ""
-            }`}
+            className={`flex justify-center items-center ${isMobile ? 'md:w-20 md:h-[4.2rem] w-[3.9rem] h-[4.2rem]' : 'xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]'} bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""}`}
             onClick={() => handleClick(index)}
             style={{
-              backgroundColor:
-                revealed[index] || gamesOver ? "#071824" : "#2f4553",
+              backgroundColor: revealed[index] || gamesOver ? "#071824" : "#2f4553",
               cursor: revealed[index] ? "default" : "pointer",
             }}
           >
@@ -240,9 +288,7 @@ function MinesGameContent() {
                   height: img.size,
                   opacity: img.opacity || 1,
                 }}
-                className={`flex justify-center items-center ${
-                  revealed[index] || gamesOver ? "reveal-animation" : "hidden"
-                } ${img.className || ""}`}
+                className={`flex justify-center items-center ${revealed[index] || gamesOver ? "reveal-animation" : "hidden"} ${img.className || ""}`}
                 src={img.icon}
                 alt="Icon"
               />
@@ -255,4 +301,3 @@ function MinesGameContent() {
 }
 
 export default MinesGameContent;
-
