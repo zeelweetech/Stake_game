@@ -5,6 +5,7 @@ const initialState = {
     betamount: 0,
     difficulty: "medium",
   },
+  completeFundStatus: false,
   showRandomField: false,
   gameBet: false,
   bettingStatus: "",
@@ -15,6 +16,8 @@ const initialState = {
   rowsIndex: '',
   boxsIndex: '',
   clickedBoxes: {},
+  gameOverResult: null,
+  restorData: []
 };
 
 const dragonTowerGameSlice = createSlice({
@@ -52,11 +55,20 @@ const dragonTowerGameSlice = createSlice({
       state.boxsIndex = action.payload
     },
     setClickedBoxes(state, action) {
-      state.clickedBoxes = action.payload; // Add this to update clickedBoxes
+      state.clickedBoxes = action.payload;
+    },
+    setGameOverResult(state, action) {
+      state.gameOverResult = action.payload;
+    },
+    setRestorData(state, action) {
+      state.restorData = action.payload;
+    },
+    setCompleteFundStatus(state, action) {
+      state.completeFundStatus = action.payload;
     },
   },
 });
 
-export const { setValues, setBettingStatus, setShowRandomField, setGameBet, setTileSelected, setRestor, setRestodMultiplier, setIsGameOver, setRowsIndex, setBoxsIndex, setClickedBoxes } = dragonTowerGameSlice.actions;
+export const { setCompleteFundStatus, setValues, setBettingStatus, setShowRandomField, setGameBet, setTileSelected, setRestor, setRestodMultiplier, setIsGameOver, setRowsIndex, setBoxsIndex, setClickedBoxes, setGameOverResult, setRestorData } = dragonTowerGameSlice.actions;
 
 export default dragonTowerGameSlice.reducer;

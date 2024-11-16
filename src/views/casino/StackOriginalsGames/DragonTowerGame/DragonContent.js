@@ -19,10 +19,13 @@ import { decodedToken } from "../../../../resources/utility";
 import {
   setBoxsIndex,
   setClickedBoxes,
+  setCompleteFundStatus,
   setGameBet,
+  setGameOverResult,
   setIsGameOver,
   setRestodMultiplier,
   setRestor,
+  setRestorData,
   setRowsIndex,
   setShowRandomField,
   setTileSelected,
@@ -32,19 +35,17 @@ import toast from "react-hot-toast";
 function DragonContent() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  // const [clickedBoxes, setClickedBoxes] = useState({});
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
-  const [gameOverResult, setGameOverResult] = useState(null);
-  const [restorData, setRestorData] = useState([]);
-  const { values, gameBet, isGameOver, restor, rowsIndex, boxsIndex, clickedBoxes, } = useSelector((state) => state.dragonTowerGame);
+  // const [restorData, setRestorData] = useState([]);
+  const { values, gameBet, isGameOver, gameOverResult, rowsIndex, boxsIndex, clickedBoxes, restorData } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
   const resetGame = () => {
     dispatch(setClickedBoxes({}))
     setCashoutResult(null);
     setCashoutVisible(false);
-    setGameOverResult(null);
+    dispatch(setGameOverResult(null))
     dispatch(setRowsIndex(undefined));
     dispatch(setBoxsIndex(undefined));
     dispatch(setIsGameOver(false));
@@ -60,7 +61,7 @@ function DragonContent() {
       console.log("gameRestored data", data, currentMultiplier);
       dispatch(setRestor(data));
       dispatch(setRestodMultiplier(currentMultiplier));
-      setRestorData(data.restoreData);
+      dispatch(setRestorData(data.restoreData))
       dispatch(setRowsIndex(data.currentStep - 1))
 
       // dispatch(setIsGameOver(false));
@@ -76,9 +77,8 @@ function DragonContent() {
   }, []);
 
   DragonTowerSocket.on("Insufficientfund", (fundData) => {
-    console.log("fundData ********", fundData);
-    // toast.apply("Insufficientfund data");
     toast.error(fundData?.message)
+    dispatch(setCompleteFundStatus(false));
   });
 
   DragonTowerSocket.on("gameStarted", (data) => {
@@ -88,12 +88,12 @@ function DragonContent() {
   });
 
   DragonTowerSocket.on("tileSelected", (data) => {
-    console.log("tileSelected data", data);
+    // console.log("tileSelected data", data);
     dispatch(setTileSelected(data));
   });
 
   DragonTowerSocket.on("gameOver", (data) => {
-    console.log("gameOver data", data);
+    console.log("gameOver data", data)
     handleGameOverResult();
     dispatch(setIsGameOver(true));
     dispatch(setShowRandomField(false))
@@ -118,20 +118,29 @@ function DragonContent() {
         const boxIndices = new Set();
         while (boxIndices.size < maxSkullBoxes) {
           const randomIndex = Math.floor(Math.random() * boxesPerRow);
-          if (randomIndex !== clickedBoxes[rowIndex]) {
+          if (randomIndex !== clickedBoxes[rowIndex] && !boxIndices.has(randomIndex)) {
             boxIndices.add(randomIndex);
           }
         }
         return Array.from(boxIndices);
       }
+
+      if (rowIndex > rowsIndex) {
+        const randomEggIndices = new Set();
+        while (randomEggIndices.size < maxSkullBoxes + 1) {
+          const randomIndex = Math.floor(Math.random() * boxesPerRow);
+          randomEggIndices.add(randomIndex);
+        }
+        return Array.from(randomEggIndices);
+      }
       return [];
     });
 
-    setGameOverResult({
+    dispatch(setGameOverResult({
       skullRowIndex: rowsIndex,
       skullBoxIndex: boxsIndex,
       eggRows: randomEggBoxes,
-    });
+    }))
   };
 
   DragonTowerSocket.on("cashoutSuccess", (data) => {
@@ -139,10 +148,11 @@ function DragonContent() {
     setCashoutResult(data);
     setCashoutVisible(true);
     handleGameOverResult();
+    // dispatch(setIsGameOver(true));
   });
 
   DragonTowerSocket.on("walletBalance", (data) => {
-    console.log("walletBalance data", data);
+    // console.log("walletBalance data", data);
     // dispatch(setWallet(data?.walletBalance));
   });
 
@@ -160,7 +170,6 @@ function DragonContent() {
       });
       const updatedClickedBoxes = { ...clickedBoxes, [rowIndex]: boxIndex };
       dispatch(setClickedBoxes(updatedClickedBoxes));
-      // setClickedBoxes((prev) => ({ ...prev, [rowIndex]: boxIndex }));
       dispatch(setRowsIndex(rowIndex))
       dispatch(setBoxsIndex(boxIndex))
     }
@@ -228,7 +237,7 @@ function DragonContent() {
               alt="Not Found"
             />
           </div>
-          {cashoutVisible && !gameBet && (
+          {cashoutVisible && !gameBet && gameOverResult && (
             <div className="mt-64 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
               <p className="text-3xl font-medium">
                 {cashoutResult?.multiplier}x
@@ -251,19 +260,15 @@ function DragonContent() {
                 const boxElements = [];
                 for (let boxIndex = 0; boxIndex < boxesPerRow; boxIndex++) {
                   const isRestoredEgg = restorData[rowIndex]?.[boxIndex] === 1;
-
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
                   const imageToShow = isGameOver
                     ? rowIndex === gameOverResult?.skullRowIndex && boxIndex === gameOverResult?.skullBoxIndex
-                      ? skullImage
-                      : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || clickedBoxes[rowIndex] === boxIndex || rowIndex === gameOverResult?.skullRowIndex || rowIndex > gameOverResult?.skullRowIndex
-                        ? eggImage
-                        : Boxsvg
-                    : isRestoredEgg
-                      ? eggImage
-                      : isSelected
-                        ? eggImage
-                        : Boxsvg;
+                      ? skullImage 
+                        : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || clickedBoxes[rowIndex] === boxIndex || rowIndex === gameOverResult?.skullRowIndex
+                          ? eggImage
+                          : Boxsvg
+                    : isRestoredEgg ? eggImage 
+                    : isSelected ? eggImage : Boxsvg;
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}

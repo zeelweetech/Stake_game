@@ -7,8 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setBoxsIndex,
   setClickedBoxes,
+  setCompleteFundStatus,
   setGameBet,
+  setGameOverResult,
   setIsGameOver,
+  setRestorData,
   setRowsIndex,
   setShowRandomField,
   setValues,
@@ -33,9 +36,9 @@ function DragonSidebar() {
     restor,
     restorMultiplier,
     isGameOver,
-    boxsIndex,
-    rowsIndex,
-    clickedBoxes
+    clickedBoxes,
+    rowsIndex = 0,
+    completeFundStatus
   } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
@@ -53,6 +56,9 @@ function DragonSidebar() {
   const handleOnChange = (e) => {
     const { value, name } = e.target;
     dispatch(setValues({ ...values, [name]: value }));
+    dispatch(setClickedBoxes({}))
+    dispatch(setGameOverResult())
+    dispatch(setRestorData({}))
   };
 
   const handleBetClick = () => {
@@ -76,6 +82,7 @@ function DragonSidebar() {
           difficulty: values?.difficulty,
           betType: "Manual",
         });
+        // dispatch(setCompleteFundStatus(true));
         dispatch(setGameBet(true));
         dispatch(setIsGameOver(false))
         dispatch(setShowRandomField(true));
@@ -99,23 +106,27 @@ function DragonSidebar() {
   };
 
   const pickRandomTile = () => {
-    const rowIndex = 2;
-    const boxesInRow = getBoxesPerRow();
+    const rows = 9;
+    let randomRowIndex = rowsIndex ? rowsIndex + 1 : 0;
+    if (randomRowIndex >= rows) return;
 
-    if (clickedBoxes[rowIndex] === undefined) {
-      const randomBoxIndex = Math.floor(Math.random() * boxesInRow);
+    const boxesPerRow = getBoxesPerRow();
+    const randomBoxIndex = Math.floor(Math.random() * boxesPerRow);
 
-      DragonTowerSocket.emit("selectTile", {
-        userId: decoded?.userId.toString(),
-        gameId: id,
-        tileIndex: randomBoxIndex,
-        tileStep: rowIndex,
-      });
-
-      dispatch(setClickedBoxes((prev) => ({ ...prev, [rowIndex]: randomBoxIndex })))
-      dispatch(setRowsIndex(rowIndex));
-      dispatch(setBoxsIndex(randomBoxIndex));
+    while (clickedBoxes[randomRowIndex] !== undefined) {
+      randomRowIndex = (randomRowIndex + 1) % rows;
     }
+    DragonTowerSocket.emit("selectTile", {
+      userId: decoded?.userId.toString(),
+      gameId: id,
+      tileIndex: randomBoxIndex,
+      tileStep: randomRowIndex,
+    });
+
+    const updatedClickedBoxes = { ...clickedBoxes, [randomRowIndex]: randomBoxIndex };
+    dispatch(setClickedBoxes(updatedClickedBoxes));
+    dispatch(setRowsIndex(randomRowIndex));
+    dispatch(setBoxsIndex(randomBoxIndex));
   };
 
   return (
@@ -158,13 +169,13 @@ function DragonSidebar() {
                 name="betamount"
                 value={values?.betamount || ""}
                 onChange={(e) => handleOnChange(e)}
-                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e] ${showRandomField && "cursor-not-allowed opacity-80"
+                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e] ${showRandomField && completeFundStatus && "cursor-not-allowed opacity-80"
                   }`}
-                disabled={showRandomField}
+                disabled={showRandomField && completeFundStatus}
               />
             </div>
             <button
-              className={`w-16 text-xs ${showRandomField
+              className={`w-16 text-xs ${showRandomField && completeFundStatus
                 ? "cursor-not-allowed opacity-80"
                 : "hover:bg-[#5c849e68]"
                 }`}
@@ -176,7 +187,7 @@ function DragonSidebar() {
                   })
                 )
               }
-              disabled={showRandomField}
+              disabled={showRandomField && completeFundStatus}
             >
               1/2
             </button>
@@ -186,7 +197,7 @@ function DragonSidebar() {
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
             <button
-              className={`w-16 text-xs ${showRandomField
+              className={`w-16 text-xs ${showRandomField && completeFundStatus
                 ? "cursor-not-allowed opacity-80"
                 : "hover:bg-[#5c849e68]"
                 }`}
@@ -198,7 +209,7 @@ function DragonSidebar() {
                   })
                 )
               }
-              disabled={showRandomField}
+              disabled={showRandomField && completeFundStatus}
             >
               2x
             </button>
@@ -214,9 +225,9 @@ function DragonSidebar() {
                 name="difficulty"
                 value={values?.difficulty}
                 onChange={(e) => handleOnChange(e)}
-                className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] ${showRandomField && "cursor-not-allowed opacity-80"
+                className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] ${showRandomField && completeFundStatus && "cursor-not-allowed opacity-80"
                   }`}
-                disabled={showRandomField}
+                disabled={showRandomField && completeFundStatus}
               >
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
@@ -269,6 +280,7 @@ function DragonSidebar() {
             className={`${gameBet && !isGameOver ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
               } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
             onClick={handleBetClick}
+            // disabled={!completeFundStatus}
           >
             {gameBet && !isGameOver ? "Cashout" : "Bet"}
           </button>
