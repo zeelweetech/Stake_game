@@ -18,6 +18,7 @@ function WheelGameContent() {
   const [isSpinning, setIsSpinning] = useState(true);
   const [segments, setSegments] = useState([]);
   const [segColors, setSegColors] = useState([]);
+  const [isMdScreen, setIsMdScreen] = useState(false);
   const { wheelValue, finalmultiplier, mustSpin } = useSelector(
     (state) => state.wheelGame
   );
@@ -33,6 +34,22 @@ function WheelGameContent() {
       })
       .catch((err) => {});
   };
+  useEffect(() => {
+    const mdQuery = window.matchMedia(
+      "(min-width: 768px) and (max-width: 1023px)"
+    );
+
+    const handleScreenChange = () => {
+      setIsMdScreen(mdQuery.matches);
+    };
+
+    handleScreenChange();
+    mdQuery.addListener(handleScreenChange);
+
+    return () => {
+      mdQuery.removeListener(handleScreenChange);
+    };
+  }, []);
 
   useEffect(() => {
     if (mustSpin) {
@@ -101,24 +118,28 @@ function WheelGameContent() {
       </button>
     </>
   );
-
+  // const lowRiskButtons = (
+  //   <div className="flex justify-center gap-4 flex-wrap">
+  //     <button className="border-b-[#406c82] border-b-4 bg-[#213743] rounded-xl px-4 py-2 text-sm sm:px-6 sm:py-2 sm:text-base">
+  //       0.00x
+  //     </button>
+  //     <button className="border-b-[#fcfcfc] border-b-4 bg-[#213743] rounded-xl px-4 py-2 text-sm sm:px-6 sm:py-2 sm:text-base">
+  //       1.20x
+  //     </button>
+  //     <button className="border-b-[#1fff20] border-b-4 bg-[#213743] rounded-xl px-4 py-2 text-sm sm:px-6 sm:py-2 sm:text-base">
+  //       1.50x
+  //     </button>
+  //   </div>
+  // );
   const mediumRiskButtons = (
     <>
       <button
-        className={`border-b-[#406c82] bg-[#213743] border-b-8 ${
-          wheelValue?.segments === "30" || wheelValue?.segments === 30
-            ? "px-8"
-            : "px-10"
-        } py-3 rounded-xl`}
+        className={`border-b-[#406c82] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
       >
         0.00x
       </button>
       <button
-        className={`border-b-[#1fff20] bg-[#213743] border-b-8 ${
-          wheelValue?.segments === "30" || wheelValue?.segments === 30
-            ? "px-8"
-            : "px-10"
-        } py-3 rounded-xl`}
+        className={`border-b-[#1fff20] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
       >
         1.50x
       </button>
@@ -144,11 +165,7 @@ function WheelGameContent() {
         </button>
       )}
       <button
-        className={`border-b-[#e8e225] bg-[#213743] border-b-8 ${
-          wheelValue?.segments === "30" || wheelValue?.segments === 30
-            ? "px-8"
-            : "px-10"
-        } py-3 rounded-xl`}
+        className={`border-b-[#e8e225] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
       >
         2.00x
       </button>
@@ -183,7 +200,6 @@ function WheelGameContent() {
       )}
     </>
   );
-
   const highRiskButtons = (
     <>
       <button className="border-b-[#406c82] bg-[#213743] border-b-8 px-32 py-3 rounded-xl">
@@ -204,12 +220,11 @@ function WheelGameContent() {
       </button>
     </>
   );
-
   return (
-    <div className="bg-[#0f212e] flex flex-col justify-center items-center h-full xl:w-[52rem] lg:w-[36.8rem]">
-      <div className="p-10 relative">
-        <div className="relative">
-          <div style={{ position: "relative" }}>
+    <div className={`bg-[#0f212e] flex flex-col justify-center items-center overflow-hidden xl:w-[44rem] xl:h-[46rem] lg:w-[38.5rem] lg:h-[46rem] md:h-[32rem] h-full mx-3 ${isMdScreen ? "md:mx-32" : "md:mx-0"}  rounded-t-lg`}>
+      <div className="relative">
+        <div className="relative ">
+          <div  style={{ position: "relative" }}>
             <Wheel
               mustStartSpinning={mustSpin}
               prizeNumber={finalmultiplier?.position}
