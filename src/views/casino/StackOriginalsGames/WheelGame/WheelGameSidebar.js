@@ -216,6 +216,7 @@ function WheelGameSidebar() {
             // onClick={handleBetClick}
             // gameBet ? "bg-[#489649]" :
             onClick={() => handleOnManualBet()}
+            // disabled={}
           >
             {/* {gameBet ? "Cashout" : "Bet"} */}
             Bet
