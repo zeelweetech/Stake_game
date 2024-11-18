@@ -35,7 +35,7 @@ function LimboGameSidebar() {
       .then((res) => {
         dispatch(setWallet(res?.currentAmount));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   LimboSocket.on("Insufficientfund", (data) => {
@@ -111,17 +111,15 @@ function LimboGameSidebar() {
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
             <button
-              className={`py-2 xl:w-[8.8rem] lg:w-[7.5rem] md:w-[10.7rem] w-[11rem] rounded-full ${
-                isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-              }`}
+              className={`py-2 xl:w-[8.8rem] lg:w-[7.5rem] md:w-[10.7rem] w-[11rem] rounded-full ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                }`}
               onClick={() => dispatch(SwiperModel(true))}
             >
               Manual
             </button>
             <button
-              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] md:w-[11rem] w-[10.3rem] rounded-full ${
-                !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-              }`}
+              className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] md:w-[11rem] w-[10.3rem] rounded-full ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                }`}
               onClick={() => dispatch(SwiperModel(false))}
             >
               Auto
@@ -133,7 +131,7 @@ function LimboGameSidebar() {
         <div>
           <div className="text-[#b1bad3] flex justify-between font-semibold mt-3 mb-1">
             <label>Bet Amount</label>
-            <label>$0.00</label>
+            <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
           </div>
           <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
             <div className="relative flex">
@@ -184,7 +182,7 @@ function LimboGameSidebar() {
           </div>
           <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
             <label>Profit on Win</label>
-            <label>0.00000000 BTC</label>
+            <label>₹{values?.betamount * (values?.multiplier) ? values?.betamount * (values?.multiplier) : '0.00'}</label>
           </div>
           <div className="relative flex">
             <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -203,9 +201,9 @@ function LimboGameSidebar() {
               // bettingStatus === false
               //   ? "bg-[#489649]"
               "bg-[#1fff20] hover:bg-[#42ed45]"
-            } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+              } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
             onClick={() => handleOnManualBet()}
-            // disabled={limboStatusData.actualMultiplier > 1}
+          // disabled={limboStatusData.actualMultiplier > 1}
           >
             Bet
           </button>
@@ -215,7 +213,7 @@ function LimboGameSidebar() {
           <div>
             <div className="text-[#b1bad3] flex justify-between font-semibold mt-3 mb-1">
               <label>Bet Amount</label>
-              <label>$0.00</label>
+              <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
             </div>
             <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768] ">
               <div className="relative flex">
@@ -279,12 +277,10 @@ function LimboGameSidebar() {
                   min={0}
                   name="numberofbet"
                   value={
-                    values?.numberofbet
-                    // ? values?.numberofbet
-                    // : values?.numberofbet - limboStatusData?.autoBetRound
+                    limboStatusData?.autoBetRound ? limboStatusData?.autoBetRound : values?.numberofbet
                   }
                   onChange={(e) => handleOnChange(e)}
-                  // disabled={limboStatusData?.autoBetRound}
+                // disabled={limboStatusData?.autoBetRound}
                 />
               </div>
             </div>
@@ -293,23 +289,22 @@ function LimboGameSidebar() {
             </label>
             <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded-md border-[#4d718768] bg-[#4d718768]">
               <button
-                className={`${
-                  onProfit.win
-                    ? "bg-[#0f212e]"
-                    : "bg-[#4d718768] hover:bg-[#85afca68]"
-                } px-5 py-2.5 rounded-md`}
+                className={`${onProfit.win
+                  ? "bg-[#0f212e]"
+                  : "bg-[#4d718768] hover:bg-[#85afca68]"
+                  } px-5 py-2.5 rounded-md`}
                 onClick={() => {
                   setOnProfit({ ...onProfit, win: true });
+                  dispatch(setValues({ onwin: '' }))
                 }}
               >
                 Reset
               </button>
               <button
-                className={`${
-                  onProfit.win
-                    ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                    : "bg-[#0f212e] rounded-md"
-                } px-[0.95rem] py-2.5`}
+                className={`${onProfit.win
+                  ? "bg-[#4d718768] hover:bg-[#85afca68]"
+                  : "bg-[#0f212e] rounded-md"
+                  } px-[0.95rem] py-2.5`}
                 onClick={() => {
                   setOnProfit({ ...onProfit, win: false });
                 }}
@@ -317,11 +312,10 @@ function LimboGameSidebar() {
                 Increase by:
               </button>
               <div
-                className={`relative flex ${
-                  onProfit.win
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                }`}
+                className={`relative flex ${onProfit.win
+                  ? "opacity-50 pointer-events-none cursor-not-allowed"
+                  : ""
+                  }`}
               >
                 <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <PercentIcon fontSize="small" />
@@ -343,13 +337,13 @@ function LimboGameSidebar() {
             <div className="flex items-center space-x-0.5 border-2 mt-1 rounded-md border-[#4d718768] bg-[#4d718768]">
               <div>
                 <button
-                  className={`${
-                    onProfit.lose
-                      ? "bg-[#0f212e]"
-                      : "bg-[#4d718768] hover:bg-[#85afca68]"
-                  } px-5 py-2.5 rounded-md`}
+                  className={`${onProfit.lose
+                    ? "bg-[#0f212e]"
+                    : "bg-[#4d718768] hover:bg-[#85afca68]"
+                    } px-5 py-2.5 rounded-md`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, lose: true });
+                    dispatch(setValues({ onlose: '' }))
                   }}
                 >
                   Reset
@@ -357,11 +351,10 @@ function LimboGameSidebar() {
               </div>
               <div>
                 <button
-                  className={`${
-                    onProfit.lose
-                      ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-md"
-                  } px-[0.95rem] py-2.5`}
+                  className={`${onProfit.lose
+                    ? "bg-[#4d718768] hover:bg-[#85afca68]"
+                    : "bg-[#0f212e] rounded-md"
+                    } px-[0.95rem] py-2.5`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, lose: false });
                   }}
@@ -370,11 +363,10 @@ function LimboGameSidebar() {
                 </button>
               </div>
               <div
-                className={`relative flex ${
-                  onProfit.lose
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                }`}
+                className={`relative flex ${onProfit.lose
+                  ? "opacity-50 pointer-events-none cursor-not-allowed"
+                  : ""
+                  }`}
               >
                 <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <PercentIcon fontSize="small" />
@@ -392,7 +384,7 @@ function LimboGameSidebar() {
             </div>
             <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
               <label>Stop on Profit</label>
-              <label>0.00000000 BTC</label>
+              <label>₹{values?.stoponprofit ? values?.stoponprofit : '0.00'}</label>
             </div>
             <div className="relative flex">
               <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -410,7 +402,7 @@ function LimboGameSidebar() {
             </div>
             <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
               <label>Stop on Loss</label>
-              <label>0.00000001 BTC</label>
+              <label>₹{values?.stoponloss ? values?.stoponloss : '0.00'}</label>
             </div>
             <div className="relative flex">
               <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -439,7 +431,7 @@ function LimboGameSidebar() {
                   // bettingStatus === false
                   //   ? "bg-[#489649]"
                   "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                  } text-black mt-3 py-3 rounded-md font-semibold w-full`}
                 onClick={() => handleOnAutoBet()}
               >
                 Start Autobet

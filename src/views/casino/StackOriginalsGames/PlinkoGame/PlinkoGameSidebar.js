@@ -54,7 +54,7 @@ function PlinkoGameSidebar() {
         betAmount: values?.betamount ? values?.betamount : 0,
         rows: values?.rows,
         riskLevel: values?.risk,
-        autoBetCount: name === "autoBet" && values?.numberofbets ? values?.numberofbets : finalMultiplier?.remainingBets,
+        autoBetCount: name === "autoBet" && finalMultiplier?.remainingBets ? finalMultiplier?.remainingBets : values?.numberofbets
       });
       dispatch(setCompleteBetStatus(true));
       if (name === "manualBet") {
@@ -97,7 +97,7 @@ function PlinkoGameSidebar() {
         <div>
           <div className=" text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
             <label>Bet Amount</label>
-            <label>$0.00</label>
+            <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
           </div>
           <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
             <div className="relative flex">
@@ -208,7 +208,7 @@ function PlinkoGameSidebar() {
           <div>
             <div className="text-[#b1bad3] flex justify-between font-semibold my-1">
               <label>Bet Amount</label>
-              <label>$0.00</label>
+              <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
             </div>
             <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
               <div className="relative flex">
@@ -319,7 +319,7 @@ function PlinkoGameSidebar() {
                   name="numberofbets"
                   value={
                     finalMultiplier?.remainingBets
-                      ? finalMultiplier?.remainingBets
+                      ? parseInt(finalMultiplier?.remainingBets) - 1
                       : values?.numberofbets
                   }
                   onChange={(e) => handleOnChange(e)}

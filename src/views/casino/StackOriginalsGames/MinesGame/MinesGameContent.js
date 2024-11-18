@@ -35,7 +35,6 @@ function MinesGameContent() {
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
 
-  // Resize event listener to handle mobile screen detection
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -54,7 +53,6 @@ function MinesGameContent() {
     });
 
     MineSocket.on("gameRestored", (data, currentMultiplier) => {
-      console.log("gameRestored data *-*-*-*-*--*-*", data, currentMultiplier);
       dispatch(setRestored(data));
       dispatch(setRestoredMultiplier(currentMultiplier));
 
@@ -73,16 +71,15 @@ function MinesGameContent() {
 
       setImages(newImages);
       setRevealed(newRevealed);
+      dispatch(setGameBet(true));
     });
   }, []);
 
   MineSocket.on("Insufficientfund", (fundData) => {
-    console.log("Insufficientfund data:", fundData);
     toast.apply("Insufficient funds");
   });
 
   MineSocket.on("gameStarted", (data) => {
-    console.log("gameStarted data", data);
     dispatch(setGameStart(data));
     setImages(Array(25).fill(null));
     setRevealed(Array(25).fill(false));
@@ -91,30 +88,9 @@ function MinesGameContent() {
 
   // game tile selected event
   MineSocket.on("tileSelected", (data) => {
-    console.log("tileSelected data", data);
     dispatch(setTileSelect(data));
     handleTileSelection(data.tileIndex, data.isBomb);
   });
-
-  // const handleTileSelection = (index, isBomb) => {
-  //   const newImages = [...images];
-  //   const newRevealed = [...revealed];
-
-  //   setTimeout(() => {
-  //     newImages[index] = isBomb
-  //       ? { icon: bombIcon, size: 100 }
-  //       : { icon: diamondIcon, size: 100 };
-  //     newRevealed[index] = true;
-  //     setImages(newImages);
-  //     setRevealed(newRevealed);
-
-  //     if (isBomb) {
-  //       dispatch(setGamesOver(true));
-  //       dispatch(setGameBet(false));
-  //       revealAll(newImages);
-  //     }
-  //   }, 800);
-  // };
 
   // game Over event
   const handleTileSelection = (index, isBomb) => {
@@ -139,7 +115,6 @@ function MinesGameContent() {
     }
   }; 
   MineSocket.on("gameOver", (data) => {
-    console.log("gameOver data", data);
     const { clickedMine, remainingMines } = data;
     handleGameOver(clickedMine, remainingMines);
     dispatch(setShowFields(false));
@@ -191,26 +166,8 @@ function MinesGameContent() {
     setImages(newImages);
     setRevealed(newRevealed);
   };
-  
-  // const revealAll = () => {
-  //   setImages((prevImages) => {
-  //     const newImages = [...prevImages];
-  //     const newRevealed = Array(25).fill(true); // Reveal all tiles
-  
-  //     for (let i = 0; i < 25; i++) {
-  //       newImages[i] = newImages[i] || {
-  //         icon: diamondIcon,
-  //         size: isMobile ? 50 : 80,
-  //         opacity: 0.5,
-  //       };
-  //     }
-  
-  //     setRevealed(newRevealed);
-  //     return newImages;
-  //   });
-  // };
+
   MineSocket.on("cashoutSuccess", (data) => {
-    console.log("cashoutSuccess data", data);
     setCashoutResult(data);
 
     const newImages = Array(25).fill(null);
@@ -219,7 +176,7 @@ function MinesGameContent() {
     const bombPositions = placeBombs(
       25,
       mineValue?.mines,
-      tileSelect.tileIndex
+      tileSelect?.tileIndex
     );
     bombPositions.forEach((index) => {
       newImages[index] = { icon: bombIcon, size: 60, opacity: 0.5 };
@@ -235,6 +192,7 @@ function MinesGameContent() {
 
     setImages(newImages);
     setRevealed(newRevealed);
+    dispatch(setTileSelect());
   });
 
   const placeBombs = (totalTiles, bombCount, selectedTileIndex) => {
