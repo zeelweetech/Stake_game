@@ -69,6 +69,8 @@ const CrashGameSidebar = () => {
     // });
     CrashSocket.on("gameStatus", (data) => {
       dispatch(setGameStatusData(data));
+      console.log("data *************", data);
+      
       const betData =
         data?.autoBets?.length > 0 &&
         data?.autoBets?.filter((item) => {
@@ -221,6 +223,8 @@ const CrashGameSidebar = () => {
 
   const handleOnCancelAutoBet = () => {
     const BetId = gameStatusData?.autoBets?.find((item) => {
+      console.log('item ************', item);
+      
       return item?.userId === decoded?.userId && item?.betId;
     });
 
@@ -243,7 +247,7 @@ const CrashGameSidebar = () => {
   };
 
   return (
-    <div className="flex flex-col xl:w-80 lg:w-[16.8rem] p-3  bg-[#213743] rounded-tl-lg">
+    <div className="py-10 flex flex-col xl:w-80 lg:w-[16.8rem] p-3  bg-[#213743] rounded-tl-lg">
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
@@ -270,7 +274,7 @@ const CrashGameSidebar = () => {
         <div>
           <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
             <label>Bet Amount</label>
-            <label>$0.00</label>
+            <label>₹0.00</label>
           </div>
           <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
             <div className="relative flex">
@@ -346,7 +350,7 @@ const CrashGameSidebar = () => {
           </div>
           <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
             <label>Profit on Win</label>
-            <label>0.00000000 BTC</label>
+            <label>0.00000000 ₹</label>
           </div>
           <div className="relative flex">
             <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -479,7 +483,7 @@ const CrashGameSidebar = () => {
             <div>
               <div className="text-[#b1bad3] flex justify-between font-semibold my-1">
                 <label>Bet Amount</label>
-                <label>$0.00</label>
+                <label>₹0.00</label>
               </div>
               <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
                 <div className="relative flex">
@@ -685,7 +689,7 @@ const CrashGameSidebar = () => {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
                 <label>Stop on Profit</label>
-                <label>0.00000000 BTC</label>
+                <label>₹0.00</label>
               </div>
               <div className="relative flex">
                 <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -703,7 +707,7 @@ const CrashGameSidebar = () => {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
                 <label>Stop on Loss</label>
-                <label>0.00000001 BTC</label>
+                <label>₹0.00</label>
               </div>
               <div className="relative flex">
                 <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -721,7 +725,7 @@ const CrashGameSidebar = () => {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
                 <label>Profit on Win</label>
-                <label>0.00000000 BTC</label>
+                <label>₹0.00</label>
               </div>
               <div className="relative flex">
                 <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -823,7 +827,7 @@ const CrashGameSidebar = () => {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1.5">
                 <label>Profit on Win</label>
-                <label>0.00000000 BTC</label>
+                <label>0.00000000 ₹</label>
               </div>
               <div className="relative flex">
                 <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">

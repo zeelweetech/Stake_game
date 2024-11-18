@@ -20,6 +20,7 @@ import { DragonTowerSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import { useParams } from "react-router-dom";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
+import toast from "react-hot-toast";
 
 function DragonSidebar() {
   const dispatch = useDispatch();
@@ -61,6 +62,13 @@ function DragonSidebar() {
     dispatch(setRestorData({}))
   };
 
+  DragonTowerSocket.on("Insufficientfund", (fundData) => {
+    toast.error(fundData?.message)
+    dispatch(setCompleteFundStatus(true));
+    dispatch(setShowRandomField(false));
+    dispatch(setGameBet(false));
+  });
+
   const handleBetClick = () => {
     if (gameBet && !isGameOver) {
       DragonTowerSocket.emit("cashout", {
@@ -82,7 +90,6 @@ function DragonSidebar() {
           difficulty: values?.difficulty,
           betType: "Manual",
         });
-        // dispatch(setCompleteFundStatus(true));
         dispatch(setGameBet(true));
         dispatch(setIsGameOver(false))
         dispatch(setShowRandomField(true));
@@ -130,7 +137,7 @@ function DragonSidebar() {
   };
 
   return (
-    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
+    <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-16 md:mx-[4rem] -mx-12 m-12 flex flex-col p-3 bg-[#213743] rounded-b-lg">
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
@@ -279,8 +286,7 @@ function DragonSidebar() {
           <button
             className={`${gameBet && !isGameOver ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
               } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-            onClick={handleBetClick}
-            // disabled={!completeFundStatus}
+            onClick={handleBetClick}  
           >
             {gameBet && !isGameOver ? "Cashout" : "Bet"}
           </button>
