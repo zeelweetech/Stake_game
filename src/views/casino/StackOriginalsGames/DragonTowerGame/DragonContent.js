@@ -76,11 +76,6 @@ function DragonContent() {
     });
   }, []);
 
-  DragonTowerSocket.on("Insufficientfund", (fundData) => {
-    toast.error(fundData?.message)
-    dispatch(setCompleteFundStatus(false));
-  });
-
   DragonTowerSocket.on("gameStarted", (data) => {
     console.log("gameStarted data", data);
     setCashoutVisible(false);
@@ -228,17 +223,22 @@ function DragonContent() {
 
   return (
     <div className="flex flex-col items-center bg-cover">
-      <div className="dragonBackImage xl:w-[52rem] lg:w-[36.8rem] pt-14 pb-14">
+        <div className="dragonBackImage 
+            xl:w-[44rem] xl:h-[46rem] xl:mx-0 
+            lg:h-[46rem] lg:w-[36.5rem] lg:mx-0 
+            md:h-[30rem] md:w-[29.2rem]
+            mx-[-3rem] h-[28rem]">
+
         <div className="flex flex-col items-center">
           <div className="flex justify-center">
             <img
               src={dragonFrame}
-              className="w-[39rem] h-[40rem]"
+              className="w-[96] h-[96] sm:w-60 sm:h-64 md:w-[30rem] md:h-[28.5rem] lg:w-[39rem] lg:h-[40rem] xl:w-[39rem] xl:h-[40rem]"
               alt="Not Found"
             />
           </div>
           {cashoutVisible && !gameBet && gameOverResult && (
-            <div className="mt-64 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
+            <div className="xl:mt-80 lg:mt-80 md:mt-56 mt-52 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
               <p className="text-3xl font-medium">
                 {cashoutResult?.multiplier}x
               </p>
@@ -249,7 +249,7 @@ function DragonContent() {
             </div>
           )}
           <div
-            className={`flex flex-col gap-3 bg-[#182433] lg:w-[28.9rem] xl:w-[30.6rem] p-3 mt-[-31.5rem] border-2 border-gray-800 shadow-lg`}
+            className={`flex flex-col xl:gap-3 lg:gap-3 md:gap-2 gap-3 bg-[#182433] xl:w-[30.6rem] xl:h-[30rem] lg:w-[28.6rem] lg:h-[30rem] md:w-[23.1rem] p-3 xl:mt-[-31.2rem] lg:mt-[-31.2rem] md:mt-[-23rem] md:h-[22rem] md:mx-[3.1rem] w-[19.9rem] h-[21.2rem] -mt-[22.2rem]  border-2 border-gray-800 shadow-lg`}
           >
             {(() => {
               const rowElements = [];
@@ -272,11 +272,11 @@ function DragonContent() {
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
-                      className={`rounded-md w-full h-10 flex justify-center items-center ${isGameOver
+                      className={`rounded-md w-full h-6 xl:h-10 lg:h-10 md:h-[1.80rem] flex justify-center items-center ${isGameOver
                         ? "cursor-not-allowed bg-[#213743]"
                         : (gameBet && rowIndex === 0) ||
                           clickedBoxes[rowIndex - 1] !== undefined
-                          ? "bg-[#00e701]"
+                          ? "bg-[#00e701] w-10"
                           : "cursor-not-allowed bg-[#213743]"
                         } ${clickedBoxes[rowIndex] !== undefined
                           ? "bg-[#213743] opacity-100"
