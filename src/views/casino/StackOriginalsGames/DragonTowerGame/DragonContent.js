@@ -76,6 +76,11 @@ function DragonContent() {
     });
   }, []);
 
+  DragonTowerSocket.on("Insufficientfund", (fundData) => {
+    toast.error(fundData?.message)
+    dispatch(setCompleteFundStatus(false));
+  });
+
   DragonTowerSocket.on("gameStarted", (data) => {
     console.log("gameStarted data", data);
     setCashoutVisible(false);
@@ -224,11 +229,11 @@ function DragonContent() {
   return (
     <div className="flex flex-col items-center bg-cover">
         <div className="dragonBackImage 
-            xl:w-[44rem] xl:h-[46rem] xl:mx-0 
+            xl:w-[44rem] xl:h-[46rem] xl:mx-0 xl:py-8 
             lg:h-[46rem] lg:w-[36.5rem] lg:mx-0 
-            md:h-[30rem] md:w-[29.2rem]
+            md:h-[30rem] md:mx-[4rem] 
+            sm:mx-[2rem] 
             mx-[-3rem] h-[28rem]">
-
         <div className="flex flex-col items-center">
           <div className="flex justify-center">
             <img
@@ -272,7 +277,7 @@ function DragonContent() {
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
-                      className={`rounded-md w-full h-6 xl:h-10 lg:h-10 md:h-[1.80rem] flex justify-center items-center ${isGameOver
+                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center ${isGameOver
                         ? "cursor-not-allowed bg-[#213743]"
                         : (gameBet && rowIndex === 0) ||
                           clickedBoxes[rowIndex - 1] !== undefined
