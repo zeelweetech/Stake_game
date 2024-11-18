@@ -55,13 +55,13 @@ function MainHeader() {
             Listor
           </span>
           <div className="flex items-center md:space-x-0">
-            <button className="flex items-center bg-transparent md:bg-[#0f212e] md:bg-#0f212e blockhidden  space-x-1 px-2 md:px-5 py-2 md:py-3 rounded-s-md text-white font-medium">
+            <button className="flex items-center bg-transparent md:bg-[#0f212e] md:bg-#0f212e space-x-1 px-2 md:px-5 py-2 md:py-3 rounded-s-md text-white font-medium">
               <p className="text-sm md:text-base md:block hidden">
                 ₹{wallet ? wallet : 0}
               </p>
               <RiMoneyRupeeCircleFill
                 color="yellow"
-                className="text-lg md:text-xl md:block hidden"
+                className="text-lg md:text-xl"
               />
             </button>
             <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-4 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base">
