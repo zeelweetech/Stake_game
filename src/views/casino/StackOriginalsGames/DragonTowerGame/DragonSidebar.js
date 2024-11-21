@@ -167,9 +167,9 @@ function DragonSidebar() {
           </div>
           <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
             <div className="relative flex">
-              <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">₹
-                {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
-              </div>
+              {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+              </div> */}
               <input
                 type="number"
                 placeholder="0.00"
@@ -177,7 +177,7 @@ function DragonSidebar() {
                 name="betamount"
                 value={values?.betamount || ""}
                 onChange={(e) => handleOnChange(e)}
-                className={`xl:w-48 lg:w-36 md:w-80 pr-9 pl-2 py-2 rounded-l-md text-white border-2  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField && completeFundStatus && "cursor-not-allowed opacity-80"
+                className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField && completeFundStatus && "cursor-not-allowed opacity-80"
                   }`}
                 disabled={showRandomField && completeFundStatus}
               />
@@ -227,7 +227,7 @@ function DragonSidebar() {
             <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2">
               <label>Difficulty</label>
             </div>
-            <div className="relative flex border-2 rounded-md hover:border-[#557086] border-[#2F4553] bg-[#2F4553]">
+            <div className="relative flex border-2 rounded hover:border-[#557086] border-[#2F4553] bg-[#2F4553]">
               <select
                 type="select"
                 name="difficulty"
@@ -237,11 +237,11 @@ function DragonSidebar() {
                   }`}
                 disabled={showRandomField && completeFundStatus}
               >
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-                <option value="expert">Expert</option>
-                <option value="master">Master</option>
+                <option>Easy</option>
+                <option>Medium</option>
+                <option>Hard</option>
+                <option>Expert</option>
+                <option>Master</option>
               </select>
             </div>
           </div>
@@ -300,11 +300,11 @@ function DragonSidebar() {
           </div>
           <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
             <div className="relative flex">
-              <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">₹
-                {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
-              </div>
+              {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">₹
+                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+              </div> */}
               <input
-                className="xl:w-48 lg:w-40 md:w-80 w-64 pr-9 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                className="xl:w-48 lg:w-40 md:w-80 w-64 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
@@ -332,11 +332,11 @@ function DragonSidebar() {
               onChange={(e) => handleOnChange(e)}
               className="w-full px-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
             >
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-              <option value="expert">Expert</option>
-              <option value="master">Master</option>
+              <option>Easy</option>
+              <option>Medium</option>
+              <option>Hard</option>
+              <option>Expert</option>
+              <option>Master</option>
             </select>
           </div>
           <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
@@ -457,11 +457,11 @@ function DragonSidebar() {
             <label>₹0.00</label>
           </div>
           <div className="relative flex">
-            <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">₹
-              {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
-            </div>
+            {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+              <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+            </div> */}
             <input
-              className="w-full pr-8 px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] focus:outline-none"
+              className="w-full pr-1.5 px-2 py-2 text-white border-2 rounded border-[#4d718768] bg-[#0f212e] focus:outline-none"
               type="number"
               placeholder="0.01"
               step="0.01"
@@ -475,11 +475,11 @@ function DragonSidebar() {
             <label>₹0.00</label>
           </div>
           <div className="relative flex">
-            <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">₹
-              {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
-            </div>
+            {/* <div className="cursor-text text-[#B1BAD3] absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+              <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+            </div> */}
             <input
-              className="w-full pr-8 px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+              className="w-full pr-1.5 px-2 py-2  text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
               type="number"
               placeholder="0.01"
               step="0.01"

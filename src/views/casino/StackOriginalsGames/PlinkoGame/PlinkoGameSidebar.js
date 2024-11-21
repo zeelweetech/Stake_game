@@ -104,9 +104,9 @@ function PlinkoGameSidebar() {
           </div>
           <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
             <div className="relative flex">
-              <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+              {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl " />
-              </div>
+              </div> */}
               <input
                 type="number"
                 placeholder="0.00"
@@ -114,7 +114,7 @@ function PlinkoGameSidebar() {
                 name="betamount"
                 value={values?.betamount}
                 onChange={(e) => handleOnChange(e)}
-                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2 md:w-[13rem] sm:w-[10rem] w-60 rounded-s-md text-white bg-[#0f212e] ${completeBetStatus && "cursor-not-allowed"
+                className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[13rem] sm:w-[10rem] w-60 rounded-s-md text-white bg-[#0f212e] ${completeBetStatus && "cursor-not-allowed"
                   }`}
                 disabled={completeBetStatus}
               />
@@ -215,9 +215,9 @@ function PlinkoGameSidebar() {
             </div>
             <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
               <div className="relative flex">
-                <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+                {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-                </div>
+                </div> */}
                 <input
                   type="number"
                   placeholder="0.00"
@@ -226,7 +226,7 @@ function PlinkoGameSidebar() {
                   name="betamount"
                   value={values?.betamount}
                   onChange={(e) => handleOnChange(e)}
-                  className={`w-48 pr-9 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e] ${completeBetStatus && "cursor-not-allowed"
+                  className={`w-48 pr-1.5 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e] ${completeBetStatus && "cursor-not-allowed"
                     }`}
                   disabled={completeBetStatus}
                 />
