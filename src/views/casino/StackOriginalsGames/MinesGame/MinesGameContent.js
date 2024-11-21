@@ -16,6 +16,7 @@ import {
   setShowFields,
 } from "../../../../features/casino/minesSlice";
 import toast from "react-hot-toast";
+import { setWallet } from "../../../../features/auth/authSlice";
 
 function MinesGameContent() {
   const { id } = useParams();
@@ -77,6 +78,11 @@ function MinesGameContent() {
 
   MineSocket.on("Insufficientfund", (fundData) => {
     toast.apply("Insufficient funds");
+  });
+
+  MineSocket.on("walletBalance", (data) => {
+    // console.log("data *******", data);
+    dispatch(setWallet(data?.walletBalance));
   });
 
   MineSocket.on("gameStarted", (data) => {

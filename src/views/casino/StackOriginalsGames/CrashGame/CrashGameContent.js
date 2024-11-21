@@ -32,6 +32,10 @@ import {
 } from "../../../../features/casino/crashSlice";
 import { getRandomFiveData } from "../../../../services/CasinoServices";
 import { ResponsiveContainer } from "recharts";
+import { setWallet } from "../../../../features/auth/authSlice";
+import { getWallet } from "../../../../services/LoginServices";
+import { decodedToken } from "../../../../resources/utility";
+import { useParams } from "react-router-dom";
 
 // Register Chart.js components
 ChartJS.register(
@@ -48,6 +52,7 @@ ChartJS.register(
 
 function CrashGameContent() {
   const dispatch = useDispatch();
+  const { id } = useParams();
   // const [data, setData] = useState([{ time: 0, value: 1 }]);
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
   const { xValue, bettingStatus, multiplier, combinedData, crashStatus } =
@@ -58,10 +63,18 @@ function CrashGameContent() {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
   const [chartRefData, setChartRefData] = useState();
+  const decoded = decodedToken();
 
   // CrashSocket.on("multiplierUpdate", (data) => {
   //   dispatch(setMultiplier(data?.multiplier));
   // });
+
+  useEffect(() => {
+    CrashSocket.emit("joinGame", {
+      userId: decoded?.userId,
+      gameId: id,
+    });
+  }, [])
 
   useEffect(() => {
     if (bettingStatus === true) {
@@ -116,6 +129,23 @@ function CrashGameContent() {
 
   CrashSocket.on("endRound", (data) => {
     dispatch(setXValue(parseFloat(data?.crashPoint)));
+  });
+
+  // useEffect(() => {
+  //   GetWalletData();
+  // }, []);
+
+  // const GetWalletData = async () => {
+  //   await getWallet({ id: decoded?.userId })
+  //     .then((res) => {
+  //       dispatch(setWallet(res?.currentAmount));
+  //     })
+  //     .catch((err) => {});
+  // };
+
+  // *****************************************
+  CrashSocket.on("walletBalance", (data) => {
+    dispatch(setWallet(data?.walletBalance));
   });
 
   useEffect(() => {
@@ -192,7 +222,7 @@ function CrashGameContent() {
       if (!isNaN(newMultiplier)) {
         const lastMultiplier =
           chartInstance.current.data.datasets[0].data[
-            chartInstance.current.data.datasets[0].data.length - 1
+          chartInstance.current.data.datasets[0].data.length - 1
           ];
         const smoothMultiplier = lastMultiplier * 0.9 + newMultiplier * 0.1;
 
@@ -308,73 +338,71 @@ function CrashGameContent() {
 
   return (
     <div className="xl:max-w-[52rem] md:w-full md:h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg p-4">
-  <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
-    {topXData?.length > 0 &&
-      [...topXData].reverse()?.map((item, index) => {
-        return (
-          <div key={index}>
-            <button
-              className={`p-2.5 ${
-                item?.crashPoint > 3 ? "bg-[#1fff20]" : "bg-white"
-              } rounded-full text-xs`}
-            >
-              {`${item?.crashPoint}`}
-            </button>
+      <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
+        {topXData?.length > 0 &&
+          [...topXData].reverse()?.map((item, index) => {
+            return (
+              <div key={index}>
+                <button
+                  className={`p-2.5 ${item?.crashPoint > 3 ? "bg-[#1fff20]" : "bg-white"
+                    } rounded-full text-xs`}
+                >
+                  {`${item?.crashPoint}`}
+                </button>
+              </div>
+            );
+          })}
+        <button className="px-2.5 py-2.5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
+          <IoIosTrendingUp color="white" />
+        </button>
+      </div>
+      <div className="flex flex-col items-center justify-between flex-grow w-full xl:max-w-[55rem] lg:max-w-[41rem] md:max-w-[25rem] item-center mt-10 relative">
+        <div
+          className="xl:pl-4 lg:pl-2 xl:pr-8 lg:pr-6 xl:h-[35rem] lg:h-[34rem] md:h-[20rem] sm:max-w-full max-w-[90vw] sm:h-[20rem]"
+        >
+          <canvas ref={chartRef} className="w-full h-full"></canvas>
+        </div>
+        <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center w-full px-4 text-white font-bold text-center">
+          <div className="flex-grow flex items-center justify-center">
+            <div>
+              <p
+                className={`text-4xl sm:text-5xl ${multiplier === xValue ? "text-red-500" : "text-white"
+                  }`}
+              >
+                {multiplier}x
+              </p>
+              {multiplier === xValue && (
+                <button className="bg-[#4d718768] text-lg sm:text-xl shadow-lg px-8 sm:px-12 pt-2 pb-3 mt-3 rounded-md">
+                  Crashed
+                </button>
+              )}
+              {bettingStatus && (
+                <button className="bg-[#4d718768] text-lg sm:text-2xl px-6 sm:px-8 pt-3 pb-4 mt-3 rounded-md progress-bar">
+                  starting in
+                </button>
+              )}
+            </div>
           </div>
-        );
-      })}
-    <button className="px-2.5 py-2.5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
-      <IoIosTrendingUp color="white" />
-    </button>
-  </div>
-  <div className="flex flex-col items-center justify-between flex-grow w-full xl:max-w-[55rem] lg:max-w-[41rem] md:max-w-[25rem] item-center mt-10 relative">
-    <div
-      className="xl:pl-4 lg:pl-2 xl:pr-8 lg:pr-6 xl:h-[35rem] lg:h-[34rem] md:h-[20rem] sm:max-w-full max-w-[90vw] sm:h-[20rem]"
-    >
-      <canvas ref={chartRef} className="w-full h-full"></canvas>
-    </div>
-    <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center w-full px-4 text-white font-bold text-center">
-      <div className="flex-grow flex items-center justify-center">
-        <div>
-          <p
-            className={`text-4xl sm:text-5xl ${
-              multiplier === xValue ? "text-red-500" : "text-white"
-            }`}
-          >
-            {multiplier}x
-          </p>
-          {multiplier === xValue && (
-            <button className="bg-[#4d718768] text-lg sm:text-xl shadow-lg px-8 sm:px-12 pt-2 pb-3 mt-3 rounded-md">
-              Crashed
-            </button>
-          )}
-          {bettingStatus && (
-            <button className="bg-[#4d718768] text-lg sm:text-2xl px-6 sm:px-8 pt-3 pb-4 mt-3 rounded-md progress-bar">
-              starting in
-            </button>
-          )}
+          <div className="flex flex-col items-end space-y-1.5 xl:ml-[40rem] lg:ml-[30rem] md:ml-64 sm:ml-32 ml-44">
+            {visibleData?.length > 0
+              ? visibleData?.map((data, index) => (
+                <button
+                  key={index}
+                  className="py-1 px-1 border-2 border-[#4d718768] bg-[#213743] rounded-full"
+                >
+                  <div className="flex items-center space-x-1">
+                    <BsIncognito />
+                    <p className="text-[#b1bad3] text-xs">Hidden</p>
+                    <RiMoneyRupeeCircleFill color="yellow" size={10} />
+                    <p className="text-green-500">{data?.amount}</p>
+                  </div>
+                </button>
+              ))
+              : ""}
+          </div>
         </div>
       </div>
-      <div className="flex flex-col items-end space-y-1.5 xl:ml-[40rem] lg:ml-[30rem] md:ml-64 sm:ml-32 ml-44">
-        {visibleData?.length > 0
-          ? visibleData?.map((data, index) => (
-              <button
-                key={index}
-                className="py-1 px-1 border-2 border-[#4d718768] bg-[#213743] rounded-full"
-              >
-                <div className="flex items-center space-x-1">
-                  <BsIncognito />
-                  <p className="text-[#b1bad3] text-xs">Hidden</p>
-                  <RiMoneyRupeeCircleFill color="yellow" size={10} />
-                  <p className="text-green-500">{data?.amount}</p>
-                </div>
-              </button>
-            ))
-          : ""}
-      </div>
     </div>
-  </div>
-</div>
 
   );
 }

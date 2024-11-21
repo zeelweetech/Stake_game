@@ -10,16 +10,17 @@ import { pad } from "./padding";
 import { RowByRisk, RowData } from "../RowXButton";
 
 const getCall = (values) => {
-  const selectionByRisk = RowByRisk[values.risk];
-  const selectionByRow = selectionByRisk[`row${values.rows}`];
+  console.log('values ++++++++++++++++', values);
+  const selectionByRisk = RowByRisk[values?.risk];
+  const selectionByRow = selectionByRisk[`row${values?.rows}`];
   const multiplier = selectionByRow.map((el) => el.xValue);
   return multiplier;
 };
 
 export const createObstacles = (values) => {
-  const selectedOption = RowData[`row${values.rows}`];
+  const selectedOption = RowData[`row${values?.rows}`];
   const obstacles = [];
-  const rows = selectedOption.rows;
+  const rows = selectedOption?.rows;
 
   for (let row = 2; row < rows; row++) {
     const numObstacles = row + 1;
@@ -34,10 +35,10 @@ export const createObstacles = (values) => {
 };
 
 export const createSinks = (values) => {
-  const selectedOption = RowData[`row${values.rows}`];
-  const NUM_SINKS = selectedOption.sinksNumber;
+  const selectedOption = RowData[`row${values?.rows}`];
+  const NUM_SINKS = selectedOption?.sinksNumber;
   const sinks = [];
-  const SPACING = obstacleRadius * selectedOption.multiply;
+  const SPACING = obstacleRadius * selectedOption?.multiply;
   const MULTIPLIERS = getCall(values);
 
   for (let i = 0; i < NUM_SINKS; i++) {

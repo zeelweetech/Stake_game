@@ -45,6 +45,9 @@ const CrashGameSidebar = () => {
     multiplier,
   } = useSelector((state) => state.crashGame);
 
+  // console.log('crashValues *--*-*-*-**-', crashValues);
+  // console.log('bettingStatus +-+-++--+-+-+', bettingStatus);
+  
   useEffect(() => {
     GetWalletData();
   }, []);
@@ -68,6 +71,7 @@ const CrashGameSidebar = () => {
     //   dispatch(setCrashStatus(data));
     // });
     CrashSocket.on("gameStatus", (data) => {
+      console.log("data",data);
       dispatch(setGameStatusData(data));
       const betData =
         data?.autoBets?.length > 0 &&
@@ -169,7 +173,7 @@ const CrashGameSidebar = () => {
           : 0,
         cashoutMultiplier: crashValues?.cashout
           ? parseInt(crashValues?.cashout, 10)
-          : 1.01,
+          : 2.00,
         betType: "Manual",
       });
       dispatch(
@@ -193,7 +197,7 @@ const CrashGameSidebar = () => {
           : 0,
         cashoutMultiplier: crashValues?.cashout
           ? parseInt(crashValues?.cashout, 10)
-          : 1.01,
+          : 2.00,
         numberOfBets: crashValues?.numberofbet
           ? parseInt(crashValues?.numberofbet, 10)
           : 1,
@@ -218,6 +222,16 @@ const CrashGameSidebar = () => {
     });
     setOnClickStatus(false);
   };
+
+  // *****************************************
+  const BetId = gameStatusData?.players?.find((item) => {
+    return item?.userId === decoded?.userId && item?.betId;
+  });
+
+  CrashSocket.emit("betCompleted", {
+    betId: BetId?.betId,
+    userId: decoded?.userId,
+  });
 
   const handleOnCancelAutoBet = () => {
     const BetId = gameStatusData?.autoBets?.find((item) => {
@@ -612,6 +626,7 @@ const CrashGameSidebar = () => {
                     min={0}
                     name="numberofbet"
                     value={
+                      // crashValues?.numberofbet
                       betAmount?.placedBets
                         ? crashValues?.numberofbet - betAmount?.placedBets
                         : crashValues?.numberofbet

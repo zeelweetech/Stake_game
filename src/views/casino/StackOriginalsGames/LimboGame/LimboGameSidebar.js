@@ -35,12 +35,13 @@ function LimboGameSidebar() {
       .then((res) => {
         dispatch(setWallet(res?.currentAmount));
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   LimboSocket.on("Insufficientfund", (data) => {
     toast.error(data?.message);
   });
+  
   LimboSocket.on("WalletNotFound", (data) => {
     toast.error(data?.message);
   });
@@ -76,9 +77,7 @@ function LimboGameSidebar() {
         userId: decoded?.userId,
         betAmount: values?.betamount ? values?.betamount : 0,
         multiplier: values?.multiplier ? values?.multiplier : 2,
-        autoBetCount: values?.numberofbet
-          ? parseInt(values?.numberofbet, 10)
-          : 1,
+        autoBetCount: limboStatusData?.autoBetRound ? limboStatusData?.autoBetRound : parseInt(values?.autoBetCount),
         onWins: parseInt(values?.onwin, 10),
         onLoss: parseInt(values?.onlose, 10),
         stopOnProfit: parseInt(values?.stoponprofit, 10),
@@ -86,21 +85,10 @@ function LimboGameSidebar() {
         betType: "Auto",
       });
       dispatch(setStopAutoBet(true));
-      dispatch(
-        setValues({
-          betamount: "",
-          autoBetCount: "",
-          onWins: "",
-          onLoss: "",
-          stopOnProfit: "",
-          stopOnLoss: "",
-        })
-      );
     }
   };
 
   const handleOnStopAutoBet = () => {
-    console.log("%%%%%%%");
     LimboSocket.emit("stopAutoBet", { userId: decoded?.userId });
     dispatch(setStopAutoBet(false));
   };
@@ -267,6 +255,7 @@ function LimboGameSidebar() {
             </div>
             <div className="flex justify-between rounded-md border-2 border-[#4d718768] bg-[#4d718768] mb-2 ">
               <div className="relative flex">
+                {/* {console.log('limboStatusData **-*-*-*-*-*-*', limboStatusData)} */}
                 <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <IoInfiniteSharp className="text-xl" />
                 </div>
@@ -275,10 +264,10 @@ function LimboGameSidebar() {
                   type="number"
                   placeholder="0"
                   min={0}
-                  name="numberofbet"
-                  value={
-                    limboStatusData?.autoBetRound ? limboStatusData?.autoBetRound : values?.numberofbet
-                  }
+                  name="autoBetCount"
+                  value={limboStatusData?.autoBetRound && parseInt(values?.autoBetCount)
+                    ? (parseInt(values?.autoBetCount) - limboStatusData?.autoBetRound + 1) - 1
+                    : parseInt(values?.autoBetCount)}
                   onChange={(e) => handleOnChange(e)}
                 // disabled={limboStatusData?.autoBetRound}
                 />
@@ -418,7 +407,7 @@ function LimboGameSidebar() {
                 onChange={(e) => handleOnChange(e)}
               />
             </div>
-            {stopAutoBet ? (
+            {stopAutoBet && (values?.autoBetCount > 0 || limboStatusData?.autoBetRound > 0) ? (
               <button
                 className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
                 onClick={() => handleOnStopAutoBet()}

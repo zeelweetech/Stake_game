@@ -11,9 +11,11 @@ import { decodedToken } from "../../../../resources/utility";
 import { setWallet } from "../../../../features/auth/authSlice";
 import toast from "react-hot-toast";
 import { getWallet } from "../../../../services/LoginServices";
+import { useParams } from "react-router-dom";
 
 function PlinkoGameContent() {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const decoded = decodedToken();
   const canvasRef = useRef();
   const [ballManager, setBallManager] = useState();
@@ -21,6 +23,13 @@ function PlinkoGameContent() {
   const { finalMultiplier, values, lastMultipliers } = useSelector(
     (state) => state.plinkoGame
   );
+
+  useEffect(() => {
+    PlinkoSocket.emit("joinGame", {
+      userId: decoded?.userId,
+      gameId: id,
+    });
+  }, [])
 
   useEffect(() => {
     GetWalletData();
@@ -61,6 +70,7 @@ function PlinkoGameContent() {
   });
 
   PlinkoSocket.on("walletBalance", (data) => {
+    console.log("data *******", data);
     dispatch(setWallet(data?.walletBalance));
   });
 

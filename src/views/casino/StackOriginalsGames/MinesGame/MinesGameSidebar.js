@@ -300,7 +300,7 @@ function MinesGameSidebar() {
             // disabled={gameBet && !gamesOver && tileSelect?.tileIndex === undefined}
             disabled={
               (gameBet && !gamesOver && tileSelect?.tileIndex === undefined) &&
-              !restored?.totalSelectedTiles > 0
+              !restored?.totalSelectedTiles > 0 && !gamesOver
             }
           >
             {gameBet && !gamesOver ? "Cashout" : "Bet"}

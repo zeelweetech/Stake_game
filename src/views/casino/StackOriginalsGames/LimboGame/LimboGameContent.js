@@ -10,21 +10,34 @@ import {
   getGameRandomFiveData,
   getRandomFiveData,
 } from "../../../../services/CasinoServices";
-import { decodedToken } from "../../../../resources/utility";
 import { IoIosTrendingUp } from "react-icons/io";
 import { useParams } from "react-router-dom";
+import { setWallet } from "../../../../features/auth/authSlice";
+import { decodedToken } from "../../../../resources/utility";
 
 function LimboGameContent() {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const decoded = decodedToken();
   const [displayedMultiplier, setDisplayedMultiplier] = useState(1.0);
   const { values, limboStatusData } = useSelector((state) => state.limboGame);
-  const [topXData, setTopXData] = useState();
+  const [topXData, setTopXData] = useState([]);
+
+  useEffect(() => {
+    LimboSocket.emit("joinGame", {
+      userId: decoded?.userId,
+      gameId: id,
+    });
+  }, [])
 
   LimboSocket.on("limbobetResult", (data) => {
     dispatch(setLimboStatusData(data));
   });
-  console.log("limboStatusData", limboStatusData);
+  console.log('limboStatusData', limboStatusData);
+
+  LimboSocket.on("walletBalance", (data) => {
+    dispatch(setWallet(data?.walletBalance));
+  });
 
   useEffect(() => {
     if (
@@ -32,17 +45,17 @@ function LimboGameContent() {
       Math.floor(limboStatusData.actualMultiplier)
     ) {
       GetRendomFiveData();
-      const timeout = setTimeout(() => {
-        setDisplayedMultiplier(1.0);
-      }, 1000);
+      // const timeout = setTimeout(() => {
+      //   setDisplayedMultiplier(1.0);
+      // }, 1000);
 
-      return () => {
-        clearTimeout(timeout); // Clear timeout when component unmounts or value changes
-      };
+      // return () => {
+      //   clearTimeout(timeout);
+      // };
     }
   }, [
     Math.floor(displayedMultiplier) ===
-      Math.floor(limboStatusData.actualMultiplier),
+    Math.floor(limboStatusData.actualMultiplier),
   ]);
 
   useEffect(() => {
@@ -52,7 +65,7 @@ function LimboGameContent() {
   const GetRendomFiveData = async () => {
     await getGameRandomFiveData({ id: id })
       .then((response) => {
-        console.log("resssss", response);
+        console.log('response /-*/-/-*/-**-', response);
         setTopXData(response?.data);
       })
       .catch((error) => {
@@ -62,39 +75,49 @@ function LimboGameContent() {
 
   useEffect(() => {
     if (limboStatusData?.actualMultiplier) {
-      const totalDuration = 1000; // 2 seconds
       const targetMultiplier = parseFloat(limboStatusData.actualMultiplier);
-      const incrementCount = totalDuration / 5;
-      // 5 ms interval for smooth transition
-      const incrementValue = targetMultiplier / incrementCount; // Calculate how much to increment each step
+      const totalDuration = 1000;
+      const incrementCount = totalDuration / 3;
+      const incrementValue = targetMultiplier / incrementCount;
 
       let currentMultiplier = 1.0;
       const interval = setInterval(() => {
         if (currentMultiplier < targetMultiplier) {
           currentMultiplier += incrementValue;
-          setDisplayedMultiplier(currentMultiplier.toFixed(2));
+          setDisplayedMultiplier(Number(currentMultiplier.toFixed(2)));
         } else {
+          setDisplayedMultiplier(targetMultiplier.toFixed(2));
           clearInterval(interval);
         }
-      }, 5); // Update every 5 milliseconds for smooth animation
+      }, 3);
 
-      return () => clearInterval(interval); // Cleanup the interval on unmount
+      LimboSocket.emit("betCompleted", {
+        betId: limboStatusData?.betId,
+        userId: decoded?.userId,
+      });
+
+      GetRendomFiveData()
+
+      return () => clearInterval(interval);
     }
   }, [limboStatusData?.actualMultiplier]);
 
   // useEffect(() => {
   //   if (limboStatusData?.actualMultiplier) {
-  //     let currentMultiplier = 1.0;
   //     const targetMultiplier = parseFloat(limboStatusData.actualMultiplier);
+  //     const incrementCount = 50; // Set the number of increments for smoother transition (e.g., 50 steps)
+  //     const incrementValue = targetMultiplier / incrementCount;
 
+  //     let currentMultiplier = 1.0;
   //     const interval = setInterval(() => {
   //       if (currentMultiplier < targetMultiplier) {
-  //         currentMultiplier += 0.01; // Increment by 0.01
+  //         currentMultiplier += incrementValue;
   //         setDisplayedMultiplier(currentMultiplier.toFixed(2));
   //       } else {
   //         clearInterval(interval);
   //       }
-  //     }, 5);
+  //     }, 5); 
+
   //     return () => clearInterval(interval);
   //   }
   // }, [limboStatusData?.actualMultiplier]);
@@ -126,18 +149,13 @@ function LimboGameContent() {
     if (displayedMultiplier === 1.0) {
       return "text-white";
     }
-    // Get target multiplier from user input
     const targetMultiplier = parseFloat(values?.multiplier || 2);
-    // Get actual result multiplier
     const actualMultiplier = parseFloat(limboStatusData?.actualMultiplier);
 
-    // When animation is complete (displayed matches actual)
     if (Math.floor(displayedMultiplier) === Math.floor(actualMultiplier)) {
-      // Win condition: actual multiplier is greater than target
       if (actualMultiplier >= targetMultiplier) {
         return "text-green-500";
       }
-      // Loss condition: actual multiplier is less than target
       else {
         return "text-red-500";
       }
@@ -153,9 +171,8 @@ function LimboGameContent() {
             return (
               <div key={index}>
                 <button
-                  className={`p-2.5 ${
-                    item?.isWin === true ? "bg-[#1fff20]" : "bg-white"
-                  } rounded-full`}
+                  className={`p-2.5 ${item?.isWin === true ? "bg-[#1fff20]" : "bg-white"
+                    } rounded-full`}
                 >{`${item?.multiplier}x`}</button>
               </div>
             );
@@ -165,7 +182,7 @@ function LimboGameContent() {
         </button>
       </div>
       <div className="flex-grow flex items-center justify-center">
-        <p className={`text-9xl font-bold ${getLastValueColor()}`}>
+        <p className={`text-7xl md:text-9xl font-bold ${getLastValueColor()}`}>
           {displayedMultiplier}x
         </p>
       </div>
@@ -212,7 +229,7 @@ function LimboGameContent() {
                 placeholder="0.00"
                 step="0.01"
                 name="winchance"
-                value={values?.winchance} // Calculate winchance if multiplier exists
+                value={values?.winchance}
                 onChange={(e) => handleOnChange(e)}
               />
             </div>

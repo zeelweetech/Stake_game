@@ -45,7 +45,7 @@ function PlinkoGameSidebar() {
     dispatch(setValues({ ...values, [name]: value }));
   };
 
-  const handleOnBet = (name) => {
+  const handleOnBet = (name) => { 
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
@@ -54,12 +54,15 @@ function PlinkoGameSidebar() {
         betAmount: values?.betamount ? values?.betamount : 0,
         rows: values?.rows,
         riskLevel: values?.risk,
-        autoBetCount: name === "autoBet" && finalMultiplier?.remainingBets ? finalMultiplier?.remainingBets : values?.numberofbets
+        autoBetCount: name === "autoBet" && finalMultiplier?.remainingBets === 1
+          ? values?.numberofbets || ""
+          : (finalMultiplier?.remainingBets ? parseInt(finalMultiplier?.remainingBets) - 1 : values?.numberofbets)
       });
       dispatch(setCompleteBetStatus(true));
       if (name === "manualBet") {
       } else if (name === "autoBet") {
         dispatch(setStopAutoBet(true));
+        dispatch(setValues({ numberofbets: "" }))
       }
     }
   };
@@ -311,22 +314,31 @@ function PlinkoGameSidebar() {
                 <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <IoInfiniteSharp className="text-xl" />
                 </div>
-                {console.log("finalMultiplier ++-+-++-++++----", finalMultiplier)}
                 <input
                   type="number"
                   placeholder="0"
                   min={0}
                   name="numberofbets"
+                  // value={
+                  //   finalMultiplier?.remainingBets
+                  //     ? parseInt(finalMultiplier?.remainingBets) - 1 : finalMultiplier?.remainingBets === 1 ? "" : values?.numberofbets
+                  // }
+                  // value={
+                  //   finalMultiplier?.remainingBets === 1 
+                  //     ? "" 
+                  //     : (finalMultiplier?.remainingBets && parseInt(finalMultiplier?.remainingBets) - 1) || values?.numberofbets
+                  // }
                   value={
-                    finalMultiplier?.remainingBets
-                      ? parseInt(finalMultiplier?.remainingBets) - 1
-                      : values?.numberofbets
+                    finalMultiplier?.remainingBets === 1
+                      ? values?.numberofbets || ""
+                      : (finalMultiplier?.remainingBets ? parseInt(finalMultiplier?.remainingBets) - 1 : values?.numberofbets)
                   }
                   onChange={(e) => handleOnChange(e)}
                   className={`w-full pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]`}
                   disabled={completeBetStatus}
                 />
               </div>
+              {console.log("finalMultiplier ", finalMultiplier)}
             </div>
             {stopAutoBet ? (
               <button
