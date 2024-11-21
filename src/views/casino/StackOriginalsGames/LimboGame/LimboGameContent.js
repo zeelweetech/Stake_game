@@ -193,14 +193,14 @@ function LimboGameContent() {
               <label>Target Multiplier</label>
             </div>
             <div className="flex relative">
-              <div className="cursor-text absolute flex right-4 translate-y-[4rem] pointer-events-none z-2">
+              {/* <div className="cursor-text absolute flex right-4 translate-y-[4rem] pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill
                   color="yellow"
                   className="text-xl -mt-[3.2rem]"
                 />
-              </div>
+              </div> */}
               <input
-                className="w-[23.5rem] xl:w-96 lg:w-64 md:w-40 max-sm:w-36 max-[320px]:w-32 pr-9 pl-2 py-2 border-2 border-[#2f4553] hover:border-[#557086] focus:border-[#557086]  rounded-md text-white bg-[#0f212e] outline-none"
+                className="w-[23.5rem] xl:w-96 lg:w-64 md:w-40 max-sm:w-36 max-[320px]:w-32 pr-1.5 pl-2 py-2 border-2 border-[#2f4553] hover:border-[#557086] focus:border-[#557086]  rounded-md text-white bg-[#0f212e] outline-none"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
@@ -217,14 +217,14 @@ function LimboGameContent() {
               <label>Win Chance</label>
             </div>
             <div className="flex">
-              <div className="cursor-text absolute flex right-4 translate-y-[4rem] pointer-events-none z-2">
+              {/* <div className="cursor-text absolute flex right-4 translate-y-[4rem] pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill
                   color="yellow"
                   className="text-xl -mt-[3.3rem] mr-8"
                 />
-              </div>
+              </div> */}
               <input
-                className="w-[23.5rem] xl:w-96 lg:w-64 md:w-40 max-sm:w-36 max-[320px]:w-32 pr-9 pl-2 py-2 border-2 border-[#2f4553] hover:border-[#557086] focus:border-[#557086] rounded-md text-white bg-[#0f212e] outline-none"
+                className="w-[23.5rem] xl:w-96 lg:w-64 md:w-40 max-sm:w-36 max-[320px]:w-32 pr-1.5 pl-2 py-2 border-2 border-[#2f4553] hover:border-[#557086] focus:border-[#557086] rounded-md text-white bg-[#0f212e] outline-none"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
