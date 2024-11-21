@@ -55,23 +55,23 @@ function MainHeader() {
             Listor
           </span>
           <div className="flex items-center md:space-x-0">
-            <button className="flex items-center bg-transparent md:bg-[#0f212e] md:bg-#0f212e space-x-1 px-2 md:px-5 py-2 md:py-3 rounded-s-md text-white font-medium">
-              <p className="text-sm md:text-base md:block hidden">
+            <button className="flex bg-[#0f212e] items-center bg-transparent  space-x-1 px-2 md:px-5 py-2 md:py-3 rounded-s-md text-white font-medium">
+              <p className="text-sm md:text-base">
                 ₹{wallet ? wallet : 0}
               </p>
-              <RiMoneyRupeeCircleFill
+              {/* <RiMoneyRupeeCircleFill
                 color="yellow"
                 className="text-lg md:text-xl"
-              />
+              /> */}
             </button>
-            <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-4 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base">
+            <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-3 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base">
               Wallet
             </button>
           </div>
           <div className="text-white flex items-center space-x-0.4 md:space-x-6">
             <button className="flex items-center space-x-1.5 font-medium">
               <IoMdSearch className="text-sm w-10 h-6 md:text-base md:block hidden " />
-              <p className="hidden md:block text-sm md:text-base md:space-x-1">
+              <p className="md:block hidden text-sm md:text-base md:space-x-1">
                 Search
               </p>
             </button>

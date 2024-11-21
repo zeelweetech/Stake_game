@@ -11,6 +11,7 @@ import { Wheel } from "react-custom-roulette";
 import { decodedToken } from "../../../../resources/utility";
 import { getWallet } from "../../../../services/LoginServices";
 import { setWallet } from "../../../../features/auth/authSlice";
+import { useParams } from "react-router-dom";
 
 function WheelGameContent() {
   const dispatch = useDispatch();
@@ -19,9 +20,17 @@ function WheelGameContent() {
   const [segments, setSegments] = useState([]);
   const [segColors, setSegColors] = useState([]);
   const [isMdScreen, setIsMdScreen] = useState(false);
+  const { id } = useParams();
   const { wheelValue, finalmultiplier, mustSpin } = useSelector(
     (state) => state.wheelGame
   );
+
+  useEffect(() => {
+    WheelSocket.emit("joinGame", {
+      userId: decoded?.userId,
+      gameId: id,
+    });
+  }, [])
 
   useEffect(() => {
     GetWalletData();
@@ -34,6 +43,10 @@ function WheelGameContent() {
       })
       .catch((err) => {});
   };
+  WheelSocket.on("walletBalance", (data) => {
+    console.log("data *******", data);
+    dispatch(setWallet(data?.walletBalance));
+  });
   useEffect(() => {
     const mdQuery = window.matchMedia(
       "(min-width: 768px) and (max-width: 1023px)"

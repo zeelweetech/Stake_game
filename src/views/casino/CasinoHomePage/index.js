@@ -83,7 +83,7 @@ function CasinoHomePage() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="text-white pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10">
+        <div className="text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10">
           <SlideBar />
 
           <div className="mt-8 mx-3 relative">

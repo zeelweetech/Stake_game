@@ -110,21 +110,21 @@ function SlideBar() {
         >
           {promoGame.map((Data, index) => (
             <SwiperSlide key={index} className="pl-2">
-                <div className="flex flex-col md:flex-row justify-between items-center bg-[#213743] xl:w-full lg:w-[28.5rem] md:w-[21.2rem] md:h-52 w-full h-auto px-2 py-2 rounded-md hover:cursor-pointer">
+                <div className="flex flex-col md:flex-row justify-between items-center bg-[#213743] xl:w-full lg:w-[28.5rem] md:w-[21.2rem] md:h-52 w-full h-auto px-3 py-2 rounded-md hover:cursor-pointer">
                   <div className="flex flex-col space-y-4 md:space-y-8 justify-around w-full md:w-44">
                     <div>
                       <button className="bg-white text-black text-sm font-semibold px-2 rounded-md">
                         Promo
                       </button>
                       <p className="text-base md:text-lg font-bold py-1">{Data.Game}</p>
-                      <p className="text-sm font-medium leading-5 xl:w-44 w-52 md:w-44">{Data.gameDescription}</p>
+                      <p className="text-sm font-medium leading-5 xl:w-44 w-48 md:w-44">{Data.gameDescription}</p>
                     </div>
                     <button className="border border-white w-20 md:w-28 hover:bg-[#8aaec22c] text-xs font-semibold py-2 md:py-3 rounded-md">
                       {Data.gameButton}
                     </button>
                   </div>
                   <div className="mt-4">
-                    <img src={Data.gameImage} className="xl:w-72 xl:h-56 xl:-mt-0 xl:ml-0 lg:w-72 lg:h-52 lg:-mt-0 lg:ml-0 md:h-52 md:-mt-0 md:ml-0 w-44 h-44 -mt-[10.5rem] ml-56" alt="Not Found" />
+                    <img src={Data.gameImage} className="xl:w-72 xl:h-56 xl:-mt-0 xl:ml-0 lg:w-72 lg:h-52 lg:-mt-0 lg:ml-0 md:w-52 md:h-48 md:-mt-0 md:ml-3 w-44 h-44 -mt-[10.5rem] ml-44" alt="Not Found" />
                   </div>
                 </div>
             </SwiperSlide>
