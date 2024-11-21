@@ -31,6 +31,8 @@ import {
   setTileSelected,
 } from "../../../../features/casino/dragonTowerSlice";
 import toast from "react-hot-toast";
+import { setWallet } from "../../../../features/auth/authSlice";
+import { getWallet } from "../../../../services/LoginServices"
 
 function DragonContent() {
   const { id } = useParams();
@@ -49,6 +51,18 @@ function DragonContent() {
     dispatch(setRowsIndex(undefined));
     dispatch(setBoxsIndex(undefined));
     dispatch(setIsGameOver(false));
+  };
+
+  useEffect(() => {
+    GetWalletData();
+  }, []);
+
+  const GetWalletData = async () => {
+    await getWallet({ id: decoded?.userId })
+      .then((res) => {
+        dispatch(setWallet(res?.currentAmount));
+      })
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -79,6 +93,11 @@ function DragonContent() {
   DragonTowerSocket.on("Insufficientfund", (fundData) => {
     toast.error(fundData?.message)
     dispatch(setCompleteFundStatus(false));
+  });
+
+  DragonTowerSocket.on("walletBalance", (data) => {
+    console.log("data *******", data);
+    dispatch(setWallet(data?.walletBalance));
   });
 
   DragonTowerSocket.on("gameStarted", (data) => {
@@ -228,17 +247,17 @@ function DragonContent() {
 
   return (
     <div className="flex flex-col items-center bg-cover">
-        <div className="dragonBackImage 
+        <div className="dragonBackImage rounded-t-lg
             xl:w-[44rem] xl:h-[46rem] xl:mx-0 xl:py-8 
             lg:h-[46rem] lg:w-[36.5rem] lg:mx-0 
             md:h-[30rem] md:mx-[4rem] 
             sm:mx-[2rem] 
-            mx-[-3rem] h-[28rem]">
+            mx-[-5rem]  h-[28rem]"> 
         <div className="flex flex-col items-center">
           <div className="flex justify-center">
             <img
               src={dragonFrame}
-              className="w-[96] h-[96] sm:w-60 sm:h-64 md:w-[30rem] md:h-[28.5rem] lg:w-[39rem] lg:h-[40rem] xl:w-[39rem] xl:h-[40rem]"
+              className="w-[25rem] h-[96] sm:w-60 sm:h-64 md:w-[30rem] md:h-[28.5rem] lg:w-[39rem] lg:h-[40rem] xl:w-[39rem] xl:h-[40rem]"
               alt="Not Found"
             />
           </div>

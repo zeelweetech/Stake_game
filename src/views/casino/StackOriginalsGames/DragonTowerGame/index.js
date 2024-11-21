@@ -38,10 +38,10 @@ function DragonTowerGame() {
   });
 
   return (
-  <div className="bg-[#1a2c38] px-14 py-8 flex justify-center items-center text-white h-full ">
+  <div className=" xl:py-10 lg:py-8 md:py-4 py-5 bg-[#1a2c38] px-14 flex justify-center items-center text-white h-full">
     <div className="w-full max-w-screen-lg">
       <div
-        className={`flex w-full min-w-70  ${
+        className={`flex w-full ${
           isMobile ? "h-[25rem]" : "h-[46rem]"
         } border-b-3`}
       >
@@ -62,7 +62,7 @@ function DragonTowerGame() {
       )}
       <div
         className={`${
-          isMobile ? "h-[12rem]" : "h-[15rem]"
+          isMobile ? "h-[15rem] -ml-12 w-[25.3rem] -mt-12 md:w-[29.3rem] md:-mt-12 md:ml-16 " : "h-[15rem] xl:w-[64rem] lg:w-[53.3rem]"
         } border-t-2 border-[#213743]`}
       >
         <hr className="border-2 border-[#213743]" />
