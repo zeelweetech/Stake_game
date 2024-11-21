@@ -51,7 +51,8 @@ function MinesGameSidebar() {
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
-        dispatch(setWallet(res?.currentAmount));
+        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
+        dispatch(setWallet(wallet.toFixed(2)));
       })
       .catch((err) => { });
   };
@@ -129,9 +130,9 @@ function MinesGameSidebar() {
           </div>
           <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
             <div className="relative flex">
-              <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+              {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-              </div>
+              </div> */}
               <input
                 type="number"
                 placeholder="0.00"
@@ -145,7 +146,7 @@ function MinesGameSidebar() {
                       : ""
                 }
                 onChange={(e) => handleOnChange(e)}
-                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2  md:w-[20rem] rounded-s-md text-white bg-[#0f212e] ${minesBetStatus && "cursor-not-allowed"
+                className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2  md:w-[20rem] rounded-s-md text-white bg-[#0f212e] ${minesBetStatus && "cursor-not-allowed"
                   }`}
                 disabled={minesBetStatus}
               />
@@ -240,7 +241,7 @@ function MinesGameSidebar() {
                         ? restoredMultiplier
                         : 0.0)}
                 </p>
-                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+                {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
               </div>
               <button
                 className="bg-[#2f4553] border border-[#0e2433] w-full p-2 mt-2.5"
@@ -300,7 +301,7 @@ function MinesGameSidebar() {
             // disabled={gameBet && !gamesOver && tileSelect?.tileIndex === undefined}
             disabled={
               (gameBet && !gamesOver && tileSelect?.tileIndex === undefined) &&
-              !restored?.totalSelectedTiles > 0 && !gamesOver
+              !restored?.totalSelectedTiles > 0
             }
           >
             {gameBet && !gamesOver ? "Cashout" : "Bet"}
@@ -314,11 +315,11 @@ function MinesGameSidebar() {
           </div>
           <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
             <div className="relative flex">
-              <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+              {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-              </div>
+              </div> */}
               <input
-                className="xl:w-48 xl:ml-0 lg:w-40 lg:ml-0 pr-9 pl-2 py-1 md:w-[20rem] rounded-s-md text-white bg-[#0f212e]"
+                className="xl:w-48 xl:ml-0 lg:w-40 lg:ml-0 pr-1.5 pl-2 py-1 md:w-[20rem] rounded-s-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
@@ -526,11 +527,11 @@ function MinesGameSidebar() {
             <label>₹{mineValue?.stoponprofit ? mineValue?.stoponprofit : '0.00'}</label>
           </div>
           <div className="relative flex">
-            <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+            {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-            </div>
+            </div> */}
             <input
-              className="w-full pr-8 px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+              className="w-full pr-1.5 px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
               type="number"
               placeholder="0.01"
               step="0.01"
@@ -544,11 +545,11 @@ function MinesGameSidebar() {
             <label>₹{mineValue?.stoponloss ? mineValue?.stoponloss : '0.00'}</label>
           </div>
           <div className="relative flex">
-            <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+            {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-            </div>
+            </div> */}
             <input
-              className="w-full pr-8 px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+              className="w-full pr-1.5 px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
               type="number"
               placeholder="0.01"
               step="0.01"

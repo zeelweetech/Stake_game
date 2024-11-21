@@ -39,14 +39,17 @@ function WheelGameContent() {
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
-        dispatch(setWallet(res?.currentAmount));
+        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
+        dispatch(setWallet(wallet.toFixed(2)));
       })
       .catch((err) => {});
   };
+
   WheelSocket.on("walletBalance", (data) => {
     console.log("data *******", data);
     dispatch(setWallet(data?.walletBalance));
   });
+
   useEffect(() => {
     const mdQuery = window.matchMedia(
       "(min-width: 768px) and (max-width: 1023px)"
@@ -70,7 +73,6 @@ function WheelGameContent() {
     }
   }, [mustSpin]);
 
-  console.log("finalmultiplier", finalmultiplier);
   useEffect(() => {
     WheelSocket.on("manualBetResult", (data) => {
       dispatch(setFinaMultiplier(data));

@@ -124,6 +124,8 @@ function MinesGameContent() {
     const { clickedMine, remainingMines } = data;
     handleGameOver(clickedMine, remainingMines);
     dispatch(setShowFields(false));
+    dispatch(setTileSelect({}))
+    setCashoutResult(false)
   });
 
   const handleGameOver = (clickedMine, remainingMines) => {

@@ -18,9 +18,6 @@ import {
 import { IoIosTrendingUp } from "react-icons/io";
 import { BsIncognito } from "react-icons/bs";
 import {
-  RiMoneyCnyCircleFill,
-  RiMoneyDollarCircleFill,
-  RiMoneyPoundCircleFill,
   RiMoneyRupeeCircleFill,
 } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +30,6 @@ import {
 import { getRandomFiveData } from "../../../../services/CasinoServices";
 import { ResponsiveContainer } from "recharts";
 import { setWallet } from "../../../../features/auth/authSlice";
-import { getWallet } from "../../../../services/LoginServices";
 import { decodedToken } from "../../../../resources/utility";
 import { useParams } from "react-router-dom";
 
@@ -130,18 +126,6 @@ function CrashGameContent() {
   CrashSocket.on("endRound", (data) => {
     dispatch(setXValue(parseFloat(data?.crashPoint)));
   });
-
-  // useEffect(() => {
-  //   GetWalletData();
-  // }, []);
-
-  // const GetWalletData = async () => {
-  //   await getWallet({ id: decoded?.userId })
-  //     .then((res) => {
-  //       dispatch(setWallet(res?.currentAmount));
-  //     })
-  //     .catch((err) => {});
-  // };
 
   // *****************************************
   CrashSocket.on("walletBalance", (data) => {

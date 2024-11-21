@@ -21,7 +21,6 @@ function WheelGameSidebar() {
   const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const { wheelValue } = useSelector((state) => state.wheelGame);
-  console.log("wheelValue", wheelValue);
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
@@ -117,9 +116,9 @@ function WheelGameSidebar() {
           </div>
           <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
             <div className="relative flex">
-              <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">₹
-                {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
-              </div>
+              {/* <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
+                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+              </div> */}
               <input
                 type="number"
                 placeholder="0.00"
@@ -127,7 +126,7 @@ function WheelGameSidebar() {
                 name="betamount"
                 value={wheelValue?.betamount}
                 onChange={(e) => handleOnChange(e)}
-                className={`xl:w-48 lg:w-36 md:w-80 w-64 pr-9 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
+                className={`xl:w-48 lg:w-36 md:w-80 w-64 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
                 // disabled={minesBetStatus}
               />
             </div>
@@ -230,11 +229,11 @@ function WheelGameSidebar() {
           </div>
           <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
             <div className="relative flex">
-              <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">₹
-                {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
-              </div>
+              {/* <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
+                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+              </div> */}
               <input
-                className="xl:w-48 lg:w-40 md:w-80 pr-9 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                className="xl:w-48 lg:w-40 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
@@ -440,11 +439,11 @@ function WheelGameSidebar() {
             <label>₹0.00 </label>
           </div>
           <div className="relative flex">
-            <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">₹
-              {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
-            </div>
+            {/* <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
+              <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+            </div> */}
             <input
-              className="w-full pr-8 px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] focus:outline-none"
+              className="w-full pr-1.5 px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] focus:outline-none"
               type="number"
               placeholder="0.01"
               step="0.01"
@@ -458,11 +457,11 @@ function WheelGameSidebar() {
             <label>₹0.00</label>
           </div>
           <div className="relative flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
-            <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">₹
-              {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
-            </div>
+            {/* <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
+              <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+            </div> */}
             <input
-              className="w-full pr-8 px-2 py-2 text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+              className="w-full pr-1.5 px-2 py-2 text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
               type="number"
               placeholder="0.01"
               step="0.01"

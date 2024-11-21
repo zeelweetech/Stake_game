@@ -44,9 +44,6 @@ const CrashGameSidebar = () => {
     combinedData,
     multiplier,
   } = useSelector((state) => state.crashGame);
-
-  // console.log('crashValues *--*-*-*-**-', crashValues);
-  // console.log('bettingStatus +-+-++--+-+-+', bettingStatus);
   
   useEffect(() => {
     GetWalletData();
@@ -55,7 +52,8 @@ const CrashGameSidebar = () => {
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
-        dispatch(setWallet(res?.currentAmount));
+        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
+        dispatch(setWallet(wallet.toFixed(2)));
       })
       .catch((err) => { });
   };
@@ -71,7 +69,6 @@ const CrashGameSidebar = () => {
     //   dispatch(setCrashStatus(data));
     // });
     CrashSocket.on("gameStatus", (data) => {
-      console.log("data",data);
       dispatch(setGameStatusData(data));
       const betData =
         data?.autoBets?.length > 0 &&
@@ -174,6 +171,7 @@ const CrashGameSidebar = () => {
         cashoutMultiplier: crashValues?.cashout
           ? parseInt(crashValues?.cashout, 10)
           : 2.00,
+        // cashoutMultiplier: crashValues?.cashout === "" ? "2.00" : crashValues?.cashout ?? "2.00",
         betType: "Manual",
       });
       dispatch(
@@ -287,11 +285,11 @@ const CrashGameSidebar = () => {
           </div>
           <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
             <div className="relative flex">
-              <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+              {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-              </div>
+              </div> */}
               <input
-                className="w-48 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
+                className="w-48 pr-1.5 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0.00"
                 min={0}
@@ -342,8 +340,13 @@ const CrashGameSidebar = () => {
               min={1.01}
               placeholder="1.01"
               name="cashout"
-              value={crashValues?.cashout || "2.00"}
+              value={crashValues?.cashout || ""}
               onChange={(e) => handleOnChange(e)}
+              onBlur={(e) => {
+                if (!e.target.value) {
+                  handleOnChange({ target: { name: "cashout", value: "2.00" } });
+                }
+              }}
             />
             <button className="w-16 hover:bg-[#5c849e68]"
               onClick={() => {
@@ -384,9 +387,9 @@ const CrashGameSidebar = () => {
             <label>₹{crashValues?.betamount * crashValues?.cashout ? crashValues?.betamount * crashValues?.cashout : '0.00' || 0}</label>
           </div>
           <div className="relative flex">
-            <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+            {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-            </div>
+            </div> */}
             <input
               className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
               type="text"
@@ -428,8 +431,8 @@ const CrashGameSidebar = () => {
               <p>{combinedData?.length}</p>
             </div>
             <div className="flex items-center space-x-1 font-semibold">
-              <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-              <p>
+              {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
+              <p>₹
                 {combinedData
                   ?.reduce((acc, item) => {
                     const amount = item?.amount ? String(item?.amount) : "0";
@@ -463,7 +466,7 @@ const CrashGameSidebar = () => {
                   </div>
                   <div className="flex items-center">
                     <div className="flex">
-                      <RiMoneyRupeeCircleFill color="yellow" />
+                      {/* <RiMoneyRupeeCircleFill color="yellow" /> */}
                       <div
                         className={`${item.cashoutMultiplier || item?.multiplier === "-"
                           ? "text-white"
@@ -514,14 +517,14 @@ const CrashGameSidebar = () => {
               </div>
               <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
                 <div className="relative flex">
-                  <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+                  {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <RiMoneyRupeeCircleFill
                       color="yellow"
                       className="text-xl"
                     />
-                  </div>
+                  </div> */}
                   <input
-                    className="w-48 pr-9 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
+                    className="w-48 pr-1.5 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
                     type="number"
                     placeholder="0.00"
                     step="0.01"
@@ -738,11 +741,11 @@ const CrashGameSidebar = () => {
                 <label>₹{crashValues?.stoponprofit ? crashValues?.stoponprofit : '0.00'}</label>
               </div>
               <div className="relative flex">
-                <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+                {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-                </div>
+                </div> */}
                 <input
-                  className="w-full pr-8 px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                  className="w-full pr-1.5 px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
                   type="number"
                   placeholder="0.01"
                   step="0.01"
@@ -756,11 +759,11 @@ const CrashGameSidebar = () => {
                 <label>₹{crashValues?.stoponloss ? crashValues?.stoponloss : '0.00'}</label>
               </div>
               <div className="relative flex">
-                <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+                {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-                </div>
+                </div> */}
                 <input
-                  className="w-full pr-8 px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                  className="w-full pr-1.5 px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
                   type="number"
                   placeholder="0.01"
                   step="0.01"
@@ -774,9 +777,9 @@ const CrashGameSidebar = () => {
                 <label>₹{crashValues?.betamount * crashValues?.cashout ? crashValues?.betamount * crashValues?.cashout : '0.00' || 0}</label>
               </div>
               <div className="relative flex">
-                <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+                {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-                </div>
+                </div> */}
                 <input
                   className="w-full px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
                   type="text"
@@ -813,8 +816,8 @@ const CrashGameSidebar = () => {
                   <p>{combinedData?.length}</p>
                 </div>
                 <div className="flex items-center space-x-1 font-semibold">
-                  <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-                  <p>
+                  {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
+                  <p>₹
                     {combinedData
                       ?.reduce((acc, item) => {
                         const amount = item?.amount
@@ -860,8 +863,8 @@ const CrashGameSidebar = () => {
                             }`}
                         >
                           <div className="flex">
-                            <RiMoneyRupeeCircleFill color="yellow" />{" "}
-                            <div>{item?.amount}</div>
+                            {/* <RiMoneyRupeeCircleFill color="yellow" /> */}
+                            <div>₹{item?.amount}</div>
                           </div>
                         </div>
                       </div>
@@ -874,9 +877,9 @@ const CrashGameSidebar = () => {
                 <label>0.00000000 ₹</label>
               </div>
               <div className="relative flex">
-                <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+                {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-                </div>
+                </div> */}
                 <input
                   type="text"
                   className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
