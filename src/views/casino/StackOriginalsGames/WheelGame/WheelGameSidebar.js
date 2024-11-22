@@ -5,7 +5,7 @@ import {
   setMustSpin,
   setWheelValue,
 } from "../../../../features/casino/wheelSlice";
-import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+// import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { Divider } from "@mui/material";
 import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 import PercentIcon from "@mui/icons-material/Percent";
