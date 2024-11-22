@@ -70,7 +70,7 @@ const nav = [
   },
   {
     name: "Slot",
-    // to: "/",
+    to: "/slot",
     icon: <Filter7Icon size={10}/>,
     badge: {
       color: "info",

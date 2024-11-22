@@ -44,7 +44,7 @@ const CrashGameSidebar = () => {
     combinedData,
     multiplier,
   } = useSelector((state) => state.crashGame);
-  
+
   useEffect(() => {
     GetWalletData();
   }, []);
@@ -257,6 +257,26 @@ const CrashGameSidebar = () => {
 
   return (
     <div className="flex flex-col xl:w-80 lg:w-[16.8rem] p-3  bg-[#213743] rounded-tl-lg">
+      <div className="md:hidden block mb-5">
+        {autoBetOnClick ? (
+          <button
+            className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+            onClick={() => handleOnCancelAutoBet()}
+          >
+            Cancel Autobet
+          </button>
+        ) : (
+          <button
+            className={`${bettingStatus === false
+              ? "bg-[#489649]"
+              : "bg-[#1fff20] hover:bg-[#42ed45]"
+              } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+            onClick={() => handleOnAutoBet()}
+          >
+            Start Autobet
+          </button>
+        )}
+      </div>
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
@@ -279,6 +299,34 @@ const CrashGameSidebar = () => {
       </div>
       {isSwiper ? (
         <div>
+          <div className="md:hidden block">
+            {multiplier > 1 ? (
+              <button
+                className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                onClick={() => setOnClickStatus(false)}
+              >
+                Bet (Next Round)
+              </button>
+            ) : onClickStatus ? (
+              <button
+                className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                onClick={() => handleOnCancelBet()}
+              >
+                Cancel
+              </button>
+            ) : (
+              <button
+                className={`${bettingStatus === false
+                  ? "bg-[#489649]"
+                  : "bg-[#1fff20] hover:bg-[#42ed45]"
+                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                onClick={() => handleOnManualBet()}
+                disabled={bettingStatus === false}
+              >
+                Bet
+              </button>
+            )}
+          </div>
           <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
             <label>Bet Amount</label>
             <label>₹{crashValues?.betamount ? crashValues?.betamount : '0.00'}</label>
@@ -399,32 +447,34 @@ const CrashGameSidebar = () => {
             />
           </div>
           {/* {bettingStatus === false ? ( */}
-          {multiplier > 1 ? (
-            <button
-              className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-              onClick={() => setOnClickStatus(false)}
-            >
-              Bet (Next Round)
-            </button>
-          ) : onClickStatus ? (
-            <button
-              className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-              onClick={() => handleOnCancelBet()}
-            >
-              Cancel
-            </button>
-          ) : (
-            <button
-              className={`${bettingStatus === false
-                ? "bg-[#489649]"
-                : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-              onClick={() => handleOnManualBet()}
-              disabled={bettingStatus === false}
-            >
-              Bet
-            </button>
-          )}
+          <div className="md:block hidden">
+            {multiplier > 1 ? (
+              <button
+                className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                onClick={() => setOnClickStatus(false)}
+              >
+                Bet (Next Round)
+              </button>
+            ) : onClickStatus ? (
+              <button
+                className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                onClick={() => handleOnCancelBet()}
+              >
+                Cancel
+              </button>
+            ) : (
+              <button
+                className={`${bettingStatus === false
+                  ? "bg-[#489649]"
+                  : "bg-[#1fff20] hover:bg-[#42ed45]"
+                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                onClick={() => handleOnManualBet()}
+                disabled={bettingStatus === false}
+              >
+                Bet
+              </button>
+            )}
+          </div>
           <div className="flex justify-between mt-3">
             <div className="flex items-center space-x-1 font-semibold">
               <SupervisorAccountIcon className="text-[#b1bad3]" />
@@ -575,7 +625,7 @@ const CrashGameSidebar = () => {
               </div>
               <div className="flex justify-between mb-2">
                 <div className="flex border-2 w-44 rounded-md border-[#4d718768] bg-[#4d718768]">
-                <input
+                  <input
                     className="w-20 px-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
                     type="number"
                     min={1.01}
@@ -794,24 +844,26 @@ const CrashGameSidebar = () => {
                   disabled
                 />
               </div>
-              {autoBetOnClick ? (
-                <button
-                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-                  onClick={() => handleOnCancelAutoBet()}
-                >
-                  Cancel Autobet
-                </button>
-              ) : (
-                <button
-                  className={`${bettingStatus === false
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3 py-3 rounded-md font-semibold w-full`}
-                  onClick={() => handleOnAutoBet()}
-                >
-                  Start Autobet
-                </button>
-              )}
+              <div className="md:block hidden">
+                {autoBetOnClick ? (
+                  <button
+                    className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                    onClick={() => handleOnCancelAutoBet()}
+                  >
+                    Cancel Autobet
+                  </button>
+                ) : (
+                  <button
+                    className={`${bettingStatus === false
+                      ? "bg-[#489649]"
+                      : "bg-[#1fff20] hover:bg-[#42ed45]"
+                      } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                    onClick={() => handleOnAutoBet()}
+                  >
+                    Start Autobet
+                  </button>
+                )}
+              </div>
             </div>
           ) : (
             <div>
@@ -894,21 +946,23 @@ const CrashGameSidebar = () => {
                   disabled
                 />
               </div>
-              {autoBetOnClick ? (
-                <button
-                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-                  onClick={() => handleOnCancelAutoBet()}
-                >
-                  Cancel Autobet
-                </button>
-              ) : (
-                <button
-                  className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-                  onClick={() => handleOnAutoBet()}
-                >
-                  Start Autobet
-                </button>
-              )}
+              <div className="md:block hidden">
+                {autoBetOnClick ? (
+                  <button
+                    className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                    onClick={() => handleOnCancelAutoBet()}
+                  >
+                    Cancel Autobet
+                  </button>
+                ) : (
+                  <button
+                    className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                    onClick={() => handleOnAutoBet()}
+                  >
+                    Start Autobet
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>

@@ -1,7 +1,525 @@
+// import React, { useEffect, useState } from "react";
+// import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+// // import { IoInfiniteSharp } from "react-icons/io5";
+// import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
+// import { Divider } from "@mui/material";
+// import PercentIcon from "@mui/icons-material/Percent";
+// import { useDispatch, useSelector } from "react-redux";
+// import {
+//   setBoxsIndex,
+//   setClickedBoxes,
+//   setCompleteFundStatus,
+//   setGameBet,
+//   setGameOverResult,
+//   setIsGameOver,
+//   setRestorData,
+//   setRowsIndex,
+//   setShowRandomField,
+//   setValues,
+// } from "../../../../features/casino/dragonTowerSlice";
+// import { DragonTowerSocket } from "../../../../socket";
+// import { decodedToken } from "../../../../resources/utility";
+// import { useParams } from "react-router-dom";
+// import { openRegisterModel } from "../../../../features/auth/authSlice";
+// import toast from "react-hot-toast";
+
+// function DragonSidebar() {
+//   const dispatch = useDispatch();
+//   const { id } = useParams();
+//   const [isManual, setIsManual] = useState(true);
+//   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
+//   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
+//   const {
+//     values = { betamount: "", difficulty: "medium" },
+//     bettingStatus,
+//     showRandomField,
+//     gameBet,
+//     tileSelected,
+//     restor,
+//     restorMultiplier,
+//     isGameOver,
+//     clickedBoxes,
+//     rowsIndex = 0,
+//     completeFundStatus
+//   } = useSelector((state) => state.dragonTowerGame);
+//   const decoded = decodedToken();
+
+//   useEffect(() => {
+//     if (restor && restor.difficulty) {
+//       dispatch(setValues({ ...values, difficulty: restor.difficulty }));
+//     }
+//     if (restor?.restoreData?.[0]?.length > 0) {
+//       dispatch(setShowRandomField(true));
+//     } else {
+//       dispatch(setShowRandomField(false));
+//     }
+//   }, [restor]);
+
+//   const handleOnChange = (e) => {
+//     const { value, name } = e.target;
+//     dispatch(setValues({ ...values, [name]: value }));
+//     dispatch(setClickedBoxes({}))
+//     dispatch(setGameOverResult())
+//     dispatch(setRestorData({}))
+//   };
+
+//   DragonTowerSocket.on("Insufficientfund", (fundData) => {
+//     toast.error(fundData?.message)
+//     dispatch(setCompleteFundStatus(true));
+//     dispatch(setShowRandomField(false));
+//     dispatch(setGameBet(false));
+//   });
+
+//   const handleBetClick = () => {
+//     if (gameBet && !isGameOver) {
+//       DragonTowerSocket.emit("cashout", {
+//         userId: decoded?.userId.toString(),
+//         gameId: id,
+//         betId: restor?.betId,
+//       });
+//       dispatch(setGameBet(false));
+//       dispatch(setIsGameOver(true))
+//       dispatch(setShowRandomField(false));
+//     } else {
+//       if (!localStorage.getItem("token")) {
+//         dispatch(openRegisterModel());
+//       } else {
+//         DragonTowerSocket.emit("dragonTowerPlaceBet", {
+//           userId: decoded?.userId.toString(),
+//           gameId: id,
+//           betAmount: values?.betamount,
+//           difficulty: values?.difficulty,
+//           betType: "Manual",
+//         });
+//         dispatch(setGameBet(true));
+//         dispatch(setIsGameOver(false))
+//         dispatch(setShowRandomField(true));
+//       }
+//     }
+//   };
+
+//   const getBoxesPerRow = () => {
+//     switch (values.difficulty) {
+//       case "easy":
+//       case "master":
+//         return 4;
+//       case "medium":
+//       case "expert":
+//         return 3;
+//       case "hard":
+//         return 2;
+//       default:
+//         return 4;
+//     }
+//   };
+
+//   const pickRandomTile = () => {
+//     const rows = 9;
+//     let randomRowIndex = rowsIndex ? rowsIndex + 1 : 0;
+//     if (randomRowIndex >= rows) return;
+
+//     const boxesPerRow = getBoxesPerRow();
+//     const randomBoxIndex = Math.floor(Math.random() * boxesPerRow);
+
+//     while (clickedBoxes[randomRowIndex] !== undefined) {
+//       randomRowIndex = (randomRowIndex + 1) % rows;
+//     }
+//     DragonTowerSocket.emit("selectTile", {
+//       userId: decoded?.userId.toString(),
+//       gameId: id,
+//       tileIndex: randomBoxIndex,
+//       tileStep: randomRowIndex,
+//     });
+
+//     const updatedClickedBoxes = { ...clickedBoxes, [randomRowIndex]: randomBoxIndex };
+//     dispatch(setClickedBoxes(updatedClickedBoxes));
+//     dispatch(setRowsIndex(randomRowIndex));
+//     dispatch(setBoxsIndex(randomBoxIndex));
+//   };
+
+//   return (
+//     <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-16 md:mx-[4rem] -mx-12 m-12 flex flex-col p-3 bg-[#213743] rouded">
+//       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
+//         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
+//           <div className="flex space-x-2">
+//             <button
+//               className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[13.4rem] w-[11.3rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+//                 }`}
+//               onClick={() => setIsManual(true)}
+//             >
+//               Manual
+//             </button>
+//             <button
+//               className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[13.3rem] w-[11.4rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+//                 }`}
+//               onClick={() => setIsManual(false)}
+//             >
+//               Auto
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//       {isManual ? (
+//         <div>
+//           <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
+//             <label>Bet Amount</label>
+//             <label>₹0.00</label>
+//           </div>
+//           <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+//             <div className="relative flex">
+//               {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+//                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+//               </div> */}
+//               <input
+//                 type="number"
+//                 placeholder="0.00"
+//                 min={0}
+//                 name="betamount"
+//                 value={values?.betamount || ""}
+//                 onChange={(e) => handleOnChange(e)}
+//                 className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField && completeFundStatus && "cursor-not-allowed opacity-80"
+//                   }`}
+//                 disabled={showRandomField && completeFundStatus}
+//               />
+//             </div>
+//             <button
+//               className={`w-16 text-lg font-bold hover:bg-[#5c849e68] ${showRandomField && completeFundStatus
+//                 ? "cursor-not-allowed opacity-80"
+//                 : "hover:bg-[#5c849e68]"
+//                 }`}
+//               onClick={() =>
+//                 dispatch(
+//                   setValues({
+//                     ...values,
+//                     betamount: values?.betamount / 2,
+//                   })
+//                 )
+//               }
+//               disabled={showRandomField && completeFundStatus}
+//             >
+//               ½
+//             </button>
+//             <Divider
+//               flexItem
+//               orientation="vertical"
+//               sx={{ my: 1.5, backgroundColor: "#1A2c38",  width: "2px" }}
+//             />
+//             <button
+//               className={`w-16 text-sm font-bold ${showRandomField && completeFundStatus
+//                 ? "cursor-not-allowed opacity-80"
+//                 : "hover:bg-[#5c849e68]"
+//                 }`}
+//               onClick={() =>
+//                 dispatch(
+//                   setValues({
+//                     ...values,
+//                     betamount: values?.betamount * 2,
+//                   })
+//                 )
+//               }
+//               disabled={showRandomField && completeFundStatus}
+//             >
+//               2×
+//             </button>
+//           </div>
+
+//           <div>
+//             <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2">
+//               <label>Difficulty</label>
+//             </div>
+//             <div className="relative flex border-2 rounded hover:border-[#557086] border-[#2F4553] bg-[#2F4553]">
+//               <select
+//                 type="select"
+//                 name="difficulty"
+//                 value={values?.difficulty}
+//                 onChange={(e) => handleOnChange(e)}
+//                 className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent ${showRandomField && completeFundStatus && "cursor-not-allowed opacity-80"
+//                   }`}
+//                 disabled={showRandomField && completeFundStatus}
+//               >
+//                 <option>Easy</option>
+//                 <option>Medium</option>
+//                 <option>Hard</option>
+//                 <option>Expert</option>
+//                 <option>Master</option>
+//               </select>
+//             </div>
+//           </div>
+
+//           {showRandomField && (
+//             <div>
+//               <button
+//                 className="bg-[#2f4553] hover:bg-[#5c849e68] rounded w-full p-2 mt-2.5"
+//                 onClick={pickRandomTile}
+//               >
+//                 Pick random tile
+//               </button>
+//               <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 border-none focus:outline-none focus:border-transparent">
+//                 <label>
+//                   Total Profit (
+//                   {tileSelected?.multiplier
+//                     ? tileSelected?.multiplier
+//                     : restor?.restoreData?.[0]?.length > 0
+//                       ? restorMultiplier
+//                       : "1.00"}
+//                   x )
+//                 </label>
+//                 <label>₹0.00</label>
+//               </div>
+//               <div className="flex justify-between items-cente rounded-sm border-2 hover:border-[#557086] border-[#2F4553] bg-[#2f4553] focus:outline-none p-2">
+//                 <p>
+//                   {(values?.betamount
+//                     ? values?.betamount
+//                     : restor?.restoreData?.length > 0
+//                       ? restor?.betAmount
+//                       : 0) *
+//                     (tileSelected?.multiplier
+//                       ? tileSelected?.multiplier
+//                       : tileSelected?.mineLocations?.length > 0
+//                         ? restorMultiplier
+//                         : 0.0)}
+//                 </p>
+//                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+//               </div>
+//             </div>
+//           )}
+
+//           <button
+//             className={`${gameBet && !isGameOver ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
+//               } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+//             onClick={handleBetClick}  
+//           >
+//             {gameBet && !isGameOver ? "Cashout" : "Bet"}
+//           </button>
+//         </div>
+//       ) : (
+//         <div>
+//           <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
+//             <label>Bet Amount</label>
+//             <label>₹0.00</label>
+//           </div>
+//           <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+//             <div className="relative flex">
+//               {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">₹
+//                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+//               </div> */}
+//               <input
+//                 className="xl:w-48 lg:w-40 md:w-80 w-64 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+//                 type="number"
+//                 placeholder="0.00"
+//                 step="0.01"
+//                 name="betamount"
+//                 value={values?.betamount || ""}
+//                 onChange={(e) => handleOnChange(e)}
+//               />
+//             </div>
+//             <button className="w-16 text-lg font-bold hover:bg-[#5c849e68]">½</button>
+//             <Divider
+//               flexItem
+//               orientation="vertical"
+//               sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
+//             />
+//             <button className="w-16 text-sm font-bold hover:bg-[#5c849e68]">2x</button>
+//           </div>
+//           <div className="text-[#b1bad3] text-sm font-semibold text-m mt-1 my-2">
+//             <label>Difficulty</label>
+//           </div>
+//           <div className="flex rounded bg-[#0f212e] focus:outline-none focus:border-transparent">
+//             <select
+//               type="select"
+//               name="mines"
+//               value={values?.difficulty}
+//               onChange={(e) => handleOnChange(e)}
+//               className="w-full px-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+//             >
+//               <option>Easy</option>
+//               <option>Medium</option>
+//               <option>Hard</option>
+//               <option>Expert</option>
+//               <option>Master</option>
+//             </select>
+//           </div>
+//           <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+//             <label>Number of Bets</label>
+//           </div>
+//           <div className="relative flex rounded-md">
+//             <div className="absolute flex top-1/2 right-1 -translate-y-1/2 pointer-events-none z-2">
+//               <AllInclusiveIcon className="mx-1" style={{ fontSize: 18, color: "#B1BAD3", width: "20px", height: "20px"}} />
+//             </div>
+//             <input
+//               className="w-full pr-7 pl-2 py-2 rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+//               type="number"
+//               placeholder="0"
+//               min={0}
+//               name="numberofbet"
+//               value={values?.numberofbet || ""}
+//               onChange={(e) => handleOnChange(e)}
+//             />
+//           </div>
+//           <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+//             <label>On win</label>
+//           </div>
+//           <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded border-[#4d718768] bg-[#4d718768]">
+//             <button
+//               className={`${onProfit.win
+//                 ? "bg-[#0f212e] rounded"
+//                 : "rounded hover:bg-[#85afca68]"
+//                 } xl:px-2 lg:px-3.5 md:px-6 px-3.5 py-1.5 rounded-md`}
+//               onClick={() => {
+//                 setOnProfit({ ...onProfit, win: true });
+//               }}
+//             >
+//               Reset
+//             </button>
+//             <button
+//               className={`${onProfit.win
+//                 ? "hover:bg-[#85afca68]"
+//                 : "bg-[#0f212e] rounded-sm"
+//                 } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
+//               onClick={() => {
+//                 setOnProfit({ ...onProfit, win: false });
+//               }}
+//             >
+//               Increase by:
+//             </button>
+//             <div
+//               className={`relative flex ${onProfit.win
+//                 ? "opacity-50 pointer-events-none cursor-not-allowed"
+//                 : ""
+//                 }`}
+//             >
+//               <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+//                 <PercentIcon fontSize="small" />
+//               </div>
+//               <input
+//                 className="w-[10.9rem] xl:w-[8.8rem] lg:w-[4.89rem] md:w-[14.7rem] pr-7 pl-2 py-1.5 rounded text-white bg-[#0f212e] focus:outline-none"
+//                 type="number"
+//                 placeholder="0"
+//                 name="onwin"
+//                 value={values?.onwin || ""}
+//                 onChange={(e) => handleOnChange(e)}
+//                 disabled={onProfit.win}
+//               />
+//             </div>
+//           </div>
+//           <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
+//             <label>On Lose</label>
+//           </div>
+//           <div className="flex items-center space-x-0.5 border-2 mt-1 rounded border-[#4d718768] bg-[#4d718768]">
+//             <div>
+//               <button
+//                 className={`${onProfit.lose
+//                   ? "bg-[#0f212e] rounded"
+//                   : "hover:bg-[#85afca68] rounded"
+//                   } xl:px-3 lg:px-3.5 md:px-6 px-3.5 py-1.5 rounded`}
+//                 onClick={() => {
+//                   setOnProfit({ ...onProfit, lose: true });
+//                 }}
+//               >
+//                 Reset
+//               </button>
+//             </div>
+//             <div>
+//               <button
+//                 className={`${onProfit.lose
+//                   ? "hover:bg-[#85afca68]"
+//                   : "bg-[#0f212e] rounded-sm"
+//                   } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
+//                 onClick={() => {
+//                   setOnProfit({ ...onProfit, lose: false });
+//                 }}
+//               >
+//                 Increase by:
+//               </button>
+//             </div>
+//             <div
+//               className={`relative flex ${onProfit.lose
+//                 ? "opacity-50 pointer-events-none cursor-not-allowed"
+//                 : ""
+//                 }`}
+//             >
+//               <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+//                 <PercentIcon fontSize="small" />
+//               </div>
+//               <input
+//                 className="w-[10.9rem] xl:w-[8.3rem] lg:w-[4.89rem] md:w-[14.7rem] pr-7 pl-2 py-1.5 rounded text-white bg-[#0f212e] focus:outline-none focus:border-transparent"
+//                 type="number"
+//                 placeholder="0"
+//                 name="onlose"
+//                 value={values?.onlose || ""}
+//                 onChange={(e) => handleOnChange(e)}
+//                 disabled={onProfit.lose}
+//               />
+//             </div>
+//           </div>
+//           <div className="text-[#B1BAD3] font-bold flex justify-between text-xs mt-2 mb-1">
+//             <label>Stop on Profit</label>
+//             <label>₹0.00</label>
+//           </div>
+//           <div className="relative flex">
+//             {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+//               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+//             </div> */}
+//             <input
+//               className="w-full pr-1.5 px-2 py-2 text-white border-2 rounded border-[#4d718768] bg-[#0f212e] focus:outline-none"
+//               type="number"
+//               placeholder="0.01"
+//               step="0.01"
+//               name="stoponprofit"
+//               value={values?.stoponprofit || ""}
+//               onChange={(e) => handleOnChange(e)}
+//             />
+//           </div>
+//           <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1">
+//             <label>Stop on Loss</label>
+//             <label>₹0.00</label>
+//           </div>
+//           <div className="relative flex">
+//             {/* <div className="cursor-text text-[#B1BAD3] absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+//               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+//             </div> */}
+//             <input
+//               className="w-full pr-1.5 px-2 py-2  text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+//               type="number"
+//               placeholder="0.01"
+//               step="0.01"
+//               name="stoponloss"
+//               value={values?.stoponloss || ""}
+//               onChange={(e) => handleOnChange(e)}
+//             />
+//           </div>
+//           {autoBetOnClick ? (
+//             <button
+//               className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+//             // onClick={() => handleOnCancelAutoBet()}
+//             >
+//               Cancel Autobet
+//             </button>
+//           ) : (
+//             <button
+//               className={`${bettingStatus === false
+//                 ? "bg-[#489649]"
+//                 : "bg-[#1fff20] hover:bg-[#42ed45]"
+//                 } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+//             // onClick={() => handleOnAutoBet()}
+//             >
+//               Start Autobet
+//             </button>
+//           )}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default DragonSidebar;
+
+
+
+
 import React, { useEffect, useState } from "react";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
-// import { IoInfiniteSharp } from "react-icons/io5";
-import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
+import { IoInfiniteSharp } from "react-icons/io5";
 import { Divider } from "@mui/material";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
@@ -69,7 +587,7 @@ function DragonSidebar() {
     dispatch(setShowRandomField(false));
     dispatch(setGameBet(false));
   });
-
+  
   const handleBetClick = () => {
     if (gameBet && !isGameOver) {
       DragonTowerSocket.emit("cashout", {
@@ -91,6 +609,7 @@ function DragonSidebar() {
           difficulty: values?.difficulty,
           betType: "Manual",
         });
+        // dispatch(setCompleteFundStatus(true));
         dispatch(setGameBet(true));
         dispatch(setIsGameOver(false))
         dispatch(setShowRandomField(true));
@@ -138,19 +657,19 @@ function DragonSidebar() {
   };
 
   return (
-    <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-16 md:mx-[4rem] -mx-12 m-12 flex flex-col p-3 bg-[#213743] rouded">
+    <div className="xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] rounded-tl-lg">
       <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
         <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
           <div className="flex space-x-2">
             <button
-              className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[13.4rem] w-[11.3rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+              className={`py-2 xl:w-[8.6rem] lg:w-[7.05rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                 }`}
               onClick={() => setIsManual(true)}
             >
               Manual
             </button>
             <button
-              className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[13.3rem] w-[11.4rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+              className={`py-2 xl:w-[8.6rem] lg:w-[7.1rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                 }`}
               onClick={() => setIsManual(false)}
             >
@@ -161,15 +680,15 @@ function DragonSidebar() {
       </div>
       {isManual ? (
         <div>
-          <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
+          <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
             <label>Bet Amount</label>
-            <label>₹0.00</label>
+            <label>$0.00</label>
           </div>
-          <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+          <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
             <div className="relative flex">
-              {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+              <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-              </div> */}
+              </div>
               <input
                 type="number"
                 placeholder="0.00"
@@ -177,13 +696,13 @@ function DragonSidebar() {
                 name="betamount"
                 value={values?.betamount || ""}
                 onChange={(e) => handleOnChange(e)}
-                className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField && completeFundStatus && "cursor-not-allowed opacity-80"
+                className={`xl:w-48 lg:w-36 pr-9 pl-2 py-2 rounded-s-md text-white bg-[#0f212e] ${showRandomField && completeFundStatus && "cursor-not-allowed opacity-80"
                   }`}
                 disabled={showRandomField && completeFundStatus}
               />
             </div>
             <button
-              className={`w-16 text-lg font-bold hover:bg-[#5c849e68] ${showRandomField && completeFundStatus
+              className={`w-16 text-xs ${showRandomField && completeFundStatus
                 ? "cursor-not-allowed opacity-80"
                 : "hover:bg-[#5c849e68]"
                 }`}
@@ -197,15 +716,15 @@ function DragonSidebar() {
               }
               disabled={showRandomField && completeFundStatus}
             >
-              ½
+              1/2
             </button>
             <Divider
               flexItem
               orientation="vertical"
-              sx={{ my: 1.5, backgroundColor: "#1A2c38",  width: "2px" }}
+              sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
             <button
-              className={`w-16 text-sm font-bold ${showRandomField && completeFundStatus
+              className={`w-16 text-xs ${showRandomField && completeFundStatus
                 ? "cursor-not-allowed opacity-80"
                 : "hover:bg-[#5c849e68]"
                 }`}
@@ -219,29 +738,40 @@ function DragonSidebar() {
               }
               disabled={showRandomField && completeFundStatus}
             >
-              2×
+              2x
             </button>
           </div>
-
+          <button
+            className={`${gameBet && !isGameOver ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
+              } text-black mt-3.5 py-3 rounded-md font-semibold w-full md:hidden block`}
+            onClick={handleBetClick}
+            // disabled={!completeFundStatus}
+            disabled={
+              (gameBet && !isGameOver && tileSelected?.tileIndex === undefined) &&
+              !restor?.currentStep > 0
+            }
+          >
+            {gameBet && !isGameOver ? "Cashout" : "Bet"}
+          </button>
           <div>
-            <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2">
+            <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
               <label>Difficulty</label>
             </div>
-            <div className="relative flex border-2 rounded hover:border-[#557086] border-[#2F4553] bg-[#2F4553]">
+            <div className="relative flex">
               <select
                 type="select"
                 name="difficulty"
                 value={values?.difficulty}
                 onChange={(e) => handleOnChange(e)}
-                className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent ${showRandomField && completeFundStatus && "cursor-not-allowed opacity-80"
+                className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] ${showRandomField && completeFundStatus && "cursor-not-allowed opacity-80"
                   }`}
                 disabled={showRandomField && completeFundStatus}
               >
-                <option>Easy</option>
-                <option>Medium</option>
-                <option>Hard</option>
-                <option>Expert</option>
-                <option>Master</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+                <option value="expert">Expert</option>
+                <option value="master">Master</option>
               </select>
             </div>
           </div>
@@ -249,12 +779,12 @@ function DragonSidebar() {
           {showRandomField && (
             <div>
               <button
-                className="bg-[#2f4553] hover:bg-[#5c849e68] rounded w-full p-2 mt-2.5"
+                className="bg-[#2f4553] hover:bg-[#5c849e68] border border-[#0e2433] w-full p-2 mt-2.5"
                 onClick={pickRandomTile}
               >
                 Pick random tile
               </button>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 border-none focus:outline-none focus:border-transparent">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
                 <label>
                   Total Profit (
                   {tileSelected?.multiplier
@@ -264,9 +794,9 @@ function DragonSidebar() {
                       : "1.00"}
                   x )
                 </label>
-                <label>₹0.00</label>
+                <label>$0.00</label>
               </div>
-              <div className="flex justify-between items-cente rounded-sm border-2 hover:border-[#557086] border-[#2F4553] bg-[#2f4553] focus:outline-none p-2">
+              <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
                 <p>
                   {(values?.betamount
                     ? values?.betamount
@@ -283,28 +813,32 @@ function DragonSidebar() {
               </div>
             </div>
           )}
-
           <button
             className={`${gameBet && !isGameOver ? "bg-[#489649]" : "bg-[#1fff20] hover:bg-[#42ed45]"
-              } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-            onClick={handleBetClick}  
+              } text-black mt-3.5 py-3 rounded-md font-semibold w-full md:block hidden`}
+            onClick={handleBetClick}
+            // disabled={!completeFundStatus}
+            disabled={
+              (gameBet && !isGameOver && tileSelected?.tileIndex === undefined) &&
+              !restor?.currentStep > 0
+            }
           >
             {gameBet && !isGameOver ? "Cashout" : "Bet"}
           </button>
         </div>
       ) : (
         <div>
-          <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
+          <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-1">
             <label>Bet Amount</label>
-            <label>₹0.00</label>
+            <label>0.00000000 BTC</label>
           </div>
-          <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+          <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
             <div className="relative flex">
-              {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">₹
+              <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-              </div> */}
+              </div>
               <input
-                className="xl:w-48 lg:w-40 md:w-80 w-64 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                className="xl:w-48 lg:w-40 pr-9 pl-2 py-1 rounded-s-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
@@ -313,24 +847,24 @@ function DragonSidebar() {
                 onChange={(e) => handleOnChange(e)}
               />
             </div>
-            <button className="w-16 text-lg font-bold hover:bg-[#5c849e68]">½</button>
+            <button className="w-16 hover:bg-[#5c849e68]">1/2</button>
             <Divider
               flexItem
               orientation="vertical"
-              sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
+              sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
-            <button className="w-16 text-sm font-bold hover:bg-[#5c849e68]">2x</button>
+            <button className="w-16 hover:bg-[#5c849e68]">2x</button>
           </div>
-          <div className="text-[#b1bad3] text-sm font-semibold text-m mt-1 my-2">
+          <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">
             <label>Difficulty</label>
           </div>
-          <div className="flex rounded bg-[#0f212e] focus:outline-none focus:border-transparent">
+          <div className="relative flex">
             <select
               type="select"
               name="mines"
               value={values?.difficulty}
               onChange={(e) => handleOnChange(e)}
-              className="w-full px-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+              className="w-full px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
             >
               <option>Easy</option>
               <option>Medium</option>
@@ -339,15 +873,15 @@ function DragonSidebar() {
               <option>Master</option>
             </select>
           </div>
-          <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+          <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">
             <label>Number of Bets</label>
           </div>
-          <div className="relative flex rounded-md">
-            <div className="absolute flex top-1/2 right-1 -translate-y-1/2 pointer-events-none z-2">
-              <AllInclusiveIcon className="mx-1" style={{ fontSize: 18, color: "#B1BAD3", width: "20px", height: "20px"}} />
+          <div className="relative flex">
+            <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+              <IoInfiniteSharp className="text-xl" />
             </div>
             <input
-              className="w-full pr-7 pl-2 py-2 rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+              className="w-full pr-7 pl-2 py-1.5 rounded-md  text-white bg-[#0f212e]"
               type="number"
               placeholder="0"
               min={0}
@@ -356,15 +890,15 @@ function DragonSidebar() {
               onChange={(e) => handleOnChange(e)}
             />
           </div>
-          <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+          <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">
             <label>On win</label>
           </div>
-          <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded border-[#4d718768] bg-[#4d718768]">
+          <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded-md border-[#4d718768] bg-[#4d718768]">
             <button
               className={`${onProfit.win
-                ? "bg-[#0f212e] rounded"
-                : "rounded hover:bg-[#85afca68]"
-                } xl:px-2 lg:px-3.5 md:px-6 px-3.5 py-1.5 rounded-md`}
+                ? "bg-[#0f212e]"
+                : "bg-[#4d718768] hover:bg-[#85afca68]"
+                } px-3.5 py-1.5 rounded-md`}
               onClick={() => {
                 setOnProfit({ ...onProfit, win: true });
               }}
@@ -373,9 +907,9 @@ function DragonSidebar() {
             </button>
             <button
               className={`${onProfit.win
-                ? "hover:bg-[#85afca68]"
-                : "bg-[#0f212e] rounded-sm"
-                } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
+                ? "bg-[#4d718768] hover:bg-[#85afca68]"
+                : "bg-[#0f212e] rounded-md"
+                } px-[0.3rem] py-1.5`}
               onClick={() => {
                 setOnProfit({ ...onProfit, win: false });
               }}
@@ -392,7 +926,7 @@ function DragonSidebar() {
                 <PercentIcon fontSize="small" />
               </div>
               <input
-                className="w-[10.9rem] xl:w-[8.8rem] lg:w-[4.89rem] md:w-[14.7rem] pr-7 pl-2 py-1.5 rounded text-white bg-[#0f212e] focus:outline-none"
+                className="w-20 pr-5 pl-2 py-1.5 rounded-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0"
                 name="onwin"
@@ -402,16 +936,16 @@ function DragonSidebar() {
               />
             </div>
           </div>
-          <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
+          <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">
             <label>On Lose</label>
           </div>
-          <div className="flex items-center space-x-0.5 border-2 mt-1 rounded border-[#4d718768] bg-[#4d718768]">
+          <div className="flex items-center space-x-0.5 border-2 mt-1 rounded-md border-[#4d718768] bg-[#4d718768]">
             <div>
               <button
                 className={`${onProfit.lose
-                  ? "bg-[#0f212e] rounded"
-                  : "hover:bg-[#85afca68] rounded"
-                  } xl:px-3 lg:px-3.5 md:px-6 px-3.5 py-1.5 rounded`}
+                  ? "bg-[#0f212e]"
+                  : "bg-[#4d718768] hover:bg-[#85afca68]"
+                  } px-3.5 py-1.5 rounded-md`}
                 onClick={() => {
                   setOnProfit({ ...onProfit, lose: true });
                 }}
@@ -422,9 +956,9 @@ function DragonSidebar() {
             <div>
               <button
                 className={`${onProfit.lose
-                  ? "hover:bg-[#85afca68]"
-                  : "bg-[#0f212e] rounded-sm"
-                  } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
+                  ? "bg-[#4d718768] hover:bg-[#85afca68]"
+                  : "bg-[#0f212e] rounded-md"
+                  } px-[0.3rem] py-1.5`}
                 onClick={() => {
                   setOnProfit({ ...onProfit, lose: false });
                 }}
@@ -442,7 +976,7 @@ function DragonSidebar() {
                 <PercentIcon fontSize="small" />
               </div>
               <input
-                className="w-[10.9rem] xl:w-[8.3rem] lg:w-[4.89rem] md:w-[14.7rem] pr-7 pl-2 py-1.5 rounded text-white bg-[#0f212e] focus:outline-none focus:border-transparent"
+                className="w-20 pr-7 pl-2 py-1.5 rounded-md text-white bg-[#0f212e]"
                 type="number"
                 placeholder="0"
                 name="onlose"
@@ -452,16 +986,16 @@ function DragonSidebar() {
               />
             </div>
           </div>
-          <div className="text-[#B1BAD3] font-bold flex justify-between text-xs mt-2 mb-1">
+          <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
             <label>Stop on Profit</label>
-            <label>₹0.00</label>
+            <label>0.00000000 BTC</label>
           </div>
           <div className="relative flex">
-            {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+            <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-            </div> */}
+            </div>
             <input
-              className="w-full pr-1.5 px-2 py-2 text-white border-2 rounded border-[#4d718768] bg-[#0f212e] focus:outline-none"
+              className="w-full pr-8 px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
               type="number"
               placeholder="0.01"
               step="0.01"
@@ -470,16 +1004,16 @@ function DragonSidebar() {
               onChange={(e) => handleOnChange(e)}
             />
           </div>
-          <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1">
+          <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
             <label>Stop on Loss</label>
-            <label>₹0.00</label>
+            <label>0.00000001 BTC</label>
           </div>
           <div className="relative flex">
-            {/* <div className="cursor-text text-[#B1BAD3] absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+            <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-            </div> */}
+            </div>
             <input
-              className="w-full pr-1.5 px-2 py-2  text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+              className="w-full pr-8 px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
               type="number"
               placeholder="0.01"
               step="0.01"
@@ -490,7 +1024,7 @@ function DragonSidebar() {
           </div>
           {autoBetOnClick ? (
             <button
-              className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+              className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full`}
             // onClick={() => handleOnCancelAutoBet()}
             >
               Cancel Autobet
@@ -500,7 +1034,7 @@ function DragonSidebar() {
               className={`${bettingStatus === false
                 ? "bg-[#489649]"
                 : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                } text-black mt-3 py-3 rounded-md font-semibold w-full`}
             // onClick={() => handleOnAutoBet()}
             >
               Start Autobet

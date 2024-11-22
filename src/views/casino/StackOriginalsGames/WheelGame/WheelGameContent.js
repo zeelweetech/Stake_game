@@ -33,8 +33,14 @@ function WheelGameContent() {
         const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
+
+  WheelSocket.on("walletBalance", (data) => {
+    // console.log("data *******", data);
+    dispatch(setWallet(data?.walletBalance));
+  });
+
   useEffect(() => {
     const mdQuery = window.matchMedia(
       "(min-width: 768px) and (max-width: 1023px)"
@@ -159,14 +165,13 @@ function WheelGameContent() {
   //     </button>
   //   </>
   // );
-  
+
   const lowRiskButtons = (
     <>
       <button className={`group relative inline-block overflow-hidden font-medium border-b-[#406c82] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg
-      ${
-        finalmultiplier?.multiplier === 0
-        ? ""
-        : ""
+      ${finalmultiplier?.multiplier === 0
+          ? ""
+          : ""
         }
         `}>
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#406c82] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
@@ -174,12 +179,12 @@ function WheelGameContent() {
       </button>
 
       <button className="border-b-[#d5e8f2] group relative inline-block overflow-hidden font-medium border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
-          <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
-          <span className="relative">1.20×</span>
+        <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+        <span className="relative">1.20×</span>
       </button>
 
       <button className="group relative inline-block overflow-hidden font-medium border-b-[#1fff20] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
-       <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#1fff20] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+        <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#1fff20] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
         <span className="relative group-hover:text-white -mt-2">1.50×</span>
       </button>
     </>
@@ -200,20 +205,18 @@ function WheelGameContent() {
   const mediumRiskButtons = (
     <>
       <button
-        className={`border-b-[#406c82] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${
-          wheelValue?.segments === "30" || wheelValue?.segments === 30
+        className={`border-b-[#406c82] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30
             ? ""
             : ""
-        } py-3 rounded-lg`}
+          } py-3 rounded-lg`}
       >
         0.00x
       </button>
       <button
-        className={`border-b-[#1fff20] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${
-          wheelValue?.segments === "30" || wheelValue?.segments === 30
+        className={`border-b-[#1fff20] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30
             ? ""
             : ""
-        } py-3 rounded-lg`}
+          } py-3 rounded-lg`}
       >
         1.50x
       </button>
@@ -221,29 +224,27 @@ function WheelGameContent() {
         ""
       ) : (
         <button
-          className={`border-b-[#fcfcfc] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-4 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base${
-            wheelValue?.segments === "30" || wheelValue?.segments === 30
+          className={`border-b-[#fcfcfc] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-4 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base${wheelValue?.segments === "30" || wheelValue?.segments === 30
               ? "px-8"
               : "px-10"
-          } py-3 rounded-lg`}
+            } py-3 rounded-lg`}
         >
           {wheelValue?.segments === "10"
             ? "1.90x"
             : wheelValue?.segments === "20"
-            ? "1.80x"
-            : wheelValue?.segments === "30"
-            ? "1.70x"
-            : wheelValue?.segments === "40"
-            ? "1.60x"
-            : "1.70x"}
+              ? "1.80x"
+              : wheelValue?.segments === "30"
+                ? "1.70x"
+                : wheelValue?.segments === "40"
+                  ? "1.60x"
+                  : "1.70x"}
         </button>
       )}
       <button
-        className={`border-b-[#e8e225] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-2 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${
-          wheelValue?.segments === "30" || wheelValue?.segments === 30
+        className={`border-b-[#e8e225] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-2 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30
             ? ""
             : ""
-        }`}
+          }`}
       >
         2.00x
       </button>
@@ -252,7 +253,7 @@ function WheelGameContent() {
          
         `}
       >
-         {/* ${
+        {/* ${
           wheelValue?.segments === "30" || wheelValue?.segments === 30
             ? "xl:px-8"
             : "px-10"
@@ -265,7 +266,7 @@ function WheelGameContent() {
            
           `}
         >
-           {/* ${
+          {/* ${
             wheelValue?.segments === "30" || wheelValue?.segments === 30
               ? "px-8"
               : "px-10"
@@ -294,19 +295,19 @@ function WheelGameContent() {
         {wheelValue?.segments === "10"
           ? "9.90x"
           : wheelValue?.segments === "20"
-          ? "19.80x"
-          : wheelValue?.segments === "30"
-          ? "29.70x"
-          : wheelValue?.segments === "40"
-          ? "39.60x"
-          : wheelValue?.segments === "40"
-          ? "49.50x"
-          : "49.70x"}
+            ? "19.80x"
+            : wheelValue?.segments === "30"
+              ? "29.70x"
+              : wheelValue?.segments === "40"
+                ? "39.60x"
+                : wheelValue?.segments === "40"
+                  ? "49.50x"
+                  : "49.70x"}
       </button>
     </>
   );
-  
-  
+
+
   return (
     <div className={`bg-[#0f212e] flex flex-col  justify-center items-center overflow-hidden xl:w-[44rem] xl:h-[46rem] lg:w-[38.5rem] lg:h-[46rem] md:h-[32rem] h-full mx-3 -mt-0.2 ${isMdScreen ? "md:mx-32" : "md:mx-0"}  rounded-t-lg`}>
       <div className="relative">

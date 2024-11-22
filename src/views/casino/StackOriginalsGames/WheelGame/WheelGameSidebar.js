@@ -41,13 +41,13 @@ function WheelGameSidebar() {
         segment: parseInt(wheelValue?.segments, 10),
       });
       dispatch(setMustSpin(false));
-      dispatch(
-        setWheelValue({
-          betamount: "",
-          risk: wheelValue?.risk,
-          segments: wheelValue?.segments,
-        })
-      );
+      // dispatch(
+      //   setWheelValue({
+      //     betamount: "",
+      //     risk: wheelValue?.risk,
+      //     segments: wheelValue?.segments,
+      //   })
+      // );
     }
   };
 
@@ -69,18 +69,18 @@ function WheelGameSidebar() {
         stopOnLoss: parseInt(wheelValue?.stoponloss, 10),
         stopOnProfit: parseInt(wheelValue?.stoponprofit, 10),
       });
-      dispatch(
-        setWheelValue({
-          betamount: "",
-          numberofbet: "",
-          stoponloss: "",
-          stoponprofit: "",
-          onwin: "",
-          onloss: "",
-          risk: wheelValue?.risk,
-          segments: wheelValue?.segments,
-        })
-      );
+      // dispatch(
+      //   setWheelValue({
+      //     betamount: "",
+      //     numberofbet: "",
+      //     stoponloss: "",
+      //     stoponprofit: "",
+      //     onwin: "",
+      //     onloss: "",
+      //     risk: wheelValue?.risk,
+      //     segments: wheelValue?.segments,
+      //   })
+      // );
     }
   };
 
@@ -170,6 +170,16 @@ function WheelGameSidebar() {
            2×
             </button>
           </div>
+          <button
+            className={`${"bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3.5 py-3 rounded font-semibold w-full md:hidden block`}
+            // onClick={handleBetClick}
+            // gameBet ? "bg-[#489649]" :
+            onClick={() => handleOnManualBet()}
+            // disabled={}
+          >
+            {/* {gameBet ? "Cashout" : "Bet"} */}
+            Bet
+          </button>
           <div className="text-[#b1bad3] font-semibold text-m mt-1 my-2">
             <label>Risk </label>
           </div>
@@ -211,7 +221,7 @@ function WheelGameSidebar() {
             </div>
           </div>
           <button
-            className={`${"bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3.5 py-3 rounded font-semibold w-full`}
+            className={`${"bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3.5 py-3 rounded font-semibold w-full md:block hidden`}
             // onClick={handleBetClick}
             // gameBet ? "bg-[#489649]" :
             onClick={() => handleOnManualBet()}
@@ -223,6 +233,17 @@ function WheelGameSidebar() {
         </div>
       ) : (
         <div>
+          <button
+            className={`${
+              // bettingStatus === false
+              //   ? "bg-[#489649]"
+              //   :
+              "bg-[#1fff20] hover:bg-[#42ed45]"
+            } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:hidden block`}
+            onClick={() => handleOnAutoBet()}
+          >
+            Start Autobet
+          </button>
           <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
             <label>Bet Amount</label>
             <label>₹0.00</label>
@@ -484,7 +505,7 @@ function WheelGameSidebar() {
               //   ? "bg-[#489649]"
               //   :
               "bg-[#1fff20] hover:bg-[#42ed45]"
-            } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+            } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
             onClick={() => handleOnAutoBet()}
           >
             Start Autobet

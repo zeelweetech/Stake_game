@@ -104,11 +104,11 @@ function LimboGameSidebar() {
         multiplier: values?.multiplier ? values?.multiplier : 2,
         betType: "Manual",
       });
-      dispatch(
-        setValues({
-          betamount: "",
-        })
-      );
+      // dispatch(
+      //   setValues({
+      //     betamount: "",
+      //   })
+      // );
     }
   };
 
@@ -212,6 +212,17 @@ function LimboGameSidebar() {
               2×
             </button>
           </div>
+          <button
+            className={`${
+              // bettingStatus === false
+              //   ? "bg-[#489649]"
+              "bg-[#1fff20] hover:bg-[#42ed45]"
+              } text-black mt-3.5 py-3 rounded-md font-semibold w-full md:hidden block`}
+            onClick={() => handleOnManualBet()}
+          // disabled={limboStatusData.actualMultiplier > 1}
+          >
+            Bet
+          </button>
           <div className="text-[#b1bad3] flex justify-between items-center font-semibold text-m mt-1 my-2">
             <label>Profit on Win</label>
             <label>₹{values?.betamount * (values?.multiplier) ? values?.betamount * (values?.multiplier) : '0.00'}</label>
@@ -233,7 +244,7 @@ function LimboGameSidebar() {
               // bettingStatus === false
               //   ? "bg-[#489649]"
               "bg-[#1fff20] hover:bg-[#42ed45]"
-              } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+              } text-black mt-3.5 py-3 rounded-md font-semibold w-full md:block hidden`}
             onClick={() => handleOnManualBet()}
           // disabled={limboStatusData.actualMultiplier > 1}
           >
@@ -243,6 +254,27 @@ function LimboGameSidebar() {
       ) : (
         <div>
           <div>
+            <div className="md:hidden block">
+              {stopAutoBet ? (
+                <button
+                  className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
+                  onClick={() => handleOnStopAutoBet()}
+                >
+                  Stop Autobet
+                </button>
+              ) : (
+                <button
+                  className={`${
+                    // bettingStatus === false
+                    //   ? "bg-[#489649]"
+                    "bg-[#1fff20] hover:bg-[#42ed45]"
+                    } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => handleOnAutoBet()}
+                >
+                  Start Autobet
+                </button>
+              )}
+            </div>
             <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
               <label>Bet Amount</label>
               <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
@@ -307,7 +339,7 @@ function LimboGameSidebar() {
                 type="number"
                 placeholder="0"
                 min={0}
-                name="autoBetCount" 
+                name="autoBetCount"
                 // value={limboStatusData?.autoBetRound
                 //   ? (parseInt(values?.autoBetCount) - limboStatusData?.autoBetRound + 1) - 1
                 //   : parseInt(values?.autoBetCount)}
@@ -453,25 +485,27 @@ function LimboGameSidebar() {
               onChange={(e) => handleOnChange(e)}
             />
           </div>
-          {stopAutoBet ? (
-            <button
-              className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
-              onClick={() => handleOnStopAutoBet()}
-            >
-              Stop Autobet
-            </button>
-          ) : (
-            <button
-              className={`${
-                // bettingStatus === false
-                //   ? "bg-[#489649]"
-                "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3 py-3 rounded-md font-semibold w-full`}
-              onClick={() => handleOnAutoBet()}
-            >
-              Start Autobet
-            </button>
-          )}
+          <div className="md:block hidden">
+            {stopAutoBet ? (
+              <button
+                className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
+                onClick={() => handleOnStopAutoBet()}
+              >
+                Stop Autobet
+              </button>
+            ) : (
+              <button
+                className={`${
+                  // bettingStatus === false
+                  //   ? "bg-[#489649]"
+                  "bg-[#1fff20] hover:bg-[#42ed45]"
+                  } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                onClick={() => handleOnAutoBet()}
+              >
+                Start Autobet
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>

@@ -248,12 +248,12 @@ function DragonContent() {
 
   return (
     <div className="flex flex-col items-center bg-cover">
-        <div className="dragonBackImage rounded-t-lg
+      <div className="dragonBackImage rounded-t-lg
             xl:w-[44rem] xl:h-[46rem] xl:mx-0 xl:py-8 
             lg:h-[46rem] lg:w-[36.5rem] lg:mx-0 
             md:h-[30rem] md:mx-[4rem] 
             sm:mx-[2rem] 
-            mx-[-5rem]  h-[28rem]"> 
+            mx-[-5rem]  h-[28rem]">
         <div className="flex flex-col items-center">
           <div className="flex justify-center">
             <img
@@ -268,7 +268,7 @@ function DragonContent() {
                 {cashoutResult?.multiplier}x
               </p>
               <div className="flex items-center justify-center space-x-1">
-                <p>{cashoutResult?.amount || "0.00000000"}</p>
+                <p>{(parseFloat(values?.betamount) * parseFloat(cashoutResult?.multiplier)).toFixed(2) || '0.00'} ₹</p>
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div>
             </div>
@@ -288,12 +288,13 @@ function DragonContent() {
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
                   const imageToShow = isGameOver
                     ? rowIndex === gameOverResult?.skullRowIndex && boxIndex === gameOverResult?.skullBoxIndex
-                      ? skullImage 
-                        : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || clickedBoxes[rowIndex] === boxIndex || rowIndex === gameOverResult?.skullRowIndex
-                          ? eggImage
-                          : Boxsvg
-                    : isRestoredEgg ? eggImage 
-                    : isSelected ? eggImage : Boxsvg;
+                      ? skullImage
+                      : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || isSelected || rowIndex === gameOverResult?.skullRowIndex
+                        ? eggImage
+                        : Boxsvg
+                    : isRestoredEgg ? eggImage
+                      : isSelected ? eggImage : Boxsvg;
+                  const isRowActive = gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
@@ -308,8 +309,8 @@ function DragonContent() {
                           : "opacity-50"
                         } ${isSelected ? "opacity-100 bg-[#00e701]" : "opacity-50"
                         } ${isGameOver ? "cursor-not-allowed" : "cursor-pointer"
-                        }`}
-                      onClick={() => handleBoxClick(rowIndex, boxIndex)}
+                        } ${isRowActive ? "cursor-pointer bg-[#00e701]" : "cursor-not-allowed bg-[#213743]"}`}
+                      onClick={() => isRowActive && handleBoxClick(rowIndex, boxIndex)}
                     >
                       <img
                         src={imageToShow}
