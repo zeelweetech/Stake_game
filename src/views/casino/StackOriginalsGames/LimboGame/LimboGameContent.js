@@ -4,6 +4,7 @@ import { LimboSocket } from "../../../../socket";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setLimboStatusData,
+  setStopAutoBet,
   setValues,
 } from "../../../../features/casino/limboSlice";
 import {
@@ -33,7 +34,6 @@ function LimboGameContent() {
   LimboSocket.on("limbobetResult", (data) => {
     dispatch(setLimboStatusData(data));
   });
-  console.log('limboStatusData', limboStatusData);
 
   LimboSocket.on("walletBalance", (data) => {
     dispatch(setWallet(data?.walletBalance));
@@ -65,7 +65,6 @@ function LimboGameContent() {
   const GetRendomFiveData = async () => {
     await getGameRandomFiveData({ id: id })
       .then((response) => {
-        console.log('response /-*/-/-*/-**-', response);
         setTopXData(response?.data);
       })
       .catch((error) => {
@@ -95,6 +94,9 @@ function LimboGameContent() {
         betId: limboStatusData?.betId,
         userId: decoded?.userId,
       });
+      if(limboStatusData.autoBetRound && parseInt(limboStatusData.autoBetRound) >= parseInt(values.autoBetCount)) {
+        dispatch(setStopAutoBet(false));
+      }
 
       GetRendomFiveData()
 
@@ -228,6 +230,7 @@ function LimboGameContent() {
                 type="number"
                 placeholder="0.00"
                 step="0.01"
+                min={0}
                 name="winchance"
                 value={values?.winchance}
                 onChange={(e) => handleOnChange(e)}

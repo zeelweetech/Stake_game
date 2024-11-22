@@ -24,6 +24,7 @@ function MinesGameSidebar() {
   const { id } = useParams();
   const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
+  const [selectedTiles, setSelectedTiles] = useState([]);
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
   const {
     bettingStatus,
@@ -88,16 +89,36 @@ function MinesGameSidebar() {
       }
     }
   };
+// console.log('tileSelect ', tileSelect);
 
+  // const pickRandomTile = () => {
+  //   const index = Math.floor(Math.random() * 25);
+  //   MineSocket.emit("selectTile", {
+  //     userId: decoded?.userId.toString(),
+  //     gameId: id,
+  //     tileIndex: index,
+  //   });
+  // };
   const pickRandomTile = () => {
-    const index = Math.floor(Math.random() * 25);
+    // Generate a random tile index
+    let index = Math.floor(Math.random() * 25);
+  
+    // Ensure that the tile has not been selected before
+    while (selectedTiles.includes(index)) {
+      index = Math.floor(Math.random() * 25); // Generate a new tile index if the selected tile is already picked
+    }
+  
+    // Emit the selected tile index
     MineSocket.emit("selectTile", {
       userId: decoded?.userId.toString(),
       gameId: id,
       tileIndex: index,
     });
+  
+    // Add the selected tile index to the selectedTiles array
+    setSelectedTiles([...selectedTiles, index]);
   };
-
+  
   const gems = 25 - mineValue?.mines || 0;
 
   return (
@@ -128,7 +149,7 @@ function MinesGameSidebar() {
             <label>Bet Amount</label>
             <label>₹{mineValue?.betamount ? mineValue?.betamount : '0.00'}</label>
           </div>
-          <div className={`flex border-2 rounded-md border-[#4d718768] bg-[#4d718768] ${minesBetStatus ? "cursor-not-allowed" : "cursor-auto" } `}>
+          <div className={`flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]`}>
             <div className="relative flex">
               {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
@@ -146,13 +167,12 @@ function MinesGameSidebar() {
                       : ""
                 }
                 onChange={(e) => handleOnChange(e)}
-                className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2  md:w-[20rem] rounded-s-md text-white bg-[#0f212e] ${minesBetStatus && "cursor-not-allowed"
-                  }`}
-                disabled={minesBetStatus}
+                className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2  md:w-[20rem] rounded-s-md text-white bg-[#0f212e] ${showFields && "cursor-not-allowed"}`}
+                disabled={showFields}
               />
             </div>
             <button
-              className={`w-16 text-xl hover:bg-[#5c849e68] ${minesBetStatus && "cursor-not-allowed"
+              className={`w-16 text-xl hover:bg-[#5c849e68] ${showFields && "cursor-not-allowed"
                 }`}
               onClick={() =>
                 dispatch(
@@ -162,7 +182,7 @@ function MinesGameSidebar() {
                   })
                 )
               }
-              disabled={minesBetStatus}
+              disabled={showFields}
             >
               ½
             </button>
@@ -172,7 +192,7 @@ function MinesGameSidebar() {
               sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
             <button
-              className={`w-16 text-base hover:bg-[#5c849e68] ${minesBetStatus && "cursor-not-allowed"
+              className={`w-16 text-base hover:bg-[#5c849e68] ${showFields && "cursor-not-allowed"
                 } `}
               onClick={() =>
                 dispatch(
@@ -182,7 +202,7 @@ function MinesGameSidebar() {
                   })
                 )
               }
-              disabled={minesBetStatus}
+              disabled={showFields}
             >
               2x
             </button>
@@ -230,7 +250,7 @@ function MinesGameSidebar() {
               </div>
               <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
                 <p>
-                  {(mineValue?.betamount
+                  {((mineValue?.betamount
                     ? mineValue?.betamount
                     : restored?.mineLocations?.length > 0
                       ? restored?.betAmount
@@ -239,7 +259,7 @@ function MinesGameSidebar() {
                       ? tileSelect?.multiplier
                       : restored?.mineLocations?.length > 0
                         ? restoredMultiplier
-                        : 0.0)}
+                        : 0.0)).toFixed(2)}
                 </p>
                 {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
               </div>

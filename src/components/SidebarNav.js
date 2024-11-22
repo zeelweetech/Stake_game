@@ -17,7 +17,7 @@ export const SidebarNav = ({ items, openMenubar }) => {
                 </span>
               )
             )}
-          </div>
+          </div>  
           <span className={`ml-4 ${openMenubar ? "block" : "hidden"}`}>
             {name && name}
           </span>

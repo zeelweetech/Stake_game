@@ -6,6 +6,8 @@ import diamondIcon from "../../../../assets/img/Diamond.png";
 import { decodedToken } from "../../../../resources/utility";
 import { MineSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
+import winSound from "../../../../assets/Sound/winSound.wav"
+import bombSound from "../../../../assets/Sound/bombSound.wav"
 import {
   setGamesOver,
   setGameBet,
@@ -25,6 +27,7 @@ function MinesGameContent() {
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
   const [cashoutResult, setCashoutResult] = useState(null);
+  const [firstMineIndex, setFirstMineIndex] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const {
     gamesOver,
@@ -35,6 +38,8 @@ function MinesGameContent() {
     restored
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
+
+  // console.log("mineValue", mineValue?.mines);
 
   useEffect(() => {
     const handleResize = () => {
@@ -94,6 +99,8 @@ function MinesGameContent() {
 
   // game tile selected event
   MineSocket.on("tileSelected", (data) => {
+    console.log('data data data', data);
+    
     dispatch(setTileSelect(data));
     handleTileSelection(data.tileIndex, data.isBomb);
   });
@@ -107,19 +114,21 @@ function MinesGameContent() {
         : { icon: diamondIcon, size: isMobile ? 60 : 100 };
       return newImages;
     });
-  
+
     setRevealed((prevRevealed) => {
       const newRevealed = [...prevRevealed];
       newRevealed[index] = true;
       return newRevealed;
     });
-  
+
     if (isBomb) {
       dispatch(setGamesOver(true));
       dispatch(setGameBet(false));
       revealAll();
+
     }
-  }; 
+  };
+
   MineSocket.on("gameOver", (data) => {
     const { clickedMine, remainingMines } = data;
     handleGameOver(clickedMine, remainingMines);
@@ -147,14 +156,17 @@ function MinesGameContent() {
       }
     });
 
-    setTimeout(() => {
-      revealAll(newImages);
-      setImages(newImages);
-      setRevealed(newRevealed);
+    // const audio = new Audio(bombSound);
+    // audio.play();
 
-      dispatch(setGamesOver(true));
-      dispatch(setGameBet(false));
+    setTimeout(() => {
+    revealAll(newImages);
+    setImages(newImages);
+    setRevealed(newRevealed);
     }, 1000);
+
+    dispatch(setGamesOver(true));
+    dispatch(setGameBet(false));
   };
 
   const revealAll = (newImages) => {
@@ -217,6 +229,9 @@ function MinesGameContent() {
   const handleClick = (index) => {
     if (gamesOver || revealed[index]) return;
 
+    const audio = new Audio(winSound);
+    audio.play();
+
     MineSocket.emit("selectTile", {
       userId: decoded?.userId.toString(),
       gameId: id,
@@ -231,8 +246,8 @@ function MinesGameContent() {
         <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
-            <p>{parseFloat(mineValue?.betamount).toFixed(2) * parseFloat(cashoutResult?.multiplier).toFixed(2)}</p>
-            <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+            <p>{(parseFloat(mineValue?.betamount) * parseFloat(cashoutResult?.multiplier)).toFixed(2) || '0.00'} ₹</p>
+            {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
           </div>
         </div>
       )}
@@ -244,7 +259,7 @@ function MinesGameContent() {
             onClick={() => handleClick(index)}
             style={{
               backgroundColor: revealed[index] || gamesOver ? "#071824" : "#2f4553",
-              cursor: revealed[index] ? "default" : "pointer",
+              cursor: revealed[index] ? "pointer" : "not-allowed",
             }}
           >
             {img && (
