@@ -11,7 +11,6 @@ import { Wheel } from "react-custom-roulette";
 import { decodedToken } from "../../../../resources/utility";
 import { getWallet } from "../../../../services/LoginServices";
 import { setWallet } from "../../../../features/auth/authSlice";
-import { useParams } from "react-router-dom";
 
 function WheelGameContent() {
   const dispatch = useDispatch();
@@ -19,18 +18,9 @@ function WheelGameContent() {
   const [isSpinning, setIsSpinning] = useState(true);
   const [segments, setSegments] = useState([]);
   const [segColors, setSegColors] = useState([]);
-  const [isMdScreen, setIsMdScreen] = useState(false);
-  const { id } = useParams();
   const { wheelValue, finalmultiplier, mustSpin } = useSelector(
     (state) => state.wheelGame
   );
-
-  useEffect(() => {
-    WheelSocket.emit("joinGame", {
-      userId: decoded?.userId,
-      gameId: id,
-    });
-  }, [])
 
   useEffect(() => {
     GetWalletData();
@@ -39,33 +29,10 @@ function WheelGameContent() {
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
-        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
-        dispatch(setWallet(wallet.toFixed(2)));
+        dispatch(setWallet(res?.currentAmount));
       })
       .catch((err) => {});
   };
-
-  WheelSocket.on("walletBalance", (data) => {
-    console.log("data *******", data);
-    dispatch(setWallet(data?.walletBalance));
-  });
-
-  useEffect(() => {
-    const mdQuery = window.matchMedia(
-      "(min-width: 768px) and (max-width: 1023px)"
-    );
-
-    const handleScreenChange = () => {
-      setIsMdScreen(mdQuery.matches);
-    };
-
-    handleScreenChange();
-    mdQuery.addListener(handleScreenChange);
-
-    return () => {
-      mdQuery.removeListener(handleScreenChange);
-    };
-  }, []);
 
   useEffect(() => {
     if (mustSpin) {
@@ -73,6 +40,7 @@ function WheelGameContent() {
     }
   }, [mustSpin]);
 
+  console.log("finalmultiplier", finalmultiplier);
   useEffect(() => {
     WheelSocket.on("manualBetResult", (data) => {
       dispatch(setFinaMultiplier(data));
@@ -209,12 +177,20 @@ function WheelGameContent() {
   const mediumRiskButtons = (
     <>
       <button
-        className={`border-b-[#406c82] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
+        className={`border-b-[#406c82] bg-[#213743] border-b-8 ${
+          wheelValue?.segments === "30" || wheelValue?.segments === 30
+            ? "px-8"
+            : "px-10"
+        } py-3 rounded-xl`}
       >
         0.00x
       </button>
       <button
-        className={`border-b-[#1fff20] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
+        className={`border-b-[#1fff20] bg-[#213743] border-b-8 ${
+          wheelValue?.segments === "30" || wheelValue?.segments === 30
+            ? "px-8"
+            : "px-10"
+        } py-3 rounded-xl`}
       >
         1.50x
       </button>
@@ -240,7 +216,11 @@ function WheelGameContent() {
         </button>
       )}
       <button
-        className={`border-b-[#e8e225] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
+        className={`border-b-[#e8e225] bg-[#213743] border-b-8 ${
+          wheelValue?.segments === "30" || wheelValue?.segments === 30
+            ? "px-8"
+            : "px-10"
+        } py-3 rounded-xl`}
       >
         2.00x
       </button>
@@ -281,6 +261,7 @@ function WheelGameContent() {
       )}
     </>
   );
+
   const highRiskButtons = (
     <>
       <button className="border-b-[#406c82] bg-[#213743] border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
@@ -304,10 +285,10 @@ function WheelGameContent() {
   
   
   return (
-    <div className={`bg-[#0f212e] flex flex-col justify-center items-center overflow-hidden xl:w-[44rem] xl:h-[46rem] lg:w-[38.5rem] lg:h-[46rem] md:h-[32rem] h-full mx-3 ${isMdScreen ? "md:mx-32" : "md:mx-0"}  rounded-t-lg`}>
-      <div className="relative">
-        <div className="relative ">
-          <div  style={{ position: "relative" }}>
+    <div className="bg-[#0f212e] flex flex-col justify-center items-center h-full xl:w-[52rem] lg:w-[36.8rem]">
+      <div className="p-10 relative">
+        <div className="relative">
+          <div style={{ position: "relative" }}>
             <Wheel
               mustStartSpinning={mustSpin}
               prizeNumber={finalmultiplier?.position}
@@ -361,5 +342,3 @@ function WheelGameContent() {
 }
 
 export default memo(WheelGameContent);
-
-

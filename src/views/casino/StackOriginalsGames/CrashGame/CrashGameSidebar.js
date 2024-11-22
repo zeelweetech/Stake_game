@@ -575,14 +575,19 @@ const CrashGameSidebar = () => {
               </div>
               <div className="flex justify-between mb-2">
                 <div className="flex border-2 w-44 rounded-md border-[#4d718768] bg-[#4d718768]">
-                  <input
+                <input
                     className="w-20 px-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
                     type="number"
                     min={1.01}
-                    placeholder="2"
+                    placeholder="1.01"
                     name="cashout"
-                    value={crashValues?.cashout || "2.00"}
+                    value={crashValues?.cashout || ""}
                     onChange={(e) => handleOnChange(e)}
+                    onBlur={(e) => {
+                      if (!e.target.value) {
+                        handleOnChange({ target: { name: "cashout", value: "2.00" } });
+                      }
+                    }}
                   />
                   <button className="w-12 hover:bg-[#5c849e68]"
                     onClick={() => {
