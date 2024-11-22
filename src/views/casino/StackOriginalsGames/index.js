@@ -83,6 +83,21 @@ function GameContainer() {
       case "Bonsai Banzai":
       case "Dog Mansion Megaways":
       case "Poseidon Apollo":
+      case "POP Royale":
+      case "Clash of Fangs":
+      case "Roosters Revenge":
+      case "Pixel Farm":
+      case "Wild west Bounty":
+      case "Athena Ares":
+      case "Bison Spirit":
+      case "Wild west Bonanza":
+      case "Skyship Raiders":
+      case "Dracs Stackes":
+      case "Jewel Bonanza":
+      case "Spaceknight Merge Up":
+      case "Gates of Heaven":
+      case "Sugar Twist":
+      case "Slushie Party":
         return <ComeSoon />;
       default:
         break;
