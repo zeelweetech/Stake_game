@@ -62,7 +62,7 @@ function PlinkoGameSidebar() {
       if (name === "manualBet") {
       } else if (name === "autoBet") {
         dispatch(setStopAutoBet(true));
-        dispatch(setValues({ numberofbets: "" }))
+        // dispatch(setValues({ numberofbets: "" }))
       }
     }
   };
@@ -338,7 +338,6 @@ function PlinkoGameSidebar() {
                   disabled={completeBetStatus}
                 />
               </div>
-              {console.log("finalMultiplier ", finalMultiplier)}
             </div>
             {stopAutoBet ? (
               <button

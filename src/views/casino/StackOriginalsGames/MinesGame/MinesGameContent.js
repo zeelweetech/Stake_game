@@ -231,7 +231,7 @@ function MinesGameContent() {
         <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
-            <p>0.00000000</p>
+            <p>{parseFloat(mineValue?.betamount).toFixed(2) * parseFloat(cashoutResult?.multiplier).toFixed(2)}</p>
             <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
           </div>
         </div>

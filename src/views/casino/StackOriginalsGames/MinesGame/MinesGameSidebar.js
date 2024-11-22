@@ -128,7 +128,7 @@ function MinesGameSidebar() {
             <label>Bet Amount</label>
             <label>₹{mineValue?.betamount ? mineValue?.betamount : '0.00'}</label>
           </div>
-          <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+          <div className={`flex border-2 rounded-md border-[#4d718768] bg-[#4d718768] ${minesBetStatus ? "cursor-not-allowed" : "cursor-auto" } `}>
             <div className="relative flex">
               {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />

@@ -114,19 +114,98 @@ function WheelGameContent() {
     setSegColors(segColors);
   }, [wheelValue]);
 
+  // const lowRiskButtons = (
+  //   <>
+  //     <button className="border-b-[#406c82] border-b-8 bg-[#213743] rounded-xl xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 sm sm:px-6 px-4 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
+  //       0.00x
+  //     </button>
+  //     <button className="border-b-[#fcfcfc] border-b-8 bg-[#213743] rounded-xl xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 sm:px-6 px-4 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
+  //       1.20x
+  //     </button>
+  //     <button className="border-b-[#1fff20] border-b-8 bg-[#213743] rounded-xl xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 sm:px-6 px-4 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
+  //       1.50x
+  //     </button>
+  //   </>
+  // );
+  // const mediumRiskButtons = (
+  //   <>
+  //     <button
+  //       className={`border-b-[#406c82] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
+  //     >
+  //       0.00x
+  //     </button>
+  //     <button
+  //       className={`border-b-[#1fff20] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
+  //     >
+  //       1.50x
+  //     </button>
+  //     <button
+  //       className={`border-b-[#ffffff] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
+  //     >
+  //       1.80x
+  //     </button>
+  //     <button
+  //       className={`border-b-[#e8e225] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
+  //     >
+  //       2.00x
+  //     </button>
+  //     <button
+  //       className={`border-b-[#9322e3] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
+  //     >
+  //       3.00x
+  //     </button>
+  //     {wheelValue?.segments === "30" || wheelValue?.segments === 30 ? (
+  //       <button className="border-b-[#d18a2c] bg-[#213743] border-b-8 xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 rounded-xl text-xs sm:text-sm md:text-base">
+  //         4.00x
+  //       </button>
+  //     ) : (
+  //       ""
+  //     )}
+  //   </>
+  // );
+  // const highRiskButtons = (
+  //   <>
+  //     <button className="border-b-[#f1c40f] bg-[#213743] border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
+  //       2.00x
+  //     </button>
+  //     <button className="border-b-[#8e44ad] bg-[#213743] border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
+  //       3.00x
+  //     </button>
+  //   </>
+  // );
+  
   const lowRiskButtons = (
     <>
-      <button className="border-b-[#406c82] border-b-8 bg-[#213743] rounded-xl xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 sm sm:px-6 px-4 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
+      <button
+        className={`border-b-[#406c82] border-b-8 bg-[#213743] rounded-xl xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 sm sm:px-6 px-4 py-1 text-xs sm:text-sm md:text-base lg:text-lg${
+          finalmultiplier?.multiplier === 0
+            ? "text-white bg-[#406c82] transition-colors duration-300"
+            : ""
+        }`}
+      >
         0.00x
       </button>
-      <button className="border-b-[#fcfcfc] border-b-8 bg-[#213743] rounded-xl xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 sm:px-6 px-4 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
+      <button className="border-b-[#fcfcfc] border-b-8 bg-[#213743] rounded-xl transition-colors duration-300 xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 sm:px-6 px-4 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
         1.20x
       </button>
-      <button className="border-b-[#1fff20] border-b-8 bg-[#213743] rounded-xl xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 sm:px-6 px-4 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
+      <button className="border-b-[#1fff20] border-b-8 bg-[#213743] rounded-xl transition-colors duration-300 xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 sm:px-6 px-4 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
         1.50x
       </button>
     </>
   );
+  // const lowRiskButtons = (
+  //   <div className="flex justify-center gap-4 flex-wrap">
+  //     <button className="border-b-[#406c82] border-b-4 bg-[#213743] rounded-xl px-4 py-2 text-sm sm:px-6 sm:py-2 sm:text-base">
+  //       0.00x
+  //     </button>
+  //     <button className="border-b-[#fcfcfc] border-b-4 bg-[#213743] rounded-xl px-4 py-2 text-sm sm:px-6 sm:py-2 sm:text-base">
+  //       1.20x
+  //     </button>
+  //     <button className="border-b-[#1fff20] border-b-4 bg-[#213743] rounded-xl px-4 py-2 text-sm sm:px-6 sm:py-2 sm:text-base">
+  //       1.50x
+  //     </button>
+  //   </div>
+  // );
   const mediumRiskButtons = (
     <>
       <button
@@ -139,24 +218,63 @@ function WheelGameContent() {
       >
         1.50x
       </button>
+      {wheelValue?.segments === "50" ? (
+        ""
+      ) : (
+        <button
+          className={`border-b-[#fcfcfc] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base${
+            wheelValue?.segments === "30" || wheelValue?.segments === 30
+              ? "px-8"
+              : "px-10"
+          } py-3 rounded-xl`}
+        >
+          {wheelValue?.segments === "10"
+            ? "1.90x"
+            : wheelValue?.segments === "20"
+            ? "1.80x"
+            : wheelValue?.segments === "30"
+            ? "1.70x"
+            : wheelValue?.segments === "40"
+            ? "1.60x"
+            : "1.70x"}
+        </button>
+      )}
       <button
         className={`border-b-[#e8e225] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
-      >
-        1.80x
-      </button>
-      <button
-        className={`border-b-[#9322e3] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
       >
         2.00x
       </button>
       <button
-        className={`border-b-[#8e44ad] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base`}
+        className={`border-b-[#9322e3] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base 
+         
+        `}
       >
+         {/* ${
+          wheelValue?.segments === "30" || wheelValue?.segments === 30
+            ? "xl:px-8"
+            : "px-10"
+        } */}
         3.00x
       </button>
+      {wheelValue?.segments === "50" ? (
+        <button
+          className={`border-b-[#42d7f5] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base 
+           
+          `}
+        >
+           {/* ${
+            wheelValue?.segments === "30" || wheelValue?.segments === 30
+              ? "px-8"
+              : "px-10"
+          } */}
+          5.00x
+        </button>
+      ) : (
+        ""
+      )}
       {wheelValue?.segments === "30" || wheelValue?.segments === 30 ? (
-        <button className="border-b-[#8e44ad] bg-[#213743] border-b-8 xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 rounded-xl text-xs sm:text-sm md:text-base">
-          3.00x
+        <button className="border-b-[#d18a2c] bg-[#213743] border-b-8 rounded-xl xl:px-8 lg:px-6 md:px-2.5 sm:px-4 px-2 py-1 text-xs sm:text-sm md:text-base">
+          4.00x
         </button>
       ) : (
         ""
@@ -165,14 +283,26 @@ function WheelGameContent() {
   );
   const highRiskButtons = (
     <>
-      <button className="border-b-[#f1c40f] bg-[#213743] border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
-        2.00x
+      <button className="border-b-[#406c82] bg-[#213743] border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
+        0.00x
       </button>
-      <button className="border-b-[#8e44ad] bg-[#213743] border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
-        3.00x
+      <button className="border-b-[#de2128] bg-[#213743] border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
+        {wheelValue?.segments === "10"
+          ? "9.90x"
+          : wheelValue?.segments === "20"
+          ? "19.80x"
+          : wheelValue?.segments === "30"
+          ? "29.70x"
+          : wheelValue?.segments === "40"
+          ? "39.60x"
+          : wheelValue?.segments === "40"
+          ? "49.50x"
+          : "29.70x"}
       </button>
     </>
   );
+  
+  
   return (
     <div className={`bg-[#0f212e] flex flex-col justify-center items-center overflow-hidden xl:w-[44rem] xl:h-[46rem] lg:w-[38.5rem] lg:h-[46rem] md:h-[32rem] h-full mx-3 ${isMdScreen ? "md:mx-32" : "md:mx-0"}  rounded-t-lg`}>
       <div className="relative">
