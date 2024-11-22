@@ -17,21 +17,9 @@ export const SidebarNav = ({ items, openMenubar }) => {
         <div>
           <li
             key={index}
-            className={`flex items-center ${
-              name === "Favourites" ||
-              name === "Recent" ||
-              name === "My Bets" ||
-              name === "Lobby" ||
-              name === "Listor Originals" ||
-              name === "Slot" ||
-              name === "Live Casino" ||
-              name === "Game Shows" ||
-              name === "Listor Exclusives" ||
-              name === "Profile" ||
-              name === "New Releases"
-                ? "bg-[#213743] p-1.5 rounded-md w-40"
-                : ""
-            }${
+            className={`flex items-center 
+
+            ${
               name === "Games"
                 ? "border-b-2 bg-[#213743] p-1.5 rounded-md w-40"
                 : ""
@@ -68,6 +56,22 @@ export const SidebarNav = ({ items, openMenubar }) => {
       </>
     );
   };
+
+  // ${
+  //   name === "Favourites" ||
+  //   name === "Recent" ||
+  //   name === "My Bets" ||
+  //   name === "Lobby" ||
+  //   name === "Listor Originals" ||
+  //   name === "Slot" ||
+  //   name === "Live Casino" ||
+  //   name === "Game Shows" ||
+  //   name === "Listor Exclusives" ||
+  //   name === "Profile" ||
+  //   name === "New Releases"
+  //     ? "bg-[#213743] p-1.5 rounded-md w-40"
+  //     : ""
+  // }
 
   const navItem = (item, index, indent = false) => {
     const { component, name, badge, icon, ...rest } = item;

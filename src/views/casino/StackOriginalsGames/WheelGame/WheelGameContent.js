@@ -30,7 +30,8 @@ function WheelGameContent() {
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
-        dispatch(setWallet(res?.currentAmount));
+        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
+        dispatch(setWallet(wallet.toFixed(2)));
       })
       .catch((err) => {});
   };
