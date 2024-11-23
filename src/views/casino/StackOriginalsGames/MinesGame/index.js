@@ -63,7 +63,7 @@ function MinesGame() {
       )}
       <div
         className={`${
-          isMobile ? "h-[12rem]" : "h-[15rem]"
+          isMobile ? "h-[12rem] md:ml-32 md:" : "h-[15rem] xl:w-[72rem] lg:w-[55rem] md:w-[20rem] "
         } border-t-2 border-[#213743]`}
       >
         <hr className="border-2 border-[#213743]" />

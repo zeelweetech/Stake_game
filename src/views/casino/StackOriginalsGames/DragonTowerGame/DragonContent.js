@@ -11,7 +11,7 @@ import mediumSkull from "../../../../assets/svg/mediumSkull.svg";
 import masterSkull from "../../../../assets/svg/masterSkull.svg";
 import expertSkull from "../../../../assets/svg/expertSkull.svg";
 import hardSkull from "../../../../assets/svg/hardSkull.svg";
-import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+// import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { DragonTowerSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
@@ -31,8 +31,9 @@ import {
   setTileSelected,
 } from "../../../../features/casino/dragonTowerSlice";
 import toast from "react-hot-toast";
+import dragontowerSound from "../../../../assets/Sound/dragontowerSound.wav";
 import { setWallet } from "../../../../features/auth/authSlice";
-import { getWallet } from "../../../../services/LoginServices"
+import { getWallet } from "../../../../services/LoginServices";
 
 function DragonContent() {
   const { id } = useParams();
@@ -40,14 +41,23 @@ function DragonContent() {
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
   // const [restorData, setRestorData] = useState([]);
-  const { values, gameBet, isGameOver, gameOverResult, rowsIndex, boxsIndex, clickedBoxes, restorData } = useSelector((state) => state.dragonTowerGame);
+  const {
+    values,
+    gameBet,
+    isGameOver,
+    gameOverResult,
+    rowsIndex,
+    boxsIndex,
+    clickedBoxes,
+    restorData,
+  } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
   const resetGame = () => {
-    dispatch(setClickedBoxes({}))
+    dispatch(setClickedBoxes({}));
     setCashoutResult(null);
     setCashoutVisible(false);
-    dispatch(setGameOverResult(null))
+    dispatch(setGameOverResult(null));
     dispatch(setRowsIndex(undefined));
     dispatch(setBoxsIndex(undefined));
     dispatch(setIsGameOver(false));
@@ -60,10 +70,11 @@ function DragonContent() {
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
-        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
+        const wallet =
+          parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -76,8 +87,8 @@ function DragonContent() {
       console.log("gameRestored data", data, currentMultiplier);
       dispatch(setRestor(data));
       dispatch(setRestodMultiplier(currentMultiplier));
-      dispatch(setRestorData(data.restoreData))
-      dispatch(setRowsIndex(data.currentStep - 1))
+      dispatch(setRestorData(data.restoreData));
+      dispatch(setRowsIndex(data.currentStep - 1));
 
       // dispatch(setIsGameOver(false));
       dispatch(setGameBet(true));
@@ -85,14 +96,16 @@ function DragonContent() {
 
       const initialClickedBoxes = {};
       for (let i = 0; i < data.currentStep; i++) {
-        initialClickedBoxes[i] = data.restoreData[i]?.findIndex((value) => value === 1);
+        initialClickedBoxes[i] = data.restoreData[i]?.findIndex(
+          (value) => value === 1
+        );
       }
-      dispatch(setClickedBoxes(initialClickedBoxes))
+      dispatch(setClickedBoxes(initialClickedBoxes));
     });
   }, []);
 
   DragonTowerSocket.on("Insufficientfund", (fundData) => {
-    toast.error(fundData?.message)
+    toast.error(fundData?.message);
     dispatch(setCompleteFundStatus(false));
   });
 
@@ -104,7 +117,7 @@ function DragonContent() {
   DragonTowerSocket.on("gameStarted", (data) => {
     console.log("gameStarted data", data);
     setCashoutVisible(false);
-    resetGame()
+    resetGame();
   });
 
   DragonTowerSocket.on("tileSelected", (data) => {
@@ -113,10 +126,10 @@ function DragonContent() {
   });
 
   DragonTowerSocket.on("gameOver", (data) => {
-    console.log("gameOver data", data)
+    console.log("gameOver data", data);
     handleGameOverResult();
     dispatch(setIsGameOver(true));
-    dispatch(setShowRandomField(false))
+    dispatch(setShowRandomField(false));
     setCashoutVisible(false);
   });
 
@@ -125,7 +138,10 @@ function DragonContent() {
 
     if (values.difficulty === "easy" || values.difficulty === "master") {
       maxSkullBoxes = 2;
-    } else if (values.difficulty === "medium" || values.difficulty === "expert") {
+    } else if (
+      values.difficulty === "medium" ||
+      values.difficulty === "expert"
+    ) {
       maxSkullBoxes = 1;
     } else if (values.difficulty === "hard") {
       maxSkullBoxes = 0;
@@ -138,7 +154,10 @@ function DragonContent() {
         const boxIndices = new Set();
         while (boxIndices.size < maxSkullBoxes) {
           const randomIndex = Math.floor(Math.random() * boxesPerRow);
-          if (randomIndex !== clickedBoxes[rowIndex] && !boxIndices.has(randomIndex)) {
+          if (
+            randomIndex !== clickedBoxes[rowIndex] &&
+            !boxIndices.has(randomIndex)
+          ) {
             boxIndices.add(randomIndex);
           }
         }
@@ -156,11 +175,13 @@ function DragonContent() {
       return [];
     });
 
-    dispatch(setGameOverResult({
-      skullRowIndex: rowsIndex,
-      skullBoxIndex: boxsIndex,
-      eggRows: randomEggBoxes,
-    }))
+    dispatch(
+      setGameOverResult({
+        skullRowIndex: rowsIndex,
+        skullBoxIndex: boxsIndex,
+        eggRows: randomEggBoxes,
+      })
+    );
   };
 
   DragonTowerSocket.on("cashoutSuccess", (data) => {
@@ -188,10 +209,14 @@ function DragonContent() {
         tileIndex: boxIndex,
         tileStep: rowIndex,
       });
+
+      const audio = new Audio(dragontowerSound);
+      audio.play();
+
       const updatedClickedBoxes = { ...clickedBoxes, [rowIndex]: boxIndex };
       dispatch(setClickedBoxes(updatedClickedBoxes));
-      dispatch(setRowsIndex(rowIndex))
-      dispatch(setBoxsIndex(boxIndex))
+      dispatch(setRowsIndex(rowIndex));
+      dispatch(setBoxsIndex(boxIndex));
     }
   };
 
@@ -248,12 +273,14 @@ function DragonContent() {
 
   return (
     <div className="flex flex-col items-center bg-cover">
-      <div className="dragonBackImage rounded-t-lg
+      <div
+        className="dragonBackImage rounded-t-lg
             xl:w-[44rem] xl:h-[46rem] xl:mx-0 xl:py-8 
             lg:h-[46rem] lg:w-[36.5rem] lg:mx-0 
             md:h-[30rem] md:mx-[4rem] 
             sm:mx-[2rem] 
-            mx-[-5rem]  h-[28rem]">
+            mx-[-5rem]  h-[28rem]"
+      >
         <div className="flex flex-col items-center">
           <div className="flex justify-center">
             <img
@@ -268,8 +295,14 @@ function DragonContent() {
                 {cashoutResult?.multiplier}x
               </p>
               <div className="flex items-center justify-center space-x-1">
-                <p>{(parseFloat(values?.betamount) * parseFloat(cashoutResult?.multiplier)).toFixed(2) || '0.00'} ₹</p>
-                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+                <p>
+                  {(
+                    parseFloat(values?.betamount) *
+                    parseFloat(cashoutResult?.multiplier)
+                  ).toFixed(2) || "0.00"}{" "}
+                  ₹
+                </p>
+                {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
               </div>
             </div>
           )}
@@ -287,30 +320,50 @@ function DragonContent() {
                   const isRestoredEgg = restorData[rowIndex]?.[boxIndex] === 1;
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
                   const imageToShow = isGameOver
-                    ? rowIndex === gameOverResult?.skullRowIndex && boxIndex === gameOverResult?.skullBoxIndex
+                    ? rowIndex === gameOverResult?.skullRowIndex &&
+                      boxIndex === gameOverResult?.skullBoxIndex
                       ? skullImage
-                      : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || isSelected || rowIndex === gameOverResult?.skullRowIndex
-                        ? eggImage
-                        : Boxsvg
-                    : isRestoredEgg ? eggImage
-                      : isSelected ? eggImage : Boxsvg;
-                  const isRowActive = gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
+                      : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) ||
+                        isRestoredEgg ||
+                        isSelected ||
+                        rowIndex === gameOverResult?.skullRowIndex
+                      ? eggImage
+                      : Boxsvg
+                    : isRestoredEgg
+                    ? eggImage
+                    : isSelected
+                    ? eggImage
+                    : Boxsvg;
+                  const isRowActive =
+                    gameBet &&
+                    (rowIndex === 0 ||
+                      clickedBoxes[rowIndex - 1] !== undefined);
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
-                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center ${isGameOver
-                        ? "cursor-not-allowed bg-[#213743]"
-                        : (gameBet && rowIndex === 0) ||
-                          clickedBoxes[rowIndex - 1] !== undefined
+                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center ${
+                        isGameOver
+                          ? "cursor-not-allowed bg-[#213743]"
+                          : (gameBet && rowIndex === 0) ||
+                            clickedBoxes[rowIndex - 1] !== undefined
                           ? "bg-[#00e701] w-10"
                           : "cursor-not-allowed bg-[#213743]"
-                        } ${clickedBoxes[rowIndex] !== undefined
+                      } ${
+                        clickedBoxes[rowIndex] !== undefined
                           ? "bg-[#213743] opacity-100"
                           : "opacity-50"
-                        } ${isSelected ? "opacity-100 bg-[#00e701]" : "opacity-50"
-                        } ${isGameOver ? "cursor-not-allowed" : "cursor-pointer"
-                        } ${isRowActive ? "cursor-pointer bg-[#00e701]" : "cursor-not-allowed bg-[#213743]"}`}
-                      onClick={() => isRowActive && handleBoxClick(rowIndex, boxIndex)}
+                      } ${
+                        isSelected ? "opacity-100 bg-[#00e701]" : "opacity-50"
+                      } ${
+                        isGameOver ? "cursor-not-allowed" : "cursor-pointer"
+                      } ${
+                        isRowActive
+                          ? "cursor-pointer bg-[#00e701]"
+                          : "cursor-not-allowed bg-[#213743]"
+                      }`}
+                      onClick={() =>
+                        isRowActive && handleBoxClick(rowIndex, boxIndex)
+                      }
                     >
                       <img
                         src={imageToShow}
