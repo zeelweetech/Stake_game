@@ -54,7 +54,7 @@ const nav = [
   },
   {
     name: "Lobby",
-    // to: "/",
+    to: "/Lobby",
     icon: <TbCherryFilled size={24}/>,
     badge: {
       color: "info",
@@ -62,15 +62,15 @@ const nav = [
   },
   {
     name: "Listor Originals",
-    // to: "/",
+    to: "/StackOriginals",
     icon: <BsFire size={24}/>,
     badge: {
       color: "info",
     },
   },
   {
-    name: "Slot",
-    to: "/slot",
+    name: "Slots",
+    to: "/slots",
     icon: <Filter7Icon size={10}/>,
     badge: {
       color: "info",
@@ -78,7 +78,7 @@ const nav = [
   },
   {
     name: "Live Casino",
-    // to: "/",
+    to: "/LiveCasion",
     icon: <InboxIcon />,
     badge: {
       color: "info",
@@ -86,7 +86,7 @@ const nav = [
   },
   {
     name: "Game Shows",
-    // to: "/",
+    to: "/GameShows",
     icon: <FaGift size={20}/>,
     badge: {
       color: "info",
@@ -94,7 +94,7 @@ const nav = [
   },
   {
     name: "Listor Exclusives",
-    // to: "/",
+    to: "/Exclusives",
     icon: <BsBookmarkStarFill size={20}/>,
     badge: {
       color: "info",
@@ -102,7 +102,7 @@ const nav = [
   },
   {
     name: "New Releases",
-    // to: "/",
+    to: "/NewReleases",
     icon: <IoIosRocket size={20}/>,
     badge: {
       color: "info",

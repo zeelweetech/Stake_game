@@ -17,6 +17,9 @@ import {
   PlinkoSocket,
   WheelSocket,
 } from "../../../socket";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllGames } from "../../../services/GameServices";
+import { setAllGame } from "../../../features/casino/allGameSlice";
 
 function StackOriginals({ allGames, isLobby }) {
   const [loading, setLoading] = useState(false);
@@ -24,6 +27,8 @@ function StackOriginals({ allGames, isLobby }) {
   const swiperRef = useRef(null);
   const navButtonsRef = useRef(null);
   const decoded = decodedToken();
+  const dispatch = useDispatch();
+  const allGame = useSelector((state) => state.allGame);
 
   const handleAllGame = (gameName, id) => {
     setLoading(true);
@@ -63,6 +68,19 @@ function StackOriginals({ allGames, isLobby }) {
         break;
     }
   };
+  useEffect(() => {
+    GetAllGames();
+  }, []);
+
+  const GetAllGames = async () => {
+    await getAllGames()
+      .then((response) => {
+        dispatch(setAllGame(response))
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
 
   useEffect(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
@@ -80,7 +98,7 @@ function StackOriginals({ allGames, isLobby }) {
       <div className="flex justify-between items-center">
         <div className="flex items-center mx-3 mt-8 space-x-2">
           <BsFire fontSize={20} className="text-[#b1bad3] hover:text-white" />
-          <Link className="text-lg font-medium">Listor Originals</Link>
+          <Link className="text-lg font-medium text-white">Listor Originals</Link>
         </div>
         {isLobby && (
           <div ref={navButtonsRef}>
@@ -153,7 +171,7 @@ function StackOriginals({ allGames, isLobby }) {
               },
             }}
           >
-            {allGames?.games?.map((gameData, index) =>
+            {allGame?.allGame?.games?.map((gameData, index) =>
               gameData?.gameType === "casino" ||
               gameData?.gameType === "Casino" ? (
                 <SwiperSlide key={index}>
@@ -180,7 +198,7 @@ function StackOriginals({ allGames, isLobby }) {
           </Swiper>
         ) : (
           <div className="grid grid-cols-3 md:grid-cols-6 gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0">
-            {allGames?.games?.map((gameData, index) =>
+            {allGame?.allGame?.games?.map((gameData, index) =>
               gameData?.gameType === "casino" ||
               gameData?.gameType === "Casino" ? (
                 <div key={index}>

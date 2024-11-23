@@ -8,16 +8,35 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllGames } from "../../../services/GameServices";
+import { setAllGame } from "../../../features/casino/allGameSlice";
 
 function Exclusives({ allGames, isLobby }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const swiperRef = useRef(null);
   const navButtonsRef = useRef(null);
+  const dispatch = useDispatch();
+  const allGame = useSelector((state) => state.allGame);
 
   const handleAllGame = (gameName, id) => {
     setLoading(true);
     navigate(`/casino/${gameName}/${id}`);
+  };
+
+  useEffect(() => {
+    GetAllGames();
+  }, []);
+
+  const GetAllGames = async () => {
+    await getAllGames()
+      .then((response) => {
+        dispatch(setAllGame(response))
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   useEffect(() => {
@@ -39,7 +58,7 @@ function Exclusives({ allGames, isLobby }) {
             fontSize="small"
             className="text-[#b1bad3] hover:text-white"
           />
-          <Link className="text-lg font-medium">Listor Exclusives</Link>
+          <Link className="text-lg font-medium text-white">Listor Exclusives</Link>
         </div>
         {isLobby && (
           <div ref={navButtonsRef}>
@@ -112,7 +131,7 @@ function Exclusives({ allGames, isLobby }) {
               },
             }}
           >
-            {allGames?.games?.map((exclusives, index) =>
+            {allGame?.allGame?.games?.map((exclusives, index) =>
               exclusives?.gameType === "StackExclusives" ? (
                 <SwiperSlide key={index}>
                   <div className="text-center">
@@ -136,7 +155,7 @@ function Exclusives({ allGames, isLobby }) {
           </Swiper>
         ) : (
           <div className="grid grid-cols-3 md:grid-cols-6 gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0">
-            {allGames?.games?.map((exclusives, index) =>
+            {allGame?.allGame?.games?.map((exclusives, index) =>
               exclusives?.gameType === "StackExclusives" ? (
                 <div key={index}>
                   <div className="text-center">

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../component/Loader";
-import SlideBar from "./SlideBar";
 import StackOriginals from "./StackOriginals";
-import SearchIcon from "@mui/icons-material/Search";
 import { TbCherryFilled } from "react-icons/tb";
 import { BsFire } from "react-icons/bs";
 import Filter7Icon from "@mui/icons-material/Filter7";
@@ -19,8 +17,9 @@ import { decodedToken } from "../../../resources/utility";
 import { getWallet, updateWallet } from "../../../services/LoginServices";
 import { useDispatch } from "react-redux";
 import { setWallet } from "../../../features/auth/authSlice";
+import { Link } from "react-router-dom";
 
-function CasinoHomePage() {
+function Lobby() {
   const [stackMenu, setStackMenu] = useState("Lobby");
   const [loading, setLoading] = useState(false);
   const [allGames, setAllGames] = useState();
@@ -85,40 +84,13 @@ function CasinoHomePage() {
         <Loader />
       ) : (
         <div className="text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10">
-          <SlideBar />
-
-          <div className="mt-8 mx-3 relative">
-            <input
-              className="border-2 rounded-full w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
-              name="search"
-              type="text"
-              placeholder="Search your game"
-            />
-            <div className="absolute left-0 top-0 pt-2.5 px-3 flex items-center cursor-pointer text-[#b1bad3]">
-              <SearchIcon />
-            </div>
-          </div>
-
-          <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 mx-3 my-7">
-            <div className="bg-[#0f212e] flex rounded-full p-[5px] flex-shrink-0 space-x-2 text-xs">
-              {menuItems.map((item) => (
-                <button
-                  key={item.label}
-                  className={`py-2 px-5 rounded-full flex justify-center space-x-1.5 items-center ${
-                    stackMenu === item.label
-                      ? "bg-[#4d718768]"
-                      : "hover:bg-[#4d718768]"
-                  }`}
-                  onClick={() => setStackMenu(item.label)}
-                >
-                  {item.icon}
-                  <p>{item.label}</p>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Main Content */}
+                    <div className="flex items-center mx-3 mt-8 space-x-2">
+          <TbCherryFilled 
+            size={28}
+            className="text-[#b1bad3] hover:text-white"
+          />
+          <Link className="text-lg font-medium text-white">Lobby</Link>
+        </div>
           <div className="flex flex-col space-y-6">
             {stackMenu === "Lobby" ? (
               <>
@@ -128,7 +100,7 @@ function CasinoHomePage() {
                   isLobby={isLobby}
                 />
                 <Slots
-                  // allGames={allGames}
+                  allGames={allGames}
                   setLoading={setLoading}
                   isLobby={isLobby}
                 />
@@ -160,7 +132,7 @@ function CasinoHomePage() {
                 setLoading={setLoading}
                 isLobby={false}
               />
-            ) : stackMenu === "Live Casino" ? (
+            ) : stackMenu === "Live Casino" ? (         
               <LiveCasino
                 allGames={allGames}
                 setLoading={setLoading}
@@ -188,4 +160,4 @@ function CasinoHomePage() {
   );
 }
 
-export default CasinoHomePage;
+export default Lobby;

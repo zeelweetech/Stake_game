@@ -8,16 +8,35 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
+import { getAllGames } from "../../../services/GameServices";
+import { useDispatch, useSelector } from "react-redux";
+import { setAllGame } from "../../../features/casino/allGameSlice";
 
-function Slots({ allGames, isLobby }) {
+function Slots({ isLobby }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const swiperRef = useRef(null);
   const navButtonsRef = useRef(null);
+  const dispatch = useDispatch();
+  const allGame = useSelector((state) => state.allGame);
 
   const handleAllGame = (gameName, id) => {
     setLoading(true);
     navigate(`/casino/${gameName}/${id}`);
+  };
+
+  useEffect(() => {
+    GetAllGames();
+  }, []);
+
+  const GetAllGames = async () => {
+    await getAllGames()
+      .then((response) => {
+        dispatch(setAllGame(response))
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   useEffect(() => {
@@ -39,7 +58,7 @@ function Slots({ allGames, isLobby }) {
             fontSize="small"
             className="text-[#b1bad3] hover:text-white"
           />
-          <Link className="text-lg font-medium">Slots</Link>
+          <Link className="text-lg font-medium text-white">Slots</Link>
         </div>
         {isLobby && (
           <div ref={navButtonsRef}>
@@ -112,7 +131,7 @@ function Slots({ allGames, isLobby }) {
               },
             }}
           >
-            {allGames?.games?.map((slots, index) =>
+            {allGame?.allGame?.games?.map((slots, index) =>
               slots?.gameType === "Slots" ? (
                 <SwiperSlide key={index}>
                   <div className="text-center">
@@ -136,7 +155,7 @@ function Slots({ allGames, isLobby }) {
           </Swiper>
         ) : (
           <div className="grid grid-cols-3 md:grid-cols-6 gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0">
-            {allGames?.games?.map((slots, index) =>
+            {allGame?.allGame?.games?.map((slots, index) =>
               slots?.gameType === "Slots" ? (
                 <div key={index}>
                   <div className="text-center">

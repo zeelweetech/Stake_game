@@ -24,6 +24,7 @@ import {
   closeRegisterModel,
   openLoginModel,
 } from "../../../features/auth/authSlice";
+import { setCookie } from "../../../resources/utility";
 
 function Register() {
   const dispatch = useDispatch();
@@ -43,7 +44,8 @@ function Register() {
   const Validation = () => {
     let errors = {};
     const EmailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    const PasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const PasswordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (!values?.email) {
       errors.email = "Email require";
@@ -109,6 +111,11 @@ function Register() {
         .then((response) => {
           console.log("response", response);
           toast.success(response?.message);
+          setCookie("token", response?.token, 24);
+          localStorage.setItem("token", response?.token);
+          toast.success(response?.message);
+          dispatch(closeRegisterModel());
+          window.location.reload();
         })
         .catch((error) => {
           console.log("error", error);
@@ -257,6 +264,12 @@ function Register() {
                       <DoneIcon fontSize="10" />
                       <p className="text-sm">Minimum 8 characters</p>
                     </div>
+                    <div className="flex items-center space-x-1">
+                      <DoneIcon fontSize="10" />
+                      <p className="text-sm">
+                        Includes at least 1 special character
+                      </p>
+                    </div>
                   </div>
                 ) : (
                   <div></div>
@@ -332,9 +345,9 @@ function Register() {
               <div className="my-4">
                 <label
                   className="flex text-[#b1bad3] font-semibold text-sm mb-1"
-                  htmlFor="Phone (Optional)"
+                  htmlFor="Phone"
                 >
-                  Phone (Optional)
+                  Phone
                 </label>
                 <div className="flex space-x-3">
                   <select
@@ -369,7 +382,7 @@ function Register() {
                     onClick={() => setCodeShow((showchek) => !showchek)}
                   />
                   <label className="text-[#b1bad3] text-sm font-semibold">
-                    Code (Optional)
+                    Code
                   </label>
                 </div>
                 {codeShow ? (

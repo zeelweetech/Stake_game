@@ -61,7 +61,7 @@ function MainHomePage() {
           <Mainbar />
           <div className="xl:px-44 lg:px-14 mt-8">
             <StackOriginals allGames={allGames} setLoading={setLoading} />
-            <Slots allGames={allGames} />
+            <Slots/>
             <LiveCasino allGames={allGames} />
             <GameShows allGames={allGames} />
             <Exclusives allGames={allGames} />
