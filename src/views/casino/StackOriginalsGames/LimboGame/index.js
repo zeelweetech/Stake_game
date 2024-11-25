@@ -66,9 +66,9 @@ function LimboGame() {
         </div>
       )}
       <div
-        className={`${
-          isMobile ? "h-[12rem]" : "h-[15rem]"
-        } xl:w-[72rem] lg:w-[55rem] border-t-2 border-[#213743]`}
+        className={`
+          // ${isMobile ? "h-[12rem]" : "h-10"} 
+        xl:w-[72rem] lg:w-[55rem] border-t-2 border-[#213743] h-10`}
       >
         <hr className="md:w- border-[#213743]" />
         <GameFooter />

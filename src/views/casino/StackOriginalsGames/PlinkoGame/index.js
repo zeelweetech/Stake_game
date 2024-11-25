@@ -67,9 +67,9 @@ function PlinkoGame() {
           </div>
         )}
         <div
-          className={`${
-            isMobile ? "h-[12rem]" : "h-[15rem]"
-          } border-t-2 border-[#213743]`}
+          className={`
+            // ${isMobile ? "h-[12rem]" : "h-20"}
+          border-t-2 border-[#213743] h-20`}
         >
           <hr className="border-2 border-[#213743]" />
           <GameFooter />

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { decodedToken } from "../../../../resources/utility";
 import {
+  setAutoBetOnClick,
+  setIsBetInProgress,
   setMustSpin,
   setWheelValue,
 } from "../../../../features/casino/wheelSlice";
@@ -20,7 +22,7 @@ function WheelGameSidebar() {
   const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth)
-  const { wheelValue } = useSelector((state) => state.wheelGame);
+  const { wheelValue, finalmultiplier, isBetInProgress, autoBetOnClick } = useSelector((state) => state.wheelGame);
 
   useEffect(() => {
     const handleResize = () => setResponsiveMobile(window.innerWidth);
@@ -37,6 +39,7 @@ function WheelGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
+      dispatch(setIsBetInProgress(true))
       WheelSocket.emit("manualBet", {
         userId: decoded?.userId,
         gameId: id,
@@ -72,7 +75,8 @@ function WheelGameSidebar() {
           : 0,
         risk: wheelValue?.risk,
         segment: parseInt(wheelValue?.segments, 10),
-        numberOfBets: parseInt(wheelValue?.numberofbet, 10),
+        numberOfBets: finalmultiplier?.remainingBets === 1 ? wheelValue?.numberofbet || ""
+          : (finalmultiplier?.remainingBets ? parseInt(finalmultiplier?.remainingBets) : wheelValue?.numberofbet),
         onWin: parseInt(wheelValue?.onwin, 10),
         onLoss: parseInt(wheelValue?.onloss, 10),
         stopOnLoss: parseInt(wheelValue?.stoponloss, 10),
@@ -80,6 +84,7 @@ function WheelGameSidebar() {
       });
       const audio = new Audio(wheelSound);
       audio.play();
+      dispatch(setAutoBetOnClick(true));
       // dispatch(
       //   setWheelValue({
       //     betamount: "",
@@ -94,6 +99,13 @@ function WheelGameSidebar() {
       // );
     }
   };
+
+  const handleOnCancelAutoBet = () => {
+    WheelSocket.emit("pauseAutoBet");
+    dispatch(setAutoBetOnClick(false));
+  };
+
+  console.log('finalmultiplier', finalmultiplier);
 
   return (
     <div>
@@ -123,7 +135,7 @@ function WheelGameSidebar() {
             <div>
               <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
                 <label>Bet Amount</label>
-                <label>₹0.00</label>
+                <label>₹{wheelValue?.betamount ? wheelValue?.betamount : '0.00'}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -181,16 +193,6 @@ function WheelGameSidebar() {
                   2×
                 </button>
               </div>
-              <button
-                className={`${"bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3.5 py-3 rounded font-semibold w-full md:hidden block`}
-                // onClick={handleBetClick}
-                // gameBet ? "bg-[#489649]" :
-                onClick={() => handleOnManualBet()}
-              // disabled={}
-              >
-                {/* {gameBet ? "Cashout" : "Bet"} */}
-                Bet
-              </button>
               <div className="text-[#b1bad3] font-semibold text-m mt-1 my-2">
                 <label>Risk </label>
               </div>
@@ -232,11 +234,9 @@ function WheelGameSidebar() {
                 </div>
               </div>
               <button
-                className={`${"bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3.5 py-3 rounded font-semibold w-full md:block hidden`}
-                // onClick={handleBetClick}
-                // gameBet ? "bg-[#489649]" :
+                className={`${isBetInProgress ? "bg-[#298629]" : "bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3.5 py-3 rounded font-semibold w-full md:block hidden`}
                 onClick={() => handleOnManualBet()}
-              // disabled={}
+                disabled={isBetInProgress}
               >
                 {/* {gameBet ? "Cashout" : "Bet"} */}
                 Bet
@@ -244,20 +244,9 @@ function WheelGameSidebar() {
             </div>
           ) : (
             <div>
-              <button
-                className={`${
-                  // bettingStatus === false
-                  //   ? "bg-[#489649]"
-                  //   :
-                  "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:hidden block`}
-                onClick={() => handleOnAutoBet()}
-              >
-                Start Autobet
-              </button>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                 <label>Bet Amount</label>
-                <label>₹0.00</label>
+                <label>₹{wheelValue?.betamount ? wheelValue?.betamount : '0.00'}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -360,7 +349,9 @@ function WheelGameSidebar() {
                   placeholder="0"
                   min={0}
                   name="numberofbet"
-                  value={wheelValue?.numberofbet}
+                  // value={wheelValue?.numberofbet}
+                  value={finalmultiplier?.remainingBets === 1 ? wheelValue?.numberofbet || ""
+                    : (finalmultiplier?.remainingBets ? parseInt(finalmultiplier?.remainingBets) : wheelValue?.numberofbet)}
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
@@ -375,6 +366,7 @@ function WheelGameSidebar() {
                     } xl:px-2 lg:px-2 md:px-6 px-2 py-1.5 rounded-sm`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
+                    dispatch(setWheelValue({ onwin: "" }))
                   }}
                 >
                   Reset
@@ -422,6 +414,7 @@ function WheelGameSidebar() {
                       } xl:px-2 lg:px-2 md:px-6 px-2 py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
+                      dispatch(setWheelValue({ onlose: "" }))
                     }}
                   >
                     Reset
@@ -462,7 +455,7 @@ function WheelGameSidebar() {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
                 <label>Stop on Profit</label>
-                <label>₹0.00 </label>
+                <label>₹{wheelValue?.stoponprofit ? wheelValue?.stoponprofit : '0.00'}</label>
               </div>
               <div className="relative flex">
                 {/* <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
@@ -480,7 +473,7 @@ function WheelGameSidebar() {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
                 <label>Stop on Loss</label>
-                <label>₹0.00</label>
+                <label>₹{wheelValue?.stoponloss ? wheelValue?.stoponloss : '0.00'}</label>
               </div>
               <div className="relative flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 {/* <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
@@ -496,26 +489,26 @@ function WheelGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              {/* {autoBetOnClick ? (
-            <button
-              className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full`}
-              // onClick={() => handleOnCancelAutoBet()}
-            >
-              Cancel Autobet
-            </button>
-          ) : ( */}
-              <button
-                className={`${
-                  // bettingStatus === false
-                  //   ? "bg-[#489649]"
-                  //   :
-                  "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
-                onClick={() => handleOnAutoBet()}
-              >
-                Start Autobet
-              </button>
-              {/* )} */}
+              {autoBetOnClick ? (
+                <button
+                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => handleOnCancelAutoBet()}
+                >
+                  Cancel Autobet
+                </button>
+              ) : (
+                <button
+                  className={`${
+                    // bettingStatus === false
+                    //   ? "bg-[#489649]"
+                    //   :
+                    "bg-[#1fff20] hover:bg-[#42ed45]"
+                    } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
+                  onClick={() => handleOnAutoBet()}
+                >
+                  Start Autobet
+                </button>
+              )}
             </div>
           )}
         </div>
