@@ -1,8 +1,8 @@
 const Columns = () => {
     const columns = [
       {
-        field: "id",
-        headerName: "Rank",
+        field: "gameName",
+        headerName: "Game",
         width: 170,
         headerClassName: "column-header",
         cellClassName: "column-cell",
@@ -16,7 +16,7 @@ const Columns = () => {
       },
       {
         field: "betTime",
-        headerName: "Date",
+        headerName: "Time",
         width: 200,
         headerClassName: "column-header",
         cellClassName: "column-cell",
@@ -37,7 +37,7 @@ const Columns = () => {
       },
       {
         field: "winAmount",
-        headerName: "Winnigs",
+        headerName: "Result",
         width: 170,
         headerClassName: "column-header",
         cellClassName: "column-cell",

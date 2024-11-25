@@ -3,8 +3,8 @@ import GameFooter from "../../../component/GameFooter";
 import CrashGameContent from "./CrashGameContent";
 import CrashGameSidebar from "./CrashGameSidebar";
 import { CrashSocket } from "../../../../socket";
-import GameTable from "../../../component/GameTable";
 import GameContent from "../../../component/GameContent";
+import GameTable from "../../../component/GameTable";
 
 function CrashGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 786);
