@@ -26,20 +26,6 @@ function GameShows({ allGames, isLobby }) {
   };
 
   useEffect(() => {
-    GetAllGames()
-  })
-
-  const GetAllGames = async() => {
-    await getAllGames()
-    .then((response) => {
-      dispatch(setAllGame(response))
-    })
-    .catch((error) => {
-      console.log("error", error);
-    });
-  }
-
-  useEffect(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
       const prevButton = navButtonsRef.current.querySelector(".prev-arrow");
       const nextButton = navButtonsRef.current.querySelector(".next-arrow");
