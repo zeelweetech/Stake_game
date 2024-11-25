@@ -45,7 +45,7 @@ function Footer() {
             </span>
             {/* Copyright */}
             <p className="text-sm text-gray-400">
-              © 2024 Stake.com | All Rights Reserved.
+              © 2024 Listor.com | All Rights Reserved.
             </p>
           </div>
 
@@ -53,7 +53,7 @@ function Footer() {
           <div className="flex items-center justify-end gap-4 mt-[-30px]">
             {/* Blog */}
             <a
-              href="https://blog.stake.com"
+              href="https://blog.Listor.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white"
@@ -63,7 +63,7 @@ function Footer() {
 
             {/* Forum/Community */}
             <a
-              href="https://forum.stake.com"
+              href="https://forum.Listor.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white"
@@ -73,7 +73,7 @@ function Footer() {
 
             {/* Facebook */}
             <a
-              href="https://www.facebook.com/StakeCasino"
+              href="https://www.facebook.com/ListorCasino"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white"
@@ -83,7 +83,7 @@ function Footer() {
 
             {/* Twitter */}
             <a
-              href="https://twitter.com/Stake"
+              href="https://twitter.com/Listor"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white"
@@ -93,7 +93,7 @@ function Footer() {
 
             {/* Instagram */}
             <a
-              href="https://www.instagram.com/stake"
+              href="https://www.instagram.com/Listor"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white"
@@ -103,7 +103,7 @@ function Footer() {
 
             {/* YouTube */}
             <a
-              href="https://www.youtube.com/c/StakeCasino"
+              href="https://www.youtube.com/c/ListorCasino"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white"
@@ -113,7 +113,7 @@ function Footer() {
 
             {/* Merchandise Store */}
             <a
-              href="https://shop.stake.com"
+              href="https://shop.Listor.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white"
@@ -123,7 +123,7 @@ function Footer() {
 
             {/* VIP Program */}
             <a
-              href="https://stake.com/vip"
+              href="https://Listor.com/vip"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white"
@@ -137,37 +137,37 @@ function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">Casino</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white">Casino Games</a></li>
-              <li><a href="#" className="hover:text-white">Slots</a></li>
-              <li><a href="#" className="hover:text-white">Live Casino</a></li>
-              <li><a href="#" className="hover:text-white">Roulette</a></li>
-              <li><a href="#" className="hover:text-white">Blackjack</a></li>
-              <li><a href="#" className="hover:text-white">Providers</a></li>
-              <li><a href="#" className="hover:text-white">Promos & Competitions</a></li>
+              <li><a href="/" className="hover:text-white">Casino Games</a></li>
+              <li><a href="/slots" className="hover:text-white">Slots</a></li>
+              <li><a href="/LiveCasion" className="hover:text-white">Live Casino</a></li>
+              <li><a href="/casino/Roulette" className="hover:text-white">Roulette</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Blackjack</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Providers</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Promos & Competitions</a></li>
             </ul>
           </div>
           <div>
             <h3 className="text-white font-semibold mb-4">Sports</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white">Sportsbook</a></li>
-              <li><a href="#" className="hover:text-white">Live Sports</a></li>
-              <li><a href="#" className="hover:text-white">Soccer</a></li>
-              <li><a href="#" className="hover:text-white">Basketball</a></li>
-              <li><a href="#" className="hover:text-white">Tennis</a></li>
-              <li><a href="#" className="hover:text-white">eSports</a></li>
-              <li><a href="#" className="hover:text-white">Bet Bonuses</a></li>
-              <li><a href="#" className="hover:text-white">Sports Rules</a></li>
-              <li><a href="#" className="hover:text-white">Racing Rules</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Sportsbook</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Live Sports</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Soccer</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Basketball</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Tennis</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">eSports</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Bet Bonuses</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Sports Rules</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Racing Rules</a></li>
             </ul>
           </div>
           <div>
             <h3 className="text-white font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
               <li><a href="#" className="hover:text-white flex items-center">Help Center <svg className="w-3 h-3 ml-1" /></a></li>
-              <li><a href="#" className="hover:text-white">Fairness</a></li>
-              <li><a href="#" className="hover:text-white flex items-center">Gambling Helpline <svg className="w-3 h-3 ml-1" /></a></li>
-              <li><a href="#" className="hover:text-white">Live Support</a></li>
-              <li><a href="#" className="hover:text-white">Self Exclusion</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Fairness</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white flex items-center">Gambling Helpline <svg className="w-3 h-3 ml-1" /></a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Live Support</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Self Exclusion</a></li>
             </ul>
           </div>
           <div>
@@ -200,66 +200,12 @@ function Footer() {
               <li><a href="#" className="hover:text-white">Online Casino Guide</a></li>
               <li><a href="#" className="hover:text-white">Sports Betting Guide</a></li>
               <li><a href="#" className="hover:text-white">How to Live Stream Sports</a></li>
-              <li><a href="#" className="hover:text-white">Stake VIP Guide</a></li>
+              <li><a href="#" className="hover:text-white">Listor VIP Guide</a></li>
               <li><a href="#" className="hover:text-white">House Edge Guide</a></li>
             </ul>
           </div>
 
-          <div className="gap-3">
-            <div className="relative">
-              <button
-                onClick={() => setIsEnglishOpen(!isEnglishOpen)}
-                className="bg-[#243b4d] hover:bg-[#2f4b61] px-4 py-2 rounded flex items-center justify-between min-w-[120px] text-white"
-              >
-                <span className="text-sm">English</span>
-                <svg
-                  className={`w-4 h-4 transition-transform ${isEnglishOpen ? 'rotate-180' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-
-              {isEnglishOpen && (
-                <div className="absolute right-0 top-full mt-1 w-[120px] bg-[#243b4d] rounded shadow-lg z-50">
-                  <ul className="py-1 text-sm">
-                    <li><a href="#" className="block px-4 py-2 hover:bg-[#2f4b61] text-white">English</a></li>
-                    <li><a href="#" className="block px-4 py-2 hover:bg-[#2f4b61] text-white">Español</a></li>
-                    <li><a href="#" className="block px-4 py-2 hover:bg-[#2f4b61] text-white">Français</a></li>
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            <div className="relative mt-2">
-              <button
-                onClick={() => setIsDecimalOpen(!isDecimalOpen)}
-                className="bg-[#243b4d] hover:bg-[#2f4b61] px-4 py-2 rounded flex items-center justify-between min-w-[120px] text-white"
-              >
-                <span className="text-sm">Decimal</span>
-                <svg
-                  className={`w-4 h-4 transition-transform ${isDecimalOpen ? 'rotate-180' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-
-              {isDecimalOpen && (
-                <div className="absolute right-0 top-full mt-1 w-[120px] bg-[#243b4d] rounded shadow-lg z-50">
-                  <ul className="py-1 text-sm">
-                    <li><a href="#" className="block px-4 py-2 hover:bg-[#2f4b61] text-white">Decimal</a></li>
-                    <li><a href="#" className="block px-4 py-2 hover:bg-[#2f4b61] text-white">Fractional</a></li>
-                    <li><a href="#" className="block px-4 py-2 hover:bg-[#2f4b61] text-white">American</a></li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          </div>
+   
 
         </div>
 
@@ -290,7 +236,7 @@ function Footer() {
             <img src={EvertonLogo} alt="Partner" className="h-12" />
             <img src={Ufc} alt="Partner" className="h-12" />
 
-            <img src={Everton} alt="Partner" className="h-12" />
+       
 
             {/* Add more partner logos */}
           </div>
@@ -301,7 +247,7 @@ function Footer() {
 
           <div className="text-center py-2">
             <p className="text-sm">
-              Stake is committed to responsible gambling, for more information visit{" "}
+              Listor is committed to responsible gambling, for more information visit{" "}
               <a
                 href="https://www.gamblingtherapy.org"
                 className="text-white hover:underline font-medium"
@@ -318,8 +264,8 @@ function Footer() {
             <p className="text-xs max-w-[900px] mx-auto leading-relaxed opacity-80">
             Listor is owned and operated by Medium Rare N.V., registration number: 145353,
               registered address: Korporaalweg 10, Willemstad, Curaçao. Contact us at{" "}
-              <a href="mailto:support@stake.com" className="text-inherit">
-                support@stake.com
+              <a href="mailto:support@Listor.com" className="text-inherit">
+                support@Listor.com
               </a>
               . Payment agent company is Medium Rare Limited with address: 7-9 Riga Feraiou,
               LIZANTIA COURT, Office 310, Agioi Omologites, 1087 Nicosia, Cyprus and

@@ -7,6 +7,7 @@ const CasinoHomePage = React.lazy(() =>
 const GameContainer = React.lazy(() =>
   import("./views/casino/StackOriginalsGames")
 );
+const ComeSoon = React.lazy(()=>import("./views/component/ComeSoon"))
 const Slots = React.lazy(() => import("./views/casino/CasinoHomePage/Slots"));
 const LiveCasion = React.lazy(() => import("./views/casino/CasinoHomePage/LiveCasino"))
 const GameShows = React.lazy(() => import("./views/casino/CasinoHomePage/GameShows"))
@@ -35,7 +36,9 @@ const routes = [
   {path: "/GameShows", name: "GameShows", element: GameShows},
   {path: "/Exclusives", name: "Exclusives", element: Exclusives},
   {path: "/StackOriginals", name: "StackOriginals", element: StackOriginals},
-  {path: "/NewReleases", name: "NewReleases", element: NewReleases}
+  {path: "/NewReleases", name: "NewReleases", element: NewReleases},
+  {path: "/ComeSoon", name: "ComeSoon", element: ComeSoon},
+
 ];
 
 export default routes;

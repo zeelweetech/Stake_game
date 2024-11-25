@@ -27,7 +27,7 @@ export const SidebarNav = ({ items, openMenubar }) => {
             ${
               name === "Logout" ? "bg-[#213743] p-1.5 rounded-md w-40 ml-4" : ""
             }`}
-            onClick={name === "Logout" ? handleLogout : undefined}
+            onClick={name === "Logout" ? handleLogout : undefined }
           >
             <div className="text-white">
               {icon ? (
