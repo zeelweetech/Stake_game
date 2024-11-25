@@ -344,7 +344,7 @@ function CrashGameContent() {
         <div
           className="xl:pl-4 lg:pl-2 xl:pr-8 lg:pr-6 xl:h-[35rem] lg:h-[34rem] md:h-[20rem] sm:max-w-full max-w-[95vw] sm:h-[20rem]"
         >
-          <canvas ref={chartRef} className=" h-[20rem] xl:w-full lg:w-full md:w-full w-[80rem]"></canvas>
+          <canvas ref={chartRef} className=" h-[20rem] xl:w-full lg:w-full md:w-full w-[100rem]"></canvas>
         </div>
         <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center w-full px-4 text-white font-bold text-center">
           <div className="flex-grow flex items-center justify-center">
@@ -356,12 +356,12 @@ function CrashGameContent() {
                 {multiplier}x
               </p>
               {multiplier === xValue && (
-                <button className="bg-[#4d718768] text-lg sm:text-xl shadow-lg xl:px-8 lg:px-8 md:px-8 px-2 pt-2 pb-3 mt-3 rounded-md">
+                <button className="bg-[#4d718768] text-lg sm:text-xl shadow-lg xl:px-8 lg:px-8 md:px-8 px-8 pt-2 pb-3 mt-3 rounded-md">
                   Crashed
                 </button>
               )}
               {bettingStatus && (
-                <button className="bg-[#4d718768] text-lg sm:text-2xl  rounded-md progress-bar">
+                <button className="bg-[#4d718768] text-lg sm:text-2xl xl:px-6 px-4 pt-3 pb-4 mt-3 rounded-md progress-bar">
                   starting in
                 </button>
               )}
@@ -372,13 +372,13 @@ function CrashGameContent() {
               ? visibleData?.map((data, index) => (
                 <button
                   key={index}
-                  className="py-1 px-1 border-2 border-[#4d718768] bg-[#213743] rounded-full"
+                  className="py-1 px-1 border-1 border-[#4d718768] bg-[#213743] rounded-full"
                 >
                   <div className="flex items-center space-x-1">
                     <BsIncognito />
-                    <p className="text-[#b1bad3] text-xs">Hidden</p>
-                    <RiMoneyRupeeCircleFill color="yellow" size={10} />
-                    <p className="text-green-500">{data?.amount}</p>
+                    <p className="text-[#b1bad3] text-xs">Hidden</p> ₹
+                    {/* <RiMoneyRupeeCircleFill color="yellow" size={10} /> */}
+                    <p className="text-[#00F701]">{data?.amount}</p>
                   </div>
                 </button>
               ))

@@ -255,7 +255,7 @@ function MinesGameContent() {
         {images.map((img, index) => (
           <div
             key={index}
-            className={`flex justify-center items-center ${isMobile ? 'md:w-[5.1rem] md:h-[4.3rem] max-[425px]:w-[4.6rem] max-[390px]:w-[4.18rem] max-[430px]:w-[4.7rem] min-[360px]:w-[20rem] max-[414px]:w-[4.5rem] h-[4.3rem] max-[375px]:w-16 max-[320px]:w-[3.3rem]' : 'xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]'} bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""}`}
+            className={`flex justify-center items-center ${isMobile ? 'md:w-20 md:h-[4.2rem] w-[3.9rem] h-[4.2rem]' : 'xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]'} bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""}`}
             onClick={() => handleClick(index)}
             style={{
               backgroundColor: revealed[index] || gamesOver ? "#071824" : "#2f4553",
