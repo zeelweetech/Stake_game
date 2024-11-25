@@ -8,7 +8,7 @@ import { jwtDecode } from "jwt-decode";
 
 function DefaultLayout() {
   const [openMenubar, setOpenMenubar] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const handleDrawerToggle = () => {
     setOpenMenubar((prevOpen) => !prevOpen);
@@ -30,7 +30,7 @@ function DefaultLayout() {
 
   return (
     <div className="flex h-screen">
-      
+
       {!isMobile && (
         <div
           className={`fixed left-0 bg-[#0f212e] text-white h-full overflow-hidden
@@ -58,12 +58,11 @@ function DefaultLayout() {
         )}
         <div className="overflow-auto">
           <Content />
+          <Footer />
         </div>
-        <Footer />
       </div>
     </div>
   );
 }
 
 export default DefaultLayout;
-  

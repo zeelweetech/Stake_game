@@ -53,7 +53,7 @@ function MainHomePage() {
   };
 
   return (
-    <div className="flex justify-center h-screen bg-[#1a2c38]">
+    <div className="flex justify-center h-full bg-[#1a2c38]">
       {loading ? (
         <Loader />
       ) : (
