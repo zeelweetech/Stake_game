@@ -1,3 +1,4 @@
+import { element } from "prop-types";
 import React from "react";
 
 const LandingBanner = React.lazy(() => import("./views/lendingpage/index"));
@@ -8,6 +9,7 @@ const CasinoHomePage = React.lazy(() =>
 const GameContainer = React.lazy(() =>
   import("./views/casino/StackOriginalsGames")
 );
+<<<<<<< HEAD
 const HelpCenter = React.lazy(() =>
   import("./views/footerpage/HelpCenter"))
 const Policies = React.lazy(() => import("./views/footerpage/Policies"))
@@ -26,6 +28,11 @@ const Exclusives = React.lazy(() => import("./views/casino/CasinoHomePage/Exclus
 const StackOriginals = React.lazy(() => import("./views/casino/CasinoHomePage/StackOriginals"))
 const NewReleases = React.lazy(() => import("./views/casino/CasinoHomePage/NewReleases"))
 const Lobby = React.lazy(() => import("./views/casino/CasinoHomePage/Lobby"))
+=======
+const Setting = React.lazy(() => import("./views/Profile/Setting"));
+
+const Profile = React.lazy(() => import("./views/Profile/index"))
+>>>>>>> a24eda6845cf0f182cc84b846a29963440b26905
 const token = localStorage.getItem("token");
 
 const routes = [
@@ -41,6 +48,7 @@ const routes = [
     name: "GameContainer",
     element: GameContainer,
   },
+<<<<<<< HEAD
   { path: "/Lobby", name: "Lobby", element: Lobby },
   { path: "/slots", name: "Slots", element: Slots },
   { path: "/LiveCasion", name: "LiveCasion", element: LiveCasion },
@@ -62,6 +70,10 @@ const routes = [
 
 
 
+=======
+  {path: "/profile", name: "Profile", element: Profile},
+  { path: "/setting", name: "Setting", element: Setting }, 
+>>>>>>> a24eda6845cf0f182cc84b846a29963440b26905
 ];
 
 export default routes;
