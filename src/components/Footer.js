@@ -163,7 +163,7 @@ function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white flex items-center">Help Center <svg className="w-3 h-3 ml-1" /></a></li>
+              <li><a href="/HelpCenter" className="hover:text-white flex items-center">Help Center <svg className="w-3 h-3 ml-1" /></a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Fairness</a></li>
               <li><a href="/ComeSoon" className="hover:text-white flex items-center">Gambling Helpline <svg className="w-3 h-3 ml-1" /></a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Live Support</a></li>
@@ -176,7 +176,7 @@ function Footer() {
               <ul className="space-y-2">
                 <li><a href="#" className="hover:text-white">VIP Club</a></li>
                 <li><a href="#" className="hover:text-white">Affiliate</a></li>
-                <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
+                <li><a href="/Policies" className="hover:text-white">Privacy Policy</a></li>
                 <li><a href="#" className="hover:text-white">AML Policy</a></li>
                 <li><a href="#" className="hover:text-white">Terms of Service</a></li>
               </ul>

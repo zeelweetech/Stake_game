@@ -1,12 +1,13 @@
-import "./App.css";
+import React from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DefaultLayout from "./layout/DefaultLayout";
 import VerifyTerm from "./views/pages/register/VerifyTerm";
-import DefultPage from "./defultPage";
+import routes from "./routes"; // Import your routes
 
 function App() {
   const status = localStorage.getItem("status");
+
   return (
     <>
       <Toaster
@@ -21,15 +22,30 @@ function App() {
       />
       <BrowserRouter>
         <Routes>
-          <Route>
-            {/* {!status ? (
-              <Route path="/" element={<DefultPage />} />
-            ) : ( */}
-              <Route path="*" name="Home" element={<DefaultLayout />} />
-            {/* )} */}
-            <Route path="/verifyterm" element={<VerifyTerm />} />
+          {/* Render default layout for most routes */}
+          <Route path="/" element={<DefaultLayout />}>
+            {routes.map((route, index) =>
+              route.children ? (
+                <Route key={index} path={route.path} element={<route.element />}>
+                  {route.children.map((child, idx) => (
+                    <Route
+                      key={idx}
+                      path={child.path}
+                      element={<child.element />}
+                    />
+                  ))}
+                </Route>
+              ) : (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={<route.element />}
+                />
+              )
+            )}
           </Route>
         </Routes>
+
       </BrowserRouter>
     </>
   );
