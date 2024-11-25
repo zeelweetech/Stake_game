@@ -47,22 +47,6 @@ function Lobby() {
     },
   ];
 
-  useEffect(() => {
-    GetAllGames();
-    UpdateWalletData();
-    GetWalletData();
-  }, []);
-
-  const GetAllGames = async () => {
-    await getAllGames()
-      .then((response) => {
-        setAllGames(response);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
-
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
@@ -79,7 +63,7 @@ function Lobby() {
   };
 
   return (
-    <div className="flex justify-center h-screen bg-[#1a2c38]">
+    <div className="flex justify-center h-full bg-[#1a2c38]">
       {loading ? (
         <Loader />
       ) : (
