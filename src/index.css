@@ -145,3 +145,24 @@ code {
 @tailwind components;
 @tailwind utilities;
 
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+th{
+  color: white;
+  font-size: 12px;
+}
+
+td, th {
+  text-align: left;
+  padding: 12px;
+  font-size: 14px;
+  
+}
+
+tr:nth-child(even) {
+  background-color: #4d718768;
+}

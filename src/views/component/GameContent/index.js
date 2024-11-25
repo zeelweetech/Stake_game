@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Loader from "../Loader";
 import BigWins from "./BigWins";
-import LuckyWins from "./LuckyWins";
-import Challenges from "./Challenges";
 import Discription from "./Discription";
 
 const GameContent = () => {
@@ -14,20 +12,20 @@ const GameContent = () => {
     {
       label: "Big Wins",
     },
-    {
-      label: "Lucky Wins",
-    },
-    {
-      label: "Challenges",
-    },
+    // {
+    //   label: "Lucky Wins",
+    // },
+    // {
+    //   label: "Challenges",
+    // },
     {
       label: "Discription",
     },
   ];
   return (
     <>
-      <div className=" bg-[#0f212e] p-10 my-12 text-white flex w-full rounded-xl ">
-        <div className="h-screen flex flex-col">
+      <div className=" bg-[#0f212e] p-10 mt-12 text-white flex w-full rounded-xl ">
+        <div className="flex flex-col">
           {loading ? (
             <Loader />
           ) : (
@@ -61,13 +59,22 @@ const GameContent = () => {
                       commissionData={commissionData}
                       setCommissionData={setCommissionData}
                     />
+                  ) : (
+                    <Discription />
+                  )}
+                  {/* {gameMenu === "Big Wins" ? (
+                    <BigWins
+                      setLoading={setLoading}
+                      commissionData={commissionData}
+                      setCommissionData={setCommissionData}
+                    />
                   ) : gameMenu === "Lucky Wins" ? (
                     <LuckyWins commissionData={commissionData} />
                   ) : gameMenu === "Challenges" ? (
                     <Challenges commissionData={commissionData} />
                   ) : (
                     <Discription />
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>

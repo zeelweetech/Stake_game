@@ -1,41 +1,32 @@
 import React, { useEffect, useState } from "react";
-import Loader from "./Loader";
+import Loader from "../Loader";
+import MyBets from "./MyBets";
+import AllBets from "./AllBets";
 
 export default function GameTable() {
   const [commissionData, setCommissionData] = useState([]);
-  const [gameMenu, setGameMenu] = useState("My Games");
+  const [gameMenu, setGameMenu] = useState("My Bets");
   const [loading, setLoading] = useState(false);
-
-//   const menuItems = [
-//     {
-//       label: "Casino Bets",
-//     },
-//     {
-//       label: "Sports Bets",
-//     },
-//     {
-//       label: "Rece Leaderboard",
-//     },
-//   ];
-const menuItems = [
+  
+  const menuItems = [
     {
-      label: "My Games",
+      label: "My Bets",
     },
     {
-      label: "All Games",
+      label: "All Bets",
     },
-    {
-      label: "High Rollers"
-    },
-    {
-      label: "Rece Leaderboard",
-    },
+    // {
+    //   label: "High Rollers"
+    // },
+    // {
+    //   label: "Rece Leaderboard",
+    // },
   ];
 
   return (
     <div className="bg-[#1a2c38] h-screen flex flex-col">
       {loading ? (
-        <Loader/>
+        <Loader />
       ) : (
         <div className="flex flex-col flex-1 bg-[#1a2c38]">
           <div className="flex flex-col flex-1 justify-center pt-12">
@@ -61,17 +52,15 @@ const menuItems = [
                 </div>
               </div>
 
-              {/* {gameMenu === "Information" ? (
-                <GameInformation
+              {gameMenu === "My Bets" ? (
+                <MyBets
                   setLoading={setLoading}
                   commissionData={commissionData}
                   setCommissionData={setCommissionData}
                 />
-              ) : gameMenu === "Details" ? (
-                <GameDetails commissionData={commissionData} />
               ) : (
-                <GameCommissions />
-              )} */}
+                <AllBets />
+              )}
             </div>
           </div>
         </div>

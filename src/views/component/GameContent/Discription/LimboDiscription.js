@@ -1,18 +1,13 @@
 import React from "react";
-import crashGame from "../../../../assets/img/crashGame.avif";
-import plinkoGame from "../../../../assets/img/plinkoGame.jpeg";
-import WheelGame from "../../../../assets/img/wheelGame.avif";
 import LimboGame from "../../../../assets/img/limboGame.avif";
-import DragonTowerGame from "../../../../assets/img/dragonTower.png";
 
-
-const Discription = () => {
+const LimboDiscription = () => {
   return (
     <>
       <div className="py-3 xl:max-w-[52rem] md:w-full text-[#b1bad3]">
         <div className="flex gap-7">
           <div>
-            <img className="rounded-lg w-56" src={DragonTowerGame} alt="crashGame" />
+            <img className="rounded-lg w-56" src={LimboGame} alt="crashGame" />
           </div>
           <div>
             <button className="text-[11px] bg-[#4d718768] px-1 py-0.5 rounded-2xl">
@@ -145,4 +140,4 @@ const Discription = () => {
   );
 };
 
-export default Discription;
+export default LimboDiscription;
