@@ -188,6 +188,7 @@ function DragonContent() {
     console.log("cashoutSuccess data", data);
     setCashoutResult(data);
     setCashoutVisible(true);
+    dispatch(setTileSelected({}));
     handleGameOverResult();
     // dispatch(setIsGameOver(true));
   });
