@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { decodedToken } from "../../../../resources/utility";
 import {
-  setAutoBetOnClick,
+  setAutoBet,
+  setFinaMultiplier,
   setIsBetInProgress,
   setMustSpin,
   setWheelValue,
@@ -14,6 +15,7 @@ import { openRegisterModel } from "../../../../features/auth/authSlice";
 import { WheelSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import wheelSound from "../../../../assets/Sound/wheelSound.wav"
+import toast from "react-hot-toast";
 
 function WheelGameSidebar() {
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ function WheelGameSidebar() {
   const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth)
-  const { wheelValue, finalmultiplier, isBetInProgress, autoBetOnClick } = useSelector((state) => state.wheelGame);
+  const { wheelValue, finalmultiplier, isBetInProgress, autoBet } = useSelector((state) => state.wheelGame);
 
   useEffect(() => {
     const handleResize = () => setResponsiveMobile(window.innerWidth);
@@ -84,7 +86,7 @@ function WheelGameSidebar() {
       });
       const audio = new Audio(wheelSound);
       audio.play();
-      dispatch(setAutoBetOnClick(true));
+      dispatch(setAutoBet(true));
       // dispatch(
       //   setWheelValue({
       //     betamount: "",
@@ -100,12 +102,10 @@ function WheelGameSidebar() {
     }
   };
 
-  const handleOnCancelAutoBet = () => {
+  const handleOnStopAutoBet = () => {
     WheelSocket.emit("pauseAutoBet");
-    dispatch(setAutoBetOnClick(false));
+    dispatch(setAutoBet(false));
   };
-
-  console.log('finalmultiplier', finalmultiplier);
 
   return (
     <div>
@@ -350,10 +350,24 @@ function WheelGameSidebar() {
                   min={0}
                   name="numberofbet"
                   // value={wheelValue?.numberofbet}
-                  value={finalmultiplier?.remainingBets === 1 ? wheelValue?.numberofbet || ""
-                    : (finalmultiplier?.remainingBets ? parseInt(finalmultiplier?.remainingBets) : wheelValue?.numberofbet)}
-                  onChange={(e) => handleOnChange(e)}
+                  // value={finalmultiplier?.remainingBets === 1 ? wheelValue?.numberofbet || ""
+                  //   : (finalmultiplier?.remainingBets ? parseInt(finalmultiplier?.remainingBets) : wheelValue?.numberofbet)}
+                  value={
+                    finalmultiplier?.remainingBets > 0
+                      ? finalmultiplier.remainingBets
+                      : wheelValue?.numberofbet || ""
+                  }
+                  // onChange={(e) => handleOnChange(e)}
+                  onChange={(e) => {
+                    handleOnChange(e);
+              
+                    if (finalmultiplier?.remainingBets > 0) {
+                      dispatch(setFinaMultiplier({ ...finalmultiplier, remainingBets: e.target.value }));
+                    }
+                  }}
                 />
+                {console.log('finalmultiplier', finalmultiplier)}
+                {console.log('wheelValue', wheelValue)}
               </div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
                 <label>On win</label>
@@ -489,12 +503,12 @@ function WheelGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              {autoBetOnClick ? (
+              {autoBet ? (
                 <button
                   className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full`}
-                  onClick={() => handleOnCancelAutoBet()}
+                  onClick={() => handleOnStopAutoBet()}
                 >
-                  Cancel Autobet
+                  Stop Autobet
                 </button>
               ) : (
                 <button
@@ -504,7 +518,10 @@ function WheelGameSidebar() {
                     //   :
                     "bg-[#1fff20] hover:bg-[#42ed45]"
                     } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
-                  onClick={() => handleOnAutoBet()}
+                  onClick={() => 
+                    wheelValue?.numberofbet === undefined || finalmultiplier?.numberofbet === ""
+                    ? toast.error("Please enter a number of bets")
+                    : handleOnAutoBet()}
                 >
                   Start Autobet
                 </button>

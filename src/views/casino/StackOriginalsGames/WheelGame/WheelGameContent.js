@@ -3,10 +3,12 @@ import { WheelSocket } from "../../../../socket";
 import { RowByRisk } from "./WheelJason";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setAutoBet,
   setFinaMultiplier,
   setIsBetInProgress,
   setIsSpinning,
   setMustSpin,
+  setWheelValue,
 } from "../../../../features/casino/wheelSlice";
 import toast from "react-hot-toast";
 import { Wheel } from "react-custom-roulette";
@@ -64,8 +66,6 @@ function WheelGameContent() {
       dispatch(setIsSpinning(true))
     }
   }, [mustSpin]);
-
-  // console.log("finalmultiplier", finalmultiplier);
 
   useEffect(() => {
     WheelSocket.on("manualBetResult", (data) => {
@@ -132,66 +132,97 @@ function WheelGameContent() {
   const mediumRiskButtons = (
     <>
       <button
-        className={`border-b-[#406c82] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30
+        className={`border-b-[#406c82] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30
           ? ""
           : ""
           } py-3 rounded-lg`}
       >
-        0.00x
+        <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#406c82] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+        <span className="relative">0.00x</span>
       </button>
       <button
-        className={`border-b-[#1fff20] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30
+        className={`border-b-[#1fff20] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30
           ? ""
           : ""
           } py-3 rounded-lg`}
       >
-        1.50x
+        <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#1fff20] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+        <span className="relative">1.50x</span>
       </button>
       {wheelValue?.segments === "50" ? (
         ""
       ) : (
         <button
-          className={`border-b-[#fcfcfc] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-4 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base${wheelValue?.segments === "30" || wheelValue?.segments === 30
+          className={`border-b-[#fcfcfc] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-4 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base${wheelValue?.segments === "30" || wheelValue?.segments === 30
             ? "px-8"
             : "px-10"
             } py-3 rounded-lg`}
         >
           {wheelValue?.segments === "10"
-            ? "1.90x"
+            ? (
+              <div>
+                <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#fcfcfc] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+                <span className="relative">1.90x</span>
+              </div>
+            )
             : wheelValue?.segments === "20"
-              ? "1.80x"
+              ? (
+                <div>
+                  <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#fcfcfc] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+                  <span className="relative">1.80x</span>
+                </div>
+              )
               : wheelValue?.segments === "30"
-                ? "1.70x"
+                ? (
+                  <div>
+                    <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#fcfcfc] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+                    <span className="relative">1.70x</span>
+                  </div>
+                )
                 : wheelValue?.segments === "40"
-                  ? "1.60x"
-                  : "1.70x"}
+                  ? (
+                    <div>
+                      <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#fcfcfc] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+                      <span className="relative">1.60x</span>
+                    </div>
+                  )
+                  : (
+                    <div>
+                      <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#fcfcfc] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+                      <span className="relative">1.70x</span>
+                    </div>
+                  )}
         </button>
       )}
       <button
-        className={`border-b-[#e8e225] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-2 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30
+        className={`border-b-[#e8e225] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-2 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30
           ? ""
           : ""
           }`}
       >
-        2.00x
+        <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#e8e225] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+        <span className="relative">2.00x</span>
       </button>
       <button
-        className={`border-b-[#9322e3] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base `}
+        className={`border-b-[#9322e3] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base `}
       >
-        3.00x
+        <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#9322e3] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+        <span className="relative">3.00x</span>
       </button>
       {wheelValue?.segments === "50" ? (
         <button
-          className={`border-b-[#42d7f5] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base`}
+          className={`border-b-[#007bff] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base`}
         >
-          5.00x
+          <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#007bff] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+          <span className="relative">5.00x</span>
         </button>
       ) : (
         ""
       )}
       {wheelValue?.segments === "30" || wheelValue?.segments === 30 ? (
-        <button className="border-b-[#d18a2c] bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base">
-          4.00x
+        <button className="border-b-[#d18a2c] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-3 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base">
+          <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d18a2c] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+          <span className="relative">4.00x</span>
         </button>
       ) : (
         ""
@@ -201,21 +232,52 @@ function WheelGameContent() {
 
   const highRiskButtons = (
     <>
-      <button className="border-b-[#406c82] bg-[#213743] cursor-help border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
-        0.00x
+      <button className="border-b-[#406c82] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
+        <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#406c82] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+        <span className="relative">0.00x</span>
       </button>
-      <button className="border-b-[#de2128] bg-[#213743] cursor-help border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
+      <button className="border-b-[#de2128] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
         {wheelValue?.segments === "10"
-          ? "9.90x"
+          ? (
+            <div>
+              <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+              <span className="relative">9.90x</span>
+            </div>
+          )
           : wheelValue?.segments === "20"
-            ? "19.80x"
+            ? (
+              <div>
+                <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+                <span className="relative">19.80x</span>
+              </div>
+            )
             : wheelValue?.segments === "30"
-              ? "29.70x"
+              ? (
+                <div>
+                  <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+                  <span className="relative">29.70x</span>
+                </div>
+              )
               : wheelValue?.segments === "40"
-                ? "39.60x"
+                ? (
+                  <div>
+                    <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+                    <span className="relative">39.60x</span>
+                  </div>
+                )
                 : wheelValue?.segments === "40"
-                  ? "49.50x"
-                  : "49.50x"}
+                  ? (
+                    <div>
+                      <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+                      <span className="relative">49.50x</span>
+                    </div>
+                  )
+                  : (
+                    <div>
+                      <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-white"></span>
+                      <span className="relative">49.50x</span>
+                    </div>
+                  )}
       </button>
     </>
   );
@@ -237,6 +299,9 @@ function WheelGameContent() {
                   userId: decoded?.userId,
                 });
                 dispatch(setIsBetInProgress(false))
+                if (finalmultiplier?.remainingBets === 1) {
+                  dispatch(setAutoBet(false));
+                }
               }}
               // radiusLineWidth={5}
               spinDuration={0.1}
