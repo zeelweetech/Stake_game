@@ -16,8 +16,6 @@ const MyBets = () => {
     pageSize: 10,
   });
   const [totalCount, setTotalCount] = useState(0);
-
-  console.log("mybets id=========", decoded?.userId);
   
   useEffect(() => {
     getMyBetsdata();
@@ -30,7 +28,6 @@ const MyBets = () => {
         page: paginationModel?.page + 1,
         pageSize: paginationModel?.pageSize,
       });
-      console.log("getMyBets response", response);
       setBetsData(response?.response || []);
       setTotalCount(response?.pagination?.totalBets);
       setLoading(false);
@@ -62,7 +59,7 @@ const MyBets = () => {
             </div>
           ) : (
             <div>
-              <div className="flex justify-center item-center">
+              {/* <div className="flex justify-center item-center">
                 <div>
                   <DataGrid
                     rows={rows}
@@ -103,7 +100,7 @@ const MyBets = () => {
                     }}
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
         </div>

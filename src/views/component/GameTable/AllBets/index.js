@@ -25,7 +25,7 @@ const AllBets = () => {
           page: paginationModel?.page + 1,
           pageSize: paginationModel?.pageSize,
         });
-        console.log("getAllBets response", response);
+        // console.log("getAllBets response", response);
         setBetsData(response?.BetList || []);
         setTotalCount(response?.pagination?.totalBets);
         setLoading(false);
