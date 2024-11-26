@@ -4,19 +4,23 @@ import Loader from "../../Loader";
 import Columns from "./columns";
 import { DataGrid } from "@mui/x-data-grid";
 import {getBigWins } from "../../../../services/GameServices";
+import { useParams } from "react-router-dom";
 
 const BigWins = () => {
+  const {id} = useParams()
   const [betsData, setBetsData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [totalCount, setTotalCount] = useState(0);
+  const [loading, setLoading] = useState(false)
+  console.log("bigwins id==========", id);
+  
 
   useEffect(() => {
     getBigWinsdata();
-  }, []);
+  }, [id]);
 
   const getBigWinsdata = async () => {
     try {
       const response = await getBigWins({
+        id
       });
       console.log("getAllBets response", response);
       setBetsData(response || []);
@@ -27,8 +31,9 @@ const BigWins = () => {
     }
   };
 
-  const rows = betsData.map((bet) => ({
+  const rows = betsData.map((bet, index) => ({
     id: bet?.id,
+    rank: index + 1,
     userName: bet?.user?.userName ? bet?.user?.userName : "-",
     betTime: bet?.betTime ? bet?.betTime : "-",
     betAmount: bet?.betAmount ? bet?.betAmount : "-",

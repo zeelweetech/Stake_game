@@ -3,6 +3,8 @@ import LimboGameContent from "./LimboGameContent";
 import GameFooter from "../../../component/GameFooter";
 import LimboGameSidebar from "./LimboGameSidebar";
 import { LimboSocket } from "../../../../socket";
+import GameContent from "../../../component/GameContent";
+import GameTable from "../../../component/GameTable";
 
 function LimboGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -72,6 +74,10 @@ function LimboGame() {
       >
         <hr className="md:w- border-[#213743]" />
         <GameFooter />
+      </div>
+      <div>
+        <GameContent />
+        <GameTable />
       </div>
     </div>
   </div>

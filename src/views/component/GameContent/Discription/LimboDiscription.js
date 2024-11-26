@@ -7,7 +7,7 @@ const LimboDiscription = () => {
       <div className="py-3 xl:max-w-[52rem] md:w-full text-[#b1bad3]">
         <div className="flex gap-7">
           <div>
-            <img className="rounded-lg w-56" src={LimboGame} alt="crashGame" />
+            <img className="rounded-lg w-52" src={LimboGame} alt="crashGame" />
           </div>
           <div>
             <button className="text-[11px] bg-[#4d718768] px-1 py-0.5 rounded-2xl">
@@ -130,8 +130,8 @@ const LimboDiscription = () => {
           </p>
           <p className="text-[15px] pb-3">
             While you're having fun on our platform, remember to take advantage
-            of our amazing social casino promotions and bonuses , or you can
-            gain access to more exclusive benefits by becoming a Stake VIP Club
+            of our amazing social casino promotions and bonuses, or you can gain
+            access to more exclusive benefits by becoming a Stake VIP Club
             member .
           </p>
         </div>

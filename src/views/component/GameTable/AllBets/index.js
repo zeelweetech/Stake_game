@@ -4,7 +4,6 @@ import Loader from "../../Loader";
 import Columns from "./columns";
 import { DataGrid } from "@mui/x-data-grid";
 import { getAllBets } from "../../../../services/GameServices";
-import { useNavigate } from "react-router-dom";
 
 const AllBets = () => {
   const [betsData, setBetsData] = useState([]);
@@ -13,9 +12,8 @@ const AllBets = () => {
     page: 0,
     pageSize: 10,
   });
-    const navigate = useNavigate()
-    const [totalCount, setTotalCount] = useState(0);
-    const [currentUserId, setCurrentUserId] = useState(null);
+  const [totalCount, setTotalCount] = useState(0);
+
 
     useEffect(() => {
       getAllBetsdata();
@@ -29,7 +27,7 @@ const AllBets = () => {
         });
         console.log("getAllBets response", response);
         setBetsData(response?.BetList || []);
-        setTotalCount(response?.totalPulls);
+        setTotalCount(response?.pagination?.totalBets);
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch users: ", error);
@@ -50,7 +48,7 @@ const AllBets = () => {
   return (
     <>
       <div>
-        <div className="bg-[#1a2c38] py-2 h-screen">
+        <div className="pt-5">
           {loading ? (
             <Loader />
           ) : (
