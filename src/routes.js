@@ -31,7 +31,7 @@ const Setting = React.lazy(() => import("./views/Profile/Setting"));
 
 const Profile = React.lazy(() => import("./views/Profile/index"))
 const token = localStorage.getItem("token");
-
+// const General = React.lazy(() => import("./views/Profile/Setting/General"))
 const routes = [
   {
     path: "/",
@@ -68,6 +68,8 @@ const routes = [
 
   {path: "/profile", name: "Profile", element: Profile},
   { path: "/setting", name: "Setting", element: Setting }, 
+  { path:"/setting/:section", name: "Setting", element: Setting}
+
 ];
 
 export default routes;
