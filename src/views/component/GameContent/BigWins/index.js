@@ -39,7 +39,7 @@ const BigWins = () => {
   return (
     <>
       <div>
-        <div className=" py-2 mt-5">
+        <div className=" py-2 lg:-mx-5 md:-mx-[30rem] mt-5">
           {loading ? (
             <Loader />
           ) : (

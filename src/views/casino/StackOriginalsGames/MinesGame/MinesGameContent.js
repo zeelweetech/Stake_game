@@ -95,6 +95,7 @@ function MinesGameContent() {
     setImages(Array(25).fill(null));
     setRevealed(Array(25).fill(false));
     setZoomClass(Array(25).fill(false));
+    dispatch(setRestoredMultiplier("0.00"));
   });
 
   // game tile selected event
@@ -255,7 +256,7 @@ function MinesGameContent() {
         {images.map((img, index) => (
           <div
             key={index}
-            className={`flex justify-center items-center ${isMobile ? 'md:w-20 md:h-[4.2rem] w-[3.9rem] h-[4.2rem]' : 'xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]'} bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""}`}
+            className={`flex justify-center items-center ${isMobile ? 'md:w-20 md:h-[4.2rem] w-[4.6rem] h-[4.3rem] max-[375px]:w-[4rem] max-[320px]:w-[3.3rem] max-[414px]:w-[4.44rem] max-[390px]:w-[4.2rem] max-[360px]:w-[3.8rem]' : 'xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]'} bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""}`}
             onClick={() => handleClick(index)}
             style={{
               backgroundColor: revealed[index] || gamesOver ? "#071824" : "#2f4553",
