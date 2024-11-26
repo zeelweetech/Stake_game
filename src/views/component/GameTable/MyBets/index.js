@@ -2,39 +2,43 @@ import React, { useEffect, useState } from "react";
 import Loader from "../../Loader";
 import Columns from "./columns";
 import { DataGrid } from "@mui/x-data-grid";
-import { getAllBets, getMyBets } from "../../../../services/GameServices";
-import { useNavigate } from "react-router-dom";
+import { getMyBets } from "../../../../services/GameServices";
+import { useParams } from "react-router-dom";
+import { decodedToken } from "../../../../resources/utility";
 
 const MyBets = () => {
+  const { userId } = useParams();
   const [betsData, setBetsData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const decoded = decodedToken();
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
-    const navigate = useNavigate()
-    const [totalCount, setTotalCount] = useState(0);
-    const [currentUserId, setCurrentUserId] = useState(null);
+  const [totalCount, setTotalCount] = useState(0);
 
-    useEffect(() => {
-      getAllBetsdata();
-    }, [paginationModel?.page, paginationModel?.pageSize]);
+  console.log("mybets id=========", decoded?.userId);
+  
+  useEffect(() => {
+    getMyBetsdata();
+  }, [paginationModel?.page, paginationModel?.pageSize, userId]);
 
-    const getAllBetsdata = async () => {
-      try {
-        const response = await getMyBets({
-          page: paginationModel?.page + 1,
-          pageSize: paginationModel?.pageSize,
-        });
-        console.log("getAllBets response", response);
-        setBetsData(response?.response || []);
-        setTotalCount(response?.totalPulls);
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to fetch users: ", error);
-        setLoading(false);
-      }
-    };
+  const getMyBetsdata = async () => {
+    try {
+      const response = await getMyBets({
+        userId: decoded?.userId,
+        page: paginationModel?.page + 1,
+        pageSize: paginationModel?.pageSize,
+      });
+      console.log("getMyBets response", response);
+      setBetsData(response?.response || []);
+      setTotalCount(response?.pagination?.totalBets);
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch users: ", error);
+      setLoading(false);
+    }
+  };
 
   const rows = betsData.map((bet) => ({
     id: bet?.id,
@@ -49,9 +53,13 @@ const MyBets = () => {
   return (
     <>
       <div>
-        <div className="bg-[#1a2c38] py-2 h-screen">
+        <div className="py-2 mt-4">
           {loading ? (
             <Loader />
+          ) : betsData.length === 0 ? (
+            <div className="text-center text-white text-lg mt-4">
+              No Data Found
+            </div>
           ) : (
             <div>
               <div className="flex justify-center item-center">

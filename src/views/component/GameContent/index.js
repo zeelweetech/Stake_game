@@ -24,7 +24,7 @@ const GameContent = () => {
   ];
   return (
     <>
-      <div className=" bg-[#0f212e] p-10 mt-12 text-white flex w-full rounded-xl ">
+      <div className=" bg-[#0f212e] py-10 px-3 mt-12 text-white flex w-full rounded-xl">
         <div className="flex flex-col">
           {loading ? (
             <Loader />

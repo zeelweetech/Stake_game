@@ -3,6 +3,8 @@ import PlinkoGameSidebar from "./PlinkoGameSidebar";
 import PlinkoGameContent from "./PlinkoGameContent";
 import GameFooter from "../../../component/GameFooter";
 import { PlinkoSocket } from "../../../../socket";
+import GameContent from "../../../component/GameContent";
+import GameTable from "../../../component/GameTable";
 
 function PlinkoGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -74,6 +76,10 @@ function PlinkoGame() {
           <hr className="border-2 border-[#213743]" />
           <GameFooter />
         </div>
+        <div>
+        <GameContent />
+        <GameTable />
+      </div>
       </div>
     </div>
   );

@@ -33,8 +33,8 @@ const PlinkoDiscription = () => {
           </div>
         </div>
         <div>
-          <h1 className="text-white text-xl font-bold pb-3">What is Plinko?</h1>
-          <p className="text-[15px] pb-3">
+          <h1 className="text-white text-xl font-bold pt-7">What is Plinko?</h1>
+          <p className="text-[15px] py-3">
             Plinko is a classic game of chance where the player drops a ball in
             a multi-row pin pyramid, with the ball bouncing between pins in a
             random route until it reaches a destination at the bottom of the
@@ -46,7 +46,7 @@ const PlinkoDiscription = () => {
           </p>
         </div>
         <div>
-          <h1 className="text-white text-xl font-bold pb-3">
+          <h1 className="text-white text-xl font-bold py-3">
             How to Play Plinko
           </h1>
           <p className="text-[15px] pb-3">
@@ -68,7 +68,7 @@ const PlinkoDiscription = () => {
           </ul>
         </div>
         <div>
-          <h1 className="text-white text-xl font-bold pb-3">Playing Options</h1>
+          <h1 className="text-white text-xl font-bold py-3">Playing Options</h1>
           <p className="text-[15px] pb-3">
             In addition to the verifiable fairness of results, Stake also offers
             advanced playing features for games like Plinko. These include:
@@ -101,7 +101,7 @@ const PlinkoDiscription = () => {
           </p>
         </div>
         <div>
-          <h1 className="text-white text-xl font-bold pb-3">
+          <h1 className="text-white text-xl font-bold py-3">
             Low-Risk Options
           </h1>
           <p className="text-[15px] pb-3">
@@ -184,7 +184,7 @@ const PlinkoDiscription = () => {
           </p>
         </div>
         <div>
-          <h1 className="text-white text-xl font-bold pb-3">
+          <h1 className="text-white text-xl font-bold py-3">
             Medium-Risk Options
           </h1>
           <p className="text-[15px] pb-3">
@@ -264,7 +264,7 @@ const PlinkoDiscription = () => {
           </p>
         </div>
         <div>
-          <h1 className="text-white text-xl font-bold pb-3">
+          <h1 className="text-white text-xl font-bold py-3">
             High-Risk Options
           </h1>
           <p className="text-[15px] pb-3">

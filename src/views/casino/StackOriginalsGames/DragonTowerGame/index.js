@@ -3,6 +3,8 @@ import GameFooter from "../../../component/GameFooter";
 import DragonSidebar from "./DragonSidebar";
 import DragonContent from "./DragonContent";
 import { DragonTowerSocket } from "../../../../socket";
+import GameContent from "../../../component/GameContent";
+import GameTable from "../../../component/GameTable";
 
 function DragonTowerGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -67,6 +69,10 @@ function DragonTowerGame() {
       >
         <hr className="border-2 border-[#213743]" />
         <GameFooter />
+      </div>
+      <div>
+        <GameContent />
+        <GameTable />
       </div>
     </div>
   </div>

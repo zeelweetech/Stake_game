@@ -16,10 +16,12 @@ export async function getAllGames() {
   }
 }
 
-export async function getAllBets() {
+export async function getAllBets({
+  page: page, pageSize: pageSize
+}) {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_LOCAL_URL}/game/bets/get`,
+      `${process.env.REACT_APP_LOCAL_URL}/game/bets/get?page=${page}&limit=${pageSize}`,
       {
         headers: {
           Authorization: localStorage.getItem("token"),
@@ -32,10 +34,14 @@ export async function getAllBets() {
   }
 }
 
-export async function getMyBets() {
+export async function getMyBets({
+  userId: userId,
+  page: page,
+  pageSize: pageSize
+}) {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_LOCAL_URL}/game/bets/get/2`,
+      `${process.env.REACT_APP_LOCAL_URL}/game/bets/get/${userId}?page=${page}&limit=${pageSize}`,
       {
         headers: {
           Authorization: localStorage.getItem("token"),
@@ -48,10 +54,12 @@ export async function getMyBets() {
   }
 }
 
-export async function getBigWins() {
+export async function getBigWins({
+  id: id
+}) {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_LOCAL_URL}/game/getTopBets/13`,
+      `${process.env.REACT_APP_LOCAL_URL}/game/getTopBets/${id}`,
       {
         headers: {
           Authorization: localStorage.getItem("token"),

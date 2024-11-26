@@ -30,10 +30,10 @@ const WheelDiscription = () => {
           </div>
         </div>
         <div>
-          <h1 className="text-white text-xl font-bold pb-3">
+          <h1 className="text-white text-xl font-bold pt-6">
             How to Play Wheel & Gameplay
           </h1>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] py-3">
             To play Wheel at Stake social casino , you must first create an
             account. This takes just a few minutes, and you can then verify your
             details to get started.
@@ -159,7 +159,7 @@ const WheelDiscription = () => {
           </table>
         </div>
         <div>
-          <h1 className="text-white text-xl font-bold pb-3">
+          <h1 className="text-white text-xl font-bold py-3">
             Wheel Features & Bonuses
           </h1>
           <p className="text-[15px] pb-3">

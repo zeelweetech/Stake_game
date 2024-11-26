@@ -2,12 +2,12 @@ import React from "react";
 import MinesGame from "../../../../assets/img/minesGame.avif";
 
 const MinesDiscription = () => {
-    return(
-        <>
-         <div className="py-3 xl:max-w-[52rem] md:w-full text-[#b1bad3]">
+  return (
+    <>
+      <div className="py-3 xl:max-w-[52rem] md:w-full text-[#b1bad3]">
         <div className="flex gap-7">
           <div>
-            <img className="rounded-lg w-56" src={MinesGame} alt="crashGame" />
+            <img className="rounded-lg w-60" src={MinesGame} alt="crashGame" />
           </div>
           <div>
             <button className="text-[11px] bg-[#4d718768] px-1 py-0.5 rounded-2xl">
@@ -148,8 +148,8 @@ const MinesDiscription = () => {
           </p>
         </div>
       </div>
-        </>
-    )
-}
+    </>
+  );
+};
 
-export default MinesDiscription
+export default MinesDiscription;

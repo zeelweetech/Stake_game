@@ -3,6 +3,8 @@ import GameFooter from "../../../component/GameFooter";
 import MinesGameSidebar from "./MinesGameSidebar";
 import MinesGameContent from "./MinesGameContent";
 import { MineSocket } from "../../../../socket";
+import GameContent from "../../../component/GameContent";
+import GameTable from "../../../component/GameTable";
 
 function MinesGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -68,6 +70,10 @@ function MinesGame() {
       > 
         <hr className="border-2 border-[#213743]" />
         <GameFooter />
+      </div>
+      <div>
+        <GameContent />
+        <GameTable />
       </div>
     </div>
   </div>
