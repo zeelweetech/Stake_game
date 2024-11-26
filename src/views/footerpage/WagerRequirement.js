@@ -362,7 +362,7 @@ const wagerRequirement = () => {
       "Plinko"
     ],
     stakePoker: [
-      "Stake Poker"
+      "Listor Poker"
     ],
     thunderkick: [
       "12 Bolts of Thunder",
@@ -1034,7 +1034,7 @@ const wagerRequirement = () => {
                   </ul>
                 </div>
                 <div className="mb-8">
-                  <h2 className="text-xl font-bold mb-4 text-white">Stake Originals</h2>
+                  <h2 className="text-xl font-bold mb-4 text-white">Listor Originals</h2>
                   <ul className="space-y-2">
                     {gamesList.stakeOriginals?.map((game) => (
                       <li key={game} className="flex items-center space-x-2">
@@ -1047,9 +1047,9 @@ const wagerRequirement = () => {
                   </ul>
                 </div>
 
-                {/* Stake Poker */}
+                {/* Listor Poker */}
                 <div className="mb-8">
-                  <h2 className="text-xl font-bold mb-4 text-white">Stake Poker</h2>
+                  <h2 className="text-xl font-bold mb-4 text-white">Listor Poker</h2>
                   <ul className="space-y-2">
                     {gamesList.stakePoker?.map((game) => (
                       <li key={game} className="flex items-center space-x-2">
