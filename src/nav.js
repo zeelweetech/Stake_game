@@ -132,7 +132,7 @@ const nav = [
       color: "info",
     },
     dropdown: [
-      { name: "Wallet", to: "/wallet", icon:<FaWallet size={15}  className="mr-2"/>},
+      { name: "Wallet", to: "/wallet", icon:<FaWallet size={15}  className="mr-2" />},
       { name: "Vault", to: "/Vault", icon:<PiVaultFill size={18}  className="mr-2"/>  },
       { name: "VIP", to: "/VIP", icon:<MdEmojiEvents size={18}  className="mr-2"/>  },
       { name: "Statistics", to: "/Statistics", icon:<LegendToggleIcon size={18}  className="mr-0"/>  },

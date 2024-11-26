@@ -15,21 +15,15 @@ const Setting = () => {
       case "general":
         return <Generals />;
       case "security":
-        return <div><Security/></div>;
-      case "preference":
-        return <div>Preference Settings</div>;
-      case "api":
-        return <div>API Settings</div>;
+        return <div><Security /></div>;
       case "session":
         return <div>Session Settings</div>;
-      case "ignored-users":
-        return <div>Ignored Users</div>;
+
       case "verify":
         return <div>Verify Settings</div>;
-      case "offers":
-        return <div>Offers Settings</div>;
+
       default:
-        return <div>Select a Setting</div>;
+        return <Generals/>
     }
   };
 
@@ -49,25 +43,20 @@ const Setting = () => {
           </div>
           <div className="flex">
             {/* Left Sidebar (List of Settings) */}
-            <div className="bg-[#0f212e] text-white rounded-lg shadow-lg p-1 w-60 h-96 flex flex-col items-start m-10 mt-5">
+            <div className="bg-[#0f212e] text-white rounded-lg shadow-lg p-1 w-60 h-52 flex flex-col items-start m-10 mt-5">
               <ul className="space-y-2">
                 {[
                   "General",
                   "Security",
-                  "Preference",
-                  "API",
                   "Session",
-                  "Ignored Users",
                   "Verify",
-                  "Offers",
                 ].map((setting) => (
                   <li
                     key={setting}
-                    className={`cursor-pointer hover:bg-[#2f4553] p-2 rounded ${
-                      section === setting.toLowerCase().replace(" ", "-")
-                        ? "bg-[#2f4553]"
-                        : ""
-                    }`}
+                    className={`cursor-pointer hover:bg-[#2f4553] p-2 rounded ${section === setting.toLowerCase().replace(" ", "-")
+                      ? "bg-[#2f4553]"
+                      : ""
+                      }`}
                     onClick={() => handleSettingClick(setting)}
                   >
                     {setting}
