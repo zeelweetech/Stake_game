@@ -7,7 +7,7 @@ export default function Profile() {
     const [loading, setLoading] = useState(false);
 
     return (
-        <div className="bg-[#1a2c38] py-2 h-screen">
+        <div className="bg-[#1a2c38] py-2 h-full">
             {loading ? (
                 <Loader />
             ) : (
