@@ -10,8 +10,14 @@ const GameContainer = React.lazy(() =>
 );
 const HelpCenter = React.lazy(() =>
   import("./views/footerpage/HelpCenter"))
+const CoinMixing = React.lazy(() =>
+  import("./views/footerpage/CoinMixing"))
+const Privacy = React.lazy(() =>
+  import("./views/footerpage/Privacy"))
 const Policies = React.lazy(() => import("./views/footerpage/Policies"))
 const Terms = React.lazy(() => import("./views/footerpage/Terms"))
+const Providers = React.lazy(() => import("./views/footerpage/Providers"))
+const Sportsbook = React.lazy(() => import("./views/footerpage/Sportsbook"))
 // ... existing code ...
 const WagerRequirements = React.lazy(() => import("./views/footerpage/WagerRequirement"))
 // Remove the duplicated commented line
@@ -60,12 +66,15 @@ const routes = [
     // ],
   },
   { path: "/terms", name: "Terms", element: Terms },
+  { path: "/providers", name: "Providers", element: Providers },
+  { path: "/sportsbook", name: "Sportsbook", element: Sportsbook },
   { path: "/wager-requirements", name: "WagerRequirements", element: WagerRequirements },
   { path: "/anti-money-laundering", name: "antiMoneyLaundering", element: antiMoneyLaundering },
-  {path: "/profile", name: "Profile", element: Profile},
-  { path: "/setting", name: "Setting", element: Setting }, 
-  { path:"/setting/:section", name: "Setting", element: Setting}
-
+  { path: "/Privacy", name: "Privacy", element: Privacy },
+  { path: "/coin-mixing", name: "CoinMixing", element: CoinMixing },
+  { path: "/profile", name: "Profile", element: Profile },
+  { path: "/setting", name: "Setting", element: Setting },
+  { path: "/setting/:section", name: "Setting", element: Setting }
 ];
 
 export default routes;
