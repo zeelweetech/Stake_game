@@ -10,7 +10,7 @@ const BigWins = () => {
   const {id} = useParams()
   const [betsData, setBetsData] = useState([]);
   const [loading, setLoading] = useState(false)
-  console.log("bigwins id==========", id);
+  // console.log("bigwins id==========", id);
   
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const BigWins = () => {
       const response = await getBigWins({
         id
       });
-      console.log("getAllBets response", response);
+      // console.log("getAllBets response", response);
       setBetsData(response || []);
       setLoading(false);
     } catch (error) {
@@ -44,7 +44,7 @@ const BigWins = () => {
   return (
     <>
       <div>
-        <div className=" py-2 lg:-mx-5 md:-mx-[30rem] mt-5">
+        <div className="py-2 md:mt-3 md:-ml-5">
           {loading ? (
             <Loader />
           ) : (
