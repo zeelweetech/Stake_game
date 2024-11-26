@@ -311,7 +311,6 @@ function DragonSidebar() {
                 onClick={handleBetClick}
                 disabled={gameBet && !isGameOver && (tileSelected?.tileIndex === undefined || tileSelected?.multiplier < 1) && !restor?.currentStep > 0}
               >
-                {console.log('tileSelected?.multiplier /-*-*-', tileSelected)}
                 {gameBet && !isGameOver ? "Cashout" : "Bet"}
               </button>
             </div>
@@ -619,12 +618,7 @@ function DragonSidebar() {
                   : "bg-[#1fff20] hover:bg-[#42ed45]"
                   } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
                 onClick={handleBetClick}
-                disabled={
-                  gameBet &&
-                  !isGameOver &&
-                  tileSelected?.tileIndex === undefined &&
-                  !restor?.currentStep > 0
-                }
+                disabled={gameBet && !isGameOver && (tileSelected?.tileIndex === undefined || tileSelected?.multiplier < 1) && !restor?.currentStep > 0}
               >
                 {gameBet && !isGameOver ? "Cashout" : "Bet"}
               </button>

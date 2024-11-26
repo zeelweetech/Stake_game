@@ -3,8 +3,8 @@ import GameFooter from "../../../component/GameFooter";
 import CrashGameContent from "./CrashGameContent";
 import CrashGameSidebar from "./CrashGameSidebar";
 import { CrashSocket } from "../../../../socket";
-import GameTable from "../../../component/GameTable";
 import GameContent from "../../../component/GameContent";
+import GameTable from "../../../component/GameTable";
 
 function CrashGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 786);
@@ -41,7 +41,7 @@ function CrashGame() {
   }, []);
 
   return (
-    <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center w-full">
+    <div className="bg-[#1a2c38] py-8 text-white flex justify-center items-center w-full">
       <div>
         {isMobile ? (
           <div className="flex flex-col">

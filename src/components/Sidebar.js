@@ -3,8 +3,9 @@ import EmailIcon from "@mui/icons-material/Email";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/Inbox";
 import nav from "../nav";
-import { SidebarNav } from "./SidebarNav";
+// import { SidebarNav } from "./SidebarNav";
 import { useNavigate } from "react-router-dom";
+import { SidebarNav } from "./SidebarNav";
 
 function Sidebar({ openMenubar, handleDrawerToggle }) {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Sidebar({ openMenubar, handleDrawerToggle }) {
     <div
       className={`h-full ${openMenubar ? "block" : "hidden md:block"} 
       ${openMenubar && "md:text-white"} 
-       md:bg-none`} 
+       md:bg-none overflow-y-auto`} 
     >
       <div className="p-4 shadow-2xl shadow-black">
         <div className="flex items-center">
@@ -58,4 +59,4 @@ function Sidebar({ openMenubar, handleDrawerToggle }) {
   );
 }
 
-export default Sidebar;
+export default Sidebar

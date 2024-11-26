@@ -9,6 +9,9 @@ const initialState = {
   },
   finalmultiplier: "",
   mustSpin: false,
+  isSpinning: true,
+  isBetInProgress: false,
+  autoBetOnClick: false
 };
 
 const WheelGameSlice = createSlice({
@@ -24,10 +27,19 @@ const WheelGameSlice = createSlice({
     setMustSpin(state, action) {
       state.mustSpin = action.payload;
     },
+    setIsSpinning(state, action) {
+      state.isSpinning = action.payload;
+    },
+    setIsBetInProgress(state, action) {
+      state.isBetInProgress = action.payload;
+    },
+    setAutoBetOnClick(state, action) {
+      state.autoBetOnClick = action.payload;
+    },
   },
 });
 
-export const { setWheelValue, setFinaMultiplier, setMustSpin } =
+export const { setWheelValue, setFinaMultiplier, setMustSpin, setIsSpinning, setIsBetInProgress, setAutoBetOnClick } =
   WheelGameSlice.actions;
 
 export default WheelGameSlice.reducer;

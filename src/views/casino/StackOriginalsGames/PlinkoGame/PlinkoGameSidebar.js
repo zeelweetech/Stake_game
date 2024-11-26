@@ -319,15 +319,6 @@ function PlinkoGameSidebar() {
                   placeholder="0"
                   min={0}
                   name="numberofbets"
-                  // value={
-                  //   finalMultiplier?.remainingBets
-                  //     ? parseInt(finalMultiplier?.remainingBets) - 1 : finalMultiplier?.remainingBets === 1 ? "" : values?.numberofbets
-                  // }
-                  // value={
-                  //   finalMultiplier?.remainingBets === 1 
-                  //     ? "" 
-                  //     : (finalMultiplier?.remainingBets && parseInt(finalMultiplier?.remainingBets) - 1) || values?.numberofbets
-                  // }
                   value={
                     finalMultiplier?.remainingBets === 1
                       ? values?.numberofbets || ""

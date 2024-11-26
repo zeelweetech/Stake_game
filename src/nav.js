@@ -11,6 +11,13 @@ import { FaGift } from "react-icons/fa6";
 import { IoIosRocket } from "react-icons/io";
 import { BsBookmarkStarFill } from "react-icons/bs";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { FaWallet } from "react-icons/fa";
+import { PiVaultFill } from "react-icons/pi";
+import { MdEmojiEvents } from "react-icons/md";
+import LegendToggleIcon from '@mui/icons-material/LegendToggle';
+import { LuListTodo } from "react-icons/lu";
+import { MdSettings } from "react-icons/md";
 
 const nav = [
   {
@@ -108,14 +115,32 @@ const nav = [
       color: "info",
     },
   },
+ 
   {
-    name: "Profile",
-    // to: "/",
-    icon: <Person2Icon />,
+    // name: "Profile",
+    icon: (
+      <div className="flex items-center">
+        <Person2Icon  /> 
+        <span className="ml-3">Profile</span> 
+        <ChevronDownIcon
+          aria-hidden="true"
+          className="h-5 w-5 ml-2 text-gray-400"
+        /> 
+      </div>
+    ),
     badge: {
       color: "info",
     },
+    dropdown: [
+      { name: "Wallet", to: "/wallet", icon:<FaWallet size={15}  className="mr-2"/>},
+      { name: "Vault", to: "/Vault", icon:<PiVaultFill size={18}  className="mr-2"/>  },
+      { name: "VIP", to: "/VIP", icon:<MdEmojiEvents size={18}  className="mr-2"/>  },
+      { name: "Statistics", to: "/Statistics", icon:<LegendToggleIcon size={18}  className="mr-0"/>  },
+      { name: "Notification", to: "/Notification", icon:<LuListTodo  size={18}  className="mr-1"/>  },
+      { name: "Setting", to: "/Setting", icon:<MdSettings  size={18}  className="mr-1"/>  },
+    ],
   },
+  
   {
     name: "Logout",
     to: "/logout",
@@ -127,3 +152,6 @@ const nav = [
 ];
 
 export default nav;
+
+
+

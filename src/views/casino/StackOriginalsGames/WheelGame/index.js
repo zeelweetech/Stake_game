@@ -38,10 +38,10 @@ function WheelGame() {
   });
 
   return (
-    <div className="xl:py-10 lg:py-10 md:py-6 py-4 xl:px-40 lg:w-11/12 lg:ml-9 bg-[#1a2c38] flex justify-center items-center text-white h-full ">
+    <div className="xl:py-10 lg:py-10 md:py-6 py-4 xl:px-40 lg:w-11/12 lg:ml-9 bg-[#1a2c38] flex justify-center items-center text-white h-full">
     <div className="w-full max-w-screen-lg">
       <div
-        className={`flex w-full min-w-72  ${
+        className={`flex w-full min-w-72 ${
           isMobile ? "h-[24rem]" : "h-[46rem]"
         } border-b-3`}
       >
@@ -62,8 +62,8 @@ function WheelGame() {
       )}
       <div
         className={`${
-          isMobile ? "h-[15rem] w-auto ml-3 md:ml-32 md:w-[28.3rem]" : "h-[15rem] xl:w-[64rem]"
-        } border-t-2 border-[#213743]`}
+          isMobile ? "w-auto ml-3 md:ml-32 md:w-[28.3rem]" : "xl:w-[64rem]"
+        } border-t-2 border-[#213743] h-10`}
       >
         <hr className="border-2 border-[#213743]" />
         <GameFooter />
