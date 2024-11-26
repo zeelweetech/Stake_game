@@ -24,12 +24,7 @@ export default function GameTable() {
   ];
 
   return (
-<<<<<<< HEAD
     <div className="bg-[#1a2c38] h-screen flex flex-col md:-mx-56">
-=======
-    <div className=" bg-[#1a2c38] mt-10 text-white flex w-full rounded-xl ">
-    <div className="flex flex-col">
->>>>>>> 92c0eabfdce6e3ecd80db7f302ec8373c5b95c05
       {loading ? (
         <Loader />
       ) : (
@@ -84,6 +79,5 @@ export default function GameTable() {
         </div>
       )}
     </div>
-  </div>
   );
 }
