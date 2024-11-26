@@ -96,37 +96,26 @@ function MinesGameSidebar() {
       }
     }
   };
-  // console.log('tileSelect ', tileSelect);
 
-  // const pickRandomTile = () => {
-  //   const index = Math.floor(Math.random() * 25);
-  //   MineSocket.emit("selectTile", {
-  //     userId: decoded?.userId.toString(),
-  //     gameId: id,
-  //     tileIndex: index,
-  //   });
-  // };
   const pickRandomTile = () => {
-    // Generate a random tile index
     let index = Math.floor(Math.random() * 25);
 
-    // Ensure that the tile has not been selected before
     while (selectedTiles.includes(index)) {
-      index = Math.floor(Math.random() * 25); // Generate a new tile index if the selected tile is already picked
+      index = Math.floor(Math.random() * 25);
     }
 
-    // Emit the selected tile index
     MineSocket.emit("selectTile", {
       userId: decoded?.userId.toString(),
       gameId: id,
       tileIndex: index,
     });
 
-    // Add the selected tile index to the selectedTiles array
     setSelectedTiles([...selectedTiles, index]);
   };
 
   const gems = 25 - mineValue?.mines || 0;
+
+  console.log("restored restored", restored)
 
   return (
     <div>
@@ -214,22 +203,6 @@ function MinesGameSidebar() {
               disabled={showFields}
             >
               2x
-            </button>
-          </div>
-          <div className="block md:hidden">
-            <button
-              className={`${gameBet && !gamesOver
-                ? "bg-[#489649]"
-                : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-              onClick={() => handleBetClick()}
-              // disabled={gameBet && !gamesOver && tileSelect?.tileIndex === undefined}
-              disabled={
-                (gameBet && !gamesOver && tileSelect?.tileIndex === undefined) &&
-                !restored?.totalSelectedTiles > 0
-              }
-            >
-              {gameBet && !gamesOver ? "Cashout" : "Bet"}
             </button>
           </div>
 
@@ -664,10 +637,10 @@ function MinesGameSidebar() {
                 name="betamount"
                 value={
                   mineValue?.betamount
-                    ? mineValue?.betamount
-                    : restored?.mineLocations?.length > 0
-                      ? restored?.betAmount
-                      : mineValue?.betamount
+                    // ? mineValue?.betamount
+                    // : restored?.mineLocations?.length > 0
+                    //   ? restored?.betAmount
+                    //   : mineValue?.betamount
                 }
                 onChange={(e) => handleOnChange(e)}
                 className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2  md:w-[20rem] w-64 rounded-s-md text-white bg-[#0f212e] ${showFields && "cursor-not-allowed"}`}
@@ -710,7 +683,6 @@ function MinesGameSidebar() {
               2×
             </button>
           </div>
-          <div className="block md:hidden">
             <button
               className={`${gameBet && !gamesOver
                 ? "bg-[#489649]"
@@ -725,7 +697,6 @@ function MinesGameSidebar() {
             >
               {gameBet && !gamesOver ? "Cashout" : "Bet"}
             </button>
-          </div>
 
           {showFields ? (
             <div>
@@ -830,21 +801,6 @@ function MinesGameSidebar() {
               </div>
             </div>
           )}
-
-          <button
-            className={`${gameBet && !gamesOver
-              ? "bg-[#489649]"
-              : "bg-[#1fff20] hover:bg-[#42ed45]"
-              } text-black mt-3.5 py-3 rounded-md font-semibold w-full `}
-            onClick={() => handleBetClick()}
-            // disabled={gameBet && !gamesOver && tileSelect?.tileIndex === undefined}
-            disabled={
-              (gameBet && !gamesOver && tileSelect?.tileIndex === undefined) &&
-              !restored?.totalSelectedTiles > 0
-            }
-          >
-            {gameBet && !gamesOver ? "Cashout" : "Bet"}
-          </button>
         </div>
       ) : (
         <div>

@@ -229,7 +229,6 @@ function WheelGameContent() {
       )}
     </>
   );
-
   const highRiskButtons = (
     <>
       <button className="border-b-[#406c82] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">

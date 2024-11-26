@@ -357,17 +357,14 @@ function WheelGameSidebar() {
                       ? finalmultiplier.remainingBets
                       : wheelValue?.numberofbet || ""
                   }
-                  // onChange={(e) => handleOnChange(e)}
                   onChange={(e) => {
                     handleOnChange(e);
               
                     if (finalmultiplier?.remainingBets > 0) {
-                      dispatch(setFinaMultiplier({ ...finalmultiplier, remainingBets: e.target.value }));
+                      dispatch(setFinaMultiplier({ remainingBets: '' }));
                     }
                   }}
                 />
-                {console.log('finalmultiplier', finalmultiplier)}
-                {console.log('wheelValue', wheelValue)}
               </div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
                 <label>On win</label>
@@ -519,7 +516,7 @@ function WheelGameSidebar() {
                     "bg-[#1fff20] hover:bg-[#42ed45]"
                     } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() => 
-                    wheelValue?.numberofbet === undefined || finalmultiplier?.numberofbet === ""
+                    wheelValue?.numberofbet === undefined || wheelValue?.numberofbet === ""
                     ? toast.error("Please enter a number of bets")
                     : handleOnAutoBet()}
                 >

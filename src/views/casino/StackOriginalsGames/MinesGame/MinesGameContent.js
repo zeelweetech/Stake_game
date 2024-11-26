@@ -100,8 +100,6 @@ function MinesGameContent() {
 
   // game tile selected event
   MineSocket.on("tileSelected", (data) => {
-    console.log('data data data', data);
-    
     dispatch(setTileSelect(data));
     handleTileSelection(data.tileIndex, data.isBomb);
   });
@@ -135,6 +133,7 @@ function MinesGameContent() {
     handleGameOver(clickedMine, remainingMines);
     dispatch(setShowFields(false));
     dispatch(setTileSelect({}))
+    dispatch(setRestored({}))
     setCashoutResult(false)
   });
 
@@ -247,7 +246,11 @@ function MinesGameContent() {
         <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
-            <p>{(parseFloat(mineValue?.betamount) * parseFloat(cashoutResult?.multiplier)).toFixed(2) || '0.00'} ₹</p>
+            <p>{(parseFloat(mineValue?.betamount
+              ? mineValue?.betamount
+              : restored?.mineLocations?.length > 0
+                ? restored?.betAmount
+                : mineValue?.betamount) * parseFloat(cashoutResult?.multiplier)).toFixed(2) || '0.00'} ₹</p>
             {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
           </div>
         </div>
