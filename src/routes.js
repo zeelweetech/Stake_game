@@ -1,3 +1,4 @@
+import { element } from "prop-types";
 import React from "react";
 
 const LandingBanner = React.lazy(() => import("./views/lendingpage/index"));
@@ -30,6 +31,8 @@ const Setting = React.lazy(() => import("./views/Profile/Setting"));
 const Profile = React.lazy(() => import("./views/Profile/index"))
 const token = localStorage.getItem("token");
 // const General = React.lazy(() => import("./views/Profile/Setting/General"))
+const Wallet = React.lazy(() =>import("./views/Profile/Wallet"))
+
 const routes = [
   {
     path: "/",
@@ -64,7 +67,8 @@ const routes = [
   { path: "/anti-money-laundering", name: "antiMoneyLaundering", element: antiMoneyLaundering },
   {path: "/profile", name: "Profile", element: Profile},
   { path: "/setting", name: "Setting", element: Setting }, 
-  { path:"/setting/:section", name: "Setting", element: Setting}
+  { path:"/setting/:section", name: "Setting", element: Setting},
+  {path: "/Wallet", name: "Wallet", element: Wallet}
 
 ];
 

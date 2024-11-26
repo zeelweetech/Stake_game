@@ -125,11 +125,17 @@ import PropTypes from "prop-types";
 export const SidebarNav = ({ items, openMenubar }) => {
   const [dropdownVisible, setDropdownVisible] = useState(null); // Track which dropdown is open
   const navigate = useNavigate();
+  const [popupVisible, setPopupVisible] = useState(null);  // Track which item has a popup
+
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
     window.location.reload();
+  };
+
+  const handlePopupToggle = (itemName) => {
+    setPopupVisible(popupVisible === itemName ? null : itemName);  // Toggle popup visibility
   };
 
   const toggleDropdown = (index) => {
@@ -180,9 +186,8 @@ export const SidebarNav = ({ items, openMenubar }) => {
 
   const navItem = (item, index, indent = false) => {
     const { component, name, badge, icon, dropdown, ...rest } = item;
-
+  
     if (dropdown) {
-      // Handle items with a dropdown
       return (
         <div key={index} className="flex flex-col items-start p-2 pl-4">
           <div
@@ -190,26 +195,21 @@ export const SidebarNav = ({ items, openMenubar }) => {
             className="flex items-center cursor-pointer"
           >
             {icon && <div>{icon}</div>}
-            <span className={`ml-10 ${openMenubar ? "block" : "hidden"}`}>
-              {name}
-            </span>
+            <span className={`ml-10 ${openMenubar ? "block" : "hidden"}`}>{name}</span>
           </div>
-
-          {/* Dropdown menu */}
+  
+          {/* Dropdown */}
           {dropdownVisible === index && (
             <div className="ml-2 bg-[#213743] text-white rounded-md p-2 mt-2">
               {dropdown.map((dropdownItem, idx) => (
                 <Link
                   key={idx}
                   to={dropdownItem.to}
-                  className="block px-4 py-2 hover:bg-gray-600"
-                  onClick={
-                    dropdownItem.action === "logout" ? handleLogout : undefined
-                  }
+                  className="block px-4 py-2 hover:bg-[#0f212e] transition-colors"
+                  onClick={dropdownItem.action === "logout" ? handleLogout : undefined}
                 >
                   {dropdownItem.icon && <span className="mr-2 inline-block">{dropdownItem.icon}</span>}
                   <span>{dropdownItem.name}</span>
-                  
                 </Link>
               ))}
             </div>
@@ -217,11 +217,7 @@ export const SidebarNav = ({ items, openMenubar }) => {
         </div>
       );
     }
-
-    if (name === "Logout") {
-      return navLink(name, icon, badge, indent, index);
-    }
-
+  
     return (
       <div as="div" key={index} className="flex items-center p-2 pl-4">
         {rest.to || rest.href ? (
@@ -234,6 +230,7 @@ export const SidebarNav = ({ items, openMenubar }) => {
       </div>
     );
   };
+  
 
   const navGroup = (item, index) => {
     const { component, name, icon, items, to, ...rest } = item;
@@ -246,6 +243,8 @@ export const SidebarNav = ({ items, openMenubar }) => {
       </div>
     );
   };
+
+  
 
   return (
     <div>

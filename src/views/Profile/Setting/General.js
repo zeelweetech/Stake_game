@@ -13,7 +13,8 @@ const Generals = () => {
     const [decodedEmail, setDecodedEmail] = useState("");
     const [tokenValid, setTokenValid] = useState(true);
     const [resendClicked, setResendClicked] = useState(false);
-    const [isOpen, setIsOpen] = useState(false); // Controls dropdown visibility
+    const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // List of country codes and country names
     const countryCodes = [
@@ -26,17 +27,17 @@ const Generals = () => {
 
     // Fetch token and decode safely
     useEffect(() => {
-        const token = localStorage.getItem("token"); // Assume the token is stored in localStorage
+        const token = localStorage.getItem("token");
         if (token) {
             try {
-                const decoded = decodedToken(token); // Decode the token
+                const decoded = decodedToken(token);
 
                 console.log("decoded", decoded);
 
-                setDecodedEmail(decoded.email); // Assume decoded token has an email field
+                setDecodedEmail(decoded.email);
             } catch (error) {
                 console.error("Invalid token", error);
-                setTokenValid(false); // Mark token as invalid if decoding fails
+                setTokenValid(false);
             }
         } else {
             setTokenValid(false);
@@ -53,7 +54,7 @@ const Generals = () => {
         if (tokenValid && decodedEmail) {
             alert(`Decoded Email: ${decodedEmail}`);
         } else {
-            alert("Invalid token or email");
+            // alert("Invalid token or email");
         }
     };
 
@@ -73,12 +74,12 @@ const Generals = () => {
         <div className="bg-[#0f212e] text-white rounded-lg py-1 min-h-screen">
             <div className="bg-[#1a2c38] text-white rounded-lg py-4 h-64 w-120 m-10">
                 {/* Email Section */}
-                <div className="py-3 text-xl ml-8">
+                <div className="py-3 text-xl ml-8 ">
                     Email
                     <div className="border-b pt-2 border-gray-500 w-[95%] mt-1"></div>
                 </div>
                 <div>
-                    <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium">Email</p>
+                    <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400">Email</p>
                     <FormControl sx={{ mt: 0, ml: 0 }} error={!!errors.email}>
                         <TextField
                             // placeholder="Enter Email"
@@ -128,14 +129,14 @@ const Generals = () => {
 
             {/* Phone Number Section */}
             <div className="bg-[#1a2c38] text-white rounded-lg py-4 h-96 w-120 m-10">
-                <div className="py-3 font-bold text-xl ml-8">Phone Number</div>
-                <p className="font-normal text-sm pt-2 mt-1 ml-8">
+                <div className="py-3 font-bold text-xl ml-8 ">Phone Number</div>
+                <p className="font-normal text-sm pt-2 mt-1 ml-8 text-gray-400">
                     We only service areas that are listed in the available country code list.
                 </p>
                 <div className="border-b pt-4 border-gray-500 w-[95%] mt-1"></div>
 
                 {/* Country Code Dropdown */}
-                <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium">Country Code</p>
+                <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400">Country Code</p>
                 <FormControl sx={{ mt: -2, ml: 3.7, width: '41%' }} size="small">
                     <div
                         onClick={() => setIsOpen(!isOpen)}
@@ -194,7 +195,7 @@ const Generals = () => {
 
 
                 {/* Phone Number Input */}
-                <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium">Phone Number</p>
+                <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400 ">Phone Number</p>
                 <FormControl sx={{ mt: -2, ml: 0 }}>
                     <TextField
                         // placeholder="Enter Phone Number"
@@ -230,6 +231,7 @@ const Generals = () => {
                     >
                         Submit
                     </Button>
+
                 </div>
             </div>
         </div>

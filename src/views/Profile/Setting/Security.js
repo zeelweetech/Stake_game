@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FormControl, TextField, InputAdornment, IconButton, Button } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { FaCopy } from "react-icons/fa";
+
 
 const Security = () => {
     const [showPassword, setShowPassword] = useState({
@@ -53,16 +55,26 @@ const Security = () => {
             // Add logic here
         }
     };
+    // const handleCopy = () => {
+    //     const inputField = document.getElementById("auth-code-input");
+    //     inputField.select();
+    //     inputField.setSelectionRange(0, 99999);
+    //     navigator.clipboard.writeText(inputField.value).then(() => {
+    //         //   alert("Code copied to clipboard!"); 
+    //         console.error("Failed to copy text: ", err);
+    //     });
+    // };
+
 
     return (
-        <div className="bg-[#0f212e] text-white rounded-lg py-1 min-h-screen">
-            <div className="bg-[#1a2c38] text-white rounded-lg py-4 w-120 mx-10">
+        <div className="bg-[#0f212e] text-white rounded-lg p-1 py-1">
+            <div className="bg-[#1a2c38] text-white rounded-lg py-2 w-120 m-6 mx-10">
                 <div className="py-2 text-xl ml-8">Password</div>
 
 
                 <div className="mx-8">
                     <div className="mb-4">
-                        <p className=" mt-4 text-sm font-medium">
+                        <p className=" mt-4 text-sm font-medium text-gray-400">
                             Old Password <span className="text-red-500">*</span>
                         </p>
                         <FormControl sx={{ mt: 0, ml: 0 }}>
@@ -107,7 +119,7 @@ const Security = () => {
 
                     {/* New Password */}
                     <div className="mb-4">
-                        <p className="text-sm font-medium">New Password <span className="text-red-500">*</span></p>
+                        <p className="text-sm font-medium text-gray-400">New Password <span className="text-red-500">*</span></p>
                         <FormControl sx={{ mt: 0, ml: 0 }}>
                             <TextField
                                 name="newPassword"
@@ -149,7 +161,7 @@ const Security = () => {
 
                     {/* Confirm Password */}
                     <div className="mb-6">
-                        <p className=" text-sm font-medium">Confirm Password <span className="text-red-500">*</span></p>
+                        <p className=" text-sm font-medium text-gray-400">Confirm Password <span className="text-red-500">*</span></p>
                         <FormControl sx={{ mt: 0, ml: 0 }}>
                             <TextField
                                 name="confirmPassword"
@@ -158,18 +170,18 @@ const Security = () => {
                                 onChange={handleInputChange}
                                 error={!!error.confirmPassword}
                                 helperText={error.confirmPassword}
-                               sx={{
-                                width: "140%",
-                                backgroundColor: "#0f212e",
-                                // marginLeft: "30px",
-                                "& .MuiOutlinedInput-root": {
-                                    border: "1px border-gray-500",
-                                    height: "40px",
-                                    "&:hover": {
-                                        border: "2px solid #b1bad3",
+                                sx={{
+                                    width: "140%",
+                                    backgroundColor: "#0f212e",
+                                    // marginLeft: "30px",
+                                    "& .MuiOutlinedInput-root": {
+                                        border: "1px border-gray-500",
+                                        height: "40px",
+                                        "&:hover": {
+                                            border: "2px solid #b1bad3",
+                                        },
                                     },
-                                },
-                            }}
+                                }}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -187,18 +199,22 @@ const Security = () => {
                                 }}
                             />
                         </FormControl>
+
                     </div>
 
+                    <div className="border-b pt-2 border-gray-500 w-4/1 mt-1"></div>
+
                     {/* Save Button */}
-                    <div className="flex justify-end">
+                    <div className="flex justify-end p-4">
                         <Button
+                            variant="contained"
+                            color="success"
                             onClick={handleSave}
+
                             sx={{
-                                backgroundColor: "#4caf50",
-                                color: "white",
-                                "&:hover": {
-                                    backgroundColor: "#45a049",
-                                },
+                                color: "black",
+                                height: "50px",
+                                width: "80px"
                             }}
                         >
                             Save
@@ -206,7 +222,41 @@ const Security = () => {
                     </div>
                 </div>
             </div>
+
+            {/* <div className="bg-[#0f212e] text-white rounded-lg p-1 py-1 min-h-screen">
+                <div className="bg-[#1a2c38] text-white rounded-lg py-2 w-120 m-6 mx-10">
+                    <div className="py-2 text-xl ml-8">Two Factor</div>
+                    <p className="font-normal text-sm pt-1 mt-1 ml-8 text-gray-400">
+                        To keep your account extra secure leave a two factor authentication enabled.
+                    </p>
+                    <div className="border-b pt-4 border-gray-500 w-full mt-1"></div>
+                    <div>
+                        <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400">
+                            Copy this code to your authenticator app
+                        </p>
+
+                        <div className="flex items-center ml-8">
+                            {/* Input field with code */}
+                            {/* <input
+                                id="auth-code-input"
+                                type="text"
+                                value="123456"  // You can replace this with your dynamic code
+                                readOnly
+                                className="bg-[#1a2c38] text-white rounded-lg p-2 w-60 border border-gray-500 mr-2"
+                            />
+
+                    
+                            <FaCopy
+                                size={20}
+                                className="cursor-pointer text-gray-400 hover:text-gray-500"
+                                onClick={handleCopy}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>  */}
         </div>
+
     );
 };
 
