@@ -139,44 +139,6 @@ export const SidebarNav = ({ items, openMenubar }) => {
 
   const navLink = (name, icon, badge, indent = false, index) => {
     return (
-<<<<<<< HEAD
-      <>
-        <div>
-          <li
-            key={index}
-            className={`flex items-center 
-
-            ${
-              name === "Games"
-                ? "border-b-2 bg-[#213743] p-1.5 rounded-md w-40"
-                : ""
-            }
-            ${
-              name === "Logout" ? "bg-[#213743] p-1.5 rounded-md w-40 ml-4" : ""
-            }`}
-            onClick={name === "Logout" ? handleLogout : undefined }
-          >
-            <div className="text-white">
-              {icon ? (
-                <>{index % 2 === 0 ? icon : icon}</>
-              ) : (
-                indent && (
-                  <span className="nav-icon">
-                    <span className="nav-icon-bullet"></span>
-                  </span>
-                )
-              )}
-            </div>
-            <span className={`ml-4 ${openMenubar ? "block" : "hidden"}`}>
-              {name && name}
-            </span>
-            {badge && (
-              <span
-                color={badge.color}
-                className={`ml-4 ${openMenubar ? "block" : "hidden"}`}
-              >
-                {badge.text}
-=======
       <li
         key={index}
         className={`flex items-center
@@ -197,7 +159,6 @@ export const SidebarNav = ({ items, openMenubar }) => {
             indent && (
               <span className="nav-icon">
                 <span className="nav-icon-bullet"></span>
->>>>>>> a24eda6845cf0f182cc84b846a29963440b26905
               </span>
             )
           )}
