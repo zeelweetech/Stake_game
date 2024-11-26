@@ -26,6 +26,8 @@ const Exclusives = React.lazy(() => import("./views/casino/CasinoHomePage/Exclus
 const StackOriginals = React.lazy(() => import("./views/casino/CasinoHomePage/StackOriginals"))
 const NewReleases = React.lazy(() => import("./views/casino/CasinoHomePage/NewReleases"))
 const Lobby = React.lazy(() => import("./views/casino/CasinoHomePage/Lobby"))
+const Setting = React.lazy(() => import("./views/Profile/Setting"));
+const Profile = React.lazy(() => import("./views/Profile/index"))
 const token = localStorage.getItem("token");
 // const General = React.lazy(() => import("./views/Profile/Setting/General"))
 const routes = [
