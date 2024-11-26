@@ -51,14 +51,17 @@ const routes = [
   { path: "/ComeSoon", name: "ComeSoon", element: ComeSoon },
   { path: "/HelpCenter", name: "HelpCenter", element: HelpCenter },
   {
-    path: "/Policies", name: "Policies", element: Policies,
-    // children: [
-    //   { path: "terms", name: "Terms", element: Terms }, // No leading slash
-    //   { path: "privacy", name: "Privacy", element: Policies }, // Example of another child
-    // ],
+    path: "/policies",
+    name: "Policies",
+    element: Policies,
+    children: [
+      { path: "terms", name: "Terms of Service", element: Terms },
+      { path: "privacy", name: "Privacy", element: Policies },
+      { path: "cookies-policy", name: "Cookies Policy", element: WagerRequirements },
+    ],
   },
-  { path: "/terms", name: "Terms", element: Terms },
-  { path: "/wager-requirements", name: "WagerRequirements", element: WagerRequirements },
+  // { path: "/terms", name: "Terms", element: Terms },
+  // { path: "/wager-requirements", name: "WagerRequirements", element: WagerRequirements },
 
 
 

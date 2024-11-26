@@ -5,7 +5,7 @@ const Policies = () => {
         { name: "Privacy Policy", link: "privacy" }, // Relative path
         { name: "Terms of Service", link: "terms" }, // Relative path
         { name: 'Anti-Money Laundering', link: '/anti-money-laundering' },
-        { name: 'Privacy', link: '/Terms' },
+        // { name: 'Privacy', link: '/Terms' },
         { name: 'Coin Mixing', link: '/coin-mixing' },
         { name: 'Providers', link: '/providers' },
         { name: 'Sportsbook', link: '/sportsbook' },
@@ -13,7 +13,7 @@ const Policies = () => {
         { name: 'Self-Exclusion', link: '/self-exclusion' },
         { name: 'Racing Rules', link: '/racing-rules' },
         { name: 'Poker Card Room Rules', link: '/poker-card-room-rules' },
-        { name: 'Poker Refund Policy', link: '/poker-refund-policy' },
+        { name: 'Poker Refund Policy', link: '/poker-refund-policy' },  
     ];
 
     return (

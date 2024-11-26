@@ -365,7 +365,7 @@ const wagerRequirement = () => {
                     </li>
                     <li class="flex items-center space-x-2">
                       <div class="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                      <span class="text-gray-300">Gold Digger</span>
+                      <span class="text-gray-300">Gold Pigger</span>
                     </li>
                   </ul>
                 </div>
