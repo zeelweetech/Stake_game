@@ -2,11 +2,11 @@ import React from 'react'
 
 const Sportsbook = () => {
     return (
-        <div className="max-w-4xl mx-auto px-4 py-8 text-gray-300">
+        <div className="px-2 py-8 text-gray-300 bg-[#0F212E] rounded-lg">
             <h1 className="text-3xl font-bold mb-6 text-white">Sportsbook Rules and Policies</h1>
 
             <div className="grid md:grid-cols-3 gap-6 mb-8">
-                <div>
+                <div className="pl-8">
                     <ul className='list-disc'>
                         <li>General</li>
                         <li>Soccer</li>
@@ -248,25 +248,25 @@ const Sportsbook = () => {
                         Where Cashout is available on a Pre-Match market, if the odds provider do not cover the event Live then Cashout will be unavailable once the event starts.
                     </li>
                     <li>
-                        Your Cashout value will differ depending on how your selection is performing and may be higher or lower than your original stake, allowing you to guarantee a profit or minimise a loss.
+                        Your Cashout value will differ depending on how your selection is performing and may be higher or lower than your original Listor, allowing you to guarantee a profit or minimise a loss.
                     </li>
                     <li>
-                        Stake reserves the right to reverse the settlement of a cashout on any bet that has been settled in error.
+                        Listor reserves the right to reverse the settlement of a cashout on any bet that has been settled in error.
                     </li>
                     <li>
-                        Stake will not be responsible in the event that Cashout is unavailable due to technical issues. Any bets will be settled as normal based on the final result.
+                        Listor will not be responsible in the event that Cashout is unavailable due to technical issues. Any bets will be settled as normal based on the final result.
                     </li>
                     <li>
-                        Stake reserves the right to remove the Cashout feature for any customer who misuses it by regularly taking advantage of Pre-Match price movements to close their bets before events have started.
+                        Listor reserves the right to remove the Cashout feature for any customer who misuses it by regularly taking advantage of Pre-Match price movements to close their bets before events have started.
                     </li>
                     <li>
-                        Stake reserves the right to remove the cashout feature for any customer who misuses it by taking advantage of latency to guarantee profit when placing bets then immediately cashing out.
+                        Listor reserves the right to remove the cashout feature for any customer who misuses it by taking advantage of latency to guarantee profit when placing bets then immediately cashing out.
                     </li>
                 </ul>
                 <h3 className="text-xl font-semibold mb-3 mt-6 text-white">Third Party Content</h3>
                 <ul className="list-disc pl-8 space-y-3">
                     <li>
-                        The Stake sportsbook contains content provided by Third Party Providers. This includes the information related to sports scores and analytics. Stake is not responsible for, do not endorse and make no representation either expressly or implicitly concerning the Third Party Content provided on our platform. You rely on Third Party Content completely at your own risk.
+                        The Listor sportsbook contains content provided by Third Party Providers. This includes the information related to sports scores and analytics. Listor is not responsible for, do not endorse and make no representation either expressly or implicitly concerning the Third Party Content provided on our platform. You rely on Third Party Content completely at your own risk.
                     </li>
                 </ul>
 
@@ -965,7 +965,7 @@ const Sportsbook = () => {
                     <li>The odds provider reserves the right to void bets if a fight does not take place for any reason on the scheduled date.</li>
                     <li>If either fighter fails to answer the bell for the next round then his opponent will be deemed to have won in the previous round.</li>
                     <li>Should there be a withdrawal or a substitution of one of the boxers concerned, bets will be void.</li>
-                    <li>In the event of a fight being declared a No Contest all bets will be void and stakes returned.</li>
+                    <li>In the event of a fight being declared a No Contest all bets will be void and Listors returned.</li>
                     <li>Should the scheduled number of rounds be changed before the fight then all Total Rounds, Round Betting and Method of Victory bets will be made void.</li>
                     <li>Half of round must pass to be counted for settlements</li>
                 </ul>
@@ -1724,7 +1724,7 @@ const Sportsbook = () => {
                         In limited overs matches, bets will be void if it has not been possible to complete at least 80% of the scheduled overs in either innings due to external factors, including bad weather, unless settlement of the bet has already been determined before the reduction. In drawn First Class matches, bets will be void if fewer than 200 overs have been bowled, unless settlement of the bet has already been determined.
                     </li>
                     <li>
-                        If a match is declared a 'no-ball' bets will be void and staked money returned to the customer. If a match/market is cancelled before a ball being bowled, and it is not rescheduled within 48 hours, bets on the match will be classified as void.
+                        If a match is declared a 'no-ball' bets will be void and Listord money returned to the customer. If a match/market is cancelled before a ball being bowled, and it is not rescheduled within 48 hours, bets on the match will be classified as void.
                     </li>
                     <li>
                         For the Hundred, an over will consist of 5 legal deliveries, so a full innings will be made up of 20 overs. All other rules remain the same as other limited overs formats.

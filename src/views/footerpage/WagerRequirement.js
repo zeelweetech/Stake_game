@@ -388,8 +388,8 @@ const wagerRequirement = () => {
 
   return (
     <div>
-      <div className="min-h-screen bg-gray-900 text-gray-300">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="bg-[#0F212E] rounded-lg">
+        <div className="container mx-auto px-4 py-8 text-white">
           {/* Main content container */}
           <div className="space-y-6">
             {/* Introduction paragraphs */}

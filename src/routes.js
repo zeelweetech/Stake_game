@@ -1,5 +1,6 @@
 import { element } from "prop-types";
 import React from "react";
+// import pokerTournamentCancellation from "./views/footerpage/pokerTournamentCancellation";
 
 const LandingBanner = React.lazy(() => import("./views/lendingpage/index"));
 const Homepage = React.lazy(() => import("./views/Homepage/index"));
@@ -11,21 +12,12 @@ const GameContainer = React.lazy(() =>
 );
 const HelpCenter = React.lazy(() =>
   import("./views/footerpage/HelpCenter"))
-const CoinMixing = React.lazy(() =>
-  import("./views/footerpage/CoinMixing"))
-const Privacy = React.lazy(() =>
-  import("./views/footerpage/Privacy"))
 const Policies = React.lazy(() => import("./views/footerpage/Policies"))
-const Terms = React.lazy(() => import("./views/footerpage/Terms"))
-const Providers = React.lazy(() => import("./views/footerpage/Providers"))
-const Sportsbook = React.lazy(() => import("./views/footerpage/Sportsbook"))
-// ... existing code ...
-const WagerRequirements = React.lazy(() => import("./views/footerpage/WagerRequirement"))
-// Remove the duplicated commented line
-const ComeSoon = React.lazy(() => import("./views/component/ComeSoon"))
-// ... existing code ...
 
-const antiMoneyLaundering = React.lazy(() => import("./views/footerpage/antiMoneyLaundering"))
+
+const ComeSoon = React.lazy(() => import("./views/component/ComeSoon"))
+
+// const antiMoneyLaundering = React.lazy(() => import("./views/footerpage/antiMoneyLaundering"))
 const Slots = React.lazy(() => import("./views/casino/CasinoHomePage/Slots"));
 const LiveCasion = React.lazy(() => import("./views/casino/CasinoHomePage/LiveCasino"))
 const GameShows = React.lazy(() => import("./views/casino/CasinoHomePage/GameShows"))
@@ -36,7 +28,7 @@ const Lobby = React.lazy(() => import("./views/casino/CasinoHomePage/Lobby"))
 const Setting = React.lazy(() => import("./views/Profile/Setting"));
 const Profile = React.lazy(() => import("./views/Profile/index"))
 const token = localStorage.getItem("token");
-// const General = React.lazy(() => import("./views/Profile/Setting/General"))
+
 const Wallet = React.lazy(() =>import("./views/Profile/Wallet"))
 
 const routes = [
@@ -61,24 +53,30 @@ const routes = [
   { path: "/NewReleases", name: "NewReleases", element: NewReleases },
   { path: "/ComeSoon", name: "ComeSoon", element: ComeSoon },
   { path: "/HelpCenter", name: "HelpCenter", element: HelpCenter },
-  {
-    path: "/Policies", name: "Policies", element: Policies,
-    // children: [
-    //   { path: "terms", name: "Terms", element: Terms }, // No leading slash
-    //   { path: "privacy", name: "Privacy", element: Policies }, // Example of another child
-    // ],
-  },
-  { path: "/terms", name: "Terms", element: Terms },
-  { path: "/providers", name: "Providers", element: Providers },
-  { path: "/sportsbook", name: "Sportsbook", element: Sportsbook },
-  { path: "/wager-requirements", name: "WagerRequirements", element: WagerRequirements },
-  { path: "/anti-money-laundering", name: "antiMoneyLaundering", element: antiMoneyLaundering },
-  { path: "/Privacy", name: "Privacy", element: Privacy },
-  { path: "/coin-mixing", name: "CoinMixing", element: CoinMixing },
+ 
+  // { path: "/terms", name: "Terms", element: Terms },
+  // { path: "/poker-tournament-cancellation", name: "PokerTournamentCancellation", element: pokerTournamentCancellation },
+  // { path: "/card-room-rules", name: "CardRoomRules", element: CardRoomRules },
+  // { path: "/racing-rules", name: "RacingRules", element: RacingRules },
+  // { path: "/self-exclusion", name: "SelfExclusion", element: SelfExclusion },
+  // { path: "/cookies", name: "Cookies", element: Cookies },
+  // { path: "/providers", name: "Providers", element: Providers },
+  // { path: "/sportsbook", name: "Sportsbook", element: Sportsbook },
+  // { path: "/wager-requirements", name: "WagerRequirements", element: WagerRequirements },
+  // { path: "/anti-money-laundering", name: "antiMoneyLaundering", element: antiMoneyLaundering },
+  // { path: "/Privacy", name: "Privacy", element: Privacy },
+  // { path: "/coin-mixing", name: "CoinMixing", element: CoinMixing },
   { path: "/profile", name: "Profile", element: Profile },
   { path: "/setting", name: "Setting", element: Setting },
   { path: "/setting/:section", name: "Setting", element: Setting },
+  {
+    path: "/Policies/:section", name: "Policies", element: Policies,
+
+  },
+  // { path: "/setting/:section", name: "Setting", element: Setting },
+
   {path: "/Wallet", name: "Wallet", element: Wallet}
+
 
 ];
 

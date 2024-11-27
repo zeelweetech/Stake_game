@@ -2,7 +2,7 @@ import React from 'react'
 
 const Privacy = () => {
     return (
-        <div className="max-w-4xl mx-auto px-4 py-8 text-gray-300">
+        <div className="px-4 py-8 text-gray-300 bg-[#0F212E] rounded-lg">
             <h1 className="text-3xl font-bold mb-6 text-white">Privacy Policy</h1>
 
             <p className="mb-6">
@@ -54,7 +54,7 @@ const Privacy = () => {
                     <li className="mb-2">To maintain your Member account.</li>
                     <li className="mb-2">To upgrade and enhance your experience within the website or over the telephone, or to tailor or develop information, services or products to suit your needs which may include market research and conducting promotions.</li>
                     <li className="mb-2">To tell you about our products or services that we think may be of interest to you by communicating with you via SMS or telephone.</li>
-                    <li className="mb-2">To create aggregate data about Members through demographic profiling, statistical analysis of the database to provide to potential and existing stakeholders, and to allow for more efficient operation of Listor.com's business.</li>
+                    <li className="mb-2">To create aggregate data about Members through demographic profiling, statistical analysis of the database to provide to potential and existing Listorholders, and to allow for more efficient operation of Listor.com's business.</li>
                     <li className="mb-2">To respond to your questions, comments, or requests.</li>
                     <li className="mb-2">To determine Members' liability to pay goods and services tax and other taxes where applicable.</li>
                     <li className="mb-2">To comply with Listor.com's contractual, legal, and statutory obligations.</li>

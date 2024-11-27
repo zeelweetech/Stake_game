@@ -25,6 +25,7 @@ import { IoShirt } from "react-icons/io5";
 import { FaCrown } from "react-icons/fa6";
 
 import { FaBloggerB } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const [isEnglishOpen, setIsEnglishOpen] = useState(false);
@@ -176,9 +177,26 @@ function Footer() {
               <ul className="space-y-2">
                 <li><a href="#" className="hover:text-white">VIP Club</a></li>
                 <li><a href="#" className="hover:text-white">Affiliate</a></li>
-                <li><a href="/Policies" className="hover:text-white">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white">AML Policy</a></li>
-                <li><a href="#" className="hover:text-white">Terms of Service</a></li>
+                <li>   <Link
+                  to="/policies/Privacy"
+                  className=" hover:text-white transition-colors"
+                >
+                  Privacy Policy
+                </Link></li>
+                <li>    <Link
+                  to="/policies/AntiMoneyLaunderings"
+                  className=" hover:text-white transition-colors"
+                >
+                  AML Policy
+                </Link></li>
+                <li>
+                  <Link
+                    to="/policies/Terms"
+                    className=" hover:text-white transition-colors"
+                  >
+                    Terms of Service
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -205,7 +223,7 @@ function Footer() {
             </ul>
           </div>
 
-   
+
 
         </div>
 
@@ -236,7 +254,7 @@ function Footer() {
             <img src={EvertonLogo} alt="Partner" className="h-12" />
             <img src={Ufc} alt="Partner" className="h-12" />
 
-       
+
 
             {/* Add more partner logos */}
           </div>
@@ -262,7 +280,7 @@ function Footer() {
           {/* Company Information */}
           <div className="text-center py-2">
             <p className="text-xs max-w-[900px] mx-auto leading-relaxed opacity-80">
-            Listor is owned and operated by Medium Rare N.V., registration number: 145353,
+              Listor is owned and operated by Medium Rare N.V., registration number: 145353,
               registered address: Korporaalweg 10, Willemstad, Curaçao. Contact us at{" "}
               <a href="mailto:support@Listor.com" className="text-inherit">
                 support@Listor.com

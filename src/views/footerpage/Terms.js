@@ -2,7 +2,7 @@ const Terms = () => {
 
     return (
         <>
-            <div className="flex-1 p-8">
+            <div className="flex-1 p-8 bg-[#0F212E] rounded-lg">
                 <h2 className="text-3xl font-bold text-white mb-8">Terms and Conditions</h2>
 
                 <div className="space-y-8">
@@ -80,7 +80,7 @@ const Terms = () => {
                         <p className="text-gray-300 leading-relaxed">
                             4.7 You represent and warrant that any information provided by You on Your application form is true, updated and correct.                          </p><br />
                         <p className="text-gray-300 leading-relaxed">
-                            4.8 Listor reserves the right, at any time, to ask for any KYC documentation it deems necessary to determine the identity and location of a Player. Listor reserves the right to restrict the Service, payment or withdrawal until identity is sufficiently determined, or for any other reason in Stake’s sole discretion. Listor also reserves the right to disclose a Player’s information as appropriate to comply with legal process or as otherwise permitted by the privacy policy of Listor (owner and operator of Listor), and by using the Service, you acknowledge and consent to the possibility of such disclosure.                         </p><br />
+                            4.8 Listor reserves the right, at any time, to ask for any KYC documentation it deems necessary to determine the identity and location of a Player. Listor reserves the right to restrict the Service, payment or withdrawal until identity is sufficiently determined, or for any other reason in Listor’s sole discretion. Listor also reserves the right to disclose a Player’s information as appropriate to comply with legal process or as otherwise permitted by the privacy policy of Listor (owner and operator of Listor), and by using the Service, you acknowledge and consent to the possibility of such disclosure.                         </p><br />
                         <h3>Multiple Accounts</h3>
                         <p className="text-gray-300 leading-relaxed">
                             4.9 Only one Listor Account per Player is allowed. Should You attempt or successfully open more than one Listor Account, under Your own name or under any other name, or should You attempt or succeed in using the Website by means of any other person's Listor Account, Listor will be entitled to immediately close all Your Listor Account(s), retain all monies in such Listor Accounts and ban You from future use of the Website.                          </p><br />
