@@ -118,7 +118,7 @@ function PlinkoGameContent() {
 
   return (
     <div
-      className={`bg-[#0f212e] h-full ml-2 mr-2 flex flex-col md:flex-row justify-center items-center select-none relative rounded-tr-lg 
+      className={`bg-[#0f212e] h-full ml-2 mr-2 flex flex-col md:flex-row justify-center items-center select-none relative 
         ${isMdScreen ? "md:mx-40 rounded-t-lg" : "md:mx-0"} 
         max-sm:h-96 rounded-t-lg`}
     >

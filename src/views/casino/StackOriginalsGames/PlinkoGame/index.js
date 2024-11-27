@@ -46,10 +46,11 @@ function PlinkoGame() {
   }, []);
 
   return (
+    <div>
     <div className="mt-10 bg-[#1a2c38] flex justify-center items-center text-white w-full h-full">
       <div className="w-full max-w-screen-lg">
         <div
-          className={`flex w-full min-w-70  ${
+          className={`flex w-full min-w-72  ${
             isMobile ? "h-[24rem]" : "h-[39rem]"
           } border-b-3`}
         >
@@ -70,17 +71,18 @@ function PlinkoGame() {
         )}
         <div
           className={`
-            // ${isMobile ? "h-[12rem]" : "h-20"}
+             ${isMobile ? "h-[5rem] md:ml-40 md:w-[24.3rem] ml-2 max-[425px]:w-[25.4rem] max-[375px]:w-[22.26rem] max-[414px]:w-[24.71rem] max-[390px]:w-[23.2rem] max-[430px]:w-[25.7rem] max-[360px]:w-[21.3rem] max-[400px]:w-[23.79rem]" : "h-24"}
           border-t-2 border-[#213743] h-20`}
         >
           <hr className="border-2 border-[#213743]" />
           <GameFooter />
         </div>
-        <div>
+        <div className="mt-5">
         <GameContent />
         <GameTable />
       </div>
       </div>
+    </div>
     </div>
   );
 }
