@@ -5,6 +5,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { getMyBets } from "../../../../services/GameServices";
 import { useParams } from "react-router-dom";
 import { decodedToken } from "../../../../resources/utility";
+import { format } from "date-fns";
 
 const MyBets = () => {
   const { userId } = useParams();
@@ -41,7 +42,7 @@ const MyBets = () => {
     id: bet?.id,
     gameName: bet?.game?.gameName ? bet?.game?.gameName : "-",
     userName: bet?.user?.userName ? bet?.user?.userName : "-",
-    betTime: bet?.betTime ? bet?.betTime : "-",
+    betTime: bet?.betTime ? format(new Date(bet.betTime), "hh:mm a") : "-",
     betAmount: bet?.betAmount ? bet?.betAmount : "-",
     multiplier: bet?.multiplier ? bet?.multiplier : "-",
     winAmount: bet?.winAmount ? bet?.winAmount : "-",
@@ -59,7 +60,7 @@ const MyBets = () => {
             </div>
           ) : (
             <div>
-              {/* <div className="flex justify-center item-center">
+              <div className="flex justify-center item-center">
                 <div>
                   <DataGrid
                     rows={rows}
@@ -100,7 +101,7 @@ const MyBets = () => {
                     }}
                   />
                 </div>
-              </div> */}
+              </div>
             </div>
           )}
         </div>

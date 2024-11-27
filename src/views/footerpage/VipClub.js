@@ -4,6 +4,7 @@ import { FaRegStar } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
 import InfoIcon from "@mui/icons-material/Info";
 import { getMedalsProgress } from "../../services/LoginServices";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import { decodedToken } from "../../resources/utility";
 import vipHeader from "../../assets/img/vip-header.png";
 import boost1 from "../../assets/img/boost.DF2DDCCE.png";
@@ -13,7 +14,6 @@ import boost4 from "../../assets/img/levelup.BPAS_FPf.png";
 import boost5 from "../../assets/img/bespoke.CxQq-dvx.png";
 import { GoCheck } from "react-icons/go";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 const VipClub = () => {
   const { userId } = useParams();
@@ -37,28 +37,29 @@ const VipClub = () => {
             <AccordionContent
               items={[
                 {
-                  question: "Why is Stake’s VIP program the best?",
+                  question: "Why is Listor ’s VIP program the best?",
                   answer:
-                    "Stake’s VIP program is often rated as one of the best online casino experiences due to the amount of bonuses we give out to players. Additionally, our award winning support team is online 24/7 to answer any questions you have. We have the highest customer satisfaction rate out of many online casinos where we have amassed a community of some of the most passionate gamblers across the globe.",
+                    "Listor ’s VIP program is often rated as one of the best online casino experiences due to the amount of bonuses we give out to players. Additionally, our award winning support team is online 24/7 to answer any questions you have. We have the highest customer satisfaction rate out of many online casinos where we have amassed a community of some of the most passionate gamblers across the globe.",
                 },
                 {
-                  question: "How much has Stake given out in bonuses?",
+                  question: "How much has listorgiven out in bonuses?",
                   answer:
                     "We have given over $1 Billion in bonuses. This is primarily the reason we have the best VIP program online. We truly believe in rewarding our players for their gameplay and loyalty.",
                 },
                 {
                   question: "How do I enter the $75,000 weekly raffle?",
                   answer:
-                    "To get one ticket to enter the raffle, you must wager $1000 on Stake.com. The more you wager, the more tickets you get, which increases your chances of winning.",
+                    "To get one ticket to enter the raffle, you must wager $1000 on Listor .com. The more you wager, the more tickets you get, which increases your chances of winning.",
                 },
                 {
-                  question: "Where can I find the Stake Telegram Channel?",
-                  answer: "The Stake Telegram channel is (@StakeCasino).",
+                  question: "Where can I find the Listor  Telegram Channel?",
+                  answer: "The Listor  Telegram channel is (@Listor Casino).",
                 },
                 {
-                  question: "Where can I find the Stake VIP Telegram channel?",
+                  question:
+                    "Where can I find the Listor  VIP Telegram channel?",
                   answer:
-                    "Once you reach Bronze, you can ask live support to be added to the Stake VIP Telegram Channel.",
+                    "Once you reach Bronze, you can ask live support to be added to the Listor  VIP Telegram Channel.",
                 },
               ]}
             />
@@ -88,7 +89,7 @@ const VipClub = () => {
                 {
                   question: "When is the Monthly bonus scheduled for?",
                   answer:
-                    "The monthly bonus is distributed once a month. The date is generally around the 15th. In some instances it can be a little later or even earlier. This is why it’s one of the most anticipated bonuses on Stake. When it’s released, you will be notified via email. To ensure you do not miss out on a bonus, please check your spam folder in your email.",
+                    "The monthly bonus is distributed once a month. The date is generally around the 15th. In some instances it can be a little later or even earlier. This is why it’s one of the most anticipated bonuses on Listor . When it’s released, you will be notified via email. To ensure you do not miss out on a bonus, please check your spam folder in your email.",
                 },
                 {
                   question:
@@ -152,6 +153,29 @@ const VipClub = () => {
     }
   };
 
+  const AccordionContent = ({ items }) => {
+    return (
+      <div className="space-y-2">
+        {items.map((item, index) => (
+          <div key={index} className="border-b border-[#2f4553]">
+            <Accordion sx={{ backgroundColor: "#213743", color: "white" }}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+              >
+                {item.question}
+              </AccordionSummary>
+              <AccordionDetails
+                sx={{ borderTop: "1px solid #b1bad3", color: "#b1bad3" }}
+              >
+                {item.answer}
+              </AccordionDetails>
+            </Accordion>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   useEffect(() => {
     getVipProgress();
   }, [userId]);
@@ -212,21 +236,55 @@ const VipClub = () => {
                       <InfoIcon fontSize="small" className="text-[#b1bad3]" />
                     </div>
                   </div>
-                  <div className="relative w-full my-2.5 h-[0.625em]">
+
+                  <div className="relative w-full my-2.5 h-[0.625em] bg-[#2f4553] rounded-[10px]">
                     <div
-                      className="h-full w-full shadow-lg rounded-[10px]"
-                      style={{ right: "100%", backgroundColor: "#2f4553" }}
+                      className={`h-full shadow-lg rounded-[10px]`}
+                      style={{
+                        width: progressData?.vipProgress
+                          ? progressData.vipProgress
+                          : "0%",
+                        backgroundColor: progressData?.vipProgress
+                          ? "#1475e1"
+                          : "#2f4553",
+                      }}
                     ></div>
                   </div>
                   <div className="flex justify-between">
                     <div className="flex items-center space-x-1">
-                      <FaRegStar size={18} color="#2f4553" />
+                      <FaRegStar
+                        size={18}
+                        color={
+                          progressData?.medal === "Bronze"
+                            ? "#c69c6d"
+                            : progressData?.medal === "Silver"
+                            ? "#b2cccc"
+                            : progressData?.medal === "Gold"
+                            ? "#fed100"
+                            : progressData?.medal === "Platinum"
+                            ? "#6fdde7"
+                            : "#2f4553"
+                        }
+                      />
                       <p className="text-sm text-[#b1bad3] font-medium">
                         {progressData?.medal || "None"}
                       </p>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <FaRegStar size={18} color="#2f4553" />
+                      <FaRegStar
+                        size={18}
+                        color={
+                          progressData?.nextMedal === "Bronze"
+                            ? "#c69c6d"
+                            : progressData?.nextMedal === "Silver"
+                            ? "#b2cccc"
+                            : progressData?.nextMedal === "Gold"
+                            ? "#fed100"
+                            : progressData?.nextMedal === "Platinum"
+                            ? "#6fdde7"
+                            : "#2f4553"
+                        }
+                      />
                       <p className="text-sm text-[#b1bad3] font-medium">
                         {progressData?.nextMedal || "Bronze"}
                       </p>
@@ -239,16 +297,16 @@ const VipClub = () => {
         ) : (
           <div className="w-full">
             <div
-              className="h-auto xl:w-[95.7rem] lg:w-full flex flex-col lg:flex-row justify-evenly items-center p-4"
-              // style={{
-              //   backgroundImage: `url(${mainbarBGimage})`,
-              //   backgroundSize: "cover",
-              //   backgroundPosition: "center",
-              //   backgroundRepeat: "no-repeat",
-              // }}
+              className="xl:w-full lg:w-full flex flex-col lg:flex-row items-center py-16"
+              style={{
+                backgroundImage: `url(${vipHeader})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
             >
               <div>
-                <div className="w-full md:w-[30rem] p-5 text-white">
+                <div className="w-full md:w-[30rem] p-5 text-white xl:ml-40 lg:ml-28 ml-4">
                   <div className="flex justify-between items-center">
                     <h1 className="text-2xl font-bold">
                       The Unrivaled VIP Experience
@@ -272,8 +330,34 @@ const VipClub = () => {
         )}
 
         <div className="my-10">
-          <div className="text-white font-bold text-center text-xl mb-6">
-            Stake VIP Ranking System
+          <div className="text-white font-bold text-center text-xl">
+            Listor VIP Ranking System
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-4 lg:px-16 my-6">
+            <div className="flex items-center space-x-3">
+              <div className="bg-[#213743] p-2.5 rounded-full">
+                <FaRegStar size={24} className="text-[#c69c6d]" />
+              </div>
+              <hr className="w-full border-4 rounded-lg border-[#213743]"></hr>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="bg-[#213743] p-2.5 rounded-full">
+                <FaRegStar size={24} className="text-[#b2cccc]" />
+              </div>
+              <hr className="w-full border-4 rounded-lg border-[#213743]"></hr>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="bg-[#213743] p-2.5 rounded-full">
+                <FaRegStar size={24} className="text-[#fed100]" />
+              </div>
+              <hr className="w-full border-4 rounded-lg border-[#213743]"></hr>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="bg-[#213743] p-2.5 rounded-full">
+                <FaRegStar size={24} className="text-[#6fdde7]" />
+              </div>
+              <hr className="w-full border-4 rounded-lg border-[#213743]"></hr>
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-4 lg:px-16">
             {/* Bronze Card */}
@@ -344,7 +428,9 @@ const VipClub = () => {
               <div className="text-[#071d2a] font-semibold">
                 <button className="bg-[#b2cccc] p-1 rounded-md">Silver</button>
               </div>
-              <div className=" text-white text-lg font-bold mt-2">$10k</div>
+              <div className=" text-white text-lg font-bold mt-2">
+                $50k - $100k
+              </div>
               <div className=" text-[#b1bad3] text-sm">Wager amount</div>
               <ul className="mt-4 space-y-1 text-white">
                 <li className="flex items-center">
@@ -420,7 +506,7 @@ const VipClub = () => {
               <div className="text-[#071d2a] font-semibold">
                 <button className="bg-[#fed100] p-1 rounded-md">Gold</button>
               </div>
-              <div className=" text-white text-lg font-bold mt-2">$10k</div>
+              <div className=" text-white text-lg font-bold mt-2">$100k</div>
               <div className=" text-[#b1bad3] text-sm">Wager amount</div>
               <ul className="mt-4 space-y-1 text-white">
                 <li className="flex items-center">
@@ -498,7 +584,9 @@ const VipClub = () => {
                   Platinum I-III
                 </button>
               </div>
-              <div className=" text-white text-lg font-bold mt-2">$10k</div>
+              <div className=" text-white text-lg font-bold mt-2">
+                $250k - $1M
+              </div>
               <div className=" text-[#b1bad3] text-sm">Wager amount</div>
               <ul className="mt-4 space-y-1 text-white">
                 <li className="flex items-center">
@@ -587,7 +675,7 @@ const VipClub = () => {
         {/* Benefits Section */}
         <div className="mt-12 px-4 lg:px-16">
           <h2 className="text-white text-center text-lg font-bold mb-6">
-            Stake VIP Club Benefits
+            Listor VIP Club Benefits
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-[#213743] p-6 rounded-lg text-white shadow-md flex space-x-4">
@@ -659,51 +747,34 @@ const VipClub = () => {
           <p class="text-[#b1bad3] text-center mb-8">
             Reach out to our award-winning support team
           </p>
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-center">
+              <div className="bg-[#10161b] md:w-48 md:h-[8rem] flex-shrink-0 md:ml-40">
+                <div className="bg-[#10161b]">
+                  {links.map((link, index) => (
+                    <div
+                      key={index}
+                      onClick={() => setActiveLink(link.label)}
+                      className={`w-full text-sm p-2 md:p-4 cursor-pointer  ${
+                        activeLink === link.label
+                          ? "bg-[#2c4a5a] text-white border-l-4 border-[#1475e1]"
+                          : "bg-[#10161b] text-white hover:bg-[#2c4a5a] hover:border-l-4 border-[#1475e1]"
+                      }`}
+                    >
+                      {link.label}
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-          <div className="flex justify-center">
-            <div class="bg-[#10161b]">
-              <div className="bg-[#10161b] w-48">
-                {links.map((link, index) => (
-                  <div
-                    key={index}
-                    onClick={() => setActiveLink(link.label)}
-                    className={`w-full text-sm p-2 xl:p-4 cursor-pointer ${
-                      activeLink === link.label
-                        ? "bg-[#2c4a5a] text-white"
-                        : "bg-[#10161b] text-white hover:bg-[#2c4a5a] hover:border-l-4 border-[#1475e1]"
-                    }`}
-                  >
-                    {link.label}
-                  </div>
-                ))}
+              <div className="flex-grow mt-4 md:mt-0 md:ml-4">
+                {renderContent()}
               </div>
             </div>
-
-            <div className="flex-grow p-4">{renderContent()}</div>
           </div>
         </div>
       </div>
     </>
-  );
-};
-
-const AccordionContent = ({ items }) => {
-  return (
-    <div className="space-y-2">
-      {items.map((item, index) => (
-        <div key={index} className="border-b border-[#2f4553] pb-3">
-          <Accordion className="bg-[#213743]">
-            <AccordionSummary
-              className="bg-[#213743]"
-              expandIcon={<ExpandMoreIcon />}
-            >
-              {item.question}
-            </AccordionSummary>
-            <AccordionDetails>{item.answer}</AccordionDetails>
-          </Accordion>
-        </div>
-      ))}
-    </div>
   );
 };
 
