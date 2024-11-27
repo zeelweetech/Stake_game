@@ -29,7 +29,7 @@ function PlinkoGameContent() {
       userId: decoded?.userId,
       gameId: id,
     });
-  }, [])
+  }, []);
 
   useEffect(() => {
     GetWalletData();
@@ -38,7 +38,8 @@ function PlinkoGameContent() {
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
-        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
+        const wallet =
+          parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
       .catch((err) => {});
@@ -118,25 +119,25 @@ function PlinkoGameContent() {
 
   return (
     <div
-      className={`bg-[#0f212e] h-full ml-2 mr-2 flex flex-col md:flex-row justify-center items-center select-none relative 
+      className={`bg-[#0f212e] xl:w-[45rem] lg:w-[41rem] h-full flex flex-col md:flex-row justify-center items-center select-none relative 
         ${isMdScreen ? "md:mx-40 rounded-t-lg" : "md:mx-0"} 
         max-sm:h-96 rounded-t-lg`}
     >
       <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
         <canvas
-          className="md:mt-12 max-sm:mb-[6rem] xl:w-[90vw] xl:h-[90vh] xl:max-w-[800px] xl:max-h-[700px] 
-                  lg:w-[90vw] lg:h-[150vh] lg:max-w-[697px] lg:max-h-[710px] 
-                  md:w-[80vw] md:h-[70vh] mt-28 sm:h-[20rem]
-                  max-w-[450px] max-h-[430px] sm:w-[400px] max-sm:w-[100%] max-sm:h-[30rem]"
+          className="xl:w-[50vw] xl:h-[90vh] xl:max-w-[800px] xl:max-h-[700px] 
+                  lg:w-[65vw] lg:h-[93vh] lg:max-w-[663px] lg:max-h-[650px] 
+                  md:w-[80vw] md:h-[70vh] mt-28 sm:h-[20rem] md:mt-12
+                  max-w-[450px] max-h-[430px] sm:w-[400px] max-sm:w-[100%] max-sm:h-[30rem] max-sm:mb-[6rem]"
           ref={canvasRef}
-        width="800"
-        height="710"
-      ></canvas>
+          width="800"
+          height="710"
+        ></canvas>
       </div>
-    <div className="flex flex-col xl:w-80 lg:w-80 lg:mt-14 md:ml-[17rem] md:w-14 max-sm:mb-36 max-sm:ml-[19rem] max-sm:w-10 relative xl:left-[19rem] xl:-top-40 lg:left-30 lg:-top-40 md:left-[1rem] md:-top-[1rem]">
-      {renderMultiplierButtons()}
+      <div className="flex flex-col xl:w-80 lg:w-80 lg:mt-14 md:ml-[17rem] md:w-14 max-sm:mb-36 max-sm:ml-[19rem] max-sm:w-10 relative xl:left-[19rem] xl:-top-40 lg:left-30 lg:-top-40 md:left-[1rem] md:-top-[1rem]">
+        {renderMultiplierButtons()}
+      </div>
     </div>
-  </div>
   );
 }
 

@@ -47,42 +47,46 @@ function PlinkoGame() {
 
   return (
     <div>
-    <div className="mt-10 bg-[#1a2c38] flex justify-center items-center text-white w-full h-full">
-      <div className="w-full max-w-screen-lg">
-        <div
-          className={`flex w-full min-w-72  ${
-            isMobile ? "h-[24rem]" : "h-[39rem]"
-          } border-b-3`}
-        >
-          {!isMobile && (
-            <div className="flex-row bg-[#213743]">
+      <div className="mt-10 bg-[#1a2c38] flex justify-center items-center text-white w-full h-full xl:mx-0 lg:mx-5">
+        <div className="w-full max-w-screen-lg">
+          <div
+            className={`flex w-full min-w-72  ${
+              isMobile ? "h-[24rem]" : "h-[39rem]"
+            } border-b-3`}
+          >
+            {!isMobile && (
+              <div className="flex-row bg-[#213743]">
+                <PlinkoGameSidebar />
+              </div>
+            )}
+            <div className="flex-grow">
+              <PlinkoGameContent />
+            </div>
+          </div>
+
+          {isMobile && (
+            <div className="flex flex-col">
               <PlinkoGameSidebar />
             </div>
           )}
-          <div className="flex-grow">
-            <PlinkoGameContent />
-          </div>
-        </div>
-
-        {isMobile && (
-          <div className="flex flex-col">
-            <PlinkoGameSidebar />
-          </div>
-        )}
-        <div
-          className={`
-             ${isMobile ? "h-[5rem] md:ml-40 md:w-[24.3rem] ml-2 max-[425px]:w-[25.4rem] max-[375px]:w-[22.26rem] max-[414px]:w-[24.71rem] max-[390px]:w-[23.2rem] max-[430px]:w-[25.7rem] max-[360px]:w-[21.3rem] max-[400px]:w-[23.79rem]" : "h-24"}
+          <div
+            className={`
+             ${
+               isMobile
+                 ? "h-[5rem] md:ml-40 md:w-[24.3rem] ml-2 max-[425px]:w-[25.4rem] max-[375px]:w-[22.26rem] max-[414px]:w-[24.71rem] max-[390px]:w-[23.2rem] max-[430px]:w-[25.7rem] max-[360px]:w-[21.3rem] max-[400px]:w-[23.79rem]"
+                 : "h-24 xl:w-[65rem] lg:w-[57.8rem]"
+             }
           border-t-2 border-[#213743] h-20`}
-        >
-          <hr className="border-2 border-[#213743]" />
-          <GameFooter />
+          >
+            <hr className="border-2 border-[#213743]" />
+            <GameFooter />
+          </div>
+          <div className=" xl:ml-36 lg:ml-28 md:mx-3 mx-3 mt-5">
+            <GameContent />
+            <GameTable />
+          </div>
         </div>
-        <div className="mt-5">
-        <GameContent />
-        <GameTable />
       </div>
-      </div>
-    </div>
     </div>
   );
 }
