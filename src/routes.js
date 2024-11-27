@@ -34,6 +34,8 @@ const vipclub = React.lazy(() => import("./views/footerpage/VipClub"))
 
 const Vault = React.lazy(() => import("./views/Profile/Vault"))
 const Vip = React.lazy(()=> import("./views/Profile/Vip"))
+const Statistics = React.lazy (() => import("./views/Profile/Statistic"))
+const Notification = React.lazy(() => import("./views/Profile/Notification"))
 const routes = [
   {
     path: "/",
@@ -79,7 +81,10 @@ const routes = [
   {path: "/Wallet", name: "Wallet", element: Wallet},
   {path: "/vip-club", name: "VipClub", element: vipclub},
   {path: "/Vault", name: "Vault", element: Vault},
-  {path: "/Vip", name: "Vip", element: Vip}
+  {path: "/Vip", name: "Vip", element: Vip},
+  {path: "/Statistics", name: "Statistics", element: Statistics},
+  {path: "/Notification", name: "Notification", element: Notification}
+
 
 ];
 
