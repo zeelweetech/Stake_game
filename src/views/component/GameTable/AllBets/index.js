@@ -4,6 +4,7 @@ import Loader from "../../Loader";
 import Columns from "./columns";
 import { DataGrid } from "@mui/x-data-grid";
 import { getAllBets } from "../../../../services/GameServices";
+import { format } from "date-fns";
 
 const AllBets = () => {
   const [betsData, setBetsData] = useState([]);
@@ -39,7 +40,7 @@ const AllBets = () => {
     id: bet?.id,
     gameName: bet?.game?.gameName ? bet?.game?.gameName : "-",
     userName: bet?.user?.userName ? bet?.user?.userName : "-",
-    betTime: bet?.betTime ? bet?.betTime : "-",
+    betTime: bet?.betTime ? format(new Date(bet.betTime), "hh:mm a") : "-",
     betAmount: bet?.betAmount ? bet?.betAmount : "-",
     multiplier: bet?.multiplier ? bet?.multiplier : "-",
     winAmount: bet?.winAmount ? bet?.winAmount : "-",

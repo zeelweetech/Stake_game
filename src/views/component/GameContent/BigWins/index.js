@@ -5,6 +5,7 @@ import Columns from "./columns";
 import { DataGrid } from "@mui/x-data-grid";
 import {getBigWins } from "../../../../services/GameServices";
 import { useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 const BigWins = () => {
   const {id} = useParams()
@@ -35,7 +36,7 @@ const BigWins = () => {
     id: bet?.id,
     rank: index + 1,
     userName: bet?.user?.userName ? bet?.user?.userName : "-",
-    betTime: bet?.betTime ? bet?.betTime : "-",
+    betTime: bet?.betTime ? format(new Date(bet.betTime), "hh:mm a") : "-",
     betAmount: bet?.betAmount ? bet?.betAmount : "-",
     multiplier: bet?.multiplier ? bet?.multiplier : "-",
     winAmount: bet?.winAmount ? bet?.winAmount : "-",
