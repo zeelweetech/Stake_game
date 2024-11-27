@@ -46,7 +46,7 @@ const Verify = () => {
         >
           <DialogTitle>
             <div className="flex justify-between items-center w-full">
-              <h2 className="text-lg text-[#b1bad3]">Listor</h2>
+              <h2 className="text-lg text-[#b1bad3]  font-extrabold italic font-sans hover:cursor-pointer">Listor</h2>
 
               <IconButton>
                 <div

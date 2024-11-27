@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Generals from "./General";
 import Loader from "../../component/Loader";
 import Security from "./Security";
+import Session from "./Session";
+import Verify from "./Verify";
 
 const Setting = () => {
   const navigate = useNavigate();
@@ -15,12 +17,12 @@ const Setting = () => {
       case "general":
         return <Generals />;
       case "security":
-        return <div><Security /></div>;
+        return <Security />;
       case "session":
-        return <div>Session Settings</div>;
+        return <Session/>;
 
       case "verify":
-        return <div>Verify Settings</div>;
+        return <Verify/>;
 
       default:
         return <Generals/>
@@ -43,7 +45,7 @@ const Setting = () => {
           </div>
           <div className="flex">
             {/* Left Sidebar (List of Settings) */}
-            <div className="bg-[#0f212e] text-white rounded-lg shadow-lg p-1 w-60 h-52 flex flex-col items-start m-10 mt-5">
+            <div className="bg-[#0f212e] text-white rounded-lg shadow-lg p-1 w-52 h-52 flex flex-col items-start m-10 mt-5">
               <ul className="space-y-2">
                 {[
                   "General",

@@ -1,107 +1,56 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  TextField,
-} from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 const Wallet = () => {
-  const [open, setOpen] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [open, setOpen] = useState(true);
+  const handleClose = () => setOpen(false);
 
   return (
-    <>
-      <div>
-          
-
-        <Dialog
-          open={open}
-          onClose={() => setOpen(false)}
-          maxWidth="sm"
-          fullWidth
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      maxWidth="sm"
+      fullWidth
+      sx={{
+        color: "white",
+        borderRadius: 0, 
+      }}
+    >
+      <DialogTitle sx={{ backgroundColor: "#1a2c38", color: "#b1bad3" }}>
+        <div className="flex justify-between items-center w-full">
+          <h2 className="text-lg">Listor</h2>
+          <IconButton onClick={handleClose} sx={{ color: "white" }}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+      </DialogTitle>
+      <DialogContent sx={{ backgroundColor: "#1a2c38", color: "white" }}>
+        <p className="font-bold text-2xl py-2 p-6">Let's setup your wallet & get started!</p>
+        <div>
+          <p className="p-6">
+            Confirm your email & quickly verify your account details to get started using Stake.
+            This will allow you to deposit & withdraw your funds seamlessly.
+          </p>
+        </div>
+      </DialogContent>
+      <DialogActions sx={{ backgroundColor: "#1a2c38" }}>
+        <Button
+          onClick={handleClose}
           sx={{
-            "& .MuiPaper-root": {
-              borderRadius: "6px",
-              backgroundColor: "#0f212e",
-              color: "#b1bad3",
+            color: "#ffffff",
+            backgroundColor: "#1475E1", // Sky blue color for the button
+            width: "100%", // Makes the button take the full width
+            padding: "10px", // Adds padding for better button appearance
+            "&:hover": {
+              backgroundColor: "#106bb5", // Darker sky blue when hovered
             },
           }}
         >
-          <DialogTitle>
-            <div className="flex justify-between items-center w-full">
-              <h2 className="text-lg text-[#b1bad3]">Listor</h2>
-
-              <IconButton>
-                <div
-                  onClick={() => setOpen(false)}
-                  className="text-[#b1bad3] text-lg"
-                >
-                  Exit
-                </div>
-              </IconButton>
-            </div>
-          </DialogTitle>
-          <DialogContent>
-            <div className="h-96">
-              <h2 className="text-white text-xl">Confirm your email</h2>
-              <p>
-                Please check your email & click the Verification link to
-                activate your account
-              </p>
-              <div className="text-white pt-3">Email</div>
-              <TextField
-                autoFocus
-                placeholder="Email"
-                name="Email"
-                type="text"
-                fullWidth
-                error={!!errors.commissionPercentage}
-                helperText={errors.commissionPercentage}
-                sx={{
-                  my: 1,
-                  input: {
-                    color: "#b1bad3",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "#2f4553",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: "#2f4553",
-                    },
-                  },
-                }}
-              />
-              <div className="text-white text-end">Resend email</div>
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => setOpen(false)}
-              sx={{
-                width: "100%",
-                backgroundColor: "rgba(20, 117, 225)",
-                px: "1rem",
-                py: "0.5rem",
-                color: "#ffffff",
-                border: "1px solid rgba(20, 117, 225)",
-                "&:hover": {
-                  backgroundColor: "rgba(20, 117, 225)",
-                  color: "#fffff",
-                },
-              }}
-            >
-              continue
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    </>
+          Setup Wallet
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
