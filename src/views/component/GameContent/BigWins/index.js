@@ -44,7 +44,7 @@ const BigWins = () => {
   return (
     <>
       <div>
-        <div className="py-2 md:mt-3 md:-ml-5">
+        <div className="py-2 xl:ml-16 md:mt-3 md:-ml-5 ml-2">
           {loading ? (
             <Loader />
           ) : (
@@ -57,11 +57,10 @@ const BigWins = () => {
                     loading={loading}
                     paginationMode="server"
                     getRowClassName={(params) =>
-                      params.indexRelativeToCurrentPage % 2 === 0
-                        ? "row-dark"
-                        : "row-light"
+                      params.indexRelativeToCurrentPage % 2 === 0 ? "row-dark" : "row-light"
                     }
                     sx={{
+                      width: "78.5%",
                       border: "none",
                       color: "#b1bad3",
                       "& .MuiDataGrid-cell": {
@@ -83,6 +82,97 @@ const BigWins = () => {
                         color: "white",
                       },
                       overflowY: "hidden",
+                      // Add responsive styles here
+                      "@media (max-width: 425px)": {
+                        marginRight: "20px",
+                        width: "42%",
+                        fontSize: "0.8rem", // Adjust font size for smaller screens
+                        overflowX: "auto", // Enable horizontal scrolling
+                        "& .MuiDataGrid-cell": {
+                          whiteSpace: "nowrap", // Prevent content overflow
+                        },
+                        "& .MuiDataGrid-footerContainer": {
+                          fontSize: "0.7rem", // Adjust footer text size
+                        },
+                      },
+                      "@media (max-width: 375px)": {
+                        width: "20%",
+                        fontSize: "0.8rem", // Adjust font size for smaller screens
+                        overflowX: "auto", // Enable horizontal scrolling
+                        "& .MuiDataGrid-cell": {
+                          whiteSpace: "nowrap", // Prevent content overflow
+                        },
+                        "& .MuiDataGrid-footerContainer": {
+                          fontSize: "0.7rem", // Adjust footer text size
+                        },
+                      },
+                      // "@media (max-width: 320px)": {
+                      //   width: "32.5%",
+                      //   fontSize: "0.7rem",
+                      //   "& .MuiDataGrid-cell": {
+                      //     whiteSpace: "nowrap",
+                      //   },
+                      // },
+                      // "@media (max-width: 414px)": {
+                      //   marginRight : "10%",
+                      //   width: "44.5%",
+                      //   fontSize: "0.8rem", // Adjust font size for smaller screens
+                      //   overflowX: "auto", // Enable horizontal scrolling
+                      //   "& .MuiDataGrid-cell": {
+                      //     whiteSpace: "nowrap", // Prevent content overflow
+                      //   },
+                      //   "& .MuiDataGrid-footerContainer": {
+                      //     fontSize: "0.7rem", // Adjust footer text size
+                      //   },
+                      // },
+                      // "@media (max-width: 390px)": {
+                      //   marginRight : "10%",
+                      //   width: "41.5%",
+                      //   fontSize: "0.8rem", // Adjust font size for smaller screens
+                      //   overflowX: "auto", // Enable horizontal scrolling
+                      //   "& .MuiDataGrid-cell": {
+                      //     whiteSpace: "nowrap", // Prevent content overflow
+                      //   },
+                      //   "& .MuiDataGrid-footerContainer": {
+                      //     fontSize: "0.7rem", // Adjust footer text size
+                      //   },
+                      // },
+                      // "@media (max-width: 430px)": {
+                      //   marginRight : "10%",
+                      //   width: "46%",
+                      //   fontSize: "0.8rem", // Adjust font size for smaller screens
+                      //   overflowX: "auto", // Enable horizontal scrolling
+                      //   "& .MuiDataGrid-cell": {
+                      //     whiteSpace: "nowrap", // Prevent content overflow
+                      //   },
+                      //   "& .MuiDataGrid-footerContainer": {
+                      //     fontSize: "0.7rem", // Adjust footer text size
+                      //   },
+                      // },
+                      // "@media (max-width: 412px)": {
+                      //   marginRight : "10%",
+                      //   width: "44.2%",
+                      //   fontSize: "0.8rem", // Adjust font size for smaller screens
+                      //   overflowX: "auto", // Enable horizontal scrolling
+                      //   "& .MuiDataGrid-cell": {
+                      //     whiteSpace: "nowrap", // Prevent content overflow
+                      //   },
+                      //   "& .MuiDataGrid-footerContainer": {
+                      //     fontSize: "0.7rem", // Adjust footer text size
+                      //   },
+                      // },
+                      // "@media (max-width: 360px)": {
+                      //   marginRight : "10%",
+                      //   width: "37.5%",
+                      //   fontSize: "0.8rem", // Adjust font size for smaller screens
+                      //   overflowX: "auto", // Enable horizontal scrolling
+                      //   "& .MuiDataGrid-cell": {
+                      //     whiteSpace: "nowrap", // Prevent content overflow
+                      //   },
+                      //   "& .MuiDataGrid-footerContainer": {
+                      //     fontSize: "0.7rem", // Adjust footer text size
+                      //   },
+                      // },
                     }}
                   />
                 </div>
