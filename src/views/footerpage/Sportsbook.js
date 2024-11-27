@@ -2047,11 +2047,737 @@ const Sportsbook = () => {
                     <li>
                         Named Player Performance - How many points will the named player score in the player performance system? Points are scored as follows: 1 point per run scored, 20 points per wicket taken, 10 points per catch taken, 25 points per stumping taken. If the player does not bat or bowl, but is in the starting eleven, all bets will be settled. If the player is not in the starting eleven bets will be void.
                     </li>
+
+                    <li>
+                        In limited overs matches, bets will be void if it has not been possible to complete at least 80% of the scheduled overs in either innings due to external factors, including bad weather, unless settlement has been determined. Result will be considered determined if the line at which the bet was placed is passed. In drawn First Class matches, bets will be void if fewer than 200 overs have been bowled, unless both first innings have been completed.
+                    </li>
+                    <li>
+                        In First Class games, only first innings points will count. Points scored in a super over do not count.
+                    </li>
+                    <li>
+                        Batter Matchbet - Which of the named players will score the most runs? In limited overs matches, bets will be void if it has not been possible to complete at least 80% of the scheduled overs in either innings due to external factors, including bad weather, unless settlement has been determined. In drawn First Class matches, bets will be void if fewer than 200 overs have been bowled, unless settlement of the bet has already been determined.
+                    </li>
+                    <li>
+                        Both players must be named in the starting XI, or appear as a substitute. If either does not then subsequently bat all bets are still settled. Runs scored in a super over do not count.
+                    </li>
+                    <li>
+                        Bowler Matchbet - Which of the named players will take the most wickets? In limited overs matches, bets will be void if it has not been possible to complete at least 80% of the scheduled overs in either innings due to external factors, including bad weather, unless settlement has been determined. In drawn First Class matches, bets will be void if fewer than 200 overs have been bowled, unless settlement of the bet has already been determined.
+                    </li>
+                    <li>
+                        Both players must be named in the starting XI, or appear as a substitute. If either does not then subsequently bowl all bets are still settled. Wickets taken in a super over do not count.
+                    </li>
+                    <li>
+                        All-Rounder Matchbet - Which of the named players will score the most points in the player performance scoring system? Points are scored as follows: 1 point per run scored, 20 points per wicket taken, 10 points per catch taken, 25 points per stumping taken.
+                    </li>
+                    <li>
+                        In limited overs matches, bets will be void if it has not been possible to complete at least 80% of the scheduled overs in either innings due to external factors, including bad weather, unless settlement has been determined. In drawn First Class matches, bets will be void if fewer than 200 overs have been bowled, unless settlement of the bet has already been determined.
+                    </li>
+                    <li>
+                        Both players must be named in the starting XI, or appear as a substitute. If either player does not then subsequently bat or bowl then all bets are still settled. Points scored in a super over do not count.
+                    </li>
+                    <li>
+                        Keeper Matchbet - Which of the named wicket keepers score more points in the player performance scoring system? Points are scored as follows: 1 point per run scored, 20 points per wicket taken, 10 points per catch taken, 25 points per stumping taken.
+                    </li>
+                    <li>
+                        In limited overs matches, bets will be void if it has not been possible to complete at least 80% of the scheduled overs in either innings due to external factors, including bad weather, unless settlement has been determined. In drawn First Class matches, bets will be void if fewer than 200 overs have been bowled, unless settlement of the bet has already been determined.
+                    </li>
+                    <li>
+                        Both named players must start the match as a wicket keeper, or appear as a substitute, but if their playing role changes for any reason all bets will still be settled in accordance with the scoring system above. Points scored in a super over do not count.
+                    </li>
+                    <li>
+                        Fall of Next Wicket - How many runs will the batting team have scored when the next wicket falls? If the partnership is ended by the end of an innings, bets will settle at the final score. For settlement purposes, a batter retiring hurt does not count as a wicket.
+                    </li>
+
+                    <li>
+                        In limited overs matches, bets will be void if it has not been possible to complete at least 80% of the scheduled overs in either innings due to external factors, unless settlement has already been determined, or goes on to be determined. Result will be considered determined if the line at which the bet was placed is passed, or the wicket in question falls. In drawn First Class matches, bets will be void if fewer than 200 overs have been bowled, unless settlement of the bet has already been determined.
+                    </li>
+                    <li>
+                        Next Player Out - Which batter will be the next to be dismissed? If either batter retires hurt or the batters at the crease are different from those quoted, the bets placed on both batters will be declared void. If no more wickets fall, all bets will be void.
+                    </li>
+                    <li>
+                        Method of Next Dismissal - How will the next batter be out? The result will be determined by the dismissal method of the next wicket that falls. A batter retiring hurt does not count as a wicket. If a batter is retired out, all bets will be void. If the specified wicket does not fall, all bets will be void. Caught and bowled is included in fielder catch. "Other" dismissal methods include: hit wicket, timed out, obstructing the field and hit the ball twice.
+                    </li>
+                    <li>
+                        Race to 'X' Runs - Which batter will reach the specified number of runs first? All bets stand, regardless of any curtailment. If neither batter reaches the specified number of runs the markets will be settled as "Neither".
+                    </li>
+                    <li>
+                        Next Boundary Four or Six - Will the next boundary be a four or a six? If there are no more boundaries in the innings, bets will be void. Only boundaries scored from the bat (off any delivery – legal or not) will count as a boundary. Overthrows, all run fours and extras do not count as boundaries.
+                    </li>
+                    <li>
+                        In limited overs matches, bets will be void if the total innings is reduced at any stage to less than 80% of the stated maximum overs at the time the bet was placed, unless settlement of the bet was already determined before the reduction. In drawn First Class matches, bets will be void if fewer than 200 overs are bowled, unless settlement of the bet has already been determined.
+                    </li>
+                    <li>
+                        Boundaries scored in a super over do not count.
+                    </li>
+                    <li>
+                        Winning Over - In which over of the named team's innings will the match be completed? All bets will be void if there is no official result. In limited overs matches, all bets will be void if, subsequent to placing the bet, the maximum overs possible are reduced in any way.
+                    </li>
+                    <li>
+                        Both Teams to Score 'X' Runs - Will both teams score the specified number of runs? In limited overs matches, bets will be void if it has not been possible to complete at least 80% of the overs scheduled to have been bowled in both innings at the time the bet was placed due to external factors, including bad weather, unless settlement of the bet has already been determined before the reduction. In drawn First Class matches, bets will be void if fewer than 100 overs have been bowled in either teams first innings, unless settlement of the bet has already been determined.
+                    </li>
+                    <li>
+                        Only runs scored in the first innings count. If a team declares, that innings will be considered complete for the purposes of settlement.
+                    </li>
+                    <li>
+                        Either Batter Method of Dismissal - Will either of the named batters be dismissed in the specified method? All bets will settle, regardless of whether either batter remains not out, or retired hurt, at the end of the innings.
+                    </li>
+                    <li>
+                        Both Batter Method of Dismissal - Will both of the named batters be dismissed in the specified method? Same rules as "Either Batter Method of Dismissal".
+                    </li>
+                    <li>
+                        Runs off Consecutive Deliveries - How many runs will be scored off each of the specified deliveries? Same rules as "Runs off Delivery" except the specified number of runs must be scored off both named deliveries.
+                    </li>
+                    <li>
+                        Wicket off Delivery - Will a wicket fall in the specified delivery? The specified delivery must be completed for bets to stand. For settlement purposes, any wicket will count, including run outs. A batter retiring hurt does not count as a wicket. If a batter is timed out or retired out then the wicket is deemed to have taken place on the previous ball.
+                    </li>
+
+                    <li>
+                        Both Batters to Score 'X' Runs in Over - Will both batters score the specified number of runs in the over? The specified over must be completed for bets to stand unless settlement has already been determined. If an innings ends during an over then that over will be deemed to be complete unless the innings is ended due to external factors, including bad weather, in which case all bets will be void, unless settlement has already been determined. If the over does not commence for any reason, all bets will be void. Only runs that scored off the bat will count towards settlement. Bets will settle regardless of whether or not either of the specified batters are dismissed or retired hurt before the over commences.
+                    </li>
+                    <li>
+                        Both Batters to Score Boundary in Over - Will both batters score a boundary in the over? Same rules as "Both Batters to Score 'X' Runs in Over". But fours and sixes count as boundaries. Only fours or sixes scored from the bat (off any delivery – legal or not) will count. Overthrows, all run fours and extras do not count.
+                    </li>
+                    <li>
+                        Both a Four and a Six to be Scored in an Over - Will both a four and a six be scored in the over? The specified over must be completed for bets to stand unless settlement has already been determined. If an innings ends during an over then that over will be deemed to be complete unless the innings is ended due to external factors, including bad weather, in which case all bets will be void, unless settlement has already been determined. If the over does not commence for any reason, all bets will be void. Only fours or sixes scored from the bat (off any delivery – legal or not) will count. Overthrows, all run fours and extras do not count.
+                    </li>
+                    <li>
+                        Batter and Bowler Combo Milestones - Will both the named batter, and the named bowler, reach their specified milestones? For batter – same as "Batter Runs". In first class games, only runs scored in the first innings will count. For bowler – if a bowler does not bowl, they will be deemed to have taken 0 wickets.
+                    </li>
+                    <li>
+                        In limited overs matches, bets will be void if it has not been possible to complete at least 80% of the scheduled overs in the relevant innings due to external factors, including bad weather, unless settlement has been determined. In drawn First Class matches, bets will be void if fewer than 200 overs have been bowled, unless the player's bowling innings is complete. The result will be considered determined if the lines at which the bet was placed are passed.
+                    </li>
+                    <li>
+                        In First Class games, only first innings wickets will count and runs. Wickets and runs scored in a super over do not count.
+                    </li>
+                    <li>
+                        Batters Combo Milestones - Will both the batters reach their specified milestones? Same rules as "Combined Batter Runs".
+                    </li>
+
+                    <h4 className="font-bold mt-6 mb-2">Notes for all Markets</h4>
+                    <li>
+                        Players sent off/retired out: A player being sent off is viewed as retired out, so counts as a wicket.
+                    </li>
+                    <li>
+                        Concussion substitutions: When a player leaves the field as a concussion substitute, this does not count as a wicket. If the player does not return later, the final result will be as it stood when the player left the field. When a player enters the match as a concussion substitute, for settlement purposes both they and the player replaced are looked upon as to have played a full part in the match.
+                    </li>
+                    <li>
+                        Penalty runs after the conclusion of an innings: Penalty runs added to a team's total after the start of the other team's innings do not count towards settlement of markets in the previous innings.
+                    </li>
+                    <li>
+                        Incorrectly created matches: If a match is created in the wrong format (i.e. T20 instead of List A), bets will be void and a new match will be created.
+                    </li>
+
+
+                </ul>
+            </section>
+            // ... existing market descriptions ...
+            <section>
+                <h3 className="text-xl font-bold mb-4">All Other Sports</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        No sport-specific rules, general rules apply.
+                    </li>
                 </ul>
 
-
-
+                <h3 className="text-xl font-bold mb-4 mt-8">Esports General</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        All esports markets are based on in-game score events or results at the end of a scheduled match/map. All settlements will occur using the official score and results, which are declared on the official video stream or the in-game stream of the relevant matches.
+                    </li>
+                    <li>
+                        If a match start date/time is displayed for Esports matches are for indication purposes only and are not guaranteed to be correct. Bets will stand if a match is offered with an incorrect date and/or time.
+                    </li>
+                    <li>
+                        If a match is paused/postponed and not rescheduled to a later time within 24 hours of the actual scheduled start time, then all bets on that match will be voided.
+                    </li>
+                    <li>
+                        If the name of a player/team/tournament is misspelled, all bets will still stand unless it's obvious that the misspelled name is the same as a different entity.
+                    </li>
+                    <li>
+                        If a team name is changed due to a team leaving the organization, joining another organization, or due to an official change of team name, all bets will stand.
+                    </li>
+                    <li>
+                        If the organizer of the event allows for stand-ins and there is an official result, all bets will be resulted as normal.
+                    </li>
+                    <li>
+                        In the case where there is an overruling of a match result by the organizer due to unforeseen circumstances - such as cheating - all bets on that match will be voided. This rule is applicable within 72 hours from the end of the match, then we don't change the result of the tickets.
+                    </li>
+                    <li>
+                        If a match has been declared as a walkover by the tournament organizer, all bets will be void.
+                    </li>
+                    <li>
+                        If one team retires during a match, only wagers on the completed individual maps will be resulted. Match market, match side markets, and all other undecided map markets will be voided. Bets placed on any following maps that will be completed will be resulted with the official results. However, any and all live offer will be suspended on the match and moved to a new match with a different match ID that will genuinely reflect the state of the match. The only exemption to this rule would be in the situation team A wins map1 and proceeds to forfeit map 2. In this case, we would void all wagers on all undecided match and map 2 markets and continue our offer within map 3 of the match.
+                    </li>
+                    <li>
+                        All markets consider overtime, unless stated otherwise in the market name.
+                    </li>
+                    <li>
+                        If the match format is changed or differs from the one which is being offered, we reserve the right to void all bets.
+                    </li>
+                    <li>
+                        If the fixture is listed incorrectly, we reserve the right to void all bets.
+                    </li>
+                    <li>
+                        If a match is played before the scheduled start date / time, all bets placed after the actual start of the match will be refunded. All bets placed before the actual start of the match will stand.
+                    </li>
+                    <li>
+                        If a match or map is replayed due to an organizer or technical issues, all affected markets will be voided, while the replayed matches or maps will be handled separately as a new match.
+                    </li>
+                    <li>
+                        If a game on the map starts with less than ten players, all bets on that map will be voided.
+                    </li>
+                    <li>
+                        If the final gameplay length/duration is the same as a particular threshold, it is resolved as OVER.
+                    </li>
+                    <li>
+                        Unless stated otherwise, each Market has just one winning Selection.
+                    </li>
+                    <li>
+                        Unless stated otherwise, results are announced by the official organizer, usually over the stream and/or web.
+                    </li>
+                </ul>
             </section>
+            // ... existing sections ...
+            <section>
+                <h3 className="text-xl font-bold mb-4">Glossary</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Selection: a single option that punters can bet on. There are usually 2 Selections per Market, but there can be much more
+                    </li>
+                    <li>
+                        Title: computer/console/mobile game developed by a publisher with an active Esports ecosystem, for the purpose of this specification, it means mainly League of Legends, DOTA2, Counter Strike: Global Offensive, Rush Soccer/Rush Football (FIFA 2023), Rush Basketball (NBA 2K23), and Counter-Strike: Global Offensive – Head 2 Head Global Gaming League (H2HGGL).
+                    </li>
+                    <li>
+                        Map: one particular Esports game within an Esports competition
+                    </li>
+                    <li>
+                        Match: multiple Maps, where the first team to win 1 (Bo1 / Best of 1), 2 (Bo3 / Best of 3) or 3 (Bo3 / Best of 5) Map(s) wins. Bo2 (Best of 2) can be played with a draw 1-1 or won by 2-0.
+                    </li>
+                </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">Market Types</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Continuously open Markets: Markets are available for pre-Match and live betting, i.e., bets are accepted both before the Map start and while the Map is being played. Bets are resulted after the Match is finished, or after a certain event happens in-game.
+                    </li>
+                    <li>
+                        Temporarily open Markets: Markets are only available for pre-Match betting, where bets are accepted only before the actual Map start or before a certain in-game event. The resulting happens after the Map is finished, or after a certain event happens in-game.
+                    </li>
+                </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">Counter-Strike 2 / CS:GO</h3>
+                <h4 className="font-bold mt-6 mb-2">General Counter-Strike 2 betting rules</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        If one of the players disconnects and is unable to reconnect or be replaced for the rest of the Map, both teams decide to continue 4v5, and they play at least 3 rounds. All affected bets on that Map, Match, and match side markets will be voided.
+                    </li>
+                    <li>
+                        If a team retires, receives a win by admin decision, or is disqualified before all scheduled rounds of a Map are played, all undecided bets on that Map and Match will be voided.
+                    </li>
+                    <li>
+                        Rounds 1-12 constitute the first half of CS2 Maps.
+                    </li>
+                    <li>
+                        In the case of a round restart, all bets will stand. All markets will be resolved based on the official score.
+                    </li>
+                </ul>
+
+                <h4 className="font-bold mt-6 mb-2">Glossary</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        T / CT (Terrorists / Counter-terrorists): title specific name of Dark / Light team
+                    </li>
+                    <li>
+                        Round: Team wins Rounds to win the Map. A Round is won when 1) one team eliminates the other, or 2) by Terrorists when they successfully detonate the bomb, or 3) by Counter-terrorists when the bomb does not detonate in 115 seconds from the start of the Round, or 4) by Counter-terrorists when the bomb is defused. The first team to score 16 Rounds wins the Map in CSGO while in CS2 the first team to score 13 Rounds wins the Map.
+                    </li>
+                    <li>
+                        Overtime: In case of Map draw score (15:15 for CSGO or 12:12 for CS2), first overtime is being played in Bo6 format. In case of another draw (18:18 for CSGO or 15:15 for CS2), next overtime with the same rules will be played. This process repeats until one team wins overtime. Overtime rules can be tournament-specific.
+                    </li>
+                    <li>
+                        Pistol Round: 1. and 16. Round on a particular Map.
+                    </li>
+                </ul>
+                // ... existing sections ...
+                <h3 className="text-xl font-bold mb-4 mt-8">Markets</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Match winner 2-way: which team (Terrorists / Counter-terrorists) wins the Match.
+                    </li>
+                    <li>
+                        Match winner 3-way: which team (Terrorists / Counter-terrorists) wins the Match or both teams score one Map and Match is concluded as a draw.
+                    </li>
+                    <li>
+                        Match winner with handicap: which team (Terrorists / Counter-terrorists) wins the alternated game when the handicap is deducted from particular team final Map score. Handicap 1.5 is used for Bo2 and Bo3 Matches, handicap 2.5 is additionally used for Bo5 Matches.
+                    </li>
+                    <li>
+                        Exact Match score: what would be the final score of the Match, presented as "No. of Maps won by team A: No. of Maps won by team B".
+                    </li>
+                    <li>
+                        Map winner 2-way: which team (Terrorists / Counter-terrorists) won the Map.
+                    </li>
+                    <li>
+                        Map winner 3-way: which team (Terrorists / Counter-terrorists) wins the map after the regular period, if the map goes into Overtime the winning selection is a draw.
+                    </li>
+                    <li>
+                        Total Maps over/under: whether the count of Maps played in a certain Match is over or under a certain figure. Number 2.5 is used for Bo3, while numbers 3.5 and 4.5 are used for Bo5.
+                    </li>
+                    <li>
+                        Team to win at least 1 Map yes/no: whether a certain team wins at least one Map in a particular Match.
+                    </li>
+                    <li>
+                        Overtime Selection: whether Overtime will be played or not.
+                    </li>
+                    <li>
+                        Number of Rounds: whether the count of Rounds played in a certain Map is over or under a certain figure.
+                    </li>
+                    <li>
+                        Map winner with handicap: which team (Terrorists / Counter-terrorists) wins the alternated Map when handicap is deducted from particular team final Map score.
+                    </li>
+                    <li>
+                        Correct Round score: what would be the final score of the Map, presented as "No. of Rounds won by team A: No. of Rounds won by team B".
+                    </li>
+                    <li>
+                        Round X winner: which team (Terrorists / Counter-terrorists) win Round X.
+                    </li>
+                    <li>
+                        Pistol Round winner: which team (Terrorists / Counter-terrorists) wins specified pistol (1/16.) Round.
+                    </li>
+                    <li>
+                        First to win # of Rounds: which team (Terrorists / Counter-terrorists) reaches # of won Rounds first.
+                    </li>
+                    <li>
+                        First half winner: which team (Terrorists / Counter-terrorists) has higher number of won Rounds after first 15 Rounds.
+                    </li>
+                    <li>
+                        Second half winner: which team (Terrorists / Counter-terrorists) has higher number of won Rounds after first 15 Rounds and before Map is concluded as draw or won by one team.
+                    </li>
+                </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">Valorant</h3>
+                <h4 className="font-bold mt-6 mb-2">General Valorant betting rules</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        If one of the players disconnects and is unable to reconnect or be replaced for the rest of the Map, both teams decide to continue 4v5, and they play at least 5 rounds. All affected bets on that Map, Match and match side markets will be voided.
+                    </li>
+                    <li>
+                        If a team retires, receives a win by admin decision, or is disqualified before all scheduled rounds of a Map are played, all undecided bets on that Map and Match will be voided.
+                    </li>
+                    <li>
+                        Rounds 1-12 constitute the first half of Valorant Maps.
+                    </li>
+                    <li>
+                        Map winner 3-way: which team wins the map after the regular period, if the map goes into Overtime the winning selection is a draw
+                    </li>
+                </ul>
+                // ... existing sections ...
+                <h4 className="font-bold mt-6 mb-2">Glossary</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        A / D (Attackers / Defenders): title specific name of Dark / Light team
+                    </li>
+                    <li>
+                        Round: Team wins Rounds to win the Map. A Round is won when 1) one team eliminates the other, or 2) by Attackers when they successfully plant the spike, or 3) by Defenders when the spike does not detonate in 45 seconds from the start of the Round, or 4) by Defenders when the spike is defused. The first team to score 13 Rounds wins the Map.
+                    </li>
+                    <li>
+                        Overtime: In case of Map draw score (12:12), first overtime is being played in Bo2 format. In case of another draw (13:13), next overtime with the same rules will be played. This process repeats until one team wins overtime. Overtime rules can be tournament-specific.
+                    </li>
+                    <li>
+                        Pistol Round: 1 and 13. Round on a particular Map.
+                    </li>
+                </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">Markets</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Match winner 2-way: which team (Attackers / Defenders) wins the Match.
+                    </li>
+                    <li>
+                        Match winner 3-way: which team (Attackers / Defenders) wins the Match or both teams score one Map and Match is concluded as a draw.
+                    </li>
+                    <li>
+                        Match winner with handicap: which team (Attackers / Defenders) wins the alternated game when the handicap is deducted from particular team final Map score. Handicap 1.5 is used for Bo2 and Bo3 Matches, handicap 2.5 is additionally used for Bo5 Matches.
+                    </li>
+                    <li>
+                        Exact Match score: what would be the final score of the Match, presented as "No. of Maps won by team A: No. of Maps won by team B".
+                    </li>
+                    <li>
+                        Map winner 2-way: which team (Attackers / Defenders) won the Map.
+                    </li>
+                    <li>
+                        Total Maps over/under: whether the count of Maps played in a certain Match is over or under a certain figure. Number 2.5 is used for Bo3, while numbers 3.5 and 4.5 are used for Bo5.
+                    </li>
+                    <li>
+                        Team to win at least 1 Map yes/no: whether a certain team wins at least one Map in a particular Match.
+                    </li>
+                    <li>
+                        Overtime Selection: whether Overtime will be played or not.
+                    </li>
+                    <li>
+                        Number of Rounds: whether the count of Rounds played in a certain Map is over or under a certain figure.
+                    </li>
+                    <li>
+                        Map winner with handicap: which team (Attackers / Defenders) wins the alternated Map when handicap is deducted from particular team final Map score.
+                    </li>
+                    <li>
+                        Round X winner: which team (Attackers / Defenders) win Round X.
+                    </li>
+                    <li>
+                        Pistol Round winner: which team (Attackers / Defenders) wins specified pistol (1/13.) Round.
+                    </li>
+                    <li>
+                        First to win # of Rounds: which team (Attackers / Defenders) reaches # of won Rounds first.
+                    </li>
+                    <li>
+                        First half winner: which team (Attackers / Defenders) has higher number of won Rounds after first 12 Rounds.
+                    </li>
+                    <li>
+                        Second half winner: which team (Attackers / Defenders) has higher number of won Rounds after first 12 Rounds and before Map is concluded as draw or won by one team.
+                    </li>
+                </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">Dota 2</h3>
+                <h4 className="font-bold mt-6 mb-2">General Dota 2 betting rules</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        If a Map starts with fewer than 10 competitors, all bets on the Map will be void.
+                    </li>
+                    <li>
+                        If a competitor disconnects in the first 10 minutes and is unable to reconnect or be replaced for the rest of the Map, all affected bets on that Map and Match will be voided. If a competitor disconnects or quits after the 10th minute of play of a Map but action continues, bets have action according to the official result.
+                    </li>
+                </ul>
+                // ... existing sections ...
+                    <li>
+                        If a walkover or win by admin decision is given in the first 10 minutes of a Map, all bets on the Map will be void. If a win by admin decision is awarded after the 10th minute of play of a Map has started, bets have action according to the official result.
+                    </li>
+
+                    <h4 className="font-bold mt-6 mb-2">Glossary</h4>
+                    <ul className="list-disc pl-8 space-y-3">
+                        <li>
+                            Ancient: The primary objective of the Map. The first team to destroy the opposing team's Ancient wins the Map.
+                        </li>
+                        <li>
+                            GG: This allows the relevant team to surrender the Map when typed into the all chat.
+                        </li>
+                        <li>
+                            Dire / Radiant: The title specific name of Dark / Light opposing teams
+                        </li>
+                        <li>
+                            Kill: The Light/Dark team's score, which represents the total number of times members of the opposing team were killed.
+                        </li>
+                        <li>
+                            Aegis: An item which appears after the game objective Roshan is killed. It can be picked up by a player.
+                        </li>
+                        <li>
+                            Tower: A team specific game objective, which can be destroyed by the opposite team.
+                        </li>
+                        <li>
+                            Barracks: A team specific game objective, which can be destroyed by the opposite team.
+                        </li>
+                    </ul>
+
+                    <h3 className="text-xl font-bold mb-4 mt-8">Markets</h3>
+                    <ul className="list-disc pl-8 space-y-3">
+                        <li>
+                            Match winner 2-way: which team (Dark or Light) wins the Match.
+                        </li>
+                        <li>
+                            Match winner 3-way: which team (Dark or Light) wins the Match or both teams score for one Map (Bo2) and the Match is concluded as a draw.
+                        </li>
+                        <li>
+                            Match winner with handicap: which team (Dark or Light) wins the alternated game when handicap is deducted from that particular team's final Map score. A handicap of 1.5 is used for Bo2 and Bo3 Matches, a handicap of 2.5 is additionally used for Bo5 Matches.
+                        </li>
+                        <li>
+                            Exact Match score: the final score of the Match, presented as "No. of Maps won by team A: No. of Maps won by team B".
+                        </li>
+                        <li>
+                            Map winner 2-way: which team (Dark or Light) wins the Map.
+                        </li>
+                        <li>
+                            Total Maps over/under: whether the count of Maps played in a certain Match is over or under a certain figure. Number 2.5 is used for Bo3, while numbers 3.5 and 4.5 are used for Bo5.
+                        </li>
+                        <li>
+                            Team to win at least 1 Map yes/no: whether a certain team wins at least one Map in a particular Match.
+                        </li>
+                        <li>
+                            Map Duration: whether a Map's final gameplay length/duration is over or under a certain figure.
+                        </li>
+                        <li>
+                            Map TotalKills: whether the final count (Based on the visible in-game score, which is the sum of the Dark and Light kills) in a Map is over or under a certain figure.
+                        </li>
+                        <li>
+                            Map TotalTowers: whether the final count of destroyed towers (Based on the visible in-game score, which is the sum of the Dark and Light destroyed towers) in a Map is over or under a certain figure.
+                        </li>
+                        <li>
+                            Map Kill Handicap: which team (Dark or Light) has more kills after the deduction of the handicap from that particular team's final Map score.
+                        </li>
+                        <li>
+                            Map Xth Kill: the winner of this market is the team that makes a kill, forcing the sum of the total kills for both teams to be equal to X.
+                        </li>
+                        <li>
+                            Map FirstToReach: which team reaches a certain number of kills first.
+                        </li>
+                        <li>
+                            Map First Blood: which team scores the first kill.
+                        </li>
+                        <li>
+                            Map First Tower: which team scores the first destroyed Tower.
+                        </li>
+                        <li>
+                            Map First Barracks: which team scores the first destroyed Barracks.
+                        </li>
+                        <li>
+                            Map First Aegis: which team picks-up the first aegis.
+                        </li>
+                        <li>
+                            Map TotalKillsParity: whether the final count of kills (Based on the visible in-game score, which is the sum of the Dark and Light kills) in a certain Map is an odd or even number.
+                        </li>
+                        // ... existing Dota 2 markets ...
+                        <li>
+                            Map Rampage: whether at least one player, from the Dark or Light teams, has scored 5 or more kills in a short period of time and this event is announced in game.
+                        </li>
+                        <li>
+                            Map Ultrakill: whether at least one player, from the Dark or Light teams, has scored 4 or more kills in a short period of time and this event is announced in game.
+                        </li>
+                        <li>
+                            Map BeyondGodlike: whether at least one player, from the Dark or Light teams, has scored 10 or more kills without dying and this event is announced in game.
+                        </li>
+                        <li>
+                            Map Megacreeps: whether all Dark or Light barracks are destroyed and this event is announced in game.
+                        </li>
+                        <li>
+                            Map Type of activated rune spawned at specific Map time: Type of rune, which spawns at specific game time (thresholds) and is activated (Or bottled and activated later) by one of the players. The market is cancelled if a player destroys the rune.
+                        </li>
+                    </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">League of Legends</h3>
+                <h4 className="font-bold mt-6 mb-2">General League of Legends betting rules</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        If a Map starts with fewer than 10 competitors, all bets on the Map will be void.
+                    </li>
+                    <li>
+                        If a competitor disconnects in the first 10 minutes and is unable to reconnect or be replaced for the rest of the Map, all affected bets on that Map and Match will be voided. If a competitor disconnects or quits after the 10th minute of play of a Map that has started, bets have action according to the official result.
+                    </li>
+                    <li>
+                        If a walkover or win by admin decision is given in the first 10 minutes of a Map, all undecided bets on that Map and Match will be voided. If a win by admin decision is awarded after the 10th minute of play of a Map has started, bets have action according to the official result.
+                    </li>
+                </ul>
+
+                <h4 className="font-bold mt-6 mb-2">Glossary</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Nexus: the primary objective of the Map. The first team to destroy the opposing team's Nexus wins the Map.
+                    </li>
+                    <li>
+                        Kill: The Blue/Red team's score, which represents the total number of times members of the opposing team were killed.
+                    </li>
+                    <li>
+                        Turret: a team specific game objective, which can be destroyed by the opposite team.
+                    </li>
+                    <li>
+                        Inhibitor: a team specific game objective, which can be destroyed by the opposite team.
+                    </li>
+                    <li>
+                        Dragon: a game objective, can be killed by players.
+                    </li>
+                    <li>
+                        Baron: a game objective, can be killed by players.
+                    </li>
+                    <li>
+                        Herald: a game objective, can be killed by players.
+                    </li>
+                </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">Markets</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Match winner 2-way: which team (Red or Blue) wins the Match.
+                    </li>
+                    <li>
+                        Match winner 3-way: which team (Red or Blue) wins the Match or both teams score one Map (Bo2) and Match is concluded as a draw.
+                    </li>
+                    <li>
+                        Match winner with handicap: which team (Red or Blue) wins the alternated game when handicap is deducted from a particular team's final Map score. A handicap 1.5 is used for Bo2 and Bo3 Matches, handicap 2.5 is additionally used for Bo5 Matches.
+                    </li>
+                    <li>
+                        Exact Match score: what would be the final score of the Match, presented as "No. of Maps won by team A: No. of Maps won by team B".
+                    </li>
+                </ul>
+                // ... existing sections ...
+                <h3 className="text-xl font-bold mb-4 mt-8">FIFA</h3>
+                <h4 className="font-bold mt-6 mb-2">Glossary</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Goal: a goal is scored when the whole ball passes over the goal line.
+                    </li>
+                    <li>
+                        Draw: Occurs when the number of goals scored by each team is identical.
+                    </li>
+                    <li>
+                        First Period: the first 45 minutes of in-game time + additional time in the first period.
+                    </li>
+                </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">Markets</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Match Winner 3-way: The team (Home / Away) which scores the most goals wins the Match or if both teams score the same number of goals in the Match, then the Match is concluded as a draw.
+                    </li>
+                    <li>
+                        Match First Half Winner 3-way: the team (Home / Away) which scores the most goals in the first period wins the first period or if both teams score the same number of goals in the first period, then the market is concluded as a draw.
+                    </li>
+                    <li>
+                        Match Total Goals: whether the final count of goals scored in a certain Match is over or under a certain figure.
+                    </li>
+                    <li>
+                        Match First Half Total Goals: whether the final count of goals scored in the first period of a certain Match is over or under a certain figure.
+                    </li>
+                    <li>
+                        Match Total Goals Parity: whether the final count of goals scored in a certain Match is an odd or even number.
+                    </li>
+                    <li>
+                        Match First Half Total Goals Parity: whether the final count of goals scored in the first period of a certain Match is odd or even number.
+                    </li>
+                    <li>
+                        Match Winner Double Chance: Match winner market that combines two possible outcomes into one bet (home/draw, away/draw, home/away)
+                    </li>
+                    <li>
+                        Match First Half Winner Double Chance: Match first half winner market that combines two possible outcomes into one bet (home/draw, away/draw, home/away)
+                    </li>
+                </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">NBA2K</h3>
+                <h4 className="font-bold mt-6 mb-2">Glossary</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Basket: a basket is scored when the whole ball passes over the basket.
+                    </li>
+                    <li>
+                        3-points basket: for any basket made beyond the 3 point line, in bounds.
+                    </li>
+                    <li>
+                        2-points basket: for any basket made inside the 3 point line, in bounds.
+                    </li>
+                    <li>
+                        1-point basket: for the made free throws.
+                    </li>
+                    <li>
+                        Free throws: shots when a player is fouled in the act of shooting. A free throw shot is also taken when the other team is over the foul limit, putting the offensive team in a bonus "1 and 1" situation.
+                    </li>
+                    <li>
+                        Draw: Occurs when the number of points scored by each team is identical.
+                    </li>
+                    <li>
+                        Quarter: 5 minutes of in-game time
+                    </li>
+                </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">Markets</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Match Winner No Draw: The team (Home / Away) which gets the most points wins the Match. If both teams get the same number of points in the set time, then the Match is concluded as a draw; in this case, the market is cancelled and all bets should be voided.
+                    </li>
+                </ul>
+                // ... existing sections ...
+                <h3 className="text-xl font-bold mb-4 mt-8">Counter-Strike: Global Offensive Wingman</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        The teams play 2 Maps in 1 Match (the Bo2 format). A draw is possible only at the Match, but not at the Map level.
+                    </li>
+                </ul>
+
+                <h4 className="font-bold mt-6 mb-2">Glossary</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        T / CT (Terrorists / Counter-terrorists): title-specific name of Dark / Light team
+                    </li>
+                    <li>
+                        Round: A team needs to win Rounds to win the Map. A Round is won when 1) one team eliminates the other, or 2) by Terrorists when they successfully detonate the bomb, or 3) by Counter-terrorists when the bomb does not detonate in 90 seconds from the start of the Round, or 4) by Counter-terrorists when the bomb is defused. First team to score 9 Rounds wins the Map.
+                    </li>
+                    <li>
+                        Overtime: In the case of the Map draw score (8:8), overtime will be played in Bo1 format. Overtime is played as a knife-only Round.
+                    </li>
+                    <li>
+                        Pistol Round: 1st and 9th Round on a particular Map.
+                    </li>
+                </ul>
+
+                <h3 className="text-xl font-bold mb-4 mt-8">Markets</h3>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Match winner 3-way: which team (Terrorists / Counter-terrorists) wins the Match or both teams score one Map and Match is concluded as a draw.
+                    </li>
+                    <li>
+                        Match winner with handicap: which team (Terrorists / Counter-terrorists) wins the alternated game when the handicap is deducted from particular team final Map score. Handicap 1.5 is used for Bo2.
+                    </li>
+                    <li>
+                        Exact Match score: what would be the final score of the Match, presented as "No. of Maps won by team A: No. of Maps won by team B".
+                    </li>
+                    <li>
+                        Map winner 2-way: which team (Terrorists / Counter-terrorists) won the Map.
+                    </li>
+                    <li>
+                        Map winner 3-way: which team (Terrorists / Counter-terrorists) reaches a score of 9 Rounds first or both teams score 8 Rounds and the Map is concluded as a draw.
+                    </li>
+                    <li>
+                        Team to win at least 1 Map yes/no: whether a certain team wins at least one Map in a particular Match.
+                    </li>
+                    <li>
+                        Overtime yes/no: whether Overtime will be played or not.
+                    </li>
+                    <li>
+                        Number of Rounds: whether the count of Rounds played in a certain Map is over or under a certain figure.
+                    </li>
+                    <li>
+                        Map winner with handicap: which team (Terrorists / Counter-terrorists) wins the alternated Map when the handicap is deducted from particular team final Map score.
+                    </li>
+                    <li>
+                        Correct Round score: what would be the final score of the Map, presented as "No. of Rounds won by team A: No. of Rounds won by team B".
+                    </li>
+                    <li>
+                        Round X winner: which team (Terrorists / Counter-terrorists) wins Round X.
+                    </li>
+                    <li>
+                        Pistol Round winner: which team (Terrorists / Counter-terrorists) wins a specified pistol (1st/9th) Round.
+                    </li>
+                    <li>
+                        First to win # of Rounds: which team (Terrorists / Counter-terrorists) reaches # won Rounds first.
+                    </li>
+                    <li>
+                        First half winner: which team (Terrorists / Counter-terrorists) has a higher number of won Rounds after the first 8 Rounds.
+                    </li>
+                    <li>
+                        Second half winner: which team (Terrorists / Counter-terrorists) has a higher number of won Rounds after the first 8 Rounds and before the Map is concluded as a draw or won by one team.
+                    </li>
+                </ul>
+                <h3 className="text-xl font-bold mb-4 mt-8">Other Esports Titles</h3>
+                <h4 className="font-bold mt-6 mb-2">Markets</h4>
+                <ul className="list-disc pl-8 space-y-3">
+                    <li>
+                        Match winner 2-way: which team wins the Match.
+                    </li>
+                    <li>
+                        Match winner 3-way: which team wins the Match or both teams score one Map and Match is concluded as a draw.
+                    </li>
+                    <li>
+                        Total Maps over/under: whether the count of Maps played in a certain Match is over or under a certain figure.
+                    </li>
+                    <li>
+                        Match winner with handicap: which team wins the alternated game when the handicap is deducted from particular team final Map score.
+                    </li>
+                    <li>
+                        Exact Match score: what would be the final score of the Match, presented as "No. of Maps won by team A: No. of Maps won by team B".
+                    </li>
+                    <li>
+                        Team to win at least 1 Map yes/no: whether a certain team wins at least one Map in a particular Match.
+                    </li>
+                    <li>
+                        Map winner 2-way: which team won the Map.
+                    </li>
+                </ul>
+            </section>
+
+
         </div>
     )
 }
