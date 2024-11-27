@@ -13,7 +13,7 @@ import facebook from "../../../assets/img/facebook.png";
 import google from "../../../assets/img/google.png";
 import { Link } from "react-router-dom";
 import ErrorIcon from "@mui/icons-material/Error";
-import { userRegister } from "../../../services/LoginServices";
+import { userLogin, userRegister } from "../../../services/LoginServices";
 import toast from "react-hot-toast";
 import {
   handleFacebookLogin,
@@ -111,11 +111,27 @@ function Register() {
         .then((response) => {
           console.log("response", response);
           toast.success(response?.message);
-          setCookie("token", response?.token, 24);
-          localStorage.setItem("token", response?.token);
-          toast.success(response?.message);
-          dispatch(closeRegisterModel());
-          window.location.reload();
+          // setCookie("token", response?.token, 24);
+          // localStorage.setItem("token", response?.token);
+          // toast.success(response?.message);
+          // dispatch(closeRegisterModel());
+          // window.location.reload();
+          const body = {
+            email: values?.email,
+            password: values?.password,
+          };
+          userLogin({ body: body })
+            .then((response) => {
+              console.log("response", response);
+              setCookie("token", response?.token, 24);
+              localStorage.setItem("token", response?.token);
+              // toast.success(response?.message);
+              dispatch(closeRegisterModel());
+              window.location.reload();
+            })
+            .catch((error) => {
+              console.log("error", error);
+            });
         })
         .catch((error) => {
           console.log("error", error);
@@ -176,9 +192,8 @@ function Register() {
                   Email<p className="text-red-700  ml-1">*</p>
                 </label>
                 <input
-                  className={`border rounded w-[28rem] py-2 px-3 max-sm:w-64 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${
-                    error?.email ? "border-[#ed4163]" : "border-gray-600"
-                  }`}
+                  className={`border rounded w-[28rem] py-2 px-3 max-sm:w-64 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${error?.email ? "border-[#ed4163]" : "border-gray-600"
+                    }`}
                   name="email"
                   value={values?.email}
                   onChange={(e) => handleOnChange(e)}
@@ -199,9 +214,8 @@ function Register() {
                   Username<p className="text-red-700 ml-1">*</p>
                 </label>
                 <input
-                  className={`border rounded w-[28rem] py-2 px-3 max-sm:w-64 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${
-                    error?.Username ? "border-[#ed4163]" : "border-gray-600"
-                  }`}
+                  className={`border rounded w-[28rem] py-2 px-3 max-sm:w-64 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${error?.Username ? "border-[#ed4163]" : "border-gray-600"
+                    }`}
                   name="Username"
                   value={values?.Username}
                   onChange={(e) => handleOnChange(e)}
@@ -226,9 +240,8 @@ function Register() {
                     Password<p className="text-red-700 ml-1">*</p>
                   </label>
                   <input
-                    className={`border rounded hover:border-[#7f8798] w-full py-2 px-3  bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
-                      error?.password ? "border-[#ed4163]" : "border-gray-600"
-                    }`}
+                    className={`border rounded hover:border-[#7f8798] w-full py-2 px-3  bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${error?.password ? "border-[#ed4163]" : "border-gray-600"
+                      }`}
                     name="password"
                     onClick={handlePasswordDetails}
                     value={values?.password}
@@ -236,9 +249,8 @@ function Register() {
                     type={showPassword ? "text" : "password"}
                   />
                   <div
-                    className={`absolute inset-y-0 right-0 pr-3 ${
-                      error?.password ? "" : "mt-7"
-                    } flex items-center cursor-pointer text-[#b1bad3]`}
+                    className={`absolute inset-y-0 right-0 pr-3 ${error?.password ? "" : "mt-7"
+                      } flex items-center cursor-pointer text-[#b1bad3]`}
                     onClick={togglePasswordVisibility}
                   >
                     {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
@@ -284,9 +296,8 @@ function Register() {
                 </label>
                 <div className="flex space-x-3">
                   <input
-                    className={`border w-36 rounded py-2 px-3 max-sm:w-12 hover:border-[#7f8798] bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${
-                      error?.day ? "border-[#ed4163]" : "border-gray-600"
-                    }`}
+                    className={`border w-36 rounded py-2 px-3 max-sm:w-12 hover:border-[#7f8798] bg-[#0f212e] text-[#b1bad3] focus:outline-[#b1bad3] ${error?.day ? "border-[#ed4163]" : "border-gray-600"
+                      }`}
                     name="day"
                     type="number"
                     min="1"
@@ -296,9 +307,8 @@ function Register() {
                     placeholder="DD"
                   />
                   <select
-                    className={`py-2 px-3 w-36  max-sm:w-[7rem] bg-[#0f212e] border rounded hover:border-[#7f8798] text-white focus:outline-[#b1bad3] ${
-                      error?.month ? "border-[#ed4163]" : "border-gray-600"
-                    }`}
+                    className={`py-2 px-3 w-36  max-sm:w-[7rem] bg-[#0f212e] border rounded hover:border-[#7f8798] text-white focus:outline-[#b1bad3] ${error?.month ? "border-[#ed4163]" : "border-gray-600"
+                      }`}
                     name="month"
                     value={values?.month}
                     onChange={(e) => handleOnChange(e)}
@@ -318,9 +328,8 @@ function Register() {
                     <option value="12">December</option>
                   </select>
                   <input
-                    className={`border w-36 rounded py-2 px-3 max-sm:w-24 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${
-                      error?.year ? "border-[#ed4163]" : "border-gray-600"
-                    }`}
+                    className={`border w-36 rounded py-2 px-3 max-sm:w-24 bg-[#0f212e] hover:border-[#7f8798] text-[#b1bad3] focus:outline-[#b1bad3] ${error?.year ? "border-[#ed4163]" : "border-gray-600"
+                      }`}
                     name="year"
                     type="number"
                     value={values?.year}
@@ -336,8 +345,8 @@ function Register() {
                       {error?.day
                         ? error?.day
                         : error?.month
-                        ? error?.month
-                        : error?.year}
+                          ? error?.month
+                          : error?.year}
                     </p>
                   </div>
                 )}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  setLimboStatusData,
   setStopAutoBet,
   setValues,
   SwiperModel,
@@ -32,19 +33,6 @@ function LimboGameSidebar() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  useEffect(() => {
-    if (limboStatusData?.autoBetRound && values.autoBetCount) {
-      const remainingBets =
-        parseInt(values.autoBetCount, 10) - limboStatusData.autoBetRound;
-      dispatch(
-        setValues({
-          ...values,
-          autoBetCount: remainingBets > 0 ? remainingBets.toString() : "1",
-        })
-      );
-    }
-  }, [limboStatusData?.autoBetRound]);
 
   useEffect(() => {
     GetWalletData();
@@ -98,8 +86,7 @@ function LimboGameSidebar() {
         userId: decoded?.userId,
         betAmount: values?.betamount ? values?.betamount : 0,
         multiplier: values?.multiplier ? values?.multiplier : 2,
-        // autoBetCount: limboStatusData?.autoBetRound ? limboStatusData?.autoBetRound : parseInt(values?.autoBetCount),
-        autoBetCount: values.autoBetCount || "",
+        autoBetCount: limboStatusData?.autoBetRound > 0 ? limboStatusData?.autoBetRound : parseInt(values?.autoBetCount) || "",
         onWins: parseInt(values?.onwin, 10),
         onLoss: parseInt(values?.onlose, 10),
         stopOnProfit: parseInt(values?.stoponprofit, 10),
@@ -234,27 +221,6 @@ function LimboGameSidebar() {
           ) : (
             <div>
               <div>
-                <div className="md:hidden block">
-                  {stopAutoBet ? (
-                    <button
-                      className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
-                      onClick={() => handleOnStopAutoBet()}
-                    >
-                      Stop Autobet
-                    </button>
-                  ) : (
-                    <button
-                      className={`${
-                        // bettingStatus === false
-                        //   ? "bg-[#489649]"
-                        "bg-[#1fff20] hover:bg-[#42ed45]"
-                        } text-black mt-3 py-3 rounded-md font-semibold w-full`}
-                      onClick={() => handleOnAutoBet()}
-                    >
-                      Start Autobet
-                    </button>
-                  )}
-                </div>
                 <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                   <label>Bet Amount</label>
                   <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
@@ -320,15 +286,14 @@ function LimboGameSidebar() {
                     placeholder="0"
                     min={0}
                     name="autoBetCount"
-                    // value={limboStatusData?.autoBetRound
-                    //   ? (parseInt(values?.autoBetCount) - limboStatusData?.autoBetRound + 1) - 1
-                    //   : parseInt(values?.autoBetCount)}
-                    value={values.autoBetCount || ""}
-                    onChange={(e) => handleOnChange(e)}
-                  // disabled={limboStatusData?.autoBetRound}
+                    value={limboStatusData?.autoBetRound > 0 ? limboStatusData?.autoBetRound : parseInt(values?.autoBetCount) || ""}
+                    onChange={(e) => {
+                      handleOnChange(e)
+                      if (limboStatusData?.autoBetRound > 0) {
+                        dispatch(setLimboStatusData({ autoBetRound: '' }));
+                      }
+                    }}
                   />
-                  {console.log('limboStatusData', limboStatusData)}
-                  {console.log('values /*-/*-/*-/*-', values)}
                 </div>
               </div>
               <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
@@ -342,7 +307,7 @@ function LimboGameSidebar() {
                     }xl:px-2 lg:px-2 md:px-2 px-2 py-2 rounded-sm`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
-                    dispatch(setValues({ onwin: '' }))
+                    dispatch(setValues({ ...values, onwin: '' }))
                   }}
                 >
                   Reset
@@ -390,7 +355,7 @@ function LimboGameSidebar() {
                       } px-2 py-2 rounded-sm`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
-                      dispatch(setValues({ onlose: '' }))
+                      dispatch(setValues({ ...values, onlose: '' }))
                     }}
                   >
                     Reset
@@ -460,32 +425,31 @@ function LimboGameSidebar() {
                   type="number"
                   placeholder="0.01"
                   step="0.01"
+
                   name="stoponloss"
                   value={values?.stoponloss}
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              <div className="md:block hidden">
-                {stopAutoBet ? (
-                  <button
-                    className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
-                    onClick={() => handleOnStopAutoBet()}
-                  >
-                    Stop Autobet
-                  </button>
-                ) : (
-                  <button
-                    className={`${
-                      // bettingStatus === false
-                      //   ? "bg-[#489649]"
-                      "bg-[#1fff20] hover:bg-[#42ed45]"
-                      } text-black mt-3 py-3 rounded-md font-semibold w-full`}
-                    onClick={() => handleOnAutoBet()}
-                  >
-                    Start Autobet
-                  </button>
-                )}
-              </div>
+              {stopAutoBet ? (
+                <button
+                  className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
+                  onClick={() => handleOnStopAutoBet()}
+                >
+                  Stop Autobet
+                </button>
+              ) : (
+                <button
+                  className={`${
+                    // bettingStatus === false
+                    //   ? "bg-[#489649]"
+                    "bg-[#1fff20] hover:bg-[#42ed45]"
+                    } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => handleOnAutoBet()}
+                >
+                  Start Autobet
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -577,25 +541,25 @@ function LimboGameSidebar() {
           ) : (
             <div>
               <div>
-                  {stopAutoBet ? (
-                    <button
-                      className="bg-[#1fff20] hover:bg-[#42ed45] text-black py-3 rounded-md font-semibold w-full"
-                      onClick={() => handleOnStopAutoBet()}
-                    >
-                      Stop Autobet
-                    </button>
-                  ) : (
-                    <button
-                      className={`${
-                        // bettingStatus === false
-                        //   ? "bg-[#489649]"
-                        "bg-[#1fff20] hover:bg-[#42ed45]"
-                        } text-black mt-3 py-3 rounded-md font-semibold w-full`}
-                      onClick={() => handleOnAutoBet()}
-                    >
-                      Start Autobet
-                    </button>
-                  )}
+                {stopAutoBet ? (
+                  <button
+                    className="bg-[#1fff20] hover:bg-[#42ed45] text-black py-3 rounded-md font-semibold w-full"
+                    onClick={() => handleOnStopAutoBet()}
+                  >
+                    Stop Autobet
+                  </button>
+                ) : (
+                  <button
+                    className={`${
+                      // bettingStatus === false
+                      //   ? "bg-[#489649]"
+                      "bg-[#1fff20] hover:bg-[#42ed45]"
+                      } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                    onClick={() => handleOnAutoBet()}
+                  >
+                    Start Autobet
+                  </button>
+                )}
                 <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                   <label>Bet Amount</label>
                   <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
@@ -661,11 +625,13 @@ function LimboGameSidebar() {
                     placeholder="0"
                     min={0}
                     name="autoBetCount"
-                    // value={limboStatusData?.autoBetRound
-                    //   ? (parseInt(values?.autoBetCount) - limboStatusData?.autoBetRound + 1) - 1
-                    //   : parseInt(values?.autoBetCount)}
-                    value={values.autoBetCount || ""}
-                    onChange={(e) => handleOnChange(e)}
+                    value={limboStatusData?.autoBetRound > 0 ? limboStatusData?.autoBetRound : parseInt(values?.autoBetCount) || ""}
+                    onChange={(e) => {
+                      handleOnChange(e)
+                      if (limboStatusData?.autoBetRound > 0) {
+                        dispatch(setLimboStatusData({ autoBetRound: '' }));
+                      }
+                    }}
                   // disabled={limboStatusData?.autoBetRound}
                   />
                 </div>
@@ -681,7 +647,7 @@ function LimboGameSidebar() {
                     }xl:px-2 lg:px-2 md:px-2 px-2 py-2 rounded-sm`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
-                    dispatch(setValues({ onwin: '' }))
+                    dispatch(setValues({ ...values, onwin: '' }))
                   }}
                 >
                   Reset
@@ -729,7 +695,7 @@ function LimboGameSidebar() {
                       } px-2 py-2 rounded-sm`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
-                      dispatch(setValues({ onlose: '' }))
+                      dispatch(setValues({ ...values, onlose: '' }))
                     }}
                   >
                     Reset

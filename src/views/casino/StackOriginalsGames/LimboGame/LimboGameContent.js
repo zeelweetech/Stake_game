@@ -23,6 +23,7 @@ function LimboGameContent() {
   const [displayedMultiplier, setDisplayedMultiplier] = useState(1.0);
   const { values, limboStatusData } = useSelector((state) => state.limboGame);
   const [topXData, setTopXData] = useState([]);
+  const [lossBetAmount, setLossBetAmount] = useState()
 
   useEffect(() => {
     LimboSocket.emit("joinGame", {
@@ -38,6 +39,12 @@ function LimboGameContent() {
   LimboSocket.on("walletBalance", (data) => {
     dispatch(setWallet(data?.walletBalance));
   });
+
+  LimboSocket.on("autoBetStop", (data) => {
+    console.log("fataataytaya", data);
+    
+    setLossBetAmount(data)
+  })
 
   useEffect(() => {
     if (
@@ -94,7 +101,8 @@ function LimboGameContent() {
         betId: limboStatusData?.betId,
         userId: decoded?.userId,
       });
-      if(limboStatusData.autoBetRound && parseInt(limboStatusData.autoBetRound) >= parseInt(values.autoBetCount)) {
+
+      if(limboStatusData?.autoBetRound === 1) {
         dispatch(setStopAutoBet(false));
       }
 

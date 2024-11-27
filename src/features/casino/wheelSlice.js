@@ -5,7 +5,6 @@ const initialState = {
     betamount: "",
     risk: "medium",
     segments: 30,
-    // finalmultiplier: "",
   },
   finalmultiplier: "",
   mustSpin: false,
