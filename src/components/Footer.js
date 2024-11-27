@@ -175,7 +175,7 @@ function Footer() {
             <div>
               <h3 className="text-white font-semibold mb-4">About Us</h3>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white">VIP Club</a></li>
+                <li><a href="/vip-club" className="hover:text-white">VIP Club</a></li>
                 <li><a href="#" className="hover:text-white">Affiliate</a></li>
                 <li>   <Link
                   to="/policies/Privacy"

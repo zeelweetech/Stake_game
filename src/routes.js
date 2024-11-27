@@ -30,6 +30,7 @@ const Profile = React.lazy(() => import("./views/Profile/index"))
 const token = localStorage.getItem("token");
 
 const Wallet = React.lazy(() =>import("./views/Profile/Wallet"))
+const vipclub = React.lazy(() => import("./views/footerpage/VipClub"))
 
 const routes = [
   {
@@ -75,7 +76,8 @@ const routes = [
   },
   // { path: "/setting/:section", name: "Setting", element: Setting },
 
-  {path: "/Wallet", name: "Wallet", element: Wallet}
+  {path: "/Wallet", name: "Wallet", element: Wallet},
+  {path: "/vip-club", name: "VipClub", element: vipclub}
 
 
 ];

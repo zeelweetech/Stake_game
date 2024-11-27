@@ -57,3 +57,19 @@ export async function updateWallet({ userId: userId }) {
     throw error;
   }
 }
+
+export async function getMedalsProgress({ userId: userId }) {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_LOCAL_URL}/medals/progress/get/${userId}`,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
