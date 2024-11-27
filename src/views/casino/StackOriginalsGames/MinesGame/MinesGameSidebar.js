@@ -613,10 +613,11 @@ function MinesGameSidebar() {
                 </button>
               ) : (
                 <button
-                  className={`${bettingStatus === false
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                  className={`text-black bg-[#46a147] cursor-default mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                    // ${bettingStatus === false
+                    // ? "bg-[#489649]"
+                    // : "bg-[#1fff20] hover:bg-[#42ed45]"
+                    // } 
                 // onClick={() => handleOnAutoBet()}
                 >
                   Start Autobet
@@ -827,10 +828,11 @@ function MinesGameSidebar() {
                 </button>
               ) : (
                 <button
-                  className={`${bettingStatus === false
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                  className={`text-black bg-[#46a147] cursor-default mt-3 py-3 rounded-md font-semibold w-full`}
+                    // ${bettingStatus === false
+                    // ? "bg-[#489649]"
+                    // : "bg-[#1fff20] hover:bg-[#42ed45]"
+                    // } 
                 // onClick={() => handleOnAutoBet()}
                 >
                   Start Autobet

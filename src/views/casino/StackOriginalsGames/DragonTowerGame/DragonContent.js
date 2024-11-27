@@ -43,6 +43,7 @@ function DragonContent() {
   // const [restorData, setRestorData] = useState([]);
   const {
     values,
+    restor,
     gameBet,
     isGameOver,
     gameOverResult,
@@ -74,7 +75,7 @@ function DragonContent() {
           parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -84,7 +85,6 @@ function DragonContent() {
     });
 
     DragonTowerSocket.on("gameRestored", (data, currentMultiplier) => {
-      console.log("gameRestored data", data, currentMultiplier);
       dispatch(setRestor(data));
       dispatch(setRestodMultiplier(currentMultiplier));
       dispatch(setRestorData(data.restoreData));
@@ -110,23 +110,19 @@ function DragonContent() {
   });
 
   DragonTowerSocket.on("walletBalance", (data) => {
-    console.log("data *******", data);
     dispatch(setWallet(data?.walletBalance));
   });
 
   DragonTowerSocket.on("gameStarted", (data) => {
-    console.log("gameStarted data", data);
     setCashoutVisible(false);
     resetGame();
   });
 
   DragonTowerSocket.on("tileSelected", (data) => {
-    // console.log("tileSelected data", data);
     dispatch(setTileSelected(data));
   });
 
   DragonTowerSocket.on("gameOver", (data) => {
-    console.log("gameOver data", data);
     handleGameOverResult();
     dispatch(setIsGameOver(true));
     dispatch(setShowRandomField(false));
@@ -185,7 +181,6 @@ function DragonContent() {
   };
 
   DragonTowerSocket.on("cashoutSuccess", (data) => {
-    console.log("cashoutSuccess data", data);
     setCashoutResult(data);
     setCashoutVisible(true);
     dispatch(setTileSelected({}));
@@ -194,7 +189,6 @@ function DragonContent() {
   });
 
   DragonTowerSocket.on("walletBalance", (data) => {
-    // console.log("walletBalance data", data);
     // dispatch(setWallet(data?.walletBalance));
   });
 
@@ -282,7 +276,7 @@ function DragonContent() {
             sm:mx-[2rem] 
             mx-[-5rem]  h-[28rem]"
       >
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center relative">
           <div className="flex justify-center">
             <img
               src={dragonFrame}
@@ -298,9 +292,13 @@ function DragonContent() {
               <div className="flex items-center justify-center space-x-1">
                 <p>
                   {(
-                    parseFloat(values?.betamount) *
-                    parseFloat(cashoutResult?.multiplier)
-                  ).toFixed(2) || "0.00"}{" "}
+                    (values?.betamount
+                      ? values?.betamount
+                      : restor?.restoreData?.[0]?.length > 0
+                        ? restor?.betAmount
+                        : values?.betamount) *
+                        parseFloat(cashoutResult?.multiplier)
+                  ).toFixed(2) || "0.00"}
                   ₹
                 </p>
                 {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
@@ -328,13 +326,13 @@ function DragonContent() {
                         isRestoredEgg ||
                         isSelected ||
                         rowIndex === gameOverResult?.skullRowIndex
-                      ? eggImage
-                      : Boxsvg
+                        ? eggImage
+                        : Boxsvg
                     : isRestoredEgg
-                    ? eggImage
-                    : isSelected
-                    ? eggImage
-                    : Boxsvg;
+                      ? eggImage
+                      : isSelected
+                        ? eggImage
+                        : Boxsvg;
                   const isRowActive =
                     gameBet &&
                     (rowIndex === 0 ||
@@ -342,26 +340,21 @@ function DragonContent() {
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
-                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center ${
-                        isGameOver
+                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center ${isGameOver
                           ? "cursor-not-allowed bg-[#213743]"
                           : (gameBet && rowIndex === 0) ||
                             clickedBoxes[rowIndex - 1] !== undefined
-                          ? "bg-[#00e701] w-10"
-                          : "cursor-not-allowed bg-[#213743]"
-                      } ${
-                        clickedBoxes[rowIndex] !== undefined
+                            ? "bg-[#00e701] w-10"
+                            : "cursor-not-allowed bg-[#213743]"
+                        } ${clickedBoxes[rowIndex] !== undefined
                           ? "bg-[#213743] opacity-100"
                           : "opacity-50"
-                      } ${
-                        isSelected ? "opacity-100 bg-[#00e701]" : "opacity-50"
-                      } ${
-                        isGameOver ? "cursor-not-allowed" : "cursor-pointer"
-                      } ${
-                        isRowActive
+                        } ${isSelected ? "opacity-100 bg-[#00e701]" : "opacity-50"
+                        } ${isGameOver ? "cursor-not-allowed" : "cursor-pointer"
+                        } ${isRowActive
                           ? "cursor-pointer bg-[#00e701]"
                           : "cursor-not-allowed bg-[#213743]"
-                      }`}
+                        }`}
                       onClick={() =>
                         isRowActive && handleBoxClick(rowIndex, boxIndex)
                       }

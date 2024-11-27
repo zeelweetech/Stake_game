@@ -78,7 +78,7 @@ function WheelGameSidebar() {
         risk: wheelValue?.risk,
         segment: parseInt(wheelValue?.segments, 10),
         numberOfBets: finalmultiplier?.remainingBets > 0
-          ? finalmultiplier.remainingBets
+          ? finalmultiplier.remainingBets - 1
           : wheelValue?.numberofbet || "",
         onWin: parseInt(wheelValue?.onwin, 10),
         onLoss: parseInt(wheelValue?.onloss, 10),
@@ -247,7 +247,7 @@ function WheelGameSidebar() {
             <div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                 <label>Bet Amount</label>
-                <label>₹{wheelValue?.betamount ? wheelValue?.betamount : '0.00'}</label>
+                <label>₹{finalmultiplier?.betAmount ? Number(finalmultiplier?.betAmount).toFixed(2) : wheelValue?.betamount || '0.00'}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -261,8 +261,12 @@ function WheelGameSidebar() {
                     step="0.01"
                     min={0}
                     name="betamount"
-                    value={wheelValue?.betamount}
-                    onChange={(e) => handleOnChange(e)}
+                    value={finalmultiplier?.betAmount ? Number(finalmultiplier?.betAmount).toFixed(2) : wheelValue?.betamount}
+                    onChange={(e) => {handleOnChange(e)
+                      if (finalmultiplier?.betAmount) {
+                        dispatch(setFinaMultiplier({ betAmount: '' }))
+                      }
+                    }}  
                   />
                 </div>
                 <button
@@ -355,7 +359,7 @@ function WheelGameSidebar() {
                   //   : (finalmultiplier?.remainingBets ? parseInt(finalmultiplier?.remainingBets) : wheelValue?.numberofbet)}
                   value={
                     finalmultiplier?.remainingBets > 0
-                      ? finalmultiplier.remainingBets
+                      ? finalmultiplier.remainingBets - 1 
                       : wheelValue?.numberofbet || ""
                   }
                   onChange={(e) => {
@@ -378,7 +382,7 @@ function WheelGameSidebar() {
                     } xl:px-2 lg:px-2 md:px-6 px-2 py-1.5 rounded-sm`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
-                    dispatch(setWheelValue({ onwin: "" }))
+                    dispatch(setWheelValue({ ...wheelValue, onwin: "" }))
                   }}
                 >
                   Reset
@@ -426,7 +430,7 @@ function WheelGameSidebar() {
                       } xl:px-2 lg:px-2 md:px-6 px-2 py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
-                      dispatch(setWheelValue({ onlose: "" }))
+                      dispatch(setWheelValue({ ...wheelValue, onlose: "" }))
                     }}
                   >
                     Reset
@@ -673,7 +677,7 @@ function WheelGameSidebar() {
               )}
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                 <label>Bet Amount</label>
-                <label>₹{wheelValue?.betamount ? wheelValue?.betamount : '0.00'}</label>
+                <label>₹{finalmultiplier?.betAmount ? Number(finalmultiplier?.betAmount).toFixed(2) : wheelValue?.betamount || '0.00'}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -687,8 +691,12 @@ function WheelGameSidebar() {
                     step="0.01"
                     min={0}
                     name="betamount"
-                    value={wheelValue?.betamount}
-                    onChange={(e) => handleOnChange(e)}
+                    value={finalmultiplier?.betAmount ? Number(finalmultiplier?.betAmount).toFixed(2) : wheelValue?.betamount}
+                    onChange={(e) => {handleOnChange(e)
+                      if (finalmultiplier?.betAmount) {
+                        dispatch(setFinaMultiplier({ betAmount: '' }))
+                      }
+                    }}
                   />
                 </div>
                 <button

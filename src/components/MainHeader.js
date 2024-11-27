@@ -60,7 +60,7 @@ function MainHeader() {
                 ₹{wallet ? wallet : 0}
               </p>
               {/* <RiMoneyRupeeCircleFill
-                color="yellow"
+                color="yellow"  
                 className="text-lg md:text-xl"
               /> */}
             </button>

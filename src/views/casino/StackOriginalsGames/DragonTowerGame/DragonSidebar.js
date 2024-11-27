@@ -12,6 +12,7 @@ import {
   setGameBet,
   setGameOverResult,
   setIsGameOver,
+  setRestor,
   setRestorData,
   setRowsIndex,
   setShowRandomField,
@@ -65,8 +66,10 @@ function DragonSidebar() {
   const handleOnChange = (e) => {
     const { value, name } = e.target;
     dispatch(setValues({ ...values, [name]: value }));
-    dispatch(setClickedBoxes({}));
-    dispatch(setGameOverResult());
+    if (name === "difficulty") {
+      dispatch(setClickedBoxes({}));
+      dispatch(setGameOverResult());
+    }
     dispatch(setRestorData({}));
   };
 
@@ -175,7 +178,7 @@ function DragonSidebar() {
             <div>
               <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
                 <label>Bet Amount</label>
-                <label>₹0.00</label>
+                <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -187,8 +190,19 @@ function DragonSidebar() {
                     placeholder="0.00"
                     min={0}
                     name="betamount"
-                    value={values?.betamount || ""}
-                    onChange={(e) => handleOnChange(e)}
+                    value={
+                      values?.betamount
+                        ? values?.betamount
+                        : restor?.restoreData?.[0]?.length > 0
+                          ? restor?.betAmount
+                          : values?.betamount || ""
+                    }
+                    onChange={(e) => {
+                      handleOnChange(e)
+                      if (restor?.restoreData?.[0]?.length > 0) {
+                        dispatch(setRestor({ betAmount: '' }))
+                      }
+                    }}
                     className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField &&
                       completeFundStatus &&
                       "cursor-not-allowed opacity-80"
@@ -280,7 +294,16 @@ function DragonSidebar() {
                           : "1.00"}
                       x )
                     </label>
-                    <label>₹0.00</label>
+                    <label>₹{((values?.betamount
+                      ? values?.betamount
+                      : restor?.restoreData?.length > 0
+                        ? restor?.betAmount
+                        : 0) *
+                      (tileSelected?.multiplier
+                        ? tileSelected?.multiplier
+                        : tileSelected?.mineLocations?.length > 0
+                          ? restorMultiplier
+                          : 0.0)).toFixed(2)}</label>
                   </div>
                   <div className="flex justify-between items-cente rounded-sm border-2 hover:border-[#557086] border-[#2F4553] bg-[#2f4553] focus:outline-none p-2">
                     <p>
@@ -318,7 +341,7 @@ function DragonSidebar() {
             <div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                 <label>Bet Amount</label>
-                <label>₹0.00</label>
+                <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -331,8 +354,19 @@ function DragonSidebar() {
                     placeholder="0.00"
                     step="0.01"
                     name="betamount"
-                    value={values?.betamount || ""}
-                    onChange={(e) => handleOnChange(e)}
+                    value={
+                      values?.betamount
+                        ? values?.betamount
+                        : restor?.restoreData?.[0]?.length > 0
+                          ? restor?.betAmount
+                          : values?.betamount || ""
+                    }
+                    onChange={(e) => {
+                      handleOnChange(e)
+                      if (restor?.restoreData?.[0]?.length > 0) {
+                        dispatch(setRestor({ betAmount: '' }))
+                      }
+                    }}
                   />
                 </div>
                 <button className="w-16 text-lg font-bold hover:bg-[#5c849e68]">
@@ -531,10 +565,11 @@ function DragonSidebar() {
                 </button>
               ) : (
                 <button
-                  className={`${bettingStatus === false
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                  className={`text-black bg-[#46a147] cursor-default mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                    // ${bettingStatus === false
+                    // ? "bg-[#489649]"
+                    // : "bg-[#1fff20] hover:bg-[#42ed45]"
+                    // } 
                 // onClick={() => handleOnAutoBet()}
                 >
                   Start Autobet
@@ -551,7 +586,7 @@ function DragonSidebar() {
             <div>
               <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
                 <label>Bet Amount</label>
-                <label>₹0.00</label>
+                <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -563,8 +598,19 @@ function DragonSidebar() {
                     placeholder="0.00"
                     min={0}
                     name="betamount"
-                    value={values?.betamount || ""}
-                    onChange={(e) => handleOnChange(e)}
+                    value={
+                      values?.betamount
+                        ? values?.betamount
+                        : restor?.restoreData?.[0]?.length > 0
+                          ? restor?.betAmount
+                          : values?.betamount || ""
+                    }
+                    onChange={(e) => {
+                      handleOnChange(e)
+                      if (restor?.restoreData?.[0]?.length > 0) {
+                        dispatch(setRestor({ betAmount: '' }))
+                      }
+                    }}
                     className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 w-64 rounded-l-md text-white border-2  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField &&
                       completeFundStatus &&
                       "cursor-not-allowed opacity-80"
@@ -665,18 +711,27 @@ function DragonSidebar() {
                           : "1.00"}
                       x )
                     </label>
-                    <label>₹0.00</label>
+                    <label>₹{((values?.betamount
+                      ? values?.betamount
+                      : restor?.restoreData?.[0]?.length > 0
+                        ? restor?.betAmount
+                        : values?.betamount) *
+                      (tileSelected?.multiplier
+                        ? tileSelected?.multiplier
+                        : restor?.restoreData?.[0]?.length > 0
+                          ? restorMultiplier
+                          : 0.0)).toFixed(2)}</label>
                   </div>
                   <div className="flex justify-between items-cente rounded-sm border-2 hover:border-[#557086] border-[#2F4553] bg-[#2f4553] focus:outline-none p-2">
                     <p>
                       {(values?.betamount
                         ? values?.betamount
-                        : restor?.restoreData?.length > 0
+                        : restor?.restoreData?.[0]?.length > 0
                           ? restor?.betAmount
-                          : 0) *
+                          : values?.betamount) *
                         (tileSelected?.multiplier
                           ? tileSelected?.multiplier
-                          : tileSelected?.mineLocations?.length > 0
+                          : restor?.restoreData?.[0]?.length > 0
                             ? restorMultiplier
                             : 0.0)}
                     </p>
@@ -692,17 +747,18 @@ function DragonSidebar() {
             <div>
               {autoBetOnClick ? (
                 <button
-                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                  className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
                 // onClick={() => handleOnCancelAutoBet()}
                 >
                   Cancel Autobet
                 </button>
               ) : (
                 <button
-                  className={`${bettingStatus === false
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                className={`text-black bg-[#46a147] cursor-default mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                    // ${bettingStatus === false
+                    // ? "bg-[#489649]"
+                    // : "bg-[#1fff20] hover:bg-[#42ed45]"
+                    // }
                 // onClick={() => handleOnAutoBet()}
                 >
                   Start Autobet

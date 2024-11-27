@@ -86,7 +86,7 @@ function LimboGameSidebar() {
         userId: decoded?.userId,
         betAmount: values?.betamount ? values?.betamount : 0,
         multiplier: values?.multiplier ? values?.multiplier : 2,
-        autoBetCount: limboStatusData?.autoBetRound > 0 ? limboStatusData?.autoBetRound : parseInt(values?.autoBetCount) || "",
+        autoBetCount: limboStatusData?.autoBetRound > 0 ? limboStatusData?.autoBetRound - 1 : parseInt(values?.autoBetCount) || "",
         onWins: parseInt(values?.onwin, 10),
         onLoss: parseInt(values?.onlose, 10),
         stopOnProfit: parseInt(values?.stoponprofit, 10),
@@ -223,7 +223,7 @@ function LimboGameSidebar() {
               <div>
                 <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                   <label>Bet Amount</label>
-                  <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
+                  <label>₹{limboStatusData?.currentBetAmount ? Number(limboStatusData.currentBetAmount).toFixed(2) : values?.betamount || '0.00'}</label>
                 </div>
                 <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                   <div className="relative flex">
@@ -237,8 +237,13 @@ function LimboGameSidebar() {
                       step="0.01"
                       min={0}
                       name="betamount"
-                      value={values?.betamount}
-                      onChange={(e) => handleOnChange(e)}
+                      value={limboStatusData?.currentBetAmount ? Number(limboStatusData.currentBetAmount).toFixed(2) : values?.betamount}
+                      onChange={(e) => {
+                        handleOnChange(e)
+                        if (limboStatusData?.currentBetAmount) {
+                          dispatch(setLimboStatusData({ currentBetAmount: '' }))
+                        }
+                      }}
                     />
                   </div>
                   <button
@@ -286,7 +291,7 @@ function LimboGameSidebar() {
                     placeholder="0"
                     min={0}
                     name="autoBetCount"
-                    value={limboStatusData?.autoBetRound > 0 ? limboStatusData?.autoBetRound : parseInt(values?.autoBetCount) || ""}
+                    value={limboStatusData?.autoBetRound > 0 ? limboStatusData?.autoBetRound - 1 : parseInt(values?.autoBetCount) || ""}
                     onChange={(e) => {
                       handleOnChange(e)
                       if (limboStatusData?.autoBetRound > 0) {
@@ -562,7 +567,7 @@ function LimboGameSidebar() {
                 )}
                 <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                   <label>Bet Amount</label>
-                  <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
+                  <label>₹{limboStatusData?.currentBetAmount ? Number(limboStatusData.currentBetAmount).toFixed(2) : values?.betamount || '0.00'}</label>
                 </div>
                 <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                   <div className="relative flex">
@@ -576,8 +581,13 @@ function LimboGameSidebar() {
                       step="0.01"
                       min={0}
                       name="betamount"
-                      value={values?.betamount}
-                      onChange={(e) => handleOnChange(e)}
+                      value={limboStatusData?.currentBetAmount ? Number(limboStatusData.currentBetAmount).toFixed(2) : values?.betamount}
+                      onChange={(e) => {
+                        handleOnChange(e)
+                        if (limboStatusData?.currentBetAmount) {
+                          dispatch(setLimboStatusData({ currentBetAmount: '' }))
+                        }
+                      }}
                     />
                   </div>
                   <button

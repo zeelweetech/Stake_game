@@ -39,6 +39,10 @@ function WheelGameContent() {
       .catch((err) => { });
   };
 
+  WheelSocket.on("autoBetStop", (data) => {
+    dispatch(setAutoBet(false));
+  })
+
   WheelSocket.on("walletBalance", (data) => {
     // console.log("data *******", data);
     dispatch(setWallet(data?.walletBalance));
@@ -106,6 +110,8 @@ function WheelGameContent() {
     setSegColors(segColors);
   }, [wheelValue]);
 
+  console.log('RowByRisk', RowByRisk[wheelValue?.risk]['segment'+wheelValue?.segments][finalmultiplier?.position]?.backgroundColor);
+  
   const lowRiskButtons = (
     <>
       <button className={`group relative inline-block overflow-hidden font-medium border-b-[#406c82] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg

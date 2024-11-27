@@ -23,7 +23,6 @@ function LimboGameContent() {
   const [displayedMultiplier, setDisplayedMultiplier] = useState(1.0);
   const { values, limboStatusData } = useSelector((state) => state.limboGame);
   const [topXData, setTopXData] = useState([]);
-  const [lossBetAmount, setLossBetAmount] = useState()
 
   useEffect(() => {
     LimboSocket.emit("joinGame", {
@@ -41,9 +40,7 @@ function LimboGameContent() {
   });
 
   LimboSocket.on("autoBetStop", (data) => {
-    console.log("fataataytaya", data);
-    
-    setLossBetAmount(data)
+    dispatch(setStopAutoBet(false));
   })
 
   useEffect(() => {
@@ -78,7 +75,7 @@ function LimboGameContent() {
         console.log("error", error);
       });
   };
-
+  
   useEffect(() => {
     if (limboStatusData?.actualMultiplier) {
       const targetMultiplier = parseFloat(limboStatusData.actualMultiplier);
@@ -105,6 +102,12 @@ function LimboGameContent() {
       if(limboStatusData?.autoBetRound === 1) {
         dispatch(setStopAutoBet(false));
       }
+
+      // if(lossBetAmount === false){
+      //   dispatch(setStopAutoBet(false));
+      // } else if(limboStatusData?.autoBetRound === 1) {
+      //   dispatch(setStopAutoBet(false));
+      // }
 
       GetRendomFiveData()
 
