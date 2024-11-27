@@ -29,10 +29,10 @@ function LandingDetails() {
               Leading Online Casino
             </p>
             <p className="text-[#b1bad3] text-sm">
-              Browse our giant range of casino games as Stake offers a fair and
+              Browse our giant range of casino games as Listor offers a fair and
               fun online gambling experience. Play Slots, Live Casino, Blackjack,
               Baccarat, Roulette, and thousands of classic casino games right
-              from your browser, including your favourite Stake Originals.
+              from your browser, including your favourite Listor Originals.
             </p>
             <button
               type="button"

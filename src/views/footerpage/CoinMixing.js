@@ -2,11 +2,11 @@ import React from 'react'
 
 const CoinMixing = () => {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-8 text-gray-300">
+      <div className=" px-4 py-8 text-gray-300 bg-[#0F212E] rounded-lg">
         <h1 className="text-3xl font-bold mb-6 text-white">Coin Mixing Policy</h1>
         
         <p className="mb-6">
-          Stake has a strict anti coin mixing policy. This is in accordance with our AML procedures outlined in our terms of service.
+          Listor has a strict anti coin mixing policy. This is in accordance with our AML procedures outlined in our terms of service.
         </p>
   
         <p className="mb-6">
@@ -26,7 +26,7 @@ const CoinMixing = () => {
         </ul>
   
         <p className="mb-4">
-          Stake will always try to ensure every matter is resolved & the above can be modified to suit specific situations.
+          Listor will always try to ensure every matter is resolved & the above can be modified to suit specific situations.
         </p>
       </div>
     )

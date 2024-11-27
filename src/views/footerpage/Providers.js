@@ -2,11 +2,11 @@ import React from 'react'
 
 const Providers = () => {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-8 text-gray-300">
+      <div className="px-4 py-8 text-gray-300 bg-[#0F212E] rounded-lg">
         <h1 className="text-3xl font-bold mb-6 text-white">Provider Availability Policy</h1>
         
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4 text-white">1. Absolute Restriction</h2>
+          <h2 className="text-2xl font-semibold mb-4 text    -white">1. Absolute Restriction</h2>
           <p className="mb-4">
             NetEnt will not permit NetEnt Casino Games to be supplied to any entity that operates in any of the below jurisdictions (irrespective of whether or not NetEnt Casino Games are being supplied by the entity in that jurisdiction) without the appropriate licenses: Belgium, Bulgaria, Colombia, Croatia, Czech Republic, Denmark, Estonia, France, Italy, Latvia, Lithuania, Mexico, Portugal, Romania, Spain, Sweden, Switzerland, United Kingdom, United States of America.
           </p>
