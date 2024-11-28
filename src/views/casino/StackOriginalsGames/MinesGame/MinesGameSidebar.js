@@ -164,7 +164,6 @@ function MinesGameSidebar() {
                           ? restored?.betAmount
                           : mineValue?.betamount || ""
                     }
-                    // value={inputValue}
                     onChange={(e) => {
                       handleOnChange(e)
                       if (restored?.mineLocations?.length > 0) {
@@ -748,10 +747,19 @@ function MinesGameSidebar() {
                         ? tileSelect?.multiplier
                         : restored?.mineLocations?.length > 0
                           ? restoredMultiplier
-                          : "0.00"}
+                          : "1.00"}
                       )
                     </label>
-                    <label>$0.00</label>
+                    <label>₹{((mineValue?.betamount
+                      ? mineValue?.betamount
+                      : restored?.mineLocations?.length > 0
+                        ? restored?.betAmount
+                        : 0) *
+                      (tileSelect?.multiplier
+                        ? tileSelect?.multiplier
+                        : restored?.mineLocations?.length > 0
+                          ? restoredMultiplier
+                          : 0.0)).toFixed(2)}</label>
                   </div>
                   <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
                     <p>
@@ -1125,7 +1133,6 @@ function MinesGameSidebar() {
             </div>
           </div>
         </div>
-
       ) : null}
     </div>
   );

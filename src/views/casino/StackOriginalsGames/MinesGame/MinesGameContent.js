@@ -246,11 +246,12 @@ function MinesGameContent() {
         <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
-            <p>{(parseFloat(mineValue?.betamount
+            {/* <p>{(parseFloat(mineValue?.betamount
               ? mineValue?.betamount
               : restored?.mineLocations?.length > 0
                 ? restored?.betAmount
-                : mineValue?.betamount) * parseFloat(cashoutResult?.multiplier)).toFixed(2) || '0.00'} ₹</p>
+                : mineValue?.betamount) * parseFloat(cashoutResult?.multiplier)).toFixed(2) || '0.00'} ₹</p> */}
+                <p>{cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}₹</p>
             {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
           </div>
         </div>

@@ -44,7 +44,7 @@ function WheelGameContent() {
   })
 
   WheelSocket.on("walletBalance", (data) => {
-    // console.log("data *******", data);
+    console.log("data WheelSocket",data);
     dispatch(setWallet(data?.walletBalance));
   });
 
@@ -110,7 +110,10 @@ function WheelGameContent() {
     setSegColors(segColors);
   }, [wheelValue]);
 
-  console.log('RowByRisk', RowByRisk[wheelValue?.risk]['segment'+wheelValue?.segments][finalmultiplier?.position]?.backgroundColor);
+  // console.log('RowByRisk', RowByRisk[wheelValue?.risk]['segment'+wheelValue?.segments][finalmultiplier?.position]?.backgroundColor);
+  // const xvalue = RowByRisk[wheelValue?.risk]['segment'+wheelValue?.segments][finalmultiplier?.position]?.xvalue
+  // const buttons = String(xvalue)
+  // console.log('RowByRisk', RowByRisk[wheelValue?.risk]['segment'+wheelValue?.segments][finalmultiplier?.position]?.xvalue,buttons);
   
   const lowRiskButtons = (
     <>
@@ -135,6 +138,42 @@ function WheelGameContent() {
       </button>
     </>
   );
+
+  // const lowRiskButtons = (
+  //   <>
+  //     <button
+  //     className={`group relative inline-block overflow-hidden font-medium border-b-[#406c82] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg
+  //       ${buttons?.includes('0') ? "h-0 group-hover:h-full transition-all duration-500 ease-out bg-[#406c82] animate-bgAlternate" : "h-16"} 
+  //     `}
+  //   >
+  //     <span
+  //       className={`absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#406c82] transition-all duration-500 ease-out group-hover:h-full`}
+  //     ></span>
+  //     <span className="relative">0.00×</span>
+  //   </button>
+  
+  //     <button
+  //       className={`border-b-[#d5e8f2] group relative inline-block overflow-hidden font-medium border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg
+  //         ${buttons?.includes('1.20×') ? "highlight-class" : ""}`}
+  //     >
+  //       <span
+  //         className="absolute left-0 right-0 bottom-0 flex max-h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-500 ease-out group-hover:max-h-32 text-white"
+  //       ></span>
+  //       <span className="relative">1.20×</span>
+  //     </button>
+  
+  //     <button
+  //       className={`group relative inline-block overflow-hidden font-medium border-b-[#1fff20] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg
+  //         ${buttons?.includes('1.50×') ? "highlight-class" : ""}`}
+  //     >
+  //       <span
+  //         className="absolute left-0 right-0 bottom-0 flex max-h-0 w-full translate-y-0 transform bg-[#1fff20] transition-all duration-500 ease-out group-hover:max-h-32 text-white"
+  //       ></span>
+  //       <span className="relative group-hover:text-white -mt-2">1.50×</span>
+  //     </button>
+  //   </>
+  // );
+
   const mediumRiskButtons = (
     <>
       <button

@@ -791,7 +791,7 @@ function WheelGameSidebar() {
                   name="numberofbet"
                   value={
                     finalmultiplier?.remainingBets > 0
-                      ? finalmultiplier.remainingBets
+                      ? finalmultiplier.remainingBets - 1 
                       : wheelValue?.numberofbet || ""
                   }
                   onChange={(e) => {
@@ -803,7 +803,6 @@ function WheelGameSidebar() {
                   }}
                 />
               </div>
-
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
                 <label>On win</label>
               </div>
@@ -815,7 +814,7 @@ function WheelGameSidebar() {
                     } xl:px-2 lg:px-2 md:px-6 px-2 py-1.5 rounded-sm`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
-                    dispatch(setWheelValue({ onwin: "" }))
+                    dispatch(setWheelValue({ ...wheelValue, onwin: "" }))
                   }}
                 >
                   Reset
@@ -863,6 +862,7 @@ function WheelGameSidebar() {
                       } xl:px-2 lg:px-2 md:px-6 px-2 py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
+                      dispatch(setWheelValue({ ...wheelValue, onlose: "" }))
                     }}
                   >
                     Reset
@@ -876,7 +876,6 @@ function WheelGameSidebar() {
                       } px-[0.20rem] py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
-                      dispatch(setWheelValue({ onlose: "" }))
                     }}
                   >
                     Increase by:

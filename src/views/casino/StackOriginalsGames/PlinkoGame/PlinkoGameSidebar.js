@@ -153,7 +153,7 @@ function PlinkoGameSidebar() {
                   }
                   disabled={completeBetStatus}
                 >
-                  1/2
+                  ½
                 </button>
                 <Divider
                   flexItem
@@ -272,7 +272,7 @@ function PlinkoGameSidebar() {
                     }
                     disabled={completeBetStatus}
                   >
-                    1/2
+                    ½
                   </button>
                   <Divider
                     flexItem
@@ -531,7 +531,7 @@ function PlinkoGameSidebar() {
           ) : (
             <div className="text-m">
               <div>
-                {stopAutoBet ? (
+              {stopAutoBet ? (
                   <button
                     className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
                     onClick={() => handleOnStopAutoBet()}

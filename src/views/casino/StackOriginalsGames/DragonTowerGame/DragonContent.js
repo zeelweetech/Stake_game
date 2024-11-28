@@ -290,7 +290,7 @@ function DragonContent() {
                 {cashoutResult?.multiplier}x
               </p>
               <div className="flex items-center justify-center space-x-1">
-                <p>
+                {/* <p>
                   {(
                     (values?.betamount
                       ? values?.betamount
@@ -300,7 +300,8 @@ function DragonContent() {
                         parseFloat(cashoutResult?.multiplier)
                   ).toFixed(2) || "0.00"}
                   ₹
-                </p>
+                </p> */}
+                <p>{cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}₹</p>
                 {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
               </div>
             </div>

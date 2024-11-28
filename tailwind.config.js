@@ -9,6 +9,15 @@ module.exports = {
       letterSpacing: {
         input: "var(--input-letter-spacing)",
       },
+      // animation: {
+      //   bgAlternate: "bgAlternate 2s alternate",
+      // },
+      // keyframes: {
+      //   bgAlternate: {
+      //     "0%": { backgroundColor: "#406c82" }, // initial background color
+      //     "100%": { backgroundColor: "#213743" }, // end background color
+      //   },
+      // },
     },
   },
   plugins: [],

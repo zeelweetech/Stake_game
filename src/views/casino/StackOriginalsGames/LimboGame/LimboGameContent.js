@@ -44,25 +44,6 @@ function LimboGameContent() {
   })
 
   useEffect(() => {
-    if (
-      Math.floor(displayedMultiplier) ===
-      Math.floor(limboStatusData.actualMultiplier)
-    ) {
-      GetRendomFiveData();
-      // const timeout = setTimeout(() => {
-      //   setDisplayedMultiplier(1.0);
-      // }, 1000);
-
-      // return () => {
-      //   clearTimeout(timeout);
-      // };
-    }
-  }, [
-    Math.floor(displayedMultiplier) ===
-    Math.floor(limboStatusData.actualMultiplier),
-  ]);
-
-  useEffect(() => {
     GetRendomFiveData();
   }, []);
 
@@ -75,7 +56,7 @@ function LimboGameContent() {
         console.log("error", error);
       });
   };
-  
+
   useEffect(() => {
     if (limboStatusData?.actualMultiplier) {
       const targetMultiplier = parseFloat(limboStatusData.actualMultiplier);
@@ -88,28 +69,23 @@ function LimboGameContent() {
         if (currentMultiplier < targetMultiplier) {
           currentMultiplier += incrementValue;
           setDisplayedMultiplier(Number(currentMultiplier.toFixed(2)));
+          if (displayedMultiplier === limboStatusData.actualMultiplier) {
+          }
         } else {
           setDisplayedMultiplier(targetMultiplier.toFixed(2));
           clearInterval(interval);
+          GetRendomFiveData()
+
+          LimboSocket.emit("betCompleted", {
+            betId: limboStatusData?.betId,
+            userId: decoded?.userId,
+          });
         }
       }, 3);
 
-      LimboSocket.emit("betCompleted", {
-        betId: limboStatusData?.betId,
-        userId: decoded?.userId,
-      });
-
-      if(limboStatusData?.autoBetRound === 1) {
+      if (limboStatusData?.autoBetRound === 1) {
         dispatch(setStopAutoBet(false));
       }
-
-      // if(lossBetAmount === false){
-      //   dispatch(setStopAutoBet(false));
-      // } else if(limboStatusData?.autoBetRound === 1) {
-      //   dispatch(setStopAutoBet(false));
-      // }
-
-      GetRendomFiveData()
 
       return () => clearInterval(interval);
     }
@@ -177,7 +153,7 @@ function LimboGameContent() {
   };
 
   return (
-    <div className="xl:w-[52rem] xl:mx-0 lg:w-[38rem] lg:mx-0 md:mx-40  max-sm:mx-3 h-full flex flex-col justify-center select-none relative bg-[#0f212e]  rounded-t-lg">
+    <div className="xl:w-[52rem] xl:mx-0 lg:w-[41rem] lg:mx-0 md:mx-40  max-sm:mx-3 h-full flex flex-col justify-center select-none relative bg-[#0f212e]  rounded-t-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
@@ -195,7 +171,7 @@ function LimboGameContent() {
         </button>
       </div>
       <div className="flex-grow flex items-center justify-center">
-        <p className={`text-7xl md:text-9xl font-bold ${getLastValueColor()}`}>
+        <p className={`xl:text-9xl lg:text-9xl md:text-8xl text-8xl font-bold ${getLastValueColor()}`}>
           {displayedMultiplier}x
         </p>
       </div>

@@ -310,35 +310,6 @@ const CrashGameSidebar = () => {
           </div>
           {isSwiper ? (
             <div>
-              <div className="md:hidden block">
-                {multiplier > 1 ? (
-                  <button
-                    className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-                    onClick={() => setOnClickStatus(false)}
-                  >
-                    Bet (Next Round)
-                  </button>
-                ) : onClickStatus ? (
-                  <button
-                    className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-                    onClick={() => handleOnCancelBet()}
-                  >
-                    Cancel
-                  </button>
-                ) : (
-                  <button
-                    className={`${
-                      bettingStatus === false
-                        ? "bg-[#489649]"
-                        : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-                    onClick={() => handleOnManualBet()}
-                    disabled={bettingStatus === false}
-                  >
-                    Bet
-                  </button>
-                )}
-              </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
                 <label>Bet Amount</label>
                 <label>
@@ -472,7 +443,7 @@ const CrashGameSidebar = () => {
                 />
               </div>
               {/* {bettingStatus === false ? ( */}
-              <div className="md:block hidden">
+
                 {multiplier > 1 ? (
                   <button
                     className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
@@ -500,7 +471,7 @@ const CrashGameSidebar = () => {
                     Bet
                   </button>
                 )}
-              </div>
+
               <div className="flex justify-between mt-3">
                 <div className="flex items-center space-x-1 font-semibold">
                   <SupervisorAccountIcon className="text-[#b1bad3]" />
