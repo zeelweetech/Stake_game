@@ -61,7 +61,7 @@ const BigWins = () => {
                       params.indexRelativeToCurrentPage % 2 === 0 ? "row-dark" : "row-light"
                     }
                     sx={{
-                      width: "78.5%",
+                      width: "99.93%",
                       border: "none",
                       color: "#b1bad3",
                       "& .MuiDataGrid-cell": {
@@ -87,24 +87,24 @@ const BigWins = () => {
                       "@media (max-width: 425px)": {
                         marginRight: "20px",
                         width: "42%",
-                        fontSize: "0.8rem", // Adjust font size for smaller screens
-                        overflowX: "auto", // Enable horizontal scrolling
+                        fontSize: "0.8rem", 
+                        overflowX: "auto", 
                         "& .MuiDataGrid-cell": {
-                          whiteSpace: "nowrap", // Prevent content overflow
+                          whiteSpace: "nowrap", 
                         },
                         "& .MuiDataGrid-footerContainer": {
-                          fontSize: "0.7rem", // Adjust footer text size
+                          fontSize: "0.7rem", 
                         },
                       },
                       "@media (max-width: 375px)": {
                         width: "20%",
-                        fontSize: "0.8rem", // Adjust font size for smaller screens
-                        overflowX: "auto", // Enable horizontal scrolling
+                        fontSize: "0.8rem", 
+                        overflowX: "auto", 
                         "& .MuiDataGrid-cell": {
-                          whiteSpace: "nowrap", // Prevent content overflow
+                          whiteSpace: "nowrap", 
                         },
                         "& .MuiDataGrid-footerContainer": {
-                          fontSize: "0.7rem", // Adjust footer text size
+                          fontSize: "0.7rem", 
                         },
                       },
                       // "@media (max-width: 320px)": {

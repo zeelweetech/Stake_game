@@ -250,7 +250,6 @@ function DragonSidebar() {
                   2×
                 </button>
               </div>
-
               <div>
                 <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2">
                   <label>Difficulty</label>
@@ -306,15 +305,15 @@ function DragonSidebar() {
                           : 0.0)).toFixed(2)}</label>
                   </div>
                   <div className="flex justify-between items-cente rounded-sm border-2 hover:border-[#557086] border-[#2F4553] bg-[#2f4553] focus:outline-none p-2">
-                    <p>
+                  <p>
                       {(values?.betamount
                         ? values?.betamount
-                        : restor?.restoreData?.length > 0
+                        : restor?.restoreData?.[0]?.length > 0
                           ? restor?.betAmount
-                          : 0) *
+                          : values?.betamount) *
                         (tileSelected?.multiplier
                           ? tileSelected?.multiplier
-                          : tileSelected?.mineLocations?.length > 0
+                          : restor?.restoreData?.[0]?.length > 0
                             ? restorMultiplier
                             : 0.0)}
                     </p>
@@ -325,7 +324,6 @@ function DragonSidebar() {
                   </div>
                 </div>
               )}
-
               <button
                 className={`${gameBet && !isGameOver
                   ? "bg-[#489649]"
@@ -713,12 +711,12 @@ function DragonSidebar() {
                     </label>
                     <label>₹{((values?.betamount
                       ? values?.betamount
-                      : restor?.restoreData?.[0]?.length > 0
+                      : restor?.restoreData?.length > 0
                         ? restor?.betAmount
-                        : values?.betamount) *
+                        : 0) *
                       (tileSelected?.multiplier
                         ? tileSelected?.multiplier
-                        : restor?.restoreData?.[0]?.length > 0
+                        : tileSelected?.mineLocations?.length > 0
                           ? restorMultiplier
                           : 0.0)).toFixed(2)}</label>
                   </div>
@@ -735,10 +733,10 @@ function DragonSidebar() {
                             ? restorMultiplier
                             : 0.0)}
                     </p>
-                    <RiMoneyRupeeCircleFill
+                    {/* <RiMoneyRupeeCircleFill
                       color="yellow"
                       className="text-xl"
-                    />
+                    /> */}
                   </div>
                 </div>
               )}
@@ -766,7 +764,7 @@ function DragonSidebar() {
               )}
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                 <label>Bet Amount</label>
-                <label>₹0.00</label>
+                <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -779,8 +777,19 @@ function DragonSidebar() {
                     placeholder="0.00"
                     step="0.01"
                     name="betamount"
-                    value={values?.betamount || ""}
-                    onChange={(e) => handleOnChange(e)}
+                    value={
+                      values?.betamount
+                        ? values?.betamount
+                        : restor?.restoreData?.[0]?.length > 0
+                          ? restor?.betAmount
+                          : values?.betamount || ""
+                    }
+                    onChange={(e) => {
+                      handleOnChange(e)
+                      if (restor?.restoreData?.[0]?.length > 0) {
+                        dispatch(setRestor({ betAmount: '' }))
+                      }
+                    }}
                   />
                 </div>
                 <button className="w-16 text-lg font-bold hover:bg-[#5c849e68]">
@@ -970,39 +979,20 @@ function DragonSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              {/* {autoBetOnClick ? (
-                <button
-                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
-                  // onClick={() => handleOnCancelAutoBet()}
-                >
-                  Cancel Autobet
-                </button>
-              ) : (
-                <button
-                  className={`${
-                    bettingStatus === false
-                      ? "bg-[#489649]"
-                      : "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
-                  // onClick={() => handleOnAutoBet()}
-                >
-                  Start Autobet
-                </button>
-              )} */}
             </div>
           )}
-          <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0 mt-3">
-            <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
+          <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
+            <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0 mt-3">
               <div className="flex space-x-2">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[13.4rem] w-[11.3rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[13.3rem] max-[425px]:w-[11.33rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.3rem] max-[430px]:w-[11.5rem] max-[412px]:w-[11rem] max-[360px]:w-[9.3rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[13.3rem] w-[11.4rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] max-[425px]:w-[11.4rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.2rem] max-[430px]:w-[11.5rem] max-[412px]:w-[10.92rem] max-[360px]:w-[9.4rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setIsManual(false)}
                 >

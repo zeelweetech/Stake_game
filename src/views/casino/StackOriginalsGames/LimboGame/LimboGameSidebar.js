@@ -105,19 +105,19 @@ function LimboGameSidebar() {
   return (
     <div>
       {responsiveMobile > 768 ? (
-        <div className="xl:w-80 xl:mx-0 lg:w-[16.8rem] lg:mx-0 md:mx-40 max-sm:mx-3 flex flex-col p-3 bg-[#213743] rounded-b-lg">
+        <div className="xl:w-80 xl:mx-0 lg:w-[16.8rem] lg:mx-0 md:mx-40 max-sm:mx-3 flex flex-col p-3">
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2">
                 <button
-                  className={`py-2 xl:w-[8.8rem] lg:w-[7.5rem] md:w-[10.7rem] w-[11rem] rounded-full ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.65rem] lg:w-[7.5rem] md:w-[10.7rem] w-[11rem] rounded-full ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => dispatch(SwiperModel(true))}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] md:w-[11rem] w-[10.3rem] rounded-full ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.73rem] lg:w-[6.68rem] md:w-[11rem] w-[10.3rem] rounded-full ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => dispatch(SwiperModel(false))}
                 >
@@ -179,17 +179,6 @@ function LimboGameSidebar() {
                   2×
                 </button>
               </div>
-              <button
-                className={`${
-                  // bettingStatus === false
-                  //   ? "bg-[#489649]"
-                  "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full md:hidden block`}
-                onClick={() => handleOnManualBet()}
-              // disabled={limboStatusData.actualMultiplier > 1}
-              >
-                Bet
-              </button>
               <div className="text-[#b1bad3] flex justify-between items-center font-semibold text-m mt-1 my-2">
                 <label>Profit on Win</label>
                 <label>₹{values?.betamount * (values?.multiplier) ? values?.betamount * (values?.multiplier) : '0.00'}</label>
@@ -211,7 +200,7 @@ function LimboGameSidebar() {
                   // bettingStatus === false
                   //   ? "bg-[#489649]"
                   "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full md:block hidden`}
+                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
                 onClick={() => handleOnManualBet()}
               // disabled={limboStatusData.actualMultiplier > 1}
               >
@@ -338,7 +327,7 @@ function LimboGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="xl:w-[9rem] lg:w-[4.7rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-[9rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -389,7 +378,7 @@ function LimboGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="xl:w-[9rem] lg:w-[4.7rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7  pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-[9rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7  pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -430,7 +419,6 @@ function LimboGameSidebar() {
                   type="number"
                   placeholder="0.01"
                   step="0.01"
-
                   name="stoponloss"
                   value={values?.stoponloss}
                   onChange={(e) => handleOnChange(e)}
@@ -461,7 +449,7 @@ function LimboGameSidebar() {
       ) : null}
 
       {responsiveMobile <= 768 ? (
-        <div className="xl:w-80 xl:mx-0 lg:w-[16.8rem] lg:mx-0 md:mx-40 max-sm:mx-3 flex flex-col p-3 bg-[#213743] rounded-b-lg">
+        <div className="xl:w-80 xl:mx-0 lg:w-[16.8rem] lg:mx-0 md:mx-40 max-sm:mx-3 flex flex-col p-3 bg-[#213743]">
           {isSwiper ? (
             <div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mb-2">
@@ -635,14 +623,13 @@ function LimboGameSidebar() {
                     placeholder="0"
                     min={0}
                     name="autoBetCount"
-                    value={limboStatusData?.autoBetRound > 0 ? limboStatusData?.autoBetRound : parseInt(values?.autoBetCount) || ""}
+                    value={limboStatusData?.autoBetRound > 0 ? limboStatusData?.autoBetRound - 1 : parseInt(values?.autoBetCount) || ""}
                     onChange={(e) => {
                       handleOnChange(e)
                       if (limboStatusData?.autoBetRound > 0) {
                         dispatch(setLimboStatusData({ autoBetRound: '' }));
                       }
                     }}
-                  // disabled={limboStatusData?.autoBetRound}
                   />
                 </div>
               </div>
@@ -683,7 +670,7 @@ function LimboGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="xl:w-[9rem] lg:w-[4.7rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-[9rem] lg:w-[4.7rem] md:w-[11.5rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -734,7 +721,7 @@ function LimboGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="xl:w-[9rem] lg:w-[4.7rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7  pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-[9rem] lg:w-[4.7rem] md:w-[11.5rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7  pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -782,26 +769,27 @@ function LimboGameSidebar() {
               </div>
             </div>
           )}
+        
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0 mt-3">
-            <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
-              <div className="flex space-x-2">
-                <button
-                  className={`py-2 xl:w-[8.8rem] lg:w-[7.5rem] md:w-[10.7rem] w-[11rem] rounded-full ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
-                  onClick={() => dispatch(SwiperModel(true))}
-                >
-                  Manual
-                </button>
-                <button
-                  className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] md:w-[11rem] w-[10.3rem] rounded-full ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
-                  onClick={() => dispatch(SwiperModel(false))}
-                >
-                  Auto
-                </button>
-              </div>
+          <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
+            <div className="flex space-x-2 w-full">
+              <button
+                className={`py-2 rounded-full transition-all ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                  xl:w-[8.7rem] lg:w-[4rem] md:w-[10.9rem] w-full`}
+                onClick={() => dispatch(SwiperModel(true))}
+              >
+                Manual
+              </button>
+              <button
+                className={`py-2 rounded-full transition-all ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                  xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.8rem] w-full`}
+                onClick={() => dispatch(SwiperModel(false))}
+              >
+                Auto
+              </button>
             </div>
           </div>
+        </div>
         </div>
       ) : null}
     </div>
