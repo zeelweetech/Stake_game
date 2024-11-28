@@ -14,13 +14,20 @@ import boost4 from "../../assets/img/levelup.BPAS_FPf.png";
 import boost5 from "../../assets/img/bespoke.CxQq-dvx.png";
 import { GoCheck } from "react-icons/go";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useDispatch, useSelector } from "react-redux";
+import { openLoginModel, openRegisterModel } from "../../features/auth/authSlice";
 
 const VipClub = () => {
   const { userId } = useParams();
+  const dispatch = useDispatch()
   const [progressData, setProgressData] = useState([]);
   const [loading, setLoading] = useState(false);
   const decoded = decodedToken();
   const [activeLink, setActiveLink] = useState("General");
+  const {
+    isRegisterModelOpen,
+    isVerifyTermModelOpen,
+  } = useSelector((state) => state.auth);
 
   const links = [
     { label: "General" },
@@ -176,6 +183,10 @@ const VipClub = () => {
     );
   };
 
+  const handleOnRegister = () => {
+    dispatch(openRegisterModel());
+  };
+
   useEffect(() => {
     getVipProgress();
   }, [userId]);
@@ -319,7 +330,7 @@ const VipClub = () => {
                     </div>
                   </div>
                   <div className="flex justify-between mt-5">
-                    <button className="bg-[#4175e1] p-3 rounded-lg">
+                    <button onClick={handleOnRegister} className="bg-[#4175e1] p-3 rounded-lg">
                       Sign up
                     </button>
                   </div>
