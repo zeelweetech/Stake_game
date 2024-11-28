@@ -10,7 +10,6 @@ const Generals = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [countryCode, setCountryCode] = useState("");
     const [errors, setErrors] = useState({});
-    const [decodedEmail, setDecodedEmail] = useState("");
     const [tokenValid, setTokenValid] = useState(true);
     const [resendClicked, setResendClicked] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -25,16 +24,18 @@ const Generals = () => {
         { code: "+81", name: "Japan" },
     ];
 
-    // Fetch token and decode safely
+    const decoded = decodedToken();
+    console.log(">>>>>>>>>>", decoded?.userId);
+    
+    const userId = decoded?.userId;
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
             try {
                 const decoded = decodedToken(token);
-
-                console.log("decoded", decoded);
-
-                setDecodedEmail(decoded.email);
+                setTokenValid(true);  
+                setEmail(decoded?.email || "");  
             } catch (error) {
                 console.error("Invalid token", error);
                 setTokenValid(false);
@@ -42,17 +43,12 @@ const Generals = () => {
         } else {
             setTokenValid(false);
         }
-
-        const loggedInEmail = localStorage.getItem("email");
-        if (loggedInEmail) {
-            setEmail(loggedInEmail);
-        }
     }, []);
 
     const handleResendEmail = () => {
         setResendClicked(true);
-        if (tokenValid && decodedEmail) {
-            alert(`Decoded Email: ${decodedEmail}`);
+        if (tokenValid && email) {
+            alert(`Decoded Email: ${email}`);
         } else {
             // alert("Invalid token or email");
         }
@@ -63,11 +59,8 @@ const Generals = () => {
     };
 
     const handleSubmitPhone = () => {
-
         alert(`Phone number submitted: ${countryCode} ${phoneNumber}`);
-        // console.log("Country Code:", countryCode);
-        // console.log("Phone Number:", phone);
-        // Add your logic here (e.g., send the data to an API or update the state)
+        
     };
 
     return (
@@ -82,19 +75,24 @@ const Generals = () => {
                     <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400">Email</p>
                     <FormControl sx={{ mt: 0, ml: 0 }} error={!!errors.email}>
                         <TextField
-                            // placeholder="Enter Email"
-                            value={decodedEmail?.email}
+                            value={email}  
                             onChange={(e) => setEmail(e.target.value)}
+                            
                             sx={{
                                 width: "140%",
                                 marginLeft: "30px",
                                 backgroundColor: "#0f212e",
+                                color: "white",
+                                
                                 "& .MuiOutlinedInput-root": {
                                     border: "1px border-gray-500",
                                     height: "40px",
                                     "&:hover": {
                                         border: "2px solid #b1bad3",
                                     },
+                                },
+                                "& .MuiInputBase-input": {
+                                    color: "white", 
                                 },
                             }}
                         />
@@ -104,22 +102,16 @@ const Generals = () => {
 
                 {/* Buttons Section */}
                 <div className="mt-4 px-8" style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-                    <Button
-                        onClick={handleResendEmail}
-                        sx={{
-                            color: "white",
-
-                        }}
-                    >
+                    <Button onClick={handleResendEmail} sx={{ color: "white" }}>
                         Resend Email
                     </Button>
                     <Button
                         variant="contained"
-                        color="success" // Green color
+                        color="success"
                         onClick={handleSaveEmail}
                         sx={{
                             color: "black",
-                            height: "40px"
+                            height: "40px",
                         }}
                     >
                         Save
@@ -192,13 +184,10 @@ const Generals = () => {
                     </div>
                 )}
 
-
-
                 {/* Phone Number Input */}
                 <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400 ">Phone Number</p>
                 <FormControl sx={{ mt: -2, ml: 0 }}>
                     <TextField
-                        // placeholder="Enter Phone Number"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         sx={{
@@ -207,7 +196,7 @@ const Generals = () => {
                             marginLeft: "30px",
                             backgroundColor: "#0f212e",
                             "& .MuiOutlinedInput-root": {
-                                border: "1px  border-gray-500",
+                                border: "1px border-gray-500",
                                 height: "40px",
                                 "&:hover": {
                                     border: "2px solid #b1bad3",
@@ -226,12 +215,11 @@ const Generals = () => {
                         onClick={handleSubmitPhone}
                         sx={{
                             color: "black",
-                            height: "40px"
+                            height: "40px",
                         }}
                     >
                         Submit
                     </Button>
-
                 </div>
             </div>
         </div>
