@@ -11,29 +11,30 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { PiVaultFill } from "react-icons/pi";
+import { PiCurrencyBtcFill, PiVaultFill } from "react-icons/pi";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { CurrencyBangladeshiIcon } from "@heroicons/react/20/solid";
 
 const Vault = () => {
     const [open, setOpen] = useState(true);
     const [dropdownOpen, setDropdownOpen] = useState(null);
     const [searchValue, setSearchValue] = useState("");
-    const [selectedCurrency, setSelectedCurrency] = useState("");
+    const [selectedCurrency, setSelectedCurrency] = useState("0.00000000");
     const [gameMenu, setGameMenu] = useState("Deposit");
     const [amount, setAmount] = useState("");
     const [amountError, setAmountError] = useState("");
-    const [password, setPassword] = useState(""); // State to store password
-    const [showPassword, setShowPassword] = useState(false); // State to toggle visibility
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
 
     const MAX_AMOUNT = 8;
 
     const handleDropdownOpen = (event) => setDropdownOpen(event.currentTarget);
-    const handleDropdownClose = () => setDropdownOpen(null);
+    // const handleDropdownClose = () => setDropdownOpen(null);
     const handlePasswordChange = (value) => setPassword(value);
     const handleAmountChange = (value) => {
         const parsedValue = parseFloat(value);
@@ -45,23 +46,29 @@ const Vault = () => {
         setAmount(value);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // Validation logic here
-        if (password) {
-            const body = { password }; // Send password in request
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     // Validation logic here
+    //     if (password) {
+    //         const body = { password }; // Send password in request
+    //     }
+    // };
+    const handleDropdownClose = (currency) => {
+        if (currency) {
+            setSelectedCurrency(currency);
+            setAmount(currency.split(' ')[0]);
         }
+        setDropdownOpen(null);
     };
 
- 
-        const handleEnable2FA = () => {
-          
-            navigate("/setting/security"); 
-        };
-  
+    const handleEnable2FA = () => {
+
+        navigate("/setting/security");
+    };
+
 
     const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword); // Toggle visibility
+        setShowPassword(!showPassword);
     };
 
     const handleMaxClick = () => {
@@ -72,17 +79,17 @@ const Vault = () => {
     const handleDeposit = () => {
         console.log("Depositing amount: ", amount);
         setAmount("");
-        setPassword(""); // Clear password after deposit
+        setPassword("");
     };
 
     const handleWithdraw = () => {
         console.log("Withdrawing amount: ", amount, " with password: ", password);
-        setAmount(""); // Reset amount after withdrawal
-        setPassword(""); // Reset password after withdrawal
+        setAmount("");
+        setPassword("");
     };
 
     const currencyList = [
-        "0.00000000 BTC",
+        `0.00000000 BTC `,
         "0.00000000 ETH",
         "0.00000000 LTC",
         "0.00000000 SOL",
@@ -160,10 +167,12 @@ const Vault = () => {
                                 <ExpandMoreIcon />
                             </div>
                         </FormControl>
+
+
                         <Menu
                             anchorEl={dropdownOpen}
                             open={Boolean(dropdownOpen)}
-                            onClose={handleDropdownClose}
+                            onClose={() => handleDropdownClose(null)}
                             PaperProps={{
                                 style: {
                                     maxHeight: 300,
@@ -194,10 +203,7 @@ const Vault = () => {
                             {filteredCurrencies.map((currency) => (
                                 <MenuItem
                                     key={currency}
-                                    onClick={() => {
-                                        setSelectedCurrency(currency);
-                                        handleDropdownClose();
-                                    }}
+                                    onClick={() => handleDropdownClose(currency)}
                                     sx={{
                                         backgroundColor: "#1a2c38",
                                         color: "white",
@@ -244,6 +250,7 @@ const Vault = () => {
                                         },
                                     }}
                                 />
+                                <PiCurrencyBtcFill color="#FFD700" />
                                 <button
                                     onClick={handleMaxClick}
                                     style={{
@@ -253,9 +260,11 @@ const Vault = () => {
                                         border: "none",
                                         cursor: "pointer",
                                     }}
+
                                 >
                                     Max
                                 </button>
+
                             </div>
                         </FormControl>
                         {amountError && (
@@ -266,83 +275,89 @@ const Vault = () => {
                     </div>
 
                     {/* Password Input Section for Withdraw */}
-                    {gameMenu === "Withdraw" && (
-                        <div className="flex flex-col mt-4">
-                            <p className="text-sm font-medium text-gray-400 mb-2">Password</p>
-                            <FormControl sx={{ width: "100%", height: "25%" }}>
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        backgroundColor: "#0f212e",
-                                        padding: "8px 12px",
-                                        border: "1px solid #b1bad3",
-                                        borderRadius: "4px",
-                                        color: "white",
-                                        gap: "8px",
-                                        // minHeight: "10px"
-                                    }}
-                                >
-                                    <TextField
-                                        type={showPassword ? "text" : "password"}
-                                        value={password}
-                                        onChange={(e) => handlePasswordChange(e.target.value)}
-                                        // placeholder="Enter your password"
-                                        sx={{
-                                            flexGrow: 1,
-                                            backgroundColor: "transparent",
-                                            input: { color: "white" },
-                                            "& .MuiOutlinedInput-root": {
-                                                height: "10px",
-                                                "& fieldset": { border: "none" },
-                                            },
+                    <div className="w-full">
+                        {gameMenu === "Withdraw" && (
+                            <div className="flex flex-col mt-3">
+                                <p className="text-sm font-medium text-gray-400 mb-2">Password</p>
+                                <FormControl sx={{ width: "100%" }}>
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            backgroundColor: "#0f212e",
+                                     
+                                            border: "1px solid #b1bad3",
+                                            borderRadius: "4px",
+                                            color: "white",
+                                            gap: "8px",
+                                            minHeight: "30px", 
                                         }}
-                                    />
-                                    <IconButton onClick={togglePasswordVisibility} sx={{ color: "white" }}>
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </div>
-                            </FormControl>
-                        </div>
-                    )}
+                                    >
+                                        <TextField
+                                            type={showPassword ? "text" : "password"}
+                                            value={password}
+                                            onChange={(e) => handlePasswordChange(e.target.value)}
+                                            sx={{
+                                                flexGrow: 1,
+                                                backgroundColor: "transparent",
+                                                input: { color: "white" },
+                                                "& .MuiOutlinedInput-root": {
+                                                    
+                                                    height: "40px", 
+                                                    "& fieldset": { border: "none" },
+                                                },
+                                            }}
+                                        />
+                                        <IconButton onClick={togglePasswordVisibility} sx={{ color: "white" }}>
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </div>
+                                </FormControl>
+                            </div>
+                        )}
+                    </div>
+
 
                     {/* Action Buttons */}
                     <div className="flex w-full justify-between mt-4">
                         <Button
                             sx={{
-                                backgroundColor: "rgba(20, 117, 225, var(--tw-bg-opacity));",
+                                backgroundColor: "rgba(20, 117, 225, var(--tw-bg-opacity))",
                                 color: "white",
                                 width: "100%",
-                                "&:hover": { backgroundColor: "rgba(20, 117, 225, var(--tw-bg-opacity));" },
+                                padding: "12px",
+                                fontSize: "16px",
+                                "&:hover": { backgroundColor: "rgba(20, 117, 225, var(--tw-bg-opacity))" },
                             }}
                             onClick={gameMenu === "Deposit" ? handleDeposit : handleWithdraw}
                         >
-                            {gameMenu}
+                            {gameMenu === "Deposit" ? "Deposit to Vault" : "Withdraw to Vault"}
                         </Button>
                     </div>
-                    </div>
+
+                </div>
 
             </DialogContent>
             <div className="bg-[#0f212e] w-full p-6 py-4">
-                    <p className="text-gray-400">Improve your account security with Two-Factor Authentication</p>
-                    <Button
-                                    sx={{
-                                       backgroundColor: "rgba(20, 117, 225, 1)",
-                                        color: "white",
-                                        width: "100%",
-                                        paddingTop: "2px",
-                                        "&:hover": { backgroundColor: "gray-500" },
-                                    }}
-                                    onClick={handleEnable2FA}
-                                >
-                                    Enable 2FA
-                                </Button>
+                <p className="text-gray-400 p-2">Improve your account security with Two-Factor Authentication</p>
+                <Button
+                    sx={{
+                        backgroundColor: "#213743",
+                        color: "white",
+                        width: "100%",
+                        paddingTop: "2px",
+                        "&:hover": { backgroundColor: "gray-500" },
+                    }}
+                    onClick={handleEnable2FA}
+                >
+                    Enable 2FA
+                </Button>
 
-                                <div>
-                                    <p className="text-gray-400">Learn more about Vault</p>
-                                </div>
-                    </div>
-               
+                <div>
+                    <p className="text-gray-400 p-2">Learn more about Vault</p>
+                </div>
+            </div>
+
         </Dialog>
     );
 };

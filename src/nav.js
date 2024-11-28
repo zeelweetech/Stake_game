@@ -139,7 +139,12 @@ import { MdSettings } from "react-icons/md";
     { name: "Vault", to: "/Vault", icon:<PiVaultFill size={18}  className="mr-2"/>  },
     { name: "VIP", to: "/VIP", icon:<MdEmojiEvents size={18}  className="mr-2"/>  },
     { name: "Statistics", to: "/Statistics", icon:<LegendToggleIcon size={18}  className="mr-0"/>  },
-    { name: "Notification", to: "/Notification", icon:<LuListTodo  size={18}  className="mr-1"/>  },
+    {
+      name: "Notification",
+      to: "/notification", 
+      icon: <LuListTodo size={18} className="mr-1" />,
+      // action: () => handleMenuOpen(), 
+    },    
     { name: "Setting", to: "/Setting", icon:<MdSettings  size={18}  className="mr-1"/>  },
   ],
 },
