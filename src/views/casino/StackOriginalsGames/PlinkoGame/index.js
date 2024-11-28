@@ -76,12 +76,12 @@ function PlinkoGame() {
                  ? "h-[5rem] md:ml-40 md:w-[24.3rem] ml-2 max-[425px]:w-[25.4rem] max-[375px]:w-[22.26rem] max-[414px]:w-[24.71rem] max-[390px]:w-[23.2rem] max-[430px]:w-[25.7rem] max-[360px]:w-[21.3rem] max-[400px]:w-[23.79rem]"
                  : "h-24 xl:w-[65rem] lg:w-[57.8rem]"
              }
-          border-t-2 border-[#213743] h-20`}
+          border-t-2 border-[#213743] h-28`}
           >
             <hr className="border-2 border-[#213743]" />
             <GameFooter />
           </div>
-          <div className=" xl:ml-36 lg:ml-28 md:mx-3 mx-3 mt-5">
+          <div className="xl:ml-36 lg:ml-28 md:mx-3 mx-3 ">
             <GameContent />
             <GameTable />
           </div>

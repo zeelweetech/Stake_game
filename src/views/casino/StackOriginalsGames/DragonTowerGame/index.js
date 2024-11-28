@@ -70,7 +70,7 @@ function DragonTowerGame() {
         <hr className="border-2 border-[#213743]" />
         <GameFooter />
       </div>
-      <div>
+      <div className="xl:w-[78rem] xl:ml-28 xl:mt-16 px-4 md:px-7 max-w-screen-md mx-auto">
         <GameContent />
         <GameTable />
       </div>
