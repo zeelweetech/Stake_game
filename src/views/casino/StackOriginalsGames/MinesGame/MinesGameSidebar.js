@@ -728,10 +728,10 @@ function MinesGameSidebar() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                      <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-2 mb-1">
                         <label>Gems</label>
                       </div>
-                      <div className="bg-[#2f4553] border border-[#0e2433] w-[11.5rem] md:w-52 lg:w-[7.4rem] xl:w-36 p-2 mt-2.5">
+                      <div className="bg-[#2f4553] border border-[#0e2433] w-[11.5rem] max-[400px]:w-[10.3rem] md:w-52 lg:w-[7.4rem] xl:w-36 p-2 mt-2.5">
                         {restored?.mineLocations?.length > 0
                           ? 25 - restored?.mines
                           : mineValue?.mines
@@ -1116,14 +1116,14 @@ function MinesGameSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0 mt-4">
               <div className="flex space-x-2">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[12rem] max-[425px]:w-[11.33rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.3rem] max-[430px]:w-[11.5rem] max-[412px]:w-[11rem] max-[360px]:w-[9.3rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[12rem] max-[425px]:w-[11.33rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.3rem] max-[430px]:w-[11.5rem] max-[412px]:w-[11rem] max-[360px]:w-[9.3rem] max-[400px]:w-[10.45rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] max-[425px]:w-[11.4rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.2rem] max-[430px]:w-[11.5rem] max-[412px]:w-[10.92rem]  max-[360px]:w-[9.4rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] max-[425px]:w-[11.4rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.2rem] max-[430px]:w-[11.5rem] max-[412px]:w-[10.92rem] max-[360px]:w-[9.4rem] max-[400px]:w-[10.49rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setIsManual(false)}
                 >

@@ -40,7 +40,7 @@ function WheelGame() {
   });
 
   return (
-    <div className="xl:py-10 lg:py-10 md:py-6 py-4 xl:px-40 lg:w-11/12 lg:ml-9 bg-[#1a2c38] flex justify-center items-center text-white h-full">
+    <div className="xl:py-10 lg:py-10 md:py-6 py-4 xl:px-40 lg:w-11/12 xl:ml-16 lg:ml-9 bg-[#1a2c38] flex justify-center items-center text-white h-full">
     <div className="w-full max-w-screen-lg">
       <div
         className={`flex w-full min-w-72 ${
