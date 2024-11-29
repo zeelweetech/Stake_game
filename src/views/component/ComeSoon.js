@@ -5,8 +5,8 @@ import GameFooter from "./GameFooter";
 function ComeSoon() {
   return (
   <>
-   <h1 className="flex justify-center h-screen items-center text-white text-5xl">Coming Soon...</h1>
-   <GameFooter />
+   <h1 className="flex justify-center h-[35rem] items-center text-white text-5xl">Coming Soon...</h1>
+   {/* <GameFooter /> */}
   </>
   );
 }

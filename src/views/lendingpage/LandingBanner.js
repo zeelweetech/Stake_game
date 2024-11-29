@@ -9,13 +9,17 @@ import {
   handleFacebookLogin,
   handleGoogleLogin,
 } from "../../services/FirebaseServices";
+import { openRegisterModel } from "../../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 function LandingBanner() {
+  const dispatch = useDispatch();
   const [registerModel, setRagisterModel] = useState(false);
   const [loginModel, setLoginModel] = useState(false);
   const [forgotPasswordModel, setForgotPasswordModel] = useState(false);
 
   const handleOnRegister = () => {
+    dispatch(openRegisterModel());
     setRagisterModel(true);
   };
 

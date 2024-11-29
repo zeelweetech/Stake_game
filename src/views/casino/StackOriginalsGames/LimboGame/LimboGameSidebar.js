@@ -378,7 +378,7 @@ function LimboGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="xl:w-[9rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7  pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-[9rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 max-[390px]:w-[5rem] pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -434,11 +434,14 @@ function LimboGameSidebar() {
               ) : (
                 <button
                   className={`${
-                    // bettingStatus === false
+                    // bettingStatus === false 
                     //   ? "bg-[#489649]"
                     "bg-[#1fff20] hover:bg-[#42ed45]"
                     } text-black mt-3 py-3 rounded-md font-semibold w-full`}
-                  onClick={() => handleOnAutoBet()}
+                  onClick={() => 
+                    values?.autoBetCount === undefined || values?.autoBetCount === ""
+                    ? toast.error("Please enter a number of bets")
+                    : handleOnAutoBet()}
                 >
                   Start Autobet
                 </button>

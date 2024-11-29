@@ -38,7 +38,7 @@ function Header() {
           /> */}
           <span
             className="text-white text-5xl font-extrabold italic font-sans cursor-pointer"
-            onClick={() => navigate("/casino/home")}
+            onClick={() => navigate("/")}
           >
             Listor
           </span>

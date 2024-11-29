@@ -40,7 +40,6 @@ function DragonContent() {
   const dispatch = useDispatch();
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
-  // const [restorData, setRestorData] = useState([]);
   const {
     values,
     restor,
@@ -90,9 +89,7 @@ function DragonContent() {
       dispatch(setRestorData(data.restoreData));
       dispatch(setRowsIndex(data.currentStep - 1));
 
-      // dispatch(setIsGameOver(false));
       dispatch(setGameBet(true));
-      // dispatch(setShowRandomField(true));
 
       const initialClickedBoxes = {};
       for (let i = 0; i < data.currentStep; i++) {
@@ -125,6 +122,7 @@ function DragonContent() {
   DragonTowerSocket.on("gameOver", (data) => {
     handleGameOverResult();
     dispatch(setIsGameOver(true));
+    dispatch(setTileSelected({}));
     dispatch(setShowRandomField(false));
     setCashoutVisible(false);
   });
@@ -274,7 +272,7 @@ function DragonContent() {
             lg:h-[46rem] lg:w-[36.5rem] lg:mx-0 
             md:h-[30rem] md:mx-[4rem] 
             sm:mx-[2rem] 
-            mx-[-5rem]  h-[28rem]"
+            mx-[-5rem] h-[28rem]"
       >
         <div className="flex flex-col items-center relative">
           <div className="flex justify-center">
@@ -311,9 +309,7 @@ function DragonContent() {
           >
             {(() => {
               const rowElements = [];
-              // const lastClickedRowIndex = Math.max(
-              //   ...Object.keys(clickedBoxes).map(Number)
-              // );
+
               for (let rowIndex = rows - 1; rowIndex >= 0; rowIndex--) {
                 const boxElements = [];
                 for (let boxIndex = 0; boxIndex < boxesPerRow; boxIndex++) {

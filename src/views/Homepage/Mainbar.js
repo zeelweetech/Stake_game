@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import mainbarBGimage from "../../assets/img/MainbarBG.png";
 import { FaRegStar } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import StackCasino from "../../assets/img/StackCasino.png";
 import SportBook from "../../assets/img/SportBook.png";
@@ -15,6 +15,7 @@ import { getMedalsProgress } from "../../services/LoginServices";
 function Mainbar() {
   //   const InfoTooltip = `All bets settled on the sportsbook return a 3x (three times) faster rate of progression compared to Casino (1x progression). Voided bets are excluded.`;
   const { userId } = useParams();
+  const navigate = useNavigate();
   const [progressData, setProgressData] = useState([]);
   const [loading, setLoading] = useState(false);
   const decoded = decodedToken();
@@ -38,7 +39,7 @@ function Mainbar() {
   return (
     <div className="w-full">
       <div
-        className="h-auto xl:w-[95.7rem] lg:w-full flex flex-col lg:flex-row justify-evenly items-center p-4"
+        className="h-auto xl:w-full lg:w-full flex flex-col lg:flex-row justify-evenly items-center p-4"
         style={{
           backgroundImage: `url(${mainbarBGimage})`,
           backgroundSize: "cover",
@@ -53,7 +54,7 @@ function Mainbar() {
           }}
           className="mb-6 lg:mb-0"
         >
-          <div className="bg-[#0f212e] w-full md:w-80 p-5 border border-[#2f4553]">
+          <div className="bg-[#0f212e] xl:w-[20.5rem] w-[20.5rem] md:w-80 p-5 border border-[#2f4553]">
             <div className="flex justify-between items-center">
               <p>{progressData?.userName || "User"}</p>
               <FaRegStar size={22} color="#2f4553" />
@@ -127,7 +128,7 @@ function Mainbar() {
         </div>
 
         <div className="flex md:flex-row space-x-2  md:space-x-5 md:space-y-0">
-          <div className="bg-[#1a2c38] hover:cursor-pointer  transition-transform duration-300 hover:translate-y-[-8px]">
+          <div className="bg-[#1a2c38] hover:cursor-pointer  transition-transform duration-300 hover:translate-y-[-8px]" onClick={() => navigate("/casino/home")}>
             <img
               src={StackCasino}
               className=" md:w-80 h-40 md:h-56  "
@@ -143,7 +144,7 @@ function Mainbar() {
               <p>Casino</p>
             </div>
           </div>
-          <div className="bg-[#1a2c38] hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px]">
+          <div className="bg-[#1a2c38] hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px]" onClick={() => navigate("/ComeSoon")}>
             <img
               src={SportBook}
               className="md:w-80 h-40 md:h-56 "

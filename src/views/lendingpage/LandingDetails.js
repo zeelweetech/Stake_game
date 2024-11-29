@@ -7,8 +7,10 @@ import Mastercard from "../../assets/img/Mastercard.png";
 import Applepay from "../../assets/img/Applepay.png";
 import Gpay from "../../assets/img/Gpay.png";
 import Samsung from "../../assets/img/Samsung.png";
+import { useNavigate } from "react-router-dom";
 
 function LandingDetails() {
+  const navigate = useNavigate();
   return (
     <div className="bg-[#1a2c38] pb-10">
       <div>
@@ -37,6 +39,7 @@ function LandingDetails() {
             <button
               type="button"
               className="bg-[#1475e1] hover:bg-[#396ca8] rounded-md text-sm text-white py-3 w-full mt-3 font-semibold"
+              onClick={() => navigate("/casino/home")}
             >
               Go to Casino
             </button>
@@ -69,6 +72,7 @@ function LandingDetails() {
             <button
               type="button"
               className="bg-[#1475e1] hover:bg-[#396ca8] rounded-md text-sm text-white py-3 w-full mt-3 font-semibold"
+              onClick={() => navigate("/ComeSoon")}
             >
               Go to Sportsbook
             </button>

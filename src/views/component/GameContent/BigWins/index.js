@@ -3,16 +3,16 @@ import "../../../../App.css";
 import Loader from "../../Loader";
 import Columns from "./columns";
 import { DataGrid } from "@mui/x-data-grid";
-import {getBigWins } from "../../../../services/GameServices";
+import { getBigWins } from "../../../../services/GameServices";
 import { useParams } from "react-router-dom";
 import { format } from "date-fns";
 
 const BigWins = () => {
-  const {id} = useParams()
+  const { id } = useParams()
   const [betsData, setBetsData] = useState([]);
   const [loading, setLoading] = useState(false)
   // console.log("bigwins id==========", id);
-  
+
 
   useEffect(() => {
     getBigWinsdata();
@@ -45,12 +45,12 @@ const BigWins = () => {
   return (
     <>
       <div>
-        <div className="py-2 xl:ml-16 md:mt-3 md:-ml-5 ml-2">
+        <div>
           {loading ? (
             <Loader />
           ) : (
             <div>
-              <div className="flex justify-center item-center">
+              <div className="flex justify-center item-center pt-4">
                 <div>
                   <DataGrid
                     rows={rows}
@@ -61,8 +61,9 @@ const BigWins = () => {
                       params.indexRelativeToCurrentPage % 2 === 0 ? "row-dark" : "row-light"
                     }
                     sx={{
-                      width: "99.93%",
+                      // width: "99.93%",
                       border: "none",
+                      // borderRadius: "16px",
                       color: "#b1bad3",
                       "& .MuiDataGrid-cell": {
                         border: "none",
@@ -83,30 +84,55 @@ const BigWins = () => {
                         color: "white",
                       },
                       overflowY: "hidden",
+                      "@media (max-width: 768px)": {
+                        width: "45%",
+                      },
+                      // "@media (min-width: 768px)": {
+                      //   width: "52%",
+                      // },
+                      "@media (width: 320px)": {
+                        width: "35%",
+                      },
+                      "@media (width: 375px)": {
+                        width: "42.8%",
+                      },
+                      "@media (width: 425px)": {
+                        width: "49.7%",
+                      },
+                      "@media (width: 768px)": {
+                        width: "86.2%",
+                      },
+                      "@media (width: 1024px)": {
+                        width: "100%",
+                      },
+                      "@media (width: 1260px)": {
+                        width: "90%",
+                      },
+                      
                       // Add responsive styles here
-                      "@media (max-width: 425px)": {
-                        marginRight: "20px",
-                        width: "42%",
-                        fontSize: "0.8rem", 
-                        overflowX: "auto", 
-                        "& .MuiDataGrid-cell": {
-                          whiteSpace: "nowrap", 
-                        },
-                        "& .MuiDataGrid-footerContainer": {
-                          fontSize: "0.7rem", 
-                        },
-                      },
-                      "@media (max-width: 375px)": {
-                        width: "20%",
-                        fontSize: "0.8rem", 
-                        overflowX: "auto", 
-                        "& .MuiDataGrid-cell": {
-                          whiteSpace: "nowrap", 
-                        },
-                        "& .MuiDataGrid-footerContainer": {
-                          fontSize: "0.7rem", 
-                        },
-                      },
+                      // "@media (max-width: 425px)": {
+                      //   marginRight: "20px",
+                      //   width: "42%",
+                      //   fontSize: "0.8rem", 
+                      //   overflowX: "auto", 
+                      //   "& .MuiDataGrid-cell": {
+                      //     whiteSpace: "nowrap", 
+                      //   },
+                      //   "& .MuiDataGrid-footerContainer": {
+                      //     fontSize: "0.7rem", 
+                      //   },
+                      // },
+                      // "@media (max-width: 375px)": {
+                      //   width: "20%",
+                      //   fontSize: "0.8rem", 
+                      //   overflowX: "auto", 
+                      //   "& .MuiDataGrid-cell": {
+                      //     whiteSpace: "nowrap", 
+                      //   },
+                      //   "& .MuiDataGrid-footerContainer": {
+                      //     fontSize: "0.7rem", 
+                      //   },
+                      // },
                       // "@media (max-width: 320px)": {
                       //   width: "32.5%",
                       //   fontSize: "0.7rem",

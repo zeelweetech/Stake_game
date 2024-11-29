@@ -203,15 +203,14 @@ function DragonSidebar() {
                         dispatch(setRestor({ betAmount: '' }))
                       }
                     }}
-                    className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField &&
-                      completeFundStatus &&
-                      "cursor-not-allowed opacity-80"
+                    className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2  border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField
+                      ? "cursor-not-allowed opacity-80" : "hover:border-[#557086]"
                       }`}
-                    disabled={showRandomField && completeFundStatus}
+                    disabled={showRandomField}
                   />
                 </div>
                 <button
-                  className={`w-16 text-lg font-bold hover:bg-[#5c849e68] ${showRandomField && completeFundStatus
+                  className={`w-16 text-lg font-bold ${showRandomField
                     ? "cursor-not-allowed opacity-80"
                     : "hover:bg-[#5c849e68]"
                     }`}
@@ -223,7 +222,7 @@ function DragonSidebar() {
                       })
                     )
                   }
-                  disabled={showRandomField && completeFundStatus}
+                  disabled={showRandomField}
                 >
                   ½
                 </button>
@@ -233,7 +232,7 @@ function DragonSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-sm font-bold ${showRandomField && completeFundStatus
+                  className={`w-16 text-sm font-bold ${showRandomField
                     ? "cursor-not-allowed opacity-80"
                     : "hover:bg-[#5c849e68]"
                     }`}
@@ -245,7 +244,7 @@ function DragonSidebar() {
                       })
                     )
                   }
-                  disabled={showRandomField && completeFundStatus}
+                  disabled={showRandomField}
                 >
                   2×
                 </button>
@@ -254,17 +253,14 @@ function DragonSidebar() {
                 <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2">
                   <label>Difficulty</label>
                 </div>
-                <div className="relative flex border-2 rounded hover:border-[#557086] border-[#2F4553] bg-[#2F4553]">
+                <div className={`relative flex border-2 rounded ${showRandomField ? "" : "hover:border-[#557086]"} border-[#2F4553] bg-[#2F4553]`}>
                   <select
                     type="select"
                     name="difficulty"
                     value={values?.difficulty}
                     onChange={(e) => handleOnChange(e)}
-                    className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent ${showRandomField &&
-                      completeFundStatus &&
-                      "cursor-not-allowed opacity-80"
-                      }`}
-                    disabled={showRandomField && completeFundStatus}
+                    className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent ${showRandomField ? "cursor-not-allowed opacity-80" : "cursor-pointer"}`}
+                    disabled={showRandomField}
                   >
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
@@ -610,14 +606,13 @@ function DragonSidebar() {
                       }
                     }}
                     className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 w-64 rounded-l-md text-white border-2  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField &&
-                      completeFundStatus &&
                       "cursor-not-allowed opacity-80"
                       }`}
-                    disabled={showRandomField && completeFundStatus}
+                    disabled={showRandomField}
                   />
                 </div>
                 <button
-                  className={`w-16 text-lg font-bold hover:bg-[#5c849e68] ${showRandomField && completeFundStatus
+                  className={`w-16 text-lg font-bold hover:bg-[#5c849e68] ${showRandomField
                     ? "cursor-not-allowed opacity-80"
                     : "hover:bg-[#5c849e68]"
                     }`}
@@ -629,7 +624,7 @@ function DragonSidebar() {
                       })
                     )
                   }
-                  disabled={showRandomField && completeFundStatus}
+                  disabled={showRandomField}
                 >
                   ½
                 </button>
@@ -639,7 +634,7 @@ function DragonSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-sm font-bold ${showRandomField && completeFundStatus
+                  className={`w-16 text-sm font-bold ${showRandomField
                     ? "cursor-not-allowed opacity-80"
                     : "hover:bg-[#5c849e68]"
                     }`}
@@ -651,7 +646,7 @@ function DragonSidebar() {
                       })
                     )
                   }
-                  disabled={showRandomField && completeFundStatus}
+                  disabled={showRandomField}
                 >
                   2×
                 </button>
@@ -670,17 +665,16 @@ function DragonSidebar() {
                 <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2">
                   <label>Difficulty</label>
                 </div>
-                <div className="relative flex border-2 rounded hover:border-[#557086] border-[#2F4553] bg-[#2F4553]">
+                <div className={`relative flex border-2 rounded ${showRandomField ? "" : "hover:border-[#557086]"} border-[#2F4553] bg-[#2F4553]`}>
                   <select
                     type="select"
                     name="difficulty"
                     value={values?.difficulty}
                     onChange={(e) => handleOnChange(e)}
                     className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent ${showRandomField &&
-                      completeFundStatus &&
                       "cursor-not-allowed opacity-80"
                       }`}
-                    disabled={showRandomField && completeFundStatus}
+                    disabled={showRandomField}
                   >
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
@@ -985,14 +979,14 @@ function DragonSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0 mt-3">
               <div className="flex space-x-2">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[13.3rem] max-[425px]:w-[11.33rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.3rem] max-[430px]:w-[11.5rem] max-[412px]:w-[11rem] max-[360px]:w-[9.3rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[13.3rem] max-[425px]:w-[11.33rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.3rem] max-[430px]:w-[11.5rem] max-[412px]:w-[11rem] max-[360px]:w-[9.3rem] max-[400px]:w-[10.4rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] max-[425px]:w-[11.4rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.2rem] max-[430px]:w-[11.5rem] max-[412px]:w-[10.92rem] max-[360px]:w-[9.4rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] max-[425px]:w-[11.4rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.2rem] max-[430px]:w-[11.5rem] max-[412px]:w-[10.92rem] max-[360px]:w-[9.4rem] max-[400px]:w-[10.5rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setIsManual(false)}
                 >

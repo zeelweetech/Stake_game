@@ -44,7 +44,6 @@ function WheelGameContent() {
   })
 
   WheelSocket.on("walletBalance", (data) => {
-    console.log("data WheelSocket",data);
     dispatch(setWallet(data?.walletBalance));
   });
 
