@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Content from "../components/Content";
 import Footer from "../components/Footer";
 import MainHeader from "../components/MainHeader";
+import MobileMenubar from "../components/MobileMenubar"
 import { jwtDecode } from "jwt-decode";
 
 function DefaultLayout() {
@@ -60,6 +61,7 @@ function DefaultLayout() {
           <Content />
           <Footer />
         </div>
+        <MobileMenubar />
       </div>
     </div>
   );

@@ -64,7 +64,7 @@ function DragonTowerGame() {
       )}
       <div
         className={`${
-          isMobile ? "-ml-12 w-[25.3rem] -mt-12 md:w-[29.3rem] md:-mt-12 md:ml-16 max-[375px]:w-[22.23rem] max-[414px]:w-[24.7rem] max-[390px]:w-[23.2rem]" : "xl:w-[64rem] lg:w-[53.3rem]"
+          isMobile ? "-ml-12 w-[25.3rem] -mt-12 md:w-[29.3rem] md:-mt-12 md:ml-16 max-[375px]:w-[22.23rem] max-[414px]:w-[24.7rem] max-[390px]:w-[23.2rem] max-[400px]:w-[23.55rem]" : "xl:w-[64rem] lg:w-[53.3rem]"
         } border-t-2 border-[#213743] h-10`}
       >
         <hr className="border-2 border-[#213743]" />

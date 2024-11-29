@@ -80,8 +80,8 @@ function WheelGameSidebar() {
         numberOfBets: finalmultiplier?.remainingBets > 0
           ? finalmultiplier.remainingBets - 1
           : wheelValue?.numberofbet || "",
-        onWin: parseInt(wheelValue?.onwin, 10),
-        onLoss: parseInt(wheelValue?.onloss, 10),
+        onWins: parseInt(wheelValue?.onwin, 10),
+        onLoss: parseInt(wheelValue?.onlose, 10),
         stopOnLoss: parseInt(wheelValue?.stoponloss, 10),
         stopOnProfit: parseInt(wheelValue?.stoponprofit, 10),
       });
@@ -943,14 +943,14 @@ function WheelGameSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 overflow-hidden">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.08rem] md:w-[12.81rem] w-[11.12rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.08rem] md:w-[12.81rem] w-[11.12rem] max-[375px]:w-[9.5rem] max-[414px]:w-[10.77rem] max-[390px]:w-[10rem] max-[430px]:w-[11.28rem] max-[412px]:w-[10.7rem] max-[360px]:w-[9.1rem] max-[400px]:w-[10.2rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.65rem] lg:w-[7.1rem] md:w-[12.9rem] w-[11.12rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.65rem] lg:w-[7.1rem] md:w-[12.9rem] w-[11.12rem] max-[375px]:w-[9.6rem]  max-[414px]:w-[10.77rem] max-[390px]:w-[10rem] max-[430px]:w-[11.28rem] max-[412px]:w-[10.7rem] max-[360px]:w-[9.1rem] max-[400px]:w-[10.2rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setIsManual(false)}
                 >
