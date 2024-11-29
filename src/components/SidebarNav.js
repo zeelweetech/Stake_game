@@ -1,221 +1,237 @@
-// import React from "react";
-// import { Link, NavLink, useNavigate } from "react-router-dom";
+
+// import React, { useState } from "react";
+// import { Link, NavLink } from "react-router-dom";
 // import PropTypes from "prop-types";
+// import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 // export const SidebarNav = ({ items, openMenubar }) => {
-//   const navigate = useNavigate();
+//   const [dropdownVisible, setDropdownVisible] = useState(null);
 
-//   const handleLogout = () => {
-//     localStorage.removeItem("token");
-//     navigate("/");
-//     window.location.reload();
+//   const toggleDropdown = (index) => {
+//     setDropdownVisible(dropdownVisible === index ? null : index);
 //   };
 
-//   const navLink = (name, icon, badge, indent = false, index) => {
-//     return (
-//       <>
-//         <div>
-//           <li
-//             key={index}
-//             className={`flex items-center 
+  
+//   const firstGroup = ["Dashboard", "Favourites", "Recent", "My Bets"];
+//   const secondGroup = [
+//     "Lobby",
+//     "Listor Originals",
+//     "Slots",
+//     "Live Casino",
+//     "Game Shows",
+//     "Listor Exclusives",
+//     "New Releases",
+//   ];
+//   const thirdGroup = ["Profile"];
 
-//             ${
-//               name === "Games"
-//                 ? "border-b-2 bg-[#213743] p-1.5 rounded-md w-40"
-//                 : ""
-//             }
-//             ${
-//               name === "Logout" ? "bg-[#213743] p-1.5 rounded-md w-40 ml-4" : ""
-//             }`}
-//             onClick={name === "Logout" ? handleLogout : undefined}
-//           >
-//             <div className="text-white">
-//               {icon ? (
-//                 <>{index % 2 === 0 ? icon : icon}</>
-//               ) : (
-//                 indent && (
-//                   <span className="nav-icon">
-//                     <span className="nav-icon-bullet"></span>
-//                   </span>
-//                 )
-//               )}
-//             </div>
-//             <span className={`ml-4 ${openMenubar ? "block" : "hidden"}`}>
-//               {name && name}
-//             </span>
-//             {badge && (
-//               <span
-//                 color={badge.color}
-//                 className={`ml-4 ${openMenubar ? "block" : "hidden"}`}
-//               >
-//                 {badge.text}
-//               </span>
-//             )}
-//           </li>
-//         </div>
-//       </>
-//     );
-//   };
-
-//   // ${
-//   //   name === "Favourites" ||
-//   //   name === "Recent" ||
-//   //   name === "My Bets" ||
-//   //   name === "Lobby" ||
-//   //   name === "Listor Originals" ||
-//   //   name === "Slot" ||
-//   //   name === "Live Casino" ||
-//   //   name === "Game Shows" ||
-//   //   name === "Listor Exclusives" ||
-//   //   name === "Profile" ||
-//   //   name === "New Releases"
-//   //     ? "bg-[#213743] p-1.5 rounded-md w-40"
-//   //     : ""
-//   // }
+//   const navLink = (name, icon, badge, indent = false, index) => (
+//     <li
+//       key={index}
+//       className={`flex items-center ${name === "Games"
+//           ? "border-b-2 bg-[#213743] p-1.5 rounded-md w-40"
+//           : ""
+//         }`}
+//     >
+//       <div className="text-white">
+//         {icon ? <>{icon}</> : indent && <span className="nav-icon"></span>}
+//       </div>
+//       <span className={`ml-2 ${openMenubar ? "block" : "hidden"}`}>{name}</span>
+//       {badge && (
+//         <span
+//           style={{ color: badge.color }}
+//           className={`ml-1 ${openMenubar ? "block" : "hidden"}`}
+//         >
+//           {badge.text}
+//         </span>
+//       )}
+//     </li>
+//   );
 
 //   const navItem = (item, index, indent = false) => {
-//     const { component, name, badge, icon, ...rest } = item;
-//     if (name === "Logout") {
-//       return navLink(name, icon, badge, indent, index);
+//     const { name, badge, icon, dropdown, ...rest } = item;
+
+//     if (dropdown) {
+//       return (
+//         <div key={index} className="flex flex-col items-start p-2 pl-2">
+//           <div
+//             onClick={() => toggleDropdown(index)}
+//             className="flex items-center cursor-pointer border-b border-gray-600 w-full pb-2" // Adding the gray border
+//             >
+//             {icon && <div>{icon}</div>}
+//             <span className={`ml-2 ${openMenubar ? "block" : "hidden"}`}>
+//               {name}
+//             </span>
+//             <ChevronDownIcon
+//               className={`h-5 w-5 ml-2 text-gray-400 ${openMenubar ? "block" : "hidden"}`}
+//             />
+//           </div>
+//           <hr></hr>
+//           {dropdownVisible === index && (
+//             <div className="ml-2 bg-[#213743] text-white rounded-md p-2 mt-2">
+//               {dropdown.map((dropdownItem, idx) => (
+//                 <Link
+//                   key={idx}
+//                   to={dropdownItem.to}
+//                   className="block px-4 py-2 hover:bg-[#0f212e] transition-colors"
+//                 >
+//                   {dropdownItem.icon && (
+//                     <span className="mr-2 inline-block">
+//                       {dropdownItem.icon}
+//                     </span>
+//                   )}
+//                   <span>{dropdownItem.name}</span>
+//                 </Link>
+//               ))}
+//             </div>
+//           )}
+//         </div>
+//       );
 //     }
+
 //     return (
 //       <div as="div" key={index} className="flex items-center p-2 pl-4">
 //         {rest.to || rest.href ? (
-//           <>
-//             <Link {...(rest.to && { as: NavLink })} {...rest}>
-//               {navLink(name, icon, badge, indent, index)}
-//             </Link>
-//           </>
+//           <Link {...(rest.to && { as: NavLink })} {...rest}>
+//             {navLink(name, icon, badge, indent, index)}
+//           </Link>
 //         ) : (
-//           navLink(name, icon, badge, indent)
+//           navLink(name, icon, badge, indent, index)
 //         )}
 //       </div>
 //     );
 //   };
 
-//   const navGroup = (item, index) => {
-//     const { component, name, icon, items, to, ...rest } = item;
-//     const Component = component;
-//     return (
-//       <div compact as="div" key={index} toggler={navLink(name, icon)} {...rest}>
-//         {item.items?.map((item, index) =>
-//           item.items ? navGroup(item, index) : navItem(item, index, true)
-//         )}
-//       </div>
-//     );
-//   };
+//   const renderGroup = (groupItems, groupName) => (
+//     <div key={groupName} className="bg-[#213743] mb-4 rounded-md p-2">
+//       <ul>
+//         {items
+//           .filter((item) => groupItems.includes(item.name))
+//           .map((item, index) => navItem(item, index))}
+//       </ul>
+//     </div>
+//   );
 
 //   return (
 //     <div>
-//       {items &&
-//         items.map((item, index) =>
-//           item.items ? navGroup(item, index) : navItem(item, index)
-//         )}
+//       {renderGroup(firstGroup, "First Group")}
+//       {renderGroup(secondGroup, "Second Group")}
+//       {renderGroup(thirdGroup, "Third Group")}
 //     </div>
 //   );
 // };
 
 // SidebarNav.propTypes = {
-//   items: PropTypes.arrayOf(PropTypes.any).isRequired,
+//   items: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       name: PropTypes.string.isRequired,
+//       icon: PropTypes.node,
+//       badge: PropTypes.shape({
+//         color: PropTypes.string,
+//         text: PropTypes.string,
+//       }),
+//       dropdown: PropTypes.arrayOf(
+//         PropTypes.shape({
+//           name: PropTypes.string,
+//           to: PropTypes.string,
+//           icon: PropTypes.node,
+//         })
+//       ),
+//     })
+//   ).isRequired,
+//   openMenubar: PropTypes.bool.isRequired,
 // };
 import React, { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 export const SidebarNav = ({ items, openMenubar }) => {
-  // const [openWallet, setOpenWallet] = useState(false);
-  const [dropdownVisible, setDropdownVisible] = useState(null); // Track which dropdown is open
-  const navigate = useNavigate();
-  const [popupVisible, setPopupVisible] = useState(null);  // Track which item has a popup
-
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-    window.location.reload();
-  };
-
-  const handlePopupToggle = (itemName) => {
-    setPopupVisible(popupVisible === itemName ? null : itemName);  // Toggle popup visibility
-  };
+  const [dropdownVisible, setDropdownVisible] = useState(null);
 
   const toggleDropdown = (index) => {
-    // Toggle visibility for the clicked dropdown
     setDropdownVisible(dropdownVisible === index ? null : index);
   };
 
-  const navLink = (name, icon, badge, indent = false, index) => {
-    return (
-      <li
-        key={index}
-        className={`flex items-center
-          ${name === "Games"
-            ? "border-b-2 bg-[#213743] p-1.5 rounded-md w-40"
-            : ""
-          }
-          ${name === "Logout" ? "bg-[#213743] p-1.5 rounded-md w-40 ml-4" : ""
-          }`}
-        onClick={name === "Logout" ? handleLogout : undefined}
-      >
-        <div className="text-white">
-          {icon ? (
-            <>{index % 2 === 0 ? icon : icon}</>
-          ) : (
-            indent && (
-              <span className="nav-icon">
-                <span className="nav-icon-bullet"></span>
-              </span>
-            )
-          )}
-        </div>
-        <span className={`ml-4 ${openMenubar ? "block" : "hidden"}`}>
-          {name && name}
+  const firstGroup = ["Dashboard", "Favourites", "Recent", "My Bets"]
+  // const Games = ["Games"]
+  const secondGroup = [
+    "Games",
+    "Lobby",
+    "Listor Originals",
+    "Slots",
+    "Live Casino",
+    "Game Shows",
+    "Listor Exclusives",
+    "New Releases",
+  ];
+  const thirdGroup = ["Profile"];
+
+  const navLink = (name, icon, badge, indent = false, index) => (
+    <li
+      key={index}
+      className={`flex items-center ${name === "Games"
+        ? "border-b w-full  border-gray-600 bg-[#213743] p-1.5  "
+        : ""
+      }`}
+    >
+      <div className="text-white">
+        {icon ? <>{icon}</> : indent && <span className="nav-icon"></span>}
+      </div>
+      <span className={`ml-2 ${openMenubar ? "block" : "hidden"}`}>{name}</span>
+      {badge && (
+        <span
+          style={{ color: badge.color }}
+          className={`ml-1 ${openMenubar ? "block" : "hidden"}`}
+        >
+          {badge.text}
         </span>
-        {badge && (
-          <span
-            color={badge.color}
-            className={`ml-4 ${openMenubar ? "block" : "hidden"}`}
-          >
-            {badge.text}
-          </span>
-        )}
-      </li>
-    );
-  };
+      )}
+    </li>
+  );
 
   const navItem = (item, index, indent = false) => {
-    const { component, name, badge, icon, dropdown, ...rest } = item;
-    
-  if (dropdown) {
-    return (
-      <div key={index} className="flex flex-col items-start p-2 pl-4">
-        <div
-          onClick={() => toggleDropdown(index)}
-          className="flex items-center cursor-pointer"
-        >
-          {icon && <div>{icon}</div>}
-          <span className={`ml-10 ${openMenubar ? "block" : "hidden"}`}>{name}</span>
-        </div>
-        {dropdownVisible === index && (
-          <div className="ml-2 bg-[#213743] text-white rounded-md p-2 mt-2">
-            {dropdown.map((dropdownItem, idx) => (
-              <Link
-                key={idx}
-                to={dropdownItem.to}
-                className="block px-4 py-2 hover:bg-[#0f212e] transition-colors"
-                onClick={dropdownItem.action === "logout" ? handleLogout : undefined}
-                >
-                  {dropdownItem.icon && <span className="mr-2 inline-block">{dropdownItem.icon}</span>}
-                  <span>{dropdownItem.name}</span>
-              </Link>
-            ))}
+    const { name, badge, icon, dropdown, ...rest } = item;
+
+    if (dropdown) {
+      return (
+        <div key={index} className="flex flex-col items-start p-2 pl-1"> {/* Adjust padding-left */}
+          <div
+            onClick={() => toggleDropdown(index)}
+            className="flex items-center cursor-pointer border-b border-gray-600 w-full pb-2" // Adding the gray border
+          >
+            {icon && <div>{icon}</div>}
+            <span className={`ml-2 ${openMenubar ? "block" : "hidden"}`}>
+              {name}
+            </span>
+            <ChevronDownIcon
+              className={`h-5 w-5 ml-2 text-gray-400 ${openMenubar ? "block" : "hidden"}`}
+            />
           </div>
-        )}
-      </div>
-    );
-  }
+          <hr />
+          {dropdownVisible === index && (
+            <div className="ml-2 bg-[#213743] text-white rounded-md p-2 mt-2">
+              {dropdown.map((dropdownItem, idx) => (
+                <Link
+                  key={idx}
+                  to={dropdownItem.to}
+                  className="block px-4 py-2 hover:bg-[#0f212e] transition-colors"
+                >
+                  {dropdownItem.icon && (
+                    <span className="mr-2 inline-block">
+                      {dropdownItem.icon}
+                    </span>
+                  )}
+                  <span>{dropdownItem.name}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
     return (
-      <div as="div" key={index} className="flex items-center p-2 pl-4">
+      <div key={index} className="flex items-center p-2 pl-1"> 
         {rest.to || rest.href ? (
           <Link {...(rest.to && { as: NavLink })} {...rest}>
             {navLink(name, icon, badge, indent, index)}
@@ -227,31 +243,43 @@ export const SidebarNav = ({ items, openMenubar }) => {
     );
   };
 
-
-  const navGroup = (item, index) => {
-    const { component, name, icon, items, to, ...rest } = item;
-    const Component = component;
-    return (
-      <div compact as="div" key={index} toggler={navLink(name, icon)} {...rest}>
-        {item.items?.map((item, index) =>
-          item.items ? navGroup(item, index) : navItem(item, index, true)
-        )}
-      </div>
-    );
-  };
-
-
+  const renderGroup = (groupItems, groupName) => (
+    <div key={groupName} className="bg-[#213743] mb-4 rounded-md p-2">
+      <ul>
+        {items
+          .filter((item) => groupItems.includes(item.name))
+          .map((item, index) => navItem(item, index))}
+      </ul>
+    </div>
+  );
 
   return (
     <div>
-      {items &&
-        items.map((item, index) =>
-          item.items ? navGroup(item, index) : navItem(item, index)
-        )}
+      {renderGroup(firstGroup, "First Group")}
+      {/* {renderGroup(Games, "Games")} */}
+      {renderGroup(secondGroup, "Second Group")}
+      {renderGroup(thirdGroup, "Third Group")}
     </div>
   );
 };
 
 SidebarNav.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.any).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.node,
+      badge: PropTypes.shape({
+        color: PropTypes.string,
+        text: PropTypes.string,
+      }),
+      dropdown: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          to: PropTypes.string,
+          icon: PropTypes.node,
+        })
+      ),
+    })
+  ).isRequired,
+  openMenubar: PropTypes.bool.isRequired,
 };
