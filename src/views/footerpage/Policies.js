@@ -146,7 +146,7 @@ const Policies = () => {
         </div>
         <div className="flex-1 p-4 lg:p-8 bg-[#1a2c38]">
           <div className="max-w-6xl mx-auto">
-         
+
 
             {/* Main Content */}
             <div className="bg-[#0F212E] rounded-lg p-4 lg:p-6">

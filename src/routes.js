@@ -13,6 +13,8 @@ const GameContainer = React.lazy(() =>
 const HelpCenter = React.lazy(() =>
   import("./views/footerpage/HelpCenter"))
 const Policies = React.lazy(() => import("./views/footerpage/Policies"))
+const VipProgramLevels = React.lazy(() => import("./views/footerpage/VipProgramLevels"))
+const OnlineCasinoGuide = React.lazy(() => import("./views/footerpage/onlineCasinoGuide"))
 
 
 const ComeSoon = React.lazy(() => import("./views/component/ComeSoon"))
@@ -58,7 +60,8 @@ const routes = [
   { path: "/NewReleases", name: "NewReleases", element: NewReleases },
   { path: "/ComeSoon", name: "ComeSoon", element: ComeSoon },
   { path: "/HelpCenter", name: "HelpCenter", element: HelpCenter },
- 
+  { path: "/VipProgramLevels", name: "VipProgramLevels", element: VipProgramLevels },
+  { path: "/OnlineCasinoGuide", name: "OnlineCasinoGuide", element: OnlineCasinoGuide },
   // { path: "/terms", name: "Terms", element: Terms },
   // { path: "/poker-tournament-cancellation", name: "PokerTournamentCancellation", element: pokerTournamentCancellation },
   // { path: "/card-room-rules", name: "CardRoomRules", element: CardRoomRules },

@@ -51,7 +51,7 @@ function Footer() {
           </div>
 
           {/* Social Icons */}
-          <div className="flex items-center justify-end gap-4 mt-[-30px]">
+          <div className="flex items-center justify-end gap-4 mt-3">
             {/* Blog */}
             <a
               href="https://blog.Listor.com"
@@ -133,7 +133,7 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div className="border-t border-gray-700 pt-8 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-y-8 gap-x-0 mb-12">
+        <div className="border-t border-gray-700 pt-8 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-y-8 gap-x-0 mb-12">
           {/* Casino Section */}
           <div>
             <h3 className="text-white font-semibold mb-4">Casino</h3>
@@ -200,7 +200,7 @@ function Footer() {
               </ul>
             </div>
           </div>
-          <div>
+          {/* <div>
             <h3 className="text-white font-semibold mb-4">Payment Info</h3>
             <ul className="space-y-2">
               <li><a href="#" className="hover:text-white">Deposit & Withdrawals</a></li>
@@ -210,16 +210,16 @@ function Footer() {
               <li><a href="#" className="hover:text-white">How to Use the Vault</a></li>
               <li><a href="#" className="hover:text-white">How Much to Bet With</a></li>
             </ul>
-          </div>
+          </div> */}
           <div>
             <h3 className="text-white font-semibold mb-4">How-to Guides</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white">How-to Guides</a></li>
-              <li><a href="#" className="hover:text-white">Online Casino Guide</a></li>
-              <li><a href="#" className="hover:text-white">Sports Betting Guide</a></li>
-              <li><a href="#" className="hover:text-white">How to Live Stream Sports</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">How-to Guides</a></li>
+              <li><a href="/OnlineCasinoGuide" className="hover:text-white">Online Casino Guide</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">Sports Betting Guide</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">How to Live Stream Sports</a></li>
               <li><a href="#" className="hover:text-white">Listor VIP Guide</a></li>
-              <li><a href="#" className="hover:text-white">House Edge Guide</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white">House Edge Guide</a></li>
             </ul>
           </div>
 
