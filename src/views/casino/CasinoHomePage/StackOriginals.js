@@ -166,8 +166,8 @@ function StackOriginals({ allGames, isLobby }) {
                 slidesPerGroup: 4,
               },
               1024: {
-                slidesPerView: 6,
-                slidesPerGroup: 6,
+                slidesPerView: 7,
+                slidesPerGroup: 7,
               },
             }}
           >

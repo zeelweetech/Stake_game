@@ -33,13 +33,13 @@ export default function GameTable() {
             <div className="flex-1 flex flex-col">
               <div className="flex">
                 <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0">
-                  <div className="bg-[#0f212e] flex rounded-full p-[4px] flex-shrink-0 space-x-1 font-bold">
+                  <div className="bg-[#0f212e] flex rounded-full p-[4px] flex-shrink-0 space-x-1 font-bold mt-5 mb-3">
                     {menuItems.map((item) => (
                       <button
                         key={item.label}
-                        className={`py-2 lg:px-5 rounded-full flex justify-center items-center text-sm ${
+                        className={`py-2 px-7 rounded-full flex justify-center items-center text-sm ${
                           gameMenu === item.label
-                            ? "bg-[#4d718768]"
+                            ? "bg-[#4d718768] px-7"
                             : "hover:bg-[#4d718768]"
                         }`}
                         onClick={() => setGameMenu(item.label)}
