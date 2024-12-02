@@ -11,8 +11,6 @@ const BigWins = () => {
   const { id } = useParams()
   const [betsData, setBetsData] = useState([]);
   const [loading, setLoading] = useState(false)
-  // console.log("bigwins id==========", id);
-
 
   useEffect(() => {
     getBigWinsdata();
@@ -23,7 +21,6 @@ const BigWins = () => {
       const response = await getBigWins({
         id
       });
-      // console.log("getAllBets response", response);
       setBetsData(response || []);
       setLoading(false);
     } catch (error) {
@@ -63,7 +60,6 @@ const BigWins = () => {
                     sx={{
                       // width: "99.93%",
                       border: "none",
-                      // borderRadius: "16px",
                       color: "#b1bad3",
                       "& .MuiDataGrid-cell": {
                         border: "none",
@@ -87,9 +83,6 @@ const BigWins = () => {
                       "@media (max-width: 768px)": {
                         width: "45%",
                       },
-                      // "@media (min-width: 768px)": {
-                      //   width: "52%",
-                      // },
                       "@media (width: 320px)": {
                         width: "35%",
                       },
@@ -108,98 +101,6 @@ const BigWins = () => {
                       "@media (width: 1260px)": {
                         width: "90%",
                       },
-                      
-                      // Add responsive styles here
-                      // "@media (max-width: 425px)": {
-                      //   marginRight: "20px",
-                      //   width: "42%",
-                      //   fontSize: "0.8rem", 
-                      //   overflowX: "auto", 
-                      //   "& .MuiDataGrid-cell": {
-                      //     whiteSpace: "nowrap", 
-                      //   },
-                      //   "& .MuiDataGrid-footerContainer": {
-                      //     fontSize: "0.7rem", 
-                      //   },
-                      // },
-                      // "@media (max-width: 375px)": {
-                      //   width: "20%",
-                      //   fontSize: "0.8rem", 
-                      //   overflowX: "auto", 
-                      //   "& .MuiDataGrid-cell": {
-                      //     whiteSpace: "nowrap", 
-                      //   },
-                      //   "& .MuiDataGrid-footerContainer": {
-                      //     fontSize: "0.7rem", 
-                      //   },
-                      // },
-                      // "@media (max-width: 320px)": {
-                      //   width: "32.5%",
-                      //   fontSize: "0.7rem",
-                      //   "& .MuiDataGrid-cell": {
-                      //     whiteSpace: "nowrap",
-                      //   },
-                      // },
-                      // "@media (max-width: 414px)": {
-                      //   marginRight : "10%",
-                      //   width: "44.5%",
-                      //   fontSize: "0.8rem", // Adjust font size for smaller screens
-                      //   overflowX: "auto", // Enable horizontal scrolling
-                      //   "& .MuiDataGrid-cell": {
-                      //     whiteSpace: "nowrap", // Prevent content overflow
-                      //   },
-                      //   "& .MuiDataGrid-footerContainer": {
-                      //     fontSize: "0.7rem", // Adjust footer text size
-                      //   },
-                      // },
-                      // "@media (max-width: 390px)": {
-                      //   marginRight : "10%",
-                      //   width: "41.5%",
-                      //   fontSize: "0.8rem", // Adjust font size for smaller screens
-                      //   overflowX: "auto", // Enable horizontal scrolling
-                      //   "& .MuiDataGrid-cell": {
-                      //     whiteSpace: "nowrap", // Prevent content overflow
-                      //   },
-                      //   "& .MuiDataGrid-footerContainer": {
-                      //     fontSize: "0.7rem", // Adjust footer text size
-                      //   },
-                      // },
-                      // "@media (max-width: 430px)": {
-                      //   marginRight : "10%",
-                      //   width: "46%",
-                      //   fontSize: "0.8rem", // Adjust font size for smaller screens
-                      //   overflowX: "auto", // Enable horizontal scrolling
-                      //   "& .MuiDataGrid-cell": {
-                      //     whiteSpace: "nowrap", // Prevent content overflow
-                      //   },
-                      //   "& .MuiDataGrid-footerContainer": {
-                      //     fontSize: "0.7rem", // Adjust footer text size
-                      //   },
-                      // },
-                      // "@media (max-width: 412px)": {
-                      //   marginRight : "10%",
-                      //   width: "44.2%",
-                      //   fontSize: "0.8rem", // Adjust font size for smaller screens
-                      //   overflowX: "auto", // Enable horizontal scrolling
-                      //   "& .MuiDataGrid-cell": {
-                      //     whiteSpace: "nowrap", // Prevent content overflow
-                      //   },
-                      //   "& .MuiDataGrid-footerContainer": {
-                      //     fontSize: "0.7rem", // Adjust footer text size
-                      //   },
-                      // },
-                      // "@media (max-width: 360px)": {
-                      //   marginRight : "10%",
-                      //   width: "37.5%",
-                      //   fontSize: "0.8rem", // Adjust font size for smaller screens
-                      //   overflowX: "auto", // Enable horizontal scrolling
-                      //   "& .MuiDataGrid-cell": {
-                      //     whiteSpace: "nowrap", // Prevent content overflow
-                      //   },
-                      //   "& .MuiDataGrid-footerContainer": {
-                      //     fontSize: "0.7rem", // Adjust footer text size
-                      //   },
-                      // },
                     }}
                   />
                 </div>

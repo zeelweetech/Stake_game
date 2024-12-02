@@ -70,7 +70,7 @@ function WheelGame() {
         <hr className="border-2 border-[#213743]" />
         <GameFooter />
       </div>
-      <div>
+      <div className="xl:w-[80rem] px-4 md:px-7 max-w-screen-md mx-auto">
         <GameContent />
         <GameTable />
       </div>

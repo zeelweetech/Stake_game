@@ -27,7 +27,8 @@ function MinesGameContent() {
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
   const [cashoutResult, setCashoutResult] = useState(null);
-  const [firstMineIndex, setFirstMineIndex] = useState(null);
+  // const [firstMineIndex, setFirstMineIndex] = useState(null);
+  const [fundsToastShown, setFundsToastShown] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const {
     gamesOver,
@@ -81,9 +82,24 @@ function MinesGameContent() {
     });
   }, []);
 
-  MineSocket.on("Insufficientfund", (fundData) => {
-    toast.apply("Insufficient funds");
-  });
+  useEffect(() => {
+    const handleInsufficientFunds = (data) => {
+      if (!fundsToastShown) {
+        toast.error(data?.message);
+        setFundsToastShown(true);
+      }
+    };
+    MineSocket.on("Insufficientfund", handleInsufficientFunds);
+
+    const resetToastFlag = () => {
+      setFundsToastShown(false);
+    };
+
+    return () => {
+      resetToastFlag();
+      MineSocket.off("Insufficientfund", handleInsufficientFunds);
+    };
+  }, [fundsToastShown]);
 
   MineSocket.on("walletBalance", (data) => {
     // console.log("data *******", data);
@@ -251,7 +267,7 @@ function MinesGameContent() {
               : restored?.mineLocations?.length > 0
                 ? restored?.betAmount
                 : mineValue?.betamount) * parseFloat(cashoutResult?.multiplier)).toFixed(2) || '0.00'} ₹</p> */}
-                <p>{cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}₹</p>
+            <p>{cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}₹</p>
             {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
           </div>
         </div>

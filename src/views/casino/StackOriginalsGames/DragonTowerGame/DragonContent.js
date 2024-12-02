@@ -17,21 +17,11 @@ import { DragonTowerSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import { decodedToken } from "../../../../resources/utility";
 import {
-  setBoxsIndex,
-  setClickedBoxes,
-  setCompleteFundStatus,
-  setGameBet,
-  setGameOverResult,
-  setIsGameOver,
-  setRestodMultiplier,
-  setRestor,
-  setRestorData,
-  setRowsIndex,
-  setShowRandomField,
-  setTileSelected,
+  setBoxsIndex, setClickedBoxes, setCompleteFundStatus, setGameBet, setGameOverResult, setIsGameOver, setRestodMultiplier, setRestor, setRestorData, setRowsIndex, setShowRandomField, setTileSelected,
 } from "../../../../features/casino/dragonTowerSlice";
 import toast from "react-hot-toast";
 import dragontowerSound from "../../../../assets/Sound/dragontowerSound.wav";
+import dragontowerbombSound from "../../../../assets/Sound/dragontowerbomb.wav"
 import { setWallet } from "../../../../features/auth/authSlice";
 import { getWallet } from "../../../../services/LoginServices";
 
@@ -40,18 +30,36 @@ function DragonContent() {
   const dispatch = useDispatch();
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
-  const {
-    values,
-    restor,
-    gameBet,
-    isGameOver,
-    gameOverResult,
-    rowsIndex,
-    boxsIndex,
-    clickedBoxes,
-    restorData,
-  } = useSelector((state) => state.dragonTowerGame);
+  const [fundsToastShown, setFundsToastShown] = useState(false)
+  const { values, gameBet, isGameOver, gameOverResult, rowsIndex, boxsIndex, clickedBoxes, restorData } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
+
+  useEffect(() => {
+    const handleInsufficientFunds = (data) => {
+      // Log to verify that the event is being triggered
+      console.log("Insufficientfund event received:", data);
+      
+      // Only show the toast if it's not already shown
+      if (!fundsToastShown) {
+        console.log("Displaying toast for insufficient funds");
+        toast.error(data?.message);  // Show error toast
+        setFundsToastShown(true);    // Set flag to prevent another toast from showing
+  
+        // Reset the flag after a certain period (e.g., 5 seconds)
+        setTimeout(() => {
+          console.log("Resetting toast flag after timeout");
+          setFundsToastShown(false);
+        }, 5000); // Timeout to reset the flag after 5 seconds (you can adjust this duration)
+      }
+    };
+  
+    DragonTowerSocket.on("Insufficientfund", handleInsufficientFunds);
+  
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      DragonTowerSocket.off("Insufficientfund", handleInsufficientFunds);
+    };
+  }, [fundsToastShown, dispatch]);
 
   const resetGame = () => {
     dispatch(setClickedBoxes({}));
@@ -70,8 +78,7 @@ function DragonContent() {
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
-        const wallet =
-          parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
+        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
       .catch((err) => { });
@@ -101,11 +108,6 @@ function DragonContent() {
     });
   }, []);
 
-  DragonTowerSocket.on("Insufficientfund", (fundData) => {
-    toast.error(fundData?.message);
-    dispatch(setCompleteFundStatus(false));
-  });
-
   DragonTowerSocket.on("walletBalance", (data) => {
     dispatch(setWallet(data?.walletBalance));
   });
@@ -125,6 +127,9 @@ function DragonContent() {
     dispatch(setTileSelected({}));
     dispatch(setShowRandomField(false));
     setCashoutVisible(false);
+
+    const audio = new Audio(dragontowerbombSound);
+    audio.play();
   });
 
   const handleGameOverResult = () => {
@@ -203,8 +208,14 @@ function DragonContent() {
         tileStep: rowIndex,
       });
 
+      // if (!isGameOver) {
+      // const audio = new Audio(dragontowerbombSound);
+      // audio.play();
+      // console.log("gameOver");
+      // } else {
       const audio = new Audio(dragontowerSound);
       audio.play();
+      // }
 
       const updatedClickedBoxes = { ...clickedBoxes, [rowIndex]: boxIndex };
       dispatch(setClickedBoxes(updatedClickedBoxes));
@@ -338,11 +349,11 @@ function DragonContent() {
                     <div
                       key={`${rowIndex}-${boxIndex}`}
                       className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center ${isGameOver
-                          ? "cursor-not-allowed bg-[#213743]"
-                          : (gameBet && rowIndex === 0) ||
-                            clickedBoxes[rowIndex - 1] !== undefined
-                            ? "bg-[#00e701] w-10"
-                            : "cursor-not-allowed bg-[#213743]"
+                        ? "cursor-not-allowed bg-[#213743]"
+                        : (gameBet && rowIndex === 0) ||
+                          clickedBoxes[rowIndex - 1] !== undefined
+                          ? "bg-[#00e701] w-10"
+                          : "cursor-not-allowed bg-[#213743]"
                         } ${clickedBoxes[rowIndex] !== undefined
                           ? "bg-[#213743] opacity-100"
                           : "opacity-50"

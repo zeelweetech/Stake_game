@@ -22,6 +22,7 @@ function WheelGameContent() {
   const [segments, setSegments] = useState([]);
   const [segColors, setSegColors] = useState([]);
   const [isMdScreen, setIsMdScreen] = useState(false);
+  const [fundsToastShown, setFundsToastShown] = useState(false)
   const { wheelValue, finalmultiplier, mustSpin, isSpinning } = useSelector(
     (state) => state.wheelGame
   );
@@ -71,16 +72,32 @@ function WheelGameContent() {
   }, [mustSpin]);
 
   useEffect(() => {
+    const handleInsufficientFunds = (data) => {
+      if (!fundsToastShown) {
+        toast.error(data?.message);
+        setFundsToastShown(true);
+        // dispatch(setCompleteBetStatus(false));
+      }
+    };
+    WheelSocket.on("Insufficientfund", handleInsufficientFunds);
+
+    const resetToastFlag = () => {
+      setFundsToastShown(false);
+    };
+
+    return () => {
+      resetToastFlag();
+      WheelSocket.off("Insufficientfund", handleInsufficientFunds);
+    };
+  }, [fundsToastShown]);
+
+  useEffect(() => {
     WheelSocket.on("manualBetResult", (data) => {
       dispatch(setFinaMultiplier(data));
     });
 
     WheelSocket.on("autoBetResult", (data) => {
       dispatch(setFinaMultiplier(data));
-    });
-
-    WheelSocket.on("Insufficientfund", (data) => {
-      toast.error(data?.message);
     });
   }, []);
 

@@ -24,6 +24,7 @@ function LimboGameSidebar() {
   const decoded = decodedToken();
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth)
+  const [fundsToastShown, setFundsToastShown] = useState(false)
   const { isSwiper, values, limboStatusData, stopAutoBet } = useSelector(
     (state) => state.limboGame
   );
@@ -47,9 +48,25 @@ function LimboGameSidebar() {
       .catch((err) => { });
   };
 
-  LimboSocket.on("Insufficientfund", (data) => {
-    toast.error(data?.message);
-  });
+  useEffect(() => {
+    const handleInsufficientFunds = (data) => {
+      if (!fundsToastShown) {
+        toast.error(data?.message);
+        setFundsToastShown(true);
+        // dispatch(setCompleteBetStatus(false));
+      }
+    };
+    LimboSocket.on("Insufficientfund", handleInsufficientFunds);
+
+    const resetToastFlag = () => {
+      setFundsToastShown(false);
+    };
+
+    return () => {
+      resetToastFlag();
+      LimboSocket.off("Insufficientfund", handleInsufficientFunds);
+    };
+  }, [fundsToastShown]);
 
   LimboSocket.on("WalletNotFound", (data) => {
     toast.error(data?.message);

@@ -34,6 +34,7 @@ const CrashGameSidebar = () => {
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
   const [betAmount, setBetAmount] = useState();
   const [randomData, setRandomData] = useState([]);
+  const [fundsToastShown, setFundsToastShown] = useState(false)
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const {
@@ -67,6 +68,25 @@ const CrashGameSidebar = () => {
   };
 
   useEffect(() => {
+    const handleInsufficientFunds = (data) => {
+      if (!fundsToastShown) {
+        toast.error(data?.message);
+        setFundsToastShown(true);
+      }
+    };
+    CrashSocket.on("Insufficientfund", handleInsufficientFunds);
+
+    const resetToastFlag = () => {
+      setFundsToastShown(false);
+    };
+
+    return () => {
+      resetToastFlag();
+      CrashSocket.off("Insufficientfund", handleInsufficientFunds);
+    };
+  }, [fundsToastShown]);
+
+  useEffect(() => {
     CrashSocket.on("bettingStarted", (data) => {
       dispatch(setBettingStatus(data?.status));
     });
@@ -84,9 +104,6 @@ const CrashGameSidebar = () => {
           return item?.userId === decoded?.userId;
         })?.[0];
       setBetAmount(betData);
-    });
-    CrashSocket.on("Insufficientfund", (data) => {
-      toast.error(data?.message);
     });
     CrashSocket.on("inActiveUser", (data) => {
       toast.error(data?.message);

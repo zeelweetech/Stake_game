@@ -75,7 +75,7 @@ function LimboGame() {
         <hr className="border-[#213743]" />
         <GameFooter />
       </div>
-      <div className="xl:ml-36 lg:ml-[6.5rem] md:mx-3 mx-3">
+      <div className="xl:w-[80rem] px-4 md:px-7 max-w-screen-md mx-auto">
         <GameContent />
         <GameTable />
       </div>
