@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import Loader from "../Loader";
 import MyBets from "./MyBets";
 import AllBets from "./AllBets";
@@ -7,7 +7,7 @@ export default function GameTable() {
   const [commissionData, setCommissionData] = useState([]);
   const [gameMenu, setGameMenu] = useState("My Bets");
   const [loading, setLoading] = useState(false);
-  
+
   const menuItems = [
     {
       label: "My Bets",

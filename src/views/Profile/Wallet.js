@@ -12,10 +12,13 @@ const Wallet = () => {
       onClose={handleClose}
       maxWidth="sm"
       fullWidth
-      sx={{
-        color: "white",
-        borderRadius: 0, 
-      }}
+      // sx={{
+      //   color: "white",
+      //   borderRadius: 4, 
+
+      // }}
+      sx={{ width: { xs: "95%", sm: "90%", md: "60%" }, margin: "auto", color: "white",
+      borderRadius: "10px",  }}
     >
       <DialogTitle sx={{ backgroundColor: "#1a2c38", color: "#b1bad3" }}>
         <div className="flex justify-between items-center w-full">

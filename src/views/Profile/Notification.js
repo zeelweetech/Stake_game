@@ -27,12 +27,14 @@ const Notification = () => {
             onClose={() => setOpenDialog(false)}
             maxWidth="sm"
             fullWidth
-            sx={{
-                "& .MuiPaper-root": {
-                    backgroundColor: "#1a2c38",
-                    color: "#b1bad3",
-                },
-            }}
+            // sx={{
+            //     "& .MuiPaper-root": {
+            //         backgroundColor: "#1a2c38",
+            //         color: "#b1bad3",
+            //     },
+            // }}
+            sx={{ width: { xs: "95%", sm: "90%", md: "60%" }, margin: "auto", color: "#b1bad3",backgroundColor: "#1a2c38",
+      borderRadius: "10px",  }}
         >
             {/* <DialogTitle>
                 <div className="flex justify-between items-center w-full">

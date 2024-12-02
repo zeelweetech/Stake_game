@@ -36,7 +36,11 @@ const Vip = () => {
             onClose={() => setOpen(false)}
             maxWidth="sm"
             fullWidth
-            sx={{ color: "white", borderRadius: 8 }}
+            // sx={{ color: "white", borderRadius: 8 }}
+            sx={{
+                width: { xs: "95%", sm: "90%", md: "60%" }, margin: "auto", color: "white",
+                borderRadius: "10px",
+            }}
         >
             <DialogTitle sx={{ backgroundColor: "#1a2c38", color: "#b1bad3" }}>
                 <div className="flex justify-between items-center w-full">
@@ -67,7 +71,7 @@ const Vip = () => {
                         </div>
                     </div>
 
-                    
+
                     {gameMenu === "Progress" ? (
                         <Progress />
                     ) : (
@@ -80,8 +84,8 @@ const Vip = () => {
                         variant="contained"
                         sx={{
                             backgroundColor: "#0f212e",
-                            color: "white", 
-                            "&:hover": { backgroundColor: "#09202a" }, 
+                            color: "white",
+                            "&:hover": { backgroundColor: "#09202a" },
                         }}
                         fullWidth
                     >
