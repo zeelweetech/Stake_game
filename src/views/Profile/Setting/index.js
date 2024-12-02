@@ -30,7 +30,7 @@ const Setting = () => {
   };
 
   const handleSettingClick = (setting) => {
-    navigate(`/setting/${setting.toLowerCase().replace(" ", "-")}`); // Navigate to the dynamic route
+    navigate(`/setting/${setting.toLowerCase().replace(" ", "-")}`); 
   };
 
   return (

@@ -112,7 +112,11 @@ const Vault = () => {
             onClose={() => setOpen(false)}
             maxWidth="sm"
             fullWidth
-            sx={{ color: "white", borderRadius: 0 }}
+            // sx={{ color: "white", borderRadius: 0 }}
+            sx={{
+                width: { xs: "95%", sm: "90%", md: "60%" }, margin: "auto", color: "white",
+                borderRadius: "10px",
+            }}
         >
             <DialogTitle sx={{ backgroundColor: "#1a2c38", color: "#b1bad3" }}>
                 <div className="flex justify-between items-center w-full">
@@ -285,12 +289,12 @@ const Vault = () => {
                                             display: "flex",
                                             alignItems: "center",
                                             backgroundColor: "#0f212e",
-                                     
+
                                             border: "1px solid #b1bad3",
                                             borderRadius: "4px",
                                             color: "white",
                                             gap: "8px",
-                                            minHeight: "30px", 
+                                            minHeight: "30px",
                                         }}
                                     >
                                         <TextField
@@ -302,8 +306,8 @@ const Vault = () => {
                                                 backgroundColor: "transparent",
                                                 input: { color: "white" },
                                                 "& .MuiOutlinedInput-root": {
-                                                    
-                                                    height: "40px", 
+
+                                                    height: "40px",
                                                     "& fieldset": { border: "none" },
                                                 },
                                             }}

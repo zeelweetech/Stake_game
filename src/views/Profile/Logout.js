@@ -20,7 +20,11 @@ const LogoutDialog = () => {
             onClose={() => setOpen(false)}
             maxWidth="sm"
             fullWidth
-            sx={{ "& .MuiDialog-paper": { borderRadius: 2 } }}
+            // sx={{ "& .MuiDialog-paper": { borderRadius: 2 } }}
+            sx={{
+                width: { xs: "95%", sm: "90%", md: "60%" }, margin: "auto", 
+                borderRadius: "10px",
+            }}
         >
             <DialogTitle sx={{ backgroundColor: "#1a2c38", color: "#b1bad3" }}>
                 <div className="flex justify-between items-center w-full">
@@ -35,7 +39,7 @@ const LogoutDialog = () => {
                     </IconButton>
                 </div>
             </DialogTitle>
-            <DialogContent sx={{ backgroundColor: "#1a2c38", color: "white"}}>
+            <DialogContent sx={{ backgroundColor: "#1a2c38", color: "white" }}>
                 <div className="mb-4">
                     <p>Are you sure you want to end your session and log out?</p>
                 </div>
@@ -46,7 +50,7 @@ const LogoutDialog = () => {
                         backgroundColor: "#E9113C",
                         color: "white",
                         height: "50px",
-                          "&:hover": { backgroundColor: "#E9113C" },
+                        "&:hover": { backgroundColor: "#E9113C" },
 
                     }}
                     fullWidth
