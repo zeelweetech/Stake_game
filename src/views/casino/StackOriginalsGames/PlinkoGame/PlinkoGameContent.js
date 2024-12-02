@@ -20,6 +20,7 @@ function PlinkoGameContent() {
   const canvasRef = useRef();
   const [ballManager, setBallManager] = useState();
   const [isMdScreen, setIsMdScreen] = useState(false);
+  const [fundsToastShown, setFundsToastShown] = useState(false);
   const { finalMultiplier, values, lastMultipliers } = useSelector(
     (state) => state.plinkoGame
   );
@@ -61,6 +62,26 @@ function PlinkoGameContent() {
       mdQuery.removeListener(handleScreenChange);
     };
   }, []);
+  
+  useEffect(() => {
+    const handleInsufficientFunds = (data) => {
+      if (!fundsToastShown) {
+        toast.error(data?.message);
+        setFundsToastShown(true);
+        dispatch(setCompleteBetStatus(false));
+      }
+    };
+    PlinkoSocket.on("Insufficientfund", handleInsufficientFunds);
+
+    const resetToastFlag = () => {
+      setFundsToastShown(false);
+    };
+
+    return () => {
+      resetToastFlag();
+      PlinkoSocket.off("Insufficientfund", handleInsufficientFunds);
+    };
+  }, [fundsToastShown]);
 
   PlinkoSocket.on("Insufficientfund", (data) => {
     toast.error(data?.message);
@@ -96,17 +117,15 @@ function PlinkoGameContent() {
         ?.map((data, index) => (
           <button
             key={index}
-            className={`xl:w-16 xl:-ml-5 lg:w-12 lg:ml-64 py-3 text-black font-bold border-b border-black ${
-              data?.multiplier <= 1
+            className={`xl:w-16 xl:-ml-5 lg:w-12 lg:ml-64 py-3 text-black font-bold border-b border-black ${data?.multiplier <= 1
                 ? "bg-amber-300"
                 : data?.multiplier === 2 ||
                   data?.multiplier === 3 ||
                   data?.multiplier === 5
-                ? "bg-amber-500"
-                : "bg-red-600"
-            } ${
-              index === 0 ? "rounded-t-xl" : index === 3 ? "rounded-b-xl" : ""
-            }`}
+                  ? "bg-amber-500"
+                  : "bg-red-600"
+              } ${index === 0 ? "rounded-t-xl" : index === 3 ? "rounded-b-xl" : ""
+              }`}
             style={{ transitionDelay: `${index * 0.1}s` }}
           >
             {data?.multiplier}x
@@ -122,7 +141,7 @@ function PlinkoGameContent() {
         ${isMdScreen ? "md:mx-40 rounded-t-lg" : "md:mx-0"} 
         max-sm:h-96 rounded-t-lg`}
     >
-     <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
+     {/* <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
         <canvas
           className="md:mt-12 max-sm:mb-[6rem] xl:w-[90vw] xl:h-[90vh] xl:max-w-[800px] xl:max-h-[700px] 
                   lg:w-[90vw] lg:h-[150vh] lg:max-w-[697px] lg:max-h-[710px] 
@@ -132,8 +151,8 @@ function PlinkoGameContent() {
         width="800"
         height="710"
       ></canvas>
-      </div>
-       {/* <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
+      </div> */}
+       <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
         <canvas
           className={`${
             values?.rows === "8" || values?.rows === 8
@@ -143,11 +162,11 @@ function PlinkoGameContent() {
               : values?.rows === "10" || values?.rows === 10
               ? `max-sm:w-[175%] max-sm:h-[515px] max-sm:mb-[7rem] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "11" || values?.rows === 11
-              ? `max-sm:w-[160%] max-sm:h-[460px] max-sm:mb-[6rem] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[168%] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "12" || values?.rows === 12
-              ? `max-sm:w-[145%] max-sm:h-[440px] max-sm:mb-[6rem] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[135%] max-sm:h-[420px] max-sm:mt-2 max-sm:mb-[1.5rem] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "13" || values?.rows === 13
-              ? `max-sm:w-[130%] max-sm:h-[430px] max-sm:mb-[5rem] md:w-[99vw] md:h-[95vh] md:mt-20 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
+              ? `max-sm:w-[130%] max-sm:h-[400px] md:w-[99vw] md:h-[95vh] md:mt-20 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
               : values?.rows === "14" || values?.rows === 14
               ? `max-sm:w-[120%] max-sm:h-[460px] max-sm:mb-[3.5rem] md:w-[99vw] md:h-[95vh] md:mt-18 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
               : values?.rows === "15" || values?.rows === 15
@@ -160,7 +179,7 @@ function PlinkoGameContent() {
           width="800"
           height="510"
         ></canvas>
-      </div> */}
+      </div>
       <div className="flex flex-col xl:w-80 lg:w-80 lg:mt-14 md:ml-[17rem] md:w-14 max-sm:mb-36 max-sm:ml-[19rem] max-sm:w-10 relative xl:left-[19rem] xl:-top-40 lg:left-30 lg:-top-40 md:left-[1rem] md:-top-[1rem]">
         {renderMultiplierButtons()}
       </div>

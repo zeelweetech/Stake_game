@@ -38,9 +38,9 @@ const GameContent = () => {
                         {menuItems.map((item) => (
                           <button
                             key={item.label}
-                            className={`py-2 lg:px-5 rounded-full flex justify-center items-center text-sm ${
+                            className={`py-2 px-5 rounded-full flex justify-center items-center text-sm ${
                               gameMenu === item.label
-                                ? "bg-[#4d718768]"
+                                ? "bg-[#4d718768] px-5"
                                 : "hover:bg-[#4d718768]"
                             }`}
                             onClick={() => setGameMenu(item.label)}
