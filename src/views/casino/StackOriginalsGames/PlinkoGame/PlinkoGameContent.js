@@ -138,8 +138,8 @@ function PlinkoGameContent() {
   return (
     <div
       className={`bg-[#0f212e] xl:w-[45rem] lg:w-[41rem] h-full flex flex-col md:flex-row justify-center items-center select-none relative 
-        ${isMdScreen ? "md:mx-40 rounded-t-lg" : "md:mx-0"} 
-        max-sm:h-96 rounded-t-lg`}
+        ${isMdScreen ? "md:mx-40 rounded-t-lg" : "md:mx-0 mx-2"} 
+        max-sm:h-[25rem] rounded-t-lg`}
     >
      {/* <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
         <canvas
@@ -156,21 +156,21 @@ function PlinkoGameContent() {
         <canvas
           className={`${
             values?.rows === "8" || values?.rows === 8
-              ? `max-sm:w-[207%] max-sm:h-[38rem] mt-[-10rem] md:w-[99vw] md:h-[85vh] md:-mt-28 lg:min-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[207%] max-sm:h-[39rem] mt-[-8rem] md:w-[99vw] md:h-[85vh] md:-mt-28 lg:min-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "9" || values?.rows === 9
-              ? `max-sm:w-[191%] max-sm:h-[34rem] max-sm:mb-[9rem] md:w-[99vw] md:h-[91vh] md:mt-32 sm:mt-12 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[191%] max-sm:h-[36rem] max-sm:mb-[8rem] md:w-[99vw] md:h-[91vh] md:mt-32 sm:mt-12 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "10" || values?.rows === 10
-              ? `max-sm:w-[175%] max-sm:h-[515px] max-sm:mb-[7rem] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[175%] max-sm:h-[530px] max-sm:mb-[7rem] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "11" || values?.rows === 11
-              ? `max-sm:w-[168%] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[168%] max-sm:h-[475px] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "12" || values?.rows === 12
-              ? `max-sm:w-[135%] max-sm:h-[420px] max-sm:mt-2 max-sm:mb-[1.5rem] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[150%] max-sm:h-[430px] max-sm:mt-4 max-sm:mb-[1.5rem] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "13" || values?.rows === 13
-              ? `max-sm:w-[130%] max-sm:h-[400px] md:w-[99vw] md:h-[95vh] md:mt-20 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
+              ? `max-sm:w-[140%] max-sm:h-[415px] md:w-[99vw] md:h-[95vh] md:mt-20 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
               : values?.rows === "14" || values?.rows === 14
-              ? `max-sm:w-[120%] max-sm:h-[460px] max-sm:mb-[3.5rem] md:w-[99vw] md:h-[95vh] md:mt-18 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
+              ? `max-sm:w-[130%] max-sm:h-[383px] max-sm:mt-[1.8rem] md:w-[99vw] md:h-[95vh] md:mt-18 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
               : values?.rows === "15" || values?.rows === 15
-              ? `max-sm:w-[130%] max-sm:h-[430px] max-sm:mb-[4rem] md:w-[99vw] md:h-[95vh] md:mt-16 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
+              ? `max-sm:w-[130%] max-sm:h-[370px] max-sm:mt-[3rem] md:w-[99vw] md:h-[95vh] md:mt-16 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
               : values?.rows === "16" || values?.rows === 16
               ? `max-sm:w-[130%] max-sm:h-[420px] max-sm:mb-[2rem] md:w-[99vw] md:h-[95vh] md:mt-14 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
               : ""
