@@ -55,13 +55,6 @@ function WheelGameSidebar() {
       audio.play();
 
       dispatch(setMustSpin(false));
-      // dispatch(
-      //   setWheelValue({
-      //     betamount: "",
-      //     risk: wheelValue?.risk,
-      //     segments: wheelValue?.segments,
-      //   })
-      // );
     }
   };
 
@@ -88,18 +81,6 @@ function WheelGameSidebar() {
       const audio = new Audio(wheelSound);
       audio.play();
       dispatch(setAutoBet(true));
-      // dispatch(
-      //   setWheelValue({
-      //     betamount: "",
-      //     numberofbet: "",
-      //     stoponloss: "",
-      //     stoponprofit: "",
-      //     onwin: "",
-      //     onloss: "",
-      //     risk: wheelValue?.risk,
-      //     segments: wheelValue?.segments,
-      //   })
-      // );
     }
   };
 
@@ -515,9 +496,6 @@ function WheelGameSidebar() {
               ) : (
                 <button
                   className={`${
-                    // bettingStatus === false
-                    //   ? "bg-[#489649]"
-                    //   :
                     "bg-[#1fff20] hover:bg-[#42ed45]"
                     } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>

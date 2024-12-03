@@ -40,7 +40,7 @@ function WheelGameContent() {
       .catch((err) => { });
   };
 
-  WheelSocket.on("autoBetStop", (data) => {
+  WheelSocket.on("autoBetStop", () => {
     dispatch(setAutoBet(false));
   })
 
@@ -76,7 +76,7 @@ function WheelGameContent() {
       if (!fundsToastShown) {
         toast.error(data?.message);
         setFundsToastShown(true);
-        // dispatch(setCompleteBetStatus(false));
+        dispatch(setIsBetInProgress(false))
       }
     };
     WheelSocket.on("Insufficientfund", handleInsufficientFunds);

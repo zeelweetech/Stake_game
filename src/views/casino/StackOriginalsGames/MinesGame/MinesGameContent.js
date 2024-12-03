@@ -16,6 +16,7 @@ import {
   setRestored,
   setRestoredMultiplier,
   setShowFields,
+  setPreSelectTile,
 } from "../../../../features/casino/minesSlice";
 import toast from "react-hot-toast";
 import { setWallet } from "../../../../features/auth/authSlice";
@@ -27,20 +28,19 @@ function MinesGameContent() {
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
   const [cashoutResult, setCashoutResult] = useState(null);
-  // const [firstMineIndex, setFirstMineIndex] = useState(null);
   const [fundsToastShown, setFundsToastShown] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const {
+    isManual,
     gamesOver,
     gameStart,
     tileSelect,
     mineValue,
     gameBet,
-    restored
+    restored,
+    preSelectTile
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
-
-  // console.log("mineValue", mineValue?.mines);
 
   useEffect(() => {
     const handleResize = () => {
@@ -140,7 +140,6 @@ function MinesGameContent() {
       dispatch(setGamesOver(true));
       dispatch(setGameBet(false));
       revealAll();
-
     }
   };
 
@@ -242,18 +241,29 @@ function MinesGameContent() {
     return Array.from(bombPositions);
   };
 
+  MineSocket.on("betResult", (data) => {
+    console.log('betResult data',data); 
+  });
+
   const handleClick = (index) => {
-    if (gamesOver || revealed[index]) return;
+    if (gamesOver || revealed[index] || (isManual && !gameBet)) return;
 
-    const audio = new Audio(winSound);
-    audio.play();
+    if (isManual) {
+      const audio = new Audio(winSound);
+      audio.play();
 
-    MineSocket.emit("selectTile", {
-      userId: decoded?.userId.toString(),
-      gameId: id,
-      tileIndex: index,
-      betId: gameStart?.betId,
-    });
+      MineSocket.emit("selectTile", {
+        userId: decoded?.userId.toString(),
+        gameId: id,
+        tileIndex: index,
+        betId: gameStart?.betId,
+      });
+    }
+    if (!isManual) {
+      const newTile = index;
+      dispatch(setPreSelectTile([...preSelectTile, newTile]));
+      // setPreSelectTile((prev) => [...prev, index])
+    }
   };
 
   return (
@@ -262,11 +272,6 @@ function MinesGameContent() {
         <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
-            {/* <p>{(parseFloat(mineValue?.betamount
-              ? mineValue?.betamount
-              : restored?.mineLocations?.length > 0
-                ? restored?.betAmount
-                : mineValue?.betamount) * parseFloat(cashoutResult?.multiplier)).toFixed(2) || '0.00'} ₹</p> */}
             <p>{cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}₹</p>
             {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
           </div>
@@ -279,7 +284,7 @@ function MinesGameContent() {
             className={`flex justify-center items-center ${isMobile ? 'md:w-20 md:h-[4.2rem] w-[4.6rem] h-[4.3rem] max-[375px]:w-[4rem] max-[320px]:w-[3.3rem] max-[414px]:w-[4.44rem] max-[390px]:w-[4.2rem] max-[360px]:w-[3.8rem] max-[400px]:w-[4.3rem]' : 'xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]'} bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""}`}
             onClick={() => handleClick(index)}
             style={{
-              backgroundColor: revealed[index] || gamesOver ? "#071824" : "#2f4553",
+              backgroundColor: revealed[index] || gamesOver ? "#071824" : preSelectTile.includes(index) && !isManual ? "#9000ff" : "#2f4553",
               cursor: revealed[index] ? "not-allowed" : "pointer",
             }}
           >

@@ -30,36 +30,31 @@ function DragonContent() {
   const dispatch = useDispatch();
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
-  const [fundsToastShown, setFundsToastShown] = useState(false)
   const { values, gameBet, isGameOver, gameOverResult, rowsIndex, boxsIndex, clickedBoxes, restorData } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
+  const [fundsToastShown, setFundsToastShown] = useState(false)
 
   useEffect(() => {
     const handleInsufficientFunds = (data) => {
-      // Log to verify that the event is being triggered
-      console.log("Insufficientfund event received:", data);
-      
-      // Only show the toast if it's not already shown
       if (!fundsToastShown) {
-        console.log("Displaying toast for insufficient funds");
-        toast.error(data?.message);  // Show error toast
-        setFundsToastShown(true);    // Set flag to prevent another toast from showing
-  
-        // Reset the flag after a certain period (e.g., 5 seconds)
-        setTimeout(() => {
-          console.log("Resetting toast flag after timeout");
-          setFundsToastShown(false);
-        }, 5000); // Timeout to reset the flag after 5 seconds (you can adjust this duration)
+        toast.error(data?.message);
+        setFundsToastShown(true);
+        dispatch(setCompleteFundStatus(false));
+        dispatch(setShowRandomField(false));
+        dispatch(setGameBet(false));
       }
     };
-  
     DragonTowerSocket.on("Insufficientfund", handleInsufficientFunds);
-  
-    // Cleanup the event listener when the component unmounts
+
+    const resetToastFlag = () => {
+      setFundsToastShown(false);
+    };
+
     return () => {
+      resetToastFlag();
       DragonTowerSocket.off("Insufficientfund", handleInsufficientFunds);
     };
-  }, [fundsToastShown, dispatch]);
+  }, [fundsToastShown]);
 
   const resetGame = () => {
     dispatch(setClickedBoxes({}));

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
-// import { IoInfiniteSharp } from "react-icons/io5";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import { Divider } from "@mui/material";
 import PercentIcon from "@mui/icons-material/Percent";
@@ -8,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setBoxsIndex,
   setClickedBoxes,
-  setCompleteFundStatus,
   setGameBet,
   setGameOverResult,
   setIsGameOver,
@@ -22,7 +20,6 @@ import { DragonTowerSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import { useParams } from "react-router-dom";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
-import toast from "react-hot-toast";
 
 function DragonSidebar() {
   const dispatch = useDispatch();
@@ -33,7 +30,6 @@ function DragonSidebar() {
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
   const {
     values = { betamount: "", difficulty: "medium" },
-    bettingStatus,
     showRandomField,
     gameBet,
     tileSelected,
@@ -42,7 +38,6 @@ function DragonSidebar() {
     isGameOver,
     clickedBoxes,
     rowsIndex = 0,
-    completeFundStatus,
   } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
@@ -72,13 +67,6 @@ function DragonSidebar() {
     }
     dispatch(setRestorData({}));
   };
-
-  DragonTowerSocket.on("Insufficientfund", (fundData) => {
-    toast.error(fundData?.message);
-    dispatch(setCompleteFundStatus(true));
-    dispatch(setShowRandomField(false));
-    dispatch(setGameBet(false));
-  });
 
   const handleBetClick = () => {
     if (gameBet && !isGameOver) {

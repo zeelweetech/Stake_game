@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setGameBet,
   setGamesOver,
+  setIsManual,
   setMineValue,
   setRestored,
   setShowFields,
@@ -19,26 +20,26 @@ import {
   setWallet,
 } from "../../../../features/auth/authSlice";
 import { getWallet } from "../../../../services/LoginServices";
+import toast from "react-hot-toast";
 
 function MinesGameSidebar() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [selectedTiles, setSelectedTiles] = useState([]);
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth)
-
   const {
-    bettingStatus,
-    mineValue = { betamount: "", mines: 1 },
+    isManual,
+    mineValue = { betamount: "", mines: 3 },
     gameBet,
     minesBetStatus,
     tileSelect,
     restored,
     restoredMultiplier,
     showFields,
-    gamesOver
+    gamesOver,
+    preSelectTile
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
 
@@ -99,6 +100,31 @@ function MinesGameSidebar() {
     }
   };
 
+  const handleOnAutoBet = () => {
+    if (!localStorage.getItem("token")) {
+      dispatch(openRegisterModel());
+    } else {
+      MineSocket.emit("StartAutoBet", {
+        userId: decoded?.userId,
+        gameId: id,
+        preSelectedTiles: preSelectTile,
+        totalMines: parseInt(mineValue?.mines, 10),
+        betAmount: parseInt(mineValue?.betamount, 10) || 0,
+        numberOfBets: parseInt(mineValue?.numberofbet, 10),
+        onWins: parseInt(mineValue?.onwin, 10),
+        onLoss: parseInt(mineValue?.onlose, 10),
+        stopOnLoss: parseInt(mineValue?.stoponloss, 10),
+        stopOnProfit: parseInt(mineValue?.stoponprofit, 10),
+      })
+      setAutoBetOnClick(true)
+    }
+  };
+
+  const handleOnStopAutoBet = () => {
+    MineSocket.emit("StopAutoBet");
+    setAutoBetOnClick(false)
+  };
+
   const pickRandomTile = () => {
     let index = Math.floor(Math.random() * 25);
 
@@ -127,14 +153,14 @@ function MinesGameSidebar() {
                 <button
                   className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[12rem] w-[11rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
-                  onClick={() => setIsManual(true)}
+                  onClick={() => dispatch(setIsManual(true))}
                 >
                   Manual
                 </button>
                 <button
                   className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] w-[11.7rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
-                  onClick={() => setIsManual(false)}
+                  onClick={() => dispatch(setIsManual(false))}
                 >
                   Auto
                 </button>
@@ -356,18 +382,12 @@ function MinesGameSidebar() {
                     placeholder="0.00"
                     step="0.01"
                     name="betamount"
-                    value={
-                      mineValue?.betamount
-                        ? mineValue?.betamount
-                        : restored?.mineLocations?.length > 0
-                          ? restored?.betAmount
-                          : mineValue?.betamount || ""
-                    }
+                    value={mineValue?.betamount || 0}
                     onChange={(e) => {
                       handleOnChange(e)
-                      if (restored?.mineLocations?.length > 0) {
-                        dispatch(setRestored({ betAmount: '' }))
-                      }
+                      // if (restored?.mineLocations?.length > 0) {
+                      //   dispatch(setRestored({ betAmount: '' }))
+                      // }
                     }}
                   />
                 </div>
@@ -605,21 +625,22 @@ function MinesGameSidebar() {
               </div>
               {autoBetOnClick ? (
                 <button
-                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
-                // onClick={() => handleOnCancelAutoBet()}
+                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => handleOnStopAutoBet()}
                 >
-                  Cancel Autobet
+                  Stop Autobet
                 </button>
               ) : (
                 <button
-                  className={`text-black bg-[#46a147] cursor-default mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
-                    // ${bettingStatus === false
-                    // ? "bg-[#489649]"
-                    // : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    // } 
-                // onClick={() => handleOnAutoBet()}
+                  className={`${preSelectTile?.length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer" : "bg-[#489649] cursor-default"} text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
+                  onClick={() =>
+                    mineValue?.numberofbet === undefined || mineValue?.numberofbet === ""
+                      ? toast.error("Please enter a number of bets")
+                      : handleOnAutoBet()}
+                // disabled={preSelectTile?.length > 0}
                 >
                   Start Autobet
+                  {/* {console.log("preSelectTile", preSelectTile)} */}
                 </button>
               )}
             </div>
@@ -830,20 +851,21 @@ function MinesGameSidebar() {
               {autoBetOnClick ? (
                 <button
                   className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full`}
-                // onClick={() => handleOnCancelAutoBet()}
+                  onClick={() => handleOnStopAutoBet()}
                 >
-                  Cancel Autobet
+                  Stop Autobet
                 </button>
               ) : (
                 <button
-                  className={`text-black bg-[#46a147] cursor-default mt-3 py-3 rounded-md font-semibold w-full`}
-                    // ${bettingStatus === false
-                    // ? "bg-[#489649]"
-                    // : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    // } 
-                // onClick={() => handleOnAutoBet()}
+                  className={`${preSelectTile?.length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer" : "bg-[#489649] cursor-default"} text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
+                  onClick={() =>
+                    mineValue?.numberofbet === undefined || mineValue?.numberofbet === ""
+                      ? toast.error("Please enter a number of bets")
+                      : handleOnAutoBet()}
+                // disabled={preSelectTile?.length > 0}
                 >
                   Start Autobet
+                  {/* {console.log("preSelectTile", preSelectTile)} */}
                 </button>
               )}
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-1">
@@ -861,18 +883,12 @@ function MinesGameSidebar() {
                     placeholder="0.00"
                     step="0.01"
                     name="betamount"
-                    value={
-                      mineValue?.betamount
-                        ? mineValue?.betamount
-                        : restored?.mineLocations?.length > 0
-                          ? restored?.betAmount
-                          : mineValue?.betamount || ""
-                    }
+                    value={mineValue?.betamount || 0}
                     onChange={(e) => {
                       handleOnChange(e)
-                      if (restored?.mineLocations?.length > 0) {
-                        dispatch(setRestored({ betAmount: '' }))
-                      }
+                      // if (restored?.mineLocations?.length > 0) {
+                      //   dispatch(setRestored({ betAmount: '' }))
+                      // }
                     }}
                   />
                 </div>
@@ -1118,14 +1134,14 @@ function MinesGameSidebar() {
                 <button
                   className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[12rem] max-[425px]:w-[11.33rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.3rem] max-[430px]:w-[11.5rem] max-[412px]:w-[11rem] max-[360px]:w-[9.3rem] max-[400px]:w-[10.45rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
-                  onClick={() => setIsManual(true)}
+                  onClick={() => dispatch(setIsManual(true))}
                 >
                   Manual
                 </button>
                 <button
                   className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] max-[425px]:w-[11.4rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.2rem] max-[430px]:w-[11.5rem] max-[412px]:w-[10.92rem] max-[360px]:w-[9.4rem] max-[400px]:w-[10.49rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
-                  onClick={() => setIsManual(false)}
+                  onClick={() => dispatch(setIsManual(false))}
                 >
                   Auto
                 </button>
@@ -1134,6 +1150,7 @@ function MinesGameSidebar() {
           </div>
         </div>
       ) : null}
+
     </div>
   );
 }

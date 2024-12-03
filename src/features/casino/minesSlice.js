@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  isManual: true,
   mineValue: {
     betamount: 0,
-    mines: 1,
+    mines: 3,
   },
   bettingStatus: "",
   gameBet: false,
@@ -13,13 +14,19 @@ const initialState = {
   minesBetStatus: false,
   restored: "",
   restoredMultiplier: "",
-  showFields: false
+  showFields: false,
+
+  // auto part state
+  preSelectTile: [],
 };
 
 const minesGameSlice = createSlice({
   name: "minesGame",
   initialState,
   reducers: {
+    setIsManual(state, action) {
+      state.isManual = action.payload;
+    },
     setMineValue(state, action) {
       state.mineValue = action.payload;
     },
@@ -50,10 +57,16 @@ const minesGameSlice = createSlice({
     setShowFields(state, action) {
       state.showFields = action.payload
     },
+
+    // auto part state
+    setPreSelectTile(state, action) {
+      state.preSelectTile = action.payload
+    },
   },
 });
 
 export const {
+  setIsManual,
   setMineValue,
   setBettingStatus,
   setGameBet,
@@ -63,7 +76,8 @@ export const {
   setMinesBetStatus,
   setRestored,
   setRestoredMultiplier,
-  setShowFields
+  setShowFields,
+  setPreSelectTile
 } = minesGameSlice.actions;
 
 export default minesGameSlice.reducer;
