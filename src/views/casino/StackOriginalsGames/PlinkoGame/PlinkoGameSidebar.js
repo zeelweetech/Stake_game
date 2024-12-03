@@ -387,7 +387,7 @@ function PlinkoGameSidebar() {
 
       {responsiveMobile <= 768 ? (
         <div
-          className={`ml-2 max-sm:mr-2 xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] ${
+          className={`ml-2 max-sm:mr-2 xl:w-80 lg:w-[16.8rem] flex flex-col p-2 bg-[#213743] ${
             isMdScreen ? "md:mx-40" : "md:mx-0"
           } `}
         >

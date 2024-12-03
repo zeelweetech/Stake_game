@@ -1,4 +1,4 @@
-import { Style } from "@mui/icons-material";
+import { Margin, Style } from "@mui/icons-material";
 
 const LowRow = {
   row8: [
@@ -238,7 +238,7 @@ const MediumRow = {
     { xValue: 58, bgColor: "#ff003f", animatBgColor: "#9d0027" },
   ],
   row15: [
-    { xValue: 88, bgColor: "#ff003f", animatBgColor: "#9d0027" },
+    { xValue: 88, bgColor: "#ff003f", animatBgColor: "#9d0027"},
     { xValue: 18, bgColor: "#ff1e35", animatBgColor: "#bb0013" },
     { xValue: 11, bgColor: "#ff3b2c", animatBgColor: "#b50d00" },
     { xValue: 5, bgColor: "#ff5922", animatBgColor: "#bf3000" },
@@ -465,15 +465,15 @@ export const RowData = {
   },
   row14: {
     rows: 16,
-    plusNumber: 30,
-    minusHeight: 210,
+    plusNumber: -55,
+    minusHeight: 300,
     sinksNumber: 15,
     multiply: 2,
   },
   row15: {
     rows: 17,
-    plusNumber: 20,
-    minusHeight: 180,
+    plusNumber: -85,
+    minusHeight: 300,
     sinksNumber: 16,
     multiply: -0.6,
   },
