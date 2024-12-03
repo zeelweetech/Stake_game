@@ -123,7 +123,7 @@ import { getMyBets } from "../../../../services/GameServices";
 import { useParams } from "react-router-dom";
 import { decodedToken } from "../../../../resources/utility";
 import { format } from "date-fns";
-
+import { LuListTodo } from "react-icons/lu";
 const MyBets = () => {
   const { userId } = useParams();
   const [betsData, setBetsData] = useState([]);
@@ -156,7 +156,7 @@ const MyBets = () => {
   };
 
   const rows = betsData.map((bet) => ({
-    id: bet?.id,
+    id: bet ? bet.id : <LuListTodo />,
     gameName: bet?.game?.gameName ? bet?.game?.gameName : "-",
     userName: bet?.user?.userName ? bet?.user?.userName : "-",
     betTime: bet?.betTime ? format(new Date(bet.betTime), "hh:mm a") : "-",

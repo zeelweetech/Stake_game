@@ -47,7 +47,7 @@ const nav = [
   },
   {
     name: "My Bets",
-    // to: "/",
+    to: "/myBet",
     icon: <BiSolidNotepad size={24} />,
     badge: {
       color: "info",
