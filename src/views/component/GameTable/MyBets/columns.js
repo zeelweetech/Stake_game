@@ -8,6 +8,14 @@ const Columns = () => {
         cellClassName: "column-cell",
       },
       {
+        field: "id",
+        headerName: "Bet ID",
+        width: 130,
+        headerClassName: "column-header",
+        cellClassName: "column-cell",
+      },
+
+      {
         field: "betTime",
         headerName: "Time",
         width: 160,

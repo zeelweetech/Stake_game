@@ -1,5 +1,6 @@
 import { element } from "prop-types";
 import React from "react";
+import MyBets from "./views/component/GameTable/MyBets";
 // import pokerTournamentCancellation from "./views/footerpage/pokerTournamentCancellation";
 
 const LandingBanner = React.lazy(() => import("./views/lendingpage/index"));
@@ -22,12 +23,13 @@ const ComeSoon = React.lazy(() => import("./views/component/ComeSoon"))
 // const antiMoneyLaundering = React.lazy(() => import("./views/footerpage/antiMoneyLaundering"))
 const Slots = React.lazy(() => import("./views/casino/CasinoHomePage/Slots"));
 const LiveCasion = React.lazy(() => import("./views/casino/CasinoHomePage/LiveCasino"))
+const MyBet = React.lazy(() => import("./views/sidebar/myBets/MyBet"))
 const GameShows = React.lazy(() => import("./views/casino/CasinoHomePage/GameShows"))
 const Exclusives = React.lazy(() => import("./views/casino/CasinoHomePage/Exclusives"))
 const StackOriginals = React.lazy(() => import("./views/casino/CasinoHomePage/StackOriginals"))
 const NewReleases = React.lazy(() => import("./views/casino/CasinoHomePage/NewReleases"))
 const Lobby = React.lazy(() => import("./views/casino/CasinoHomePage/Lobby"))
-const Setting = React.lazy(() => import("./views/Profile/Setting"));
+const Setting = React.lazy(() => import("./views/Profile/setting"));
 const Profile = React.lazy(() => import("./views/Profile/index"))
 const token = localStorage.getItem("token");
 
@@ -39,6 +41,7 @@ const Vip = React.lazy(()=> import("./views/Profile/Vip"))
 const Statistics = React.lazy (() => import("./views/Profile/Statistic"))
 const Notification = React.lazy(() => import("./views/Profile/Notification"))
 const Logout = React.lazy(() => import("./views/Profile/Logout"))
+
 const routes = [
   {
     path: "/",
@@ -75,7 +78,7 @@ const routes = [
   // { path: "/anti-money-laundering", name: "antiMoneyLaundering", element: antiMoneyLaundering },
   // { path: "/Privacy", name: "Privacy", element: Privacy },
   // { path: "/coin-mixing", name: "CoinMixing", element: CoinMixing },
-  { path: "/profile", name: "Profile", element: Profile },
+  { path: "/profile", name: "profile", element: Profile },
   { path: "/setting", name: "Setting", element: Setting },
   { path: "/setting/:section", name: "Setting", element: Setting },
   {
@@ -88,7 +91,8 @@ const routes = [
   {path: "/Vip", name: "Vip", element: Vip},
   {path: "/Statistics", name: "Statistics", element: Statistics},
   {path: "/Notification", name: "Notification", element: Notification},
-  {path: "/logout", name: "Logout", element: Logout }
+  {path: "/logout", name: "Logout", element: Logout },
+  {path: "/myBet", name: "MyBets", element: MyBet}
 
 
 ];

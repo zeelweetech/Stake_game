@@ -19,6 +19,8 @@ const GetStatistic = ({ userId }) => {
             setLoading(true);
             if (!userId) throw new Error("User ID is undefined");
             const response = await getStatisticsData({ id: userId });
+            // console.log("?????????????", response);
+
             setStatisticsData(response || {});
         } catch (error) {
             console.error("Failed to fetch statistics data:", error);
@@ -27,41 +29,30 @@ const GetStatistic = ({ userId }) => {
         }
     };
 
-    if (loading) {
-        return (
-            <div className="flex justify-center">
-                <CircularProgress color="secondary" />
-            </div>
-        );
-    }
-
     return (
         <div className="text-white items-center">
-            {/* <h2 className="text-lg font-bold">User Statistics</h2> */}
-            {statisticsData ? (
-                <div className="grid grid-cols-2 gap-y-3 justify-center items-center">
-                    {/* <div className="w-40 h-24 bg-[#0f212e] p-3 rounded-md">
-            <p>Joining Date : {statisticsData?.joiningDate}</p>
-          </div> */}
-                    <div className="w-40 h-24 bg-[#0f212e] p-2 rounded-md ">
-                        <p className="text-gray-400">totalWins <span>{statisticsData?.totalWins}</span></p>
+            <div className="flex justify-center">
+                {statisticsData ? (
+                    <div className="grid md:grid-cols-2 grid-cols-1 gap-3 justify-center items-center">
+                        <div className="w-40 h-24 bg-[#4d718768] p-2 rounded-xl flex flex-col items-center space-y-2">
+                            <p className="text-gray-400 font-semibold h-5">Total Bets  </p> <span className="font-bold text-xl">{statisticsData?.totalBets}</span>
+                        </div>
+                        <div className="w-40 h-24 bg-[#4d718768] p-2 rounded-xl flex flex-col items-center space-y-2">
+                            <p className="text-gray-400 font-semibold h-5">Total Wins </p><span className=" font-bold text-xl">{statisticsData?.totalWins}</span>
+                        </div>
+
+                        <div className="w-40 h-24 bg-[#4d718768] p-2 rounded-xl flex flex-col items-center space-y-2">
+                            <p className="text-gray-400 font-semibold h-5">Total Losses </p> <span className="font-bold text-xl">{statisticsData?.totalLosses}</span>
+                        </div>
+                        <div className="w-40 h-24 bg-[#4d718768] p-2 rounded-xl flex flex-col items-center space-y-2">
+                            <p className="text-gray-400 font-semibold h-5">Total Wagered </p> <span className="font-bold text-xl ">{statisticsData?.totalWagered} ₹</span>
+                        </div>
+
                     </div>
-                    {/* <div className="w-40 h-24 bg-[#0f212e]  p-3 rounded-md ">
-            <p>username: {statisticsData?.username}</p>
-          </div> */}
-                    <div className="w-40 h-24 bg-[#0f212e] p-2 rounded-md">
-                        <p className="text-gray-400"> totalWagered <span>{statisticsData?.totalWagered}<RiMoneyRupeeCircleFill /></span></p>
-                    </div>
-                    <div className="w-40 h-24 bg-[#0f212e]  p-2 rounded-md">
-                        <p className="text-gray-400">totalBets <span>{statisticsData?.totalBets}</span> </p>
-                    </div>
-                    <div className="w-40 h-24 bg-[#0f212e]  p-2 rounded-md">
-                        <p className="text-gray-400">totalLosses <span>{statisticsData?.totalLosses}</span></p>
-                    </div>
-                </div>
-            ) : (
-                <p>No statistics available.</p>
-            )}
+                ) : (
+                    <p>No statistics available.</p>
+                )}
+            </div>
         </div>
     );
 };

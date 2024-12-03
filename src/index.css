@@ -141,10 +141,6 @@ code {
   background-image: url("../src/assets/img/dragonTower.png");
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 
 table {
   font-family: arial, sans-serif;
@@ -166,3 +162,29 @@ td, th {
 tr:nth-child(even) {
   background-color: #4d718768;
 }
+
+
+/* Custom thin scrollbar */
+.scrollbar-thin {
+  scrollbar-width: thin; 
+  scrollbar-color: #b1bad3 transparent; 
+}
+
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px; 
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  border-radius: 10px; 
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
