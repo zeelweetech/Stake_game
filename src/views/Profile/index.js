@@ -1,5 +1,5 @@
-import Setting from "./setting";
 import { useState } from "react";
+import Setting from "./Setting";
 import Loader from "../../views/component/Loader";
 
 
