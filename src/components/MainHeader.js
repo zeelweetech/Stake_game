@@ -4,20 +4,25 @@ import stakeLogo from "../assets/img/stakeLogo.png";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { IoMdSearch } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
-import { Badge, IconButton, Menu, MenuItem } from "@mui/material";
+import { Badge, IconButton, Menu, MenuItem, Tooltip, Box, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { IoIosChatboxes } from "react-icons/io";
 import CloseIcon from "@mui/icons-material/Close";
-import { MdOutlineEventNote } from "react-icons/md";
+import { MdEmojiEvents, MdOutlineEventNote, MdSettings } from "react-icons/md";
 import LogoutIcon from "@mui/icons-material/Logout";
 import notification from "../assets/img/Notification.png";
 import { removeCookie } from "../resources/utility";
 import { useSelector } from "react-redux";
+import { FaWallet } from "react-icons/fa";
+import { PiVaultFill } from "react-icons/pi";
+import { BiSolidNotepad } from "react-icons/bi";
+import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 
 function MainHeader() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const { wallet } = useSelector((state) => state.auth);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -77,23 +82,64 @@ function MainHeader() {
               </p>
             </button>
 
-            <IconButton onClick={handleMenuOpen} data-menu-type="profile">
-              <IoPerson color="white" size={16} />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={isMenuOpen("profile")}
-              onClose={handleMenuClose}
-              sx={{ mt: 1.5 }}
-            >
-              <MenuItem
-                className="flex items-center space-x-1 text-[#2f4553] "
-                onClick={handleLogout}
+            <div className="flex items-center">
+              <Tooltip
+                title={
+                  <Box sx={{ backgroundColor: "#ffffff", color: "black", borderRadius: "5px" }}>
+                    <List>
+                      <MenuItem onClick={() => navigate("/Wallet")}>
+                        <FaWallet color="black" />
+                        <p>Wallet</p>
+                      </MenuItem>
+                      <MenuItem button onClick={() => navigate("/Vault")}>
+
+                        <PiVaultFill color="black" />
+
+                        <p> Vault </p>
+                      </MenuItem>
+                      <MenuItem button onClick={() => navigate("/Vip")}>
+
+                        <MdEmojiEvents color="black" />
+
+                        <p>VIP</p>
+                      </MenuItem>
+                      <MenuItem button onClick={() => navigate("/Statistics")}>
+
+                        <LegendToggleIcon color="black" />
+
+                        <p>Statistics</p>
+                      </MenuItem>
+                      <MenuItem button onClick={() => navigate("myBet")}>
+
+                        <BiSolidNotepad color="black" />
+                        <p>My Bets </p>
+                      </MenuItem>
+                      <MenuItem button onClick={() => navigate("/setting")}>
+
+                        <MdSettings color="black" />
+
+                        <p>Settings </p>
+                      </MenuItem>
+                      <MenuItem button onClick={() => navigate("/logout")}>
+
+                        <LogoutIcon color="black" />
+
+                        <p>Logout </p>
+                      </MenuItem>
+                    </List>
+                  </Box>
+                }
+                open={tooltipOpen}
+                onClose={() => setTooltipOpen(false)}
+                onOpen={() => setTooltipOpen(true)}
+                placement="bottom"
+                arrow
               >
-                <LogoutIcon />
-                <p>Logout</p>
-              </MenuItem>
-            </Menu>
+                <IconButton onClick={() => setTooltipOpen(!tooltipOpen)}>
+                  <IoPerson color="white" size={16} />
+                </IconButton>
+              </Tooltip>
+            </div>
 
             <IconButton onClick={handleMenuOpen} data-menu-type="notifications">
               <Badge color="success" variant="dot">
@@ -101,46 +147,46 @@ function MainHeader() {
               </Badge>
             </IconButton>
             <Menu
-  anchorEl={anchorEl}
-  open={isMenuOpen("notifications")}
+              anchorEl={anchorEl}
+              open={isMenuOpen("notifications")}
 
-  onClose={handleMenuClose}
-  PaperProps={{
-    sx: {
-      width: "350px",
-      background: "#0f212e",
-    },
-  }}
-  transformOrigin={{
-    vertical: "top",
-    horizontal: "right",
-  }}
-  sx={{ mt: 1.5, ml: 5 }}
->
-  <div className="text-center">
-    <div className="flex justify-between items-center">
-      <div className="flex items-center font-semibold text-white space-x-2">
-        <NotificationsIcon
-          className="text-[#b1bad3]"
-          fontSize="small"
-        />
-        <p>Notifications</p>
-      </div>
-      <IconButton onClick={handleMenuClose}>
-        <CloseIcon className="text-white font-semibold" />
-      </IconButton>
-    </div>
-    <div className="flex justify-center pt-8 pb-6">
-      <img
-        src={notification}
-        className="w-16 h-16 md:w-24 md:h-20"
-        alt="Not Found"
-      />
-    </div>
-    <p className="text-white font-medium text-sm">No Notifications Available</p>
-    <p className="text-[#b1bad3]">Your interactions will be visible here</p>
-  </div>
-</Menu>
+              onClose={handleMenuClose}
+              PaperProps={{
+                sx: {
+                  width: "350px",
+                  background: "#0f212e",
+                },
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              sx={{ mt: 1.5, ml: 5 }}
+            >
+              <div className="text-center">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center font-semibold text-white space-x-2">
+                    <NotificationsIcon
+                      className="text-[#b1bad3]"
+                      fontSize="small"
+                    />
+                    <p>Notifications</p>
+                  </div>
+                  <IconButton onClick={handleMenuClose}>
+                    <CloseIcon className="text-white font-semibold" />
+                  </IconButton>
+                </div>
+                <div className="flex justify-center pt-8 pb-6">
+                  <img
+                    src={notification}
+                    className="w-16 h-16 md:w-24 md:h-20"
+                    alt="Not Found"
+                  />
+                </div>
+                <p className="text-white font-medium text-sm">No Notifications Available</p>
+                <p className="text-[#b1bad3]">Your interactions will be visible here</p>
+              </div>
+            </Menu>
 
 
             {/* Notification Dialog

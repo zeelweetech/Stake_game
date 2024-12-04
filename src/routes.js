@@ -29,7 +29,7 @@ const Exclusives = React.lazy(() => import("./views/casino/CasinoHomePage/Exclus
 const StackOriginals = React.lazy(() => import("./views/casino/CasinoHomePage/StackOriginals"))
 const NewReleases = React.lazy(() => import("./views/casino/CasinoHomePage/NewReleases"))
 const Lobby = React.lazy(() => import("./views/casino/CasinoHomePage/Lobby"))
-const Setting = React.lazy(() => import("./views/Profile/Setting"));
+const Setting = React.lazy(() => import("./views/Profile/setting"));
 const Profile = React.lazy(() => import("./views/Profile/index"))
 const token = localStorage.getItem("token");
 
@@ -41,7 +41,7 @@ const Vip = React.lazy(()=> import("./views/Profile/Vip"))
 const Statistics = React.lazy (() => import("./views/Profile/Statistic"))
 const Notification = React.lazy(() => import("./views/Profile/Notification"))
 const Logout = React.lazy(() => import("./views/Profile/Logout"))
-
+const ResetPassword = React.lazy(() => import("./views/pages/forgotpassword/NewPassword"))
 const routes = [
   {
     path: "/",
@@ -92,9 +92,8 @@ const routes = [
   {path: "/Statistics", name: "Statistics", element: Statistics},
   {path: "/Notification", name: "Notification", element: Notification},
   {path: "/logout", name: "Logout", element: Logout },
-  {path: "/myBet", name: "MyBets", element: MyBet}
-
-
+  {path: "/myBet", name: "MyBets", element: MyBet},
+  {path: "/resetpassword", name: "ResetPassword", element: ResetPassword }
 ];
 
 export default routes;

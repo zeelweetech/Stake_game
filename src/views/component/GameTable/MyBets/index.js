@@ -174,7 +174,7 @@ const MyBets = () => {
           <div className="text-center text-white text-lg mt-4">No Data Found</div>
         ) : (
           <div>
-            <div className="flex justify-center item-center">
+
               <div style={{ width: '100%', overflowX: 'auto' }}>
                 <DataGrid
                   rows={rows}
@@ -217,7 +217,7 @@ const MyBets = () => {
                 />
               </div>
             </div>
-          </div>
+
         )}
       </div>
     </>
