@@ -17,7 +17,9 @@ const initialState = {
   showFields: false,
 
   // auto part state
+  autoBet: false,
   preSelectTile: [],
+  autoBetResult: "",
 };
 
 const minesGameSlice = createSlice({
@@ -59,8 +61,14 @@ const minesGameSlice = createSlice({
     },
 
     // auto part state
+    setAutoBet(state, action) {
+      state.autoBet = action.payload
+    },
     setPreSelectTile(state, action) {
       state.preSelectTile = action.payload
+    },
+    setAutoBetResult(state, action) {
+      state.autoBetResult = action.payload
     },
   },
 });
@@ -77,7 +85,9 @@ export const {
   setRestored,
   setRestoredMultiplier,
   setShowFields,
-  setPreSelectTile
+  setPreSelectTile,
+  setAutoBetResult,
+  setAutoBet
 } = minesGameSlice.actions;
 
 export default minesGameSlice.reducer;

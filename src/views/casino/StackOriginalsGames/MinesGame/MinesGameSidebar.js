@@ -5,6 +5,8 @@ import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setAutoBet,
+  setAutoBetResult,
   setGameBet,
   setGamesOver,
   setIsManual,
@@ -27,7 +29,7 @@ function MinesGameSidebar() {
   const { id } = useParams();
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [selectedTiles, setSelectedTiles] = useState([]);
-  const [autoBetOnClick, setAutoBetOnClick] = useState(false);
+  // const [autoBet, setAutoBet] = useState(false);
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth)
   const {
     isManual,
@@ -39,7 +41,9 @@ function MinesGameSidebar() {
     restoredMultiplier,
     showFields,
     gamesOver,
-    preSelectTile
+    autoBet,
+    preSelectTile,
+    autoBetResult,
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
 
@@ -110,19 +114,21 @@ function MinesGameSidebar() {
         preSelectedTiles: preSelectTile,
         totalMines: parseInt(mineValue?.mines, 10),
         betAmount: parseInt(mineValue?.betamount, 10) || 0,
-        numberOfBets: parseInt(mineValue?.numberofbet, 10),
+        numberOfBets: autoBetResult?.round > 0
+          ? autoBetResult.round
+          : mineValue?.numberofbet || "",
         onWins: parseInt(mineValue?.onwin, 10),
         onLoss: parseInt(mineValue?.onlose, 10),
         stopOnLoss: parseInt(mineValue?.stoponloss, 10),
         stopOnProfit: parseInt(mineValue?.stoponprofit, 10),
       })
-      setAutoBetOnClick(true)
+      dispatch(setAutoBet(true))
     }
   };
 
   const handleOnStopAutoBet = () => {
     MineSocket.emit("StopAutoBet");
-    setAutoBetOnClick(false)
+    dispatch(setAutoBet(false))
   };
 
   const pickRandomTile = () => {
@@ -383,12 +389,7 @@ function MinesGameSidebar() {
                     step="0.01"
                     name="betamount"
                     value={mineValue?.betamount || 0}
-                    onChange={(e) => {
-                      handleOnChange(e)
-                      // if (restored?.mineLocations?.length > 0) {
-                      //   dispatch(setRestored({ betAmount: '' }))
-                      // }
-                    }}
+                    onChange={(e) => handleOnChange(e)}
                   />
                 </div>
                 <button
@@ -485,8 +486,13 @@ function MinesGameSidebar() {
                   placeholder="0"
                   min={0}
                   name="numberofbet"
-                  value={mineValue?.numberofbet}
-                  onChange={(e) => handleOnChange(e)}
+                  value={autoBetResult?.round > 0 ? autoBetResult.round : mineValue?.numberofbet || ""}
+                  onChange={(e) => {
+                    handleOnChange(e);
+                    if (autoBetResult?.round > 0) {
+                      dispatch(setAutoBetResult({ round: '' }));
+                    }
+                  }}
                 />
               </div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
@@ -623,7 +629,7 @@ function MinesGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              {autoBetOnClick ? (
+              {autoBet ? (
                 <button
                   className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full`}
                   onClick={() => handleOnStopAutoBet()}
@@ -848,7 +854,7 @@ function MinesGameSidebar() {
             </div>
           ) : (
             <div>
-              {autoBetOnClick ? (
+              {autoBet ? (
                 <button
                   className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full`}
                   onClick={() => handleOnStopAutoBet()}
