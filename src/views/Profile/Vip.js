@@ -11,8 +11,8 @@ import { MdEmojiEvents } from "react-icons/md";
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Progress from "./PageView/Progress";
-import Benifit from "./PageView/Benifit";
+import Progress from "./pageView/Progress";
+import Benifit from "./pageView/Benifit";
 
 const Vip = () => {
     const [open, setOpen] = useState(true);

@@ -17,11 +17,11 @@ import { decodedToken } from "../../resources/utility";
 import { FaRegStar } from "react-icons/fa";
 import { getMedalsProgress } from "../../services/LoginServices";
 import { getStatisticsData } from "../../services/InProfileServices";
-import GetStatistic from "./PageView/StatisticData";
-import Trophies from "./PageView/Trophies";
-import Raffles from "./PageView/Raffles";
+import GetStatistic from "./pageView/StatisticData";
+import Trophies from "./pageView/Trophies";
+import Raffles from "./pageView/Raffles";
 // import { getMedalsProgress, getStatisticsData } from "../../services/InProfileServices";
-import Races from "./PageView/Races";
+import Races from "./pageView/Races";
 const Statistic = () => {
   const [open, setOpen] = useState(true);
   const [gameMenu, setGameMenu] = useState("Statistic");

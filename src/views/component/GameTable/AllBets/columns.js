@@ -3,7 +3,7 @@ const Columns = () => {
       {
         field: "gameName",
         headerName: "Game",
-        width: 130,
+        width: 160,
         // flex: 1,
         headerClassName: "column-header",
         cellClassName: "column-cell",
@@ -11,7 +11,7 @@ const Columns = () => {
       {
         field: "userName",
         headerName: "User",
-        width: 130,
+        width: 250,
         // flex: 1,
         headerClassName: "column-header",
         cellClassName: "column-cell",
@@ -19,14 +19,14 @@ const Columns = () => {
       {
         field: "betTime",
         headerName: "Time",
-        width: 160,
+        width: 185,
         headerClassName: "column-header",
         cellClassName: "column-cell",
       },
       {
         field: "betAmount",
         headerName: "Amount",
-        width: 160,
+        width: 185,
         // flex: 1,
         headerClassName: "column-header",
         cellClassName: "column-cell",
@@ -34,7 +34,7 @@ const Columns = () => {
       {
         field: "multiplier",
         headerName: "Multiplier",
-        width: 160,
+        width: 185,
         // flex: 1,
         headerClassName: "column-header",
         cellClassName: "column-cell",
@@ -42,7 +42,7 @@ const Columns = () => {
       {
         field: "winAmount",
         headerName: "Result",
-        width: 160,
+        width: 187,
         // flex: 1,
         headerClassName: "column-header",
         cellClassName: "column-cell",
