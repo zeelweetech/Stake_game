@@ -47,7 +47,7 @@ function PlinkoGame() {
 
   return (
     <div>
-      <div className="xl:mt-10 lg:mt-10 md:py-8 py-3 bg-[#1a2c38] flex justify-center items-center text-white w-full h-full xl:mx-0 lg:mx-5">
+      <div className="md:py-6 py-3 bg-[#1a2c38] flex justify-center items-center text-white w-full h-full xl:mx-0 lg:mx-5">
         <div className="w-full max-w-screen-lg">
           <div
             className={`flex w-full min-w-72  ${

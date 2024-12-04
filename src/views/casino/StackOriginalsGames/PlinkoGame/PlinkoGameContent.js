@@ -138,7 +138,7 @@ function PlinkoGameContent() {
   return (
     <div
       className={`bg-[#0f212e] xl:w-[45rem] lg:w-[41rem] h-full flex flex-col md:flex-row justify-center items-center select-none relative 
-        ${isMdScreen ? "md:mx-40 rounded-t-lg" : "md:mx-0 mx-2"} 
+        ${isMdScreen ? "md:mx-40 rounded-t-lg" : "md:mx-0 mx-2 w-10"} 
         max-sm:h-[25rem] rounded-t-lg`}
     >
      {/* <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
@@ -156,23 +156,23 @@ function PlinkoGameContent() {
         <canvas
           className={`${
             values?.rows === "8" || values?.rows === 8
-              ? `max-sm:w-[207%] max-sm:h-[39rem] mt-[-8rem] md:w-[99vw] md:h-[85vh] md:-mt-28 lg:min-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[207%] max-sm:h-[39rem] mt-[-8rem] md:w-[107vw] md:h-[92vh] md:-mt-28 lg:min-w-[1149px] lg:w-[109vw] xl:max-h-[1221px] xl:h-[125vh] xl:mt-[-12rem]`
               : values?.rows === "9" || values?.rows === 9
-              ? `max-sm:w-[191%] max-sm:h-[36rem] max-sm:mb-[8rem] md:w-[99vw] md:h-[91vh] md:mt-32 sm:mt-12 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[191%] max-sm:h-[36rem] max-sm:mb-[8rem] md:w-[100vw] md:h-[82vh] md:mt-[-6rem] sm:mt-12 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "10" || values?.rows === 10
-              ? `max-sm:w-[175%] max-sm:h-[530px] max-sm:mb-[7rem] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[175%] max-sm:h-[530px] max-sm:mb-[7rem] md:w-[92vw] md:h-[76vh] md:mt-[-5rem] lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "11" || values?.rows === 11
-              ? `max-sm:w-[168%] max-sm:h-[475px] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[168%] max-sm:h-[475px] md:w-[84vw] md:h-[68vh] md:mt-[2rem] lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "12" || values?.rows === 12
-              ? `max-sm:w-[150%] max-sm:h-[430px] max-sm:mt-4 max-sm:mb-[1.5rem] md:w-[99vw] md:h-[91vh] md:mt-32 lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
+              ? `max-sm:w-[150%] max-sm:h-[430px] max-sm:mt-4 max-sm:mb-[1.5rem] md:w-[81vw] md:h-[63vh] md:mt-[1rem] lg:max-w-[1149px] lg:w-[109vw] lg:max-h-[1221px] lg:h-[150vh]`
               : values?.rows === "13" || values?.rows === 13
-              ? `max-sm:w-[140%] max-sm:h-[415px] md:w-[99vw] md:h-[95vh] md:mt-20 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
+              ? `max-sm:w-[140%] max-sm:h-[415px] md:w-[72vw] md:h-[60vh] md:mt-[2rem] lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
               : values?.rows === "14" || values?.rows === 14
-              ? `max-sm:w-[130%] max-sm:h-[383px] max-sm:mt-[1.8rem] md:w-[99vw] md:h-[95vh] md:mt-18 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
+              ? `max-sm:w-[130%] max-sm:h-[383px] max-sm:mt-[1.8rem] md:w-[68vw] md:h-[55vh] md:mt-[4rem] lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
               : values?.rows === "15" || values?.rows === 15
-              ? `max-sm:w-[130%] max-sm:h-[370px] max-sm:mt-[3rem] md:w-[99vw] md:h-[95vh] md:mt-16 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
+              ? `max-sm:w-[125%] max-sm:h-[370px] max-sm:mt-[1rem] md:w-[65vw] md:h-[53vh] md:mt-[5rem] lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
               : values?.rows === "16" || values?.rows === 16
-              ? `max-sm:w-[130%] max-sm:h-[420px] max-sm:mb-[2rem] md:w-[99vw] md:h-[95vh] md:mt-14 lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
+              ? `max-sm:w-[125%] max-sm:h-[350px] max-sm:mb-[5rem] md:w-[70vw] md:h-[61vh] md:mt-[0.5rem] lg:max-w-[1149px] lg:w-[110vw] lg:max-h-[1221px] lg:h-[155vh]`
               : ""
             }`}
           ref={canvasRef}

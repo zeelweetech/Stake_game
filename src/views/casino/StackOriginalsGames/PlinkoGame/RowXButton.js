@@ -472,8 +472,8 @@ export const RowData = {
   },
   row15: {
     rows: 17,
-    plusNumber: -85,
-    minusHeight: 300,
+    plusNumber: -65,
+    minusHeight: 295,
     sinksNumber: 16,
     multiply: -0.6,
   },
