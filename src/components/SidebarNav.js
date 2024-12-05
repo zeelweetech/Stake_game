@@ -28,8 +28,8 @@ export const SidebarNav = ({ items, openMenubar }) => {
   const navLink = (name, icon, badge, indent = false, index) => (
     <li
       key={index}
-      className={`flex items-center ${name === "Games"
-        ? "border-b w-full  border-gray-600 bg-[#213743] p-1.5  "
+      className={`flex items-center font-semibold ${name === "Games"
+        ? "border-b-2 w-full  border-[#2F4553] p-1.5 "
         : ""
       }`}
     >
@@ -53,10 +53,10 @@ export const SidebarNav = ({ items, openMenubar }) => {
 
     if (dropdown) {
       return (
-        <div key={index} className="flex flex-col items-start p-2 pl-1"> {/* Adjust padding-left */}
+        <div key={index} className="flex flex-col items-start p-2 pl-1 font-semibold"> {/* Adjust padding-left */}
           <div
             onClick={() => toggleDropdown(index)}
-            className="flex items-center cursor-pointer border-b border-gray-600 w-full pb-2" // Adding the gray border
+            className="flex items-center cursor-pointer border-b-2 border-[#2F4553] w-full pb-2" // Adding the gray border
           >
             {icon && <div>{icon}</div>}
             <span className={`ml-2 ${openMenubar ? "block" : "hidden"}`}>
@@ -103,7 +103,7 @@ export const SidebarNav = ({ items, openMenubar }) => {
   };
 
   const renderGroup = (groupItems, groupName) => (
-    <div key={groupName} className="bg-[#213743] mb-4 rounded-md p-2">
+    <div key={groupName} className="bg-[#213743] mb-2 rounded-sm p-2 mx-1">
       <ul>
         {items
           .filter((item) => groupItems.includes(item.name))
