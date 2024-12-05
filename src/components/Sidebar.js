@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import EmailIcon from "@mui/icons-material/Email";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/Inbox";
@@ -6,28 +6,86 @@ import nav from "../nav";
 // import { SidebarNav } from "./SidebarNav";
 import { useNavigate } from "react-router-dom";
 import { SidebarNav } from "./SidebarNav";
+import casino from "../assets/img/casino.png";
+import casino1 from "../assets/img/casino1.jpg";
+import sports from "../assets/img/sports.png";
+import sports1 from "../assets/img/sports1.png";
 
 function Sidebar({ openMenubar, handleDrawerToggle }) {
+  const [casinoClicked, setCasinoClicked] = useState(false);
+  const [sportsClicked, setSportsClicked] = useState(false);
   const navigate = useNavigate();
+
+  const handleCasinoClick = () => {
+    setCasinoClicked((prev) => !prev);
+    setSportsClicked(false);
+    navigate("/casino/home");
+  };
+
+  const handleSportsClick = () => {
+    setSportsClicked((prevState) => !prevState);
+    setCasinoClicked(false);
+    navigate("/ComeSoon");
+  };
 
   return (
     <div
-      className={`h-full ${openMenubar ? "block" : "hidden md:block"} 
+      className={`h-full ${openMenubar ? "block" : "hidden md:block "} 
       ${openMenubar && "md:text-white"} 
-       md:bg-none overflow-y-auto`} 
+       md:bg-none overflow-x-hidden`}
     >
-      <div className="p-4 shadow-2xl shadow-black">
+      <div className=" h-14 px-2 py-[0.70rem] shadow-2xl shadow-black">
         <div className="flex items-center">
-          <button onClick={handleDrawerToggle} className="text-white mr-4">
+          <button onClick={handleDrawerToggle} className="text-white ml-2 mt-[0.4rem]">
             <MenuIcon />
           </button>
-          <button onClick={() => navigate("/casino/home")} className="text-white">
-            CASINO
+          <button
+            onClick={handleCasinoClick}
+            className="text-white ml-3 -mt-[1.8rem] relative w-[6rem] h-10 group"
+          >
+            <img
+              src={casino1}
+              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${
+                casinoClicked ? "opacity-0" : "opacity-100 "
+              }`}
+              alt="Not Found"
+            />
+            <img
+              src={casino}
+              alt="Not Found"
+              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${
+                casinoClicked ? "opacity-100" : "opacity-0"
+              } group-hover:opacity-100`}
+            />
+            <span className={`absolute mt-8 inset-0 flex justify-center items-center text-sm font-bold ${openMenubar ? "block" : "hidden  "}`}>
+              CASINO
+            </span>
+          </button>
+          <button
+            onClick={handleSportsClick}
+            className="text-white ml-2 -mt-[1.8rem] relative w-[6rem] h-10 group"
+          >
+            <img
+              src={sports}
+              alt="Not Found"
+              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${
+                sportsClicked ? "opacity-0" : "opacity-100 hover:opacity-0"
+              } group-hover:opacity-100`}
+            />
+            <img
+              src={sports1}
+              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${
+                sportsClicked ? "opacity-100" : "opacity-0 hover:opacity-100"
+              }`}
+              alt="Not Found"
+            />
+            <span className={`absolute mt-8 inset-0 flex justify-center items-center text-sm font-bold ${openMenubar ? "block" : "hidden  "}`}>
+              SPORTS
+            </span>
           </button>
         </div>
       </div>
-
-      <div className="mt-8">
+      <div className="mt-4">
         <ul className="space-y-2 rounded-md">
           <SidebarNav items={nav} openMenubar={openMenubar} />
           {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
@@ -59,4 +117,4 @@ function Sidebar({ openMenubar, handleDrawerToggle }) {
   );
 }
 
-export default Sidebar
+export default Sidebar;

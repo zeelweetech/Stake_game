@@ -64,11 +64,34 @@ function Mainbar() {
                 <Link className="text-sm font-medium">Your VIP Progress</Link>
                 <FaArrowRight size={13} className="mt-1" color="#b1bad3" />
               </div>
-              <div className="flex items-center space-x-1">
+              {/* <div className="flex items-center space-x-1">
                 <p className="text-sm font-medium">
                   {progressData?.vipProgress || "0.00%"}
                 </p>
                 <InfoIcon fontSize="small" className="text-[#b1bad3]" />
+              </div> */}
+              <div className="flex items-center space-x-1 relative">
+                <p className="text-sm font-medium">
+                  {progressData?.vipProgress || "0.00%"}
+                </p>
+                <div className="group relative flex items-center">
+                  <InfoIcon
+                    fontSize="small"
+                    className="text-[#b1bad3] cursor-pointer"
+                  />
+                  <div
+                    id="tooltip-top"
+                    role="tooltip"
+                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity bg-white text-black text-sm font-medium rounded-lg px-3 py-2 shadow-sm z-10 w-max max-w-xs text-center"
+                  >
+                    <p>
+                      All bets settled on the sportsbook return a 3x (three
+                      times) faster rate of progression compared to Casino (1x
+                      progression). Voided bets are excluded.
+                    </p>
+                    <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-6px] left-1/2 transform -translate-x-1/2"></div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="relative w-full my-2.5 h-[0.625em] bg-[#2f4553] rounded-[10px]">
@@ -128,7 +151,10 @@ function Mainbar() {
         </div>
 
         <div className="flex md:flex-row space-x-2  md:space-x-5 md:space-y-0">
-          <div className="bg-[#1a2c38] hover:cursor-pointer  transition-transform duration-300 hover:translate-y-[-8px]" onClick={() => navigate("/casino/home")}>
+          <div
+            className="bg-[#1a2c38] hover:cursor-pointer  transition-transform duration-300 hover:translate-y-[-8px]"
+            onClick={() => navigate("/casino/home")}
+          >
             <img
               src={StackCasino}
               className=" md:w-80 h-40 md:h-56  "
@@ -144,7 +170,10 @@ function Mainbar() {
               <p>Casino</p>
             </div>
           </div>
-          <div className="bg-[#1a2c38] hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px]" onClick={() => navigate("/ComeSoon")}>
+          <div
+            className="bg-[#1a2c38] hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px]"
+            onClick={() => navigate("/ComeSoon")}
+          >
             <img
               src={SportBook}
               className="md:w-80 h-40 md:h-56 "

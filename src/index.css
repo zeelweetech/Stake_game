@@ -13,7 +13,7 @@ code {
 }
 
 ::-webkit-scrollbar {
-  width: 3px;
+  width: 5px;
 }
 
 /* Track */
@@ -23,7 +23,7 @@ code {
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #b1bad3; 
+  background: #2f4553; 
 }
 
 @keyframes progressBar {
