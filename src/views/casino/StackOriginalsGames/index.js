@@ -7,6 +7,7 @@ import LimboGame from "./LimboGame";
 import WheelGame from "./WheelGame";
 import DragonTowerGame from "./DragonTowerGame";
 import ComeSoon from "../../component/ComeSoon";
+import KenoGame from "./KenoGame";
 
 function GameContainer() {
   const { gameName } = useParams();
@@ -25,8 +26,9 @@ function GameContainer() {
         return <WheelGame />;
       case "DragonTower":
         return <DragonTowerGame />;
+        case "keno":
+          return <KenoGame />;
       case gameName :
-      // case "keno":
       // case "GatesHeaven":
       // case "FireHole2":
       // case "BigBass":

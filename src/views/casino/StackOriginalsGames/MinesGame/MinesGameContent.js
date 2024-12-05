@@ -22,7 +22,6 @@ import {
 } from "../../../../features/casino/minesSlice";
 import toast from "react-hot-toast";
 import { setWallet } from "../../../../features/auth/authSlice";
-import { BorderAll, BorderColor } from "@mui/icons-material";
 
 function MinesGameContent() {
   const { id } = useParams();
@@ -274,6 +273,7 @@ function MinesGameContent() {
           newRevealed[index] = true;
         }
       });
+
       if (data?.round === 0) {
         setImages(newImages);
         setRevealed(newRevealed);
@@ -311,7 +311,7 @@ function MinesGameContent() {
 
   return (
     <div className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? 'md:ml-32 md:mr-[8.3rem] max-sm:mx-2' : 'xl:w-[52rem] lg:w-[37.2rem]'}`}>
-      {cashoutResult && !gameBet && (
+      {cashoutResult && !gameBet && autoBetResult?.isWin === true && (
         <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
@@ -328,9 +328,7 @@ function MinesGameContent() {
             onClick={() => handleClick(index)}
             style={{
               backgroundColor: revealed[index] || gamesOver ? "#071824" : preSelectTile.includes(index) && !isManual ? "#9000ff" : "#2f4553",
-              borderTop: !isManual && autoBetResult?.mineLocations?.length > 0 && preSelectTile.includes(index) ? "8px solid #9000ff" : "",
-              borderRight: !isManual && autoBetResult?.mineLocations?.length > 0 && preSelectTile.includes(index) ? "8px solid #9000ff" : "",
-              borderLeft: !isManual && autoBetResult?.mineLocations?.length > 0 && preSelectTile.includes(index) ? "8px solid #9000ff" : "",
+              border: !isManual && autoBetResult?.mineLocations?.length > 0 && preSelectTile.includes(index) ? "7px solid #9000ff" : "",
               borderBottom: !isManual && autoBetResult?.mineLocations?.length > 0 && preSelectTile.includes(index) ? "12px solid #7100c7" : "",
               cursor: revealed[index] ? "not-allowed" : "pointer",
             }}
@@ -341,8 +339,6 @@ function MinesGameContent() {
                   width: img.size,
                   height: img.size,
                   opacity: img.opacity || 1,
-
-                  // borderColor: !isManual && autoBetResult?.mineLocations?.length > 0 ? "#9000ff" : ""
                 }}
                 className={`flex justify-center items-center ${revealed[index] || gamesOver ? "reveal-animation" : "hidden"} ${img.className || ""}`}
                 src={img.icon}

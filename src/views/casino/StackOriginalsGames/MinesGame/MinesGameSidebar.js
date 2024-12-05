@@ -12,6 +12,7 @@ import {
   setIsManual,
   setMineValue,
   setRestored,
+  setRevealed,
   setShowFields,
 } from "../../../../features/casino/minesSlice";
 import { MineSocket } from "../../../../socket";
@@ -492,6 +493,14 @@ function MinesGameSidebar() {
                     if (autoBetResult?.round > 0) {
                       dispatch(setAutoBetResult({ round: '' }));
                     }
+
+                    // if (autoBetResult?.round > 0) {
+                    //   setTimeout(() => {
+                    //     dispatch(setAutoBetResult({}));
+                    //     // setRevealed([]);
+                    //     dispatch(setRevealed([]))
+                    //   }, 1000);
+                    // }
                   }}
                 />
               </div>
