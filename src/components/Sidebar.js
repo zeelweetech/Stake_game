@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { SidebarNav } from "./SidebarNav";
 import casino from "../assets/img/casino.png";
 import casino1 from "../assets/img/casino1.jpg";
-import sports from "../assets/img/sports.png";
+import sports from "../assets/img/sports.png"
 import sports1 from "../assets/img/sports1.png";
 
 function Sidebar({ openMenubar, handleDrawerToggle }) {

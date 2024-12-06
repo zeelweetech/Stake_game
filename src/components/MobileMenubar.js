@@ -1,26 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-
 function MobileMenubar() {
   const navigate = useNavigate();
 
   return (
-  <div className="flex justify-around items-center bg-[#0f212e] text-white py-2 md:hidden">
-    <div className="flex flex-col items-center text-sm">
-      <svg
-        className="w-4 h-4 hover:fill-white"
-        fill="grey"
-        viewBox="0 0 64 64"
-      >
-        <path d="M0 0h23.867c-3.947 3.173-7.014 7.333-8.827 12.107H0V0Zm0 51.867h41.707v12.106H0V51.867Zm13.36-25.92H0v12.106h17.867a28.537 28.537 0 0 1-4.48-12.106h-.027ZM57.014 38.32l6.987 10.96-8.08 5.173-7.12-11.146c-2.24.773-4.64 1.2-7.12 1.2-12.24 0-22.187-9.947-22.187-22.187 0-12.24 9.947-22.187 22.187-22.187 12.24 0 22.187 9.947 22.187 22.187 0 6.293-2.64 11.947-6.854 16ZM41.681 9.733c-6.933 0-12.587 5.654-12.587 12.587s5.654 12.587 12.587 12.587 12.587-5.654 12.587-12.587S48.614 9.733 41.68 9.733Z" />
-      </svg>
-      <span className="font-bold mt-0.5">Browse</span>
-    </div>
-
-      <div className="flex flex-col items-center text-sm" onClick={() => navigate("/casino/home")}>
+    <div className="flex justify-around items-center bg-[#0f212e] text-white py-2 md:hidden">
+      <div className="flex flex-col items-center text-sm">
         <svg
-          class="w-5 h-5 font-bold hover:fill-white"
+          className="w-4 h-4 hover:fill-white"
+          fill="grey"
+          viewBox="0 0 64 64"
+        >
+          <path d="M0 0h23.867c-3.947 3.173-7.014 7.333-8.827 12.107H0V0Zm0 51.867h41.707v12.106H0V51.867Zm13.36-25.92H0v12.106h17.867a28.537 28.537 0 0 1-4.48-12.106h-.027ZM57.014 38.32l6.987 10.96-8.08 5.173-7.12-11.146c-2.24.773-4.64 1.2-7.12 1.2-12.24 0-22.187-9.947-22.187-22.187 0-12.24 9.947-22.187 22.187-22.187 12.24 0 22.187 9.947 22.187 22.187 0 6.293-2.64 11.947-6.854 16ZM41.681 9.733c-6.933 0-12.587 5.654-12.587 12.587s5.654 12.587 12.587 12.587 12.587-5.654 12.587-12.587S48.614 9.733 41.68 9.733Z" />
+        </svg>
+        <span className="font-bold mt-0.5">Browse</span>
+      </div>
+
+      <div
+        className="flex flex-col items-center text-sm"
+        onClick={() => navigate("/casino/home")}
+      >
+        <svg
+          className="w-5 h-5 font-bold hover:fill-white"
           fill="grey"
           viewBox="0 0 64 64"
         >
@@ -29,9 +31,9 @@ function MobileMenubar() {
         <span className="font-bold mt-0.5">Casino</span>
       </div>
 
-      <div className="flex flex-col items-center text-sm" >
+      <div className="flex flex-col items-center text-sm">
         <svg
-          class="w-4 h-4 hover:fill-white"
+          className="w-4 h-4 hover:fill-white"
           fill="grey"
           viewBox="0 0 64 64"
         >
@@ -40,10 +42,12 @@ function MobileMenubar() {
         <span className="font-bold mt-1">Bets</span>
       </div>
 
-
-      <div className="flex flex-col items-center text-sm" onClick={() => navigate("/ComeSoon")}>
+      <div
+        className="flex flex-col items-center text-sm"
+        onClick={() => navigate("/ComeSoon")}
+      >
         <svg
-          class="w-4 h-4 hover:fill-white"
+          className="w-4 h-4 hover:fill-white"
           fill="grey"
           viewBox="0 0 96 96"
         >
@@ -52,18 +56,20 @@ function MobileMenubar() {
         <span className="font-bold mt-1">Sports</span>
       </div>
 
-      <div className="flex flex-col items-center text-sm" onClick={() => navigate("/ComeSoon")}>
+      <div
+        className="flex flex-col items-center text-sm"
+        onClick={() => navigate("/ComeSoon")}
+      >
         <svg
-          class="w-4 h-4 hover:fill-white"
+          className="w-4 h-4 hover:fill-white"
           fill="grey"
           viewBox="0 0 64 64"
         >
           <path d="M32 1.916c-.288-.01-.628-.016-.97-.016C14.254 1.9.586 15.206.002 31.84L0 31.894A28.655 28.655 0 0 0 7.476 51.15l-.02-.024c-.688 4.028-1.89 7.636-3.552 10.974l.102-.228c4.634-.396 8.878-1.73 12.654-3.81l-.164.082c4.474 2.35 9.774 3.728 15.398 3.728h.112H32c.3.01.654.016 1.008.016 16.768 0 30.428-13.31 30.99-29.942l.002-.052C63.414 15.206 49.746 1.902 32.97 1.902c-.342 0-.68.006-1.018.016l.05-.002H32ZM16.138 37.604a5.948 5.948 0 1 1 0-11.896 5.948 5.948 0 0 1 0 11.896Zm15.862 0a5.948 5.948 0 1 1 0-11.896 5.948 5.948 0 0 1 0 11.896Zm15.862 0a5.948 5.948 0 1 1 0-11.896 5.948 5.948 0 0 1 0 11.896Z" />
         </svg>
-        <span className="font-bold mt-1" >Chat</span>
+        <span className="font-bold mt-1">Chat</span>
       </div>
     </div>
-
   );
 }
 
