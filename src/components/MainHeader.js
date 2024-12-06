@@ -17,12 +17,15 @@ import { FaWallet } from "react-icons/fa";
 import { PiVaultFill } from "react-icons/pi";
 import { BiSolidNotepad } from "react-icons/bi";
 import LegendToggleIcon from '@mui/icons-material/LegendToggle';
+import { BsChatDotsFill } from "react-icons/bs";
 
 function MainHeader() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const { wallet } = useSelector((state) => state.auth);
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,6 +44,12 @@ function MainHeader() {
     removeCookie("token");
     navigate("/");
     window.location.reload();
+  };
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
@@ -65,10 +74,7 @@ function MainHeader() {
               <p className="text-sm md:text-base">
                 ₹{wallet ? wallet : 0}
               </p>
-              {/* <RiMoneyRupeeCircleFill
-                color="yellow"  
-                className="text-lg md:text-xl"
-              /> */}
+
             </button>
             <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-3 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base">
               Wallet
@@ -82,63 +88,41 @@ function MainHeader() {
               </p>
             </button>
 
-            <div className="flex items-center">
-              <Tooltip
-                title={
-                  <Box sx={{ backgroundColor: "#ffffff", color: "black", borderRadius: "5px" }}>
-                    <List>
-                      <MenuItem onClick={() => navigate("/Wallet")}>
-                        <FaWallet color="black" />
-                        <p>Wallet</p>
-                      </MenuItem>
-                      <MenuItem button onClick={() => navigate("/Vault")}>
-
-                        <PiVaultFill color="black" />
-
-                        <p> Vault </p>
-                      </MenuItem>
-                      <MenuItem button onClick={() => navigate("/Vip")}>
-
-                        <MdEmojiEvents color="black" />
-
-                        <p>VIP</p>
-                      </MenuItem>
-                      <MenuItem button onClick={() => navigate("/Statistics")}>
-
-                        <LegendToggleIcon color="black" />
-
-                        <p>Statistics</p>
-                      </MenuItem>
-                      <MenuItem button onClick={() => navigate("myBet")}>
-
-                        <BiSolidNotepad color="black" />
-                        <p>My Bets </p>
-                      </MenuItem>
-                      <MenuItem button onClick={() => navigate("/setting")}>
-
-                        <MdSettings color="black" />
-
-                        <p>Settings </p>
-                      </MenuItem>
-                      <MenuItem button onClick={() => navigate("/logout")}>
-
-                        <LogoutIcon color="black" />
-
-                        <p>Logout </p>
-                      </MenuItem>
-                    </List>
-                  </Box>
-                }
-                open={tooltipOpen}
-                onClose={() => setTooltipOpen(false)}
-                onOpen={() => setTooltipOpen(true)}
-                placement="bottom"
-                arrow
+            <div className="group relative flex items-center">
+              <IoPerson color="white" size={16} />
+              <div
+                className="flex flex-col absolute top-full left-1/2 -translate-x-1/2 mt-2 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max max-w-xs text-center"
               >
-                <IconButton onClick={() => setTooltipOpen(!tooltipOpen)}>
-                  <IoPerson color="white" size={16} />
-                </IconButton>
-              </Tooltip>
+                <button onClick={() => navigate("/Wallet")} className="flex items-center space-x-5  py-2">
+                  <FaWallet size={20} color="#0f212e" />
+                  <p className="text-base text-[#0f212e]">Wallet</p>
+                </button>
+                <button onClick={() => navigate("/Vault")} className="flex items-center space-x-5 py-2">
+                  <PiVaultFill size={20} color="#0f212e" />
+                  <p className="text-base text-[#0f212e]">Vault</p>
+                </button>
+                <button onClick={() => navigate("/Vip")} className="flex items-center space-x-5 py-2">
+                  <MdEmojiEvents size={20} color="#0f212e" />
+                  <p className="text-base text-[#0f212e]" >VIP</p>
+                </button>
+                <button onClick={() => navigate("/Statistics")} className="flex items-center space-x-4 py-2">
+                  <LegendToggleIcon size={20} color="#0f212e" />
+                  <p className="text-base text-[#0f212e]">Statistics</p>
+                </button>
+                <button onClick={() => navigate("myBet")} className="flex items-center space-x-5 py-2">
+                  <BiSolidNotepad size={20} color="#0f212e" />
+                  <p className="text-base text-[#0f212e]">My Bets</p>
+                </button>
+                <button onClick={() => navigate("/setting")} className="flex items-center space-x-5 py-2">
+                  <MdSettings size={20} color="#0f212e" />
+                  <p className="text-base text-[#0f212e]">Setting</p>
+                </button>
+                <button onClick={() => navigate("/logout")} className="flex items-center space-x-4 py-2">
+                  <LogoutIcon size={10} color="#0f212e" />
+                  <p className="text-base text-[#0f212e]">Logout</p>
+                </button>
+                <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
+              </div>
             </div>
 
             <IconButton onClick={handleMenuOpen} data-menu-type="notifications">
@@ -196,28 +180,62 @@ function MainHeader() {
                 handleMenuClose={handleMenuClose}
             /> */}
 
-            <IconButton onClick={handleMenuOpen} data-menu-type="chat">
-              <IoIosChatboxes
-                color="white"
-                size={18}
-                className="mt-1.5 md:mt-0"
-              />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={isMenuOpen("chat")}
-              onClose={handleMenuClose}
-              sx={{ mt: 1.5 }}
-            >
-              <MenuItem className="flex items-center space-x-1 text-[#2f4553]">
-                <MdOutlineEventNote />
-                <p>Bet Slip</p>
-              </MenuItem>
-            </Menu>
-          </div>
+<div className="relative flex items-center">
+      <button onClick={toggleMenu} className="flex items-center">
+        <IoIosChatboxes color="white" size={18} />
+      </button>
+      {isOpen && (
+        <div
+          className="flex flex-col absolute top-full right-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max max-w-xs text-center"
+        >
+          <button
+            onClick={() => {
+              toggleSidebar(); // Open the sidebar
+              setIsOpen(false); // Close the chat menu
+            }}
+            className="flex items-center space-x-4 py-2"
+          >
+            <MdOutlineEventNote size={20} color="#0f212e" />
+            <p className="text-base text-[#0f212e]">Bet Slip</p>
+          </button>
+          <button
+            onClick={() => {
+              toggleSidebar(); // Open the sidebar
+              setIsOpen(false); // Close the chat menu
+            }}
+            className="flex items-center space-x-4 py-2"
+          >
+            <BsChatDotsFill size={20} color="#0f212e" />
+            <p className="text-base text-[#0f212e]">Chat</p>
+          </button>
+
+          <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 top-[-6px] right-1/2 overflow-hidden transform -translate-x-1/2"></div>
+        </div>
+      )}
+
+      {/* Sidebar Component */}
+      <div
+        className={`fixed top-0 right-0 h-full bg-gray-800 text-white duration-300 ${
+          isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        style={{ width: '250px' }}
+      >
+        <button className="absolute top-0 right-0 p-4" onClick={toggleSidebar}>
+          &times;
+        </button>
+        <div className="mt-16">
+          <a href="#" className="block p-4 hover:bg-gray-700">About</a>
+          <a href="#" className="block p-4 hover:bg-gray-700">Services</a>
+          <a href="#" className="block p-4 hover:bg-gray-700">Clients</a>
+          <a href="#" className="block p-4 hover:bg-gray-700">Contact</a>
+          
         </div>
       </div>
     </div>
+        </div>
+      </div>
+    </div>
+  </div>
   );
 }
 
