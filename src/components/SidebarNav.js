@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -103,7 +102,7 @@ export const SidebarNav = ({ items, openMenubar }) => {
   };
 
   const renderGroup = (groupItems, groupName) => (
-    <div key={groupName} className="bg-[#213743] mb-2 rounded-sm p-2 mx-1">
+    <div key={groupName} className="bg-[#213743] mb-2 rounded-sm p-2 mx-1.5">
       <ul>
         {items
           .filter((item) => groupItems.includes(item.name))

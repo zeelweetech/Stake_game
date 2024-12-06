@@ -54,7 +54,7 @@ function Mainbar() {
           }}
           className="mb-6 lg:mb-0"
         >
-          <div className="bg-[#0f212e] xl:w-[20.5rem] w-[20.5rem] md:w-80 p-5 border border-[#2f4553]">
+          <div className="bg-[#0f212e] xl:w-[20.5rem] w-[22rem] md:w-80 p-5 border border-[#2f4553]">
             <div className="flex justify-between items-center">
               <p>{progressData?.userName || "User"}</p>
               <FaRegStar size={22} color="#2f4553" />
@@ -79,17 +79,13 @@ function Mainbar() {
                     fontSize="small"
                     className="text-[#b1bad3] cursor-pointer"
                   />
-                  <div
-                    id="tooltip-top"
-                    role="tooltip"
-                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity bg-white text-black text-sm font-medium rounded-lg px-3 py-2 shadow-sm z-10 w-max max-w-xs text-center"
-                  >
-                    <p>
+                  <div className="absolute bottom-full left-[-1rem] text-sm -translate-x-1/2 mb-3 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity bg-white text-[#0f212e] font-semibold rounded-md px-2 py-0.5 z-10 w-max max-w-xs xl:-ml-0 lg:-ml-0 md:-ml-0 -ml-[6rem]">
+                    <p className="overflow-hidden line-clamp-3.5">
                       All bets settled on the sportsbook return a 3x (three
                       times) faster rate of progression compared to Casino (1x
                       progression). Voided bets are excluded.
                     </p>
-                    <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-6px] left-1/2 transform -translate-x-1/2"></div>
+                    <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-6px] xl:left-[11.6rem] lg:left-[11.6rem] md:left-[11.6rem] left-[17.5rem] transform -translate-x-1/2"></div>
                   </div>
                 </div>
               </div>
@@ -150,14 +146,14 @@ function Mainbar() {
           </div>
         </div>
 
-        <div className="flex md:flex-row space-x-2  md:space-x-5 md:space-y-0">
+        <div className="flex md:flex-row md:space-x-1 md:space-y-0">
           <div
-            className="bg-[#1a2c38] hover:cursor-pointer  transition-transform duration-300 hover:translate-y-[-8px]"
+            className="bg-[#1a2c38] h-full hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px] mx-3"
             onClick={() => navigate("/casino/home")}
           >
             <img
               src={StackCasino}
-              className=" md:w-80 h-40 md:h-56  "
+              className="xl:w-80 xl:h-56 lg:w-72 lg:h-52 md:w-72 h-40 md:h-52"
               alt="Not Found"
               style={{
                 border: "3px solid transparent",
@@ -171,12 +167,12 @@ function Mainbar() {
             </div>
           </div>
           <div
-            className="bg-[#1a2c38] hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px]"
+            className="bg-[#1a2c38]  hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px]"
             onClick={() => navigate("/ComeSoon")}
           >
             <img
               src={SportBook}
-              className="md:w-80 h-40 md:h-56 "
+              className="xl:w-80 xl:h-56 lg:w-72 lg:h-52 md:w-72 h-40 md:h-52"
               alt="Not Found"
               style={{
                 border: "3px solid transparent",

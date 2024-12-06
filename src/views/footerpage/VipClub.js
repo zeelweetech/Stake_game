@@ -15,19 +15,21 @@ import boost5 from "../../assets/img/bespoke.CxQq-dvx.png";
 import { GoCheck } from "react-icons/go";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDispatch, useSelector } from "react-redux";
-import { openLoginModel, openRegisterModel } from "../../features/auth/authSlice";
+import {
+  openLoginModel,
+  openRegisterModel,
+} from "../../features/auth/authSlice";
 
 const VipClub = () => {
   const { userId } = useParams();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [progressData, setProgressData] = useState([]);
   const [loading, setLoading] = useState(false);
   const decoded = decodedToken();
   const [activeLink, setActiveLink] = useState("General");
-  const {
-    isRegisterModelOpen,
-    isVerifyTermModelOpen,
-  } = useSelector((state) => state.auth);
+  const { isRegisterModelOpen, isVerifyTermModelOpen } = useSelector(
+    (state) => state.auth
+  );
 
   const links = [
     { label: "General" },
@@ -39,7 +41,7 @@ const VipClub = () => {
     switch (activeLink) {
       case "General":
         return (
-          <div className="max-w-3xl mx-auto bg-[#10161b] rounded-lg p-4 shadow-lg">
+          <div className="max-w-3xl mx-auto bg-[#0f212e] rounded-lg p-4  font-semibold shadow-lg">
             {/* General Content */}
             <AccordionContent
               items={[
@@ -172,7 +174,7 @@ const VipClub = () => {
                 {item.question}
               </AccordionSummary>
               <AccordionDetails
-                sx={{ borderTop: "1px solid #b1bad3", color: "#b1bad3" }}
+                sx={{ borderTop: "2px solid #b1bad3", color: "#b1bad3" }}
               >
                 {item.answer}
               </AccordionDetails>
@@ -222,7 +224,7 @@ const VipClub = () => {
                   border: "8px solid transparent",
                   borderImage: "linear-gradient(to bottom, #213743, #0f212e) 1",
                 }}
-                className="mb-6 lg:mb-0 xl:ml-40 lg:ml-28 ml-4"
+                className="mb-6 lg:mb-0 xl:ml-40 lg:ml-28 xl:w-[21rem] lg:w-[21rem] md:w-[21rem] w-[20rem]"
               >
                 <div className="bg-[#0f212e] w-full md:w-80 px-5 py-7 border text-white border-[#2f4553]">
                   <div className="flex justify-between items-center">
@@ -330,7 +332,10 @@ const VipClub = () => {
                     </div>
                   </div>
                   <div className="flex justify-between mt-5">
-                    <button onClick={handleOnRegister} className="bg-[#4175e1] p-3 rounded-lg">
+                    <button
+                      onClick={handleOnRegister}
+                      className="bg-[#4175e1] p-3 rounded-lg"
+                    >
                       Sign up
                     </button>
                   </div>
@@ -751,8 +756,8 @@ const VipClub = () => {
           </div>
         </div>
 
-        <div class="py-10 px-4 lg:px-16">
-          <h2 class="text-white text-center text-2xl font-bold mb-2">
+        <div className="py-10 px-4 lg:px-16">
+          <h2 className="text-white text-center text-2xl font-bold mb-2">
             Frequently Asked Questions
           </h2>
           <p class="text-[#b1bad3] text-center mb-8">
@@ -768,8 +773,8 @@ const VipClub = () => {
                       onClick={() => setActiveLink(link.label)}
                       className={`w-full text-sm p-2 md:p-4 cursor-pointer  ${
                         activeLink === link.label
-                          ? "bg-[#2c4a5a] text-white border-l-4 border-[#1475e1]"
-                          : "bg-[#10161b] text-white hover:bg-[#2c4a5a] hover:border-l-4 border-[#1475e1]"
+                          ? "bg-[#2c4a5a] text-white font-bold border-l-4 border-[#1475e1]"
+                          : "bg-[#0f212e] text-white  font-bold hover:bg-[#2c4a5a] hover:border-l-4 border-[#1475e1]"
                       }`}
                     >
                       {link.label}
@@ -781,6 +786,37 @@ const VipClub = () => {
               <div className="flex-grow mt-4 md:mt-0 md:ml-4">
                 {renderContent()}
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-[#213743] text-white py-8 px-4 mx-4 md:mx- rounded-lg grid-template-columns: auto">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div className="text-center md:text-left">
+              <h3 className="text-lg font-semibold">
+                Live, 24-hour customer support
+              </h3>
+              <p className="text-sm mt-1 px-10">
+                Real support from real people. We're available through instant
+                live chat and email to help you.
+              </p>
+            </div>
+            <div className="mt-4 md:mt-0 flex flex-col items-center gap-4 ">
+              <div className="relative">
+                <label for="language" className="sr-only">
+                  Preferred language
+                </label>
+                <select
+                  id="language"
+                  className="bg-[#0F212E] text-white text-sm rounded-md px-3 py-2 focus:outline-none"
+                >
+                  <option value="English">English</option>
+                  <option value="हिन्दी">हिन्दी</option>
+                </select>
+              </div>
+              <button className="bg-[#1475E1] hover:bg-[#105eb4] text-white text-sm font-medium rounded-md px-1 py-3">
+                Chat with us
+              </button>
             </div>
           </div>
         </div>
