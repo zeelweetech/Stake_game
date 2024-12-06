@@ -79,6 +79,8 @@ function Mainbar() {
                     fontSize="small"
                     className="text-[#b1bad3] cursor-pointer"
                   />
+
+                  
                   <div
                     id="tooltip-top"
                     role="tooltip"
@@ -91,6 +93,8 @@ function Mainbar() {
                     </p>
                     <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-6px] left-1/2 transform -translate-x-1/2"></div>
                   </div>
+
+
                 </div>
               </div>
             </div>
