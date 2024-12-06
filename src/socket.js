@@ -7,6 +7,8 @@ import { io } from "socket.io-client";
 // const WheelURL = "http://192.168.29.203:3006";
 // const LimboURL = "http://192.168.29.203:3007";
 // const DragonTowerURL = "http://192.168.29.203:3008";
+// const KenoURL = "http://192.168.29.203:3006"
+// const SlideURL = "http://192.168.29.203:3006"
 
 const token = localStorage.getItem("token");
 
@@ -58,3 +60,17 @@ export const DragonTowerSocket = io(process.env.REACT_APP_DRAGONTOWER_URL, {
     Authorization: `token: ${token}`,
   },
 });
+
+export const KenoSocket = io(process.env.REACT_APP_KENO_URL, {
+  path: "/ws",
+  extraHeaders: {
+    Authorization: `token: ${token}`,
+  },
+});
+
+// export const SlideSocket = io(process.env.REACT_APP_SLIDE_URL, {
+//   path: "/ws",
+//   extraHeaders: {
+//     Authorization: `token: ${token}`,
+//   },
+// });

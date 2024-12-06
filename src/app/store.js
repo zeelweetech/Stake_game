@@ -6,6 +6,8 @@ import minesGameReducer from "../features/casino/minesSlice";
 import limboGameReducer from "../features/casino/limboSlice";
 import WheelGameReducer from "../features/casino/wheelSlice";
 import dragonTowerGameReducer from "../features/casino/dragonTowerSlice"
+import KenoGameReducer from "../features/casino/kenoSlice"
+import SlideGameReducer from "../features/casino/slideSlice"
 import allGames from "../features/casino/allGameSlice"
 
 export const store = configureStore({
@@ -17,6 +19,8 @@ export const store = configureStore({
     limboGame: limboGameReducer,
     wheelGame: WheelGameReducer,
     dragonTowerGame: dragonTowerGameReducer,
+    kenoGame: KenoGameReducer,
+    slideGame: SlideGameReducer,
     allGame: allGames
   },
   middleware: (getDefaultMiddleware) =>
