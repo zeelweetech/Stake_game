@@ -18,6 +18,7 @@ import { PiVaultFill } from "react-icons/pi";
 import { BiSolidNotepad } from "react-icons/bi";
 import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 import { BsChatDotsFill } from "react-icons/bs";
+import RightSidebar from "./RightSidebar";
 
 function MainHeader() {
   const navigate = useNavigate();
@@ -171,71 +172,39 @@ function MainHeader() {
                 <p className="text-[#b1bad3]">Your interactions will be visible here</p>
               </div>
             </Menu>
+            <div className="relative flex items-center">
+              <button onClick={toggleMenu} className="flex items-center">
+                <IoIosChatboxes color="white" size={18} />
+              </button>
+              {isOpen && (
+                <div
+                  className="flex flex-col absolute top-full right-0 left-3 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max max-w-xs text-center"
+                >
+                  <button
+                    onClick={() => {
+                      RightSidebar()
+                    }}
+                    
+                    className="flex items-center space-x-4 py-2"
+                  >
+                    <MdOutlineEventNote size={20} color="#0f212e" />
+                    <p className="text-base text-[#0f212e]">Bet Slip</p>
+                  </button>
+                  <button
+                    className="flex items-center space-x-4 py-2"
+                  >
+                    <BsChatDotsFill size={20} color="#0f212e" />
+                    <p className="text-base text-[#0f212e]">Chat</p>
+                  </button>
 
-
-            {/* Notification Dialog
-            {/* <Notification
-                anchorEl={anchorEl}
-                isMenuOpen={isMenuOpen}
-                handleMenuClose={handleMenuClose}
-            /> */}
-
-<div className="relative flex items-center">
-      <button onClick={toggleMenu} className="flex items-center">
-        <IoIosChatboxes color="white" size={18} />
-      </button>
-      {isOpen && (
-        <div
-          className="flex flex-col absolute top-full right-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max max-w-xs text-center"
-        >
-          <button
-            onClick={() => {
-              toggleSidebar(); // Open the sidebar
-              setIsOpen(false); // Close the chat menu
-            }}
-            className="flex items-center space-x-4 py-2"
-          >
-            <MdOutlineEventNote size={20} color="#0f212e" />
-            <p className="text-base text-[#0f212e]">Bet Slip</p>
-          </button>
-          <button
-            onClick={() => {
-              toggleSidebar(); // Open the sidebar
-              setIsOpen(false); // Close the chat menu
-            }}
-            className="flex items-center space-x-4 py-2"
-          >
-            <BsChatDotsFill size={20} color="#0f212e" />
-            <p className="text-base text-[#0f212e]">Chat</p>
-          </button>
-
-          <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 top-[-6px] right-1/2 overflow-hidden transform -translate-x-1/2"></div>
-        </div>
-      )}
-
-      {/* Sidebar Component */}
-      <div
-        className={`fixed top-0 right-0 h-full bg-gray-800 text-white duration-300 ${
-          isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-        style={{ width: '250px' }}
-      >
-        <button className="absolute top-0 right-0 p-4" onClick={toggleSidebar}>
-          &times;
-        </button>
-        <div className="mt-16">
-          <a href="#" className="block p-4 hover:bg-gray-700">About</a>
-          <a href="#" className="block p-4 hover:bg-gray-700">Services</a>
-          <a href="#" className="block p-4 hover:bg-gray-700">Clients</a>
-          <a href="#" className="block p-4 hover:bg-gray-700">Contact</a>
-          
+                  <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
-        </div>
-      </div>
-    </div>
-  </div>
   );
 }
 
