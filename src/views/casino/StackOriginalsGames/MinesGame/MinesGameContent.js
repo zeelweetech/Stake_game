@@ -274,17 +274,19 @@ function MinesGameContent() {
         }
       });
 
-      if (data?.round === 0) {
-        setImages(newImages);
-        setRevealed(newRevealed);
+      if (data?.round > 0) {
         setTimeout(() => {
-          dispatch(setAutoBetResult())
-          // setImages([]);
+          setImages(newImages);
+          setRevealed(newRevealed);
+        }, 100)
+        // dispatch(setAutoBetResult())
+        setTimeout(() => {
           setRevealed([]);
-        }, 1000)
-      } else {
-        setImages(newImages);
-        setRevealed(newRevealed);
+        }, 100)
+      }
+      if (data?.round === 0) {
+        dispatch(setAutoBetResult())
+        setRevealed([])
       }
     }
   });
@@ -311,11 +313,12 @@ function MinesGameContent() {
 
   return (
     <div className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? 'md:ml-32 md:mr-[8.3rem] max-sm:mx-2' : 'xl:w-[52rem] lg:w-[37.2rem]'}`}>
-      {cashoutResult && !gameBet && autoBetResult?.isWin === true && (
+      {cashoutResult && !gameBet && (
+        // autoBetResult?.isWin === true
         <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
-            <p>{cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}₹</p>
+            <p>{cashoutResult?.winAmount ? cashoutResult.winAmount.toFixed(2) : "0.00"}₹</p>
             {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
           </div>
         </div>

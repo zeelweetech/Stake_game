@@ -11,7 +11,7 @@ import casino1 from "../assets/img/casino1.jpg";
 import chat from "../assets/img/sports.png";
 import sports1 from "../assets/img/sports1.png";
 
-function Sidebar({ openMenubar, handleDrawerToggle }) {
+function RightSidebar({ openMenubar, handleDrawerToggle }) {
   const [betSlipClicked, setBetSlipClicked] = useState(false);
   const [chatClicked, setChatClicked] = useState(false);
   const navigate = useNavigate();
@@ -120,4 +120,4 @@ function Sidebar({ openMenubar, handleDrawerToggle }) {
   );
 }
 
-export default Sidebar;
+export default RightSidebar;
