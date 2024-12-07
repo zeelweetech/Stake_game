@@ -70,7 +70,7 @@ function MainHeader() {
             Listor
           </span>
           <div className="flex items-center md:space-x-0">
-            <button className="flex bg-[#0f212e] items-center bg-transparent space-x-1 px-2 md:px-5 py-2 md:py-3 rounded-s-md text-white font-medium">
+            <button className="flex bg-[#24455e] items-center bg-transparent space-x-1 px-2 md:px-5 py-2 md:py-3 rounded-s-md text-white font-semibold">
               <p className="text-sm md:text-base">
                 ₹{wallet ? wallet : 0}
               </p>

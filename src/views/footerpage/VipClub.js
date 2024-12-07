@@ -224,7 +224,7 @@ const VipClub = () => {
                   border: "8px solid transparent",
                   borderImage: "linear-gradient(to bottom, #213743, #0f212e) 1",
                 }}
-                className="mb-6 lg:mb-0 xl:ml-40 lg:ml-28 xl:w-[21rem] lg:w-[21rem] md:w-[21rem] w-[20rem]"
+                className="mb-6 lg:mb-0 xl:ml-40 lg:ml-28 xl:w-[21rem] lg: w-[20rem]"
               >
                 <div className="bg-[#0f212e] w-full md:w-80 px-5 py-7 border text-white border-[#2f4553]">
                   <div className="flex justify-between items-center">
@@ -760,7 +760,7 @@ const VipClub = () => {
           <h2 className="text-white text-center text-2xl font-bold mb-2">
             Frequently Asked Questions
           </h2>
-          <p class="text-[#b1bad3] text-center mb-8">
+          <p className="text-[#b1bad3] text-center mb-8">
             Reach out to our award-winning support team
           </p>
           <div className="container mx-auto px-4">
@@ -789,32 +789,30 @@ const VipClub = () => {
             </div>
           </div>
         </div>
-
-        <div className="bg-[#213743] text-white py-8 px-4 mx-4 md:mx- rounded-lg grid-template-columns: auto">
+        <div className="bg-[#213743] text-white py-8 px-4 xl:mx-40  md:mx-3 mx-8 rounded-lg">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
             <div className="text-center md:text-left">
               <h3 className="text-lg font-semibold">
                 Live, 24-hour customer support
               </h3>
-              <p className="text-sm mt-1 px-10">
+              <p className="text-sm mt-1 text-[#babad3]">
                 Real support from real people. We're available through instant
                 live chat and email to help you.
               </p>
             </div>
-            <div className="mt-4 md:mt-0 flex flex-col items-center gap-4 ">
+            <div className="mt-4 md:mt-0 flex flex-col md:flex-row items-center gap-4">
               <div className="relative">
-                <label for="language" className="sr-only">
-                  Preferred language
-                </label>
+                <p className="text-[#babad3] text-sm">Preferred language</p>
+                <label for="language" className="sr-only "></label>
                 <select
                   id="language"
-                  className="bg-[#0F212E] text-white text-sm rounded-md px-3 py-2 focus:outline-none"
+                  className="bg-[#0F212E] text-white font-semibold text-sm rounded px-3 py-2 xl:w-28 xl:mt-6 lg:w-28 lg:mt-2 md:w-28  mt-1 w-72 focus:outline-none"
                 >
                   <option value="English">English</option>
                   <option value="हिन्दी">हिन्दी</option>
                 </select>
               </div>
-              <button className="bg-[#1475E1] hover:bg-[#105eb4] text-white text-sm font-medium rounded-md px-1 py-3">
+              <button className="bg-[#1475E1] hover:bg-[#105eb4] text-white text-sm font-medium rounded xl:w-28 xl:mt-6 lg:w-28 lg:mt-6 md:w-28 md:mt-6 w-72 px-3 py-2 ">
                 Chat with us
               </button>
             </div>
