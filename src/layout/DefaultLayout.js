@@ -59,6 +59,7 @@ function DefaultLayout() {
         )}
         <div className="overflow-auto">
           <Content />
+      
           <Footer />
         </div>
         <MobileMenubar />
