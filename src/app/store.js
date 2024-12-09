@@ -9,6 +9,8 @@ import dragonTowerGameReducer from "../features/casino/dragonTowerSlice"
 import KenoGameReducer from "../features/casino/kenoSlice"
 import SlideGameReducer from "../features/casino/slideSlice"
 import allGames from "../features/casino/allGameSlice"
+import betReducer from "../features/auth/betSlipSlice"
+import chatReducer from "../features/auth/chatSlice"
 
 export const store = configureStore({
   reducer: {
@@ -21,7 +23,9 @@ export const store = configureStore({
     dragonTowerGame: dragonTowerGameReducer,
     kenoGame: KenoGameReducer,
     slideGame: SlideGameReducer,
-    allGame: allGames
+    allGame: allGames,
+    betslip: betReducer,
+    chat: chatReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

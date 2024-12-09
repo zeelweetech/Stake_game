@@ -7,6 +7,9 @@ import Login from "../views/pages/login/Login";
 import Register from "../views/pages/register/Register";
 import ForgotPassword from "../views/pages/forgotpassword/ForgotPassword";
 import VerifyTerm from "../views/pages/register/VerifyTerm";
+import { openBetslipModal } from "../features/auth/betSlipSlice";
+import { isChatModelOpen } from "../features/auth/chatSlice";
+import RightSidebar from "./RightSidebar";
 
 function Header() {
   const navigate = useNavigate();
@@ -17,6 +20,13 @@ function Header() {
     isForgotPasswordModelOpen,
     isVerifyTermModelOpen,
   } = useSelector((state) => state.auth);
+
+  const { isBetslipOpen } = useSelector((state) => state.betslip);
+  console.log("openBetslipModel:", isBetslipOpen);
+
+
+  const { isChatOpen } = useSelector((state) => state.chat);
+  console.log("isChatModelOpen:", isChatOpen);
 
   const handleOnLogin = () => {
     dispatch(openLoginModel());
@@ -62,6 +72,7 @@ function Header() {
       {isRegisterModelOpen && <Register />}
       {isForgotPasswordModelOpen && <ForgotPassword />}
       {isVerifyTermModelOpen && <VerifyTerm />}
+      {/* { isBetslipOpen && <RightSidebar/>} */}
     </div>
   );
 }

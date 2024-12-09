@@ -15,6 +15,7 @@ function Sidebar({ openMenubar, handleDrawerToggle }) {
   const [casinoClicked, setCasinoClicked] = useState(false);
   const [sportsClicked, setSportsClicked] = useState(false);
   const navigate = useNavigate();
+  // const [dropdownVisible, setDropdownVisible] = useState(null); // Track which dropdown is open
 
   const handleCasinoClick = () => {
     setCasinoClicked((prev) => !prev);
@@ -27,6 +28,10 @@ function Sidebar({ openMenubar, handleDrawerToggle }) {
     setCasinoClicked(false);
     navigate("/ComeSoon");
   };
+  // const handleMenuIconClick = () => {
+  //   handleDrawerToggle(); // Close the sidebar
+  //   setDropdownVisible(null); // Close any open dropdowns
+  // };
 
   return (
     <div
@@ -34,7 +39,7 @@ function Sidebar({ openMenubar, handleDrawerToggle }) {
       ${openMenubar && "md:text-white"} 
        md:bg-none overflow-x-hidden`}
     >
-      <div className=" h-14 px-2 py-[0.70rem] shadow-2xl shadow-black">
+      <div className=" h-14 px-1 py-[0.70rem] shadow-2xl shadow-black">
         <div className="flex items-center">
           <button onClick={handleDrawerToggle} className="text-white ml-2 mt-[0.4rem]">
             <MenuIcon />
@@ -86,8 +91,15 @@ function Sidebar({ openMenubar, handleDrawerToggle }) {
         </div>
       </div>
       <div className="mt-4">
-        <ul className="space-y-2 rounded-md">
-          <SidebarNav items={nav} openMenubar={openMenubar} />
+      <ul className="space-y-2 rounded-md">
+          <SidebarNav 
+            items={nav}
+            openMenubar={openMenubar}
+            toggleSidebar={handleDrawerToggle} 
+            // setDropdownVisible={setDropdownVisible} // Pass dropdown state setter
+
+          />
+        
           {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
             <li key={text} className="flex items-center p-2 pl-4 space-x-4">
               <div className="text-white flex items-center justify-center "> 

@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 
-export const SidebarNav = ({ items, openMenubar }) => {
+export const SidebarNav = ({ items, openMenubar, toggleSidebar }) => {
   const [dropdownVisible, setDropdownVisible] = useState(null);
 
+
   const toggleDropdown = (index) => {
+    // Ensure sidebar opens when dropdown is clicked
+    if (!openMenubar) toggleSidebar();
     setDropdownVisible(dropdownVisible === index ? null : index);
   };
 
@@ -30,12 +33,12 @@ export const SidebarNav = ({ items, openMenubar }) => {
       className={`flex items-center font-semibold ${name === "Games"
         ? "border-b-2 w-full  border-[#2F4553] p-1.5 "
         : ""
-      }`}
+        }`}
     >
-      <div className="text-white">
+      <div className="text-white px-1 ">
         {icon ? <>{icon}</> : indent && <span className="nav-icon"></span>}
       </div>
-      <span className={`ml-2 ${openMenubar ? "block" : "hidden"}`}>{name}</span>
+      <span className={`ml-1 ${openMenubar ? "block" : "hidden"}`}>{name}</span>
       {badge && (
         <span
           style={{ color: badge.color }}
@@ -50,46 +53,69 @@ export const SidebarNav = ({ items, openMenubar }) => {
   const navItem = (item, index, indent = false) => {
     const { name, badge, icon, dropdown, ...rest } = item;
 
-    if (dropdown) {
+    if (dropdown && name === "Profile") {
       return (
-        <div key={index} className="flex flex-col items-start p-2 pl-1 font-semibold"> {/* Adjust padding-left */}
+        <div
+          key={index}
+          className="flex flex-col items-start pl-1 font-semibold hover:bg-[#213743]"
+        >
           <div
             onClick={() => toggleDropdown(index)}
-            className="flex items-center cursor-pointer border-b-2 border-[#2F4553] w-full pb-2" // Adding the gray border
+            className="flex items-center cursor-pointer border-b-2 border-[#2F4553] w-full pb-2 hover:bg-[#2F4553]"
           >
-            {icon && <div>{icon}</div>}
-            <span className={`ml-2 ${openMenubar ? "block" : "hidden"}`}>
-              {name}
-            </span>
-            <ChevronDownIcon
-              className={`h-5 w-5 ml-2 text-gray-400 ${openMenubar ? "block" : "hidden"}`}
-            />
+            {/* Profile Icon */}
+            {icon && (
+              <span>
+                {icon}
+              </span>
+            )}
+    
+            {/* Profile Text (only shown when sidebar is open) */}
+            {openMenubar && (
+              <span className="ml-2 ">{name}</span>
+            )}
+    
+            {/* Dropdown Icon */}
+            {dropdownVisible === index ? (
+              <ChevronDownIcon
+                className={`ml-auto ${
+                  openMenubar ? "h-5 w-5" : "h-8 w-8"
+                } `}
+              />
+            ) : (
+              <ChevronRightIcon
+                className={`ml-auto ${
+                  openMenubar ? "h-5 w-5" : "h-8 w-8"
+                } `}
+              />
+            )}
           </div>
-          <hr />
+    
+          {/* Dropdown Menu */}
           {dropdownVisible === index && (
-            <div className="ml-2 bg-[#213743] text-white rounded-md p-2 mt-2">
+            <div className="ml-2 bg-[#213743] text-white rounded-md mt-1">
               {dropdown.map((dropdownItem, idx) => (
-                <Link
+                <div
                   key={idx}
-                  to={dropdownItem.to}
-                  className="block px-4 py-2 hover:bg-[#0f212e] transition-colors"
+                  className="block w-full px-4 py-2 hover:bg-[#2F4553] transition-colors rounded-md cursor-pointer"
                 >
-                  {dropdownItem.icon && (
-                    <span className="mr-2 inline-block">
-                      {dropdownItem.icon}
-                    </span>
-                  )}
-                  <span>{dropdownItem.name}</span>
-                </Link>
+                  <Link to={dropdownItem.to} className="flex items-center">
+                    {dropdownItem.icon && (
+                      <span className="mr-2 inline-block">
+                        {dropdownItem.icon}
+                      </span>
+                    )}
+                    <span>{dropdownItem.name}</span>
+                  </Link>
+                </div>
               ))}
             </div>
           )}
         </div>
       );
     }
-
     return (
-      <div key={index} className="flex items-center p-2 pl-1"> 
+      <div key={index} className="flex items-center p-2 px-0 hover:bg-[#2F4553] w-full ">
         {rest.to || rest.href ? (
           <Link {...(rest.to && { as: NavLink })} {...rest}>
             {navLink(name, icon, badge, indent, index)}
@@ -102,7 +128,7 @@ export const SidebarNav = ({ items, openMenubar }) => {
   };
 
   const renderGroup = (groupItems, groupName) => (
-    <div key={groupName} className="bg-[#213743] mb-2 rounded-sm p-2 mx-1.5">
+    <div key={groupName} className="bg-[#213743] mb-2 rounded-sm p-1 mx-1.5  ">
       <ul>
         {items
           .filter((item) => groupItems.includes(item.name))

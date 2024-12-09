@@ -18,6 +18,12 @@ const token = localStorage.getItem("token");
 //     Authorization: `token: ${token}`,
 //   },
 // });
+export const ChatSocket = io(process.env.REACT_APP_CHAT_URL, {
+  path: "w/s",
+  extraHeaders: {
+    Authorization: `token: ${token}`,
+  }
+})
 
 export const CrashSocket = io(process.env.REACT_APP_CRASH_URL, {
   path: "/ws",
