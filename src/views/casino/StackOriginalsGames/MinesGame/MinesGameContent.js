@@ -45,8 +45,6 @@ function MinesGameContent() {
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
 
-  console.log("autoBetResult", autoBetResult);
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -246,6 +244,8 @@ function MinesGameContent() {
   };
 
   MineSocket.on("betResult", (data) => {
+    console.log("data -*-*-*-*-*-", data);
+
     dispatch(setAutoBetResult(data))
     if (data?.round === 0 && data?.round >= 0) {
       dispatch(setAutoBet(false))
@@ -274,20 +274,19 @@ function MinesGameContent() {
         }
       });
 
-      if (data?.round > 0) {
+      if (data?.round >= 0) {
         setTimeout(() => {
           setImages(newImages);
           setRevealed(newRevealed);
-        }, 100)
-        // dispatch(setAutoBetResult())
-        setTimeout(() => {
-          setRevealed([]);
-        }, 100)
+          setTimeout(() => {
+            setRevealed([]);
+          }, 1000);
+        }, 2000);
       }
-      if (data?.round === 0) {
-        dispatch(setAutoBetResult())
-        setRevealed([])
-      }
+
+      // if (data?.round > 0) {
+      //   dispatch(setAutoBetResult())
+      // }
     }
   });
 
