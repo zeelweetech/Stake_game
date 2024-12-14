@@ -61,7 +61,7 @@
 //     <div>
 //       <div className="bg-[#1a2c38] drop-shadow-2xl py-[0.30rem]">
 //         <div className="flex justify-between md:justify-around items-center px-4 md:px-0 ">
-//           {/* <img
+//            <img
 //             src={stakeLogo}
 //             className="w-12 h-12 md:w-16 md:h-16 hover:cursor-pointer"
 //             alt="Not Found"
@@ -260,13 +260,16 @@ import { MdEmojiEvents, MdOutlineEventNote, MdSettings } from "react-icons/md";
 import LogoutIcon from "@mui/icons-material/Logout";
 import notification from "../assets/img/Notification.png";
 import { removeCookie } from "../resources/utility";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaWallet } from "react-icons/fa";
 import { PiVaultFill } from "react-icons/pi";
 import { BiSolidNotepad } from "react-icons/bi";
 import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 import { BsChatDotsFill } from "react-icons/bs";
 import RightSidebar from "./RightSidebar";
+import { openBetslipModal } from "../features/auth/betSlipSlice";
+import { isChatModelOpen } from "../features/auth/chatSlice";
+import ChatApp from "../views/rightSidebarView/chat/chatInRightSidebar";
 
 function MainHeader() {
   const navigate = useNavigate();
@@ -275,6 +278,17 @@ function MainHeader() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
+
+  const { isBetslipOpen } = useSelector((state) => state.betslip);
+  console.log("openBetslipModel:", isBetslipOpen);
+
+
+  const { isChatOpen } = useSelector((state) => state.chat);
+  console.log("isChatModelOpen:", isChatOpen);
+
+
+  const dispatch = useDispatch()
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -301,16 +315,24 @@ function MainHeader() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const handleBetslipClick = () => {
+    console.log("Dispatching openBetslipModel action");
+    dispatch(openBetslipModal());
+    
+  };
+
+
+  const handleChatClick = () => {
+    dispatch(isChatModelOpen());
+  };
+
+
+
+
   return (
     <div>
       <div className="bg-[#1a2c38] drop-shadow-2xl py-[0.30rem]">
         <div className="flex justify-between md:justify-around items-center px-4 md:px-0 ">
-          {/* <img
-            src={stakeLogo}
-            className="w-12 h-12 md:w-16 md:h-16 hover:cursor-pointer"
-            alt="Not Found"
-            onClick={() => navigate("/casino/home")}
-          /> */}
           <span
             className="text-white text-3xl md:text-5xl font-extrabold italic font-sans hover:cursor-pointer"
             // onClick={() => navigate("/casino/home")}
@@ -421,33 +443,29 @@ function MainHeader() {
               </div>
             </Menu>
             <div className="relative flex items-center">
-              <button onClick={toggleMenu} className="flex items-center">
+              <button onClick={toggleSidebar} className="flex items-center">
                 <IoIosChatboxes color="white" size={18} />
               </button>
-              {isOpen && (
-                <div
-                  className="flex flex-col absolute top-full right-0 left-3 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max max-w-xs text-center"
-                >
+              {isSidebarOpen && (
+                <div className="flex flex-col absolute top-full right-0 left-3 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max max-w-xs text-center">
                   <button
-                    onClick={() => {
-                      RightSidebar()
-                    }}
-                    
-                    className="flex items-center space-x-4 py-2"
-                  >
-                    <MdOutlineEventNote size={20} color="#0f212e" />
-                    <p className="text-base text-[#0f212e]">Bet Slip</p>
-                  </button>
-                  <button
+                    onClick={handleChatClick}
                     className="flex items-center space-x-4 py-2"
                   >
                     <BsChatDotsFill size={20} color="#0f212e" />
                     <p className="text-base text-[#0f212e]">Chat</p>
                   </button>
-
+                  <button
+                    onClick={handleBetslipClick}
+                    className="flex items-center space-x-4 py-2"
+                  >
+                    <MdOutlineEventNote size={20} color="#0f212e" />
+                    <p className="text-base text-[#0f212e]">BetSlip</p>
+                  </button>
                   <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
                 </div>
               )}
+              {isSidebarOpen && <RightSidebar />}
             </div>
           </div>
         </div>

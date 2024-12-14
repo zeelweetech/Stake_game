@@ -11,7 +11,7 @@ import { FaGift } from "react-icons/fa6";
 import { IoIosRocket } from "react-icons/io";
 import { BsBookmarkStarFill } from "react-icons/bs";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { FaWallet } from "react-icons/fa";
 import { PiVaultFill } from "react-icons/pi";
 import { MdEmojiEvents } from "react-icons/md";
@@ -20,27 +20,27 @@ import { LuListTodo } from "react-icons/lu";
 import { MdSettings } from "react-icons/md";
 
 
+const ICON_SIZE = 18;
+
 const nav = [
   {
     name: "Dashboard",
     to: "/dashboard",
-    icon: <InboxIcon />,
+    icon: <InboxIcon style={{ fontSize: ICON_SIZE }} />,
     badge: {
       color: "info",
     },
   },
   {
     name: "Favourites",
-    // to: "/",
-    icon: <StarBorderIcon />,
+    icon: <StarBorderIcon style={{ fontSize: ICON_SIZE }} />,
     badge: {
       color: "info",
     },
   },
   {
     name: "Recent",
-    // to: "/",
-    icon: <HistoryIcon />,
+    icon: <HistoryIcon style={{ fontSize: ICON_SIZE }} />,
     badge: {
       color: "info",
     },
@@ -48,14 +48,13 @@ const nav = [
   {
     name: "My Bets",
     to: "/myBet",
-    icon: <BiSolidNotepad size={24} />,
+    icon: <BiSolidNotepad size={ICON_SIZE} />,
     badge: {
       color: "info",
     },
   },
   {
     name: "Games",
-    // to: "/",
     badge: {
       color: "info",
     },
@@ -63,7 +62,7 @@ const nav = [
   {
     name: "Lobby",
     to: "/Lobby",
-    icon: <TbCherryFilled size={24} />,
+    icon: <TbCherryFilled size={ICON_SIZE} />,
     badge: {
       color: "info",
     },
@@ -71,7 +70,7 @@ const nav = [
   {
     name: "Listor Originals",
     to: "/StackOriginals",
-    icon: <BsFire size={24} />,
+    icon: <BsFire size={ICON_SIZE} />,
     badge: {
       color: "info",
     },
@@ -79,7 +78,7 @@ const nav = [
   {
     name: "Slots",
     to: "/slots",
-    icon: <Filter7Icon size={10} />,
+    icon: <Filter7Icon style={{ fontSize: ICON_SIZE }} />,
     badge: {
       color: "info",
     },
@@ -87,7 +86,7 @@ const nav = [
   {
     name: "Live Casino",
     to: "/LiveCasion",
-    icon: <InboxIcon />,
+    icon: <InboxIcon style={{ fontSize: ICON_SIZE }} />,
     badge: {
       color: "info",
     },
@@ -95,7 +94,7 @@ const nav = [
   {
     name: "Game Shows",
     to: "/GameShows",
-    icon: <FaGift size={20} />,
+    icon: <FaGift size={ICON_SIZE} />,
     badge: {
       color: "info",
     },
@@ -103,7 +102,7 @@ const nav = [
   {
     name: "Listor Exclusives",
     to: "/Exclusives",
-    icon: <BsBookmarkStarFill size={20} />,
+    icon: <BsBookmarkStarFill size={ICON_SIZE} />,
     badge: {
       color: "info",
     },
@@ -111,17 +110,15 @@ const nav = [
   {
     name: "New Releases",
     to: "/NewReleases",
-    icon: <IoIosRocket size={20} />,
+    icon: <IoIosRocket size={ICON_SIZE} />,
     badge: {
       color: "info",
     },
   },
-
   {
     name: "Profile",
-    icon: <Person2Icon className="h-5 w-5 text-gray-400" />,
-    dropdownIcon: <ChevronDownIcon className="h-5 w-5 ml-2 text-gray-400" />,
-
+    icon: <Person2Icon style={{ fontSize: ICON_SIZE }} />,
+    dropdownIcon: <ChevronDownIcon style={{ fontSize: ICON_SIZE }} />,
     badge: {
       color: "info",
     },
@@ -129,46 +126,43 @@ const nav = [
       {
         name: "Wallet",
         to: "/wallet",
-        icon: <FaWallet size={15} className="mr-2" />,
+        icon: <FaWallet size={ICON_SIZE} />,
       },
       {
         name: "Vault",
         to: "/vault",
-        icon: <PiVaultFill size={18} className="mr-2" />,
+        icon: <PiVaultFill size={ICON_SIZE} />,
       },
       {
         name: "VIP",
         to: "/vip",
-        icon: <MdEmojiEvents size={18} className="mr-2" />,
+        icon: <MdEmojiEvents size={ICON_SIZE} />,
       },
       {
         name: "Statistics",
         to: "/statistics",
-        icon: <LegendToggleIcon size={18} className="mr-0" />,
+        icon: <LegendToggleIcon style={{ fontSize: ICON_SIZE }} />,
       },
       {
         name: "Notification",
         to: "/notification",
-        icon: <LuListTodo size={18} className="mr-1" />,
-        // Uncomment if you want to add a specific action
-        // action: () => handleMenuOpen(),
+        icon: <LuListTodo size={ICON_SIZE} />,
       },
       {
         name: "Setting",
         to: "/setting",
-        icon: <MdSettings size={18} className="mr-1" />,
+        icon: <MdSettings size={ICON_SIZE} />,
       },
       {
         name: "Logout",
         to: "/logout",
-        icon: <LogoutIcon />,
+        icon: <LogoutIcon style={{ fontSize: ICON_SIZE }} />,
         badge: {
           color: "info",
         },
       },
     ],
-  }
-]
-  
+  },
+];
 
 export default nav;
