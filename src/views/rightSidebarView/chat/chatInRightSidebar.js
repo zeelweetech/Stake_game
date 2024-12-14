@@ -113,45 +113,45 @@ import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
 
 function ChatApp({openMenubar, toggleSidebar}) {
-    // const [isMobile, setIsMobile] = useState(window.innerWidth <= 786);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 786);
     const [openDialog, setOpenDialog] = useState(true);
-    //  const [dropdownVisible, setDropdownVisible] = useState(null);
+     const [dropdownVisible, setDropdownVisible] = useState(null);
 
-    // const toggleDropdown = (index) => {
-    //     // Ensure sidebar opens when dropdown is clicked
-    //     if (!openMenubar) toggleSidebar();
-    //     setDropdownVisible(dropdownVisible === index ? null : index);
-    //   };
+    const toggleDropdown = (index) => {
+        // Ensure sidebar opens when dropdown is clicked
+        if (!openMenubar) toggleSidebar();
+        setDropdownVisible(dropdownVisible === index ? null : index);
+      };
 
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         setIsMobile(window.innerWidth < 786);
-    //     };
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 786);
+        };
 
-    //     window.addEventListener("resize", handleResize);
+        window.addEventListener("resize", handleResize);
 
-    //     ChatSocket.connect();
+        ChatSocket.connect();
 
-    //     ChatSocket.on("connect", () => {
-    //     });
+        ChatSocket.on("connect", () => {
+        });
 
-    //     ChatSocket.on("disconnect", () => {
-    //     });
-    //     console.log(`???????????`, ChatSocket);
+        ChatSocket.on("disconnect", () => {
+        });
+        console.log(`???????????`, ChatSocket);
 
-    //     ChatSocket.on("connect_error", (error) => {
-    //         console.error("Crash Connection Error:", error);
-    //     });
+        ChatSocket.on("connect_error", (error) => {
+            console.error("Crash Connection Error:", error);
+        });
 
-    //     return () => {
-    //         ChatSocket.off("message");
-    //         ChatSocket.off("connect");
-    //         ChatSocket.off("disconnect");
-    //         ChatSocket.off("connect_error");
-    //         ChatSocket.disconnect();
-    //         window.removeEventListener("resize", handleResize);
-    //     };
-    // }, []);
+        return () => {
+            ChatSocket.off("message");
+            ChatSocket.off("connect");
+            ChatSocket.off("disconnect");
+            ChatSocket.off("connect_error");
+            ChatSocket.disconnect();
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     return () => (
         <div>

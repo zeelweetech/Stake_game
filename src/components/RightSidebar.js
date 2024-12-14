@@ -28,22 +28,20 @@ function RightSidebar({ openMenubar, handleDrawerToggle }) {
   console.log("openBetslipModel:", isBetslipOpen);
   const { isChatOpen } = useSelector((state) => state.chat);
   console.log("isChatModelOpen:", isChatOpen);
-
-
   const navigate = useNavigate();
 
 
-  const handleCasinoClick = () => {
-    setCasinoClicked((prev) => !prev);
-    setSportsClicked(false);
-    navigate("/casino/home");
-  };
+  // const handleCasinoClick = () => {
+  //   setCasinoClicked((prev) => !prev);
+  //   setSportsClicked(false);
+  //   navigate("/casino/home");
+  // };
 
-  const handleSportsClick = () => {
-    setSportsClicked((prevState) => !prevState);
-    setCasinoClicked(false);
-    navigate("/ComeSoon");
-  };
+  // const handleSportsClick = () => {
+  //   setSportsClicked((prevState) => !prevState);
+  //   setCasinoClicked(false);
+  //   navigate("/ComeSoon");
+  // };
 
 
   const handleClose = () => {
@@ -61,13 +59,13 @@ function RightSidebar({ openMenubar, handleDrawerToggle }) {
       ${openMenubar && "md:text-white"} 
        md:bg-none overflow-x-hidden`}
     >
-      <div className=" h-14 px-1 py-[0.70rem] shadow-2xl shadow-black">
-        {/* <div className="flex items-center"> */}
-          {/* <button className="text-white ml-2 mt-[0.4rem]">
-            Stake:India
-          </button> */}
-          {/* <div className="relative h-full"> */}
-            {/* Close Button */}
+      <div className="shadow-2xl shadow-black">
+        <div className="flex items-center">
+        {/* <button onClick={handleDrawerToggle} className="text-white ml-2 mt-[0.4rem]">
+            <MenuIcon/>
+        </button>  */}
+        <div className="relative h-full"> 
+      
             {/* <button
               onClick={handleClose}
               className="absoulate top-4 right-4 text-white text-xl"
@@ -75,14 +73,13 @@ function RightSidebar({ openMenubar, handleDrawerToggle }) {
               &times;
             </button> */}
 
-
-            <div className=" mt-4 p-4 overflow-auto h-full space-y-2 rounded-md">
+         
+            <div className="absoulate z-30 overflow-auto h-full space-y-2 rounded-md">
               {isChatOpen && <ChatApp />}
               {isBetslipOpen && <Betslip />}
-
-            </div>
-          {/* </div> */}
-          {/* <button
+            </div> 
+        </div>
+        {/* <button
             onClick={handleCasinoClick}
             className="text-white ml-3 -mt-[1.8rem] relative w-[6rem] h-10 group"
           >
@@ -118,15 +115,15 @@ function RightSidebar({ openMenubar, handleDrawerToggle }) {
               SPORTS
             </span>
           </button> */}
-        {/* </div> */}
-       </div> 
-      {/* <div className="mt-4">
+        </div>
+      </div>
+      {/* <div className="mt-0">
         <ul className="space-y-2 rounded-md">
-          <Sidebar
+        <SidebarNav
             items={nav}
             openMenubar={openMenubar}
-            toggleSidebar={handleDrawerToggle}
-          />
+            toggleSidebar={handleDrawerToggle} 
+            />
         </ul>
       </div> */}
     </div>

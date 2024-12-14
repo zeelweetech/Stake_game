@@ -279,7 +279,8 @@ function MainHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
-
+  const [isChatSidebarOpen, setIsChatSidebarOpen] = useState(false);
+  const [isBetSlipSidebarOpen, setIsBetSlipSidebarOpen] = useState(false);                            
   const { isBetslipOpen } = useSelector((state) => state.betslip);
   console.log("openBetslipModel:", isBetslipOpen);
 
@@ -318,10 +319,12 @@ function MainHeader() {
   const handleBetslipClick = () => {
     console.log("Dispatching openBetslipModel action");
     dispatch(openBetslipModal());
-    
+
   };
 
-
+  const toggleTooltip = () => {
+    setTooltipOpen((prev) => !prev);
+  };
   const handleChatClick = () => {
     dispatch(isChatModelOpen());
   };
@@ -330,7 +333,7 @@ function MainHeader() {
 
 
   return (
-    <div>
+    <div className="z-0 relative">
       <div className="bg-[#1a2c38] drop-shadow-2xl py-[0.30rem]">
         <div className="flex justify-between md:justify-around items-center px-4 md:px-0 ">
           <span
@@ -443,34 +446,82 @@ function MainHeader() {
               </div>
             </Menu>
             <div className="relative flex items-center">
-              <button onClick={toggleSidebar} className="flex items-center">
+              <p onClick={toggleSidebar} className="flex items-center">
                 <IoIosChatboxes color="white" size={18} />
-              </button>
-              {isSidebarOpen && (
+              </p>
+
+              {isSidebarOpen &&  (
                 <div className="flex flex-col absolute top-full right-0 left-3 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max max-w-xs text-center">
-                  <button
-                    onClick={handleChatClick}
-                    className="flex items-center space-x-4 py-2"
+                  <button className="flex items-center space-x-4 py-2"
+                   onClick={handleChatClick}
                   >
                     <BsChatDotsFill size={20} color="#0f212e" />
                     <p className="text-base text-[#0f212e]">Chat</p>
                   </button>
-                  <button
-                    onClick={handleBetslipClick}
-                    className="flex items-center space-x-4 py-2"
-                  >
+                  <button className="flex items-center space-x-4 py-2"
+                  onClick={handleBetslipClick}>
                     <MdOutlineEventNote size={20} color="#0f212e" />
                     <p className="text-base text-[#0f212e]">BetSlip</p>
                   </button>
-                  <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
+                  <div className="w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
                 </div>
               )}
-              {isSidebarOpen && <RightSidebar />}
+{isSidebarOpen && <RightSidebar />}
             </div>
+            
+             {/* <div className="relative flex items-center">
+               <button onClick={toggleSidebar} className="flex items-center">
+                 <IoIosChatboxes color="white" size={18} />
+               </button>
+               {isSidebarOpen && (
+                 <div className="flex flex-col absolute top-full right-0 left-3 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max max-w-xs text-center">
+                   <button
+                      onClick={handleChatClick}
+                     className="flex items-center space-x-4 py-2"
+                   >
+                     <BsChatDotsFill size={20} color="#0f212e" />
+                     <p className="text-base text-[#0f212e]">Chat</p>
+                   </button>
+                   <button
+                      onClick={handleBetslipClick}
+                     className="flex items-center space-x-4 py-2"
+                   >
+                     <MdOutlineEventNote size={20} color="#0f212e" />
+                     <p className="text-base text-[#0f212e]">BetSlip</p>
+                   </button>
+                   <div className=" w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
+                 </div>
+               )} 
+               {isSidebarOpen && <RightSidebar />}
+             </div> */}
+     
+      {/* {isChatSidebarOpen && (
+        <div className="fixed right-0 top-0 h-full w-64 bg-gray-800 text-white shadow-lg z-50">
+          <div className="p-4">
+            <h2 className="text-lg font-bold">Chat Sidebar</h2>
+          
+            <p>Chat content goes here...</p>
+            <button onClick={() => setIsChatSidebarOpen(false)}>Close Chat</button>
+          </div>
+        </div>
+      )}
+
+    
+      {isBetSlipSidebarOpen && (
+        <div className="fixed right-0 top-0 h-full w-64 bg-gray-800 text-white shadow-lg z-50">
+          <div className="p-4">
+            <h2 className="text-lg font-bold">BetSlip Sidebar</h2>
+            
+            <p>BetSlip content goes here...</p>
+            <button onClick={() => setIsBetSlipSidebarOpen(false)}>Close BetSlip</button>
+          </div>
+        </div>
+      )} */}
+    </div>
           </div>
         </div>
       </div>
-    </div>
+    // </div>
   );
 }
 

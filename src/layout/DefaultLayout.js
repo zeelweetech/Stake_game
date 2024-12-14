@@ -9,7 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { openBetslipModal } from "../features/auth/betSlipSlice";
 import { isChatModelOpen} from "../features/auth/chatSlice"
-import RightSidebar from "../components/RightSidebar";
+import RightSidebar from "../components/RightSidebar"
 
 function DefaultLayout() {
   const [openMenubar, setOpenMenubar] = useState(false);
@@ -81,7 +81,7 @@ function DefaultLayout() {
         <MobileMenubar />
       </div>
 
-      {/* Right sidebar
+      {/* Right sidebar */}
       {!isMobile && isRightSidebarOpen && (
         <div
           className={`fixed right-0 bg-[#0f212e] text-white h-full overflow-hidden
@@ -97,9 +97,9 @@ function DefaultLayout() {
             handleToggle={handleRightSidebarToggle}
           />
         </div>
-      )} */}
+      )}
       {/* Right sidebar */}
-      {!isMobile && isRightSidebarOpen && (
+      {/* {!isMobile && isRightSidebarOpen && (
         <div
           className={`fixed right-0 bg-[#0f212e] text-white h-full overflow-hidden
           w-[20%] 
@@ -107,7 +107,7 @@ function DefaultLayout() {
         >
           <RightSidebar/>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
