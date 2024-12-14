@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function RightSidebar({ openMenubar, handleDrawerToggle }) {
   const [betSlipClicked, setBetSlipClicked] = useState(false);
@@ -41,6 +42,7 @@ const RightSidebar = () => {
     </div>
     
   );
-}
+};
+};
 
 export default RightSidebar;

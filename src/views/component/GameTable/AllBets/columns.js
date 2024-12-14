@@ -11,7 +11,7 @@ const Columns = () => {
       {
         field: "userName",
         headerName: "User",
-        width: 250,
+        width: 230,
         // flex: 1,
         headerClassName: "column-header",
         cellClassName: "column-cell",

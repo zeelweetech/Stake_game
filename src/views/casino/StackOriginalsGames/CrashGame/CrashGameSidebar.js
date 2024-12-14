@@ -1377,11 +1377,7 @@ const CrashGameSidebar = () => {
                       >
                         <KeyboardArrowDownIcon fontSize="small" />
                       </button>
-                      <Divider
-                        flexItem
-                        orientation="vertical"
-                        sx={{ my: 1.5, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
-                      />
+                      
                       <button
                         className="w-12 hover:bg-[#5c849e68]"
                         onClick={() => {

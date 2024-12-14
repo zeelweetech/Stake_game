@@ -56,7 +56,7 @@ function CrashGame() {
 
           <div>
             <hr className="border-2 border-[#213743]"></hr>
-            <GameFooter />
+            <GameFooter  />
           </div>
         </div>
       </div>
