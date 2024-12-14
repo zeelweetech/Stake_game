@@ -17,6 +17,7 @@ function GameFooter() {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState("All");
   const [isRotated, setIsRotated] = useState(false);
+  const [activeButton, setActiveButton] = useState("seeds");
   const [isScreenSmall, setIsScreenSmall] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -97,6 +98,18 @@ function GameFooter() {
 
   const handleClick = () => {
     setIsRotated(!isRotated);
+  };
+
+  const handleSeedClick = () => {
+    setActiveButton("seeds"); // Set the active button to "seeds"
+    console.log("Seeds button clicked");
+    // Add your condition-based functionality here
+  };
+
+  const handleVerifyClick = () => {
+    setActiveButton("verify"); // Set the active button to "verify"
+    console.log("Verify button clicked");
+    // Add your condition-based functionality here
   };
 
   return (
@@ -500,7 +513,7 @@ function GameFooter() {
           </div>
         </div>
       )}
-      {isLiveStatsOpen && (
+      {/* {isLiveStatsOpen && (
         <div className="fixed inset-0 flex items-end justify-end  md:mr-44 mr-20 bg-scroll">
           <div className="bg-[#213743] text-white rounded-lg shadow-lg w-72 relative ">
             <div className="flex justify-between items-center pl-4 bg-[#1a2c38] h-10 cursor-move rounded-t-lg">
@@ -659,10 +672,10 @@ function GameFooter() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
       {isFairnessOpen && (
         <div className="flex justify-center items-center bg-scroll z-10 absolute ml-[22rem] -mt-[37rem]">
-          <div className="bg-[#1a2c38] text-white rounded-lg shadow-lg  w-[31.25rem] relative">
+          <div className="bg-[#1a2c38] text-white  shadow-lg w-[31.25rem] relative">
             <div className="flex justify-between items-center p-4 h-16 rounded-t-lg">
               <h2 className="text-base font-semibold flex items-center gap-2">
                 <span>
@@ -684,56 +697,46 @@ function GameFooter() {
                 ✖
               </button>
             </div>
+
+            {/* Buttons */}
             <div className="flex justify-center items-center h-[3.375rem]">
               <div className="flex space-x-[0.3125rem] bg-[#0f212e] p-[5px] h-[3.375rem] rounded-full text-sm">
-                <button className="py-[0.9375rem] px-[1.25rem] w-[4.9161rem] h-[2.75rem]  rounded-full bg-[#2f4553] flex justify-center items-center font-semibold">
+                <button
+                  onClick={() => setActiveButton("seeds")}
+                  className={`py-[0.9375rem] px-[1.25rem] w-[4.9161rem] h-[2.75rem] rounded-full flex justify-center items-center font-semibold ${
+                    activeButton === "seeds"
+                      ? "text-white bg-[#2f4553]"
+                      : "hover:bg-[#2f4553]"
+                  }`}
+                >
                   Seeds
                 </button>
-                <button className="py-[0.9375rem] px-[1.25rem] w-[4.749rem] rounded-full bg-[#2f4553] flex justify-center items-center font-semibold">
+                <button
+                  onClick={() => setActiveButton("verify")}
+                  className={`py-[0.9375rem] px-[1.25rem] w-[4.749rem] h-[2.75rem] rounded-full flex justify-center items-center font-semibold ${
+                    activeButton === "verify"
+                      ? "text-white bg-[#2f4553]"
+                      : "hover:bg-[#2f4553]"
+                  }`}
+                >
                   Verify
                 </button>
               </div>
             </div>
-            <div className="p-4 w-[31.25rem] h-[16.6rem]">
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
-                <label>Active Client Seed</label>
-              </div>
-              <div
-                className={`flex border-1 rounded border-[#2F4553] bg-[#2F4553]`}
-              >
-                <div className="relative flex">
-                  <input
-                    type="text"
-                    value="5937139efe8bdf83"
-                    disabled
-                    className="w-[26.375rem] h-[2.5rem] p-[0.4375rem]  rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
-                  />
-                </div>
-                <button className="py-[0.8125rem] px-[1rem] h-[2.5rem] w-[2.875rem]  flex justify-center items-center text-sm font-bold hover:bg-[#5c849e68]">
-                  <span>
-                    <svg
-                      fill="currentColor"
-                      viewBox="0 0 64 64"
-                      className="w-4 h-4"
-                    >
-                      <path d="M61.334 64H16V12.986h45.334V64ZM2.666 0v45.466H9.28V6.506h38.96V0H2.666Z" />
-                    </svg>
-                  </span>
-                </button>
-              </div>
-              <div className="mb-4">
+
+            {/* Conditional Content */}
+            {activeButton === "seeds" && (
+              <div className="p-4 w-[31.25rem] h-[16.6rem]">
                 <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
-                  <label>Active Server Seed (Hashed)</label>
+                  <label>Active Client Seed</label>
                 </div>
-                <div
-                  className={`flex border-1 rounded border-[#2F4553] bg-[#2F4553]`}
-                >
+                <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
                   <div className="relative flex">
                     <input
                       type="text"
                       value="5937139efe8bdf83"
                       disabled
-                      className="w-[26.2rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
+                      className="w-[26.375rem] h-[2.5rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none"
                     />
                   </div>
                   <button className="py-[0.8125rem] px-[1rem] h-[2.5rem] w-[2.875rem] flex justify-center items-center text-sm font-bold hover:bg-[#5c849e68]">
@@ -748,39 +751,162 @@ function GameFooter() {
                     </span>
                   </button>
                 </div>
-              </div>
-              <div className="mb-6">
-                <div className="text-[#b1bad3] flex justify-between font-semibold text-sm ">
-                  <label>Active Client Seed</label>
+                <div className="mb-4">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
+                    <label>Active Server Seed (Hashed)</label>
+                  </div>
+                  <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
+                    <div className="relative flex">
+                      <input
+                        type="text"
+                        value="5937139efe8bdf83"
+                        disabled
+                        className="w-[26.2rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
+                      />
+                    </div>
+                    <button className="py-[0.8125rem] px-[1rem] h-[2.5rem] w-[2.875rem] flex justify-center items-center text-sm font-bold hover:bg-[#5c849e68]">
+                      <span>
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 64 64"
+                          className="w-4 h-4"
+                        >
+                          <path d="M61.334 64H16V12.986h45.334V64ZM2.666 0v45.466H9.28V6.506h38.96V0H2.666Z" />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
                 </div>
-                <div className="relative flex rounded">
-                  <input
-                    type="number"
-                    value="0"
-                    disabled
-                    className="w-[29.25rem] h-[2.4375rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
-                  />
+                <div className="mb-6">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-ss mt-3 mb-1  ">
+                    <label>Total Bets Made With Pair</label>
+                  </div>
+                  <div className="relative flex rounded">
+                    <input
+                      type="number"
+                      value="0"
+                      disabled
+                      className="w-[29.25rem] h-[2.4375rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
+                    />
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="bg-[#0f212E] p-4 w-[31.25rem] h-[10rem]">
-              <h1 className="flex justify-center items-center font-semibold">
-                Rotate Seed Pair
-              </h1>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
-                <label>Active Client Seed</label>
-              </div>
+                <div className="bg-[#0f212E] p-4 w-[31.25rem] h-[13.3rem] -ml-4 -mt-3">
+                  <h1 className="flex justify-center items-center font-semibold">
+                    Rotate Seed Pair
+                  </h1>
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
+                    <label>Active Client Seed</label>
+                  </div>
 
-              <div className="relative flex rounded">
-                <input
-                  type="text"
-                  className="w-[22.2842rem] h-[2.5rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
-                />
-                <button className=" w-[7.0925rem] h-[2.5rem] bg-[#00E701] rounded-r text-black py-[0.8125rem] px-[1rem] flex justify-center items-center font-semibold  hover:bg-green-600">
-                  Change
-                </button>
+                  <div className="relative flex rounded">
+                    <input
+                      type="text"
+                      className="w-[22.2842rem] h-[2.5rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
+                    />
+                    <button className=" w-[7.0925rem] h-[2.5rem] bg-[#00E701] hover:bg-[#1fff20] rounded-r text-black py-[0.8125rem] px-[1rem] flex justify-center items-center font-semibold  ">
+                      Change
+                    </button>
+                  </div>
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
+                    <label>Next Server Seed (Hashed)</label>
+                  </div>
+                  <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
+                    <div className="relative flex">
+                      <input
+                        type="text"
+                        value="5937139efe8bdf83"
+                        disabled
+                        className="w-[26.2rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none]"
+                      />
+                    </div>
+                    <button className="py-[0.8125rem] px-[1rem] h-[2.6rem] w-[3rem] flex justify-center items-center text-sm font-bold hover:bg-[#5c849e68]">
+                      <span>
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 64 64"
+                          className="w-4 h-4"
+                        >
+                          <path d="M61.334 64H16V12.986h45.334V64ZM2.666 0v45.466H9.28V6.506h38.96V0H2.666Z" />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
+
+            {activeButton === "verify" && (
+              <div class="flex flex-col items-center bg-[#1a2c38] p-4 text-white  w-full mt-4">
+                <div class="flex flex-col items-center p-4 justify-center w-[29.5rem] h-[12.5rem] rounded-md border-2 border-dotted border-[#2f4553]">
+                  <p class="text-gray-400">
+                    More inputs are required to verify result
+                  </p>
+                  {/* <div class="flex space-x-2 mt-2">
+                      <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                      <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+                    </div> */}
+                  <div class="flex space-x-2 mt-2">
+                    <span class="w-4 h-4 bg-gray-400 rounded-full transform transition-all duration-500 hover:scale-125"></span>
+                    <span class="w-4 h-4 bg-gray-400 rounded-full transform transition-all duration-500 hover:scale-125"></span>
+                  </div>
+                </div>
+
+                {/* <div class="w-full  bg-[#0f212E]">
+                  <label for="game" class="block mb-2 text-sm font-medium">
+                    Game
+                  </label>
+                  <select
+                    id="game"
+                    class="w-full p-2.5 bg-gray-800 border border-gray-700 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="mines">Mines</option>
+                  </select>
+
+                  <label
+                    for="clientSeed"
+                    class="block mt-4 mb-2 text-sm font-medium"
+                  >
+                    Client Seed
+                  </label>
+                  <input
+                    type="text"
+                    id="clientSeed"
+                    class="w-full p-2.5 bg-gray-800 border border-gray-700 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+
+                  <label
+                    for="serverSeed"
+                    class="block mt-4 mb-2 text-sm font-medium"
+                  >
+                    Server Seed
+                  </label>
+                  <input
+                    type="text"
+                    id="serverSeed"
+                    class="w-full p-2.5 bg-gray-800 border border-gray-700 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+
+                  <label
+                    for="nonce"
+                    class="block mt-4 mb-2 text-sm font-medium"
+                  >
+                    Nonce
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="nonce"
+                      class="w-full p-2.5 pr-10 bg-gray-800 border border-gray-700 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      value="0"
+                    />
+                    <div class="absolute inset-y-0 right-0 flex items-center px-2">
+                      <button class="text-gray-400 hover:text-white">▲</button>
+                      <button class="text-gray-400 hover:text-white">▼</button>
+                    </div>
+                  </div>
+                </div> */}
+              </div>
+            )}
           </div>
         </div>
       )}
