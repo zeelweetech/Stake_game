@@ -109,61 +109,67 @@ import { GridCloseIcon } from "@mui/x-data-grid";
 // };
 
 // export default ChatApp
-import CloseIcon from "@mui/icons-material/Close";
+import React from "react";
+import { ChevronDownIcon, ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { IconButton } from "@mui/material";
-
-function ChatApp({openMenubar, toggleSidebar}) {
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 786);
-    const [openDialog, setOpenDialog] = useState(true);
-     const [dropdownVisible, setDropdownVisible] = useState(null);
-
-    const toggleDropdown = (index) => {
-        // Ensure sidebar opens when dropdown is clicked
-        if (!openMenubar) toggleSidebar();
-        setDropdownVisible(dropdownVisible === index ? null : index);
-      };
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 786);
-        };
-
-        window.addEventListener("resize", handleResize);
-
-        ChatSocket.connect();
-
-        ChatSocket.on("connect", () => {
-        });
-
-        ChatSocket.on("disconnect", () => {
-        });
-        console.log(`???????????`, ChatSocket);
-
-        ChatSocket.on("connect_error", (error) => {
-            console.error("Crash Connection Error:", error);
-        });
-
-        return () => {
-            ChatSocket.off("message");
-            ChatSocket.off("connect");
-            ChatSocket.off("disconnect");
-            ChatSocket.off("connect_error");
-            ChatSocket.disconnect();
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
-
-    return () => (
-        <div>
-            <h2 className="text-xl font-bold mb-4">Stake: Challenges</h2>
-            {/* Your BetSlip content goes here */}
-            <p>Your bets will appear here.</p>
-            <IconButton onClick={() => setOpenDialog(false)} sx={{ color: "white" }}>
-                <CloseIcon />
-            </IconButton>
-        </div>
+import CloseIcon from "@mui/icons-material/Close";
 
 
-    )
+
+function ChatApp({ onClose }) {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  return (
+    <div className="relative bg-[#0f212e] inline-block text-white rounded-md shadow-lg">
+      {/* Close Icon */}
+      <IconButton onClick={onClose} sx={{ color: "white" }}>
+        <CloseIcon />
+      </IconButton>
+
+      <div className="inline-block text-left mb-2">
+        <button
+          onClick={toggleDropdown}
+          className="inline-flex justify-center w-full rounded-md border bg-[#0f212e] px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-2"
+        >
+          <span>BetSlip</span>
+          {/* Display Chevron Icon */}
+          {dropdownOpen ? (
+            <ChevronDownIcon className="ml-2 h-5 w-5" />
+          ) : (
+            <ChevronUpIcon className="ml-2 h-5 w-5" />
+          )}
+        </button>
+
+        {/* Dropdown Menu */}
+        {dropdownOpen && (
+          <div className="origin-top-right right-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="py-1">
+              <button
+                onClick={() => console.log("My Bets Clicked")}
+                className="text-gray-700 block px-4 py-2 text-sm"
+              >
+                My Bets
+              </button>
+              <a
+                href="#"
+                className="text-gray-700 block px-4 py-2 text-sm"
+              >
+                BetSlip
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <p>
+        Example content for the Betslip. This could include details about your current bets or other information.
+      </p>
+    </div>
+  );
 }
-export default ChatApp
+
+export default ChatApp;

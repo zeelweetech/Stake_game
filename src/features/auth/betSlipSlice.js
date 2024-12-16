@@ -8,10 +8,10 @@ const betSlice = createSlice({
   name: "betslip",
   initialState,
   reducers: {
-    openBetslipModal: (state) => { 
+    openBetslipModal: (state) => {
       state.isBetslipOpen = true;
     },
-    closeBetslipModal: (state) => { 
+    closeBetslipModal: (state) => {
       state.isBetslipOpen = false;
     },
   },
@@ -19,6 +19,7 @@ const betSlice = createSlice({
 
 export const { openBetslipModal, closeBetslipModal } = betSlice.actions;
 export default betSlice.reducer;
+
 {/* <div className="relative flex items-center">
               <button onClick={toggleSidebar} className="flex items-center">
                 <IoIosChatboxes color="white" size={18} />
