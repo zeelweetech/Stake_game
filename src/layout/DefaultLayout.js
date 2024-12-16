@@ -5,31 +5,29 @@ import Content from "../components/Content";
 import Footer from "../components/Footer";
 import MainHeader from "../components/MainHeader";
 import MobileMenubar from "../components/MobileMenubar";
-import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { openBetslipModal } from "../features/auth/betSlipSlice";
-import { isChatModelOpen} from "../features/auth/chatSlice"
-import RightSidebar from "../components/RightSidebar"
+import { isChatModelOpen } from "../features/auth/chatSlice";
+import RightSidebar from "../components/RightSidebar";
 
 function DefaultLayout() {
   const [openMenubar, setOpenMenubar] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
   const { isBetslipOpen } = useSelector((state) => state.betslip);
-  const {isChatOpen} = useSelector((state) => state.chat)
-  const dispatch = useDispatch()
+  const { isChatOpen } = useSelector((state) => state.chat);
+  const dispatch = useDispatch();
 
   const handleDrawerToggle = () => {
     setOpenMenubar((prevOpen) => !prevOpen);
   };
 
-  const handleRightSidebarToggle = () => {
-    // setIsRightSidebarOpen((prevState) => !prevState);
-    dispatch(openBetslipModal());
-    dispatch( isChatModelOpen())
+  const handleRightSidebarToggle = (type) => {
+    if (type === "betslip") {
+      dispatch(openBetslipModal());
+    } else if (type === "chat") {
+      dispatch(isChatModelOpen());
+    }
   };
-
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const handleResize = () => {
@@ -45,7 +43,6 @@ function DefaultLayout() {
 
   return (
     <div className="flex h-screen">
-
       {/* Sidebar for desktop view */}
       {!isMobile && (
         <div
@@ -66,7 +63,7 @@ function DefaultLayout() {
         ${!isMobile ? (openMenubar ? "w-[calc(100%-14%)] md:w-[calc(100%-19%)] lg:w-[calc(100%-15%)]" : "w-[calc(100%-3.5rem)]") : "w-full"}
         transition-width duration-300 ease-in-out`}
       >
-        {token ? (
+        {localStorage.getItem("token") ? (
           <MainHeader />
         ) : (
           <Header
@@ -82,34 +79,46 @@ function DefaultLayout() {
       </div>
 
       {/* Right sidebar */}
-      {!isMobile && isRightSidebarOpen && (
+      {!isMobile && (isBetslipOpen || isChatOpen) && (
         <div
-          className={`fixed right-0 bg-[#0f212e] text-white h-full overflow-hidden
-          ${openMenubar ? "w-[14%] md:w-[19%] lg:w-[15%]" : "w-14"} 
-          transition-width duration-300 ease-in-out`}
+          className={`fixed right-0 bg-[#0f212e] text-white h-full overflow-hidden w-[14%] md:w-[19%] lg:w-[15%] transition-width duration-300 ease-in-out`}
         >
           <RightSidebar
-            isOpen={isBetslipOpen}
-            handleToggle={handleRightSidebarToggle}
-          />
-          <RightSidebar
-            isOpen={isChatOpen}
+            isBetslipOpen={isBetslipOpen}
+            isChatOpen={isChatOpen}
             handleToggle={handleRightSidebarToggle}
           />
         </div>
       )}
-      {/* Right sidebar */}
-      {/* {!isMobile && isRightSidebarOpen && (
-        <div
-          className={`fixed right-0 bg-[#0f212e] text-white h-full overflow-hidden
-          w-[20%] 
-          transition-width duration-300 ease-in-out`}
-        >
-          <RightSidebar/>
-        </div>
-      )} */}
     </div>
   );
 }
 
 export default DefaultLayout;
+
+
+
+
+
+            {/* {isChatSidebarOpen && (
+        <div className="fixed right-0 top-0 h-full w-64 bg-gray-800 text-white shadow-lg z-50">
+          <div className="p-4">
+            <h2 className="text-lg font-bold">Chat Sidebar</h2>
+          
+            <p>Chat content goes here...</p>
+            <button onClick={() => setIsChatSidebarOpen(false)}>Close Chat</button>
+          </div>
+        </div>
+      )}
+
+    
+      {isBetSlipSidebarOpen && (
+        <div className="fixed right-0 top-0 h-full w-64 bg-gray-800 text-white shadow-lg z-50">
+          <div className="p-4">
+            <h2 className="text-lg font-bold">BetSlip Sidebar</h2>
+            
+            <p>BetSlip content goes here...</p>
+            <button onClick={() => setIsBetSlipSidebarOpen(false)}>Close BetSlip</button>
+          </div>
+        </div>
+      )} */}
