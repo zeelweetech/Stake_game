@@ -6,9 +6,10 @@ import { MdOutlineEventNote } from "react-icons/md";
 import sportsTable from "../../../assets/img/sportsTable.png";
 import { PiCurrencyBtcFill } from "react-icons/pi";
 import MyAllBet from "./pageview/myAllBet";
+import { useSelector } from "react-redux";
 
 
-function Betslip({ onClose }) {
+function Betslip({ onClose, isDrawerOpen }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [gameMenu, setGameMenu] = useState("Single");
   const [tooltip, setTooltip] = useState(false);
@@ -39,7 +40,9 @@ function Betslip({ onClose }) {
   ];
 
   return (
-    <div className="h-screen bg-[#0f212e] ">
+    <div className={`h-screen bg-[#0f212e] fixed right-0 text-white overflow-hidden
+      ${isDrawerOpen ? "w-80" : "w-0"} 
+      transition-width duration-300 ease-in-out`}> 
       <div className="relative text-white p-2 rounded-md shadow-lg">
         <IconButton
           onClick={onClose}
