@@ -7,7 +7,7 @@ import KenoGameSidebar from "./KenoGameSidebar";
 import KenoGameContent from "./KenoGameContent";
 
 function KenoGame() {
-      const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
     //   useEffect(() => {
     //     const handleResize = () => {
@@ -45,7 +45,7 @@ function KenoGame() {
     //   }, []);
 
     return (
-        <div className="bg-[#1a2c38] xl:-ml-16 lg:ml-5 py-10 text-white flex justify-center items-center w-full ">
+        <div className="bg-[#1a2c38] xl:-ml-16 lg:ml-5 py-10 text-white flex justify-center items-center w-full">
             <div className="w-full max-w-screen-lg">
                 <div
                     className={`flex w-full min-w-80 ${isMobile ? "h-[26rem]" : "h-[39rem]"
@@ -74,9 +74,11 @@ function KenoGame() {
                     <hr className="border-[#213743]" />
                     <GameFooter />
                 </div>
-                <div className="xl:w-[80rem] px-4 md:px-7 max-w-screen-md mx-auto">
-                    <GameContent />
-                    <GameTable />
+                <div className="flex justify-center">
+                    <div className="xl:w-[72rem] lg:w-[55rem] md:w-[42rem] xl:ml-32 mx-0 md:px-0 px-3 w-full">
+                        <GameContent />
+                        <GameTable />
+                    </div>
                 </div>
             </div>
         </div>

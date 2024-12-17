@@ -56,13 +56,15 @@ function CrashGame() {
 
           <div>
             <hr className="border-2 border-[#213743]"></hr>
-            <GameFooter  />
+            <GameFooter />
           </div>
         </div>
       </div>
-      <div className="xl:w-[80rem] px-4 md:px-7 xl:max-w-screen-md lg:max-w-screen-md mx-auto">
-        <GameContent />
-        <GameTable />
+      <div className="flex justify-center">
+        <div className="xl:w-[63rem] lg:w-[58rem] md:w-[41rem] md:px-0 px-3 w-full">
+          <GameContent />
+          <GameTable />
+        </div>
       </div>
     </div>
   );

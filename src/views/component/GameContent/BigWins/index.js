@@ -47,63 +47,61 @@ const BigWins = () => {
             <Loader />
           ) : (
             <div>
-              <div className="flex justify-center item-center pt-4">
-                <div>
-                  <DataGrid
-                    rows={rows}
-                    columns={Columns()}
-                    loading={loading}
-                    paginationMode="server"
-                    getRowClassName={(params) =>
-                      params.indexRelativeToCurrentPage % 2 === 0 ? "row-dark" : "row-light"
-                    }
-                    sx={{
-                      // width: "99.93%",
+              <div className="pt-4">
+                <DataGrid
+                  rows={rows}
+                  columns={Columns()}
+                  loading={loading}
+                  paginationMode="server"
+                  getRowClassName={(params) =>
+                    params.indexRelativeToCurrentPage % 2 === 0 ? "row-dark" : "row-light"
+                  }
+                  sx={{
+                    // width: "99.93%",
+                    border: "none",
+                    color: "#b1bad3",
+                    "& .MuiDataGrid-cell": {
                       border: "none",
-                      color: "#b1bad3",
-                      "& .MuiDataGrid-cell": {
-                        border: "none",
-                      },
-                      "& .MuiDataGrid-columnHeader": {
-                        borderBottom: "none",
-                        borderTop: "none",
-                      },
-                      "& .MuiDataGrid-footerContainer": {
-                        borderTop: "none",
-                        borderBottom: "none",
-                        color: "white",
-                      },
-                      "& .MuiTablePagination-root": {
-                        color: "white",
-                      },
-                      "& .MuiTablePagination-selectIcon": {
-                        color: "white",
-                      },
-                      overflowY: "hidden",
-                      "@media (max-width: 768px)": {
-                        width: "45%",
-                      },
-                      "@media (width: 320px)": {
-                        width: "35%",
-                      },
-                      "@media (width: 375px)": {
-                        width: "42.8%",
-                      },
-                      "@media (width: 425px)": {
-                        width: "49.7%",
-                      },
-                      "@media (width: 768px)": {
-                        width: "86.2%",
-                      },
-                      "@media (width: 1024px)": {
-                        width: "100%",
-                      },
-                      "@media (width: 1260px)": {
-                        width: "90%",
-                      },
-                    }}
-                  />
-                </div>
+                    },
+                    "& .MuiDataGrid-columnHeader": {
+                      borderBottom: "none",
+                      borderTop: "none",
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                      borderTop: "none",
+                      borderBottom: "none",
+                      color: "white",
+                    },
+                    "& .MuiTablePagination-root": {
+                      color: "white",
+                    },
+                    "& .MuiTablePagination-selectIcon": {
+                      color: "white",
+                    },
+                    overflowY: "hidden",
+                    // "@media (max-width: 768px)": {
+                    //   width: "45%",
+                    // },
+                    // "@media (width: 320px)": {
+                    //   width: "35%",
+                    // },
+                    // "@media (width: 375px)": {
+                    //   width: "42.8%",
+                    // },
+                    // "@media (width: 425px)": {
+                    //   width: "49.7%",
+                    // },
+                    // "@media (width: 768px)": {
+                    //   width: "86.2%",
+                    // },
+                    // "@media (width: 1024px)": {
+                    //   width: "100%",
+                    // },
+                    // "@media (width: 1260px)": {
+                    //   width: "90%",
+                    // },
+                  }}
+                />
               </div>
             </div>
           )}
