@@ -124,7 +124,7 @@ function ChatApp({ onClose }) {
   };
 
   return (
-    <div className="relative bg-[#0f212e] inline-block text-white rounded-md shadow-lg">
+    <div className="relative bg-[#0f212e] inline-block text-white rounded-md shadow-lg h-screen">
       {/* Close Icon */}
       <IconButton onClick={onClose} sx={{ color: "white" }}>
         <CloseIcon />
