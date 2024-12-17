@@ -343,7 +343,7 @@ function WheelGameContent() {
   );
 
   return (
-    <div className={`bg-[#0f212e] flex flex-col  justify-center items-center overflow-hidden xl:w-[44rem] xl:h-[46rem] lg:w-[38.5rem] lg:h-[46rem] md:h-[32rem] h-full mx-3 -mt-0.2 ${isMdScreen ? "md:mx-32" : "md:mx-0"}  rounded-t-lg`}>
+    <div className={`bg-[#0f212e] flex flex-col  justify-center items-center overflow-hidden xl:w-[52rem] xl:h-[46rem] lg:w-[38.5rem] lg:h-[46rem] md:h-[32rem] h-full mx-3 -mt-0.2 ${isMdScreen ? "md:mx-32" : "md:mx-0"}  rounded-t-lg`}>
       <div className="relative">
         <div className="relative">
           <div style={{ position: "relative" }}>

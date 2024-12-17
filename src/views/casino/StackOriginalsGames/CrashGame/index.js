@@ -61,7 +61,7 @@ function CrashGame() {
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="xl:w-[63rem] lg:w-[58rem] md:w-[41rem] md:px-0 px-3 w-full">
+        <div className="xl:w-[72rem] lg:w-[58rem] md:w-[41rem] md:px-0 px-3 w-full">
           <GameContent />
           <GameTable />
         </div>
