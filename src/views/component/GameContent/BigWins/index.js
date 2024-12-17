@@ -47,7 +47,7 @@ const BigWins = () => {
             <Loader />
           ) : (
             <div>
-              <div className="pt-4">
+              <div className="pt-4 overflow-x-auto md:overflow-x-hidden scrollbar-thin1">
                 <DataGrid
                   rows={rows}
                   columns={Columns()}

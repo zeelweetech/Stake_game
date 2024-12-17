@@ -57,7 +57,7 @@ const MyBets = () => {
           <div className="text-center text-white text-lg mt-4">No Data Found</div>
         ) : (
           <div>
-            <div style={{ width: '100%', overflowX: 'auto' }}>
+            <div style={{ width: '100%', overflowX: 'auto' }} className="overflow-x-auto md:overflow-x-hidden scrollbar-thin">
               <DataGrid
                 rows={rows}
                 columns={Columns()}

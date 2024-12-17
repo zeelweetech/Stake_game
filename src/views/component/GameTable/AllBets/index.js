@@ -50,7 +50,7 @@ const AllBets = () => {
         <Loader />
       ) : (
         <div className="overflow-x-auto w-full max-w-[1200px]">
-          <div style={{ width: "100%", overflowX: "auto" }}>
+          <div style={{ width: "100%", overflowX: "auto" }} className="overflow-x-auto md:overflow-x-hidden scrollbar-thin">
             <DataGrid
               rows={rows}
               columns={Columns()}
@@ -67,26 +67,29 @@ const AllBets = () => {
               }
               autoHeight
               sx={{
+                border: "none",
+                color: "#b1bad3",
                 "& .MuiDataGrid-root": {
                   minWidth: "320px",
                   maxWidth: "1200px",
                 },
-                "& .MuiDataGrid-columnHeaders": {
-                  backgroundColor: "#1a2c38",
-                  color: "#b1bad3",
-                },
-                "& .MuiDataGrid-row": {
-                  backgroundColor: "#0f212e",
-                  "&:nth-of-type(odd)": {
-                    backgroundColor: "#132f3e",
-                  },
-                },
                 "& .MuiDataGrid-cell": {
+                  border: "none",
+                },
+                "& .MuiDataGrid-columnHeader": {
                   borderBottom: "none",
-                  color: "#b1bad3",
+                  borderTop: "none",
                 },
                 "& .MuiDataGrid-footerContainer": {
-                  backgroundColor: "#1a2c38",
+                  borderTop: "none",
+                  borderBottom: "none",
+                  color: "white",
+                },
+                "& .MuiTablePagination-root": {
+                  color: "white",
+                },
+                "& .MuiTablePagination-selectIcon": {
+                  color: "white",
                 },
                 overflowY: "hidden",
                 width: "100%",

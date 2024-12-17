@@ -169,17 +169,20 @@ tr:nth-child(even) {
   scrollbar-width: thin; 
   scrollbar-color: #b1bad3 transparent; 
 }
+.scrollbar-thin1{
+  scrollbar-width: thin; 
+  scrollbar-color: #213743 transparent; 
+}
 
-
-.scrollbar-thin::-webkit-scrollbar {
+.scrollbar-thin::-webkit-scrollbar, .scrollbar-thin1::-webkit-scrollbar {
   height: 6px; 
 }
 
-.scrollbar-thin::-webkit-scrollbar-thumb {
+.scrollbar-thin::-webkit-scrollbar-thumb, .scrollbar-thin1::-webkit-scrollbar-thumb {
   border-radius: 10px; 
 }
 
-.scrollbar-thin::-webkit-scrollbar-track {
+.scrollbar-thin::-webkit-scrollbar-track, .scrollbar-thin1::-webkit-scrollbar-track {
   background: transparent; 
 }
 

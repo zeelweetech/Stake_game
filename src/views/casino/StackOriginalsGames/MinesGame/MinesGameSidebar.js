@@ -389,8 +389,19 @@ function MinesGameSidebar() {
                     placeholder="0.00"
                     step="0.01"
                     name="betamount"
-                    value={mineValue?.betamount || 0}
-                    onChange={(e) => handleOnChange(e)}
+                    value={
+                      mineValue?.betamount
+                        ? mineValue?.betamount
+                        : restored?.mineLocations?.length > 0
+                          ? restored?.betAmount
+                          : mineValue?.betamount || ""
+                    }
+                    onChange={(e) => {
+                      handleOnChange(e)
+                      if (restored?.mineLocations?.length > 0) {
+                        dispatch(setRestored({ betAmount: '' }))
+                      }
+                    }}
                   />
                 </div>
                 <button
@@ -890,12 +901,18 @@ function MinesGameSidebar() {
                     placeholder="0.00"
                     step="0.01"
                     name="betamount"
-                    value={mineValue?.betamount || 0}
+                    value={
+                      mineValue?.betamount
+                        ? mineValue?.betamount
+                        : restored?.mineLocations?.length > 0
+                          ? restored?.betAmount
+                          : mineValue?.betamount || ""
+                    }
                     onChange={(e) => {
                       handleOnChange(e)
-                      // if (restored?.mineLocations?.length > 0) {
-                      //   dispatch(setRestored({ betAmount: '' }))
-                      // }
+                      if (restored?.mineLocations?.length > 0) {
+                        dispatch(setRestored({ betAmount: '' }))
+                      }
                     }}
                   />
                 </div>

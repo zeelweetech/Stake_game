@@ -32,6 +32,7 @@ function MinesGameContent() {
   const [cashoutResult, setCashoutResult] = useState(null);
   const [fundsToastShown, setFundsToastShown] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [showautoBetResult, setShowautoBetResult] = useState(false);
   const {
     isManual,
     gamesOver,
@@ -244,8 +245,6 @@ function MinesGameContent() {
   };
 
   MineSocket.on("betResult", (data) => {
-    console.log("data -*-*-*-*-*-", data);
-
     dispatch(setAutoBetResult(data))
     if (data?.round === 0 && data?.round >= 0) {
       dispatch(setAutoBet(false))
@@ -278,15 +277,20 @@ function MinesGameContent() {
         setTimeout(() => {
           setImages(newImages);
           setRevealed(newRevealed);
+          if ((cashoutResult && !gameBet) || (autoBetResult?.isWin === true && autoBetResult?.round >= 0)) {
+            setShowautoBetResult(true);
+
+            const timeout = setTimeout(() => {
+              setShowautoBetResult(false);
+            }, 2000);
+
+            return () => clearTimeout(timeout);
+          }
           setTimeout(() => {
             setRevealed([]);
-          }, 1000);
-        }, 2000);
+          }, 2000);
+        }, 1000);
       }
-
-      // if (data?.round > 0) {
-      //   dispatch(setAutoBetResult())
-      // }
     }
   });
 
@@ -309,15 +313,15 @@ function MinesGameContent() {
       dispatch(setPreSelectTile([...preSelectTile, newTile]));
     }
   };
+  console.log("autoBetResult", autoBetResult);
 
   return (
     <div className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? 'md:ml-32 md:mr-[8.3rem] max-sm:mx-2' : 'xl:w-[52rem] lg:w-[37.2rem]'}`}>
-      {cashoutResult && !gameBet && (
-        // autoBetResult?.isWin === true
-        <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
+      {showautoBetResult && (
+        <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20 abcd`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
-            <p>{cashoutResult?.winAmount ? cashoutResult.winAmount.toFixed(2) : "0.00"}₹</p>
+            <p>{cashoutResult?.winAmount ? cashoutResult.winAmount.toFixed(2) : autoBetResult?.winAmount ? autoBetResult?.winAmount.toFixed(2) : "0.00"}₹</p>
             {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
           </div>
         </div>
