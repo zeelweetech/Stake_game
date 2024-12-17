@@ -30,7 +30,10 @@ function GameFooter() {
     };
 
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const menuItems = [
@@ -104,17 +107,13 @@ function GameFooter() {
     setIsRotated(!isRotated);
   };
 
-  const handleSeedClick = () => {
-    setActiveButton("seeds"); // Set the active button to "seeds"
-    console.log("Seeds button clicked");
-    // Add your condition-based functionality here
-  };
+  // const handleSeedClick = () => {
+  //   setActiveButton("seeds");
+  // };
 
-  const handleVerifyClick = () => {
-    setActiveButton("verify"); // Set the active button to "verify"
-    console.log("Verify button clicked");
-    // Add your condition-based functionality here
-  };
+  // const handleVerifyClick = () => {
+  //   setActiveButton("verify");
+  // };
 
   return (
     <div className="p-2 w-full bg-[#0f212e] rounded-b-lg z-10 relative">
@@ -678,8 +677,16 @@ function GameFooter() {
         </div>
       )}
       {isFairnessOpen && (
-        <div className="flex justify-center items-center  bg-scroll z-10 absolute xl:ml-[22rem] xl:-mt-[37rem] lg:ml-[11rem] lg:-mt-[41rem] md:ml-[-3rem] md:-mt-[71rem]">
-          <div className="bg-[#1a2c38]  text-white rounded-t-xl rounded-b-xl  shadow-lg w-[31.25rem] relative -">
+      <div className="flex justify-center items-center">
+        <div
+          className={`bg-scroll z-10 absolute xl:pb-[6rem] lg:pb-[50rem] 
+          ${
+            isScreenSmall
+             ? "md:-mt-[47rem] flex justify-center items-center -mt-[44.5rem]"
+             : ""
+            }`}
+            >
+            <div className="bg-[#1a2c38] text-white rounded-t-xl  shadow-lg md:w-full w-[20rem] relative ">
             <div className="flex justify-between items-center p-4 h-16 rounded-t-lg">
               <h2 className="text-base font-semibold flex items-center gap-2 select-none">
                 <span>
@@ -730,20 +737,20 @@ function GameFooter() {
 
             {/* Conditional Content */}
             {activeButton === "seeds" && (
-              <div className="p-4 w-[31.25rem] h-[16.6rem]">
+              <div className="p-4 md:w-[31.25rem] md:h-[16.6rem] w-[20rem]">
                 <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
                   <label>Active Client Seed</label>
                 </div>
-                <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
-                  <div className="relative flex">
-                    <input
-                      type="text"
-                      value="5937139efe8bdf83"
-                      disabled
-                      className="w-[26.375rem] h-[2.5rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none"
-                    />
-                  </div>
-                  <button className="py-[0.8125rem] px-[1rem] h-[2.5rem] w-[2.875rem] flex justify-center items-center text-sm font-bold hover:bg-[#5c849e68]">
+                <div className="flex ">
+                  {/* <div className="relative"> */}
+                  <input
+                    type="text"
+                    value="5937139efe8bdf83"
+                    disabled
+                    className="md:w-[26.2rem] w-[15rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
+                  />
+                  {/* </div> */}
+                  <button className="py-[0.8125rem] px-[1rem] h-[2.7rem] w-[2.875rem] flex justify-center items-center text-sm font-bold bg-[#2F4553] hover:bg-[#5c849e68]">
                     <span>
                       <svg
                         fill="currentColor"
@@ -759,16 +766,16 @@ function GameFooter() {
                   <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
                     <label>Active Server Seed (Hashed)</label>
                   </div>
-                  <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
+                  <div className="flex ">
                     <div className="relative flex">
                       <input
                         type="text"
                         value="5937139efe8bdf83"
                         disabled
-                        className="w-[26.2rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
+                        className="md:w-[26.2rem] w-[15rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
                       />
                     </div>
-                    <button className="py-[0.8125rem] px-[1rem] h-[2.5rem] w-[2.875rem] flex justify-center items-center text-sm font-bold hover:bg-[#5c849e68]">
+                    <button className="py-[0.8125rem] px-[1rem] h-[2.7rem] w-[2.875rem] flex justify-center items-center text-sm font-bold bg-[#2F4553] hover:bg-[#5c849e68]">
                       <span>
                         <svg
                           fill="currentColor"
@@ -790,11 +797,11 @@ function GameFooter() {
                       type="number"
                       value="0"
                       disabled
-                      className="w-[29.25rem] h-[2.4375rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
+                      className="md:w-[29.25rem] h-[2.4375rem] w-[18rem]  p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
                     />
                   </div>
                 </div>
-                <div className="bg-[#0f212E] p-4 w-[31.25rem] h-[13.3rem] -ml-4 -mt-3">
+                <div className="bg-[#0F212E] rounded-b-xl p-4 md:w-[31.25rem] w-[20rem] h-[13.3rem] -ml-4 -mt-4">
                   <h1 className="flex justify-center items-center font-semibold">
                     Rotate Seed Pair
                   </h1>
@@ -805,25 +812,25 @@ function GameFooter() {
                   <div className="relative flex rounded">
                     <input
                       type="text"
-                      className="w-[22.2842rem] h-[2.5rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none] "
+                      className="md:w-[22.2842rem] w-[15rem]  h-[2.5rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none"
                     />
-                    <button className=" w-[7.0925rem] h-[2.5rem] bg-[#00E701] hover:bg-[#1fff20] rounded-r text-black py-[0.8125rem] px-[1rem] flex justify-center items-center font-semibold  ">
+                    <button className=" md:w-[7.0925rem] w-[5.0925rem] h-[2.5rem] bg-[#00E701] hover:bg-[#1fff20] rounded-r text-black py-[0.8125rem] px-[1rem] flex justify-center items-center font-semibold  ">
                       Change
                     </button>
                   </div>
                   <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
                     <label>Next Server Seed (Hashed)</label>
                   </div>
-                  <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
+                  <div className="flex">
                     <div className="relative flex">
                       <input
                         type="text"
                         value="5937139efe8bdf83"
                         disabled
-                        className="w-[26.2rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none"
+                        className="md:w-[26.2rem] w-[15rem] p-[0.4375rem] rounded-l-md text-white border-2 bg-[#2F4553] hover:border-[#557086] border-[#2F4553] focus:outline-none"
                       />
                     </div>
-                    <button className="py-[0.8125rem] px-[1rem] h-[2.6rem] w-[3rem] flex justify-center items-center text-sm font-bold hover:bg-[#5c849e68]">
+                    <button className="py-[0.8125rem] px-[1rem] h-[2.6rem] w-[3rem] flex justify-center items-center text-sm font-bold bg-[#2F4553] hover:bg-[#5c849e68]">
                       <span>
                         <svg
                           fill="currentColor"
@@ -838,77 +845,12 @@ function GameFooter() {
                 </div>
               </div>
             )}
-
-            {/* {activeButton === "verify" && (
-              <div>
-                <div className="flex flex-col items-center bg-[#1a2c38] p-4 text-white w-full">
-                  <div className="flex flex-col items-center p-4 justify-center w-[29.5rem] h-[12.5rem] rounded-md border-2 border-dotted border-[#2f4553]">
-                    <p className="text-gray-400">
-                      More inputs are required to verify result
-                    </p>
-                    <div className="flex space-x-2 mt-2">
-                      <span className="w-4 h-4 bg-gray-400 rounded-full transform transition-all duration-500 hover:scale-125"></span>
-                      <span className="w-4 h-4 bg-gray-400 rounded-full transform transition-all duration-500 hover:scale-125"></span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="w-full  p-4 bg-[#0f212E]">
-                  <label className="block mb-2 text-sm font-medium">Game</label>
-                  <select className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm ">
-                    <option value="mines">Mines</option>
-                    <option value="crash">Crash</option>
-                    <option value="keno">Keno</option>
-                    <option value="dragontower">DragonTower</option>
-                    <option value="plinko">Plinko</option>
-                    <option value="limbo">Limbo</option>
-                    <option value="wheel">Wheel</option>
-                  </select>
-
-                  <label className="block mt-2 mb-2 text-sm font-medium">
-                    jdfli
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
-                  />
-
-                  <label className="block mt-2 mb-2 text-sm font-medium">
-                    Server Seed
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
-                  />
-
-                  <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3]">
-                    Nonce
-                  </label>
-                  <div className="flex rounded bg-[#2F4553]">
-                    <input
-                      className="w-full p-2.5 rounded-s-md text-white border-2 border-[#2F4553] hover:border-[#557086] bg-[#0f212e] focus:outline-none"
-                      type="number"
-                    />
-                    <button className="w-16 hover:bg-[#5c849e68]">
-                      <KeyboardArrowDownIcon fontSize="small" />
-                    </button>
-                    <Divider
-                      flexItem
-                      orientation="vertical"
-                      sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
-                    />
-                    <button className="w-16 hover:bg-[#5c849e68]">
-                      <KeyboardArrowUpIcon fontSize="small" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )} */}
             <div>
+           
               {activeButton === "verify" && (
-                <div>
+                <div className="overflow-auto xl:max-h-[450px] lg:max-h-[400px] md:max-h-[400px] max-h-[400px]">
                   <div className="flex flex-col items-center bg-[#1a2c38] p-4 text-white w-full">
-                    <div className="flex flex-col items-center p-4 justify-center w-[29.5rem] h-[12.5rem] rounded-md border-2 border-dotted border-[#2f4553]">
+                    <div className="flex flex-col items-center p-4 justify-center md:w-[29.5rem] md:h-[12.5rem]  md:mr-5 mr-5 w-[20rem] h-[12.5rem] rounded-md border-2 border-dotted border-[#2f4553]">
                       <p className="text-gray-400 select-none">
                         More inputs are required to verify result
                       </p>
@@ -918,7 +860,7 @@ function GameFooter() {
                       </div>
                     </div>
                   </div>
-                  <div className="w-full p-4 bg-[#0f212E] rounded-b-xl">
+                  <div className="w-full p-4 bg-[#0f212E] overflow-auto max-h-screen">
                     <label className="block mb-2 text-sm font-medium select-none text-[#B1BaD3]">
                       Game
                     </label>
@@ -985,7 +927,7 @@ function GameFooter() {
                         </label>
                         <select className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm">
                           <option selected></option>
-                          <option >Low</option>
+                          <option>Low</option>
                           <option value="mediun">Mediun</option>
                           <option value="high">High</option>
                         </select>
@@ -1066,6 +1008,7 @@ function GameFooter() {
               )}
             </div>
           </div>
+        </div>
         </div>
       )}
     </div>
