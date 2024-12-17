@@ -153,7 +153,7 @@ function LimboGameContent() {
   };
 
   return (
-    <div className="xl:w-[52rem] xl:mx-0 lg:w-[41rem] lg:mx-0 md:mx-40  max-sm:mx-3 h-full flex flex-col justify-center select-none relative bg-[#0f212e]  rounded-t-lg">
+    <div className="xl:w-[52rem] xl:mx-0 lg:w-[41rem] lg:mx-0 md:mx-40  max-sm:mx-3 h-full  flex flex-col justify-center select-none relative bg-[#0f212e]  rounded-t-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {

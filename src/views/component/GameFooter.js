@@ -116,8 +116,8 @@ function GameFooter() {
   // };
 
   return (
-    <div className="p-2 w-full bg-[#0f212e] rounded-b-lg z-10 relative">
-      <div className="flex justify-between items-center">
+    <div className="p-2 bg-[#0f212e] rounded-b-lg z-10 relative xl:w-[72rem] lg:w-[57.8rem] md:w-[24.3rem] md:px-0 px-3 w-full">
+      <div className="flex justify-between items-center px-2">
         <div className="space-x-9 text-[#b1bad3] relative">
           <div className="flex items-center  relative">
             <div className="group relative flex items-center py-[0.8125rem] px-[1rem] ">
@@ -179,7 +179,7 @@ function GameFooter() {
           </div>
         </div>
         <div>
-          <span className="text-[#b1bad3]/50 text-4xl font-extrabold italic font-sans hidden sm:block w-16 sm:w-24 md:w-28">
+          <span className="text-[#b1bad3]/50 text-4xl font-extrabold italic font-sans hidden md:block w-16 sm:w-24 md:w-28">
             Listor
           </span>
         </div>

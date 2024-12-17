@@ -40,38 +40,40 @@ function WheelGame() {
   });
 
   return (
-    <div className="xl:py-10 lg:py-10 md:py-6 py-4 xl:px-40 lg:w-11/12 xl:ml-16 lg:ml-9 bg-[#1a2c38] flex justify-center items-center text-white h-full">
-      <div className="w-full max-w-screen-lg">
-        <div
-          className={`flex w-full min-w-72 ${isMobile ? "h-[24rem]" : "h-[46rem]"
+    <div className="flex justify-center w-full h-full">
+      <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full ">
+        <div className="w-full">
+          <div
+            className={`flex justify-center w-full ${
+              isMobile ? "h-[24rem]" : "h-[46rem]"
             } border-b-3`}
-        >
-          {!isMobile && (
-            <div className="flex-row bg-[#213743]">
+          >
+            {!isMobile && (
+              <div className="flex-row bg-[#213743]">
+                <WheelGameSidebar />
+              </div>
+            )}
+            <div className="flex-grow">
+              <WheelGameContent />
+            </div>
+          </div>
+
+          {isMobile && (
+            <div className="flex flex-col">
               <WheelGameSidebar />
             </div>
           )}
-          <div className="flex-grow">
-            <WheelGameContent />
+          <div className="md:flex md:justify-center lg:block xl:block">
+            <div className="max-sm:mx-3 xl:-ml-[24rem] lg:-ml-[15.8rem]">
+              <hr className="border-[#213743]" />
+              <GameFooter />
+            </div>
           </div>
-        </div>
-
-        {isMobile && (
-          <div className="flex flex-col">
-            <WheelGameSidebar />
-          </div>
-        )}
-        <div
-          className={`${isMobile ? "w-auto ml-3 md:ml-32 md:w-[28.3rem]" : "xl:w-[64rem]"
-            } border-t-2 border-[#213743] h-24`}
-        >
-          <hr className="border-2 border-[#213743]" />
-          <GameFooter />
-        </div>
-        <div className="flex justify-center">
-          <div className="xl:w-[64rem] lg:w-[55rem] md:w-[42rem] md:px-0 px-3 w-full">
-            <GameContent />
-            <GameTable />
+          <div className="flex justify-center pt-5">
+            <div className="xl:w-[72rem] lg:w-[55rem] md:w-[42rem] md:px-0 px-3 w-full">
+              <GameContent />
+              <GameTable />
+            </div>
           </div>
         </div>
       </div>

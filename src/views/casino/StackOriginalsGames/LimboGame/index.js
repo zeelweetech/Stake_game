@@ -45,37 +45,40 @@ function LimboGame() {
   }, []);
 
   return (
-    <div className="bg-[#1a2c38] xl:-ml-16 lg:ml-5 py-10 text-white flex justify-center items-center w-full ">
-      <div className="w-full max-w-screen-lg">
-        <div
-          className={`flex w-full min-w-80 ${isMobile ? "h-[26rem]" : "h-[39rem]"
+    <div className="flex justify-center w-full h-full">
+      <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full">
+        <div className=" w-full">
+          <div
+            className={`flex justify-center w-full  ${
+              isMobile ? "h-[26rem]" : "h-[39rem]"
             } border-b-3`}
-        >
-          {!isMobile && (
-            <div className="flex-row bg-[#213743]">
+          >
+            {!isMobile && (
+              <div className="flex-row bg-[#213743]">
+                <LimboGameSidebar />
+              </div>
+            )}  
+            <div className="flex-grow">
+              <LimboGameContent />
+            </div>
+          </div>
+
+          {isMobile && (
+            <div className="flex flex-col">
               <LimboGameSidebar />
             </div>
           )}
-          <div className="flex-grow">
-            <LimboGameContent />
+          <div className="md:flex md:justify-center lg:block xl:block">
+            <div className="max-sm:mx-3 xl:-ml-[24rem] lg:-ml-[16.9rem]">
+              <hr className="border-[#213743]" />
+              <GameFooter />
+            </div>
           </div>
-        </div>
-
-        {isMobile && (
-          <div className="flex flex-col">
-            <LimboGameSidebar />
-          </div>
-        )}
-        <div className="md:flex md:justify-center lg:block xl:block">
-          <div className="xl:w-[72rem] lg:w-[57.8rem] md:w-[24.3rem] md:px-0 px-3 w-full">
-            <hr className="border-[#213743]" />
-            <GameFooter />
-          </div>
-        </div>
-        <div className="flex justify-center pt-5">
-          <div className="xl:w-[72rem] lg:w-[55rem] md:w-[42rem] xl:ml-32 mx-0 md:px-0 px-3 w-full">
-            <GameContent />
-            <GameTable />
+          <div className="flex justify-center pt-5">
+            <div className="xl:w-[72rem] lg:w-[55rem] md:w-[42rem]  mx-0 md:px-0 px-3 w-full">
+              <GameContent />
+              <GameTable />
+            </div>
           </div>
         </div>
       </div>
