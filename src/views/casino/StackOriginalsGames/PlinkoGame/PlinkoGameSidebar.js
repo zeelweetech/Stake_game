@@ -505,21 +505,21 @@ function PlinkoGameSidebar() {
                   <option value={16}>16</option>
                 </select>
               </div>
-              <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
-                <div className="bg-[#0f212e] flex grow rounded-full p-[4px] flex-shrink-0 mt-3">
-                  <div className="flex space-x-2">
+              <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0 mt-3">
+                <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
+                  <div className="flex space-x-2 w-full">
                     <button
-                      className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[10.4rem] w-[10.4rem] rounded-full ${
-                        isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                      }`}
+                      className={`py-2 rounded-full transition-all ${
+                        isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]" }
+                        xl:w-[8.7rem] lg:w-[4rem] md:w-[10.94rem] w-full`}
                       onClick={() => setIsManual(true)}
                     >
                       Manual
                     </button>
                     <button
-                      className={`py-2 xl:w-[8.8rem] lg:w-[7.2rem] md:w-[11.4rem] w-[10.4rem] rounded-full ${
-                        !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                      }`}
+                      className={`py-2 rounded-full transition-all ${
+                        !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                      xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.94rem] w-full`}
                       onClick={() => setIsManual(false)}
                     >
                       Auto
@@ -531,7 +531,7 @@ function PlinkoGameSidebar() {
           ) : (
             <div className="text-m">
               <div>
-              {stopAutoBet ? (
+                {stopAutoBet ? (
                   <button
                     className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
                     onClick={() => handleOnStopAutoBet()}
@@ -678,20 +678,21 @@ function PlinkoGameSidebar() {
                   </div>
                 </div>
                 <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0 mt-3">
-                  <div className="bg-[#0f212e] flex grow rounded-full p-[4px] flex-shrink-0">
-                    <div className="flex space-x-2">
+                  <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
+                    <div className="flex space-x-2 w-full">
                       <button
-                        className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[10.4rem] w-[11.4rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.3rem] max-[430px]:w-[11.6rem] max-[412px]:w-[11rem] max-[360px]:w-[9.4rem] max-[400px]:w-[10.65rem] rounded-full ${
-                          isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                        }`}
+                        className={`py-2 rounded-full transition-all ${
+                          isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"  }
+                          xl:w-[8.7rem] lg:w-[4rem] md:w-[10.94rem] w-full`}
                         onClick={() => setIsManual(true)}
                       >
                         Manual
                       </button>
                       <button
-                        className={`py-2 xl:w-[8.8rem] lg:w-[7.2rem] md:w-[11.4rem] w-[11.4rem] max-[375px]:w-[9.9rem] max-[414px]:w-[11.1rem] max-[390px]:w-[10.3rem] max-[430px]:w-[11.6rem] max-[412px]:w-[11rem] max-[360px]:w-[9.4rem] max-[400px]:w-[10.65rem] rounded-full ${
+                        className={`py-2 rounded-full transition-all ${
                           !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                        }`}
+                        }
+                                        xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.94rem] w-full`}
                         onClick={() => setIsManual(false)}
                       >
                         Auto

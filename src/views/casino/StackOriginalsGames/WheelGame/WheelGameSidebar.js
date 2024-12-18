@@ -512,7 +512,7 @@ function WheelGameSidebar() {
       ) : null}
 
       {responsiveMobile <= 768 ? (
-        <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mx-[8rem] md:mt-32 mx-3 flex flex-col p-3 bg-[#213743]">
+        <div className="xl:w-80 lg:w-[16.8rem] xl:mt-0 lg:mt-0 md:w-[24.4rem] md:-ml-1 md:mt-32 mx-3 flex flex-col p-3 bg-[#213743]">
           {isManual ? (
             <div>
               <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm mb-2">
@@ -531,7 +531,7 @@ function WheelGameSidebar() {
                     name="betamount"
                     value={wheelValue?.betamount}
                     onChange={(e) => handleOnChange(e)}
-                    className={`xl:w-48 lg:w-36 md:w-80 w-64 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
+                    className={`xl:w-48 lg:w-36 md:w-72 w-64 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
                   // disabled={minesBetStatus}
                   />
                 </div>
@@ -663,7 +663,7 @@ function WheelGameSidebar() {
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                   <input
-                    className="xl:w-48 lg:w-40 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-48 lg:w-40 md:w-72 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     step="0.01"
@@ -818,7 +818,7 @@ function WheelGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-36 lg:w-[5.8rem] md:w-[15.3rem] rounded text-white bg-[#0f212e] focus:outline-non"
+                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-36 lg:w-[5.8rem] md:w-[11.4rem] rounded text-white bg-[#0f212e] focus:outline-non"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -869,7 +869,7 @@ function WheelGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-36 rounded lg:w-[5.8rem] md:w-[15.3rem] text-white bg-[#0f212e] focus:outline-none focus:border-transparent"
+                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-36 rounded lg:w-[5.8rem] md:w-[11.4rem] text-white bg-[#0f212e] focus:outline-none focus:border-transparent"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -921,14 +921,14 @@ function WheelGameSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 overflow-hidden">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.08rem] md:w-[12.81rem] w-[11.12rem] max-[375px]:w-[9.5rem] max-[414px]:w-[10.77rem] max-[390px]:w-[10rem] max-[430px]:w-[11.28rem] max-[412px]:w-[10.7rem] max-[360px]:w-[9.1rem] max-[400px]:w-[10.2rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.08rem] md:w-[10.88rem] w-[11rem] max-[375px]:w-[9.5rem] max-[414px]:w-[5rem] max-[390px]:w-[10rem] max-[430px]:w-[11.28rem] max-[412px]:w-[10.7rem] max-[360px]:w-[9.1rem] max-[400px]:w-[10.2rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.65rem] lg:w-[7.1rem] md:w-[12.9rem] w-[11.12rem] max-[375px]:w-[9.6rem]  max-[414px]:w-[10.77rem] max-[390px]:w-[10rem] max-[430px]:w-[11.28rem] max-[412px]:w-[10.7rem] max-[360px]:w-[9.1rem] max-[400px]:w-[10.2rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  className={`py-2 xl:w-[8.65rem] lg:w-[7.1rem] md:w-[10.9rem] w-[11rem] max-[375px]:w-[9.5rem]  max-[414px]:w-[5rem] max-[390px]:w-[10rem] max-[430px]:w-[11.28rem] max-[412px]:w-[10.7rem] max-[360px]:w-[9.1rem] max-[400px]:w-[10.2rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setIsManual(false)}
                 >

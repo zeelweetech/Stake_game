@@ -316,7 +316,7 @@ function MinesGameContent() {
   console.log("autoBetResult", autoBetResult);
 
   return (
-    <div className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? 'md:ml-32 md:mr-[8.3rem] max-sm:mx-2' : 'xl:w-[52rem] lg:w-[37.2rem]'}`}>
+    <div className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? ' max-sm:mx-2' : 'xl:w-[52rem] lg:w-[40rem]'}`}>
       {showautoBetResult && (
         <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20 abcd`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
@@ -326,11 +326,11 @@ function MinesGameContent() {
           </div>
         </div>
       )}
-      <div className={`grid ${isMobile ? 'grid-cols-5 gap-1.5' : 'grid-cols-5 gap-2'} relative z-10`}>
+      <div className={`grid ${isMobile ? 'grid-cols-5 gap-1.5' : 'grid-cols-5 gap-2'} relative z-10 p-1.5 w-full`}>
         {images?.map((img, index) => (
           <div
             key={index}
-            className={`flex justify-center items-center ${isMobile ? 'md:w-20 md:h-[4.2rem] w-[4.6rem] h-[4.3rem] max-[375px]:w-[4rem] max-[320px]:w-[3.3rem] max-[414px]:w-[4.44rem] max-[390px]:w-[4.2rem] max-[360px]:w-[3.8rem] max-[400px]:w-[4.3rem]' : 'xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]'} bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""}`}
+            className={`flex justify-center items-center w-full ${isMobile ? 'md:w-[4.35rem] p-2 md:h-[4.35rem w-[4.6rem] h-[4.35rem] ' : 'xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]'} bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""}`}
             onClick={() => handleClick(index)}
             style={{
               backgroundColor: revealed[index] || gamesOver ? "#071824" : preSelectTile.includes(index) && !isManual ? "#9000ff" : "#2f4553",

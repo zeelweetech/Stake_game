@@ -40,39 +40,40 @@ function MinesGame() {
   });
 
   return (
-
-    <div className="py-10 xl:ml-0 lg:w-11/12 lg:ml-9 bg-[#1a2c38] flex justify-center items-center text-white h-full ">
-      <div className="w-full max-w-screen-lg">
-        <div
-          className={`flex w-full min-w-72  ${isMobile ? "h-[24rem]" : "h-[39rem]"
+    <div className="flex justify-center ">
+      <div className="md:py-10 py-3 bg-[#1a2c38] flex justify-center items-center text-white h-full md:max-w-96 max-w-full ">
+        <div className="w-full">
+          <div
+            className={`flex justify-center w-full   ${
+              isMobile ? "h-[24rem]" : "h-[39rem]"
             } border-b-3`}
-        >
-          {!isMobile && (
-            <div className="flex-row bg-[#213743]">
+          >
+            {!isMobile && (
+              <div className="flex-row bg-[#213743]">
+                <MinesGameSidebar />
+              </div>
+            )}
+            <div className="flex-grow">
+              <MinesGameContent />
+            </div>
+          </div>
+
+          {isMobile && (
+            <div className="flex flex-col">
               <MinesGameSidebar />
             </div>
           )}
-          <div className="flex-grow">
-            <MinesGameContent />
+          <div className="md:flex md:justify-center lg:block xl:block">
+            <div className="max-sm:mx-2 xl:-ml-[24rem] lg:-ml-[16.9rem]">
+              <hr className="border-[#213743]" />
+              <GameFooter />
+            </div>
           </div>
-        </div>
-
-        {isMobile && (
-          <div className="flex flex-col">
-            <MinesGameSidebar />
-          </div>
-        )}
-        <div
-          className={`${isMobile ? "md:ml-32 md:w-[28rem] ml-2 max-[425px]:w-[25.4rem] max-[375px]:w-[22.23rem] max-[414px]:w-[24.7rem] max-[390px]:w-[23.2rem] max-[430px]:w-[25.7rem] max-[360px]:w-[21.3rem] max-[400px]:w-[23.56rem]" : "xl:w-[72rem] lg:w-[55rem] "
-            } border-t-2 border-[#213743] h-28`}
-        >
-          <hr className="border-1 border-[#213743]" />
-          <GameFooter />
-        </div>
-        <div className="flex justify-center">
-          <div className="xl:w-[72rem] lg:w-[55rem] md:w-[42rem] xl:ml-32 mx-0 md:px-0 px-3 w-full">
-            <GameContent />
-            <GameTable />
+          <div className="flex justify-center pt-5">
+            <div className="xl:w-[72rem] lg:w-[58rem] md:w-[42rem] mx-0 md:px-0 px-3 w-full">
+              <GameContent />
+              <GameTable />
+            </div>
           </div>
         </div>
       </div>

@@ -1027,7 +1027,7 @@ const CrashGameSidebar = () => {
       ) : null}
 
       {responsiveMobile <= 768 ? (
-        <div className="flex flex-col xl:w-80 lg:w-[16.8rem] p-3  bg-[#213743] rounded-tl-lg">
+        <div className="xl:w-80 lg:w-[16.8rem] max-sm:mx-3 flex flex-col p-3 bg-[#213743]">
           {isSwiper ? (
             <div>
               {multiplier > 1 ? (
@@ -1345,7 +1345,7 @@ const CrashGameSidebar = () => {
                   <div className="flex justify-center mb-2">
                     <div className="flex border-2 w-full rounded-md border-[#4d718768] bg-[#4d718768]">
                       <input
-                        className="md:w-44 w-[8.99rem] px-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
+                        className="md:w-36 w-full px-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
                         type="number"
                         min={1.01}
                         placeholder="1.01"
@@ -1399,7 +1399,7 @@ const CrashGameSidebar = () => {
                         <IoInfiniteSharp className="text-xl" />
                       </div>
                       <input
-                        className="md:w-28 w-24 pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]"
+                        className="md:w-28 w-28 pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]"
                         type="number"
                         placeholder="0"
                         min={0}
@@ -1454,7 +1454,7 @@ const CrashGameSidebar = () => {
                         <PercentIcon fontSize="small" />
                       </div>
                       <input
-                        className="md:w-[13.3rem] w-[11.2rem] pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
+                        className="md:w-[11.9rem] w-[9.5rem] pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
                         type="number"
                         placeholder="0"
                         name="onwin"
@@ -1508,7 +1508,7 @@ const CrashGameSidebar = () => {
                         <PercentIcon fontSize="small" />
                       </div>
                       <input
-                        className="md:w-[13.3rem] w-[11.2rem] pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
+                        className="md:w-[11.9rem] w-[9.5rem] pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
                         type="number"
                         placeholder="0"
                         name="onlose"
@@ -1689,10 +1689,10 @@ const CrashGameSidebar = () => {
                   </div>
                 </div>
               )}
-              <div className="flex grow p-[5px] flex-shrink-0  mt-2">
+              <div className="flex justify-center items-center grow p-[5px] flex-shrink-0 mt-2">
                 <div className="flex">
                   <button
-                    className={`py-3 rounded-s-md md:w-[12.3rem] w-[10.55rem] font-semibold ${
+                    className={`py-3 rounded-s-md md:w-[10rem] w-[10rem] font-semibold ${
                       isboardControl
                         ? "bg-[#0f212e] text-[#b1bad3]"
                         : "bg-[#4d718768] hover:bg-[#85afca68]"
@@ -1702,7 +1702,7 @@ const CrashGameSidebar = () => {
                     Controls
                   </button>
                   <button
-                    className={`py-3 rounded-e-md md:w-[12.3rem] w-[10.6rem] font-semibold ${
+                    className={`py-3 rounded-e-md md:w-[10rem] w-[10rem] font-semibold ${
                       !isboardControl
                         ? "bg-[#0f212e] text-[#b1bad3]"
                         : "bg-[#4d718768] hover:bg-[#85afca68]"
@@ -1717,21 +1717,19 @@ const CrashGameSidebar = () => {
           )}
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0 mt-3">
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 w-full">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[4rem] md:w-[12.1rem] w-[11em] rounded-full ${
-                    isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }`}
-                  onClick={() => dispatch(SwiperModel(true))}
-                >
+                          className={`py-2 rounded-full transition-all ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                            xl:w-[8.7rem] lg:w-[4rem] md:w-[10.7rem] w-full`}
+                          onClick={() => dispatch(SwiperModel(true))}
+                        >
                   Manual
                 </button>
-                <button
-                  className={`py-2 xl:w-[8.6rem] lg:w-[6.68rem] md:w-[12.1rem] w-[10rem] rounded-full ${
-                    !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }`}
-                  onClick={() => dispatch(SwiperModel(false))}
-                >
+               <button
+                          className={`py-2 rounded-full transition-all ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                            xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.7rem] w-full`}
+                          onClick={() => dispatch(SwiperModel(false))}
+                        >
                   Auto
                 </button>
               </div>
