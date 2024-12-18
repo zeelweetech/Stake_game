@@ -31,7 +31,7 @@ function MinesGameSidebar() {
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [selectedTiles, setSelectedTiles] = useState([]);
   // const [autoBet, setAutoBet] = useState(false);
-  const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth)
+  const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
   const {
     isManual,
     mineValue = { betamount: "", mines: 3 },
@@ -67,10 +67,11 @@ function MinesGameSidebar() {
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
-        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
+        const wallet =
+          parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const handleOnChange = (e) => {
@@ -115,21 +116,22 @@ function MinesGameSidebar() {
         preSelectedTiles: preSelectTile,
         totalMines: parseInt(mineValue?.mines, 10),
         betAmount: parseInt(mineValue?.betamount, 10) || 0,
-        numberOfBets: autoBetResult?.round > 0
-          ? autoBetResult.round
-          : mineValue?.numberofbet || "",
+        numberOfBets:
+          autoBetResult?.round > 0
+            ? autoBetResult.round
+            : mineValue?.numberofbet || "",
         onWins: parseInt(mineValue?.onwin, 10),
         onLoss: parseInt(mineValue?.onlose, 10),
         stopOnLoss: parseInt(mineValue?.stoponloss, 10),
         stopOnProfit: parseInt(mineValue?.stoponprofit, 10),
-      })
-      dispatch(setAutoBet(true))
+      });
+      dispatch(setAutoBet(true));
     }
   };
 
   const handleOnStopAutoBet = () => {
     MineSocket.emit("StopAutoBet");
-    dispatch(setAutoBet(false))
+    dispatch(setAutoBet(false));
   };
 
   const pickRandomTile = () => {
@@ -158,15 +160,17 @@ function MinesGameSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[12rem] w-[11rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[12rem] w-[11rem] rounded-full ${
+                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }`}
                   onClick={() => dispatch(setIsManual(true))}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] w-[11.7rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] w-[11.7rem] rounded-full ${
+                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }`}
                   onClick={() => dispatch(setIsManual(false))}
                 >
                   Auto
@@ -178,9 +182,13 @@ function MinesGameSidebar() {
             <div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
                 <label>Bet Amount</label>
-                <label>₹{mineValue?.betamount ? mineValue?.betamount : '0.00'}</label>
+                <label>
+                  ₹{mineValue?.betamount ? mineValue?.betamount : "0.00"}
+                </label>
               </div>
-              <div className={`flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]`}>
+              <div
+                className={`flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]`}
+              >
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
@@ -194,22 +202,25 @@ function MinesGameSidebar() {
                       mineValue?.betamount
                         ? mineValue?.betamount
                         : restored?.mineLocations?.length > 0
-                          ? restored?.betAmount
-                          : mineValue?.betamount || ""
+                        ? restored?.betAmount
+                        : mineValue?.betamount || ""
                     }
                     onChange={(e) => {
-                      handleOnChange(e)
+                      handleOnChange(e);
                       if (restored?.mineLocations?.length > 0) {
-                        dispatch(setRestored({ betAmount: '' }))
+                        dispatch(setRestored({ betAmount: "" }));
                       }
                     }}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none] ${showFields && "cursor-not-allowed"}`}
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none] ${
+                      showFields && "cursor-not-allowed"
+                    }`}
                     disabled={showFields}
                   />
                 </div>
                 <button
-                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] ${showFields && "cursor-not-allowed"
-                    }`}
+                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] ${
+                    showFields && "cursor-not-allowed"
+                  }`}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -228,8 +239,9 @@ function MinesGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] ${showFields && "cursor-not-allowed"
-                    } `}
+                  className={`w-16 text-base hover:bg-[#5c849e68] ${
+                    showFields && "cursor-not-allowed"
+                  } `}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -255,8 +267,8 @@ function MinesGameSidebar() {
                         {restored?.mineLocations?.length > 0
                           ? restored?.mines
                           : mineValue?.mines
-                            ? mineValue?.mines
-                            : restored?.mines}
+                          ? mineValue?.mines
+                          : restored?.mines}
                       </div>
                     </div>
                     <div>
@@ -267,8 +279,8 @@ function MinesGameSidebar() {
                         {restored?.mineLocations?.length > 0
                           ? 25 - restored?.mines
                           : mineValue?.mines
-                            ? gems
-                            : 25 - restored?.mines}
+                          ? gems
+                          : 25 - restored?.mines}
                       </div>
                     </div>
                   </div>
@@ -278,33 +290,40 @@ function MinesGameSidebar() {
                       {tileSelect?.multiplier
                         ? tileSelect?.multiplier
                         : restored?.mineLocations?.length > 0
-                          ? restoredMultiplier
-                          : "1.00"}
+                        ? restoredMultiplier
+                        : "1.00"}
                       )
                     </label>
-                    <label>₹{((mineValue?.betamount
-                      ? mineValue?.betamount
-                      : restored?.mineLocations?.length > 0
-                        ? restored?.betAmount
-                        : 0) *
-                      (tileSelect?.multiplier
-                        ? tileSelect?.multiplier
-                        : restored?.mineLocations?.length > 0
-                          ? restoredMultiplier
-                          : 0.0)).toFixed(2)}</label>
-                  </div>
-                  <div className="flex justify-between items-center bg-[#2f4553]  border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded-sm p-2">
-                    <p>
-                      {((mineValue?.betamount
-                        ? mineValue?.betamount
-                        : restored?.mineLocations?.length > 0
+                    <label>
+                      ₹
+                      {(
+                        (mineValue?.betamount
+                          ? mineValue?.betamount
+                          : restored?.mineLocations?.length > 0
                           ? restored?.betAmount
                           : 0) *
                         (tileSelect?.multiplier
                           ? tileSelect?.multiplier
                           : restored?.mineLocations?.length > 0
-                            ? restoredMultiplier
-                            : 0.0)).toFixed(2)}
+                          ? restoredMultiplier
+                          : 0.0)
+                      ).toFixed(2)}
+                    </label>
+                  </div>
+                  <div className="flex justify-between items-center bg-[#2f4553]  border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded-sm p-2">
+                    <p>
+                      {(
+                        (mineValue?.betamount
+                          ? mineValue?.betamount
+                          : restored?.mineLocations?.length > 0
+                          ? restored?.betAmount
+                          : 0) *
+                        (tileSelect?.multiplier
+                          ? tileSelect?.multiplier
+                          : restored?.mineLocations?.length > 0
+                          ? restoredMultiplier
+                          : 0.0)
+                      ).toFixed(2)}
                     </p>
                     {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
                   </div>
@@ -358,14 +377,17 @@ function MinesGameSidebar() {
               )}
 
               <button
-                className={`${gameBet && !gamesOver
-                  ? "bg-[#489649]"
-                  : "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                className={`${
+                  gameBet && !gamesOver
+                    ? "bg-[#489649]"
+                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
                 onClick={() => handleBetClick()}
                 // disabled={gameBet && !gamesOver && tileSelect?.tileIndex === undefined}
                 disabled={
-                  (gameBet && !gamesOver && tileSelect?.tileIndex === undefined) &&
+                  gameBet &&
+                  !gamesOver &&
+                  tileSelect?.tileIndex === undefined &&
                   !restored?.totalSelectedTiles > 0
                 }
               >
@@ -376,7 +398,9 @@ function MinesGameSidebar() {
             <div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-3 mb-1">
                 <label>Bet Amount</label>
-                <label>₹{mineValue?.betamount ? mineValue?.betamount : '0.00'}</label>
+                <label>
+                  ₹{mineValue?.betamount ? mineValue?.betamount : "0.00"}
+                </label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -393,20 +417,21 @@ function MinesGameSidebar() {
                       mineValue?.betamount
                         ? mineValue?.betamount
                         : restored?.mineLocations?.length > 0
-                          ? restored?.betAmount
-                          : mineValue?.betamount || ""
+                        ? restored?.betAmount
+                        : mineValue?.betamount || ""
                     }
                     onChange={(e) => {
-                      handleOnChange(e)
+                      handleOnChange(e);
                       if (restored?.mineLocations?.length > 0) {
-                        dispatch(setRestored({ betAmount: '' }))
+                        dispatch(setRestored({ betAmount: "" }));
                       }
                     }}
                   />
                 </div>
                 <button
-                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] ${minesBetStatus && "cursor-not-allowed"
-                    }`}
+                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] ${
+                    minesBetStatus && "cursor-not-allowed"
+                  }`}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -425,8 +450,9 @@ function MinesGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] ${minesBetStatus && "cursor-not-allowed"
-                    } `}
+                  className={`w-16 text-base hover:bg-[#5c849e68] ${
+                    minesBetStatus && "cursor-not-allowed"
+                  } `}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -498,11 +524,15 @@ function MinesGameSidebar() {
                   placeholder="0"
                   min={0}
                   name="numberofbet"
-                  value={autoBetResult?.round > 0 ? autoBetResult.round : mineValue?.numberofbet || ""}
+                  value={
+                    autoBetResult?.round > 0
+                      ? autoBetResult.round
+                      : mineValue?.numberofbet || ""
+                  }
                   onChange={(e) => {
                     handleOnChange(e);
                     if (autoBetResult?.round > 0) {
-                      dispatch(setAutoBetResult({ round: '' }));
+                      dispatch(setAutoBetResult({ round: "" }));
                     }
                   }}
                 />
@@ -512,22 +542,24 @@ function MinesGameSidebar() {
               </div>
               <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded-md border-[#4d718768] bg-[#4d718768]">
                 <button
-                  className={`${onProfit.win
-                    ? "bg-[#0f212e] rounded"
-                    : "rounded hover:bg-[#85afca68]"
-                    } px-3.5 py-1  rounded-sm`}
+                  className={`${
+                    onProfit.win
+                      ? "bg-[#0f212e] rounded"
+                      : "rounded hover:bg-[#85afca68]"
+                  } px-3.5 py-1  rounded-sm`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
-                    dispatch(setMineValue({ onwin: '' }))
+                    dispatch(setMineValue({ onwin: "" }));
                   }}
                 >
                   Reset
                 </button>
                 <button
-                  className={`${onProfit.win
-                    ? " hover:bg-[#85afca68]"
-                    : "bg-[#0f212e] rounded-sm"
-                    } px-[0.3rem] py-1`}
+                  className={`${
+                    onProfit.win
+                      ? " hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded-sm"
+                  } px-[0.3rem] py-1`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -535,10 +567,11 @@ function MinesGameSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${onProfit.win
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.win
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2 ">
                     <PercentIcon fontSize="small" />
@@ -560,13 +593,14 @@ function MinesGameSidebar() {
               <div className="flex items-center space-x-0.5 border-2 mt-1 rounded-md border-[#4d718768] bg-[#4d718768]">
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "bg-[#0f212e] rounded"
-                      : "hover:bg-[#85afca68] rounded"
-                      } px-3.5 py-1 rounded-sm`}
+                    className={`${
+                      onProfit.lose
+                        ? "bg-[#0f212e] rounded"
+                        : "hover:bg-[#85afca68] rounded"
+                    } px-3.5 py-1 rounded-sm`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
-                      dispatch(setMineValue({ onlose: '' }))
+                      dispatch(setMineValue({ onlose: "" }));
                     }}
                   >
                     Reset
@@ -574,10 +608,11 @@ function MinesGameSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? " bg-[#4d718768] hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-sm"
-                      } px-[0.3rem] py-1`}
+                    className={`${
+                      onProfit.lose
+                        ? " bg-[#4d718768] hover:bg-[#85afca68]"
+                        : "bg-[#0f212e] rounded-sm"
+                    } px-[0.3rem] py-1`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -586,10 +621,11 @@ function MinesGameSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${onProfit.lose
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.lose
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -607,7 +643,9 @@ function MinesGameSidebar() {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1">
                 <label>Stop on Profit</label>
-                <label>₹{mineValue?.stoponprofit ? mineValue?.stoponprofit : '0.00'}</label>
+                <label>
+                  ₹{mineValue?.stoponprofit ? mineValue?.stoponprofit : "0.00"}
+                </label>
               </div>
               <div className="relative flex">
                 {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -625,7 +663,9 @@ function MinesGameSidebar() {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1">
                 <label>Stop on Loss</label>
-                <label>₹{mineValue?.stoponloss ? mineValue?.stoponloss : '0.00'}</label>
+                <label>
+                  ₹{mineValue?.stoponloss ? mineValue?.stoponloss : "0.00"}
+                </label>
               </div>
               <div className="relative flex">
                 {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -650,12 +690,18 @@ function MinesGameSidebar() {
                 </button>
               ) : (
                 <button
-                  className={`${preSelectTile?.length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer" : "bg-[#489649] cursor-default"} text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
+                  className={`${
+                    preSelectTile?.length > 0
+                      ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer"
+                      : "bg-[#489649] cursor-default"
+                  } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>
-                    mineValue?.numberofbet === undefined || mineValue?.numberofbet === ""
+                    mineValue?.numberofbet === undefined ||
+                    mineValue?.numberofbet === ""
                       ? toast.error("Please enter a number of bets")
-                      : handleOnAutoBet()}
-                // disabled={preSelectTile?.length > 0}
+                      : handleOnAutoBet()
+                  }
+                  // disabled={preSelectTile?.length > 0}
                 >
                   Start Autobet
                   {/* {console.log("preSelectTile", preSelectTile)} */}
@@ -667,14 +713,18 @@ function MinesGameSidebar() {
       ) : null}
 
       {responsiveMobile <= 768 ? (
-        <div className="flex flex-col xl:w-80 lg:w-[17.8rem] p-3 xl:ml-0 xl:mr-0 lg:ml-0 lg:mr-0 md:ml-32 md:mr-[8.3rem] max-sm:mx-2 bg-[#213743]">
+        <div className="flex flex-col xl:w-80 lg:w-[17.8rem] p-3  max-sm:mx-2 bg-[#213743]">
           {isManual ? (
             <div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
                 <label>Bet Amount</label>
-                <label>₹{mineValue?.betamount ? mineValue?.betamount : '0.00'}</label>
+                <label>
+                  ₹{mineValue?.betamount ? mineValue?.betamount : "0.00"}
+                </label>
               </div>
-              <div className={`flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]`}>
+              <div
+                className={`flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]`}
+              >
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
@@ -688,22 +738,25 @@ function MinesGameSidebar() {
                       mineValue?.betamount
                         ? mineValue?.betamount
                         : restored?.mineLocations?.length > 0
-                          ? restored?.betAmount
-                          : mineValue?.betamount || ""
+                        ? restored?.betAmount
+                        : mineValue?.betamount || ""
                     }
                     onChange={(e) => {
-                      handleOnChange(e)
+                      handleOnChange(e);
                       if (restored?.mineLocations?.length > 0) {
-                        dispatch(setRestored({ betAmount: '' }))
+                        dispatch(setRestored({ betAmount: "" }));
                       }
                     }}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2  md:w-[20rem] w-64 rounded-s-md text-white bg-[#0f212e] ${showFields && "cursor-not-allowed"}`}
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2  md:w-[17rem] w-64 rounded-s-md text-white bg-[#0f212e] ${
+                      showFields && "cursor-not-allowed"
+                    }`}
                     disabled={showFields}
                   />
                 </div>
                 <button
-                  className={`w-16 text-xl hover:bg-[#5c849e68] ${showFields && "cursor-not-allowed"
-                    }`}
+                  className={`w-16 text-xl hover:bg-[#5c849e68] ${
+                    showFields && "cursor-not-allowed"
+                  }`}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -722,8 +775,9 @@ function MinesGameSidebar() {
                   sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] ${showFields && "cursor-not-allowed"
-                    } `}
+                  className={`w-16 text-base hover:bg-[#5c849e68] ${
+                    showFields && "cursor-not-allowed"
+                  } `}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -738,13 +792,16 @@ function MinesGameSidebar() {
                 </button>
               </div>
               <button
-                className={`${gameBet && !gamesOver
-                  ? "bg-[#489649]"
-                  : "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                className={`${
+                  gameBet && !gamesOver
+                    ? "bg-[#489649]"
+                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
                 onClick={() => handleBetClick()}
                 disabled={
-                  (gameBet && !gamesOver && tileSelect?.tileIndex === undefined) &&
+                  gameBet &&
+                  !gamesOver &&
+                  tileSelect?.tileIndex === undefined &&
                   !restored?.totalSelectedTiles > 0
                 }
               >
@@ -758,24 +815,24 @@ function MinesGameSidebar() {
                       <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-2 mb-1">
                         <label>Mines</label>
                       </div>
-                      <div className="bg-[#2f4553] border border-[#0e2433] xl:w-36 lg:w-[7.4rem] md:w-52 w-[11.5rem] p-2 mt-2.5">
+                      <div className="bg-[#2f4553] border border-[#0e2433] xl:w-36 lg:w-[7.4rem] md:w-44 w-[11.5rem] p-2 mt-2.5">
                         {restored?.mineLocations?.length > 0
                           ? restored?.mines
                           : mineValue?.mines
-                            ? mineValue?.mines
-                            : restored?.mines}
+                          ? mineValue?.mines
+                          : restored?.mines}
                       </div>
                     </div>
                     <div>
                       <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-2 mb-1">
                         <label>Gems</label>
                       </div>
-                      <div className="bg-[#2f4553] border border-[#0e2433] w-[11.5rem] max-[400px]:w-[10.3rem] md:w-52 lg:w-[7.4rem] xl:w-36 p-2 mt-2.5">
+                      <div className="bg-[#2f4553] border border-[#0e2433] w-[11.5rem] max-[400px]:w-[10.3rem] md:w-44 lg:w-[7.4rem] xl:w-36 p-2 mt-2.5">
                         {restored?.mineLocations?.length > 0
                           ? 25 - restored?.mines
                           : mineValue?.mines
-                            ? gems
-                            : 25 - restored?.mines}
+                          ? gems
+                          : 25 - restored?.mines}
                       </div>
                     </div>
                   </div>
@@ -785,33 +842,40 @@ function MinesGameSidebar() {
                       {tileSelect?.multiplier
                         ? tileSelect?.multiplier
                         : restored?.mineLocations?.length > 0
-                          ? restoredMultiplier
-                          : "1.00"}
+                        ? restoredMultiplier
+                        : "1.00"}
                       )
                     </label>
-                    <label>₹{((mineValue?.betamount
-                      ? mineValue?.betamount
-                      : restored?.mineLocations?.length > 0
-                        ? restored?.betAmount
-                        : 0) *
-                      (tileSelect?.multiplier
-                        ? tileSelect?.multiplier
-                        : restored?.mineLocations?.length > 0
-                          ? restoredMultiplier
-                          : 0.0)).toFixed(2)}</label>
-                  </div>
-                  <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
-                    <p>
-                      {((mineValue?.betamount
-                        ? mineValue?.betamount
-                        : restored?.mineLocations?.length > 0
+                    <label>
+                      ₹
+                      {(
+                        (mineValue?.betamount
+                          ? mineValue?.betamount
+                          : restored?.mineLocations?.length > 0
                           ? restored?.betAmount
                           : 0) *
                         (tileSelect?.multiplier
                           ? tileSelect?.multiplier
                           : restored?.mineLocations?.length > 0
-                            ? restoredMultiplier
-                            : 0.0)).toFixed(2)}
+                          ? restoredMultiplier
+                          : 0.0)
+                      ).toFixed(2)}
+                    </label>
+                  </div>
+                  <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
+                    <p>
+                      {(
+                        (mineValue?.betamount
+                          ? mineValue?.betamount
+                          : restored?.mineLocations?.length > 0
+                          ? restored?.betAmount
+                          : 0) *
+                        (tileSelect?.multiplier
+                          ? tileSelect?.multiplier
+                          : restored?.mineLocations?.length > 0
+                          ? restoredMultiplier
+                          : 0.0)
+                      ).toFixed(2)}
                     </p>
                     {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
                   </div>
@@ -875,12 +939,18 @@ function MinesGameSidebar() {
                 </button>
               ) : (
                 <button
-                  className={`${preSelectTile?.length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer" : "bg-[#489649] cursor-default"} text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
+                  className={`${
+                    preSelectTile?.length > 0
+                      ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer"
+                      : "bg-[#489649] cursor-default"
+                  } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>
-                    mineValue?.numberofbet === undefined || mineValue?.numberofbet === ""
+                    mineValue?.numberofbet === undefined ||
+                    mineValue?.numberofbet === ""
                       ? toast.error("Please enter a number of bets")
-                      : handleOnAutoBet()}
-                // disabled={preSelectTile?.length > 0}
+                      : handleOnAutoBet()
+                  }
+                  // disabled={preSelectTile?.length > 0}
                 >
                   Start Autobet
                   {/* {console.log("preSelectTile", preSelectTile)} */}
@@ -888,7 +958,9 @@ function MinesGameSidebar() {
               )}
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-1">
                 <label>Bet Amount</label>
-                <label>₹{mineValue?.betamount ? mineValue?.betamount : '0.00'}</label>
+                <label>
+                  ₹{mineValue?.betamount ? mineValue?.betamount : "0.00"}
+                </label>
               </div>
               <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
                 <div className="relative flex">
@@ -896,7 +968,7 @@ function MinesGameSidebar() {
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                   <input
-                    className="xl:w-48 xl:ml-0 lg:w-40 lg:ml-0 pr-1.5 pl-2 py-2 md:w-[20rem] w-64 rounded-s-md text-white bg-[#0f212e]"
+                    className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2 md:w-[17rem] w-64 rounded-s-md text-white bg-[#0f212e]"
                     type="number"
                     placeholder="0.00"
                     step="0.01"
@@ -905,20 +977,21 @@ function MinesGameSidebar() {
                       mineValue?.betamount
                         ? mineValue?.betamount
                         : restored?.mineLocations?.length > 0
-                          ? restored?.betAmount
-                          : mineValue?.betamount || ""
+                        ? restored?.betAmount
+                        : mineValue?.betamount || ""
                     }
                     onChange={(e) => {
-                      handleOnChange(e)
+                      handleOnChange(e);
                       if (restored?.mineLocations?.length > 0) {
-                        dispatch(setRestored({ betAmount: '' }))
+                        dispatch(setRestored({ betAmount: "" }));
                       }
                     }}
                   />
                 </div>
                 <button
-                  className={`w-16 text-xl hover:bg-[#5c849e68] ${minesBetStatus && "cursor-not-allowed"
-                    }`}
+                  className={`w-16 text-xl hover:bg-[#5c849e68] ${
+                    minesBetStatus && "cursor-not-allowed"
+                  }`}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -937,8 +1010,9 @@ function MinesGameSidebar() {
                   sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] ${minesBetStatus && "cursor-not-allowed"
-                    } `}
+                  className={`w-16 text-base hover:bg-[#5c849e68] ${
+                    minesBetStatus && "cursor-not-allowed"
+                  } `}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -1020,22 +1094,24 @@ function MinesGameSidebar() {
               </div>
               <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded-md border-[#4d718768] bg-[#4d718768]">
                 <button
-                  className={`${onProfit.win
-                    ? "bg-[#0f212e]"
-                    : "bg-[#4d718768] hover:bg-[#85afca68]"
-                    } px-3.5 py-1.5  rounded-md`}
+                  className={`${
+                    onProfit.win
+                      ? "bg-[#0f212e]"
+                      : "bg-[#4d718768] hover:bg-[#85afca68]"
+                  } px-3.5 py-1.5  rounded-md`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
-                    dispatch(setMineValue({ onwin: '' }))
+                    dispatch(setMineValue({ onwin: "" }));
                   }}
                 >
                   Reset
                 </button>
                 <button
-                  className={`${onProfit.win
-                    ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                    : "bg-[#0f212e] rounded-md"
-                    } px-[0.3rem] py-1.5`}
+                  className={`${
+                    onProfit.win
+                      ? "bg-[#4d718768] hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded-md"
+                  } px-[0.3rem] py-1.5`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -1043,16 +1119,17 @@ function MinesGameSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${onProfit.win
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.win
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2 ">
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.3rem] pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[14rem]  rounded-md text-white bg-[#0f212e]"
+                    className="w-[10.2rem] pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[12.05rem]  rounded-md text-white bg-[#0f212e]"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -1068,13 +1145,14 @@ function MinesGameSidebar() {
               <div className="flex items-center space-x-0.5 border-2 mt-1 rounded-md border-[#4d718768] bg-[#4d718768]">
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "bg-[#0f212e]"
-                      : "bg-[#4d718768] hover:bg-[#85afca68]"
-                      } px-3.5 py-1.5 rounded-md`}
+                    className={`${
+                      onProfit.lose
+                        ? "bg-[#0f212e]"
+                        : "bg-[#4d718768] hover:bg-[#85afca68]"
+                    } px-3.5 py-1.5 rounded-md`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
-                      dispatch(setMineValue({ onlose: '' }))
+                      dispatch(setMineValue({ onlose: "" }));
                     }}
                   >
                     Reset
@@ -1082,10 +1160,11 @@ function MinesGameSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-md"
-                      } px-[0.3rem] py-1.5`}
+                    className={`${
+                      onProfit.lose
+                        ? "bg-[#4d718768] hover:bg-[#85afca68]"
+                        : "bg-[#0f212e] rounded-md"
+                    } px-[0.3rem] py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -1094,16 +1173,17 @@ function MinesGameSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${onProfit.lose
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.lose
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.3rem] pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[14rem]  rounded-md text-white bg-[#0f212e]"
+                    className="w-[10.2rem] pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[12.05rem] rounded-md text-white bg-[#0f212e]"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -1115,7 +1195,9 @@ function MinesGameSidebar() {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
                 <label>Stop on Profit</label>
-                <label>₹{mineValue?.stoponprofit ? mineValue?.stoponprofit : '0.00'}</label>
+                <label>
+                  ₹{mineValue?.stoponprofit ? mineValue?.stoponprofit : "0.00"}
+                </label>
               </div>
               <div className="relative flex">
                 {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -1133,7 +1215,9 @@ function MinesGameSidebar() {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
                 <label>Stop on Loss</label>
-                <label>₹{mineValue?.stoponloss ? mineValue?.stoponloss : '0.00'}</label>
+                <label>
+                  ₹{mineValue?.stoponloss ? mineValue?.stoponloss : "0.00"}
+                </label>
               </div>
               <div className="relative flex">
                 {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -1149,32 +1233,30 @@ function MinesGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-
             </div>
           )}
-          <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
-            <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0 mt-4">
-              <div className="flex space-x-2">
+          <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0 mt-3">
+            <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
+              <div className="flex space-x-2 w-full">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[12rem] max-[425px]:w-[11.33rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.3rem] max-[430px]:w-[11.5rem] max-[412px]:w-[11rem] max-[360px]:w-[9.3rem] max-[400px]:w-[10.45rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
-                  onClick={() => dispatch(setIsManual(true))}
-                >
-                  Manual
+                  className={`py-2 rounded-full transition-all ${
+                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                    xl:w-[8.7rem] lg:w-[4rem] md:w-[10.7rem] w-full`}
+                    onClick={() => dispatch(setIsManual(true))}>
+                    Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] max-[425px]:w-[11.4rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.2rem] max-[430px]:w-[11.5rem] max-[412px]:w-[10.92rem] max-[360px]:w-[9.4rem] max-[400px]:w-[10.49rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
-                  onClick={() => dispatch(setIsManual(false))}
-                >
-                  Auto
+                  className={`py-2 rounded-full transition-all ${
+                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]" }
+                    xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.7rem] w-full`}
+                    onClick={() => dispatch(setIsManual(false))}>
+                    Auto
                 </button>
               </div>
             </div>
           </div>
         </div>
       ) : null}
-
     </div>
   );
 }

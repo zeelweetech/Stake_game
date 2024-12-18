@@ -68,14 +68,14 @@ function LimboGame() {
               <LimboGameSidebar />
             </div>
           )}
-          <div className="md:flex md:justify-center lg:block xl:block">
+           <div className="md:flex md:justify-center lg:block xl:block">
             <div className="max-sm:mx-3 xl:-ml-[24rem] lg:-ml-[16.9rem]">
               <hr className="border-[#213743]" />
               <GameFooter />
             </div>
           </div>
           <div className="flex justify-center pt-5">
-            <div className="xl:w-[72rem] lg:w-[55rem] md:w-[42rem]  mx-0 md:px-0 px-3 w-full">
+            <div className="xl:w-[72rem] lg:w-[55rem] md:w-[42rem] mx-0 md:px-0 px-3 w-full">
               <GameContent />
               <GameTable />
             </div>

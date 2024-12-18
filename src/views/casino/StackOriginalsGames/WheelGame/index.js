@@ -63,8 +63,8 @@ function WheelGame() {
               <WheelGameSidebar />
             </div>
           )}
-          <div className="md:flex md:justify-center lg:block xl:block">
-            <div className="max-sm:mx-3 xl:-ml-[24rem] lg:-ml-[15.8rem]">
+         <div className="md:flex md:justify-center lg:block xl:block">
+            <div className="max-sm:mx-3 xl:-ml-[24rem] lg:-ml-[16.9rem]">
               <hr className="border-[#213743]" />
               <GameFooter />
             </div>

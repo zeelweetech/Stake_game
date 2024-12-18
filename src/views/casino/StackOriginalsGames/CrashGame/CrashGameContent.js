@@ -321,7 +321,7 @@ function CrashGameContent() {
   // };
 
   return (
-    <div className="xl:max-w-[52rem] md:w-full md:h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg ">
+    <div className="xl:w-[52rem]  lg:w-[41rem] max-sm:mx-3.5 xl:h-[41.5rem] lg:h-[41.8rem] h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
@@ -342,9 +342,9 @@ function CrashGameContent() {
       </div>
       <div className="flex flex-col items-center justify-between flex-grow w-full xl:max-w-[55rem] lg:max-w-[41rem] md:max-w-[25rem] item-center mt-10 relative">
         <div
-          className="xl:pl-4 lg:pl-2 xl:pr-8 lg:pr-6 xl:h-[35rem] lg:h-[34rem] md:h-[20rem] sm:max-w-full max-w-[95vw] sm:h-[20rem]"
+          className=" xl:h-[35rem] lg:h-[34rem] md:h-[20rem] sm:max-w-full max-w-[95vw] sm:h-[20rem]"
         >
-          <canvas ref={chartRef} className=" h-[20rem] xl:w-full lg:w-full md:w-full w-[100rem]"></canvas>
+          <canvas ref={chartRef} className="h-[22rem] xl:w-[50rem] lg:w-full md:w-full max-sm:w-[345px]"></canvas>
         </div>
         <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center w-full px-4 text-white font-bold text-center">
           <div className="flex-grow flex items-center justify-center">
@@ -367,16 +367,16 @@ function CrashGameContent() {
               )}
             </div>
           </div>
-          <div className="flex flex-col items-end space-y-1.5 xl:ml-[33rem] lg:ml-[31rem] md:ml-[15rem] sm:ml-32 ml-52">
+          <div className="flex flex-col space-y-1.5 xl:ml-[33rem] lg:ml-[31rem] md:ml-[15rem] sm:ml-28 ml-48 ">
             {visibleData?.length > 0
               ? visibleData?.map((data, index) => (
                 <button
                   key={index}
-                  className="py-1 px-1 border-1 border-[#4d718768] bg-[#213743] rounded-full"
+                  className="py-1 px-1 border-2 border-[#4d718768] bg-[#213743] rounded-full opacity-75"
                 >
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center space-x-1 ">
                     <BsIncognito />
-                    <p className="text-[#b1bad3] text-xs">Hidden</p> ₹
+                    <p className="text-white text-xs">Hidden</p> ₹
                     {/* <RiMoneyRupeeCircleFill color="yellow" size={10} /> */}
                     <p className="text-[#00F701]">{data?.amount}</p>
                   </div>
