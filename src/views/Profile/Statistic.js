@@ -1,35 +1,25 @@
 import {
   Dialog,
   DialogContent,
-  FormControl,
   DialogTitle,
   IconButton,
-  Menu,
-  MenuItem,
-  TextField,
-  Typography,
 } from "@mui/material";
 import LegendToggleIcon from "@mui/icons-material/LegendToggle";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { decodedToken } from "../../resources/utility";
 import { FaRegStar } from "react-icons/fa";
 import { getMedalsProgress } from "../../services/LoginServices";
-import { getStatisticsData } from "../../services/InProfileServices";
 import GetStatistic from "./PageView/StatisticData";
 import Trophies from "./PageView/Trophies";
 import Raffles from "./PageView/Raffles";
-// import { getMedalsProgress, getStatisticsData } from "../../services/InProfileServices";
 import Races from "./PageView/Races";
-const Statistic = () => {
-  const [open, setOpen] = useState(true);
+
+const Statistic = ({closeStatistic}) => {
   const [gameMenu, setGameMenu] = useState("Statistic");
-  const { userId: paramUserId } = useParams();
   const [progressData, setProgressData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [statistic, setStatistic] = useState(null);
-
   const decoded = decodedToken();
   const userId = decoded?.userId;
 
@@ -63,8 +53,8 @@ const Statistic = () => {
 
   return (
     <Dialog
-      open={open}
-      onClose={() => setOpen(false)}
+      open
+      onClose={closeStatistic}
       maxWidth="sm"
       fullWidth
       sx={{
@@ -72,7 +62,6 @@ const Statistic = () => {
         margin: "auto",
         color: "white",
         borderRadius: "10px",
-        // backgroundColor: '#2f4553'
       }}
     >
       <div className="bg-[#1a2c38]">
@@ -82,7 +71,7 @@ const Statistic = () => {
               <LegendToggleIcon />
               <span>Statistic</span>
             </h1>
-            <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
+            <IconButton onClick={closeStatistic} sx={{ color: "white" }}>
               <CloseIcon />
             </IconButton>
           </div>

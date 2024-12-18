@@ -6,6 +6,7 @@ const initialState = {
   isForgotPasswordModelOpen: false,
   isVerifyTermModelOpen: false,
   wallet: 0,
+  anchorEl: null,
 };
 
 const authSlice = createSlice({
@@ -39,6 +40,9 @@ const authSlice = createSlice({
     setWallet: (state, action) => {
       state.wallet = action.payload;
     },
+    setAnchorEl: (state, action) => {
+      state.anchorEl = action.payload;
+    },
   },
 });
 
@@ -52,6 +56,7 @@ export const {
   openVerifyTermModel,
   closeVerifyTermModel,
   setWallet,
+  setAnchorEl,
 } = authSlice.actions;
 
 export default authSlice.reducer;

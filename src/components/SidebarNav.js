@@ -2,13 +2,26 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import Wallet from "../views/Profile/Wallet";
+import Vault from "../views/Profile/Vault";
+import Vip from "../views/Profile/Vip";
+import Statistic from "../views/Profile/Statistic";
+import LogoutDialog from "../views/Profile/Logout";
+import { useDispatch } from "react-redux";
+import { setAnchorEl } from "../features/auth/authSlice";
 
-export const SidebarNav = ({ items, openMenubar, toggleSidebar }) => {
-  const [dropdownVisible, setDropdownVisible] = useState(null);
-
+export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible, setDropdownVisible }) => {
+  const [profilePopupOpen, setProfilePopupOpen] = useState({
+    isWalletOpen: false,
+    isVaultOpen: false,
+    isVipOpen: false,
+    isStatistic: false,
+    isNotification: false,
+    isLogoutDialog: false
+  });
+  const dispatch = useDispatch();
 
   const toggleDropdown = (index) => {
-    // Ensure sidebar opens when dropdown is clicked
     if (!openMenubar) toggleSidebar();
     setDropdownVisible(dropdownVisible === index ? null : index);
   };
@@ -27,6 +40,7 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar }) => {
   ];
   const thirdGroup = ["Profile"];
 
+  // firstGroup and secondGroup 
   const navLink = (name, icon, badge, indent = false, index) => (
     <li
       key={index}
@@ -50,9 +64,9 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar }) => {
     </li>
   );
 
+  // thirdGroup profile view
   const navItem = (item, index, indent = false) => {
     const { name, badge, icon, dropdown, ...rest } = item;
-
     if (dropdown && name === "Profile") {
       return (
         <div
@@ -69,28 +83,26 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar }) => {
                 {icon}
               </span>
             )}
-    
+
             {/* Profile Text (only shown when sidebar is open) */}
             {openMenubar && (
               <span className="ml-2 ">{name}</span>
             )}
-    
+
             {/* Dropdown Icon */}
             {dropdownVisible === index ? (
               <ChevronDownIcon
-                className={`ml-auto ${
-                  openMenubar ? "h-5 w-5" : "h-8 w-8"
-                } `}
+                className={`ml-auto ${openMenubar ? "h-5 w-5" : "h-8 w-8"
+                  } `}
               />
             ) : (
               <ChevronRightIcon
-                className={`ml-auto ${
-                  openMenubar ? "h-5 w-5" : "h-8 w-8"
-                } `}
+                className={`ml-auto ${openMenubar ? "h-5 w-5" : "h-8 w-8"
+                  } `}
               />
             )}
           </div>
-    
+
           {/* Dropdown Menu */}
           {dropdownVisible === index && (
             <div className="ml-2 bg-[#213743] text-white rounded-md mt-1">
@@ -99,14 +111,45 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar }) => {
                   key={idx}
                   className="block w-full px-4 py-2 hover:bg-[#2F4553] transition-colors rounded-md cursor-pointer"
                 >
-                  <Link to={dropdownItem.to} className="flex items-center">
-                    {dropdownItem.icon && (
-                      <span className="mr-2 inline-block">
-                        {dropdownItem.icon}
-                      </span>
-                    )}
-                    <span>{dropdownItem.name}</span>
-                  </Link>
+                  {dropdownItem.name === "Setting" ? (
+                    <Link to={dropdownItem.to} className="flex items-center">
+                      {dropdownItem.icon && (
+                        <span className="mr-2 inline-block">
+                          {dropdownItem.icon}
+                        </span>
+                      )}
+                      <span>{dropdownItem.name}</span>
+                    </Link>
+                  ) : dropdownItem.name === "Notification" ? (
+                    <button
+                      data-menu-type="notifications"
+                      onClick={(event) => dispatch(setAnchorEl(event.currentTarget))}
+                      className="flex items-center"
+                    >
+                      {dropdownItem.icon && (
+                        <span className="mr-2 inline-block">{dropdownItem.icon}</span>
+                      )}
+                      <span>{dropdownItem.name}</span>
+                    </button>
+                  ) : (
+                    <button onClick={() => {
+                      setProfilePopupOpen((prev) => ({
+                        ...prev,
+                        isWalletOpen: dropdownItem.name === "Wallet",
+                        isVaultOpen: dropdownItem.name === "Vault",
+                        isVipOpen: dropdownItem.name === "VIP",
+                        isStatistic: dropdownItem.name === "Statistics",
+                        isLogoutDialog: dropdownItem.name === "Logout",
+                      }))
+                    }} className="flex items-center">
+                      {dropdownItem.icon && (
+                        <span className="mr-2 inline-block">
+                          {dropdownItem.icon}
+                        </span>
+                      )}
+                      <span>{dropdownItem.name}</span>
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
@@ -143,6 +186,11 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar }) => {
       {/* {renderGroup(Games, "Games")} */}
       {renderGroup(secondGroup, "Second Group")}
       {renderGroup(thirdGroup, "Third Group")}
+      {profilePopupOpen.isWalletOpen && <Wallet closeWallet={() => setProfilePopupOpen({ ...profilePopupOpen, isWalletOpen: false })} />}
+      {profilePopupOpen.isVaultOpen && <Vault closeVault={() => setProfilePopupOpen({ ...profilePopupOpen, isVaultOpen: false })} />}
+      {profilePopupOpen.isVipOpen && <Vip closeVip={() => setProfilePopupOpen({ ...profilePopupOpen, isVipOpen: false })} />}
+      {profilePopupOpen.isStatistic && <Statistic closeStatistic={() => setProfilePopupOpen({ ...profilePopupOpen, isStatistic: false })} />}
+      {profilePopupOpen.isLogoutDialog && <LogoutDialog closeLogoutDialog={() => setProfilePopupOpen({ ...profilePopupOpen, isLogoutDialog: false })} />}
     </div>
   );
 };

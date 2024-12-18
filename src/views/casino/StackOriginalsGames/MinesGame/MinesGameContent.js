@@ -317,6 +317,15 @@ function MinesGameContent() {
 
   return (
     <div className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? 'md:ml-32 md:mr-[8.3rem] max-sm:mx-2' : 'xl:w-[52rem] lg:w-[37.2rem]'}`}>
+      {cashoutResult && !gameBet && (
+        <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20 abcd`}>
+          <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
+          <div className="flex items-center justify-center space-x-1">
+            <p>{cashoutResult?.winAmount ? cashoutResult.winAmount.toFixed(2) : autoBetResult?.winAmount ? autoBetResult?.winAmount.toFixed(2) : "0.00"}₹</p>
+            {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
+          </div>
+        </div>
+      )}
       {showautoBetResult && (
         <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20 abcd`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>

@@ -5,7 +5,6 @@ import {
     DialogTitle,
     FormControl,
     IconButton,
-    InputAdornment,
     Menu,
     MenuItem,
     TextField,
@@ -17,10 +16,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { CurrencyBangladeshiIcon } from "@heroicons/react/20/solid";
 
-const Vault = () => {
-    const [open, setOpen] = useState(true);
+const Vault = ({ closeVault }) => {
     const [dropdownOpen, setDropdownOpen] = useState(null);
     const [searchValue, setSearchValue] = useState("");
     const [selectedCurrency, setSelectedCurrency] = useState("0.00000000");
@@ -30,11 +27,9 @@ const Vault = () => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
-
     const MAX_AMOUNT = 8;
 
     const handleDropdownOpen = (event) => setDropdownOpen(event.currentTarget);
-    // const handleDropdownClose = () => setDropdownOpen(null);
     const handlePasswordChange = (value) => setPassword(value);
     const handleAmountChange = (value) => {
         const parsedValue = parseFloat(value);
@@ -46,13 +41,6 @@ const Vault = () => {
         setAmount(value);
     };
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     // Validation logic here
-    //     if (password) {
-    //         const body = { password }; // Send password in request
-    //     }
-    // };
     const handleDropdownClose = (currency) => {
         if (currency) {
             setSelectedCurrency(currency);
@@ -108,8 +96,8 @@ const Vault = () => {
 
     return (
         <Dialog
-            open={open}
-            onClose={() => setOpen(false)}
+            open
+            onClose={closeVault}
             maxWidth="sm"
             fullWidth
             // sx={{ color: "white", borderRadius: 0 }}
@@ -126,7 +114,7 @@ const Vault = () => {
                         </span>
                         Vault
                     </h1>
-                    <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
+                    <IconButton onClick={closeVault} sx={{ color: "white" }}>
                         <CloseIcon />
                     </IconButton>
                 </div>

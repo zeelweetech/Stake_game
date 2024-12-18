@@ -800,7 +800,7 @@ const VipClub = () => {
                 live chat and email to help you.
               </p>
             </div>
-            <div className="mt-4 md:mt-0 flex flex-col md:flex-row items-center gap-4">
+            <div className="mt-4 md:mt-0 flex flex-col md:flex-row items-end space-y-2">
               <div className="relative">
                 <p className="text-[#babad3] text-sm">Preferred language</p>
                 <label for="language" className="sr-only "></label>

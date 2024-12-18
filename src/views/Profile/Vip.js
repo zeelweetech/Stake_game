@@ -4,21 +4,16 @@ import {
     DialogContent,
     DialogTitle,
     IconButton,
-    CircularProgress,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { MdEmojiEvents } from "react-icons/md";
-
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Progress from "./PageView/Progress";
 import Benifit from "./PageView/Benifit";
 
-const Vip = () => {
-    const [open, setOpen] = useState(true);
-    const [gameMenu, setGameMenu] = useState("Progress"); // Initially set to "Progress"
-    const [progressData, setProgressData] = useState([]);
-    const [loading, setLoading] = useState(true);
+const Vip = ({ closeVip }) => {
+    const [gameMenu, setGameMenu] = useState("Progress");
     const navigate = useNavigate();
 
     const handleNavigate = () => {
@@ -32,11 +27,10 @@ const Vip = () => {
 
     return (
         <Dialog
-            open={open}
-            onClose={() => setOpen(false)}
+            open
+            onClose={closeVip}
             maxWidth="sm"
             fullWidth
-            // sx={{ color: "white", borderRadius: 8 }}
             sx={{
                 width: { xs: "95%", sm: "90%", md: "60%" }, margin: "auto", color: "white",
                 borderRadius: "10px",
@@ -50,16 +44,16 @@ const Vip = () => {
                         </span>
                         VIP
                     </h1>
-                    <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
+                    <IconButton onClick={closeVip} sx={{ color: "white" }}>
                         <CloseIcon />
                     </IconButton>
                 </div>
             </DialogTitle>
-           <DialogContent sx={{ backgroundColor: "#1a2c38", color: "white" }}>
+            <DialogContent sx={{ backgroundColor: "#1a2c38", color: "white" }}>
                 <div className="flex flex-col items-center justify-start h-full bg-[#1a2c38]">
                     <div className="flex justify-center w-full mb-4">
                         <div className="bg-[#0f212e] flex rounded-full p-[4px] space-x-1 font-bold">
-                             {menuItems.map((item) => (
+                            {menuItems.map((item) => (
                                 <button
                                     key={item.label}
                                     className={`py-2 lg:px-5 rounded-full flex justify-center items-center text-sm ${gameMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}`}
@@ -70,7 +64,6 @@ const Vip = () => {
                             ))}
                         </div>
                     </div>
-
 
                     {gameMenu === "Progress" ? (
                         <Progress />
@@ -92,8 +85,6 @@ const Vip = () => {
                         Learn more about being a Listor VIP
                     </Button>
                 </div>
-
-
             </DialogContent>
         </Dialog>
     );

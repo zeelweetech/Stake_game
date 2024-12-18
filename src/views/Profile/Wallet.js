@@ -2,28 +2,21 @@ import React, { useState } from "react";
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const Wallet = () => {
-  const [open, setOpen] = useState(true);
-  const handleClose = () => setOpen(false);
+const Wallet = ({closeWallet}) => {
 
   return (
     <Dialog
-      open={open}
-      onClose={handleClose}
+      open
+      onClose={closeWallet}
       maxWidth="sm"
       fullWidth
-      // sx={{
-      //   color: "white",
-      //   borderRadius: 4, 
-
-      // }}
       sx={{ width: { xs: "95%", sm: "90%", md: "60%" }, margin: "auto", color: "white",
       borderRadius: "10px",  }}
     >
       <DialogTitle sx={{ backgroundColor: "#1a2c38", color: "#b1bad3" }}>
         <div className="flex justify-between items-center w-full">
           <h2 className="text-lg">Listor</h2>
-          <IconButton onClick={handleClose} sx={{ color: "white" }}>
+          <IconButton onClick={closeWallet} sx={{ color: "white" }}>
             <CloseIcon />
           </IconButton>
         </div>
@@ -39,7 +32,7 @@ const Wallet = () => {
       </DialogContent>
       <DialogActions sx={{ backgroundColor: "#1a2c38" }}>
         <Button
-          onClick={handleClose}
+          onClick={closeWallet}
           sx={{
             color: "#ffffff",
             backgroundColor: "#1475E1", // Sky blue color for the button

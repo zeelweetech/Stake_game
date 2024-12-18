@@ -4,13 +4,10 @@ import Ethereum from "../assets/img/ethereum.svg.svg";
 import Dogecoin from "../assets/img/dogecoin.k8OeA1SN.svg";
 import betblocker from "../assets/img/betblocker.-t2TDIRS.svg";
 import Litecoin from "../assets/img/litecoin.RPQ1704t.svg";
-import F1 from "../assets/img/f1-logo.C8neaUBw.svg";
-import Everton from "../assets/img/everton-logo.DjZkLatD.svg";
 import Tron from "../assets/img/tron.BYiII1T_.svg";
 import BitcoinCash from "../assets/img/bitcoin-cash.DUaEsStO.svg";
 import Ufc from "../assets/img/ufc-partner.C8Oj708g.svg";
 import l2 from "../assets/img/l2.png";
-// l-2.png
 import Hub88 from "../assets/img/hub88.CvKNQs2Q.svg";
 import Tether from "../assets/img/tether.Cv3Qd73c.svg";
 import EvertonLogo from "../assets/img/everton-logo.DjZkLatD (1).svg";
@@ -23,28 +20,19 @@ import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { IoShirt } from "react-icons/io5";
 import { FaCrown } from "react-icons/fa6";
-
 import { FaBloggerB } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 function Footer() {
-  const [isEnglishOpen, setIsEnglishOpen] = useState(false);
-  const [isDecimalOpen, setIsDecimalOpen] = useState(false);
   return (
     <footer className="bg-[#071d2a] text-gray-400 py-12 px-8 z-auto mt-10">
       {/* Main Navigation Section */}
       <div className="max-w-7xl mx-auto mb-12">
         <div className="max-w-7xl mx-auto mb-12">
           <div className="flex flex-col items-start gap-2">
-            {/* Logo */}
-            <span
-              className="text-white text-5xl font-extrabold italic font-sans cursor-pointer"
-
-            >
+            <span className="text-white text-5xl font-extrabold italic font-sans cursor-pointer">
               Listor
-
             </span>
-            {/* Copyright */}
             <p className="text-sm text-gray-400">
               © 2024 Listor.com | All Rights Reserved.
             </p>
@@ -52,7 +40,6 @@ function Footer() {
 
           {/* Social Icons */}
           <div className="flex items-center justify-end gap-4 mt-3">
-            {/* Blog */}
             <a
               href="https://blog.Listor.com"
               target="_blank"
@@ -61,8 +48,6 @@ function Footer() {
             >
               <FaBloggerB />
             </a>
-
-            {/* Forum/Community */}
             <a
               href="https://forum.Listor.com"
               target="_blank"
@@ -71,8 +56,6 @@ function Footer() {
             >
               <FaCommentAlt />
             </a>
-
-            {/* Facebook */}
             <a
               href="https://www.facebook.com/ListorCasino"
               target="_blank"
@@ -81,8 +64,6 @@ function Footer() {
             >
               <FaFacebookF />
             </a>
-
-            {/* Twitter */}
             <a
               href="https://twitter.com/Listor"
               target="_blank"
@@ -91,8 +72,6 @@ function Footer() {
             >
               <FaXTwitter />
             </a>
-
-            {/* Instagram */}
             <a
               href="https://www.instagram.com/Listor"
               target="_blank"
@@ -101,8 +80,6 @@ function Footer() {
             >
               <FaInstagram />
             </a>
-
-            {/* YouTube */}
             <a
               href="https://www.youtube.com/c/ListorCasino"
               target="_blank"
@@ -111,8 +88,6 @@ function Footer() {
             >
               <FaYoutube />
             </a>
-
-            {/* Merchandise Store */}
             <a
               href="https://shop.Listor.com"
               target="_blank"
@@ -121,8 +96,6 @@ function Footer() {
             >
               <IoShirt />
             </a>
-
-            {/* VIP Program */}
             <a
               href="https://Listor.com/vip"
               target="_blank"
@@ -183,9 +156,10 @@ function Footer() {
                 >
                   Privacy Policy
                 </Link></li>
-                <li>    <Link
+                <li><Link
                   to="/policies/AntiMoneyLaunderings"
                   className=" hover:text-white transition-colors"
+                  onClick={() => window.scrollTo(0, 0)}
                 >
                   AML Policy
                 </Link></li>
@@ -222,9 +196,6 @@ function Footer() {
               <li><a href="/ComeSoon" className="hover:text-white">House Edge Guide</a></li>
             </ul>
           </div>
-
-
-
         </div>
 
         {/* Cryptocurrency Icons Section */}
@@ -236,11 +207,9 @@ function Footer() {
             <img src={Tron} alt="Partner" className="h-11" />
             <img src={Dogecoin} alt="Partner" className="h-11" />
             <img src={BitcoinCash} alt="Partner" className="h-11" />
-
             <img src={Tether} alt="Partner" className="h-11" />
             <img src={Hub88} alt="Partner" className="h-11" />
             <img src={SafeGamble} alt="Partner" className="h-11" />
-
             <img src={betblocker} alt="Partner" className="h-11" />
             <img src={Age} alt="Partner" className="h-11" />
           </div>
@@ -249,20 +218,14 @@ function Footer() {
         {/* Partners Section */}
         <div className="border-t border-gray-700 py-8">
           <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-12 items-center">
-            {/* Add partner logos here */}
             <img src={l2} alt="Partner" className="h-12" />
             <img src={EvertonLogo} alt="Partner" className="h-12" />
             <img src={Ufc} alt="Partner" className="h-12" />
-
-
-
-            {/* Add more partner logos */}
           </div>
         </div>
 
         {/* Legal Section */}
         <div className="border-t border-gray-700 pt-8 text-center text-sm">
-
           <div className="text-center py-2">
             <p className="text-sm">
               Listor is committed to responsible gambling, for more information visit{" "}
@@ -306,16 +269,8 @@ function Footer() {
               press@Listor.com
             </a>
           </div>
-
-          {/* License Logos */}
-
         </div>
-
       </div>
-
-
-
-
     </footer>
   );
 }

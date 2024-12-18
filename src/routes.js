@@ -16,10 +16,7 @@ const HelpCenter = React.lazy(() =>
 const Policies = React.lazy(() => import("./views/footerpage/Policies"))
 const VipProgramLevels = React.lazy(() => import("./views/footerpage/VipProgramLevels"))
 const OnlineCasinoGuide = React.lazy(() => import("./views/footerpage/onlineCasinoGuide"))
-
-
 const ComeSoon = React.lazy(() => import("./views/component/ComeSoon"))
-
 // const antiMoneyLaundering = React.lazy(() => import("./views/footerpage/antiMoneyLaundering"))
 const Slots = React.lazy(() => import("./views/casino/CasinoHomePage/Slots"));
 const LiveCasion = React.lazy(() => import("./views/casino/CasinoHomePage/LiveCasino"))
@@ -32,16 +29,15 @@ const Lobby = React.lazy(() => import("./views/casino/CasinoHomePage/Lobby"))
 const Setting = React.lazy(() => import("./views/Profile/Setting"));
 const Profile = React.lazy(() => import("./views/Profile/index"))
 const token = localStorage.getItem("token");
-
-const Wallet = React.lazy(() =>import("./views/Profile/Wallet"))
+// const Wallet = React.lazy(() => import("./views/Profile/Wallet"))
 const vipclub = React.lazy(() => import("./views/footerpage/VipClub"))
-
-const Vault = React.lazy(() => import("./views/Profile/Vault"))
-const Vip = React.lazy(()=> import("./views/Profile/Vip"))
-const Statistics = React.lazy (() => import("./views/Profile/Statistic"))
-const Notification = React.lazy(() => import("./views/Profile/Notification"))
+// const Vault = React.lazy(() => import("./views/Profile/Vault"))
+// const Vip = React.lazy(() => import("./views/Profile/Vip"))
+// const Statistics = React.lazy(() => import("./views/Profile/Statistic"))
+// const Notification = React.lazy(() => import("./views/Profile/Notification"))
 const Logout = React.lazy(() => import("./views/Profile/Logout"))
 const ResetPassword = React.lazy(() => import("./views/pages/forgotpassword/NewPassword"))
+
 const routes = [
   {
     path: "/",
@@ -81,19 +77,16 @@ const routes = [
   { path: "/profile", name: "profile", element: Profile },
   { path: "/setting", name: "Setting", element: Setting },
   { path: "/setting/:section", name: "Setting", element: Setting },
-  {
-    path: "/Policies/:section", name: "Policies", element: Policies,
-
-  },
-  {path: "/Wallet", name: "Wallet", element: Wallet},
-  {path: "/vip-club", name: "VipClub", element: vipclub},
-  {path: "/Vault", name: "Vault", element: Vault},
-  {path: "/Vip", name: "Vip", element: Vip},
-  {path: "/Statistics", name: "Statistics", element: Statistics},
-  {path: "/Notification", name: "Notification", element: Notification},
-  {path: "/logout", name: "Logout", element: Logout },
-  {path: "/myBet", name: "MyBets", element: MyBet},
-  {path: "/resetpassword", name: "ResetPassword", element: ResetPassword }
+  { path: "/Policies/:section", name: "Policies", element: Policies },
+  // { path: "/Wallet", name: "Wallet", element: Wallet },
+  { path: "/vip-club", name: "VipClub", element: vipclub },
+  // { path: "/Vault", name: "Vault", element: Vault },
+  // { path: "/Vip", name: "Vip", element: Vip },
+  // { path: "/Statistics", name: "Statistics", element: Statistics },
+  // { path: "/Notification", name: "Notification", element: Notification },
+  { path: "/logout", name: "Logout", element: Logout },
+  { path: "/myBet", name: "MyBets", element: MyBet },
+  { path: "/resetpassword", name: "ResetPassword", element: ResetPassword }
 ];
 
 export default routes;

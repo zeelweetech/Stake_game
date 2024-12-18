@@ -1,82 +1,67 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-    Dialog,
-    DialogContent,
-    DialogTitle,
     IconButton,
     Menu,
-    MenuItem,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import notification from "../../assets/img/Notification.png"; 
+import notification from "../../assets/img/Notification.png";
+import { useDispatch, useSelector } from "react-redux";
+import { setAnchorEl } from "../../features/auth/authSlice";
 
 const Notification = () => {
-    const [openDialog, setOpenDialog] = useState(true); 
-    const [anchorEl, setAnchorEl] = useState(null); 
+    const { anchorEl } = useSelector((state) => state.auth);
+    const dispatch = useDispatch()
 
-
-   
     const handleMenuClose = () => {
-        setAnchorEl(null);
+        dispatch(setAnchorEl(null))
+    };
+
+    const isMenuOpen = (menuType) => {
+        return anchorEl?.dataset?.menuType === menuType;
     };
 
     return (
-        <Dialog
-            open={openDialog}
-            onClose={() => setOpenDialog(false)}
-            maxWidth="sm"
-            fullWidth
-            // sx={{
-            //     "& .MuiPaper-root": {
-            //         backgroundColor: "#1a2c38",
-            //         color: "#b1bad3",
-            //     },
-            // }}
-            sx={{ width: { xs: "95%", sm: "90%", md: "60%" }, margin: "auto", color: "#b1bad3",backgroundColor: "#1a2c38",
-      borderRadius: "10px",  }}
+        <Menu
+            anchorEl={anchorEl}
+            open={isMenuOpen("notifications")}
+            onClose={handleMenuClose}
+            PaperProps={{
+                sx: {
+                    width: "350px",
+                    background: "#0f212e",
+                },
+            }}
+            transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+            }}
+            sx={{ mt: 1.5, ml: 5 }}
         >
-            {/* <DialogTitle>
-                <div className="flex justify-between items-center w-full">
-                    <h1 className="text-lg flex items-center space-x-2">
-                        <NotificationsIcon className="text-[#b1bad3]" fontSize="small" />
-                        <span>Notifications</span>
-                    </h1>
-                    <IconButton onClick={() => setOpenDialog(false)} sx={{ color: "white" }}>
-                        <CloseIcon />
-                    </IconButton>
-                </div>
-            </DialogTitle> */}
-            <DialogContent>
-                
-                <div>
-                    <div className="text-center">
-                        <div className="flex justify-between items-center">
-                            <div className="flex items-center font-semibold text-white space-x-2">
-                                <NotificationsIcon className="text-[#b1bad3]" fontSize="small" />
-                                <p>Notifications</p>
-                            </div>
-                            <IconButton onClick={() => setOpenDialog(false)} sx={{ color: "white" }}>
-                        <CloseIcon />
-                    </IconButton>
-                        </div>
-                        <div className="flex justify-center pt-8 pb-6">
-                            <img
-                                src={notification}
-                                className="w-16 h-16 md:w-24 md:h-20"
-                                alt="Notification"
-                            />
-                        </div>
-                        <p className="text-white font-medium text-sm">
-                            No Notifications Available
-                        </p>
-                        <p className="text-[#b1bad3]">
-                            Your interactions will be visible here
-                        </p>
+            <div className="text-center">
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center font-semibold text-white space-x-2">
+                        <NotificationsIcon
+                            className="text-[#b1bad3]"
+                            fontSize="small"
+                        />
+                        <p>Notifications</p>
                     </div>
+                    <IconButton onClick={handleMenuClose}>
+                        <CloseIcon className="text-white font-semibold" />
+                    </IconButton>
                 </div>
-            </DialogContent>
-        </Dialog>
+                <div className="flex justify-center pt-8 pb-6">
+                    <img
+                        src={notification}
+                        className="w-16 h-16 md:w-24 md:h-20"
+                        alt="Not Found"
+                    />
+                </div>
+                <p className="text-white font-medium text-sm">No Notifications Available</p>
+                <p className="text-[#b1bad3]">Your interactions will be visible here</p>
+            </div>
+        </Menu >
     );
 };
 

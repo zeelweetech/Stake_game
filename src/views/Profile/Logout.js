@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Dialog, DialogTitle, IconButton, Button } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { removeCookie } from "../../resources/utility";
 
-const LogoutDialog = () => {
-  const [open, setOpen] = useState(true);
+const LogoutDialog = ({closeLogoutDialog}) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -16,13 +15,13 @@ const LogoutDialog = () => {
   };
 
   const handleClose = () => {
-    setOpen(false);
-    navigate("/"); 
+    closeLogoutDialog()
+    // navigate("/"); 
   };
 
   return (
     <Dialog
-      open={open}
+      open
       onClose={handleClose} 
       maxWidth="sm"
       fullWidth
