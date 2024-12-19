@@ -46,7 +46,7 @@ function LimboGame() {
 
   return (
     <div className="flex justify-center w-full h-full">
-      <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full">
+      <div className="bg-[#1a2c38] md:py-10 py-4 text-white  flex justify-center items-center md:max-w-96 max-w-full">
         <div className=" w-full">
           <div
             className={`flex justify-center w-full  ${
@@ -54,7 +54,7 @@ function LimboGame() {
             } border-b-3`}
           >
             {!isMobile && (
-              <div className="flex-row bg-[#213743]">
+              <div className="flex-row bg-[#213743] rounded-tl-xl">
                 <LimboGameSidebar />
               </div>
             )}  

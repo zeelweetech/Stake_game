@@ -318,7 +318,7 @@ function MinesGameContent() {
   return (
     <div className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? ' max-sm:mx-2' : 'xl:w-[52rem] lg:w-[40rem]'}`}>
       {cashoutResult && !gameBet && (
-        <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20 abcd`}>
+        <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
             <p>{cashoutResult?.winAmount ? cashoutResult.winAmount.toFixed(2) : autoBetResult?.winAmount ? autoBetResult?.winAmount.toFixed(2) : "0.00"}₹</p>
@@ -327,7 +327,7 @@ function MinesGameContent() {
         </div>
       )}
       {showautoBetResult && (
-        <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20 abcd`}>
+        <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
             <p>{cashoutResult?.winAmount ? cashoutResult.winAmount.toFixed(2) : autoBetResult?.winAmount ? autoBetResult?.winAmount.toFixed(2) : "0.00"}₹</p>
@@ -335,7 +335,7 @@ function MinesGameContent() {
           </div>
         </div>
       )}
-      <div className={`grid ${isMobile ? 'grid-cols-5 gap-1.5' : 'grid-cols-5 gap-2'} relative z-10 p-1.5 w-full`}>
+      <div className={`grid ${isMobile ? 'grid-cols-5 gap-1.5' : 'grid-cols-5 gap-2'} relative z-10 p-1.5 max-sm:w-full`}>
         {images?.map((img, index) => (
           <div
             key={index}

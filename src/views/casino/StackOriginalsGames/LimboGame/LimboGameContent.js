@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+// import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { LimboSocket } from "../../../../socket";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,6 +22,7 @@ function LimboGameContent() {
   const decoded = decodedToken();
   const [displayedMultiplier, setDisplayedMultiplier] = useState(1.0);
   const { values, limboStatusData } = useSelector((state) => state.limboGame);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [topXData, setTopXData] = useState([]);
 
   useEffect(() => {
@@ -56,6 +57,18 @@ function LimboGameContent() {
         console.log("error", error);
       });
   };
+  
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768);
+      };
+  
+      window.addEventListener("resize", handleResize);
+  
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
 
   useEffect(() => {
     if (limboStatusData?.actualMultiplier) {
@@ -143,35 +156,35 @@ function LimboGameContent() {
 
     if (Math.floor(displayedMultiplier) === Math.floor(actualMultiplier)) {
       if (actualMultiplier >= targetMultiplier) {
-        return "text-green-500";
+        return "text-[#1fff20]";
       }
       else {
-        return "text-red-500";
+        return "text-[#1fff20]";
       }
     }
     return "text-white";
   };
 
   return (
-    <div className="xl:w-[52rem] lg:w-[41rem] max-sm:mx-3 h-full  flex flex-col justify-center select-none relative bg-[#0f212e] rounded-t-lg">
-      <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
+    <div className={`xl:w-[52rem] lg:w-[41rem] max-sm:mx-3 h-full  flex flex-col justify-center select-none relative bg-[#0f212e] ${isMobile ? "rounded-t-xl" : "rounded-tr-xl"} `}>
+      <div className="mt-4 flex justify-end space-x-2 text-black text-xs pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
             return (
               <div key={index}>
                 <button
-                  className={`p-2.5 ${item?.isWin === true ? "bg-[#1fff20]" : "bg-white"
+                  className={`p-2.5 ${item?.isWin === true ? "bg-[#00E701] text-black font-bold" : "bg-[#2F4553] text-white font-bold"
                     } rounded-full`}
                 >{`${item?.multiplier}x`}</button>
               </div>
             );
           })}
-        <button className="px-2.5 py-2.5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
+        {/* <button className="px-2.5 py-2.5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
           <IoIosTrendingUp color="white" />
-        </button>
+        </button> */}
       </div>
       <div className="flex-grow flex items-center justify-center">
-        <p className={`xl:text-9xl lg:text-9xl md:text-8xl text-8xl font-bold ${getLastValueColor()}`}>
+        <p className={`xl:text-9xl lg:text-9xl md:text-7xl text-8xl font-semibold ${getLastValueColor()}`}>
           {displayedMultiplier}x
         </p>
       </div>
@@ -205,7 +218,7 @@ function LimboGameContent() {
             <div className="text-[#b1bad3] font-semibold my-1">
               <label>Win Chance</label>
             </div>
-            <div className="flex">
+            <div className="flex relative">
               {/* <div className="cursor-text absolute flex right-4 translate-y-[4rem] pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill
                   color="yellow"

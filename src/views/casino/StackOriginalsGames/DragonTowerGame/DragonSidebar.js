@@ -146,15 +146,17 @@ function DragonSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[13.4rem] w-[11.3rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[13.4rem] w-[11.3rem] rounded-full ${
+                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[13.3rem] w-[11.4rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[13.3rem] w-[11.4rem] rounded-full ${
+                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }`}
                   onClick={() => setIsManual(false)}
                 >
                   Auto
@@ -166,7 +168,7 @@ function DragonSidebar() {
             <div>
               <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
                 <label>Bet Amount</label>
-                <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
+                <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -182,26 +184,29 @@ function DragonSidebar() {
                       values?.betamount
                         ? values?.betamount
                         : restor?.restoreData?.[0]?.length > 0
-                          ? restor?.betAmount
-                          : values?.betamount || ""
+                        ? restor?.betAmount
+                        : values?.betamount || ""
                     }
                     onChange={(e) => {
-                      handleOnChange(e)
+                      handleOnChange(e);
                       if (restor?.restoreData?.[0]?.length > 0) {
-                        dispatch(setRestor({ betAmount: '' }))
+                        dispatch(setRestor({ betAmount: "" }));
                       }
                     }}
-                    className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2  border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField
-                      ? "cursor-not-allowed opacity-80" : "hover:border-[#557086]"
-                      }`}
+                    className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2  border-[#2F4553] bg-[#0f212e] focus:outline-none ${
+                      showRandomField
+                        ? "cursor-not-allowed opacity-80"
+                        : "hover:border-[#557086]"
+                    }`}
                     disabled={showRandomField}
                   />
                 </div>
                 <button
-                  className={`w-16 text-lg font-bold ${showRandomField
-                    ? "cursor-not-allowed opacity-80"
-                    : "hover:bg-[#5c849e68]"
-                    }`}
+                  className={`w-16 text-lg font-bold ${
+                    showRandomField
+                      ? "cursor-not-allowed opacity-80"
+                      : "hover:bg-[#5c849e68]"
+                  }`}
                   onClick={() =>
                     dispatch(
                       setValues({
@@ -220,10 +225,11 @@ function DragonSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-sm font-bold ${showRandomField
-                    ? "cursor-not-allowed opacity-80"
-                    : "hover:bg-[#5c849e68]"
-                    }`}
+                  className={`w-16 text-sm font-bold ${
+                    showRandomField
+                      ? "cursor-not-allowed opacity-80"
+                      : "hover:bg-[#5c849e68]"
+                  }`}
                   onClick={() =>
                     dispatch(
                       setValues({
@@ -241,13 +247,21 @@ function DragonSidebar() {
                 <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2">
                   <label>Difficulty</label>
                 </div>
-                <div className={`relative flex border-2 rounded ${showRandomField ? "" : "hover:border-[#557086]"} border-[#2F4553] bg-[#2F4553]`}>
+                <div
+                  className={`relative flex border-2 rounded ${
+                    showRandomField ? "" : "hover:border-[#557086]"
+                  } border-[#2F4553] bg-[#2F4553]`}
+                >
                   <select
                     type="select"
                     name="difficulty"
                     value={values?.difficulty}
                     onChange={(e) => handleOnChange(e)}
-                    className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent ${showRandomField ? "cursor-not-allowed opacity-80" : "cursor-pointer"}`}
+                    className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent ${
+                      showRandomField
+                        ? "cursor-not-allowed opacity-80"
+                        : "cursor-pointer"
+                    }`}
                     disabled={showRandomField}
                   >
                     <option value="easy">Easy</option>
@@ -273,33 +287,38 @@ function DragonSidebar() {
                       {tileSelected?.multiplier
                         ? tileSelected?.multiplier
                         : restor?.restoreData?.[0]?.length > 0
-                          ? restorMultiplier
-                          : "1.00"}
+                        ? restorMultiplier
+                        : "1.00"}
                       x )
                     </label>
-                    <label>₹{((values?.betamount
-                      ? values?.betamount
-                      : restor?.restoreData?.length > 0
-                        ? restor?.betAmount
-                        : 0) *
-                      (tileSelected?.multiplier
-                        ? tileSelected?.multiplier
-                        : tileSelected?.mineLocations?.length > 0
+                    <label>
+                      ₹
+                      {(
+                        (values?.betamount
+                          ? values?.betamount
+                          : restor?.restoreData?.length > 0
+                          ? restor?.betAmount
+                          : 0) *
+                        (tileSelected?.multiplier
+                          ? tileSelected?.multiplier
+                          : tileSelected?.mineLocations?.length > 0
                           ? restorMultiplier
-                          : 0.0)).toFixed(2)}</label>
+                          : 0.0)
+                      ).toFixed(2)}
+                    </label>
                   </div>
                   <div className="flex justify-between items-cente rounded-sm border-2 hover:border-[#557086] border-[#2F4553] bg-[#2f4553] focus:outline-none p-2">
-                  <p>
+                    <p>
                       {(values?.betamount
                         ? values?.betamount
                         : restor?.restoreData?.[0]?.length > 0
-                          ? restor?.betAmount
-                          : values?.betamount) *
+                        ? restor?.betAmount
+                        : values?.betamount) *
                         (tileSelected?.multiplier
                           ? tileSelected?.multiplier
                           : restor?.restoreData?.[0]?.length > 0
-                            ? restorMultiplier
-                            : 0.0)}
+                          ? restorMultiplier
+                          : 0.0)}
                     </p>
                     {/* <RiMoneyRupeeCircleFill
                       color="yellow"
@@ -309,12 +328,19 @@ function DragonSidebar() {
                 </div>
               )}
               <button
-                className={`${gameBet && !isGameOver
-                  ? "bg-[#489649]"
-                  : "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                className={`${
+                  gameBet && !isGameOver
+                    ? "bg-[#489649]"
+                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
                 onClick={handleBetClick}
-                disabled={gameBet && !isGameOver && (tileSelected?.tileIndex === undefined || tileSelected?.multiplier < 1) && !restor?.currentStep > 0}
+                disabled={
+                  gameBet &&
+                  !isGameOver &&
+                  (tileSelected?.tileIndex === undefined ||
+                    tileSelected?.multiplier < 1) &&
+                  !restor?.currentStep > 0
+                }
               >
                 {gameBet && !isGameOver ? "Cashout" : "Bet"}
               </button>
@@ -323,7 +349,7 @@ function DragonSidebar() {
             <div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                 <label>Bet Amount</label>
-                <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
+                <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -340,13 +366,13 @@ function DragonSidebar() {
                       values?.betamount
                         ? values?.betamount
                         : restor?.restoreData?.[0]?.length > 0
-                          ? restor?.betAmount
-                          : values?.betamount || ""
+                        ? restor?.betAmount
+                        : values?.betamount || ""
                     }
                     onChange={(e) => {
-                      handleOnChange(e)
+                      handleOnChange(e);
                       if (restor?.restoreData?.[0]?.length > 0) {
-                        dispatch(setRestor({ betAmount: '' }))
+                        dispatch(setRestor({ betAmount: "" }));
                       }
                     }}
                   />
@@ -411,10 +437,11 @@ function DragonSidebar() {
               </div>
               <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded border-[#4d718768] bg-[#4d718768]">
                 <button
-                  className={`${onProfit.win
-                    ? "bg-[#0f212e] rounded"
-                    : "rounded hover:bg-[#85afca68]"
-                    } xl:px-2 lg:px-3.5 md:px-6 px-3.5 py-1.5 rounded-md`}
+                  className={`${
+                    onProfit.win
+                      ? "bg-[#0f212e] rounded"
+                      : "rounded hover:bg-[#85afca68]"
+                  } xl:px-2 lg:px-3.5 md:px-6 px-3.5 py-1.5 rounded-md`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                   }}
@@ -422,10 +449,11 @@ function DragonSidebar() {
                   Reset
                 </button>
                 <button
-                  className={`${onProfit.win
-                    ? "hover:bg-[#85afca68]"
-                    : "bg-[#0f212e] rounded-sm"
-                    } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
+                  className={`${
+                    onProfit.win
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded-sm"
+                  } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -433,10 +461,11 @@ function DragonSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${onProfit.win
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.win
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -458,10 +487,11 @@ function DragonSidebar() {
               <div className="flex items-center space-x-0.5 border-2 mt-1 rounded border-[#4d718768] bg-[#4d718768]">
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "bg-[#0f212e] rounded"
-                      : "hover:bg-[#85afca68] rounded"
-                      } xl:px-3 lg:px-3.5 md:px-6 px-3.5 py-1.5 rounded`}
+                    className={`${
+                      onProfit.lose
+                        ? "bg-[#0f212e] rounded"
+                        : "hover:bg-[#85afca68] rounded"
+                    } xl:px-3 lg:px-3.5 md:px-6 px-3.5 py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                     }}
@@ -471,10 +501,11 @@ function DragonSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-sm"
-                      } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
+                    className={`${
+                      onProfit.lose
+                        ? "hover:bg-[#85afca68]"
+                        : "bg-[#0f212e] rounded-sm"
+                    } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -483,10 +514,11 @@ function DragonSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${onProfit.lose
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.lose
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -541,18 +573,18 @@ function DragonSidebar() {
               {autoBetOnClick ? (
                 <button
                   className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
-                // onClick={() => handleOnCancelAutoBet()}
+                  // onClick={() => handleOnCancelAutoBet()}
                 >
                   Cancel Autobet
                 </button>
               ) : (
                 <button
                   className={`text-black bg-[#46a147] cursor-default mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
-                    // ${bettingStatus === false
-                    // ? "bg-[#489649]"
-                    // : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    // } 
-                // onClick={() => handleOnAutoBet()}
+                  // ${bettingStatus === false
+                  // ? "bg-[#489649]"
+                  // : "bg-[#1fff20] hover:bg-[#42ed45]"
+                  // }
+                  // onClick={() => handleOnAutoBet()}
                 >
                   Start Autobet
                 </button>
@@ -563,12 +595,12 @@ function DragonSidebar() {
       ) : null}
 
       {responsiveMobile <= 768 ? (
-        <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-16 md:mx-[4rem] -mx-12 m-12 flex flex-col p-3 bg-[#213743] rouded">
+        <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-20 md:mx-[0.0rem] mx-3 m-12 flex flex-col p-3 bg-[#213743] rouded">
           {isManual ? (
             <div>
               <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
                 <label>Bet Amount</label>
-                <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
+                <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
               <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
@@ -584,26 +616,27 @@ function DragonSidebar() {
                       values?.betamount
                         ? values?.betamount
                         : restor?.restoreData?.[0]?.length > 0
-                          ? restor?.betAmount
-                          : values?.betamount || ""
+                        ? restor?.betAmount
+                        : values?.betamount || ""
                     }
                     onChange={(e) => {
-                      handleOnChange(e)
+                      handleOnChange(e);
                       if (restor?.restoreData?.[0]?.length > 0) {
-                        dispatch(setRestor({ betAmount: '' }))
+                        dispatch(setRestor({ betAmount: "" }));
                       }
                     }}
-                    className={`xl:w-48 lg:w-36 md:w-80 pr-1.5 pl-2 py-2 w-64 rounded-l-md text-white border-2  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showRandomField &&
-                      "cursor-not-allowed opacity-80"
-                      }`}
+                    className={`xl:w-48 lg:w-36 md:w-72 pr-1.5 pl-2 py-2 w-64 rounded-l-md text-white border-2  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${
+                      showRandomField && "cursor-not-allowed opacity-80"
+                    }`}
                     disabled={showRandomField}
                   />
                 </div>
                 <button
-                  className={`w-16 text-lg font-bold hover:bg-[#5c849e68] ${showRandomField
-                    ? "cursor-not-allowed opacity-80"
-                    : "hover:bg-[#5c849e68]"
-                    }`}
+                  className={`w-16 text-lg font-bold hover:bg-[#5c849e68] ${
+                    showRandomField
+                      ? "cursor-not-allowed opacity-80"
+                      : "hover:bg-[#5c849e68]"
+                  }`}
                   onClick={() =>
                     dispatch(
                       setValues({
@@ -622,10 +655,11 @@ function DragonSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-sm font-bold ${showRandomField
-                    ? "cursor-not-allowed opacity-80"
-                    : "hover:bg-[#5c849e68]"
-                    }`}
+                  className={`w-16 text-sm font-bold ${
+                    showRandomField
+                      ? "cursor-not-allowed opacity-80"
+                      : "hover:bg-[#5c849e68]"
+                  }`}
                   onClick={() =>
                     dispatch(
                       setValues({
@@ -640,12 +674,19 @@ function DragonSidebar() {
                 </button>
               </div>
               <button
-                className={`${gameBet && !isGameOver
-                  ? "bg-[#489649]"
-                  : "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                className={`${
+                  gameBet && !isGameOver
+                    ? "bg-[#489649]"
+                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
                 onClick={handleBetClick}
-                disabled={gameBet && !isGameOver && (tileSelected?.tileIndex === undefined || tileSelected?.multiplier < 1) && !restor?.currentStep > 0}
+                disabled={
+                  gameBet &&
+                  !isGameOver &&
+                  (tileSelected?.tileIndex === undefined ||
+                    tileSelected?.multiplier < 1) &&
+                  !restor?.currentStep > 0
+                }
               >
                 {gameBet && !isGameOver ? "Cashout" : "Bet"}
               </button>
@@ -653,15 +694,19 @@ function DragonSidebar() {
                 <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2">
                   <label>Difficulty</label>
                 </div>
-                <div className={`relative flex border-2 rounded ${showRandomField ? "" : "hover:border-[#557086]"} border-[#2F4553] bg-[#2F4553]`}>
+                <div
+                  className={`relative flex border-2 rounded ${
+                    showRandomField ? "" : "hover:border-[#557086]"
+                  } border-[#2F4553] bg-[#2F4553]`}
+                >
                   <select
                     type="select"
                     name="difficulty"
                     value={values?.difficulty}
                     onChange={(e) => handleOnChange(e)}
-                    className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent ${showRandomField &&
-                      "cursor-not-allowed opacity-80"
-                      }`}
+                    className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent ${
+                      showRandomField && "cursor-not-allowed opacity-80"
+                    }`}
                     disabled={showRandomField}
                   >
                     <option value="easy">Easy</option>
@@ -687,33 +732,38 @@ function DragonSidebar() {
                       {tileSelected?.multiplier
                         ? tileSelected?.multiplier
                         : restor?.restoreData?.[0]?.length > 0
-                          ? restorMultiplier
-                          : "1.00"}
+                        ? restorMultiplier
+                        : "1.00"}
                       x )
                     </label>
-                    <label>₹{((values?.betamount
-                      ? values?.betamount
-                      : restor?.restoreData?.length > 0
-                        ? restor?.betAmount
-                        : 0) *
-                      (tileSelected?.multiplier
-                        ? tileSelected?.multiplier
-                        : tileSelected?.mineLocations?.length > 0
+                    <label>
+                      ₹
+                      {(
+                        (values?.betamount
+                          ? values?.betamount
+                          : restor?.restoreData?.length > 0
+                          ? restor?.betAmount
+                          : 0) *
+                        (tileSelected?.multiplier
+                          ? tileSelected?.multiplier
+                          : tileSelected?.mineLocations?.length > 0
                           ? restorMultiplier
-                          : 0.0)).toFixed(2)}</label>
+                          : 0.0)
+                      ).toFixed(2)}
+                    </label>
                   </div>
                   <div className="flex justify-between items-cente rounded-sm border-2 hover:border-[#557086] border-[#2F4553] bg-[#2f4553] focus:outline-none p-2">
                     <p>
                       {(values?.betamount
                         ? values?.betamount
                         : restor?.restoreData?.[0]?.length > 0
-                          ? restor?.betAmount
-                          : values?.betamount) *
+                        ? restor?.betAmount
+                        : values?.betamount) *
                         (tileSelected?.multiplier
                           ? tileSelected?.multiplier
                           : restor?.restoreData?.[0]?.length > 0
-                            ? restorMultiplier
-                            : 0.0)}
+                          ? restorMultiplier
+                          : 0.0)}
                     </p>
                     {/* <RiMoneyRupeeCircleFill
                       color="yellow"
@@ -727,34 +777,34 @@ function DragonSidebar() {
             <div>
               {autoBetOnClick ? (
                 <button
-                  className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
-                // onClick={() => handleOnCancelAutoBet()}
+                  className={`bg-[#00E701] hover:bg-[#42ed45] text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent`}
+                  // onClick={() => handleOnCancelAutoBet()}
                 >
                   Cancel Autobet
                 </button>
               ) : (
                 <button
-                className={`text-black bg-[#46a147] cursor-default mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
-                    // ${bettingStatus === false
-                    // ? "bg-[#489649]"
-                    // : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    // }
-                // onClick={() => handleOnAutoBet()}
+                  className={`text-black bg-[#00E701] cursor-default mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent`}
+                  // ${bettingStatus === false
+                  // ? "bg-[#489649]"
+                  // : "bg-[#1fff20] hover:bg-[#42ed45]"
+                  // }
+                  // onClick={() => handleOnAutoBet()}
                 >
                   Start Autobet
                 </button>
               )}
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                 <label>Bet Amount</label>
-                <label>₹{values?.betamount ? values?.betamount : '0.00'}</label>
+                <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
-              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">₹
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                   <input
-                    className="xl:w-48 lg:w-40 md:w-80 w-64 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-48 lg:w-40 md:w-72 w-60 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     step="0.01"
@@ -763,13 +813,13 @@ function DragonSidebar() {
                       values?.betamount
                         ? values?.betamount
                         : restor?.restoreData?.[0]?.length > 0
-                          ? restor?.betAmount
-                          : values?.betamount || ""
+                        ? restor?.betAmount
+                        : values?.betamount || ""
                     }
                     onChange={(e) => {
-                      handleOnChange(e)
+                      handleOnChange(e);
                       if (restor?.restoreData?.[0]?.length > 0) {
-                        dispatch(setRestor({ betAmount: '' }))
+                        dispatch(setRestor({ betAmount: "" }));
                       }
                     }}
                   />
@@ -834,10 +884,11 @@ function DragonSidebar() {
               </div>
               <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded border-[#4d718768] bg-[#4d718768]">
                 <button
-                  className={`${onProfit.win
-                    ? "bg-[#0f212e] rounded"
-                    : "rounded hover:bg-[#85afca68]"
-                    } xl:px-2 lg:px-3.5 md:px-6 px-3.5 py-1.5 rounded-md`}
+                  className={`${
+                    onProfit.win
+                      ? "bg-[#0f212e] rounded"
+                      : "rounded hover:bg-[#85afca68]"
+                  } xl:px-2 lg:px-3.5 md:px-3 px-3 py-1.5 rounded-md`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                   }}
@@ -845,10 +896,11 @@ function DragonSidebar() {
                   Reset
                 </button>
                 <button
-                  className={`${onProfit.win
-                    ? "hover:bg-[#85afca68]"
-                    : "bg-[#0f212e] rounded-sm"
-                    } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
+                  className={`${
+                    onProfit.win
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded-sm"
+                  } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -856,16 +908,17 @@ function DragonSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${onProfit.win
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.win
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.9rem] xl:w-[8.8rem] lg:w-[4.89rem] md:w-[14.7rem] pr-7 pl-2 py-1.5 rounded text-white bg-[#0f212e] focus:outline-none"
+                    className="w-[10.5rem] xl:w-[8.8rem] lg:w-[4.89rem] md:w-[11.1rem] pr-7 pl-2 py-1.5 rounded text-white bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -881,10 +934,11 @@ function DragonSidebar() {
               <div className="flex items-center space-x-0.5 border-2 mt-1 rounded border-[#4d718768] bg-[#4d718768]">
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "bg-[#0f212e] rounded"
-                      : "hover:bg-[#85afca68] rounded"
-                      } xl:px-3 lg:px-3.5 md:px-6 px-3.5 py-1.5 rounded`}
+                    className={`${
+                      onProfit.lose
+                        ? "bg-[#0f212e] rounded"
+                        : "hover:bg-[#85afca68] rounded"
+                    } xl:px-3 lg:px-3.5 md:px-3 px-3 py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                     }}
@@ -894,10 +948,11 @@ function DragonSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-sm"
-                      } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
+                    className={`${
+                      onProfit.lose
+                        ? "hover:bg-[#85afca68]"
+                        : "bg-[#0f212e] rounded-sm"
+                    } xl:px-[0.3rem] lg:px-[0.3rem] md:px-4 py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -906,16 +961,17 @@ function DragonSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${onProfit.lose
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.lose
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.9rem] xl:w-[8.3rem] lg:w-[4.89rem] md:w-[14.7rem] pr-7 pl-2 py-1.5 rounded text-white bg-[#0f212e] focus:outline-none focus:border-transparent"
+                    className="w-[10.5rem] xl:w-[8.3rem] lg:w-[4.89rem] md:w-[9.4rem] pr-7 pl-2 py-1.5 rounded text-white bg-[#0f212e] focus:outline-none focus:border-transparent"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -965,17 +1021,21 @@ function DragonSidebar() {
           )}
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0 mt-3">
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 w-full">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[13.3rem] max-[425px]:w-[11.33rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.3rem] max-[430px]:w-[11.5rem] max-[412px]:w-[11rem] max-[360px]:w-[9.3rem] max-[400px]:w-[10.4rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 rounded-full transition-all ${
+                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }
+                  xl:w-[8.7rem] lg:w-[4rem] md:w-[10.9rem] w-full`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] max-[425px]:w-[11.4rem] max-[375px]:w-[9.8rem] max-[414px]:w-[11rem] max-[390px]:w-[10.2rem] max-[430px]:w-[11.5rem] max-[412px]:w-[10.92rem] max-[360px]:w-[9.4rem] max-[400px]:w-[10.5rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 rounded-full transition-all ${
+                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }
+                  xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.8rem] w-full`}
                   onClick={() => setIsManual(false)}
                 >
                   Auto

@@ -1036,7 +1036,7 @@ function LimboGameSidebar() {
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full p-[0.4375rem] h-[2.4375rem] rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#2F4553] focus:outline-none"
                   type="text"
                   placeholder="0"
                   value={values?.betamount * (values?.multiplier || 2.0) || 0}
@@ -1170,7 +1170,7 @@ function LimboGameSidebar() {
                     onProfit.win
                       ? "bg-[#0f212e] rounded"
                       : "hover:bg-[#85afca68] rounded"
-                  }xl:px-2 lg:px-2 md:px-2 px-2 py-2 rounded-sm`}
+                  }xl:px-2 lg:px-2 md:px-2 px-2 py-2 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setValues({ ...values, onwin: "" }));
@@ -1183,7 +1183,7 @@ function LimboGameSidebar() {
                     onProfit.win
                       ? "hover:bg-[#85afca68]"
                       : "bg-[#0f212e] rounded-sm"
-                  } px-[0.20rem] py-1.5`}
+                  } px-[0.20rem] py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -1201,7 +1201,7 @@ function LimboGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="xl:w-[9rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-[9.04rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -1214,14 +1214,14 @@ function LimboGameSidebar() {
               <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
                 On Lose
               </label>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 rounded border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 border-2 rounded border-[#4d718768] bg-[#4d718768]">
                 <div>
                   <button
                     className={`${
                       onProfit.lose
                         ? "bg-[#0f212e] rounded"
                         : "hover:bg-[#85afca68] rounded"
-                    } px-2 py-2 rounded-sm`}
+                    } p-2 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                       dispatch(setValues({ ...values, onlose: "" }));
@@ -1234,9 +1234,9 @@ function LimboGameSidebar() {
                   <button
                     className={`${
                       onProfit.lose
-                        ? "bg-[#4d718768] hover:bg-[#85afca68]"
+                        ? "hover:bg-[#85afca68]"
                         : "bg-[#0f212e] rounded-sm"
-                    } px-[0.20rem] py-1.5`}
+                    } px-[0.20rem] py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -1255,7 +1255,7 @@ function LimboGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="xl:w-[9rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 max-[390px]:w-[5rem] pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-[9.04rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 max-[390px]:w-[5rem] pl-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -1414,7 +1414,7 @@ function LimboGameSidebar() {
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full h-[2.4375rem] p-[0.4375rem] rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#2F4553] focus:outline-none"
                   type="text"
                   placeholder="0"
                   value={values?.betamount * (values?.multiplier || 2.0) || 0}
@@ -1662,7 +1662,7 @@ function LimboGameSidebar() {
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                 <input
-                  className="w-full pr-1.5 px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full h-l pr-1.5 px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0.01"
                   step="0.01"
