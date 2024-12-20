@@ -48,9 +48,9 @@ function Betslip({ onClose, isDrawerOpen }) {
 
   const betSlipIcon = (
     <svg
-    className="w-4 h-4 text-white mr-2"
-    fill="currentColor"
-    viewBox="0 0 64 64"
+      className="w-4 h-4 text-white mr-2"
+      fill="currentColor"
+      viewBox="0 0 64 64"
     >
       <path d="M.001 3.549v7.12h7.12v49.786h6.214c.778-3.122 3.556-5.398 6.866-5.398a7.07 7.07 0 0 1 6.856 5.348l.01.048h9.974c.778-3.122 3.556-5.398 6.866-5.398a7.07 7.07 0 0 1 6.856 5.348l.01.048h6.16V10.665h7.066v-7.12L.001 3.549Zm35.546 37.334h-17.76v-5.334h17.76v5.334Zm10.668-14.214H17.789v-5.334h28.426v5.334Z" />
     </svg>
@@ -59,9 +59,9 @@ function Betslip({ onClose, isDrawerOpen }) {
   // SVG Path for My Bets Icon
   const myBetsIcon = (
     <svg
-    className="w-4 h-4 text-white mr-2"
-    fill="currentColor"
-    viewBox="0 0 64 64"
+      className="w-4 h-4 text-white mr-2"
+      fill="currentColor"
+      viewBox="0 0 64 64"
     >
       <path d="M63.998 14.213H14.215v49.783h6.16c.8-3.108 3.576-5.366 6.88-5.366a7.1 7.1 0 0 1 6.869 5.318l.01.05h9.945c.8-3.108 3.576-5.366 6.88-5.366s6.08 2.26 6.87 5.318l.01.05h6.159V14.213ZM27.946 51.251l-6.613-6.694 3.785-3.785 2.934 2.933 7.76-7.76 3.654 3.786-11.52 11.52Zm28.932-4.32H45.625v-5.334h11.253v5.334Zm0-18.479H21.335V23.12h35.543v5.333ZM49.785 0v7.12H7.122v42.663H.002V0h49.783Z" />
     </svg>
@@ -120,7 +120,7 @@ function Betslip({ onClose, isDrawerOpen }) {
 
         {selectedView === "Bet Slip" ? (
           <div>
-            <div>
+            <div className="min-h-screen">
               <div className="bg-[#1a2c38] text-white">
                 <div className="flex flex-col items-center justify-start h-full bg-[#0f212e]">
                   <div className="flex justify-center w-full mb-4">
@@ -211,7 +211,7 @@ function Betslip({ onClose, isDrawerOpen }) {
               )}
 
               {/* Empty Bet Slip Message */}
-              <div className="flex justify-center md:h-[22rem] p-20">
+              <div className="flex justify-center min-h-96 items-center">
                 <div>
                   <div className="flex justify-center">
                     <img src={sportsTable} alt="Sports" />
@@ -222,82 +222,80 @@ function Betslip({ onClose, isDrawerOpen }) {
               </div>
             </div>
 
-            <div>
-              <div className="mt-5">
-                {gameMenu === "Single" ? (
-                  <div className="bg-[#213743] p-4 space-y-2 ">
-                    {/* Total Stake Section */}
+            <div className="mt-5 absolute bottom-0 w-full bg-[#213743] p-[10px]">
+              {gameMenu === "Single" ? (
+                <div className="bg-[#213743] p-4 space-y-2 ">
+                  {/* Total Stake Section */}
+                  <div className="flex justify-between items-center">
+                    <p className="text-xs text-white">Total Stake</p>
+                    <p className="text-xs text-white font-medium">{`0.00000000 ₹`}</p>
+                  </div>
+
+                  {/* Est. Payout Section */}
+                  <div className="flex justify-between items-center">
+                    <p className="text-xs text-white">Est. Payout</p>
+                    <p className="text-xs text-white font-medium">{`0.00000000 ₹`}</p>
+                  </div>
+
+                  {/* Place Single Button */}
+                  <div className="text-center">
+                    <button className="text-white bg-sky-600 text-sm p-2 w-80 rounded font-medium">
+                      Place Single Button
+                    </button>
+                  </div>
+                </div>
+              ) : gameMenu === "Multi" ? (
+                <div>
+                  <div className="w-full flex flex-col mt-4">
+                    <FormControl sx={{ width: "100%" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          backgroundColor: "#0f212e",
+                          padding: "8px 12px",
+                          border: "1px solid #b1bad3",
+                          borderRadius: "4px",
+                          color: "white",
+                          gap: "8px",
+                        }}
+                      >
+                        <TextField
+                          type="number"
+                          value={amount}
+                          onChange={(e) => handleAmountChange(e.target.value)}
+                          InputProps={{
+                            inputProps: { min: 0 },
+                          }}
+                          sx={{
+                            flexGrow: 1,
+                            backgroundColor: "transparent",
+                            input: { color: "white" },
+                            "& .MuiOutlinedInput-root": {
+                              height: "25px",
+                              "& fieldset": { border: "none" },
+                            },
+                          }}
+                        />
+                        <PiCurrencyBtcFill color="#FFD700" />
+                      </div>
+                    </FormControl>
+                  </div>
+
+                  {/* Total Stake and Est. Payout for Multi */}
+                  <div className="bg-[#213743] p-4 space-y-2">
                     <div className="flex justify-between items-center">
                       <p className="text-xs text-white">Total Stake</p>
                       <p className="text-xs text-white font-medium">{`0.00000000 ₹`}</p>
                     </div>
 
-                    {/* Est. Payout Section */}
                     <div className="flex justify-between items-center">
                       <p className="text-xs text-white">Est. Payout</p>
                       <p className="text-xs text-white font-medium">{`0.00000000 ₹`}</p>
                     </div>
-
-                    {/* Place Single Button */}
-                    <div className="text-center">
-                      <button className="text-white bg-sky-600 text-sm p-2 w-80 rounded font-medium">
-                        Place Single Button
-                      </button>
-                    </div>
                   </div>
-                ) : gameMenu === "Multi" ? (
-                  <div>
-                    <div className="w-full flex flex-col mt-4">
-                      <FormControl sx={{ width: "100%" }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            backgroundColor: "#0f212e",
-                            padding: "8px 12px",
-                            border: "1px solid #b1bad3",
-                            borderRadius: "4px",
-                            color: "white",
-                            gap: "8px",
-                          }}
-                        >
-                          <TextField
-                            type="number"
-                            value={amount}
-                            onChange={(e) => handleAmountChange(e.target.value)}
-                            InputProps={{
-                              inputProps: { min: 0 },
-                            }}
-                            sx={{
-                              flexGrow: 1,
-                              backgroundColor: "transparent",
-                              input: { color: "white" },
-                              "& .MuiOutlinedInput-root": {
-                                height: "25px",
-                                "& fieldset": { border: "none" },
-                              },
-                            }}
-                          />
-                          <PiCurrencyBtcFill color="#FFD700" />
-                        </div>
-                      </FormControl>
-                    </div>
-
-                    {/* Total Stake and Est. Payout for Multi */}
-                    <div className="bg-[#213743] p-4 space-y-2">
-                      <div className="flex justify-between items-center">
-                        <p className="text-xs text-white">Total Stake</p>
-                        <p className="text-xs text-white font-medium">{`0.00000000 ₹`}</p>
-                      </div>
-
-                      <div className="flex justify-between items-center">
-                        <p className="text-xs text-white">Est. Payout</p>
-                        <p className="text-xs text-white font-medium">{`0.00000000 ₹`}</p>
-                      </div>
-                    </div>
-                  </div>
-                ) : null}
-              </div>
+                </div>
+              ) : null}
             </div>
           </div>
         ) : (

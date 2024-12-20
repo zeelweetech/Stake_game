@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import GameFooter from "../../../component/GameFooter";
-import { LimboSocket } from "../../../../socket";
 import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";
-import KenoGameSidebar from "./KenoGameSidebar";
-import KenoGameContent from "./KenoGameContent";
+import SlideGameSidebar from "./SlideGameSidebar";
+import SlideGameContent from "./SlideGameContent";
 
 function SlideGame() {
       const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -53,17 +52,17 @@ function SlideGame() {
                 >
                     {!isMobile && (
                         <div className="flex-row bg-[#213743]">
-                            <KenoGameSidebar />
+                            <SlideGameSidebar />
                         </div>
                     )}
                     <div className="flex-grow">
-                        <KenoGameContent />
+                        <SlideGameContent />
                     </div>
                 </div>
 
                 {isMobile && (
                     <div className="flex flex-col">
-                        <KenoGameSidebar />
+                        <SlideGameSidebar />
                     </div>
                 )}
                 <div

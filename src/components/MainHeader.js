@@ -124,7 +124,7 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
             <Notification />
 
             <div className="relative flex items-center">
-              <p onClick={toggleSidebar} className="flex items-center">
+              <p onClick={toggleSidebar} className="flex items-center hover:cursor-pointer">
                 <IoIosChatboxes color="white" size={18} />
               </p>
               {isSidebarOpen && (

@@ -295,7 +295,8 @@ function MinesGameContent() {
   });
 
   const handleClick = (index) => {
-    if (gamesOver || revealed[index] || (isManual && !gameBet)) return;
+    const maxSelectableTiles = 25 - mineValue?.mines
+    if (gamesOver || revealed[index] || (isManual && !gameBet) || (!isManual && preSelectTile.length >= maxSelectableTiles)) return;
 
     if (isManual) {
       const audio = new Audio(winSound);
@@ -313,7 +314,6 @@ function MinesGameContent() {
       dispatch(setPreSelectTile([...preSelectTile, newTile]));
     }
   };
-  console.log("autoBetResult", autoBetResult);
 
   return (
     <div className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? ' max-sm:mx-2' : 'xl:w-[52rem] lg:w-[40rem]'}`}>

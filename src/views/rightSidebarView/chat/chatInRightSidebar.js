@@ -1,153 +1,3 @@
-
-
-
-
-// import React, { useState, useEffect, useRef } from "react";
-// import io from "socket.io-client";
-// import CloseIcon from "@mui/icons-material/Close";
-// import { IconButton } from "@mui/material";
-// import { MdOutlineEventNote } from "react-icons/md";
-// import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-// import { useDispatch, useSelector } from "react-redux";
-
-
-// const socket = io('http://192.168.29.203:3002', { path: '/ws' });
-// const ChatApp = ({ onClose }) => {
-//   const [country, setCountry] = useState("India");
-//   const [countries, setCountries] = useState(["India", "USA", "UK", "Australia"]);
-//   const [message, setMessage] = useState("");
-//   const [messages, setMessages] = useState([]);
-//   const [dropdownOpen, setDropdownOpen] = useState(false);
-//   const messagesEndRef = useRef(null);
-//   const dispatch = useDispatch();
-//   const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
-
-//   useEffect(() => {
-//     // Join the initial country
-//     socket.emit("joinCountry", country);
-//     console.log("...........", socket);
-
-
-//     // Listen for incoming messages
-//     socket.on("chatMessage", (newMessage) => {
-//       setMessages((prevMessages) => [...prevMessages, newMessage]);
-//     });
-
-//     // Listen for chat history when changing countries
-//     socket.on("changeCountryResponse", (newChat) => {
-//       setMessages(newChat);
-//     });
-
-//     return () => {
-//       socket.off("chatMessage");
-//       socket.off("changeCountryResponse");
-//     };
-//   }, [country]);
-
-//   const sendMessage = () => {
-//     if (message.trim()) {
-//       const userId = "USER_128"; // Replace with actual user ID
-//       socket.emit("chatMessage", { userId, content: message, taggedUserId: "user456" });
-//       setMessage("");
-//     }
-//   };
-
-//   const handleEmojiClick = (emoji) => {
-//     if (selectedEmoji !== emoji) {
-//       console.log(emoji);
-//     dispatch(setEmoji(emoji)); // Dispatch the selected emoji to the Redux store
-//     }
-//   };
-
-//   const changeCountry = (newCountry) => {
-//     setCountry(newCountry);
-//     socket.emit("changeCountry", newCountry);
-//     setDropdownOpen(false);
-//   };
-
-//   const toggleDropdown = () => {
-//     setDropdownOpen(!dropdownOpen);
-//   };
-
-//   return (
-//     <div className="text-white p-2 rounded-md shadow-lg relative">
-//       <IconButton
-//         onClick={onClose}
-//         sx={{ color: "white", position: "absolute", top: 8, right: 8 }}
-//       >
-//         <CloseIcon fontSize="small" />
-//       </IconButton>
-//       <div className="inline-block text-left mb-4">
-//         <button
-//           onClick={toggleDropdown}
-//           className="inline-flex justify-center w-full bg-[#0f212e] px-4 py-2 text-sm font-medium text-white"
-//         >
-//           <MdOutlineEventNote size={20} color="#0ffff" />
-//           <span className="ml-2">Stake: {country}</span>
-//           {dropdownOpen ? (
-//             <ChevronDownIcon className="ml-2 h-5 w-5" />
-//           ) : (
-//             <ChevronUpIcon className="ml-2 h-5 w-5" />
-//           )}
-//         </button>
-//         {dropdownOpen && (
-//           <div className="relative">
-//             <div className="absolute top-full shadow-lg left-1/2 mt-2 text-black font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max text-center">
-//               {countries.map((item, index) => (
-//                 <div
-//                   key={index}
-//                   onClick={() => changeCountry(item)}
-//                   className={`cursor-pointer px-4 py-2 text-white hover:bg-gray-600 ${item === country ? "bg-gray-600" : ""
-//                     }`}
-//                 >
-//                   {item}
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-//         )}
-//       </div>
-//       <div className="overflow-y-auto max-h-[30rem] flex-grow">
-//         {messages.map((msg, index) => (
-//           <div
-//             key={index}
-//             className={`p-2 rounded-md mb-2 ${msg.isNewUser ? "border-[#2F4553]" : "bg-[#213743]"
-//               }`}
-//           >
-//             {msg.content}
-//           </div>
-//         ))}
-//         <div ref={messagesEndRef} />
-//       </div>
-//       <div className="bg-[#213743] h-40 p-1">
-//         <div className="flex text-black sticky bottom-0 py-1">
-//           <input
-//             type="text"
-//             value={message}
-//             onChange={(e) => setMessage(e.target.value)}
-//             className="flex-grow p-2 border px-1 text-sm text-black "
-//             placeholder="Type your message..."
-//           />
-
-//         </div>
-//         <div className="relative">
-//           <button
-//             onClick={sendMessage}
-//             className="absolute right-0 bg-[#2e7d32] text-black text-sm px-4 py-2 rounded-sm"
-//           >
-//             Send
-//           </button>
-//         </div>
-
-//       </div>
-
-//     </div>
-//   );
-// };
-
-// export default ChatApp;
-
-
 import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import CloseIcon from "@mui/icons-material/Close";
@@ -158,7 +8,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { useDispatch, useSelector } from "react-redux";
 import { setEmoji } from "../../../features/auth/emojiSlice";
 
-const socket = io('http://192.168.29.203:3002', { path: '/ws' });
+const chatSocket = io('http://192.168.29.203:3002', { path: '/ws' });
 
 const ChatApp = ({ onClose }) => {
   const [country, setCountry] = useState("India");
@@ -172,33 +22,33 @@ const ChatApp = ({ onClose }) => {
   const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
 
   useEffect(() => {
-    socket.emit("joinCountry", country);
+    chatSocket.emit("joinCountry", country);
 
-    socket.on("chatMessage", (newMessage) => {
+    chatSocket.on("chatMessage", (newMessage) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
-    socket.on("changeCountryResponse", (newChat) => {
+    chatSocket.on("changeCountryResponse", (newChat) => {
       setMessages(newChat);
     });
 
     return () => {
-      socket.off("chatMessage");
-      socket.off("changeCountryResponse");
+      chatSocket.off("chatMessage");
+      chatSocket.off("changeCountryResponse");
     };
   }, [country]);
 
   const sendMessage = () => {
     if (message.trim()) {
       const userId = "USER_128"; // Replace with actual user ID
-      socket.emit("chatMessage", { userId, content: message, taggedUserId: "user456" });
+      chatSocket.emit("chatMessage", { userId, content: message, taggedUserId: "user456" });
       setMessage("");
     }
   };
 
   const changeCountry = (newCountry) => {
     setCountry(newCountry);
-    socket.emit("changeCountry", newCountry);
+    chatSocket.emit("changeCountry", newCountry);
     setDropdownOpen(false);
   };
 
@@ -231,7 +81,7 @@ const ChatApp = ({ onClose }) => {
           className="inline-flex justify-center w-full bg-[#0f212e] px-4 py-2 text-sm font-medium text-white"
         >
           <MdOutlineEventNote size={20} color="#0ffff" />
-          <span className="ml-2">Stake: {country}</span>
+          <span className="ml-2">Listor: {country}</span>
           {dropdownOpen ? (
             <ChevronDownIcon className="ml-2 h-5 w-5" />
           ) : (
@@ -240,12 +90,12 @@ const ChatApp = ({ onClose }) => {
         </button>
         {dropdownOpen && (
           <div className="relative">
-            <div className="absolute top-full shadow-lg left-1/2 mt-2 text-black font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max text-center">
+            <div className="absolute top-full shadow-lg text-black font-medium rounded-sm px-4 py-2 z-10 w-max text-center">
               {countries.map((item, index) => (
                 <div
                   key={index}
                   onClick={() => changeCountry(item)}
-                  className={`cursor-pointer px- 4 py-2 text-white hover:bg-gray-600 ${item === country ? "bg-gray-600" : ""}`}
+                  className={`cursor-pointer px-9 py-2 bg-white hover:bg-[#b1bad3]`}
                 >
                   {item}
                 </div>
@@ -255,7 +105,12 @@ const ChatApp = ({ onClose }) => {
         )}
       </div>
 
-      <div className="overflow-y-auto max-h-[30rem] flex-grow">
+      <div className="overflow-y-auto flex-grow"
+        style={{
+          overflowY: "scroll",
+          height: "calc(88vh - 75px)",
+          padding: "10px 0 10px 0",
+        }}>
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -267,8 +122,8 @@ const ChatApp = ({ onClose }) => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="bg-[#213743] h-32 p-1 relative">
-        <div className="flex text-white sticky bg-[#0f212e] bottom-0 py-1 relative">
+      <div className="bg-[#213743] p-1 relative">
+        <div className="flex text-white sticky bg-[#0f212e] bottom-0 py-1">
           <input
             type="text"
             value={message}
@@ -299,8 +154,6 @@ const ChatApp = ({ onClose }) => {
             Send
           </button>
         </div>
-
-
 
         {emojiPickerVisible && (
           <div className="absolute bottom-16 left-0 z-50">

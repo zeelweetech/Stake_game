@@ -1,48 +1,48 @@
 import React, { useEffect, useState } from "react";
 import GameFooter from "../../../component/GameFooter";
-import { LimboSocket } from "../../../../socket";
 import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";
 import KenoGameSidebar from "./KenoGameSidebar";
 import KenoGameContent from "./KenoGameContent";
+import { KenoSocket } from "../../../../socket";
 
 function KenoGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  //   useEffect(() => {
-  //     const handleResize = () => {
-  //       setIsMobile(window.innerWidth <= 768);
-  //     };
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768);
+      };
 
-  //     window.addEventListener("resize", handleResize);
+      window.addEventListener("resize", handleResize);
 
-  //     return () => {
-  //       window.removeEventListener("resize", handleResize);
-  //     };
-  //   }, []);
-  //   useEffect(() => {
-  //     LimboSocket.connect();
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
+    useEffect(() => {
+      KenoSocket.connect();
 
-  //     LimboSocket.on("connect", () => {
-  //       console.log("Limbo sokect connected");
-  //     });
+      KenoSocket.on("connect", () => {
+        console.log("Limbo sokect connected");
+      });
 
-  //     LimboSocket.on("disconnect", () => {
-  //       console.log("Limbo Disconnected from server");
-  //     });
+      KenoSocket.on("disconnect", () => {
+        console.log("Limbo Disconnected from server");
+      });
 
-  //     LimboSocket.on("connect_error", (error) => {
-  //       console.error("Limbo Connection Error:", error);
-  //     });
+      KenoSocket.on("connect_error", (error) => {
+        console.error("Limbo Connection Error:", error);
+      });
 
-  //     return () => {
-  //       LimboSocket.off("message");
-  //       LimboSocket.off("connect");
-  //       LimboSocket.off("disconnect");
-  //       LimboSocket.off("connect_error");
-  //       LimboSocket.disconnect();
-  //     };
-  //   }, []);
+      return () => {
+        KenoSocket.off("message");
+        KenoSocket.off("connect");
+        KenoSocket.off("disconnect");
+        KenoSocket.off("connect_error");
+        KenoSocket.disconnect();
+      };
+    }, []);
 
   return (
     <div className="flex justify-center w-full h-full">
