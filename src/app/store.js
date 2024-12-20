@@ -11,6 +11,7 @@ import SlideGameReducer from "../features/casino/slideSlice"
 import allGames from "../features/casino/allGameSlice"
 import betReducer from "../features/auth/betSlipSlice"
 import chatReducer from "../features/auth/chatSlice"
+import emojiReducer from "../features/auth/emojiSlice"
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     allGame: allGames,
     betslip: betReducer,
     chat: chatReducer,
+    emoji: emojiReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

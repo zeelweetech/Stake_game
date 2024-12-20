@@ -6,9 +6,6 @@ import Footer from "../components/Footer";
 import MainHeader from "../components/MainHeader";
 import MobileMenubar from "../components/MobileMenubar";
 import { useDispatch, useSelector } from "react-redux";
-import { openBetslipModal } from "../features/auth/betSlipSlice";
-import { openChatModal } from "../features/auth/chatSlice";
-
 import { RightSidebar } from "../components/RightSidebar";
 
 function DefaultLayout() {
@@ -16,27 +13,15 @@ function DefaultLayout() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { isBetslipOpen } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
-  const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setOpenMenubar((prevOpen) => !prevOpen);
   };
 
-  const handleRightSidebarToggle = (type) => {
-    // console.log("isBetslipOpen", isBetslipOpen);
-    // if (!isBetslipOpen) {
-    //   console.log("hiiiiiu, how are youj");
-    //   dispatch(openBetslipModal());
-    // } else if (!isChatOpen) {
-    //   console.log("hiiiiiu, how are youj -*-/-/-/-/-/");
-    //   dispatch(openChatModal());
-    // }
-    setIsDrawerOpen((prev) => !prev)
+  const handleRightSidebarToggle = () => {
+    setIsDrawerOpen((prev) => !prev); // Toggles the right sidebar
   };
-  // const handleRightSidebarToggle = () => {
-  //   setIsDrawerOpen((prev) => !prev); // Toggles the right sidebar
-  // };
 
   useEffect(() => {
     const handleResize = () => {
@@ -69,19 +54,18 @@ function DefaultLayout() {
       <div
         className={`flex flex-col relative bg-[#1a2c38] z-40 h-full
         ${!isMobile ? (openMenubar ? "ml-[14%] md:ml-[19%] lg:ml-[15%]" : "ml-14") : "ml-0 w-full"}
-        ${isDrawerOpen ? "mr-[16%] md:mr-[25%] lg:mr-[25%]" : "mr-0 w-full "}
-        transition-all duration-300 ease-in-out`}//this is open the rightsidebar css
+        ${isDrawerOpen ? "mr-[16%] md:mr-[25%] lg:mr-[25%]" : "mr-0 w-full"}
+        transition-all duration-300 ease-in-out`}
       >
         {localStorage.getItem("token") ? (
           <MainHeader
             handleRightSidebarToggle={handleRightSidebarToggle}
-            isDrawerOpen={isDrawerOpen} 
-            />
+            isDrawerOpen={isDrawerOpen}
+          />
         ) : (
           <Header
             openMenubar={openMenubar}
             handleDrawerToggle={handleDrawerToggle}
-
           />
         )}
         <div className="overflow-auto">
@@ -90,27 +74,25 @@ function DefaultLayout() {
         </div>
         <MobileMenubar />
       </div>
-     
+
       {!isMobile && (isBetslipOpen || isChatOpen) && (
         <div
           className={`fixed right-0 bg-[#0f212e] text-white h-full overflow-hidden
-           ${isDrawerOpen ? "w-72: w-0 md:w-[60%] lg:w-[25%]" : "w-0"} 
+           ${isDrawerOpen ? "w-72 md:w-[60%] lg:w-[25%]" : "w-0"} 
            transition-all duration-300 ease-in-out`}
-         
         >
           <RightSidebar
             isDrawerOpen={isDrawerOpen}
-            toggleDrower={handleRightSidebarToggle}
+            handleRightSidebarToggle={handleRightSidebarToggle} // Correct prop name
           />
         </div>
       )}
-
-
     </div>
   );
 }
 
 export default DefaultLayout;
+
 // import React, { useState, useEffect } from "react";
 // import Sidebar from "../components/Sidebar";
 // import Header from "../components/Header";

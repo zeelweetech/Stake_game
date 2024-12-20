@@ -1,71 +1,56 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeBetslipModal } from "../features/auth/betSlipSlice";
 import { closeChatModal } from "../features/auth/chatSlice";
-import Betslip from "../views/rightSidebarView/betSlip/betSlip"
+import Betslip from "../views/rightSidebarView/betSlip/betSlip";
 import ChatApp from "../views/rightSidebarView/chat/chatInRightSidebar";
 import PropTypes from "prop-types";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-export const RightSidebar = ({ type, isDrawerOpen, handleRightSidebarToggle, onClose}) => {
+export const RightSidebar = ({ type, isDrawerOpen, handleRightSidebarToggle, onClose }) => {
   const dispatch = useDispatch();
-  const { isBetslipOpen } = useSelector(
-    (state) => ({
-      isBetslipOpen: state.betslip.isBetslipOpen,
-    }),
-    
-  );
-  const { isChatOpen } = useSelector(
-    (state) => ({
-      isChatOpen: state.chat.isChatOpen,
-    }),
-  );
- const handleCloseBetslip = () => {
+  const { isBetslipOpen } = useSelector((state) => ({
+    isBetslipOpen: state.betslip.isBetslipOpen,
+  }));
+
+  const { isChatOpen } = useSelector((state) => ({
+    isChatOpen: state.chat.isChatOpen,
+  }));
+
+  const handleCloseBetslip = () => {
     dispatch(closeBetslipModal());
+    handleRightSidebarToggle();
   };
+
   const handleCloseChat = () => {
     dispatch(closeChatModal());
-    // handleRightSidebarToggle()
+   handleRightSidebarToggle(); 
   };
 
   console.log("isBetslipOpen", isBetslipOpen);
 
   return (
-    <div>
- {/* <div className="relative bg-[#0f212e] inline-block text-white rounded-md shadow-lg h-screen">
-      
-      <IconButton onClick={onClose} sx={{ color: "white" }}>
-        <CloseIcon />
-      </IconButton> */}
-          {isBetslipOpen &&  (
-            <>
-              <div className="text-lg font-bold bg-[#0f212e]">
-                {console.log("*****************************************************************************************************************")}
-                <Betslip onClose={handleCloseBetslip} />
-              </div>
-              
-            </>
-          )}
-         <div>
-         {isChatOpen &&  (
-            <>
-              <div className="text-lg font-bold bg-[#0f212e]">
-                {console.log("*****?????????????**********************************")}
-                <ChatApp onClose={handleCloseChat} />
-              </div>
-              
-            </>
-          )}
-
+    <div className="bg-[#0f212e]">
+      {isBetslipOpen && (
+        <div className="text-lg font-bold bg-[#0f212e]">
+          <Betslip onClose={handleCloseBetslip} />
         </div>
+      )}
+      <div>
+        {isChatOpen && (
+          <div className="text-lg font-bold bg-[#0f212e]">
+            <ChatApp onClose={handleCloseChat} />
+          </div>
+        )}
       </div>
-  // </div>
+    </div>
   );
-}
+};
+
 RightSidebar.propTypes = {
   type: PropTypes.arrayOf().isRequired,
-  isDrawerOpen: PropTypes.bool.isRequired
-}
+  isDrawerOpen: PropTypes.bool.isRequired,
+};
 
 // import { useDispatch, useSelector } from "react-redux";
 // import { closeBetslipModal } from "../features/auth/betSlipSlice";
