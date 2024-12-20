@@ -36,12 +36,13 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
   const handleChatClick = () => {
     dispatch(openChatModal())
     handleRightSidebarToggle()
+    setIsSidebarOpen(false);
   };
 
   const handleBetslipClick = () => {
     dispatch(openBetslipModal());
-    dispatch(openBetslipModal())
     handleRightSidebarToggle();
+    setIsSidebarOpen(false);
   };
 
   // const toggleTooltip = () => {
