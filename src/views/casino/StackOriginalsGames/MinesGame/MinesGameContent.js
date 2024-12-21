@@ -296,7 +296,7 @@ function MinesGameContent() {
 
   const handleClick = (index) => {
     const maxSelectableTiles = 25 - mineValue?.mines
-    if (gamesOver || revealed[index] || (isManual && !gameBet) || (!isManual && preSelectTile.length >= maxSelectableTiles)) return;
+    if (gamesOver || revealed[index] || (isManual && !gameBet)) return;
 
     if (isManual) {
       const audio = new Audio(winSound);
@@ -309,9 +309,13 @@ function MinesGameContent() {
         betId: gameStart?.betId,
       });
     }
+
     if (!isManual) {
-      const newTile = index;
-      dispatch(setPreSelectTile([...preSelectTile, newTile]));
+      if (preSelectTile.includes(index)) {
+        dispatch(setPreSelectTile(preSelectTile.filter((tile) => tile !== index)));
+      } else if (preSelectTile.length < maxSelectableTiles) {
+        dispatch(setPreSelectTile([...preSelectTile, index]));
+      }
     }
   };
 
