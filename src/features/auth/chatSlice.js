@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isChatOpen: false,
+  isChat: "chats"
 };
 
 export const chatSlice = createSlice({
@@ -14,8 +15,12 @@ export const chatSlice = createSlice({
     closeChatModal: (state) => {
       state.isChatOpen = false;
     },
+    setChatType: (state, action) => {
+      state.isChat = action.payload;
+    },
+
   },
 });
 
-export const { openChatModal, closeChatModal } = chatSlice.actions;
+export const { openChatModal, closeChatModal, setChatType } = chatSlice.actions;
 export default chatSlice.reducer;

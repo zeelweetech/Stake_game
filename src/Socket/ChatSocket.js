@@ -7,4 +7,5 @@ export const ChatSocket = io(ChatURL, {
   extraHeaders: {
     Authorization: `token: ${token}`,
   },
+ 
 });
