@@ -21,8 +21,9 @@ function GameFooter() {
   const [selectedOption, setSelectedOption] = useState("All");
   const [isRotated, setIsRotated] = useState(false);
   const [activeButton, setActiveButton] = useState("seeds");
-  const [selectedGame, setSelectedGame] = useState("");
   const [activeTooltip, setActiveTooltip] = useState(null);
+  const [selectedGame, setSelectedGame] = useState("mines");
+  const [value, setValue] = useState(0);
   const [isScreenSmall, setIsScreenSmall] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -115,6 +116,19 @@ function GameFooter() {
     }, 2000);
   };
 
+  const handleDecrement = () => {
+    setValue((prevValue) => Math.max(prevValue - 1, 0)); // Decrease value, ensuring it doesn't go below 0
+  };
+
+  const handleIncrement = () => {
+    setValue((prevValue) => prevValue + 1); // Increase value
+  };
+
+  const handleChange = (e) => {
+    const newValue = Math.max(e.target.value, 0); // Ensure the value is non-negative
+    setValue(newValue);
+  };
+
   // const handleSeedClick = () => {
   //   setActiveButton("seeds");
   // };
@@ -179,11 +193,7 @@ function GameFooter() {
                 <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-5px] left-1/2 transform -translate-x-1/2"></div>
               </div>
             </div>
-            <ol className="relative border-s  h-10 border-[#2f4553]">
-              <li>
-                <a className="inline-flex"></a>
-              </li>
-            </ol>
+            <ol className="relative border-s h-10 border-[#2f4553]"></ol>
           </div>
         </div>
         <div>
@@ -742,7 +752,6 @@ function GameFooter() {
                 </div>
               </div>
 
-              {/* Conditional Content */}
               {activeButton === "seeds" && (
                 <div className="p-4 md:w-[31.25rem] md:h-[16.6rem] w-[20rem]">
                   <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mb-1">
@@ -759,8 +768,8 @@ function GameFooter() {
                     </div>
                     <div className="relative group">
                       <button
-                        className="py-[0.8125rem] px-[1rem] h-[2.7rem] w-[2.875rem] rounded-r flex justify-center items-center text-sm font-bold bg-[#2F4553] hover:bg-[#2F4553]"
-                        onClick={() => handleCopy(3)}
+                        className="py-[0.8125rem] px-[1rem] h-[2.7rem] w-[2.875rem] rounded-r flex justify-center items-center text-sm font-bold bg-[#2F4553] hover:bg-[#557086]"
+                        onClick={() => handleCopy(1)}
                       >
                         <span>
                           <svg
@@ -772,7 +781,7 @@ function GameFooter() {
                           </svg>
                         </span>
                       </button>
-                      {activeTooltip === 3 && (
+                      {activeTooltip === 1 && (
                         <div className="absolute left-1/2 w-20 h-10 -mt-24 transform -translate-x-1/2 bg-white text-[#0f212e] text-sm font-semibold px-2 py-1 rounded opacity-100 pointer-events-auto transition-opacity duration-200 flex justify-center items-center">
                           Copied!
                           <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-5px] left-1/2 transform -translate-x-1/2"></div>
@@ -795,8 +804,8 @@ function GameFooter() {
                       </div>
                       <div className="relative group">
                         <button
-                          className="py-[0.8125rem] px-[1rem] h-[2.7rem] w-[2.875rem] rounded-r flex justify-center items-center text-sm font-bold bg-[#2F4553] hover:bg-[#2F4553]"
-                          onClick={() => handleCopy(3)}
+                          className="py-[0.8125rem] px-[1rem] h-[2.7rem] w-[2.875rem] rounded-r flex justify-center items-center text-sm font-bold bg-[#2F4553] hover:bg-[#557086]"
+                          onClick={() => handleCopy(2)}
                         >
                           <span>
                             <svg
@@ -808,7 +817,7 @@ function GameFooter() {
                             </svg>
                           </span>
                         </button>
-                        {activeTooltip === 3 && (
+                        {activeTooltip === 2 && (
                           <div className="absolute left-1/2 w-20 h-10 -mt-24 transform -translate-x-1/2 bg-white text-[#0f212e] text-sm font-semibold px-2 py-1 rounded opacity-100 pointer-events-auto transition-opacity duration-200 flex justify-center items-center">
                             Copied!
                             <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-5px] left-1/2 transform -translate-x-1/2"></div>
@@ -835,7 +844,10 @@ function GameFooter() {
                       Rotate Seed Pair
                     </h1>
                     <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
-                      <label>Active Client Seed</label>
+                      <label>
+                        New Client Seed{" "}
+                        <span className="text-[#ED4163]">*</span>
+                      </label>
                     </div>
 
                     <div className="relative flex rounded">
@@ -861,7 +873,7 @@ function GameFooter() {
                       </div>
                       <div className="relative group">
                         <button
-                          className="py-[0.8125rem] px-[1rem] h-[2.7rem] w-[2.875rem] rounded-r flex justify-center items-center text-sm font-bold bg-[#2F4553] hover:bg-[#2F4553]"
+                          className="py-[0.8125rem] px-[1rem] h-[2.7rem] w-[2.875rem] rounded-r flex justify-center items-center text-sm font-bold bg-[#2F4553] hover:bg-[#557086]"
                           onClick={() => handleCopy(3)}
                         >
                           <span>
@@ -900,12 +912,13 @@ function GameFooter() {
                           </div>
                         </div>
                       </div>
+
                       <div className="w-full p-4 bg-[#0f212E] overflow-auto max-h-screen">
                         <label className="block mb-2 text-sm font-medium select-none text-[#B1BaD3]">
                           Game
                         </label>
                         <select
-                          className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                          className="w-full p-2.5 font-semibold bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
                           value={selectedGame}
                           onChange={(e) => setSelectedGame(e.target.value)}
                         >
@@ -919,8 +932,7 @@ function GameFooter() {
                           <option value="slide">Slide</option>
                         </select>
 
-                        {selectedGame === "crash" ||
-                        selectedGame === "plinko" ? (
+                        {selectedGame === "mines" ? (
                           <>
                             <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
                               Client Seed
@@ -941,12 +953,17 @@ function GameFooter() {
                             <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3] select-none">
                               Nonce
                             </label>
-                            <div className="flex rounded bg-[#2F4553]">
+                            <div className="flex rounded group bg-[#2F4553]">
                               <input
-                                className="w-full p-2.5 rounded-s-md text-white border-2 border-[#2F4553] hover:border-[#557086] bg-[#0f212e] focus:outline-none"
+                                className="w-full p-2.5 rounded-s-md text-white border-2 border-[#2F4553] group-hover:border-[#557086] bg-[#0f212e] focus:outline-none"
                                 type="number"
+                                value={value}
+                                onChange={handleChange}
                               />
-                              <button className="w-16 hover:bg-[#5c849e68]">
+                              <button
+                                className="w-16 hover:bg-[#557086]"
+                                onClick={handleDecrement}
+                              >
                                 <KeyboardArrowDownIcon fontSize="small" />
                               </button>
                               <Divider
@@ -958,26 +975,131 @@ function GameFooter() {
                                   width: "2px",
                                 }}
                               />
-                              <button className="w-16 hover:bg-[#5c849e68]">
+                              <button
+                                className="w-16 hover:bg-[#557086]"
+                                onClick={handleIncrement}
+                              >
+                                <KeyboardArrowUpIcon fontSize="small" />
+                              </button>
+                            </div>
+                            <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3] select-none">
+                              Mines
+                            </label>
+                            <select className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                              <option value="13">13</option>
+                              <option value="14">14</option>
+                              <option value="18">15</option>
+                              <option value="16">16</option>
+                              <option value="17">17</option>
+                              <option value="18">18</option>
+                              <option value="19">19</option>
+                              <option value="20">20</option>
+                              <option value="21">21</option>
+                              <option value="22">22</option>
+                              <option value="23">23</option>
+                              <option value="24">24</option>
+                            </select>
+                            <div className="text-[#B1BaD3] text-sm font-semibold hover:text-white flex justify-center mt-2">
+                              View Calculation Breakdown
+                            </div>
+                          </>
+                        ) : selectedGame === "crash" ? (
+                          <>
+                            <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                              Hash
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                            />
+                            <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                              Seed
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                            />
+                            <div className="text-[#B1BaD3] text-sm font-semibold hover:text-white flex justify-center mt-2">
+                              View Calculation Breakdown
+                            </div>
+                          </>
+                        ) : selectedGame === "plinko" ? (
+                          <>
+                            <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                              Client Seed
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                            />
+
+                            <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                              Server Seed
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                            />
+
+                            <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3] select-none">
+                              Nonce
+                            </label>
+                            <div className="flex rounded group bg-[#2F4553]">
+                              <input
+                                className="w-full p-2.5 rounded-s-md text-white border-2 border-[#2F4553] group-hover:border-[#557086] bg-[#0f212e] focus:outline-none"
+                                type="number"
+                                value={value}
+                                onChange={handleChange}
+                              />
+                              <button
+                                className="w-16 hover:bg-[#557086]"
+                                onClick={handleDecrement}
+                              >
+                                <KeyboardArrowDownIcon fontSize="small" />
+                              </button>
+                              <Divider
+                                flexItem
+                                orientation="vertical"
+                                sx={{
+                                  my: 1.5,
+                                  backgroundColor: "#1A2c38",
+                                  width: "2px",
+                                }}
+                              />
+                              <button
+                                className="w-16 hover:bg-[#557086]"
+                                onClick={handleIncrement}
+                              >
                                 <KeyboardArrowUpIcon fontSize="small" />
                               </button>
                             </div>
 
-                            <label className="block mb-2 text-sm font-medium select-none text-[#B1BaD3]">
-                              Rish
+                            <label className="block mt-2 mb-2 text-sm font-medium hover:text-white text-[#B1BaD3] select-none">
+                              Risk
                             </label>
                             <select className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm">
-                              <option selected></option>
-                              <option>Low</option>
+                              {/* <option selected></option> */}
+                              <option value="low">Low</option>
                               <option value="mediun">Mediun</option>
                               <option value="high">High</option>
                             </select>
 
-                            <label className="block mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                            <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3] select-none">
                               Rows
                             </label>
                             <select className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm">
-                              <option></option>
                               <option value="8">8</option>
                               <option value="9">9</option>
                               <option value="10">10</option>
@@ -988,17 +1110,166 @@ function GameFooter() {
                               <option value="15">15</option>
                               <option value="16">16</option>
                             </select>
-                            {selectedGame === "crash" && (
-                              <>
-                                <label className="block mt-2 mb-2 text-sm text-[#B1BaD3] font-medium select-none">
-                                  Seed
-                                </label>
-                                <input
-                                  type="text"
-                                  className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
-                                />
-                              </>
-                            )}
+                            <div className="text-[#B1BaD3] text-sm hover:text-white font-semibold flex justify-center mt-2">
+                              View Calculation Breakdown
+                            </div>
+                          </>
+                        ) : selectedGame === "wheel" ? (
+                          <>
+                            <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                              Client Seed
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                            />
+
+                            <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                              Server Seed
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                            />
+
+                            <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3] select-none">
+                              Nonce
+                            </label>
+                            <div className="flex rounded group bg-[#2F4553]">
+                              <input
+                                className="w-full p-2.5 rounded-s-md text-white border-2 border-[#2F4553] group-hover:border-[#557086] bg-[#0f212e] focus:outline-none"
+                                type="number"
+                                value={value}
+                                onChange={handleChange}
+                              />
+                              <button
+                                className="w-16 hover:bg-[#557086]"
+                                onClick={handleDecrement}
+                              >
+                                <KeyboardArrowDownIcon fontSize="small" />
+                              </button>
+                              <Divider
+                                flexItem
+                                orientation="vertical"
+                                sx={{
+                                  my: 1.5,
+                                  backgroundColor: "#1A2c38",
+                                  width: "2px",
+                                }}
+                              />
+                              <button
+                                className="w-16 hover:bg-[#557086]"
+                                onClick={handleIncrement}
+                              >
+                                <KeyboardArrowUpIcon fontSize="small" />
+                              </button>
+                            </div>
+                            <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3] select-none">
+                              Risk
+                            </label>
+                            <select className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm">
+                              <option>Low</option>
+                              <option value="mediun">Mediun</option>
+                              <option value="high">High</option>
+                            </select>
+
+                            <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3] select-none">
+                              Segment
+                            </label>
+                            <select className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm">
+                              <option value="10">10</option>
+                              <option value="20">20</option>
+                              <option value="30">30</option>
+                              <option value="40">40</option>
+                              <option value="50">50</option>
+                            </select>
+                            <div className="text-[#B1BaD3] hover:text-white text-sm font-semibold flex justify-center mt-2">
+                              View Calculation Breakdown
+                            </div>
+                          </>
+                        ) : selectedGame === "dragontower" ? (
+                          <>
+                            <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                              Client Seed
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                            />
+
+                            <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                              Server Seed
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                            />
+
+                            <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3] select-none">
+                              Nonce
+                            </label>
+                            <div className="flex rounded group bg-[#2F4553]">
+                              <input
+                                className="w-full p-2.5 rounded-s-md text-white border-2 border-[#2F4553] group-hover:border-[#557086] bg-[#0f212e] focus:outline-none"
+                                type="number"
+                                value={value}
+                                onChange={handleChange}
+                              />
+                              <button
+                                className="w-16 hover:bg-[#557086]"
+                                onClick={handleDecrement}
+                              >
+                                <KeyboardArrowDownIcon fontSize="small" />
+                              </button>
+                              <Divider
+                                flexItem
+                                orientation="vertical"
+                                sx={{
+                                  my: 1.5,
+                                  backgroundColor: "#1A2c38",
+                                  width: "2px",
+                                }}
+                              />
+                              <button
+                                className="w-16 hover:bg-[#557086]"
+                                onClick={handleIncrement}
+                              >
+                                <KeyboardArrowUpIcon fontSize="small" />
+                              </button>
+                            </div>
+                            <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3] select-none">
+                              Difficulty
+                            </label>
+                            <select className="w-full p-2.5 font-semibold bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm">
+                              <option value="easy">Easy</option>
+                              <option value="mediun">Mediun</option>
+                              <option value="hard">Hard</option>
+                              <option value="expert">Expert</option>
+                              <option value="master">Master</option>
+                            </select>
+                            <div className="text-[#B1BaD3] hover:text-white text-sm font-semibold flex justify-center mt-2">
+                              View Calculation Breakdown
+                            </div>
+                          </>
+                        ) : selectedGame === "slide" ? (
+                          <>
+                            <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                              Hash
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                            />
+                            <label className="block mt-2 mb-2 text-sm font-medium select-none text-[#B1BaD3]">
+                              Seed
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm"
+                            />
+                            <div className="text-[#B1BaD3] hover:text-white text-sm font-semibold flex justify-center mt-2">
+                              View Calculation Breakdown
+                            </div>
                           </>
                         ) : (
                           <>
@@ -1021,12 +1292,17 @@ function GameFooter() {
                             <label className="block mt-2 mb-2 text-sm font-medium text-[#B1BaD3] select-none">
                               Nonce
                             </label>
-                            <div className="flex rounded bg-[#2F4553]">
+                            <div className="flex rounded group bg-[#2F4553]">
                               <input
-                                className="w-full p-2.5 rounded-s-md text-white border-2 border-[#2F4553] hover:border-[#557086] bg-[#0f212e] focus:outline-none"
+                                className="w-full p-2.5 rounded-s-md text-white border-2 border-[#2F4553] group-hover:border-[#557086] bg-[#0f212e] focus:outline-none"
                                 type="number"
+                                value={value}
+                                onChange={handleChange}
                               />
-                              <button className="w-16 hover:bg-[#5c849e68]">
+                              <button
+                                className="w-16 hover:bg-[#557086]"
+                                onClick={handleDecrement}
+                              >
                                 <KeyboardArrowDownIcon fontSize="small" />
                               </button>
                               <Divider
@@ -1038,11 +1314,14 @@ function GameFooter() {
                                   width: "2px",
                                 }}
                               />
-                              <button className="w-16 hover:bg-[#5c849e68]">
+                              <button
+                                className="w-16 hover:bg-[#557086]"
+                                onClick={handleIncrement}
+                              >
                                 <KeyboardArrowUpIcon fontSize="small" />
                               </button>
                             </div>
-                            <div className="text-black flex justify-center p-2">
+                            <div className="text-[#B1BaD3] hover:text-white text-sm font-semibold flex justify-center mt-2">
                               View Calculation Breakdown
                             </div>
                           </>

@@ -14,7 +14,7 @@ import { getWallet } from "../../../../services/LoginServices";
 import { KenoSocket } from "../../../../socket";
 import { setIsSwiper, setKenoStatusData, setStopAutoBet, setValues } from "../../../../features/casino/kenoSlice";
 
-function SlideGameSidebar() {
+function KenoGameSidebar() {
   const dispatch = useDispatch();
   const decoded = decodedToken();
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
@@ -908,4 +908,4 @@ function SlideGameSidebar() {
   );
 }
 
-export default SlideGameSidebar;
+export default KenoGameSidebar;
