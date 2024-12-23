@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import bombIcon from "../../../../assets/img/bomb.svg";
@@ -19,6 +19,7 @@ import {
   setPreSelectTile,
   setAutoBetResult,
   setAutoBet,
+  setCashoutResult,
 } from "../../../../features/casino/minesSlice";
 import toast from "react-hot-toast";
 import { setWallet } from "../../../../features/auth/authSlice";
@@ -29,10 +30,11 @@ function MinesGameContent() {
   const [images, setImages] = useState(Array(25).fill(null));
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
-  const [cashoutResult, setCashoutResult] = useState(null);
+  // const [cashoutResult, setCashoutResult] = useState(null);
   const [fundsToastShown, setFundsToastShown] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showautoBetResult, setShowautoBetResult] = useState(false);
+  const gameOverProcessedRef = useRef(false);
   const {
     isManual,
     gamesOver,
@@ -43,6 +45,7 @@ function MinesGameContent() {
     restored,
     preSelectTile,
     autoBetResult,
+    cashoutResult,
   } = useSelector((state) => state.minesGame);
   const decoded = decodedToken();
 
@@ -115,6 +118,7 @@ function MinesGameContent() {
     setRevealed(Array(25).fill(false));
     setZoomClass(Array(25).fill(false));
     dispatch(setRestoredMultiplier("0.00"));
+    gameOverProcessedRef.current = false;
   });
 
   // game tile selected event
@@ -147,12 +151,15 @@ function MinesGameContent() {
 
   // game Over event
   MineSocket.on("gameOver", (data) => {
-    const { clickedMine, remainingMines } = data;
-    handleGameOver(clickedMine, remainingMines);
-    dispatch(setShowFields(false));
-    dispatch(setTileSelect({}))
-    dispatch(setRestored({}))
-    setCashoutResult(false)
+    if (!gameOverProcessedRef.current) {
+      const { clickedMine, remainingMines } = data;
+      handleGameOver(clickedMine, remainingMines);
+      dispatch(setShowFields(false));
+      dispatch(setTileSelect({}))
+      dispatch(setRestored({}))
+      dispatch(setCashoutResult(false))
+      gameOverProcessedRef.current = true;
+    }
   });
 
   const handleGameOver = (clickedMine, remainingMines) => {
@@ -175,13 +182,15 @@ function MinesGameContent() {
     });
 
     // const audio = new Audio(bombSound);
+    // console.log("audio *-*-*-*-", audio);
     // audio.play();
+    console.log("Game Over triggered. Playing audio.");
+    const audio = new Audio(bombSound);
+    audio.play();
 
-    // setTimeout(() => {
     revealAll(newImages);
     setImages(newImages);
     setRevealed(newRevealed);
-    // }, 1000);
 
     dispatch(setGamesOver(true));
     dispatch(setGameBet(false));
@@ -206,7 +215,7 @@ function MinesGameContent() {
   };
 
   MineSocket.on("cashoutSuccess", (data) => {
-    setCashoutResult(data);
+    dispatch(setCashoutResult(data))
 
     const newImages = Array(25).fill(null);
     const newRevealed = Array(25).fill(false);
@@ -299,8 +308,10 @@ function MinesGameContent() {
     if (gamesOver || revealed[index] || (isManual && !gameBet)) return;
 
     if (isManual) {
-      const audio = new Audio(winSound);
-      audio.play();
+      if (!gameOverProcessedRef.current) {
+        const audio = new Audio(winSound);
+        audio.play();
+      }
 
       MineSocket.emit("selectTile", {
         userId: decoded?.userId.toString(),

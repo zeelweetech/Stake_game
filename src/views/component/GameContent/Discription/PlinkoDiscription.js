@@ -15,7 +15,7 @@ const PlinkoDiscription = () => {
             </button>
             <div>
               <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-1 py-0.5 rounded-2xl">
-                Stake Originals
+                Listor Originals
               </button>
             </div>
             <p className="text-[15px] py-4">
@@ -26,7 +26,7 @@ const PlinkoDiscription = () => {
             </p>
             <p className="text-[15px] pb-3">
               With the ability to customize your risk factor and multipliers
-              rest assured that this version of Plinko is a Stake Original
+              rest assured that this version of Plinko is a Listor Original
               online game suited for everyone to play for fun and free at our
               social casino !
             </p>
@@ -70,7 +70,7 @@ const PlinkoDiscription = () => {
         <div>
           <h1 className="text-white text-xl font-bold py-3">Playing Options</h1>
           <p className="text-[15px] pb-3">
-            In addition to the verifiable fairness of results, Stake also offers
+            In addition to the verifiable fairness of results, Listor also offers
             advanced playing features for games like Plinko. These include:
           </p>
           <ul className="list-disc pl-8">
@@ -338,13 +338,13 @@ const PlinkoDiscription = () => {
           <p className="text-[15px] py-3">
             Choosing high risk options in Plinko can be exhilarating for players
             who are willing to accept the increased risk for the chance to win.
-            This strategy is ideal for those who prefer high-stakes gameplay and
+            This strategy is ideal for those who prefer high-Listors gameplay and
             are prepared to face the challenges that come with it.
           </p>
         </div>
         <div>
           <h1 className="text-white text-xl font-bold pb-3">
-            Origins of Plinko: From Pachinko Parlors to Bob Barker to Stake.us
+            Origins of Plinko: From Pachinko Parlors to Bob Barker to Listor.us
           </h1>
           <p className="text-[15px] pb-3">
             Plinko traces its origins back to a traditional Japanese game called
@@ -362,7 +362,7 @@ const PlinkoDiscription = () => {
             slots at the bottom.
           </p>
           <p className="text-[15px] pb-3">
-            While the basic concept of Plinko has remained the same, the Stake
+            While the basic concept of Plinko has remained the same, the Listor
             version offers players a more customizable experience. Players can
             control the risk level and number of rows in the pin pyramid,
             allowing them to create a game that suits their preferences and
@@ -371,19 +371,19 @@ const PlinkoDiscription = () => {
           <p className="text-[15px] pb-3">
             The Price is Right version focuses more on the contestant's ability
             to guess prices accurately to earn additional chips, whereas the
-            Stake version emphasizes bankroll management and strategy.
+            Listor version emphasizes bankroll management and strategy.
           </p>
           <p className="text-[15px] pb-3">
             Plinko's roots can be traced back to Japan's traditional Pachinko
             game and while The Price is Right version share a captivating
-            simplicity, Stake's adaptation adds unique features tailored to
+            simplicity, Listor's adaptation adds unique features tailored to
             online players. The enduring appeal of Plinko makes it a timeless
             favorite among game enthusiasts worldwide.
           </p>
         </div>
         <div>
           <h1 className="text-white text-xl font-bold pb-3">
-            Other Popular Stake Original Casino Games
+            Other Popular Listor Original Casino Games
           </h1>
           <p className="text-[15px] pb-3">
             If you loved the thrilling gameplay of Plinko, be sure to check out
@@ -399,7 +399,7 @@ const PlinkoDiscription = () => {
           </p>
           <p className="text-[15px] pb-3">
             Be sure to take advantage of our casino promotions and bonuses , or
-            take things to the next level by becoming a Stake VIP Club member
+            take things to the next level by becoming a Listor VIP Club member
             today!.
           </p>
         </div>

@@ -15,7 +15,7 @@ const WheelDiscription = () => {
             </button>
             <div>
               <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-1 py-0.5 rounded-2xl">
-                Stake Originals
+                Listor Originals
               </button>
             </div>
             <p className="text-[15px] py-4">
@@ -23,7 +23,7 @@ const WheelDiscription = () => {
               wheel for your chance to land big multiplier wins.
             </p>
             <p className="text-[15px] pb-3">
-              Wheel is a brilliant Stake Original game with simple gameplay
+              Wheel is a brilliant Listor Original game with simple gameplay
               based on the spin of a big wheel. If the wheel spins in your
               favor, you could land the maximum win of 49.50x the amount played.
             </p>
@@ -34,7 +34,7 @@ const WheelDiscription = () => {
             How to Play Wheel & Gameplay
           </h1>
           <p className="text-[15px] py-3">
-            To play Wheel at Stake social casino , you must first create an
+            To play Wheel at Listor social casino , you must first create an
             account. This takes just a few minutes, and you can then verify your
             details to get started.
           </p>
@@ -63,7 +63,7 @@ const WheelDiscription = () => {
           </p>
           <p className="text-[15px] pb-3">
             Check out our guide on how to play Wheel , or for more helpful
-            information regarding Stake Original gameplay and to find out more
+            information regarding Listor Original gameplay and to find out more
             about how our online games work, read through our comprehensive
             online social casino guide.
           </p>
@@ -73,7 +73,7 @@ const WheelDiscription = () => {
             Theme & Graphics
           </h1>
           <p className="text-[15px] pb-3">
-            Wheel is a Stake Original game with a simple user interface and
+            Wheel is a Listor Original game with a simple user interface and
             clear graphics. When you open the game, you will see 2 sides of the
             screen. On the left is space to place your play, adjust your risk,
             and select the number of segments.
@@ -84,7 +84,7 @@ const WheelDiscription = () => {
             screen indicate how much you can win if those segments come up.
           </p>
           <p className="text-[15px] pb-3">
-            Check out our other titles that are exclusive to Stake !
+            Check out our other titles that are exclusive to Listor !
           </p>
         </div>
         <div>
@@ -163,7 +163,7 @@ const WheelDiscription = () => {
             Wheel Features & Bonuses
           </h1>
           <p className="text-[15px] pb-3">
-            One of the best things about Stake Original games is that they’re
+            One of the best things about Listor Original games is that they’re
             straightforward to play and light on complex mechanics and bonus
             features.
           </p>
@@ -192,11 +192,11 @@ const WheelDiscription = () => {
         </div>
         <div>
           <h1 className="text-white text-xl font-bold pb-3">
-            Popular Stake Original Games on Stake.us
+            Popular Listor Original Games on Listor.us
           </h1>
           <p className="text-[15px] pb-3">
-            Stake Original games rank among the most popular and favorite games
-            at Stake.us, as they are exclusive games that you can’t play
+            Listor Original games rank among the most popular and favorite games
+            at Listor.us, as they are exclusive games that you can’t play
             anywhere else.
           </p>
           <p className="text-[15px] pb-3">
@@ -204,7 +204,7 @@ const WheelDiscription = () => {
             awesome RTPs, offering great a high level of entertainment.
           </p>
           <p className="text-[15px] py-3">
-            If you like Wheel and want to experience similar Stake Original
+            If you like Wheel and want to experience similar Listor Original
             games, check out the following:
           </p>
           <ul className="pl-4 list-disc">
@@ -218,14 +218,14 @@ const WheelDiscription = () => {
             <li className="text-[15px] pb-2">Blue Samurai</li>
           </ul>
           <p className="text-[15px] pb-3">
-            Browse through the newest games to arrive at Stake.us so you can
-            play the latest Stake Original titles as soon as they arrive,
+            Browse through the newest games to arrive at Listor.us so you can
+            play the latest Listor Original titles as soon as they arrive,
             alongside other brilliant games from leading studios .
           </p>
           <p className="text-[15px] pb-3">
             To boost your winning chances, access our wide range of current
             promotions available and learn more about the exclusive benefits
-            offered to you via the Stake VIP Club.
+            offered to you via the Listor VIP Club.
           </p>
         </div>
         <div>
@@ -239,7 +239,7 @@ const WheelDiscription = () => {
             </tr>
             <tr>
               <td>Provider</td>
-              <td>Stake Original</td>
+              <td>Listor Original</td>
             </tr>
             <tr>
               <td>Game Type</td>

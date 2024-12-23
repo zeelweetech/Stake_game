@@ -15,7 +15,7 @@ const MinesDiscription = () => {
             </button>
             <div>
               <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-1 py-0.5 rounded-2xl">
-                Stake Originals
+                Listor Originals
               </button>
             </div>
             <p className="text-[15px] py-4">
@@ -27,10 +27,10 @@ const MinesDiscription = () => {
         </div>
         <div>
           <h1 className="text-white text-xl font-bold pt-7 ">
-            What is Mines on Stake?
+            What is Mines on Listor?
           </h1>
           <p className="text-[15px] py-3">
-            Mines is a grid-based game of chance developed by Stake where
+            Mines is a grid-based game of chance developed by Listor where
             players navigate the grid to reveal gems while avoiding bombs!
           </p>
           <p className="text-[15px] pb-3">
@@ -47,7 +47,7 @@ const MinesDiscription = () => {
           <p className="text-[15px] pb-3">
             With the freedom to adjust the number of mines and a range of
             playing options available, the gaming experience offered by Mines is
-            second to none at Stake social casino !
+            second to none at Listor social casino !
           </p>
           <p className="text-[15px] pb-3">
             Keep reading to discover more about this simple, yet exciting game,
@@ -57,7 +57,7 @@ const MinesDiscription = () => {
         </div>
         <div>
           <h1 className="text-white text-xl font-bold pb-3">
-            How to Play Mines Game on Stake Social Casino
+            How to Play Mines Game on Listor Social Casino
           </h1>
           <h5 className="text-white font-bold pb-3">Mines Gameplay</h5>
           <p className="text-[15px] pb-3">
@@ -78,11 +78,11 @@ const MinesDiscription = () => {
             As Mines is a game of random chance, with an element of human
             control in picking the tile and the ability to collect wins, it is a
             popular option for advanced strategies which is shared within the
-            Stake community
+            Listor community
           </p>
           <p className="text-[15px] py-3">
             With a 99% Return to Player (RTP) and a 1% House Edge, Mines is one
-            of the fairest social casino games online. As with all other Stake
+            of the fairest social casino games online. As with all other Listor
             Originals, Mines is a 'Provably Fair Game ' and provides one of the
             safest, trustworthy and entertaining gaming experiences available
             online!
@@ -123,12 +123,12 @@ const MinesDiscription = () => {
         </div>
         <div>
           <h1 className="text-white text-xl font-bold pb-3">
-            Other Popular Stake Original Casino Games
+            Other Popular Listor Original Casino Games
           </h1>
           <p className="text-[15px] pb-3">
             If you enjoyed the entertaining gameplay and big wins of Mines, have
             a go at some of our other thrilling online games, available to play
-            for fun and free at Stake.us !
+            for fun and free at Listor.us !
           </p>
           <p className="text-[15px] pb-3">
             Amongst our most popular games include Crash , Plinko , Keno , Limbo
@@ -144,7 +144,7 @@ const MinesDiscription = () => {
           <p className="text-[15px] pb-3">
             Don't forget to take advantage of our amazing social casino
             promotions and bonuses , or you can gain access to more exclusive
-            rewards by becoming a Stake VIP Club member !
+            rewards by becoming a Listor VIP Club member !
           </p>
         </div>
       </div>

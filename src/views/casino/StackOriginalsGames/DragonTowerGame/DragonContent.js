@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Boxsvg from "../../../../assets/svg/DragonTowerBox.svg";
 import dragonFrame from "../../../../assets/img/dragonFrame.jpg";
 import easyEgg from "../../../../assets/img/easyEgg.svg";
@@ -41,6 +41,7 @@ function DragonContent() {
   const dispatch = useDispatch();
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
+  const gameOverProcessedRef = useRef(false);
   const {
     values,
     gameBet,
@@ -97,7 +98,7 @@ function DragonContent() {
           parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -131,6 +132,7 @@ function DragonContent() {
   DragonTowerSocket.on("gameStarted", (data) => {
     setCashoutVisible(false);
     resetGame();
+    gameOverProcessedRef.current = false;
   });
 
   DragonTowerSocket.on("tileSelected", (data) => {
@@ -143,7 +145,9 @@ function DragonContent() {
     dispatch(setTileSelected({}));
     dispatch(setShowRandomField(false));
     setCashoutVisible(false);
+    gameOverProcessedRef.current = true;
 
+    console.log("Game Over triggered. Playing audio.141111111");
     const audio = new Audio(dragontowerbombSound);
     audio.play();
   });
@@ -353,13 +357,13 @@ function DragonContent() {
                         isRestoredEgg ||
                         isSelected ||
                         rowIndex === gameOverResult?.skullRowIndex
-                      ? eggImage
-                      : Boxsvg
+                        ? eggImage
+                        : Boxsvg
                     : isRestoredEgg
-                    ? eggImage
-                    : isSelected
-                    ? eggImage
-                    : Boxsvg;
+                      ? eggImage
+                      : isSelected
+                        ? eggImage
+                        : Boxsvg;
                   const isRowActive =
                     gameBet &&
                     (rowIndex === 0 ||
@@ -367,26 +371,21 @@ function DragonContent() {
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
-                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center ${
-                        isGameOver
+                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center ${isGameOver
                           ? "cursor-not-allowed bg-[#213743]"
                           : (gameBet && rowIndex === 0) ||
                             clickedBoxes[rowIndex - 1] !== undefined
-                          ? "bg-[#00e701] w-10"
-                          : "cursor-not-allowed bg-[#213743]"
-                      } ${
-                        clickedBoxes[rowIndex] !== undefined
+                            ? "bg-[#00e701] w-10"
+                            : "cursor-not-allowed bg-[#213743]"
+                        } ${clickedBoxes[rowIndex] !== undefined
                           ? "bg-[#213743] opacity-100"
                           : "opacity-50"
-                      } ${
-                        isSelected ? "opacity-100 bg-[#00e701]" : "opacity-50"
-                      } ${
-                        isGameOver ? "cursor-not-allowed" : "cursor-pointer"
-                      } ${
-                        isRowActive
+                        } ${isSelected ? "opacity-100 bg-[#00e701]" : "opacity-50"
+                        } ${isGameOver ? "cursor-not-allowed" : "cursor-pointer"
+                        } ${isRowActive
                           ? "cursor-pointer bg-[#00e701]"
                           : "cursor-not-allowed bg-[#213743]"
-                      }`}
+                        }`}
                       onClick={() =>
                         isRowActive && handleBoxClick(rowIndex, boxIndex)
                       }

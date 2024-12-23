@@ -19,12 +19,12 @@ const DragonTowerDiscription = () => {
             </button>
             <div>
               <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-1 py-0.5 rounded-2xl">
-                Stake Originals
+                Listor Originals
               </button>
             </div>
             <p className="text-[15px] py-4">
               Work your way up the Dragon Tower levels and reveal eggs along the
-              way to earn some seriously big wins, in this exciting Stake
+              way to earn some seriously big wins, in this exciting Listor
               Original online casino game!
             </p>
           </div>
@@ -34,20 +34,20 @@ const DragonTowerDiscription = () => {
             What is Dragon Tower?
           </h1>
           <p className="text-[15px] py-3">
-            Dragon Tower is a Stake Original social casino game with an oriental
+            Dragon Tower is a Listor Original social casino game with an oriental
             theme . It’s an exciting game offering a super straightforward
             gameplay experience, giving you a chance to progress through the
             game while unlocking some big multipliers along the way.
           </p>
           <p className="text-[15px] pb-3">
-            It’s one of a number of popular games by Stake, alongside the likes
+            It’s one of a number of popular games by Listor, alongside the likes
             of Limbo , Hilo , Mines , Crash , Keno , and Wheel , all of which
-            are available right now at Stake social casino.
+            are available right now at Listor social casino.
           </p>
         </div>
         <div>
           <h1 className="text-white text-xl font-bold pb-3">
-            How to Play Dragon Tower Online at Stake
+            How to Play Dragon Tower Online at Listor
           </h1>
           <p className="text-[15px] pb-3">
             The first thing to decide before playing Dragon Tower is how much
@@ -144,7 +144,7 @@ const DragonTowerDiscription = () => {
               strategy.
             </li>
             <li className="text-[15px] pb-2">
-              The more Stake Original games you play at Stake.us, the more you
+              The more Listor Original games you play at Listor.us, the more you
               can earn as part of our VIP club . Also be sure to check out our
               latest promotions and offers to increase your chances of winning
               big!
@@ -153,11 +153,11 @@ const DragonTowerDiscription = () => {
         </div>
         <div>
           <h1 className="text-white text-xl font-bold pb-3">
-            Other Popular Casino Games & Stake Originals
+            Other Popular Casino Games & Listor Originals
           </h1>
           <p className="text-[15px] pb-3">
             If you have enjoyed the gameplay in Dragon Tower, you can check out
-            other popular Stake Original games that are loved by online casino
+            other popular Listor Original games that are loved by online casino
             players worldwide, including Dice , Slide , Slots , Plinko , Limbo ,
             Mines , Crash , Tome of Life , and Diamonds !
           </p>

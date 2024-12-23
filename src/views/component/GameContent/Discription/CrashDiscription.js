@@ -15,7 +15,7 @@ const CrashDiscription = () => {
             </button>
             <div>
               <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-1 py-0.5 rounded-2xl">
-                Stake Originals
+                Listor Originals
               </button>
             </div>
             <p className="text-[15px] py-4">
@@ -34,7 +34,7 @@ const CrashDiscription = () => {
         </div>
         <div>
           <p className="text-[15px] pb-5">
-            This version of Crash is a proud Stake Original and one of the most
+            This version of Crash is a proud Listor Original and one of the most
             popular games on our online social casino .
           </p>
         </div>
@@ -65,7 +65,7 @@ const CrashDiscription = () => {
           </p>
           <p className="text-[15px] pb-3">
             One of the exciting aspects of Crash is that it is a real-time game
-            and is considered a favorite amongst the Stake Community. Every
+            and is considered a favorite amongst the Listor Community. Every
             round is the same for all active players playing Crash at that
             specific time - with a live leader board showcasing each player's
             gameplay for that round.
@@ -77,7 +77,7 @@ const CrashDiscription = () => {
           </p>
           <p className="text-[15px] pb-3">
             For more information, check out our guide on how to play Crash right
-            here on Stake.us!
+            here on Listor.us!
           </p>
         </div>
         <div>
@@ -122,10 +122,10 @@ const CrashDiscription = () => {
         </div>
         <div>
           <h1 className="text-white text-xl font-bold pb-3">
-            Other Popular Stake Original Casino Games
+            Other Popular Listor Original Casino Games
           </h1>
           <p className="text-[15px] pb-3">
-            Love the Stake Original Crash game? Then be sure to check out more
+            Love the Listor Original Crash game? Then be sure to check out more
             of our amazing online games, available to play at your fingertips
             for fun and free on our platform!
           </p>
@@ -139,7 +139,7 @@ const CrashDiscription = () => {
           <p className="text-[15px] pb-3">
             Remember, we've got a sweet sweep of amazing casino promotions and
             bonuses to take advantage of, or you can gain access to more
-            exclusive benefits by becoming a Stake VIP Club member !
+            exclusive benefits by becoming a Listor VIP Club member !
           </p>
         </div>
       </div>
