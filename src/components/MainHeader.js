@@ -17,6 +17,12 @@ import Notification from "../views/Profile/Notification";
 import { setAnchorEl } from "../features/auth/authSlice";
 import { openBetslipModal } from "../features/auth/betSlipSlice";
 import { openChatModal } from "../features/auth/chatSlice";
+import Wallet from "../views/Profile/Wallet";
+import Vault from "../views/Profile/Vault";
+import Vip from "../views/Profile/Vip";
+import Statistic from "../views/Profile/Statistic";
+import { Logout } from "@mui/icons-material";
+import LogoutDialog from "../views/Profile/Logout";
 
 function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
   const navigate = useNavigate();
@@ -24,7 +30,14 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useDispatch()
-
+  const [profilePopupOpen, setProfilePopupOpen] = useState({
+    isWalletOpen: false,
+    isVaultOpen: false,
+    isVipOpen: false,
+    isStatistic: false,
+    isNotification: false,
+    isLogoutDialog: false
+  });
   const handleMenuOpen = (event) => {
     dispatch(setAnchorEl(event.currentTarget))
   };
@@ -45,9 +58,12 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
     setIsSidebarOpen(false);
   };
 
-  // const toggleTooltip = () => {
-  //   setTooltipOpen((prev) => !prev);
-  // };
+  const toggleTooltip = () => {
+    setTooltipOpen((prev) => !prev);
+  };
+
+  const closeTooltip = () => setTooltipOpen(false);
+
 
   return (
     <div className="z-0 relative">
@@ -79,41 +95,114 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
               </p>
             </button>
 
-            <div className="group relative flex items-center">
-              <IoPerson color="white" size={16} />
-              <div
-                className="flex flex-col absolute top-full left-1/2 -translate-x-1/2 mt-2 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max max-w-xs text-center"
+            <div className="relative flex items-center">
+              <p
+                onClick={toggleTooltip}
+                className="flex items-center hover:cursor-pointer"
               >
-                <button onClick={() => navigate("/Wallet")} className="flex items-center space-x-5  py-2">
-                  <FaWallet size={20} color="#0f212e" />
-                  <p className="text-base text-[#0f212e]">Wallet</p>
-                </button>
-                <button onClick={() => navigate("/Vault")} className="flex items-center space-x-5 py-2">
-                  <PiVaultFill size={20} color="#0f212e" />
-                  <p className="text-base text-[#0f212e]">Vault</p>
-                </button>
-                <button onClick={() => navigate("/Vip")} className="flex items-center space-x-5 py-2">
-                  <MdEmojiEvents size={20} color="#0f212e" />
-                  <p className="text-base text-[#0f212e]" >VIP</p>
-                </button>
-                <button onClick={() => navigate("/Statistics")} className="flex items-center space-x-4 py-2">
-                  <LegendToggleIcon size={20} color="#0f212e" />
-                  <p className="text-base text-[#0f212e]">Statistics</p>
-                </button>
-                <button onClick={() => navigate("myBet")} className="flex items-center space-x-5 py-2">
-                  <BiSolidNotepad size={20} color="#0f212e" />
-                  <p className="text-base text-[#0f212e]">My Bets</p>
-                </button>
-                <button onClick={() => navigate("/setting")} className="flex items-center space-x-5 py-2">
-                  <MdSettings size={20} color="#0f212e" />
-                  <p className="text-base text-[#0f212e]">Setting</p>
-                </button>
-                <button onClick={() => navigate("/logout")} className="flex items-center space-x-4 py-2">
-                  <LogoutIcon size={10} color="#0f212e" />
-                  <p className="text-base text-[#0f212e]">Logout</p>
-                </button>
-                <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
-              </div>
+                <IoPerson color="white" size={16} />
+              </p>
+
+              {tooltipOpen && (
+                <div
+                  className="flex flex-col absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-50 w-max max-w-xs text-center"
+                >
+                  <button
+                    onClick={() => {
+                      setProfilePopupOpen((prev) => ({
+                        ...prev,
+                        isWalletOpen: true,
+                      }))
+                      // closeTooltip();
+                    }}
+                    className="flex items-center space-x-5 py-2"
+                  >
+                    <FaWallet size={20} color="#0f212e" />
+                    <p className="text-base text-[#0f212e]">Wallet</p>
+                  </button>
+                  {profilePopupOpen.isWalletOpen && <Wallet closeWallet={() => setProfilePopupOpen({ ...profilePopupOpen, isWalletOpen: false })} />}
+
+                  <button
+                    onClick={() => {
+                      setProfilePopupOpen((prev) => ({
+                        ...prev,
+                        isVaultOpen: true,
+
+                      }))
+                    }}
+                    className="flex items-center space-x-5 py-2"
+                  >
+                    <PiVaultFill size={20} color="#0f212e" />
+                    <p className="text-base text-[#0f212e]">Vault</p>
+                  </button>
+                  {profilePopupOpen.isVaultOpen && <Vault closeVault={() => setProfilePopupOpen({ ...profilePopupOpen, isVaultOpen: false })} />}
+
+
+                  <button
+                    onClick={() => {
+                      setProfilePopupOpen((prev) => ({
+                        ...prev,
+                        isVipOpen: true,
+
+                      }))
+                    }}
+                    className="flex items-center space-x-5 py-2"
+                  >
+                    <MdEmojiEvents size={20} color="#0f212e" />
+                    <p className="text-base text-[#0f212e]">VIP</p>
+                  </button>
+                  {profilePopupOpen.isVipOpen && <Vip closeVip={() => setProfilePopupOpen({ ...profilePopupOpen, isVipOpen: false })} />}
+
+
+                  <button
+                    onClick={() => {
+                      setProfilePopupOpen((prev) => ({
+                        ...prev,
+                        isStatistic: true,
+                      }))
+                    }}
+                    className="flex items-center space-x-4 py-2"
+                  >
+                    <MdEmojiEvents size={20} color="#0f212e" />
+                    <p className="text-base text-[#0f212e]">Statistics</p>
+                  </button>
+                  {profilePopupOpen.isStatistic && <Statistic closeStatistic={() => setProfilePopupOpen({ ...profilePopupOpen, isStatistic: false })} />}
+
+
+                  <button
+                    onClick={() => navigate("/myBet")}
+                    className="flex items-center space-x-5 py-2"
+                  >
+                    <BiSolidNotepad size={20} color="#0f212e" />
+                    <p className="text-base text-[#0f212e]">My Bets</p>
+                  </button>
+
+                  <button
+                    onClick={() => navigate("/setting")}
+                    className="flex items-center space-x-5 py-2"
+                  >
+                    <MdSettings size={20} color="#0f212e" />
+                    <p className="text-base text-[#0f212e]">Setting</p>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setProfilePopupOpen((prev) => ({
+                        ...prev,
+                        isLogoutDialog: true,
+                      }))
+                    }}
+                    className="flex items-center space-x-4 py-2"
+                  >
+                    <LogoutIcon size={10} color="#0f212e" />
+                    <p className="text-base text-[#0f212e]">Logout</p>
+                  </button>
+                  {profilePopupOpen.isLogoutDialog && <LogoutDialog closeLogoutDialog={() => setProfilePopupOpen({ ...profilePopupOpen, isLogoutDialog: false })} />}
+
+
+                  <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
+                </div>
+              )}
             </div>
 
             <IconButton onClick={handleMenuOpen} data-menu-type="notifications">
@@ -123,32 +212,43 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
             </IconButton>
             <Notification />
 
-            <div className="relative flex items-center">
+            <div className="relative flex items-center z-50">
               <p onClick={toggleSidebar} className="flex items-center hover:cursor-pointer">
                 <IoIosChatboxes color="white" size={18} />
               </p>
+
               {isSidebarOpen && (
-                <div
-                  className="flex flex-col absolute top-full right-0 left-3 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max max-w-xs text-center"
-                >
-                  <button
-                    className="flex items-center space-x-4 py-2"
-                    onClick={handleChatClick}
+                <>
+
+                  <div
+                    className="flex flex-col absolute top-full right-0 left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-lg z-[9999] w-max max-w-xs text-center"
                   >
-                    <BsChatDotsFill size={20} color="#0f212e" />
-                    <p className="text-base text-[#0f212e]">Chat</p>
-                  </button>
-                  <button
-                    className="flex items-center space-x-4 py-2"
-                    onClick={handleBetslipClick}
+                    <button
+                      className="flex items-center space-x-4 py-2"
+                      onClick={handleChatClick}
+                    >
+                      <BsChatDotsFill size={20} color="#0f212e" />
+                      <p className="text-base text-[#0f212e]">Chat</p>
+                    </button>
+                    <button
+                      className="flex items-center space-x-4 py-2"
+                      onClick={handleBetslipClick}
+                    >
+                      <MdOutlineEventNote size={20} color="#0f212e" />
+                      <p className="text-base text-[#0f212e]">BetSlip</p>
+                    </button>
+                  </div>
+
+                  {/* Tooltip Arrow */}
+                  <div
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-[9999]"
                   >
-                    <MdOutlineEventNote size={20} color="#0f212e" />
-                    <p className="text-base text-[#0f212e]">BetSlip</p>
-                  </button>
-                  <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
-                </div>
+                    <div className="tooltip-arrow w-3 h-3 bg-white rotate-45"></div>
+                  </div>
+                </>
               )}
             </div>
+
           </div>
         </div>
       </div>
