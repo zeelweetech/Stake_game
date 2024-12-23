@@ -106,18 +106,19 @@ import {
   openBetslipModal,
   closeBetslipModal,
   setIsType,
-} from "../features/auth/betSlipSlice"; 
+} from "../features/auth/betSlipSlice";
 import {
   openChatModal,
   closeChatModal,
   setChatType,
-} from "../features/auth/chatSlice"; 
+} from "../features/auth/chatSlice";
 
 function DefaultLayout() {
   const [openMenubar, setOpenMenubar] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const dispatch = useDispatch();
-  
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
 
@@ -150,6 +151,7 @@ function DefaultLayout() {
       setIsMobile(window.innerWidth < 768);
       if (window.innerWidth >= 768) {
         setOpenMenubar(false);
+        setIsDrawerOpen(false);
         dispatch(closeBetslipModal());
         dispatch(closeChatModal());
       }

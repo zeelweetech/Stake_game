@@ -35,11 +35,11 @@ const Wallet = ({closeWallet}) => {
           onClick={closeWallet}
           sx={{
             color: "#ffffff",
-            backgroundColor: "#1475E1", // Sky blue color for the button
-            width: "100%", // Makes the button take the full width
-            padding: "10px", // Adds padding for better button appearance
+            backgroundColor: "#1475E1", 
+            width: "100%", 
+            padding: "10px", 
             "&:hover": {
-              backgroundColor: "#106bb5", // Darker sky blue when hovered
+              backgroundColor: "#106bb5", 
             },
           }}
         >
