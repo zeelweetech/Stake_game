@@ -23,6 +23,7 @@ import {
   setGameBet,
   setGameOverResult,
   setIsGameOver,
+  setPreSelectTile,
   setRestodMultiplier,
   setRestor,
   setRestorData,
@@ -41,8 +42,10 @@ function DragonContent() {
   const dispatch = useDispatch();
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
+  const [fundsToastShown, setFundsToastShown] = useState(false);
   const gameOverProcessedRef = useRef(false);
   const {
+    isManual,
     values,
     gameBet,
     isGameOver,
@@ -51,9 +54,9 @@ function DragonContent() {
     boxsIndex,
     clickedBoxes,
     restorData,
+    preSelectTile,
   } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
-  const [fundsToastShown, setFundsToastShown] = useState(false);
 
   useEffect(() => {
     const handleInsufficientFunds = (data) => {
@@ -141,15 +144,17 @@ function DragonContent() {
 
   DragonTowerSocket.on("gameOver", (data) => {
     handleGameOverResult();
-    dispatch(setIsGameOver(true));
-    dispatch(setTileSelected({}));
-    dispatch(setShowRandomField(false));
-    setCashoutVisible(false);
-    gameOverProcessedRef.current = true;
+    if (!gameOverProcessedRef.current) {
+      dispatch(setIsGameOver(true));
+      dispatch(setTileSelected({}));
+      dispatch(setShowRandomField(false));
+      setCashoutVisible(false);
+      gameOverProcessedRef.current = true;
 
-    console.log("Game Over triggered. Playing audio.141111111");
-    const audio = new Audio(dragontowerbombSound);
-    audio.play();
+      console.log("Game Over audio :");
+      const audio = new Audio(dragontowerbombSound);
+      audio.play();
+    }
   });
 
   const handleGameOverResult = () => {
@@ -216,31 +221,44 @@ function DragonContent() {
   });
 
   const handleBoxClick = (rowIndex, boxIndex) => {
-    if (gameBet && !isGameOver) {
-      if (clickedBoxes[rowIndex] !== undefined || rowIndex < rowsIndex + 1) {
+    const isRowActive = isManual && gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
+    if (gameBet && !isGameOver && isRowActive) {
+      if (clickedBoxes[rowIndex] !== undefined || rowIndex < rowsIndex + 1 || (isManual && !gameBet)) {
         return;
       }
 
-      DragonTowerSocket.emit("selectTile", {
-        userId: decoded?.userId.toString(),
-        gameId: id,
-        tileIndex: boxIndex,
-        tileStep: rowIndex,
-      });
+      if (isManual) {
+        DragonTowerSocket.emit("selectTile", {
+          userId: decoded?.userId.toString(),
+          gameId: id,
+          tileIndex: boxIndex,
+          tileStep: rowIndex,
+        });
 
-      // if (!isGameOver) {
-      // const audio = new Audio(dragontowerbombSound);
-      // audio.play();
-      // console.log("gameOver");
-      // } else {
-      const audio = new Audio(dragontowerSound);
-      audio.play();
-      // }
+        const audio = new Audio(dragontowerSound);
+        audio.play();
+      }
 
       const updatedClickedBoxes = { ...clickedBoxes, [rowIndex]: boxIndex };
       dispatch(setClickedBoxes(updatedClickedBoxes));
       dispatch(setRowsIndex(rowIndex));
       dispatch(setBoxsIndex(boxIndex));
+    }
+
+    if (!isManual) {
+      // if (preSelectTile.includes(rowIndex)) {
+      //   dispatch(setPreSelectTile(preSelectTile.filter((tile) => tile !== rowIndex)));
+      // } else if (preSelectTile.length) {
+      //   dispatch(setPreSelectTile([...preSelectTile, rowIndex]));
+      // }
+      
+      const updatedClickedBoxes = { ...preSelectTile, [rowIndex]: boxIndex };
+      dispatch(setPreSelectTile(updatedClickedBoxes));
+
+      console.log("preSelectTile ++++++++++", preSelectTile);
+
+      // const audio = new Audio(dragontowerSound);
+      // audio.play();
     }
   };
 
@@ -319,21 +337,7 @@ function DragonContent() {
                 {cashoutResult?.multiplier}x
               </p>
               <div className="flex items-center justify-center space-x-1">
-                {/* <p>
-                  {(
-                    (values?.betamount
-                      ? values?.betamount
-                      : restor?.restoreData?.[0]?.length > 0
-                        ? restor?.betAmount
-                        : values?.betamount) *
-                        parseFloat(cashoutResult?.multiplier)
-                  ).toFixed(2) || "0.00"}
-                  ₹
-                </p> */}
-                <p>
-                  {cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}
-                  ₹
-                </p>
+                <p>{cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}₹</p>
                 {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
               </div>
             </div>
@@ -343,58 +347,52 @@ function DragonContent() {
           >
             {(() => {
               const rowElements = [];
-
               for (let rowIndex = rows - 1; rowIndex >= 0; rowIndex--) {
                 const boxElements = [];
                 for (let boxIndex = 0; boxIndex < boxesPerRow; boxIndex++) {
                   const isRestoredEgg = restorData[rowIndex]?.[boxIndex] === 1;
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
-                  const imageToShow = isGameOver
-                    ? rowIndex === gameOverResult?.skullRowIndex &&
-                      boxIndex === gameOverResult?.skullBoxIndex
-                      ? skullImage
-                      : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) ||
-                        isRestoredEgg ||
-                        isSelected ||
-                        rowIndex === gameOverResult?.skullRowIndex
+                  const isHighlighted = !isManual && preSelectTile[rowIndex] === boxIndex;
+                  const imageToShow = isHighlighted
+                    ? null // No image when highlighted
+                    : isGameOver
+                      ? rowIndex === gameOverResult?.skullRowIndex && boxIndex === gameOverResult?.skullBoxIndex
+                        ? skullImage
+                        : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || isSelected || rowIndex === gameOverResult?.skullRowIndex
+                          ? eggImage
+                          : Boxsvg
+                      : isRestoredEgg
                         ? eggImage
-                        : Boxsvg
-                    : isRestoredEgg
-                      ? eggImage
-                      : isSelected
-                        ? eggImage
-                        : Boxsvg;
-                  const isRowActive =
-                    gameBet &&
-                    (rowIndex === 0 ||
-                      clickedBoxes[rowIndex - 1] !== undefined);
+                        : isSelected ? eggImage : Boxsvg;
+                  const isRowActive = isManual && gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
-                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center ${isGameOver
-                          ? "cursor-not-allowed bg-[#213743]"
-                          : (gameBet && rowIndex === 0) ||
-                            clickedBoxes[rowIndex - 1] !== undefined
-                            ? "bg-[#00e701] w-10"
-                            : "cursor-not-allowed bg-[#213743]"
+                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center cursor-pointer ${isGameOver
+                        ? "bg-[#213743]"
+                        : (gameBet && rowIndex === 0) ||
+                          clickedBoxes[rowIndex - 1] !== undefined
+                          ? "bg-[#00e701] w-10"
+                          : "bg-[#213743]"
                         } ${clickedBoxes[rowIndex] !== undefined
                           ? "bg-[#213743] opacity-100"
-                          : "opacity-50"
-                        } ${isSelected ? "opacity-100 bg-[#00e701]" : "opacity-50"
-                        } ${isGameOver ? "cursor-not-allowed" : "cursor-pointer"
-                        } ${isRowActive
-                          ? "cursor-pointer bg-[#00e701]"
-                          : "cursor-not-allowed bg-[#213743]"
-                        }`}
+                          : isGameOver && isManual ? "opacity-50" : "opacity-100"
+                        } ${isSelected ? "opacity-100" : isGameOver && isManual ? "opacity-50" : "opacity-100"
+                        }  ${isRowActive && isManual
+                          ? "bg-[#00e701]"
+                          : "bg-[#213743]"
+                        } ${!isManual && preSelectTile[rowIndex] === boxIndex ? "bg-[#9000ff] border-2 border-[#7100c7]" : ""}`}
                       onClick={() =>
-                        isRowActive && handleBoxClick(rowIndex, boxIndex)
+                        handleBoxClick(rowIndex, boxIndex)
                       }
                     >
-                      <img
-                        src={imageToShow}
-                        alt="Not Found"
-                        className="w-auto h-full object-cover rounded-md"
-                      />
+                      {imageToShow &&
+                        <img
+                          src={imageToShow}
+                          alt="Not Found"
+                          className="w-auto h-full object-cover rounded-md"
+                        />
+                      }
                     </div>
                   );
                 }

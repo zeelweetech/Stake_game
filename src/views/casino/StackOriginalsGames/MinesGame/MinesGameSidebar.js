@@ -30,7 +30,6 @@ function MinesGameSidebar() {
   const { id } = useParams();
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [selectedTiles, setSelectedTiles] = useState([]);
-  // const [autoBet, setAutoBet] = useState(false);
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
   const {
     isManual,

@@ -30,7 +30,6 @@ function MinesGameContent() {
   const [images, setImages] = useState(Array(25).fill(null));
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
-  // const [cashoutResult, setCashoutResult] = useState(null);
   const [fundsToastShown, setFundsToastShown] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showautoBetResult, setShowautoBetResult] = useState(false);
@@ -181,10 +180,6 @@ function MinesGameContent() {
       }
     });
 
-    // const audio = new Audio(bombSound);
-    // console.log("audio *-*-*-*-", audio);
-    // audio.play();
-    console.log("Game Over triggered. Playing audio.");
     const audio = new Audio(bombSound);
     audio.play();
 
@@ -327,6 +322,8 @@ function MinesGameContent() {
       } else if (preSelectTile.length < maxSelectableTiles) {
         dispatch(setPreSelectTile([...preSelectTile, index]));
       }
+      const audio = new Audio(winSound);
+      audio.play();
     }
   };
 

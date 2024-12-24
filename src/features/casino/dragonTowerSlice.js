@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  isManual: true,
   values: {
     betamount: 0,
     difficulty: "medium",
@@ -17,13 +18,20 @@ const initialState = {
   boxsIndex: '',
   clickedBoxes: {},
   gameOverResult: null,
-  restorData: []
+  restorData: [],
+
+  // auto part state
+  preSelectTile: [],
+  autoBetOnClick: false,
 };
 
 const dragonTowerGameSlice = createSlice({
   name: "dragonTowerGame",
   initialState,
   reducers: {
+    setIsManual(state, action) {
+      state.isManual = action.payload;
+    },
     setValues(state, action) {
       state.values = action.payload;
     },
@@ -66,9 +74,17 @@ const dragonTowerGameSlice = createSlice({
     setCompleteFundStatus(state, action) {
       state.completeFundStatus = action.payload;
     },
+
+    // auto part state
+    setPreSelectTile(state, action) {
+      state.preSelectTile = action.payload
+    },
+    setAutoBetOnClick(state, action) {
+      state.autoBetOnClick = action.payload
+    },
   },
 });
 
-export const { setCompleteFundStatus, setValues, setBettingStatus, setShowRandomField, setGameBet, setTileSelected, setRestor, setRestodMultiplier, setIsGameOver, setRowsIndex, setBoxsIndex, setClickedBoxes, setGameOverResult, setRestorData } = dragonTowerGameSlice.actions;
+export const { setIsManual, setCompleteFundStatus, setValues, setBettingStatus, setShowRandomField, setGameBet, setTileSelected, setRestor, setRestodMultiplier, setIsGameOver, setRowsIndex, setBoxsIndex, setClickedBoxes, setGameOverResult, setRestorData, setPreSelectTile, setAutoBetOnClick } = dragonTowerGameSlice.actions;
 
 export default dragonTowerGameSlice.reducer;
