@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Navigation } from "swiper/modules";
@@ -9,13 +9,102 @@ import StackEddie from "../../../assets/img/StackEddie.jpg";
 import ChaosCollecter from "../../../assets/img/ChaosCollecter.jpg";
 import LevelUp from "../../../assets/img/LevelUp.jpg";
 import MultiplierRace from "../../../assets/img/MultiplierRace.jpg";
+import ChristmasRace from "../../../assets/img/ChristmasRace.png";
 
 function SlideBar() {
   const [swiperState, setSwiperState] = useState({
     isBeginning: true,
     isEnd: false,
   });
-  const [showModal, setShowModal] = useState(false);
+
+  const [LearnMore, setLearnMore] = useState(false);
+  const [Racenow, setRaceNow] = useState(false);
+  const initialTime = {
+    days: 5,
+    hours: 2,
+    minutes: 1,
+    seconds: 10,
+  };
+  const [timeLeft, setTimeLeft] = useState(initialTime);
+
+  useEffect(() => {
+    const countdown = () => {
+      let { days, hours, minutes, seconds } = timeLeft;
+
+      if (seconds > 0) {
+        seconds--;
+      } else {
+        seconds = 59;
+        if (minutes > 24) {
+          minutes--;
+        } else {
+          minutes = 59;
+          if (hours > 0) {
+            hours--;
+          } else {
+            hours = 23;
+            if (days > 0) {
+              days--;
+            }
+          }
+        }
+      }
+
+      setTimeLeft({ days, hours, minutes, seconds });
+    };
+
+    const interval = setInterval(countdown, 1000);
+
+    return () => clearInterval(interval);
+  }, [timeLeft]);
+
+  // const initialTime = {
+  //   days: 1,
+  //   hours: 2,
+  //   minutes: 1,
+  //   seconds: 10,
+  // };
+
+  // const loadTime = () => {
+  //   const savedTime = localStorage.getItem("timeLeft");
+  //   return savedTime ? JSON.parse(savedTime) : initialTime;
+  // };
+
+  // const [timeLeft, setTimeLeft] = useState(loadTime);
+
+  // useEffect(() => {
+  //   const countdown = () => {
+  //     let { days, hours, minutes, seconds } = timeLeft;
+
+  //     if (seconds > 0) {
+  //       seconds--;
+  //     } else {
+  //       seconds = 59;
+  //       if (minutes > 0) {
+  //         minutes--;
+  //       } else {
+  //         minutes = 59;
+  //         if (hours > 0) {
+  //           hours--;
+  //         } else {
+  //           hours = 23;
+  //           if (days > 0) {
+  //             days--;
+  //           }
+  //         }
+  //       }
+  //     }
+
+  //     const updatedTime = { days, hours, minutes, seconds };
+  //     setTimeLeft(updatedTime);
+  //     // Persist the updated time to localStorage
+  //     localStorage.setItem("timeLeft", JSON.stringify(updatedTime));
+  //   };
+
+  //   const interval = setInterval(countdown, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, [timeLeft]);
 
   const promoGame = [
     {
@@ -60,16 +149,28 @@ function SlideBar() {
       gameButton: "Play Now",
       gameImage: MultiplierRace,
     },
+    {
+      Game: "$10 Million Christmas Race",
+      gameDescription: "Race To The New Year Read More",
+      gameButton: "Race now",
+      gameImage: ChristmasRace,
+    },
   ];
 
   const handleButtonClick = (gameButton) => {
     if (gameButton === "Learn More") {
-      setShowModal(true);
+      setLearnMore(true);
+    } else if (gameButton === "Race now") {
+      setRaceNow(true);
     }
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeLearnMore = () => {
+    setLearnMore(false);
+  };
+
+  const closeRacenow = () => {
+    setRaceNow(false);
   };
 
   return (
@@ -98,7 +199,7 @@ function SlideBar() {
         >
           {promoGame.map((Data, index) => (
             <SwiperSlide key={index} className="pl-2">
-              <div className="flex justify-between items-center bg-[#213743] w-full h-52 pl-4 rounded-md hover:cursor-pointer">
+              <div className="flex justify-between items-center bg-[#213743] w-full h-[13.75rem] pl-4 rounded-md hover:cursor-pointer">
                 <div className="flex flex-col space-y-8 justify-around w-44">
                   <div>
                     <button className="bg-white text-black text-sm font-semibold px-1 rounded-sm">
@@ -129,14 +230,13 @@ function SlideBar() {
         </Swiper>
       </div>
 
-      {/* Modal */}
-      {showModal && (
+      {LearnMore && (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80  z-50"
-          onClick={closeModal}
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
+          onClick={closeLearnMore}
         >
           <div
-            className="bg-[#213743] text-white  rounded-lg shadow-lg w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-xl xl:max-w-xl p-4 xl:mt-[2rem] lg:mt-[1rem] md:mt-[3rem] mt-[3rem]  relative"
+            className="bg-[#213743] text-white rounded-lg shadow-lg w-[90%] max-w-lg p-4 relative overflow-auto xl:max-h-[680px] xl:mt-5 lg:max-h-[600px] max-h-[600px] bg-"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center">
@@ -146,40 +246,39 @@ function SlideBar() {
               <button
                 className="text-gray-400 hover:text-white"
                 aria-label="Close"
-                onClick={closeModal}
+                onClick={closeLearnMore}
               >
                 ✖
               </button>
             </div>
-
             <div className="flex justify-center">
               <img src={WeeklyRaffle} alt="" className="w-[20rem] rounded-md" />
             </div>
             <div className="flex justify-start space-x-2 text-base font-bold">
-              <div className="bg-[#0F212E] w-[54px] h-[3.375rem]  px-3 py-1 -mt-16">
-                <span className="flex justify-center">5</span>
-                <span className=" flex justify-center text-[#B1BAD3]">
+              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
+                <span className="flex justify-center">{timeLeft.days}</span>
+                <span className="flex justify-center text-[#B1BAD3]">
                   {" "}
                   Day{" "}
                 </span>
               </div>
-              <div className="bg-[#0F212E] w-[54px] h-[3.375rem]  px-3 py-1 -mt-16">
-                <span className="flex justify-center">5</span>
-                <span className=" flex justify-center text-[#B1BAD3]">
+              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
+                <span className="flex justify-center">{timeLeft.hours}</span>
+                <span className="flex justify-center text-[#B1BAD3]">
                   {" "}
                   Hour{" "}
                 </span>
               </div>
-              <div className="bg-[#0F212E] w-[54px] h-[3.375rem]  px-3 py-1 -mt-16">
-                <span className="flex justify-center">5</span>
-                <span className=" flex justify-center text-[#B1BAD3]">
+              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
+                <span className="flex justify-center">{timeLeft.minutes}</span>
+                <span className="flex justify-center text-[#B1BAD3]">
                   {" "}
                   Min{" "}
                 </span>
               </div>
-              <div className="bg-[#0F212E] w-[56px] h-[3.375rem]  px-3 py-1 -mt-16">
-                <span className="flex justify-center">5</span>
-                <span className=" flex justify-center text-[#B1BAD3]">
+              <div className="bg-[#0F212E] w-[56px] h-[3.375rem] px-3 py-1 -mt-16">
+                <span className="flex justify-center">{timeLeft.seconds}</span>
+                <span className="flex justify-center text-[#B1BAD3]">
                   {" "}
                   Sec{" "}
                 </span>
@@ -200,7 +299,7 @@ function SlideBar() {
                 <span className="font-medium text-[#FFFFFF]">0</span>
               </div>
             </div>
-            <p className="text-base font-normal  text-[#B1BAD3] leading-6 mt-3 p-1">
+            <p className="text-base font-normal text-[#B1BAD3] leading-6 mt-3 p-1">
               Wager to earn tickets into a giveaway where anybody can win. Just
               one ticket could see you sharing in $75,000 every single week.
               With $1,000 wagered equating to one ticket, earn as many tickets
@@ -208,8 +307,111 @@ function SlideBar() {
               Winners drawn on live stream every Saturday 2:00pm GMT at
               www.kick.com/Eddie
             </p>
-            <div className=" cursor-pointer text-center font-semibold py-[0.7rem] px-[1.25rem] bg-[#2f4553] hover:bg-[#557086] rounded">
-                Read more
+            <div className="cursor-pointer text-center font-semibold py-[0.7rem] px-[1.25rem] bg-[#2f4553] hover:bg-[#557086] rounded">
+              Read more
+            </div>
+          </div>
+        </div>
+      )}
+
+      {Racenow && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
+          onClick={closeRacenow}
+        >
+          <div
+            className="bg-[#213743] text-white rounded-lg shadow-lg w-[90%] max-w-lg p-4  relative overflow-auto xl:max-h-[670px] xl:mt-3 lg:max-h-[600px]  max-h-[600px] bg-"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-semibold flex items-center">
+                $10 Million Christmas Race
+              </h2>
+              <button
+                className="text-gray-400 hover:text-white"
+                aria-label="Close"
+                onClick={closeRacenow}
+              >
+                ✖
+              </button>
+            </div>
+
+            <div className="flex justify-center">
+              <img
+                src={ChristmasRace}
+                alt=""
+                className="w-[20rem] rounded-md"
+              />
+            </div>
+            <div className="flex justify-start space-x-2 text-base font-bold">
+              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
+                <span className="flex justify-center">{timeLeft.days}</span>
+                <span className="flex justify-center text-[#B1BAD3]">
+                  {" "}
+                  Day{" "}
+                </span>
+              </div>
+              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
+                <span className="flex justify-center">{timeLeft.hours}</span>
+                <span className="flex justify-center text-[#B1BAD3]">
+                  {" "}
+                  Hour{" "}
+                </span>
+              </div>
+              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
+                <span className="flex justify-center">{timeLeft.minutes}</span>
+                <span className="flex justify-center text-[#B1BAD3]">
+                  {" "}
+                  Min{" "}
+                </span>
+              </div>
+              <div className="bg-[#0F212E] w-[56px] h-[3.375rem] px-3 py-1 -mt-16">
+                <span className="flex justify-center">{timeLeft.seconds}</span>
+                <span className="flex justify-center text-[#B1BAD3]">
+                  {" "}
+                  Sec{" "}
+                </span>
+              </div>
+            </div>
+            <div className="bg-[#1a2c38] text-white rounded-sm shadow-md p-4 flex items-center justify-between space-x-4">
+              <div className="text-center flex-1">
+                <p className="text-sm font-normal text-[#B1BAD3]">
+                  Your Position
+                </p>
+                <p className="text-base font-medium">-</p>
+              </div>
+              <div className="border-l border-[#557086] h-8"></div>
+              <div className="text-center flex-1">
+                <p className="text-sm font-normal text-[#B1BAD3]">
+                  Your Current Prize
+                </p>
+                <p className="text-base font-medium">₹0.00</p>
+              </div>
+              <div className="border-l border-[#557086] h-8"></div>
+              <div className="relative text-center flex-1 group">
+                <p className="text-sm font-normal text-[#B1BAD3]">
+                  Your Wagered
+                </p>
+                <p className="text-base font-medium">₹0.00</p>
+
+                <div className="absolute left-1/2 w-20 h-9 -mt-[4.2rem] transform -translate-x-1/2 bg-white text-[#0f212e] text-sm font-semibold px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 flex justify-center items-center">
+                  ₹0.00
+                  <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-5px] left-1/2 transform -translate-x-1/2"></div>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-base font-normal text-[#B1BAD3] leading-6 mt-3 p-1">
+              Join Stake’s $10m Christmas Race! Over the next 30 days, every bet
+              you place - whether in sports or casino - helps you climb the
+              leaderboard and secure a spot among the top 25,000 racers. The
+              higher you rank, the bigger your prize! Once the race ends, all
+              prizes will be instantly credited to your balance in BTC. Get in
+              on the action and race your way to incredible rewards this holiday
+              season!
+            </p>
+            <div className="cursor-pointer text-center font-semibold py-[0.7rem] px-[1.25rem] bg-[#2f4553] hover:bg-[#557086] rounded">
+              Read more
             </div>
           </div>
         </div>

@@ -212,8 +212,8 @@ function GameFooter() {
       </div>
       {isSettingsOpen && (
         <div className="relative">
-          <div className=" w-3 h-3 bg-white rotate-45 absolute bottom-[-11px] xl:left-[1.5rem] lg:left-[1.5rem] md:left-[1.5rem] left-[1.6rem] transform -translate-x-1/2"></div>
-          <div className="absolute mt-1 z-10 xl:-left-10 lg:-left-5  md:-left-10 -left-[0.2rem] py-1 bg-white rounded shadow-lg ring-1 ring-black ring-opacity-5 w-32 md:w-32 lg:w-32 ">
+          <div className=" w-3 h-3 bg-white rotate-45 absolute bottom-[-11px] left-[2rem] transform -translate-x-1/2"></div>
+          <div className="absolute mt-1 z-10 xl:-left-7 lg:-left-4  md:-left-10 -left-[0.2rem] py-1 bg-white rounded shadow-lg ring-1 ring-black ring-opacity-5 w-32 md:w-32 lg:w-32 ">
             <div className="px-2 py-2 flex items-center space-x-3">
               <svg
                 className="w-5 h-5 text-blue-500"
@@ -263,6 +263,7 @@ function GameFooter() {
                   </span>
                 </li>
               ))}
+
               <li
                 className="flex items-center px-2 py-2 hover:bg-gray-400 cursor-pointer  "
                 onClick={handleOpenModal}
@@ -279,7 +280,14 @@ function GameFooter() {
                 </span>
               </li>
               {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div
+                  className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                  onClick={(e) => {
+                    if (e.target === e.currentTarget) {
+                      handleCloseModal();
+                    }
+                  }}
+                >
                   <div className="bg-[#1a2c38] text-white rounded-lg shadow-lg w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-xl xl:max-w-xl p-4 relative">
                     <div className="flex justify-between items-center mb-4">
                       <h2 className="text-lg font-semibold flex items-center">
@@ -334,8 +342,14 @@ function GameFooter() {
                 </span>
               </li>
               {isGameInfoOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                  <div className="bg-[#1a2c38] text-white rounded-lg shadow-lg w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-xl xl:max-w-lg p-4 relative">
+                <div
+                  className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                  onClick={handleCloseGameInfo}
+                >
+                  <div
+                    className="bg-[#1a2c38] text-white rounded-lg shadow-lg w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-xl xl:max-w-lg p-4 relative"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <div className="flex justify-between items-center">
                       <h2 className="text-lg font-semibold flex items-center">
                         <span className="mr-2">
@@ -397,7 +411,15 @@ function GameFooter() {
                 </span>
               </li>
               {isHotkeysVisible && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div
+                  className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                  onClick={(e) => {
+                    // Check if the clicked area is outside the modal
+                    if (e.target === e.currentTarget) {
+                      handleCloseHotkeys();
+                    }
+                  }}
+                >
                   <div className="bg-[#1a2c38] text-white rounded-xl  w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-xl xl:max-w-lg relative  overflow-y-auto max-h-[80vh]">
                     <div className="flex justify-between items-center p-4">
                       <h2 className="text-base font-semibold flex items-center">
@@ -535,8 +557,14 @@ function GameFooter() {
         </div>
       )}
       {isLiveStatsOpen && (
-        <div className="fixed inset-0 flex items-end justify-end  md:mr-44 mr-20 bg-scroll">
-          <div className="bg-[#213743] text-white rounded-lg shadow-lg w-72 relative ">
+        <div
+          className="fixed  inset-0 flex items-end justify-end bg-scroll"
+          onClick={handleCloseLiveStats}
+        >
+          <div
+            className="bg-[#213743] text-white rounded-lg shadow-lg w-72 relative  md:ml-44 mr-20 bg-scroll"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-between items-center pl-4 bg-[#1a2c38] h-10 cursor-move rounded-t-lg">
               <h2 className="text-base font-semibold flex items-center gap-2 ">
                 <span>
@@ -695,13 +723,18 @@ function GameFooter() {
         </div>
       )}
       {isFairnessOpen && (
-        <div className="flex justify-center items-center">
+        // <div className="flex justify-center items-center">
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          onClick={handleFairnessClose}
+        >
           <div
-            className={`bg-scroll z-10 absolute xl:-mt-[47rem] lg:-mt-[47rem] md:-mt-[60rem] max-sm:mx-5 -mt-[56rem] ${
+            className={`bg-scroll z-10 absolute xl:-mt-[0rem] lg:mt-[3rem] md:-mt-[60rem] max-sm:mx-5 -mt-[56rem] ${
               isScreenSmall
                 ? "md:-mt-[47rem] flex justify-center items-center -mt-[44.5rem]"
                 : ""
             }`}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-[#1a2c38] text-white rounded-t-xl shadow-lg w-full relative">
               <div className="flex justify-between items-center p-4 h-16 rounded-t-lg">

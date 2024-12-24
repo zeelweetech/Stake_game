@@ -37,6 +37,7 @@ const vipclub = React.lazy(() => import("./views/footerpage/VipClub"))
 // const Notification = React.lazy(() => import("./views/Profile/Notification"))
 const Logout = React.lazy(() => import("./views/Profile/Logout"))
 const ResetPassword = React.lazy(() => import("./views/pages/forgotpassword/NewPassword"))
+const GameTable = React.lazy(() => import("./views/component/GameTable"))
 
 const routes = [
   {
@@ -86,7 +87,8 @@ const routes = [
   // { path: "/Notification", name: "Notification", element: Notification },
   { path: "/logout", name: "Logout", element: Logout },
   { path: "/myBet", name: "MyBets", element: MyBet },
-  { path: "/resetpassword", name: "ResetPassword", element: ResetPassword }
+  { path: "/resetpassword", name: "ResetPassword", element: ResetPassword },
+  { path: "/gametable", name: "GameTable", element: GameTable}
 ];
 
 export default routes;
