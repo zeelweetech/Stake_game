@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { decodedToken } from "../../../resources/utility";
 import { Accordion, AccordionSummary, AccordionDetails, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
 const Generals = () => {
     const [email, setEmail] = useState("");
@@ -26,7 +27,7 @@ const Generals = () => {
 
     const decoded = decodedToken();
     console.log(">>>>>>>>>>", decoded?.userId);
-    
+
     const userId = decoded?.userId;
 
     useEffect(() => {
@@ -34,8 +35,8 @@ const Generals = () => {
         if (token) {
             try {
                 const decoded = decodedToken(token);
-                setTokenValid(true);  
-                setEmail(decoded?.email || "");  
+                setTokenValid(true);
+                setEmail(decoded?.email || "");
             } catch (error) {
                 console.error("Invalid token", error);
                 setTokenValid(false);
@@ -60,7 +61,7 @@ const Generals = () => {
 
     const handleSubmitPhone = () => {
         alert(`Phone number submitted: ${countryCode} ${phoneNumber}`);
-        
+
     };
 
     return (
@@ -75,24 +76,39 @@ const Generals = () => {
                     <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400">Email</p>
                     <FormControl sx={{ mt: 0, ml: 0 }} error={!!errors.email}>
                         <TextField
-                            value={email}  
+                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            
                             sx={{
                                 width: "140%",
                                 marginLeft: "30px",
                                 backgroundColor: "#0f212e",
                                 color: "white",
-                                
                                 "& .MuiOutlinedInput-root": {
-                                    border: "1px border-gray-500",
+                                    border: "1px solid gray",
                                     height: "40px",
                                     "&:hover": {
                                         border: "2px solid #b1bad3",
                                     },
                                 },
                                 "& .MuiInputBase-input": {
-                                    color: "white", 
+                                    color: "white",
+                                },
+
+                                '@media (max-width: 425px)': {
+                                    width: "100%",
+                                    marginLeft: "0",
+                                },
+                                '@media (min-width: 426px) and (max-width: 768px)': {
+                                    width: "100%",
+                                    marginLeft: "32px",
+                                },
+                                '@media (min-width: 769px) and (max-width: 1024px)': {
+                                    width: "100%",
+                                    marginLeft: "30px",
+                                },
+                                '@media (min-width: 1025px)': {
+                                    width: "140%", // Original width for larger screens
+                                    marginLeft: "30px", // Original margin for larger screens
                                 },
                             }}
                         />
@@ -128,65 +144,51 @@ const Generals = () => {
                 <div className="border-b pt-4 border-gray-500 w-[95%] mt-1"></div>
 
                 {/* Country Code Dropdown */}
-                <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400">Country Code</p>
-                <FormControl sx={{ mt: -2, ml: 3.7, width: '41%' }} size="small">
+                <p className="mt-0 mb-2 ml-8 py-2 text-sm font-medium text-gray-400">
+                    Country Code
+                </p>
+                <FormControl
+                    className="mt-[-0.5rem] ml-8 w-[50%] sm:w-[80%] md:w-[60%] lg:w-[41%]"
+                    size="small"
+                >
                     <div
                         onClick={() => setIsOpen(!isOpen)}
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "8px 16px",
-                            backgroundColor: "#0f212e",
-                            color: "white",
-                            border: "1px solid #b1bad3",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                        }}
+                        className="flex items-center ml-8 justify-between w-[97%] p-2 bg-[#0f212e] text-white border border-[#b1bad3] rounded cursor-pointer"
                     >
-                        <Typography>
-                            {countryCode ? `Selected: ${countryCode}` : "Select Country Code"}
-                        </Typography>
-                        <ExpandMoreIcon />
+                        {countryCode ? `Selected: ${countryCode}` : "Select Country Code"}
+                        {isOpen ? (
+                            <ChevronUpIcon className="ml-2 h-5 w-5" />
+                        ) : (
+                            <ChevronDownIcon className="ml-2 h-5 w-5" />
+                        )}
                     </div>
                 </FormControl>
 
                 {/* Dropdown */}
                 {isOpen && (
                     <div
-                        style={{
-                            marginTop: "3px",
-                            marginLeft: "31px",
-                            backgroundColor: "#0f212e",
-                            color: "white",
-                            border: "1px solid #b1bad3",
-                            width: "50%",
-                            maxHeight: "180px",
-                            overflowY: "auto",
-                        }}
+                        className="mt-[3px] ml-8 w-[41%] sm:w-[80%] md:w-[60%] lg:w-[41%] bg-[#0f212e] text-white border border-[#b1bad3] max-h-[180px] overflow-y-auto rounded"
                     >
                         {countryCodes.map((item) => (
-                            <Typography
+                            <div
                                 key={item.code}
                                 onClick={() => {
                                     setCountryCode(item.code);
                                     setIsOpen(false); // Close dropdown after selection
                                 }}
-                                sx={{
-                                    padding: "8px 16px",
-                                    cursor: "pointer",
-                                    "&:hover": { backgroundColor: "#1a2c38" },
-                                }}
+                                className="p-2 cursor-pointer hover:bg-[#1a2c38]"
                             >
                                 {item.name} {item.code}
-                            </Typography>
+                            </div>
                         ))}
                     </div>
                 )}
 
+
+
                 {/* Phone Number Input */}
                 <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400 ">Phone Number</p>
-                <FormControl sx={{ mt: -2, ml: 0 }}>
+                <FormControl sx={{ mt: -2, ml: 0, color: "white" }}>
                     <TextField
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
@@ -202,7 +204,28 @@ const Generals = () => {
                                     border: "2px solid #b1bad3",
                                 },
                             },
+                            "& .MuiInputBase-input": {
+                                color: "white",
+                            },
+                            // Media queries for different screen sizes
+                            '@media (max-width: 425px)': {
+                                width: "100%", // Full width on mobile
+                                marginLeft: "0", // Remove margin on mobile
+                            },
+                            '@media (min-width: 426px) and (max-width: 768px)': {
+                                width: "100%", // Full width on small tablets
+                                marginLeft: "32px", // Remove margin on small tablets
+                            },
+                            '@media (min-width: 769px) and (max-width: 1024px)': {
+                                width: "100%", // Full width on larger tablets
+                                marginLeft: "30px", // Remove margin on larger tablets
+                            },
+                            '@media (min-width: 1025px)': {
+                                width: "140%", // Original width for larger screens
+                                marginLeft: "30px", // Original margin for larger screens
+                            },
                         }}
+
                     />
                 </FormControl>
                 <div className="border-b p-2 1px border-gray-400 mt-1"></div>

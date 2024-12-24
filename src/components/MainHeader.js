@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
-import { Badge, IconButton } from "@mui/material";
+import { Badge, IconButton, Menu } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { IoIosChatboxes } from "react-icons/io";
 import { MdEmojiEvents, MdOutlineEventNote, MdSettings } from "react-icons/md";
@@ -13,7 +13,6 @@ import { PiVaultFill } from "react-icons/pi";
 import { BiSolidNotepad } from "react-icons/bi";
 import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 import { BsChatDotsFill } from "react-icons/bs";
-import Notification from "../views/Profile/Notification";
 import { setAnchorEl } from "../features/auth/authSlice";
 import { openBetslipModal } from "../features/auth/betSlipSlice";
 import { openChatModal } from "../features/auth/chatSlice";
@@ -23,6 +22,9 @@ import Vip from "../views/Profile/Vip";
 import Statistic from "../views/Profile/Statistic";
 import { Logout } from "@mui/icons-material";
 import LogoutDialog from "../views/Profile/Logout";
+import CloseIcon from "@mui/icons-material/Close";
+import notification from "../assets/img/Notification.png";
+import Notification from "../views/Profile/Notification";
 
 function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
   const navigate = useNavigate();
@@ -30,6 +32,9 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useDispatch()
+
+  const [notificationOpen, setNotificationOpen] = useState(false); // New state for notifications
+
   const [profilePopupOpen, setProfilePopupOpen] = useState({
     isWalletOpen: false,
     isVaultOpen: false,
@@ -38,8 +43,13 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
     isNotification: false,
     isLogoutDialog: false
   });
+  // const handleMenuOpen = (event) => {
+  //   dispatch(setAnchorEl(event.currentTarget))
+  // };
+
   const handleMenuOpen = (event) => {
-    dispatch(setAnchorEl(event.currentTarget))
+    setNotificationOpen((prev) => !prev); // Toggle notification menu
+    dispatch(setAnchorEl(event.currentTarget));
   };
 
   const toggleSidebar = () => {
@@ -61,9 +71,6 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
   const toggleTooltip = () => {
     setTooltipOpen((prev) => !prev);
   };
-
-  const closeTooltip = () => setTooltipOpen(false);
-
 
   return (
     <div className="z-0 relative">
@@ -204,13 +211,16 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
                 </div>
               )}
             </div>
+            <div className="text-white flex items-center space-x-0.4 md:space-x-6">
+              {/* Other buttons */}
+              <IconButton onClick={handleMenuOpen} data-menu-type="notifications">
+                <Badge color="success" variant="dot">
+                  <NotificationsIcon className="text-white" fontSize="small" />
+                </Badge>
+              </IconButton>
+              <Notification />
+            </div>
 
-            <IconButton onClick={handleMenuOpen} data-menu-type="notifications">
-              <Badge color="success" variant="dot">
-                <NotificationsIcon className="text-white " fontSize="small" />
-              </Badge>
-            </IconButton>
-            <Notification />
 
             <div className="relative flex items-center z-50">
               <p onClick={toggleSidebar} className="flex items-center hover:cursor-pointer">

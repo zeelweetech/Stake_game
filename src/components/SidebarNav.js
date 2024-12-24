@@ -9,6 +9,7 @@ import Statistic from "../views/Profile/Statistic";
 import LogoutDialog from "../views/Profile/Logout";
 import { useDispatch } from "react-redux";
 import { setAnchorEl } from "../features/auth/authSlice";
+import Notification from "../views/Profile/Notification";
 
 export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible, setDropdownVisible }) => {
   const [profilePopupOpen, setProfilePopupOpen] = useState({
@@ -140,6 +141,7 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible,
                         isVipOpen: dropdownItem.name === "VIP",
                         isStatistic: dropdownItem.name === "Statistics",
                         isLogoutDialog: dropdownItem.name === "Logout",
+                        isNotification: dropdownItem.name === "Notification",
                       }))
                     }} className="flex items-center">
                       {dropdownItem.icon && (
@@ -191,6 +193,7 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible,
       {profilePopupOpen.isVipOpen && <Vip closeVip={() => setProfilePopupOpen({ ...profilePopupOpen, isVipOpen: false })} />}
       {profilePopupOpen.isStatistic && <Statistic closeStatistic={() => setProfilePopupOpen({ ...profilePopupOpen, isStatistic: false })} />}
       {profilePopupOpen.isLogoutDialog && <LogoutDialog closeLogoutDialog={() => setProfilePopupOpen({ ...profilePopupOpen, isLogoutDialog: false })} />}
+      {profilePopupOpen.isNotification && <Notification closeNotification={() => setProfilePopupOpen({ ...profilePopupOpen, isNotification: false })} />}
     </div>
   );
 };
