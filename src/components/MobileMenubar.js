@@ -30,8 +30,10 @@ function MobileMenubar() {
         </svg>
         <span className="font-bold mt-0.5">Casino</span>
       </div>
-
-      <div className="flex flex-col items-center text-sm">
+      <div
+        className="flex flex-col items-center text-sm"
+        onClick={() => navigate("/gametable")}
+      >
         <svg
           className="w-4 h-4 hover:fill-white"
           fill="grey"

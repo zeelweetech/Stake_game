@@ -57,7 +57,7 @@ import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DefaultLayout from "./layout/DefaultLayout";
 import VerifyTerm from "./views/pages/register/VerifyTerm";
-import DefultPage from "./defultPage";
+// import DefultPage from "./defultPage";
 
 function App() {
   const status = localStorage.getItem("status");
