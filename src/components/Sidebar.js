@@ -11,7 +11,7 @@ import casino1 from "../assets/img/casino1.jpg";
 import sports from "../assets/img/sports.png"
 import sports1 from "../assets/img/sports1.png";
 
-function Sidebar({ openMenubar, handleDrawerToggle }) {
+function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
   const [casinoClicked, setCasinoClicked] = useState(false);
   const [sportsClicked, setSportsClicked] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(null);
@@ -33,6 +33,10 @@ function Sidebar({ openMenubar, handleDrawerToggle }) {
   //   handleDrawerToggle(); // Close the sidebar
   //   setDropdownVisible(null); // Close any open dropdowns
   // };
+
+  const handleNotificationClick = (event) => {
+    handleMenuOpen(event); 
+  };
 
   return (
     <div
@@ -98,6 +102,8 @@ function Sidebar({ openMenubar, handleDrawerToggle }) {
             toggleSidebar={handleDrawerToggle}
             dropdownVisible={dropdownVisible}
             setDropdownVisible={setDropdownVisible}
+            handleMenuOpen={handleNotificationClick} // Pass the notification click handler
+
           // setDropdownVisible={setDropdownVisible} // Pass dropdown state setter
 
           />

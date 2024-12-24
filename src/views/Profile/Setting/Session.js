@@ -1,20 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
+
 
 const Session = () => {
+  const [selectedMenu, setSelectedMenu] = useState("All");
+  const [isOpen, setIsOpen] = useState(false); 
+
+  const menuItems = [
+    { label: "All" },
+    { label: "Active" },
+    { label: "Inactive" }
+  ];
+
+  const handleMenuClick = (label) => {
+    setSelectedMenu(label); 
+    setIsOpen(false); 
+  };
+
   return (
     <>
-      <div>
-        <div className="bg-[#0f212e] text-white rounded-lg p-7">
-          <div>
-            <div>Session Filter</div>
-            <div>
-              <select className="bg-[#0f212e] text-white border w-32 py-1 mt-1">
-                <option>All</option>
-                <option>Active</option>
-                <option>Inactive</option>
-              </select>
-            </div>
+      <div className="bg-[#0f212e] text-white rounded-lg p-7">
+      <div className="mb-4">
+        <div className="font-bold text-xl">Session Filter</div>
+        <div className="relative">
+          <div
+            onClick={() => setIsOpen(!isOpen)} // Toggle dropdown visibility
+            className="bg-[#0f212e] text-white border border-gray-500 w-32 py-1 mt-1 rounded cursor-pointer flex justify-between items-center px-2"
+          >
+            <span>{selectedMenu}</span>
+            {isOpen ? (
+              <ChevronUpIcon className="ml-2 h-5 w-5" />
+            ) : (
+              <ChevronDownIcon className="ml-2 h-5 w-5" />
+            )}
           </div>
+
+          {/* Dropdown Menu */}
+          {isOpen && (
+            <div className="absolute z-10 mt-1 w-32 bg-[#0f212e] border border-gray-500 rounded shadow-lg">
+              {menuItems.map((item) => (
+                <div
+                  key={item.label}
+                  onClick={() => handleMenuClick(item.label)} // Handle menu item click
+                  className="py-2 px-4 hover:bg-[#2f4553] cursor-pointer"
+                >
+                  {item.label}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
           <div className="p-6">
             <table>
               <tr>
@@ -38,7 +75,7 @@ const Session = () => {
             <div>Next</div>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };

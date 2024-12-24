@@ -6,11 +6,13 @@ import Loader from "../../component/Loader";
 import Security from "./Security";
 import Session from "./Session";
 import Verify from "./Verify";
+import { VerticalAlignBottom } from "@mui/icons-material";
 
 const Setting = () => {
   const navigate = useNavigate();
-  const { section } = useParams(); // Read dynamic route parameter
+  const { section } = useParams(); 
   const [loading, setLoading] = useState(false);
+
 
   const getContent = (setting) => {
     switch (setting) {
@@ -30,7 +32,11 @@ const Setting = () => {
   };
 
   const handleSettingClick = (setting) => {
-    navigate(`/setting/${setting.toLowerCase().replace(" ", "-")}`); 
+
+
+      navigate(`/setting/${setting.toLowerCase().replace(" ", "-")}`); 
+    
+ 
   };
 
   return (
@@ -45,7 +51,7 @@ const Setting = () => {
           </div>
           <div className="flex">
             {/* Left Sidebar (List of Settings) */}
-            <div className="bg-[#0f212e] text-white rounded-lg shadow-lg p-1 w-52 h-52 flex flex-col items-start m-10 mt-5">
+            <div className="bg-[#0f212e] text-white rounded-lg shadow-lg h-full flex flex-col items-start m-10 mt-5">
               <ul className="space-y-2">
                 {[
                   "General",
@@ -53,16 +59,19 @@ const Setting = () => {
                   "Session",
                   "Verify",
                 ].map((setting) => (
+                  <div className="">  
                   <li
                     key={setting}
-                    className={`cursor-pointer hover:bg-[#2f4553] p-2 rounded ${section === setting.toLowerCase().replace(" ", "-")
-                      ? "bg-[#2f4553]"
-                      : ""
-                      }`}
+                    className={`cursor-pointer hover:bg-[#2f4553] w-40 p-2 ${
+                      section === setting.toLowerCase().replace(" ", "-")
+                        ? `bg-[#2f4553] border-l-2 border-sky-500 ${setting === "General" ? "rounded-t-lg" : setting === "Verify" && "rounded-b-lg"}`
+                        : "border-l-transparent border-l-2"
+                    }`}
                     onClick={() => handleSettingClick(setting)}
                   >
                     {setting}
                   </li>
+                </div>
                 ))}
               </ul>
             </div>
@@ -79,3 +88,7 @@ const Setting = () => {
 };
 
 export default Setting;
+
+
+
+
