@@ -12,6 +12,7 @@ import {
   setGameOverResult,
   setIsGameOver,
   setIsManual,
+  setPreSelectTile,
   setRestor,
   setRestorData,
   setRowsIndex,
@@ -42,6 +43,7 @@ function DragonSidebar() {
     clickedBoxes,
     rowsIndex = 0,
     autoBetOnClick,
+    preSelectTile,
   } = useSelector((state) => state.dragonTowerGame);
 
   useEffect(() => {
@@ -67,6 +69,7 @@ function DragonSidebar() {
     if (name === "difficulty") {
       dispatch(setClickedBoxes({}));
       dispatch(setGameOverResult());
+      dispatch(setPreSelectTile([]));
     }
     dispatch(setRestorData({}));
   };
@@ -438,7 +441,7 @@ function DragonSidebar() {
               <div className="flex rounded bg-[#0f212e] focus:outline-none focus:border-transparent">
                 <select
                   type="select"
-                  name="mines"
+                  name="difficulty"
                   value={values?.difficulty}
                   onChange={(e) => handleOnChange(e)}
                   className="w-full px-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
@@ -618,7 +621,7 @@ function DragonSidebar() {
                 </button>
               ) : (
                 <button
-                  className={`text-black bg-[#46a147] cursor-default mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                  className={`text-black ${Object.keys(preSelectTile).length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer" : "bg-[#489649] cursor-default"} mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
                   onClick={() =>
                     values?.numberofbet === undefined ||
                       values?.numberofbet === ""
@@ -820,7 +823,7 @@ function DragonSidebar() {
                   </button>
                 ) : (
                   <button
-                    className={`text-black bg-[#46a147] cursor-default mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                    className={`text-black ${Object.keys(preSelectTile).length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer" : "bg-[#489649] cursor-default"} mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
                     onClick={() =>
                       values?.numberofbet === undefined ||
                         values?.numberofbet === ""
@@ -895,7 +898,7 @@ function DragonSidebar() {
                 <div className="flex rounded bg-[#0f212e] focus:outline-none focus:border-transparent">
                   <select
                     type="select"
-                    name="mines"
+                    name="difficulty"
                     value={values?.difficulty}
                     onChange={(e) => handleOnChange(e)}
                     className="w-full px-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"

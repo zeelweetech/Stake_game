@@ -4,11 +4,11 @@ import { setSelectTile } from "../../../../features/casino/kenoSlice";
 
 function KenoGameContent() {
   const dispatch = useDispatch();
-  const [images, setImages] = useState(Array(40).fill(null));
-  const [revealed, setRevealed] = useState(Array(40).fill(false));
-  const [zoomClass, setZoomClass] = useState(Array(40).fill(false));
+  // const [images, setImages] = useState(Array(40).fill(null));
+  // const [revealed, setRevealed] = useState(Array(40).fill(false));
+  // const [zoomClass, setZoomClass] = useState(Array(40).fill(false));
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const { selectTile } = useSelector((state) => state.kenoGame);
+  const { selectTile, images, revealed, zoomClass, values } = useSelector((state) => state.kenoGame);
   // const decoded = decodedToken();
 
   const handleClick = (index) => {
@@ -26,7 +26,7 @@ function KenoGameContent() {
 
   return (
     <div className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? ' max-sm:mx-2' : 'xl:w-[52rem] lg:w-[40rem]'}`}>
-      <div className={`grid ${isMobile ? 'grid-cols-8 gap-1.5' : 'grid-cols-8 gap-x-3 gap-y-1.5'} mt-3 mb-16 relative z-10 p-1.5 max-sm:w-full`}>
+      <div className={`grid ${isMobile ? 'grid-cols-8 gap-1.5' : 'grid-cols-8 gap-x-3 gap-y-1.5'} mt-3 relative z-10 p-1.5 max-sm:w-full`}>
         {images?.map((img, index) => (
           <div
             key={index}
@@ -34,9 +34,10 @@ function KenoGameContent() {
             onClick={() => handleClick(index)}
             style={{
               // backgroundColor: revealed[index] || gamesOver ? "#071824" : "#2f4553",
-              backgroundColor: revealed[index] ? "#071824" : selectTile.includes(index) ? "#9000ff" : "#2f4553",
-              borderBottom: selectTile.includes(index) ? "8px solid #7100c7" : "8px solid #253742",
+              backgroundColor: revealed[index] ? "#071824" : selectTile?.includes(index) ? "#9000ff" : "#2f4553",
+              borderBottom: selectTile?.includes(index) ? "8px solid #7100c7" : "8px solid #253742",
               cursor: revealed[index] ? "not-allowed" : "pointer",
+              opacity: selectTile.length < 10 ? "1" : selectTile?.includes(index) ? "1" : "0.6"
             }}
           >
             {img ? (
@@ -57,9 +58,37 @@ function KenoGameContent() {
           </div>
         ))}
       </div>
-      <div className="w-full px-4 mb-4">
-        <button className="text-[#d5dceb] text-sm py-4 bg-[#2f4553] w-full rounded-md">Select 1 - 10 numbers to play</button>
-      </div>
+      {selectTile.length > 0 ? (
+        <div className="w-full pt-2">
+          <div className="w-full px-4 mb-3 flex space-x-3">
+            <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">0.40x</button>
+            <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">2.75x</button>
+            {selectTile.length > 1 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">2.75x</button> : null}
+            {selectTile.length > 2 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
+            {selectTile.length > 3 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
+            {selectTile.length > 4 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
+            {selectTile.length > 5 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
+            {selectTile.length > 6 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
+            {selectTile.length > 7 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
+            {selectTile.length > 8 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
+            {selectTile.length > 9 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
+          </div>  
+          <div className="w-full px-4 mb-4 flex">
+            {Array.from({ length: Math.min(selectTile.length + 1, 11) }).map((_, index) => (
+              <button
+                key={index}
+                className="text-white font-bold py-4 bg-[#2f4553] w-full"
+              >
+                {index}x
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="w-full px-4 mb-4 mt-16">
+          <button className="text-[#d5dceb] text-sm py-4 bg-[#2f4553] w-full rounded-md">Select 1 - 10 numbers to play</button>
+        </div>
+      )}
     </div>
   );
 }

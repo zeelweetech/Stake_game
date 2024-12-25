@@ -246,19 +246,16 @@ function DragonContent() {
     }
 
     if (!isManual) {
-      // if (preSelectTile.includes(rowIndex)) {
-      //   dispatch(setPreSelectTile(preSelectTile.filter((tile) => tile !== rowIndex)));
-      // } else if (preSelectTile.length) {
-      //   dispatch(setPreSelectTile([...preSelectTile, rowIndex]));
-      // }
-      
-      const updatedClickedBoxes = { ...preSelectTile, [rowIndex]: boxIndex };
+      const updatedClickedBoxes = { ...preSelectTile };
+      if (updatedClickedBoxes[rowIndex] === boxIndex) {
+        delete updatedClickedBoxes[rowIndex];
+      } else {
+        updatedClickedBoxes[rowIndex] = boxIndex;
+      }
       dispatch(setPreSelectTile(updatedClickedBoxes));
 
-      console.log("preSelectTile ++++++++++", preSelectTile);
-
-      // const audio = new Audio(dragontowerSound);
-      // audio.play();
+      const audio = new Audio(dragontowerSound);
+      audio.play();
     }
   };
 

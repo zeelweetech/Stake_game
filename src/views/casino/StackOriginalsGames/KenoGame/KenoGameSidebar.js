@@ -12,7 +12,7 @@ import { decodedToken } from "../../../../resources/utility";
 import toast from "react-hot-toast";
 import { getWallet } from "../../../../services/LoginServices";
 import { KenoSocket } from "../../../../socket";
-import { setIsSwiper, setKenoStatusData, setStopAutoBet, setValues } from "../../../../features/casino/kenoSlice";
+import { setIsSwiper, setKenoStatusData, setSelectTile, setStopAutoBet, setValues } from "../../../../features/casino/kenoSlice";
 
 function KenoGameSidebar() {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ function KenoGameSidebar() {
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
   const [fundsToastShown, setFundsToastShown] = useState(false);
-  const { isSwiper, values = { betamount: "", risk: "medium" }, kenoStatusData, stopAutoBet } = useSelector(
+  const { isSwiper, values = { betamount: "", risk: "medium" }, kenoStatusData, stopAutoBet, selectTile } = useSelector(
     (state) => state.kenoGame
   );
 
@@ -111,6 +111,32 @@ function KenoGameSidebar() {
   const handleOnStopAutoBet = () => {
     KenoSocket.emit("stopAutoBet", { userId: decoded?.userId });
     dispatch(setStopAutoBet(false));
+  };
+
+  // const handleAutoPick = () => {
+  //   const totalBoxes = 40;
+  //   const randomBoxes = new Set();
+
+  //   while (randomBoxes.size < 10) {
+  //     const randomIndex = Math.floor(Math.random() * totalBoxes);
+  //     randomBoxes.add(randomIndex);
+  //   }
+
+  //   dispatch(setSelectTile(Array.from(randomBoxes)));
+  // };
+  const handleAutoPick = async () => {
+    const totalBoxes = 40;
+    const selectedBoxes = new Set();
+
+    while (selectedBoxes.size < 10) {
+      const randomIndex = Math.floor(Math.random() * totalBoxes);
+      if (!selectedBoxes.has(randomIndex)) {
+        selectedBoxes.add(randomIndex);
+
+        dispatch(setSelectTile(Array.from(selectedBoxes)));
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      }
+    }
   };
 
   return (
@@ -207,16 +233,12 @@ function KenoGameSidebar() {
                   <option>High</option>
                 </select>
               </div>
-              <button className="bg-[#2f4553] w-full rounded-sm py-2.5 my-3 font-bold text-sm">Auto Pick</button>
-              <button className="bg-[#2f4553] w-full rounded-sm py-2.5 font-bold text-sm">Clear Table</button>
+              <button className="bg-[#2f4553] w-full rounded-sm py-2.5 my-3 font-bold text-sm" onClick={handleAutoPick}>Auto Pick</button>
+              <button className="bg-[#2f4553] w-full rounded-sm py-2.5 font-bold text-sm" onClick={() => dispatch(setSelectTile([]))}>Clear Table</button>
               <button
-                className={`${
-                  // bettingStatus === false
-                  //   ? "bg-[#489649]"
-                  "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
+                className={`${selectTile.length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45]" : "bg-[#46a147]"} text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleOnManualBet()}
-              // disabled={kenoStatusData.actualMultiplier > 1}
+                disabled={selectTile.length > 0}
               >
                 Bet
               </button>
@@ -491,10 +513,7 @@ function KenoGameSidebar() {
                 </button>
               ) : (
                 <button
-                  className={`${
-                    // bettingStatus === false
-                    //   ? "bg-[#489649]"
-                    "bg-[#1fff20] hover:bg-[#42ed45]"
+                  className={`${selectTile.length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45]" : "bg-[#46a147]"
                     } text-black mt-3 py-3 rounded font-semibold w-full`}
                   onClick={() =>
                     values?.autoBetCount === undefined ||
@@ -567,13 +586,9 @@ function KenoGameSidebar() {
                 </button>
               </div>
               <button
-                className={`${
-                  // bettingStatus === false
-                  //   ? "bg-[#489649]"
-                  "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
+                className={`${selectTile.length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45]" : "bg-[#46a147]"} text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleOnManualBet()}
-              // disabled={kenoStatusData.actualMultiplier > 1}
+                disabled={selectTile.length > 0}
               >
                 Bet
               </button>
@@ -609,10 +624,7 @@ function KenoGameSidebar() {
                   </button>
                 ) : (
                   <button
-                    className={`${
-                      // bettingStatus === false
-                      //   ? "bg-[#489649]"
-                      "bg-[#1fff20] hover:bg-[#42ed45]"
+                    className={`${selectTile.length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45]" : "bg-[#46a147]"
                       } text-black mt-3 py-3 rounded font-semibold w-full`}
                     onClick={() => handleOnAutoBet()}
                   >
