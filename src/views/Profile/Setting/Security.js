@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from "react";
 import { FormControl, TextField, InputAdornment, IconButton, Button } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { twoFactPassword } from "../../../services/Users";
-// import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import toast from "react-hot-toast";
 
@@ -20,14 +18,26 @@ const Security = () => {
         confirmPassword: "",
     });
     const [error, setError] = useState({});
-    const [email, setEmail] = useState(""); 
-    const [userId, setUserId] = useState(""); 
+    const [email, setEmail] = useState("");
+    const [userId, setUserId] = useState("");
+    const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
+
+
+    useEffect(() => {
+        const handleResize = () => {
+            setResponsiveMobile(window.innerWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+        // Cleanup event listener on component unmount
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const decodedToken = () => {
         const token = localStorage.getItem("token");
         if (token) {
             try {
-                const decoded = JSON.parse(atob(token.split('.')[1])); 
+                const decoded = JSON.parse(atob(token.split('.')[1]));
                 return decoded;
             } catch (e) {
                 console.error("Error decoding token:", e);
@@ -41,10 +51,10 @@ const Security = () => {
         const token = localStorage.getItem("token");
         if (token) {
             try {
-                const decoded = decodedToken(); 
+                const decoded = decodedToken();
                 setTokenValid(true);
                 setEmail(decoded?.email || "");
-                setUserId(decoded?.userId || ""); 
+                setUserId(decoded?.userId || "");
             } catch (error) {
                 console.error("Invalid token", error);
                 setTokenValid(false);
@@ -91,178 +101,335 @@ const Security = () => {
             try {
                 if (userId) {
                     const response = await twoFactPassword({ userId, values });
-                    toast.success("Password updated successfully",response?.message);
+                    toast.success("Password updated successfully");
                 } else {
-                    console.error("User ID not found.");
+                    console.error("User  ID not found.");
                 }
             } catch (error) {
                 if (error.response) {
                     console.error("API Error:", error.response.data);
+                    toast.error(error.response.data.message || "Failed to update password");
                 } else {
                     console.error("Error:", error.message);
+                    toast.error("An error occurred while updating the password");
                 }
             }
         }
     };
 
     return (
-        <div className="bg-[#0f212e] text-white rounded-lg p-1 py-1">
-            <div className="bg-[#1a2c38] text-white rounded-lg py-2 w-120 m-6 mx-10">
-                <div className="py-2 text-xl ml-8">Password</div>
-                <div className="mx-8">
-                    <div className="mb-4">
-                        <p className="mt-4 text-sm font-medium text-gray-400">
-                            Old Password <span className="text-red-500">*</span>
-                        </p>
-                        <FormControl sx={{ mt: 0, ml: 0 }}>
-                            <TextField
-                                name="oldPassword"
-                                placeholder="Enter Old Password"
-                                type={showPassword.oldPassword ? "text" : "password"}
-                                value={values.oldPassword}
-                                onChange={handleInputChange}
-                                error={!!error.oldPassword}
-                                helperText={error.oldPassword}
-                                sx={{
-                                    width: "140%",
-                                    backgroundColor: "#0f212e",
-                                    "& .MuiOutlinedInput-root": {
-                                        border: "1px border-gray-500",
-                                        height: "40px",
-                                        "&:hover": {
-                                            border: "2px solid #b1bad3",
+        <div>
+            {responsiveMobile > 768 ? (
+                <div className="bg-[#0f212e] text-white rounded-lg p-10">
+                    <div className="bg-[#1a2c38] border border-gray-500 text-white rounded-lg p-4 w-120 space-y-3">
+                    {/* <div className="flex flex-col"> */}
+                        <div className="flex justify-start mb-4">
+                            <h2 className="text-lg font-semibold">Password</h2>
+                        </div>
+
+                        {/* Old Password */}
+                        <div className="space-y-2">
+                            <p className="text-sm font-medium text-gray-400">
+                                Old Password <span className="text-red-500">*</span>
+                            </p>
+                            <FormControl>
+                                <TextField
+                                    name="oldPassword"
+                                    placeholder="Enter Old Password"
+                                    type={showPassword.oldPassword ? "text" : "password"}
+                                    value={values.oldPassword}
+                                    onChange={handleInputChange}
+                                    error={!!error.oldPassword}
+                                    helperText={error.oldPassword}
+                                    sx={{
+                                        backgroundColor: "#0f212e",
+                                        "& .MuiOutlinedInput-root": {
+                                            border: "1px solid gray",
+                                            width: "100%",
+                                            height: "40px",
+
                                         },
-                                    },
-                                    "& .MuiInputBase-input": {
-                                        color: "white", 
-                                    },
-                                }}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => togglePasswordVisibility("oldPassword")}
-                                                edge="end"
-                                                sx={{ color: "white" }}
-                                            >
-                                                {showPassword.oldPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </FormControl>
-                    </div>
-
-                    {/* New Password */}
-                    <div className="mb-4">
-                        <p className="text-sm font-medium text-gray-400">New Password <span className="text-red-500">*</span></p>
-                        <FormControl sx={{ mt: 0, ml: 0 }}>
-                            <TextField
-                                name="newPassword"
-                                placeholder="Enter New Password"
-                                type={showPassword.newPassword ? "text" : "password"}
-                                value={values.newPassword}
-                                onChange={handleInputChange}
-                                error={!!error.newPassword}
-                                helperText={error.newPassword}
-                                sx={{
-                                    width: "140%",
-                                    backgroundColor: "#0f212e",
-                                    "& .MuiOutlinedInput-root": {
-                                        border: "1px border-gray-500",
-                                        height: "40px",
-                                        "&:hover": {
-                                            border: "2px solid #b1bad3",
+                                        "& .MuiInputBase-input": {
+                                            color: "white",
                                         },
-                                    },
-                                    "& .MuiInputBase-input": {
-                                        color: "white", 
-                                    },
-                                }}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => togglePasswordVisibility("newPassword")}
-                                                edge="end"
-                                                sx={{ color: "white" }}
-                                            >
-                                                {showPassword.newPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </FormControl>
-                    </div>
+                                    }}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={() => togglePasswordVisibility("oldPassword")}
+                                                    edge="end"
+                                                    sx={{ color: "white" }}
+                                                >
+                                                    {showPassword.oldPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
 
-                    {/* Confirm Password */}
-                    <div className="mb-6">
-                        <p className="text-sm font-medium text-gray-400">Confirm Password <span className="text-red-500">*</span></p>
-                        <FormControl sx={{ mt: 0, ml: 0 }}>
-                            <TextField
-                                name="confirmPassword"
-                                placeholder="Confirm Password"
-                                type={showPassword.confirmPassword ? "text" : "password"}
-                                value={values.confirmPassword}
-                                onChange={handleInputChange}
-                                error={!!error.confirmPassword}
-                                helperText={error.confirmPassword}
-                                sx={{
-                                    width: "140%",
-                                    backgroundColor: "#0f212e",
-                                    "& .MuiOutlinedInput-root": {
-                                        border: "1px border-gray-500",
-                                        height: "40px",
-                                        "&:hover": {
-                                            border: "2px solid #b1bad3",
+                        {/* New Password */}
+                        <div className="mb-4">
+                            <p className="text-sm font-medium text-gray-400">New Password <span className="text-red-500">*</span></p>
+                            <FormControl>
+                                <TextField
+                                    name="newPassword"
+                                    placeholder="Enter New Password"
+                                    type={showPassword.newPassword ? "text" : "password"}
+                                    value={values.newPassword}
+                                    onChange={handleInputChange}
+                                    error={!!error.newPassword}
+                                    helperText={error.newPassword}
+                                    sx={{
+                                        backgroundColor: "#0f212e",
+                                        "& .MuiOutlinedInput-root": {
+                                            border: "1px solid gray",
+                                            width: "100%",
+                                            height: "40px",
+
                                         },
-                                    },
-                                    "& .MuiInputBase-input": {
-                                        color: "white", 
-                                    },
-                                }}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => togglePasswordVisibility("confirmPassword")}
-                                                edge="end"
-                                                sx={{ color: "white" }}
-                                            >
-                                                {showPassword.confirmPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </FormControl>
-                    </div>
+                                        "& .MuiInputBase-input": {
+                                            color: "white",
+                                        },
+                                    }}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={() => togglePasswordVisibility("newPassword")}
+                                                    edge="end"
+                                                    sx={{ color: "white" }}
+                                                >
+                                                    {showPassword.newPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
 
-                    <div className="border-b pt-2 border-gray-500 w-4/1 mt-1"></div>
+                        {/* Confirm Password */}
+                        <div className="mb-6">
+                            <p className="text-sm font-medium text-gray-400">Confirm Password <span className="text-red-500">*</span></p>
+                            <FormControl>
+                                <TextField
+                                    name="confirmPassword"
+                                    placeholder="Confirm Password"
+                                    type={showPassword.confirmPassword ? "text" : "password"}
+                                    value={values.confirmPassword}
+                                    onChange={handleInputChange}
+                                    error={!!error.confirmPassword}
+                                    helperText={error.confirmPassword}
+                                    sx={{
+                                        backgroundColor: "#0f212e",
+                                        "& .MuiOutlinedInput-root": {
+                                            border: "1px solid gray",
+                                            height: "40px",
 
-                    {/* Save Button */}
-                    <div className="flex justify-end p-4">
-                        <Button
-                            variant="contained"
-                            color="success"
-                            onClick={handleSave}
-                            sx={{
-                                color: "black",
-                                height: "50px",
-                                width: "80px",
-                            }}
-                        >
-                            Save
-                        </Button>
+                                        },
+                                        "& .MuiInputBase-input": {
+                                            color: "white",
+                                        },
+                                    }}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={() => togglePasswordVisibility("confirmPassword")}
+                                                    edge="end"
+                                                    sx={{ color: "white" }}
+                                                >
+                                                    {showPassword.confirmPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
+
+                        <div className="border-b pt-2 border-gray-500 w-full mt-1"></div>
+
+                        {/* Save Button */}
+                        <div className="flex justify-end p-4">
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={handleSave}
+                                sx={{
+                                    color: "black",
+                                    height: "50px",
+                                    width: "80px",
+                                }}
+                            >
+                                Save
+                            </Button>
+                        </div>
+                        {/* </div> */}
+
                     </div>
                 </div>
-            </div>
+            ) : null}
 
-            {/* Toast Container */}
-            {/* <ToastContainer /> */}
+            {responsiveMobile <= 768 ? (
+                <div className="bg-[#0f212e] text-white rounded-lg p-7">
+                    <div className="bg-[#1a2c38] border border-gray-500 text-white rounded-lg p-6 w-120 space-y-3">
+                        {/* <div className="flex flex-col"> */}
+                        <div className="flex justify-start mb-4">
+                            <h2 className="text-lg font-semibold">Password</h2>
+                        </div>
+
+                        {/* Old Password */}
+                        <div className="space-y-2">
+                            <p className="text-sm font-medium text-gray-400">
+                                Old Password <span className="text-red-500">*</span>
+                            </p>
+                            <FormControl>
+                                <TextField
+                                    name="oldPassword"
+                                    placeholder="Enter Old Password"
+                                    type={showPassword.oldPassword ? "text" : "password"}
+                                    value={values.oldPassword}
+                                    onChange={handleInputChange}
+                                    error={!!error.oldPassword}
+                                    helperText={error.oldPassword}
+                                    sx={{
+                                        backgroundColor: "#0f212e",
+                                        "& .MuiOutlinedInput-root": {
+                                            border: "1px solid gray",
+                                            width: "100%",
+                                            height: "40px",
+
+                                        },
+                                        "& .MuiInputBase-input": {
+                                            color: "white",
+                                        },
+                                    }}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={() => togglePasswordVisibility("oldPassword")}
+                                                    edge="end"
+                                                    sx={{ color: "white" }}
+                                                >
+                                                    {showPassword.oldPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
+
+                        {/* New Password */}
+                        <div className="mb-4">
+                            <p className="text-sm font-medium text-gray-400">New Password <span className="text-red-500">*</span></p>
+                            <FormControl>
+                                <TextField
+                                    name="newPassword"
+                                    placeholder="Enter New Password"
+                                    type={showPassword.newPassword ? "text" : "password"}
+                                    value={values.newPassword}
+                                    onChange={handleInputChange}
+                                    error={!!error.newPassword}
+                                    helperText={error.newPassword}
+                                    sx={{
+                                        backgroundColor: "#0f212e",
+                                        "& .MuiOutlinedInput-root": {
+                                            border: "1px solid gray",
+                                            width: "100%",
+                                            height: "40px",
+
+                                        },
+                                        "& .MuiInputBase-input": {
+                                            color: "white",
+                                        },
+                                    }}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={() => togglePasswordVisibility("newPassword")}
+                                                    edge="end"
+                                                    sx={{ color: "white" }}
+                                                >
+                                                    {showPassword.newPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
+
+                        {/* Confirm Password */}
+                        <div className="mb-6">
+                            <p className="text-sm font-medium text-gray-400">Confirm Password <span className="text-red-500">*</span></p>
+                            <FormControl>
+                                <TextField
+                                    name="confirmPassword"
+                                    placeholder="Confirm Password"
+                                    type={showPassword.confirmPassword ? "text" : "password"}
+                                    value={values.confirmPassword}
+                                    onChange={handleInputChange}
+                                    error={!!error.confirmPassword}
+                                    helperText={error.confirmPassword}
+                                    sx={{
+                                        backgroundColor: "#0f212e",
+                                        "& .MuiOutlinedInput-root": {
+                                            border: "1px solid gray",
+                                            height: "40px",
+
+                                        },
+                                        "& .MuiInputBase-input": {
+                                            color: "white",
+                                        },
+                                    }}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={() => togglePasswordVisibility("confirmPassword")}
+                                                    edge="end"
+                                                    sx={{ color: "white" }}
+                                                >
+                                                    {showPassword.confirmPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
+
+                        <div className="border-b pt-2 border-gray-500 w-full mt-1"></div>
+
+                        {/* Save Button */}
+                        <div className="flex justify-end p-4">
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={handleSave}
+                                sx={{
+                                    color: "black",
+                                    height: "50px",
+                                    width: "80px",
+                                }}
+                            >
+                                Save
+                            </Button>
+                        </div>
+                        {/* </div> */}
+
+                    </div>
+                </div>
+            ) : null}
         </div>
+
     );
 };
 
