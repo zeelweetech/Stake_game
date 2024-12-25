@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+// import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import bombIcon from "../../../../assets/img/bomb.svg";
 import diamondIcon from "../../../../assets/img/Diamond.png";
 import { decodedToken } from "../../../../resources/utility";

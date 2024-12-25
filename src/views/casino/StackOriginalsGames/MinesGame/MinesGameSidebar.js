@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Divider } from "@mui/material";
-import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+// import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import PercentIcon from "@mui/icons-material/Percent";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,7 @@ import {
   setIsManual,
   setMineValue,
   setRestored,
-  setRevealed,
+  // setRevealed,
   setShowFields,
 } from "../../../../features/casino/minesSlice";
 import { MineSocket } from "../../../../socket";

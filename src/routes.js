@@ -1,6 +1,6 @@
-import { element } from "prop-types";
+// import { element } from "prop-types";
 import React from "react";
-import MyBets from "./views/component/GameTable/MyBets";
+// import MyBets from "./views/component/GameTable/MyBets";
 // import pokerTournamentCancellation from "./views/footerpage/pokerTournamentCancellation";
 
 const LandingBanner = React.lazy(() => import("./views/lendingpage/index"));
@@ -13,6 +13,11 @@ const GameContainer = React.lazy(() =>
 );
 const HelpCenter = React.lazy(() =>
   import("./views/footerpage/HelpCenter"))
+
+const Fairness = React.lazy(() =>
+  import("./views/footerpage/Fairness")
+);
+  
 const Policies = React.lazy(() => import("./views/footerpage/Policies"))
 const VipProgramLevels = React.lazy(() => import("./views/footerpage/VipProgramLevels"))
 const OnlineCasinoGuide = React.lazy(() => import("./views/footerpage/onlineCasinoGuide"))
@@ -61,6 +66,7 @@ const routes = [
   { path: "/NewReleases", name: "NewReleases", element: NewReleases },
   { path: "/ComeSoon", name: "ComeSoon", element: ComeSoon },
   { path: "/HelpCenter", name: "HelpCenter", element: HelpCenter },
+  { path: "/Fairness", name: "Fairness", element: Fairness },
   { path: "/VipProgramLevels", name: "VipProgramLevels", element: VipProgramLevels },
   { path: "/OnlineCasinoGuide", name: "OnlineCasinoGuide", element: OnlineCasinoGuide },
   // { path: "/terms", name: "Terms", element: Terms },

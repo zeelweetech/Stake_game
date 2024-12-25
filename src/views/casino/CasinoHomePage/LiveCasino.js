@@ -8,12 +8,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import { getAllGames } from "../../../services/GameServices";
-import { setAllGame } from "../../../features/casino/allGameSlice";
+// import { getAllGames } from "../../../services/GameServices";
+// import { setAllGame } from "../../../features/casino/allGameSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function LiveCasino({ allGames, isLobby }) {
-  const [loading, setLoading] = useState(false);
+  const [
+    // loading
+    , setLoading] = useState(false);
   const navigate = useNavigate();
   const swiperRef = useRef(null);
   const navButtonsRef = useRef(null);
