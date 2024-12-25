@@ -15,6 +15,9 @@ const Generals = () => {
     const [resendClicked, setResendClicked] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
+    const decoded = decodedToken();
+    const userId = decoded?.userId;
 
     // List of country codes and country names
     const countryCodes = [
@@ -25,10 +28,15 @@ const Generals = () => {
         { code: "+81", name: "Japan" },
     ];
 
-    const decoded = decodedToken();
-    console.log(">>>>>>>>>>", decoded?.userId);
+    useEffect(() => {
+        const handleResize = () => {
+            setResponsiveMobile(window.innerWidth);
+        };
 
-    const userId = decoded?.userId;
+        window.addEventListener("resize", handleResize);
+        // Cleanup event listener on component unmount
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -65,187 +73,214 @@ const Generals = () => {
     };
 
     return (
-        <div className="bg-[#0f212e] text-white rounded-lg py-1 min-h-screen">
-            <div className="bg-[#1a2c38] text-white rounded-lg py-4 h-64 w-120 m-10">
-                {/* Email Section */}
-                <div className="py-3 text-xl ml-8 ">
-                    Email
-                    <div className="border-b pt-2 border-gray-500 w-[95%] mt-1"></div>
-                </div>
-                <div>
-                    <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400">Email</p>
-                    <FormControl sx={{ mt: 0, ml: 0 }} error={!!errors.email}>
-                        <TextField
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            sx={{
-                                width: "140%",
-                                marginLeft: "30px",
-                                backgroundColor: "#0f212e",
-                                color: "white",
-                                "& .MuiOutlinedInput-root": {
-                                    border: "1px solid gray",
+        <div>
+            {responsiveMobile > 768 ? (
+                <div className="bg-[#0f212e] rounded-lg p-10 space-y-10">
+                    <div className="bg-[#1a2c38] text-white rounded-lg h-64 w-120 pt-3 px-10">
+                        {/* Email Section */}
+                        <div className="py-3 text-xl">
+                            Email
+                            <div className="border-b pt-2 border-gray-500 w-[95%] mt-1"></div>
+                        </div>
+                        <div>
+                            <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400">Email</p>
+
+                            <input
+                                className="bg-[#0f212e] p-2 xl:w-96 w-full"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <div className="border-b p-2 1px border-gray-400 mt-1"></div>
+                        </div>
+
+                        {/* Buttons Section */}
+                        <div className="mt-4" style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+                            <Button onClick={handleResendEmail} sx={{ color: "white" }}>
+                                Resend Email
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={handleSaveEmail}
+                                sx={{
+                                    color: "black",
                                     height: "40px",
-                                    "&:hover": {
-                                        border: "2px solid #b1bad3",
-                                    },
-                                },
-                                "& .MuiInputBase-input": {
-                                    color: "white",
-                                },
-
-                                '@media (max-width: 425px)': {
-                                    width: "100%",
-                                    marginLeft: "0",
-                                },
-                                '@media (min-width: 426px) and (max-width: 768px)': {
-                                    width: "100%",
-                                    marginLeft: "32px",
-                                },
-                                '@media (min-width: 769px) and (max-width: 1024px)': {
-                                    width: "100%",
-                                    marginLeft: "30px",
-                                },
-                                '@media (min-width: 1025px)': {
-                                    width: "140%", // Original width for larger screens
-                                    marginLeft: "30px", // Original margin for larger screens
-                                },
-                            }}
-                        />
-                    </FormControl>
-                    <div className="border-b p-2 1px border-gray-400 mt-1"></div>
-                </div>
-
-                {/* Buttons Section */}
-                <div className="mt-4 px-8" style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-                    <Button onClick={handleResendEmail} sx={{ color: "white" }}>
-                        Resend Email
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="success"
-                        onClick={handleSaveEmail}
-                        sx={{
-                            color: "black",
-                            height: "40px",
-                        }}
-                    >
-                        Save
-                    </Button>
-                </div>
-            </div>
-
-            {/* Phone Number Section */}
-            <div className="bg-[#1a2c38] text-white rounded-lg py-4 h-96 w-120 m-10">
-                <div className="py-3 font-bold text-xl ml-8 ">Phone Number</div>
-                <p className="font-normal text-sm pt-2 mt-1 ml-8 text-gray-400">
-                    We only service areas that are listed in the available country code list.
-                </p>
-                <div className="border-b pt-4 border-gray-500 w-[95%] mt-1"></div>
-
-                {/* Country Code Dropdown */}
-                <p className="mt-0 mb-2 ml-8 py-2 text-sm font-medium text-gray-400">
-                    Country Code
-                </p>
-                <FormControl
-                    className="mt-[-0.5rem] ml-8 w-[50%] sm:w-[80%] md:w-[60%] lg:w-[41%]"
-                    size="small"
-                >
-                    <div
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="flex items-center ml-8 justify-between w-[97%] p-2 bg-[#0f212e] text-white border border-[#b1bad3] rounded cursor-pointer"
-                    >
-                        {countryCode ? `Selected: ${countryCode}` : "Select Country Code"}
-                        {isOpen ? (
-                            <ChevronUpIcon className="ml-2 h-5 w-5" />
-                        ) : (
-                            <ChevronDownIcon className="ml-2 h-5 w-5" />
-                        )}
-                    </div>
-                </FormControl>
-
-                {/* Dropdown */}
-                {isOpen && (
-                    <div
-                        className="mt-[3px] ml-8 w-[41%] sm:w-[80%] md:w-[60%] lg:w-[41%] bg-[#0f212e] text-white border border-[#b1bad3] max-h-[180px] overflow-y-auto rounded"
-                    >
-                        {countryCodes.map((item) => (
-                            <div
-                                key={item.code}
-                                onClick={() => {
-                                    setCountryCode(item.code);
-                                    setIsOpen(false); // Close dropdown after selection
                                 }}
-                                className="p-2 cursor-pointer hover:bg-[#1a2c38]"
                             >
-                                {item.name} {item.code}
-                            </div>
-                        ))}
+                                Save
+                            </Button>
+                        </div>
                     </div>
-                )}
 
+                    {/* Phone Number Section */}
+                    <div className="bg-[#1a2c38] text-white rounded-lg py-4 h-96 w-120 p-10">
+                        <div className="py-3 font-bold text-xl">Phone Number</div>
+                        <p className="font-normal text-sm pt-2 mt-1 text-gray-400">
+                            We only service areas that are listed in the available country code list.
+                        </p>
+                        <div className="border-b pt-4 border-gray-500 w-[95%] mt-1"></div>
 
+                        {/* Country Code Dropdown */}
+                        <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400"> Country Code </p>
+                        <div className="relative mt-[-0.5rem] xl:w-[50%] w-full">
+                            <div
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="flex items-center justify-between xl:w-[80%] w-full p-2 bg-[#0f212e] text-white border border-[#b1bad3] rounded cursor-pointer">
+                                <span>{countryCode ? `Selected: ${countryCode}` : "Select Country Code"}</span>
+                                {isOpen ? (
+                                    <ChevronUpIcon className="ml-2 h-5 w-5" />
+                                ) : (
+                                    <ChevronDownIcon className="ml-2 h-5 w-5" />
+                                )}
+                            </div>
+                            {isOpen && (
+                                <div
+                                    className="absolute z-10 xl:w-[80%] w-full bg-[#0f212e] text-white border border-[#b1bad3] max-h-[170px] overflow-y-auto rounded">
+                                    {countryCodes.map((item) => (
+                                        <div
+                                            key={item.code}
+                                            onClick={() => {
+                                                setCountryCode(item.code);
+                                                // setIsOpen(false); 
+                                            }}
+                                            className="p-2 cursor-pointer hover:bg-[#1a2c38]"
+                                        >
+                                            {item.name} {item.code}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
 
-                {/* Phone Number Input */}
-                <p className="mt-0 mb-2 ml-8 mx-4 py-2 text-sm font-medium text-gray-400 ">Phone Number</p>
-                <FormControl sx={{ mt: -2, ml: 0, color: "white" }}>
-                    <TextField
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        sx={{
-                            color: "white",
-                            width: "140%",
-                            marginLeft: "30px",
-                            backgroundColor: "#0f212e",
-                            "& .MuiOutlinedInput-root": {
-                                border: "1px border-gray-500",
-                                height: "40px",
-                                "&:hover": {
-                                    border: "2px solid #b1bad3",
-                                },
-                            },
-                            "& .MuiInputBase-input": {
-                                color: "white",
-                            },
-                            // Media queries for different screen sizes
-                            '@media (max-width: 425px)': {
-                                width: "100%", // Full width on mobile
-                                marginLeft: "0", // Remove margin on mobile
-                            },
-                            '@media (min-width: 426px) and (max-width: 768px)': {
-                                width: "100%", // Full width on small tablets
-                                marginLeft: "32px", // Remove margin on small tablets
-                            },
-                            '@media (min-width: 769px) and (max-width: 1024px)': {
-                                width: "100%", // Full width on larger tablets
-                                marginLeft: "30px", // Remove margin on larger tablets
-                            },
-                            '@media (min-width: 1025px)': {
-                                width: "140%", // Original width for larger screens
-                                marginLeft: "30px", // Original margin for larger screens
-                            },
-                        }}
+                        </div>
+                        {/* Phone Number Input */}
+                        <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400 ">Phone Number</p>
+                        <input
+                            placeholder="Enter Phone number"
+                            className="bg-[#0f212e] p-2 xl:w-[43%] w-full"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                        <div className="border-b p-2 1px border-gray-400 mt-1"></div>
 
-                    />
-                </FormControl>
-                <div className="border-b p-2 1px border-gray-400 mt-1"></div>
-
-                {/* Submit Button */}
-                <div className="mt-4 px-8 p-4" style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <Button
-                        variant="contained"
-                        color="success"
-                        onClick={handleSubmitPhone}
-                        sx={{
-                            color: "black",
-                            height: "40px",
-                        }}
-                    >
-                        Submit
-                    </Button>
+                        {/* Submit Button */}
+                        <div className="flex justify-end mt-4">
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={handleSubmitPhone}
+                                sx={{ color: "black" }}
+                            >
+                                Submit
+                            </Button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            ) : null}
+
+            {responsiveMobile <= 768 && (
+                 <div className="bg-[#0f212e] rounded-lg p-10 space-y-10">
+                 <div className="bg-[#1a2c38] text-white rounded-lg h-64 w-120 pt-3 px-10">
+                     {/* Email Section */}
+                     <div className="py-3 text-xl">
+                         Email
+                         <div className="border-b pt-2 border-gray-500 w-[95%] mt-1"></div>
+                     </div>
+                     <div>
+                         <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400">Email</p>
+
+                         <input
+                             className="bg-[#0f212e] p-2 xl:w-96 w-full"
+                             value={email}
+                             onChange={(e) => setEmail(e.target.value)}
+                         />
+                         <div className="border-b p-2 1px border-gray-400 mt-1"></div>
+                     </div>
+
+                     {/* Buttons Section */}
+                     <div className="mt-4" style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+                         <Button onClick={handleResendEmail} sx={{ color: "white" }}>
+                             Resend Email
+                         </Button>
+                         <Button
+                             variant="contained"
+                             color="success"
+                             onClick={handleSaveEmail}
+                             sx={{
+                                 color: "black",
+                                 height: "40px",
+                             }}
+                         >
+                             Save
+                         </Button>
+                     </div>
+                 </div>
+
+                 {/* Phone Number Section */}
+                 <div className="bg-[#1a2c38] text-white rounded-lg py-4 h-96 w-120 p-10">
+                     <div className="py-3 font-bold text-xl">Phone Number</div>
+                     <p className="font-normal text-sm pt-2 mt-1 text-gray-400">
+                         We only service areas that are listed in the available country code list.
+                     </p>
+                     <div className="border-b pt-4 border-gray-500 w-[95%] mt-1"></div>
+
+                     {/* Country Code Dropdown */}
+                     <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400"> Country Code </p>
+                     <div className="relative mt-[-0.5rem] xl:w-[50%] w-full">
+                         <div
+                             onClick={() => setIsOpen(!isOpen)}
+                             className="flex items-center justify-between xl:w-[80%] w-full p-2 bg-[#0f212e] text-white border border-[#b1bad3] rounded cursor-pointer">
+                             <span>{countryCode ? `Selected: ${countryCode}` : "Select Country Code"}</span>
+                             {isOpen ? (
+                                 <ChevronUpIcon className="ml-2 h-5 w-5" />
+                             ) : (
+                                 <ChevronDownIcon className="ml-2 h-5 w-5" />
+                             )}
+                         </div>
+                         {isOpen && (
+                             <div
+                                 className="absolute z-10 xl:w-[80%] w-full bg-[#0f212e] text-white border border-[#b1bad3] max-h-[170px] overflow-y-auto rounded">
+                                 {countryCodes.map((item) => (
+                                     <div
+                                         key={item.code}
+                                         onClick={() => {
+                                             setCountryCode(item.code);
+                                             // setIsOpen(false); 
+                                         }}
+                                         className="p-2 cursor-pointer hover:bg-[#1a2c38]"
+                                     >
+                                         {item.name} {item.code}
+                                     </div>
+                                 ))}
+                             </div>
+                         )}
+
+                     </div>
+                     {/* Phone Number Input */}
+                     <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400 ">Phone Number</p>
+                     <input
+                         placeholder="Enter Phone number"
+                         className="bg-[#0f212e] p-2 xl:w-[43%] w-full"
+                         value={phoneNumber}
+                         onChange={(e) => setPhoneNumber(e.target.value)}
+                     />
+                     <div className="border-b p-2 1px border-gray-400 mt-1"></div>
+
+                     {/* Submit Button */}
+                     <div className="flex justify-end mt-4">
+                         <Button
+                             variant="contained"
+                             color="success"
+                             onClick={handleSubmitPhone}
+                             sx={{ color: "black" }}
+                         >
+                             Submit
+                         </Button>
+                     </div>
+                 </div>
+             </div>
+            )}
         </div>
+
     );
 };
 

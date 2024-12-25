@@ -8,7 +8,7 @@ const Benifit = () => {
 
     const [gameMenu, setGameMenu] = useState("Progress"); 
 
-    const benefitList = [
+    const BronzeList = [
         "Bonus from Support in currency of your choice",
         "Rakeback enabled",
         "Weekly bonuses",
@@ -47,9 +47,10 @@ const Benifit = () => {
     ];
 
     return (
-        <div className="w-full px-2 p-2">
+        <div className="w-full">
           
             {/* {gameMenu === "Benefit" && ( */}
+            <div  className="w-full px-2 p-2">
             <Accordion sx={{backgroundColor: "#213743"}}>
             <AccordionSummary
                         expandIcon={<ExpandMoreIcon sx={{ color: "#b1bad3" }} />}
@@ -63,7 +64,7 @@ const Benifit = () => {
                     <hr className= 'border-gray-500 border'></hr>
 
                     <AccordionDetails sx={{ backgroundColor: "#1a2c38", color: "#b1bad3" }}>
-                        {benefitList.map((benefit, index) => (
+                        {BronzeList.map((benefit, index) => (
                             <Typography key={index} className="text-sm mb-2">
                                  <ul className='list-disc m-2 font-thin'>
                                 <li> {benefit}</li>
@@ -72,6 +73,8 @@ const Benifit = () => {
                         ))}
                     </AccordionDetails>
                 </Accordion>
+            </div>
+           
             {/* )} */}
 
             {/* Silver */}
