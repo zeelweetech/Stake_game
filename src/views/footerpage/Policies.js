@@ -28,7 +28,7 @@ const Policies = () => {
     { name: "Providers", link: "Providers" },
     { name: "Sportsbook", link: "sportsbook" },
     { name: "Cookies Policy", link: "Cookies" },
-    { name: "Coin Mixing", link: "coin-mixing" },
+    // { name: "Coin Mixing", link: "coin-mixing" },
     { name: "Self-Exclusion", link: "self-exclusion" },
     { name: "Racing Rules", link: "racing-rules" },
     { name: "Poker Card Room Rules", link: "CardRoomRules" },

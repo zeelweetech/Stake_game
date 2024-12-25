@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
-import { Badge, IconButton, Menu } from "@mui/material";
+import { Badge, IconButton, 
+  // Menu 
+} from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { IoIosChatboxes } from "react-icons/io";
 import { MdEmojiEvents, MdOutlineEventNote, MdSettings } from "react-icons/md";
@@ -11,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaWallet } from "react-icons/fa";
 import { PiVaultFill } from "react-icons/pi";
 import { BiSolidNotepad } from "react-icons/bi";
-import LegendToggleIcon from '@mui/icons-material/LegendToggle';
+// import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 import { BsChatDotsFill } from "react-icons/bs";
 import { setAnchorEl } from "../features/auth/authSlice";
 import { openBetslipModal } from "../features/auth/betSlipSlice";
@@ -20,10 +22,10 @@ import Wallet from "../views/Profile/Wallet";
 import Vault from "../views/Profile/Vault";
 import Vip from "../views/Profile/Vip";
 import Statistic from "../views/Profile/Statistic";
-import { Logout } from "@mui/icons-material";
+// import { Logout } from "@mui/icons-material";
 import LogoutDialog from "../views/Profile/Logout";
-import CloseIcon from "@mui/icons-material/Close";
-import notification from "../assets/img/Notification.png";
+// import CloseIcon from "@mui/icons-material/Close";
+// import notification from "../assets/img/Notification.png";
 import Notification from "../views/Profile/Notification";
 
 function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
@@ -33,7 +35,9 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useDispatch()
 
-  const [notificationOpen, setNotificationOpen] = useState(false); // New state for notifications
+  const [
+    // notificationOpen
+    , setNotificationOpen] = useState(false); // New state for notifications
 
   const [profilePopupOpen, setProfilePopupOpen] = useState({
     isWalletOpen: false,

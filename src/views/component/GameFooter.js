@@ -729,7 +729,7 @@ function GameFooter() {
           onClick={handleFairnessClose}
         >
           <div
-            className={`bg-scroll z-10 absolute xl:-mt-[0rem] lg:mt-[3rem] md:-mt-[60rem] max-sm:mx-5 -mt-[56rem] ${
+            className={`bg-scroll flex justify-center items-center z-10 absolute xl:-mt-[0rem] lg:mt-[3rem] md:-mt-[2rem] max-sm:mx-5 -mt-[0rem] ${
               isScreenSmall
                 ? "md:-mt-[47rem] flex justify-center items-center -mt-[44.5rem]"
                 : ""
@@ -939,13 +939,28 @@ function GameFooter() {
                           <p className="text-gray-400 text-sm select-none">
                             More inputs are required to verify result
                           </p>
-                          <div className="flex space-x-2 mt-2">
-                            <span className="w-4 h-4 bg-gray-400 rounded-full transform transition-all duration-500 hover:scale-125"></span>
-                            <span className="w-4 h-4 bg-gray-400 rounded-full transform transition-all duration-500 hover:scale-125"></span>
+                          <style>
+                            {`
+                            @keyframes spin {
+                              0%, to { transform: translateY(-50%) scale(.4) }
+                              25% { transform: translate(-1.15rem, -50%) scale(1) }
+                              50% { transform: translateY(-50%) scale(1.5) }
+                              75% { transform: translate(1.15rem, -50%) scale(1) }
+                            }
+                            .spin-one {
+                              animation: spin 0.8s infinite linear;
+                            }
+                            .spin-two {
+                              animation: spin 0.8s -.4s infinite linear;
+                            }
+                          `}
+                          </style>
+                          <div className="flex mt-5">
+                            <div className="relative w-3 h-3 rounded-full bg-current spin-one"></div>
+                            <div className="relative w-3 h-3 rounded-full bg-current spin-two"></div>
                           </div>
                         </div>
                       </div>
-
                       <div className="w-full p-4 bg-[#0f212E] overflow-auto max-h-screen">
                         <label className="block mb-2 text-sm font-medium select-none text-[#B1BaD3]">
                           Game
@@ -1123,7 +1138,6 @@ function GameFooter() {
                               Risk
                             </label>
                             <select className="w-full p-2.5 bg-[#0F212E] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded text-sm">
-                              {/* <option selected></option> */}
                               <option value="low">Low</option>
                               <option value="mediun">Mediun</option>
                               <option value="high">High</option>
