@@ -48,12 +48,10 @@ const Setting = () => {
   };
 
   const handleMenuClick = (label) => {
-    console.log("label", label);
     setSelectedMenu(label);
     setIsOpen(false);
     if (label === "General" || label === "Security" || label === "Session") {
       navigate(`/setting/${label.toLowerCase()}`);
-
     }
   };
 
@@ -71,7 +69,7 @@ const Setting = () => {
         <Loader />
       ) : (
         <div className="ml-4">
-          <div className="text-white flex items-center space-x-4 w-80 ml-10 mt-4">
+          <div className="text-white flex items-center space-x-4 w-full px-10 md:px-2 py-2">
             <MdSettings size={22} />
             <p className="text-xl py-0">Settings</p>
           </div>
@@ -98,14 +96,9 @@ const Setting = () => {
                 {getContent(section)}
               </div>
             </div>
-          ) : null}
-
-          {responsiveMobile <= 768 ? (
+          ) : (
             <div className="">
-              {/* <div className="text-white flex items-center space-x-4 w-80 ml-10 mt-4">
-                <MdSettings size={22} />
-                <p className="text-xl py-0">Settings</p>
-              </div> */}
+
               <div className="relative py-2">
                 <div
                   onClick={() => setIsOpen(!isOpen)}
@@ -137,7 +130,7 @@ const Setting = () => {
                 {getContent(section)}
               </div>
             </div>
-          ) : null}
+          )}
 
           {verify && <div><Verify setVerify={setVerify} /></div>}
         </div>

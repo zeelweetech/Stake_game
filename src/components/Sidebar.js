@@ -10,6 +10,7 @@ import casino from "../assets/img/casino.png";
 import casino1 from "../assets/img/casino1.jpg";
 import sports from "../assets/img/sports.png"
 import sports1 from "../assets/img/sports1.png";
+import BottomDrawer from "./BottomSidebar";
 
 function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
   const [casinoClicked, setCasinoClicked] = useState(false);
@@ -35,7 +36,7 @@ function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
   // };
 
   const handleNotificationClick = (event) => {
-    handleMenuOpen(event); 
+    handleMenuOpen(event);
   };
 
   return (
@@ -107,6 +108,7 @@ function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
           // setDropdownVisible={setDropdownVisible} // Pass dropdown state setter
 
           />
+         
 
           {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
             <li key={text} className="flex items-center p-2 pl-4 space-x-4">
