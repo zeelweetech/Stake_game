@@ -95,8 +95,7 @@ function Betslip({ onClose }) {
           {/* Dropdown Menu */}
           {dropdownOpen && (
             <div className="relative">
-              <div className="absolute top-full shadow-lg left-1/2 mt-2 bg-white text-black font-medium rounded-sm px-4 py-2 shadow-sm z-10 w-max text-center">
-
+              <div className="absolute top-full shadow-lg left-1/2 mt-2 bg-white text-black font-medium rounded-sm px-4 py-2 z-10 w-max text-center">
                 <button
                   onClick={() => handleViewChange("Bet Slip")}
                   className={`text-gray-700 block py-1 text-sm ${selectedView === "Bet Slip" && "font-bold"}`}

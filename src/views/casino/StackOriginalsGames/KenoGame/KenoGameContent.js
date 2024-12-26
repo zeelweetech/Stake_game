@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectTile } from "../../../../features/casino/kenoSlice";
+import kenoDaimond from "../../../../assets/svg/kenoDaimond.svg"
+import { rowFileConfigs } from "./KenoJson";
 
 function KenoGameContent() {
   const dispatch = useDispatch();
@@ -16,11 +18,64 @@ function KenoGameContent() {
     if (revealed[index]) return;
 
     if (selectTile.includes(index)) {
-      dispatch(setSelectTile(selectTile.filter((tile) => tile !== index)));
+      dispatch(setSelectTile(selectTile.filter((tile) => tile !== index))); 
     } else {
       if (selectTile.length < 10) {
         dispatch(setSelectTile([...selectTile, index]));
       }
+    }
+  };
+
+  const renderButtons = () => {
+    const length = selectTile.length;
+
+    if (length === 0) {
+      return null;
+    }
+
+    const config = rowFileConfigs[length];
+
+    if (!config) {
+      return null;
+    }
+
+    const xValueButton = (configArray) => {
+      return configArray.map((value, index) => (
+        index < length + 1 ? (
+          <button key={index} className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">
+            {value}
+          </button>
+        ) : null
+      ));
+    };
+
+    switch (values?.risk) {
+      case 'Classic':
+        return (
+          <div className="w-full flex space-x-3">
+            {xValueButton(config.Classic)}
+          </div>
+        );
+      case 'Low':
+        return (
+          <div className="w-full flex space-x-3">
+            {xValueButton(config.Low)}
+          </div>
+        );
+      case 'Medium':
+        return (
+          <div className="w-full flex space-x-3">
+            {xValueButton(config.Medium)}
+          </div>
+        );
+      case 'High':
+        return (
+          <div className="w-full flex space-x-3">
+            {xValueButton(config.High)}
+          </div>
+        );
+      default:
+        return null;
     }
   };
 
@@ -60,26 +115,18 @@ function KenoGameContent() {
       </div>
       {selectTile.length > 0 ? (
         <div className="w-full pt-2">
-          <div className="w-full px-4 mb-3 flex space-x-3">
-            <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">0.40x</button>
-            <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">2.75x</button>
-            {selectTile.length > 1 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">2.75x</button> : null}
-            {selectTile.length > 2 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
-            {selectTile.length > 3 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
-            {selectTile.length > 4 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
-            {selectTile.length > 5 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
-            {selectTile.length > 6 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
-            {selectTile.length > 7 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
-            {selectTile.length > 8 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
-            {selectTile.length > 9 ? <button className="text-white font-bold py-4 bg-[#2f4553] w-full rounded-md">275x</button> : null}
-          </div>  
+          <div className="px-4 mb-3">
+            {renderButtons()}
+          </div>
+          {/* </div> */}
           <div className="w-full px-4 mb-4 flex">
             {Array.from({ length: Math.min(selectTile.length + 1, 11) }).map((_, index) => (
               <button
                 key={index}
-                className="text-white font-bold py-4 bg-[#2f4553] w-full"
+                className="text-white font-bold py-4 bg-[#2f4553] w-full flex items-center justify-center"
               >
                 {index}x
+                <img src={kenoDaimond} className="w-4 h-4 ml-1" style={{ filter: "grayscale(100%)" }} alt="Not Found" />
               </button>
             ))}
           </div>

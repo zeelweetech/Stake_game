@@ -8,12 +8,10 @@ import StackCasino from "../../assets/img/StackCasino.png";
 import SportBook from "../../assets/img/SportBook.png";
 import casinoCard from "../../assets/img/card.png";
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
-import { Tooltip } from "recharts";
 import { decodedToken } from "../../resources/utility";
 import { getMedalsProgress } from "../../services/LoginServices";
 
 function Mainbar() {
-  //   const InfoTooltip = `All bets settled on the sportsbook return a 3x (three times) faster rate of progression compared to Casino (1x progression). Voided bets are excluded.`;
   const { userId } = useParams();
   const navigate = useNavigate();
   const [progressData, setProgressData] = useState([]);
@@ -39,7 +37,7 @@ function Mainbar() {
   return (
     <div className="w-full">
       <div
-        className="h-auto xl:w-full lg:w-full flex flex-col lg:flex-row justify-evenly items-center p-4"
+        className="h-auto flex flex-col lg:flex-row justify-evenly items-center p-4"
         style={{
           backgroundImage: `url(${mainbarBGimage})`,
           backgroundSize: "cover",
@@ -64,12 +62,6 @@ function Mainbar() {
                 <Link className="text-sm font-medium">Your VIP Progress</Link>
                 <FaArrowRight size={13} className="mt-1" color="#b1bad3" />
               </div>
-              {/* <div className="flex items-center space-x-1">
-                <p className="text-sm font-medium">
-                  {progressData?.vipProgress || "0.00%"}
-                </p>
-                <InfoIcon fontSize="small" className="text-[#b1bad3]" />
-              </div> */}
               <div className="flex items-center space-x-1 relative">
                 <p className="text-sm font-medium">
                   {progressData?.vipProgress || "0.00%"}

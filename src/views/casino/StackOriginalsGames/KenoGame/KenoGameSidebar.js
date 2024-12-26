@@ -20,7 +20,7 @@ function KenoGameSidebar() {
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
   const [fundsToastShown, setFundsToastShown] = useState(false);
-  const { isSwiper, values = { betamount: "", risk: "medium" }, kenoStatusData, stopAutoBet, selectTile } = useSelector(
+  const { isSwiper, values = { betamount: "", risk: "Medium" }, kenoStatusData, stopAutoBet, selectTile } = useSelector(
     (state) => state.kenoGame
   );
 
@@ -229,7 +229,7 @@ function KenoGameSidebar() {
                 >
                   <option>Classic</option>
                   <option>Low</option>
-                  <option value='medium'>Medium</option>
+                  <option value='Medium'>Medium</option>
                   <option>High</option>
                 </select>
               </div>
@@ -327,7 +327,7 @@ function KenoGameSidebar() {
                   >
                     <option>Classic</option>
                     <option>Low</option>
-                    <option value='medium'>Medium</option>
+                    <option value='Medium'>Medium</option>
                     <option>High</option>
                   </select>
                 </div>
@@ -605,7 +605,7 @@ function KenoGameSidebar() {
                 >
                   <option>Classic</option>
                   <option>Low</option>
-                  <option value='medium'>Medium</option>
+                  <option value='Medium'>Medium</option>
                   <option>High</option>
                 </select>
               </div>
@@ -712,7 +712,7 @@ function KenoGameSidebar() {
                   >
                     <option>Classic</option>
                     <option>Low</option>
-                    <option value='medium'>Medium</option>
+                    <option value='Medium'>Medium</option>
                     <option>High</option>
                   </select>
                 </div>

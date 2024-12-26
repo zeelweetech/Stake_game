@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isSwiper: true,
-  values: { betamount: "", risk: "medium" },
+  values: { betamount: "", risk: "Medium" },
   selectTile: [],
   kenoStatusData: {},
   stopAutoBet: false,
