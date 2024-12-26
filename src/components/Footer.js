@@ -13,6 +13,7 @@ import Tether from "../assets/img/tether.Cv3Qd73c.svg";
 import EvertonLogo from "../assets/img/everton-logo.DjZkLatD (1).svg";
 import SafeGamble from "../assets/img/safe-gamble.Lrrm0l28.svg";
 import Age from "../assets/img/18plus.DgozareE (1).svg";
+import cryptogambling1 from "../assets/img/cryptogambling1.png";
 import { FaCommentAlt } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -44,7 +45,7 @@ function Footer() {
               href="https://blog.Listor.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white"
             >
               <FaBloggerB />
             </a>
@@ -52,7 +53,7 @@ function Footer() {
               href="https://forum.Listor.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white"
             >
               <FaCommentAlt />
             </a>
@@ -60,7 +61,7 @@ function Footer() {
               href="https://www.facebook.com/ListorCasino"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white"
             >
               <FaFacebookF />
             </a>
@@ -68,7 +69,7 @@ function Footer() {
               href="https://twitter.com/Listor"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white"
             >
               <FaXTwitter />
             </a>
@@ -76,7 +77,7 @@ function Footer() {
               href="https://www.instagram.com/Listor"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white"
             >
               <FaInstagram />
             </a>
@@ -84,7 +85,7 @@ function Footer() {
               href="https://www.youtube.com/c/ListorCasino"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white"
             >
               <FaYoutube />
             </a>
@@ -92,7 +93,7 @@ function Footer() {
               href="https://shop.Listor.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white"
             >
               <IoShirt />
             </a>
@@ -100,17 +101,17 @@ function Footer() {
               href="https://Listor.com/vip"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white"
             >
               <FaCrown />
             </a>
           </div>
         </div>
-        <div className="border-t border-gray-700 pt-8 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-y-8 gap-x-0 mb-12">
+        <div className="border-t border-gray-700 pt-8 max-w-7xl mx-auto grid grid-cols-2 gap-x-10  md:grid-cols-4 lg:grid-cols-5 gap-y-4 md:gap-x-4 mb-12">
           {/* Casino Section */}
           <div>
             <h3 className="text-white font-semibold mb-4">Casino</h3>
-            <ul className="space-y-2">
+            <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
               <li><a href="/" className="hover:text-white">Casino Games</a></li>
               <li><a href="/slots" className="hover:text-white">Slots</a></li>
               <li><a href="/LiveCasion" className="hover:text-white">Live Casino</a></li>
@@ -122,7 +123,7 @@ function Footer() {
           </div>
           <div>
             <h3 className="text-white font-semibold mb-4">Sports</h3>
-            <ul className="space-y-2">
+            <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
               <li><a href="/ComeSoon" className="hover:text-white">Sportsbook</a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Live Sports</a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Soccer</a></li>
@@ -136,9 +137,9 @@ function Footer() {
           </div>
           <div>
             <h3 className="text-white font-semibold mb-4">Support</h3>
-            <ul className="space-y-2">
+            <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
               <li><a href="/HelpCenter" className="hover:text-white flex items-center">Help Center <svg className="w-3 h-3 ml-1" /></a></li>
-              <li><a href="/Fairness" className="hover:text-white flex items-center">Fairness</a></li>
+              <li><a href="/ComeSoon" className="hover:text-white flex items-center">Fairness</a></li>
               <li><a href="/ComeSoon" className="hover:text-white flex items-center">Gambling Helpline <svg className="w-3 h-3 ml-1" /></a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Live Support</a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Self Exclusion</a></li>
@@ -147,7 +148,7 @@ function Footer() {
           <div>
             <div>
               <h3 className="text-white font-semibold mb-4">About Us</h3>
-              <ul className="space-y-2">
+              <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
                 <li><a href="/vip-club" className="hover:text-white">VIP Club</a></li>
                 <li><a href="#" className="hover:text-white">Affiliate</a></li>
                 <li>   <Link
@@ -187,7 +188,7 @@ function Footer() {
           </div> */}
           <div>
             <h3 className="text-white font-semibold mb-4">How-to Guides</h3>
-            <ul className="space-y-2">
+            <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
               <li><a href="/ComeSoon" className="hover:text-white">How-to Guides</a></li>
               <li><a href="/OnlineCasinoGuide" className="hover:text-white">Online Casino Guide</a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Sports Betting Guide</a></li>
@@ -200,7 +201,7 @@ function Footer() {
 
         {/* Cryptocurrency Icons Section */}
         <div className="border-t border-gray-700 py-8 ">
-          <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-8">
+          <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-6">
             <img src={Litecoin} alt="Partner" className="h-11" />
             <img src={Bitcoin} alt="Partner" className="h-11" />
             <img src={Ethereum} alt="Partner" className="h-11" />
@@ -212,15 +213,16 @@ function Footer() {
             <img src={SafeGamble} alt="Partner" className="h-11" />
             <img src={betblocker} alt="Partner" className="h-11" />
             <img src={Age} alt="Partner" className="h-11" />
-          </div>
+            </div>
         </div>
 
         {/* Partners Section */}
         <div className="border-t border-gray-700 py-8">
-          <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-12 items-center">
-            <img src={l2} alt="Partner" className="h-12" />
-            <img src={EvertonLogo} alt="Partner" className="h-12" />
-            <img src={Ufc} alt="Partner" className="h-12" />
+          <div className="max-w-7xl mx-auto flex flex-wrap justify-around gap-12 items-center">
+            <img src={cryptogambling1} alt="Partner" className="h-16" />
+            <img src={l2} alt="Partner" className="h-16" />
+            <img src={EvertonLogo} alt="Partner" className="h-16" />
+            <img src={Ufc} alt="Partner" className="h-16" />
           </div>
         </div>
 

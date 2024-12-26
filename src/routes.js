@@ -1,4 +1,5 @@
 // import { element } from "prop-types";
+import { element } from "prop-types";
 import React from "react";
 // import MyBets from "./views/component/GameTable/MyBets";
 // import pokerTournamentCancellation from "./views/footerpage/pokerTournamentCancellation";
@@ -17,6 +18,7 @@ const HelpCenter = React.lazy(() =>
 const Fairness = React.lazy(() =>
   import("./views/footerpage/Fairness")
 );
+
   
 const Policies = React.lazy(() => import("./views/footerpage/Policies"))
 const VipProgramLevels = React.lazy(() => import("./views/footerpage/VipProgramLevels"))
@@ -25,6 +27,8 @@ const ComeSoon = React.lazy(() => import("./views/component/ComeSoon"))
 // const antiMoneyLaundering = React.lazy(() => import("./views/footerpage/antiMoneyLaundering"))
 const Slots = React.lazy(() => import("./views/casino/CasinoHomePage/Slots"));
 const LiveCasion = React.lazy(() => import("./views/casino/CasinoHomePage/LiveCasino"))
+const favourites = React.lazy(() => import("./views/sidebar/Favourites"))
+const Recent = React.lazy(() => import("./views/sidebar/Recent"))
 const MyBet = React.lazy(() => import("./views/sidebar/myBets/MyBet"))
 const GameShows = React.lazy(() => import("./views/casino/CasinoHomePage/GameShows"))
 const Exclusives = React.lazy(() => import("./views/casino/CasinoHomePage/Exclusives"))
@@ -42,7 +46,6 @@ const vipclub = React.lazy(() => import("./views/footerpage/VipClub"))
 // const Notification = React.lazy(() => import("./views/Profile/Notification"))
 const Logout = React.lazy(() => import("./views/Profile/Logout"))
 const ResetPassword = React.lazy(() => import("./views/pages/forgotpassword/NewPassword"))
-const GameTable = React.lazy(() => import("./views/component/GameTable"))
 
 const routes = [
   {
@@ -51,6 +54,8 @@ const routes = [
     element: token ? Homepage : LandingBanner,
   },
   { path: "/dashboard", name: "Casino-Home", element: CasinoHomePage },
+  {path: "/favourites", name: "favourites", element: favourites},
+  { path: "/recent", name: "Recent", element: Recent },
   { path: "/casino/home", name: "Casino-Home", element: CasinoHomePage },
   {
     path: "/casino/:gameName/:id",
@@ -94,7 +99,6 @@ const routes = [
   { path: "/logout", name: "Logout", element: Logout },
   { path: "/myBet", name: "MyBets", element: MyBet },
   { path: "/resetpassword", name: "ResetPassword", element: ResetPassword },
-  { path: "/gametable", name: "GameTable", element: GameTable}
 ];
 
 export default routes;

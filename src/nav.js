@@ -33,6 +33,7 @@ const nav = [
   },
   {
     name: "Favourites",
+    to: "/favourites",
     icon: <StarBorderIcon style={{ fontSize: ICON_SIZE }} />,
     badge: {
       color: "info",
@@ -40,6 +41,7 @@ const nav = [
   },
   {
     name: "Recent",
+    to: "/recent",
     icon: <HistoryIcon style={{ fontSize: ICON_SIZE }} />,
     badge: {
       color: "info",
