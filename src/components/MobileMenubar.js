@@ -2,16 +2,23 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BottomDrawer from "./BottomSidebar"; // Ensure this is the correct import path
 import nav from "../nav"; // Assuming nav is an array of items
+import BetDrower from "./BetDrower";
 
 function MobileMenubar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [dropdownVisible, setDropdownVisible] = useState(null); // Manage dropdown visibility
+  const [dropdownVisible, setDropdownVisible] = useState(null); 
+  const [betDrowerOpen, setBetDrowerOpen] = useState(false);
   const navigate = useNavigate();
-
   const handleDrawerOpen = () => {
-    setIsDrawerOpen(prevState => !prevState); // Toggle drawer state
+    setIsDrawerOpen(prevState => !prevState); 
   };
-
+const handleBetDrawerOpen = () => {
+  setBetDrowerOpen(prevState => !prevState);
+}
+const handleCloseDrower = () => {
+  console.log("Close button clicked");
+  setBetDrowerOpen(false);
+};
   return (
     <div className="flex justify-around items-center bg-[#0f212e] text-white py-2 md:hidden">
       <div className="flex flex-col items-center text-sm" onClick={handleDrawerOpen}>
@@ -28,7 +35,7 @@ function MobileMenubar() {
         <span className="font-bold mt-0.5">Casino</span>
       </div>
 
-      <div className="flex flex-col items-center text-sm" onClick={() => navigate("/gametable")}>
+      <div className="flex flex-col items-center text-sm" onClick={handleBetDrawerOpen}>
         <svg className="w-4 h-4 hover:fill-white" fill="grey" viewBox="0 0 64 64">
           <path d="M59.732 0H4.266A4.266 4.266 0 0 0 0 4.266V60c0 2.21 1.79 4 4 4h56c2.21 0 4-1.79 4-4V4.266A4.266 4.266 0 0 0 59.734 0h-.002ZM17.998 50.24l-8-8 4.266-4.266 3.866 3.894 9.734-9.866 4.266 4.266L17.998 50.24Zm0-20-8-8 4.134-4.374 3.866 3.894 9.866-9.894 4.266 4.266L17.998 30.24Zm36 14.774h-14v-6.026h14v6.026Zm0-20h-14v-6.026h14v6.026Z" />
         </svg>
@@ -46,8 +53,7 @@ function MobileMenubar() {
         <svg className="w-4 h-4 hover:fill-white" fill="grey" viewBox="0 0 64 64">
           <path d="M32 1.916c-.288-.01-.628-.016-.97-.016C14.254 1.9.586 15.206.002 31.84L0 31.894A28.655 28.655 0 0 0 7.476 51.15l-.02-.024c-.688 4.028-1.89 7.636-3.552 10.974l.102-.228c4.634-.396 8.878-1.73 12.654-3.81l-.164.082c4.474 2.35 9.774 3.728 15.398 3.728h.112H32c.3.01.654.016 1.008.016 16.768 0 30.428-13.31 30.99-29.942l.002-.052C63.414 15.206 49.746 1.902 32.97 1.902c-.342 0-.68.006-1.018.016l.05-.002H32ZM16.138 37.604a5.948 5.948 0 1 1 0-11.896 5.948 5.948 0 0 1 0 11.896Zm15.862 0a5.948 5.948 0 1 1 0-11.896 5.948 5.948 0 0 1 0 11.896Zm15.862 0a5.948 5.948 0 1 1 0-11.896 5.948 5.948 0 0 1 0 11.896Z" />
         </svg>
-        <span className="font ```javascript
--bold mt-1">Chat</span>
+        <span className="font ```javascript-bold mt-1">Chat</span>
       </div>
       <div className="mt-4">
         <ul className="space-y-2 rounded-md">
@@ -60,6 +66,11 @@ function MobileMenubar() {
             openMenubar={true} // Assuming you want to show the menu bar
           />
         </ul>
+      </div>
+      <div>
+      <BetDrower
+        openDrower={betDrowerOpen}
+        onClose={handleCloseDrower}/>
       </div>
 
     </div>
