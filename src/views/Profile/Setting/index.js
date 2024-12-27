@@ -47,14 +47,6 @@ const Setting = () => {
     }
   };
 
-  const handleMenuClick = (label) => {
-    setSelectedMenu(label);
-    setIsOpen(false);
-    if (label === "General" || label === "Security" || label === "Session") {
-      navigate(`/setting/${label.toLowerCase()}`);
-    }
-  };
-
   const handleSettingClick = (setting) => {
     if (setting === "General" || setting === "Security" || setting === "Session") {
       navigate(`/setting/${setting.toLowerCase()}`);
@@ -69,7 +61,7 @@ const Setting = () => {
         <Loader />
       ) : (
         <div className="ml-4">
-          <div className="text-white flex items-center space-x-4 w-full px-10 md:px-2 py-2">
+          <div className="text-white flex items-center space-x-4 w-full xl:px-10 md:px-2 py-2">
             <MdSettings size={22} />
             <p className="text-xl py-0">Settings</p>
           </div>
@@ -117,7 +109,7 @@ const Setting = () => {
                   {menuItems.map((item) => (
                     <div
                       key={item.label}
-                      onClick={() => handleMenuClick(item.value)}
+                      onClick={() => handleSettingClick(item.label)}
                       className="p-2 text-white hover:bg-[#2f4553] cursor-pointer"
                     >
                       {item.label}

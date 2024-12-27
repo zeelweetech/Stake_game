@@ -159,11 +159,14 @@ function LimboGameContent() {
         return "text-[#1fff20]";
       }
       else {
-        return "text-[#1fff20]";
+        return "text-[#F44336]";
       }
     }
     return "text-white";
   };
+
+  console.log("");
+  
 
   return (
     <div className={`xl:w-[52rem] lg:w-[41rem] max-sm:mx-3 h-full  flex flex-col justify-center select-none relative bg-[#0f212e] ${isMobile ? "rounded-t-xl" : "rounded-tr-xl"} `}>
