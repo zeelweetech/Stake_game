@@ -16,7 +16,7 @@ import { GoCheck } from "react-icons/go";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  openLoginModel,
+  // openLoginModel,
   openRegisterModel,
 } from "../../features/auth/authSlice";
 
@@ -24,10 +24,14 @@ const VipClub = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
   const [progressData, setProgressData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [
+    // loading
+    ,setLoading] = useState(false);
   const decoded = decodedToken();
   const [activeLink, setActiveLink] = useState("General");
-  const { isRegisterModelOpen, isVerifyTermModelOpen } = useSelector(
+  const { isRegisterModelOpen
+    , isVerifyTermModelOpen 
+  } = useSelector(
     (state) => state.auth
   );
 
@@ -696,7 +700,7 @@ const VipClub = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-[#213743] p-6 rounded-lg text-white shadow-md flex space-x-4">
               <div>
-                <img src={boost1} />
+                <img src={boost1} alt=""/>
               </div>
               <div>
                 <h3 className="text-lg font-semibold">Boost</h3>
@@ -708,7 +712,7 @@ const VipClub = () => {
             </div>
             <div className="bg-[#213743] p-6 rounded-lg text-white shadow-md flex space-x-4">
               <div>
-                <img src={boost2} />
+                <img src={boost2} alt="" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold">Dedicated VIP Host</h3>
@@ -720,7 +724,7 @@ const VipClub = () => {
             </div>
             <div className="bg-[#213743] p-6 rounded-lg text-white shadow-md flex space-x-4">
               <div>
-                <img src={boost3} />
+                <img src={boost3} alt="" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold">Recent Play Bonuses</h3>
@@ -731,7 +735,7 @@ const VipClub = () => {
             </div>
             <div className="bg-[#213743] p-6 rounded-lg text-white shadow-md flex space-x-4">
               <div>
-                <img src={boost4} />
+                <img src={boost4} alt="" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold">Level-Ups</h3>
@@ -743,7 +747,7 @@ const VipClub = () => {
             </div>
             <div className="bg-[#213743] p-6 rounded-lg text-white shadow-md flex space-x-4">
               <div>
-                <img src={boost5} />
+                <img src={boost5} alt="" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold">Bespoke</h3>
