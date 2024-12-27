@@ -5,10 +5,10 @@ import GameTable from "../component/GameTable/index";
 
 const Favourites = () => {
   return (
-    <div>
-      <div className="bg-[#213743] w-full">
+    <>
+      <div className="bg-[#213743] w-full h-full">
         <div className="rounded-lg flex justify-around items-center relative max-sm:ml-5  ">
-          <div className="text-white font-semibold text-xl md:text-2xl">
+          <div className="text-white font-semibold text-xl md:text-2xl cursor-default">
             Favourites
           </div>
           <img
@@ -21,7 +21,7 @@ const Favourites = () => {
       <div className="h-full w-full bg-[#1a2c38]">
         <div className="mt-8 md:mx-28 mx-4 relative">
           <input
-            className="rounded-full text-white w-full font-semibold text-base py-2 px-10 bg-[#0f212e] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none focus:border-[#557086]"
+            className="rounded-full text-white w-full font-semibold text-base py-2 px-10 bg-[#0f212e] duration-300 border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none focus:border-[#557086]"
             name="search"
             type="text"
             placeholder="Search your game"
@@ -43,11 +43,14 @@ const Favourites = () => {
             <span className="ml-3">to favourite games.</span>
           </span>
         </div>
-        <div className="xl:w-[72rem] xl:mx-28 lg:w-[55rem] lg:mx-10 md:w-[42rem] md:mx-4 mx-0 md:px-0 px-3 w-full">
-        <GameTable />
+
+        <div className="flex justify-center items-center">
+          <div className="xl:w-[70rem]  lg:w-[55rem]  md:w-[42rem] md:px-0 px-3 w-full pt-5">
+            <GameTable />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

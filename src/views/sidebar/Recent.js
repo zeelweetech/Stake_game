@@ -1,15 +1,3 @@
-// import React from "react";
-
-// const Recent = () => {
-//     return (
-//         <div>
-//         <h1>Recent</h1>
-//         </div>
-//     );
-//     }
-
-//     export default Recent;
-
 import React from "react";
 import bannerfavourites from "../../assets/img/bannerfavourites.png";
 import SearchIcon from "@mui/icons-material/Search";
@@ -17,10 +5,10 @@ import GameTable from "../component/GameTable/index";
 
 const Recent = () => {
   return (
-    <div>
+    <>
       <div className="bg-[#213743] w-full">
         <div className="rounded-lg flex justify-around items-center relative max-sm:ml-5  ">
-          <div className="text-white font-semibold text-xl md:text-2xl">
+          <div className="text-white font-semibold text-xl md:text-2xl cursor-default">
             Recent
           </div>
           <img
@@ -33,7 +21,7 @@ const Recent = () => {
       <div className="h-full w-full bg-[#1a2c38]">
         <div className="mt-8 md:mx-28 mx-4 relative">
           <input
-            className="rounded-full text-white w-full font-semibold text-base py-2 px-10 bg-[#0f212e] border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none focus:border-[#557086]"
+            className="rounded-full text-white w-full font-semibold text-base py-2 px-10 bg-[#0f212e] duration-300 border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none focus:border-[#557086]"
             name="search"
             type="text"
             placeholder="Search your game"
@@ -47,17 +35,13 @@ const Recent = () => {
             Recent Games
           </span>
         </div>
-        <div className="flex justify-center items-center mt-4">
-          <span className="text-[#B1BAD3]">
-            <span className="mr-5">Previous</span>
-            <span>Next</span>
-          </span>
-        </div>
-        <div className="xl:w-[72rem] xl:mx-28 lg:w-[55rem] lg:mx-10 md:w-[42rem] md:mx-4 mx-0 md:px-0 px-3 w-full">
-          <GameTable />
+        <div className="flex justify-center items-center">
+        <div className="xl:w-[72rem] lg:w-[55rem]  md:w-[42rem]  md:px-0 px-3 w-full pt-5 ">
+            <GameTable />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

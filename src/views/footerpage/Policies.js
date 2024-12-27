@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { IoClose, IoChevronBack, IoChevronDown } from "react-icons/io5";
+import { 
+  // IoClose, 
+  IoChevronBack, 
+  // IoChevronDown 
+} from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import Privacy from "./Privacy";
 import AntiMoneyLaunderings from "./AntiMoneyLaunderings";
@@ -18,7 +22,9 @@ import CardRoomRules from "./cardRoomRules";
 const Policies = () => {
   const navigate = useNavigate();
   const { section } = useParams(); // Get the dynamic route parameter
-  const [isOpen, setIsOpen] = useState(true);
+  const [
+    // isOpen, 
+    setIsOpen] = useState(true);
   const links = [
     { name: "Terms of service", link: "Terms" },
     { name: "Wager Requirement", link: "WagerRequirement" },
