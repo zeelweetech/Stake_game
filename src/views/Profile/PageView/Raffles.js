@@ -1,4 +1,4 @@
-import LegendToggleIcon from "@mui/icons-material/LegendToggle";
+import Statistic from "../../../../src/assets/svg/Statistic.svg";
 
 
 const Raffles = () => {
@@ -6,9 +6,9 @@ const Raffles = () => {
         <div className="flex justify-center">
             <div>
                 <div className="flex justify-center">
-                    <LegendToggleIcon sx={{ fontSize: "120px", color: "#b1bad3" }} />
+                    <img src={Statistic} alt="Statistic" sx={{ fontSize: "120px", color: "#b1bad3" }} />
                 </div>
-                <p>No Raffles Data available.</p>
+                <p>No Trophies Data available.</p>
             </div>
         </div>
 

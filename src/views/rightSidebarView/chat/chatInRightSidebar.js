@@ -15,42 +15,50 @@ const ChatApp = ({ onClose }) => {
   const [messages, setMessages] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(Country[0]); 
+  const [selectedCountry, setSelectedCountry] = useState(Country[0]);
   const dispatch = useDispatch();
-
-  const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
   const messagesEndRef = useRef(null);
+  const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
 
   useEffect(() => {
-
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView();
+      // messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+  useEffect(() => {
     chatSocket.emit("joinCountry", selectedCountry.countryName);
-    
-
     chatSocket.on("chatMessage", (newMessage) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
-
-    chatSocket.on("changeCountryResponse", (newChat) => {
+  chatSocket.on("changeCountryResponse", (newChat) => {
       setMessages(newChat);
     });
-
-    return () => {
+  return () => {
       chatSocket.off("chatMessage");
       chatSocket.off("changeCountryResponse");
     };
-  }, [selectedCountry]); 
-
+  }, [selectedCountry]);
   const sendMessage = () => {
     if (message.trim()) {
-      const userId = "USER_128"; 
-      chatSocket.emit("chatMessage", { userId, content: message, taggedUserId: "user456" });
+      const userId = "USER_128";
+      const taggedUserId = "user456";
+      const newMessageData = {
+        userId,
+        content: message,
+        country: selectedCountry.countryName,
+        taggedUserId,
+        createdAt: new Date(),
+      };
+      console.log("sdknkadmfcna,m....", newMessageData);
+
+      chatSocket.emit("chatMessage", newMessageData);
       setMessage("");
     }
   };
-
-  const changeCountry = (newCountry) => {
+const changeCountry = (newCountry) => {
     const countryObj = Country.find((item) => item.countryName === newCountry);
-    setSelectedCountry(countryObj); 
+    setSelectedCountry(countryObj);
     chatSocket.emit("changeCountry", newCountry);
     setDropdownOpen(false);
   };
@@ -75,7 +83,6 @@ const ChatApp = ({ onClose }) => {
       sendMessage();
     }
   };
-
   return (
     <div className="text-white p-2 rounded-md shadow-lg relative">
       <IconButton onClick={onClose} sx={{ color: "white", position: "absolute", top: 8, right: 8 }}>
@@ -97,7 +104,6 @@ const ChatApp = ({ onClose }) => {
             <ChevronUpIcon className="ml-2 h-5 w-5" />
           )}
         </button>
-
         {dropdownOpen && (
           <div className="relative">
             <div className="absolute top-full shadow-lg text-black font-medium rounded-sm py-2 z-10">
@@ -113,7 +119,6 @@ const ChatApp = ({ onClose }) => {
           </div>
         )}
       </div>
-
       {/* Messages display */}
       <div className="overflow-y-auto flex-grow" style={{ overflowY: "scroll", height: "calc(86vh - 75px)", padding: "10px 0" }}>
         {messages.map((msg, index) => (
@@ -123,7 +128,6 @@ const ChatApp = ({ onClose }) => {
         ))}
         <div ref={messagesEndRef} />
       </div>
-
       {/* Message input and send button */}
       <div className="bg-[#213743] p-3 relative">
         <div className="flex items-center text-white sticky bg-[#0f212e] w-full">
@@ -139,14 +143,12 @@ const ChatApp = ({ onClose }) => {
             😊
           </div>
         </div>
-
         {/* Send button */}
         <div className="flex items-center justify-end relative">
           <button onClick={sendMessage} className="bg-[#2e7d32] text-black text-sm px-4 py-2 my-2.5 rounded-sm">
             Send
           </button>
         </div>
-
         {/* Emoji Picker */}
         {emojiPickerVisible && (
           <div className="absolute bottom-16 left-0 z-50">
@@ -174,4 +176,3 @@ const ChatApp = ({ onClose }) => {
 };
 
 export default ChatApp;
-
