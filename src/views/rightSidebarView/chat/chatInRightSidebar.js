@@ -15,16 +15,22 @@ const ChatApp = ({ onClose }) => {
   const [messages, setMessages] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(Country[0]); 
+  const [selectedCountry, setSelectedCountry] = useState(Country[0]);
   const dispatch = useDispatch();
-
-  const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
   const messagesEndRef = useRef(null);
+  const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView();
+      // messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   useEffect(() => {
 
     chatSocket.emit("joinCountry", selectedCountry.countryName);
-    
+
 
     chatSocket.on("chatMessage", (newMessage) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -38,11 +44,11 @@ const ChatApp = ({ onClose }) => {
       chatSocket.off("chatMessage");
       chatSocket.off("changeCountryResponse");
     };
-  }, [selectedCountry]); 
+  }, [selectedCountry]);
 
   const sendMessage = () => {
     if (message.trim()) {
-      const userId = "USER_128"; 
+      const userId = "USER_128";
       chatSocket.emit("chatMessage", { userId, content: message, taggedUserId: "user456" });
       setMessage("");
     }
@@ -50,7 +56,7 @@ const ChatApp = ({ onClose }) => {
 
   const changeCountry = (newCountry) => {
     const countryObj = Country.find((item) => item.countryName === newCountry);
-    setSelectedCountry(countryObj); 
+    setSelectedCountry(countryObj);
     chatSocket.emit("changeCountry", newCountry);
     setDropdownOpen(false);
   };

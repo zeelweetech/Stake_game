@@ -76,7 +76,6 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
         <div className="flex justify-between md:justify-around items-center px-4 md:px-0 ">
           <span
             className="text-white text-3xl md:text-5xl font-extrabold italic font-sans hover:cursor-pointer"
-
             onClick={() => navigate("/")}
           >
             Listor
@@ -88,9 +87,19 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
               </p>
 
             </button>
-            <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-3 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base">
+            <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-3 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base"
+              onClick={() => {
+                setProfilePopupOpen((prev) => ({
+                  ...prev,
+                  isWalletOpen: true,
+                }))
+                setTooltipOpen(false);
+                setIsSidebarOpen(false)
+                dispatch(setAnchorEl(false));
+              }}>
               Wallet
             </button>
+            {profilePopupOpen.isWalletOpen && <Wallet closeWallet={() => setProfilePopupOpen({ ...profilePopupOpen, isWalletOpen: false })} />}
           </div>
           <div className="text-white flex items-center space-x-0.4 md:space-x-6">
             <button className="flex items-center space-x-1.5 font-medium">
@@ -219,13 +228,13 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
 
 
             <div className="relative flex items-center z-50">
-              <p onClick={toggleSidebar} className="flex items-center hover:cursor-pointer">
+            <p onClick={toggleSidebar} className="flex md:block hidden items-center hover:cursor-pointer">
                 <IoIosChatboxes color="white" size={18} />
               </p>
               {isSidebarOpen && (
                 <>
                   <div
-                    className="flex flex-col absolute top-full right-0 left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-lg z-[9999] w-max max-w-xs text-center"
+                    className="flex flex-col absolute top-full right-0 md:-left-8 lg:-left-8 xl:left-1/2 left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-lg z-[9999] w-max max-w-xs text-center"
                   >
                     <button
                       className="flex items-center space-x-4 py-2"

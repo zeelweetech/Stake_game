@@ -246,6 +246,10 @@ function DragonContent() {
     }
 
     if (!isManual) {
+      if (rowIndex > 0 && preSelectTile[rowIndex - 1] === undefined) {
+        return;
+      }
+
       const updatedClickedBoxes = { ...preSelectTile };
       if (updatedClickedBoxes[rowIndex] === boxIndex) {
         delete updatedClickedBoxes[rowIndex];

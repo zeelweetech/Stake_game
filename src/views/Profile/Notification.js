@@ -32,7 +32,7 @@ const Notification = () => {
                     className="w-16 h-16 md:w-24 md:h-20"
                     alt="Not Found"
                 />
-                </div>
+            </div>
             <p className="text-white font-medium text-sm">No Notifications Available</p>
             <p className="text-[#b1bad3]">Your interactions will be visible here</p>
         </div>
