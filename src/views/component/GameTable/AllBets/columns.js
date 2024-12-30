@@ -37,7 +37,7 @@ const Columns = () => {
       },
       {
         field: "winAmount",
-        headerName: "Result",
+        headerName: "PayOut",
         width: 190,
         headerClassName: "column-header",
         cellClassName: "column-cell",

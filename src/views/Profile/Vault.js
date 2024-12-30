@@ -50,7 +50,7 @@ const Vault = ({ closeVault }) => {
     };
 
     const handleEnable2FA = () => {
-
+        closeVault()
         navigate("/setting/security");
     };
 

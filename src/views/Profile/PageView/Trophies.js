@@ -1,15 +1,15 @@
-import LegendToggleIcon from "@mui/icons-material/LegendToggle";
+import Statistic from "../../../../src/assets/svg/Statistic.svg";
 
 const Trophies = () => {
     return (
         <div className="flex justify-center">
-        <div>
-            <div className="flex justify-center">
-                <LegendToggleIcon sx={{ fontSize: "120px", color: "#b1bad3" }} />
+            <div>
+                <div className="flex justify-center">
+                    <img src={Statistic} alt="Statistic" sx={{ fontSize: "120px", color: "#b1bad3" }} />
+                </div>
+                <p>No Trophies Data available.</p>
             </div>
-            <p>No Trophies Data available.</p>
         </div>
-    </div>
     )
 }
 export default Trophies

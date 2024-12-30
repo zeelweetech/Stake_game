@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { useNavigate, Link, NavLink } from "react-router-dom"; // Assuming navigate is from react-router
-import casino from "../assets/img/casino.png";
-import casino1 from "../assets/img/casino1.jpg";
-import sports from "../assets/img/sports.png";
-import sports1 from "../assets/img/sports1.png";
+import casino from "../../assets/img/casino.png";
+import casino1 from "../../assets/img/casino1.jpg";
+import sports from "../../assets/img/sports.png";
+import sports1 from "../../assets/img/sports1.png";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import { setAnchorEl } from "../features/auth/authSlice";
+import { setAnchorEl } from "../../features/auth/authSlice";
 import PropTypes from "prop-types";
-import Wallet from "../views/Profile/Wallet";
-import Vault from "../views/Profile/Vault";
-import Vip from "../views/Profile/Vip";
-import Statistic from "../views/Profile/Statistic";
-import LogoutDialog from "../views/Profile/Logout";
-import Notification from "../views/Profile/Notification";
+import Wallet from "../../views/Profile/Wallet";
+import Vault from "../../views/Profile/Vault";
+import Vip from "../../views/Profile/Vip";
+import Statistic from "../../views/Profile/Statistic";
+import LogoutDialog from "../../views/Profile/Logout";
+import Notification from "../../views/Profile/Notification";
 
 const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDropdownVisible, openMenubar }) => {
     const [searchValue, setSearchValue] = useState("");

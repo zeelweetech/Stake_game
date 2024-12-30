@@ -10,7 +10,7 @@ import casino from "../assets/img/casino.png";
 import casino1 from "../assets/img/casino1.jpg";
 import sports from "../assets/img/sports.png"
 import sports1 from "../assets/img/sports1.png";
-import BottomDrawer from "./BottomSidebar";
+import BottomDrawer from "./BottomDrower/BottomSidebar";
 
 function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
   const [casinoClicked, setCasinoClicked] = useState(false);
@@ -69,7 +69,7 @@ function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
               className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${casinoClicked ? "opacity-100" : "opacity-0"
                 } group-hover:opacity-100`}
             />
-            <span className={`absolute mt-8 inset-0 flex justify-center items-center text-sm font-bold ${openMenubar ? "block" : "hidden  "}`}>
+            <span className={`absolute mt-8 inset-0 flex justify-center items-center xl:text-base lg:text-xs md:text-xs font-bold ${openMenubar ? "block" : "hidden  "}`}>
               CASINO
             </span>
           </button>
@@ -89,8 +89,7 @@ function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
                 }`}
               alt="Not Found"
             />
-            <span className={`absolute mt-8 inset-0 flex justify-center items-center text-sm font-bold ${openMenubar ? "block" : "hidden  "}`}>
-              SPORTS
+  <span className={`absolute mt-8 inset-0 flex justify-center items-center xl:text-base lg:text-xs md:text-xs font-bold ${openMenubar ? "block" : "hidden  "}`}>              SPORTS
             </span>
           </button>
         </div>
