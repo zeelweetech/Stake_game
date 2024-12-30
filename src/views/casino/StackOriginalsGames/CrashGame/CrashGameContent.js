@@ -321,7 +321,7 @@ function CrashGameContent() {
   // };
 
   return (
-    <div className="xl:w-[52rem]  lg:w-[41rem] max-sm:mx-3.5 xl:h-[41.5rem] lg:h-[41.8rem] h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
+    <div className="xl:w-[52rem] lg:w-[41rem] max-sm:mx-3.5 xl:h-[41.7rem] lg:h-[41.8rem] h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
@@ -346,7 +346,7 @@ function CrashGameContent() {
         >
           <canvas ref={chartRef} className="h-[22rem] xl:w-[50rem] lg:w-full md:w-full max-sm:w-[345px]"></canvas>
         </div>
-        <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center w-full px-4 text-white font-bold text-center">
+        <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center w-full text-white font-bold text-center">
           <div className="flex-grow flex items-center justify-center">
             <div>
               <p
