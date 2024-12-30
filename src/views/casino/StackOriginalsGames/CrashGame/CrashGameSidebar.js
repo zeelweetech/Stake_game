@@ -34,7 +34,7 @@ const CrashGameSidebar = () => {
   const [autoBetOnClick, setAutoBetOnClick] = useState(false);
   const [betAmount, setBetAmount] = useState();
   const [randomData, setRandomData] = useState([]);
-  const [fundsToastShown, setFundsToastShown] = useState(false)
+  const [fundsToastShown, setFundsToastShown] = useState(false);
   const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
   const {
@@ -281,7 +281,7 @@ const CrashGameSidebar = () => {
   return (
     <div>
       {responsiveMobile > 768 ? (
-        <div className="flex flex-col xl:w-80 lg:w-[16.8rem] p-3  bg-[#213743] rounded-tl-lg">
+        <div className="flex flex-col xl:w-80 lg:w-[16.8rem] p-3 bg-[#213743] rounded-tl-lg">
           <div className="md:hidden block mb-5">
             {autoBetOnClick ? (
               <button
@@ -333,13 +333,13 @@ const CrashGameSidebar = () => {
                   ₹{crashValues?.betamount ? crashValues?.betamount : "0.00"}
                 </label>
               </div>
-              <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-              </div> */}
+                </div> */}
                   <input
-                    className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
+                    className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     min={0}
@@ -383,9 +383,9 @@ const CrashGameSidebar = () => {
               <div className="text-[#b1bad3] font-semibold text-xs mt-3 mb-1">
                 <label>Cashout At</label>
               </div>
-              <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 <input
-                  className="xl:w-48 lg:w-40 px-2 py-2 md:w-60 rounded-s-md text-white bg-[#0f212e]"
+                  className="xl:w-48 lg:w-40 px-2 py-2 md:w-60 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   min={1.01}
                   placeholder="1.01"
@@ -452,7 +452,7 @@ const CrashGameSidebar = () => {
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                  className="w-full px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#2F4553] focus:outline-none"
                   type="text"
                   placeholder="0"
                   value={crashValues?.betamount * crashValues?.cashout || 0}
@@ -461,33 +461,33 @@ const CrashGameSidebar = () => {
               </div>
               {/* {bettingStatus === false ? ( */}
 
-                {multiplier > 1 ? (
-                  <button
-                    className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-                    onClick={() => setOnClickStatus(false)}
-                  >
-                    Bet (Next Round)
-                  </button>
-                ) : onClickStatus ? (
-                  <button
-                    className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-                    onClick={() => handleOnCancelBet()}
-                  >
-                    Cancel
-                  </button>
-                ) : (
-                  <button
-                    className={`${
-                      bettingStatus === false
-                        ? "bg-[#489649]"
-                        : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
-                    onClick={() => handleOnManualBet()}
-                    disabled={bettingStatus === false}
-                  >
-                    Bet
-                  </button>
-                )}
+              {multiplier > 1 ? (
+                <button
+                  className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => setOnClickStatus(false)}
+                >
+                  Bet (Next Round)
+                </button>
+              ) : onClickStatus ? (
+                <button
+                  className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => handleOnCancelBet()}
+                >
+                  Cancel
+                </button>
+              ) : (
+                <button
+                  className={`${
+                    bettingStatus === false
+                      ? "bg-[#489649]"
+                      : "bg-[#1fff20] hover:bg-[#42ed45]"
+                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  onClick={() => handleOnManualBet()}
+                  disabled={bettingStatus === false}
+                >
+                  Bet
+                </button>
+              )}
 
               <div className="flex justify-between mt-3">
                 <div className="flex items-center space-x-1 font-semibold">
@@ -522,7 +522,9 @@ const CrashGameSidebar = () => {
                       >
                         <div className="flex items-center">
                           <BsIncognito />
-                          <p className="text-[#b1bad3] font-semibold text-xs">{item.username}</p>
+                          <p className="text-[#b1bad3] font-semibold text-xs">
+                            {item.username}
+                          </p>
                         </div>
                         <div>
                           {item?.multiplier < multiplier
@@ -559,7 +561,7 @@ const CrashGameSidebar = () => {
               <div className="flex grow p-[5px] flex-shrink-0  mt-2">
                 <div className="flex">
                   <button
-                    className={`py-3 rounded-s-md xl:w-[8.9rem] lg:w-[7.2rem]  font-semibold ${
+                    className={`py-3 rounded-s xl:w-[8.9rem] lg:w-[7.2rem]  font-semibold ${
                       isboardControl
                         ? "bg-[#0f212e] text-[#b1bad3]"
                         : "bg-[#4d718768] hover:bg-[#85afca68]"
@@ -569,7 +571,7 @@ const CrashGameSidebar = () => {
                     Controls
                   </button>
                   <button
-                    className={`py-3 rounded-e-md xl:w-[8.9rem] lg:w-[7.2rem] font-semibold ${
+                    className={`py-3 rounded-e xl:w-[8.9rem] lg:w-[7.2rem] font-semibold ${
                       !isboardControl
                         ? "bg-[#0f212e] text-[#b1bad3]"
                         : "bg-[#4d718768] hover:bg-[#85afca68]"
@@ -589,7 +591,7 @@ const CrashGameSidebar = () => {
                       {crashValues?.betamount ? crashValues?.betamount : "0.00"}
                     </label>
                   </div>
-                  <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+                  <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
                     <div className="relative flex">
                       {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <RiMoneyRupeeCircleFill
@@ -598,7 +600,7 @@ const CrashGameSidebar = () => {
                     />
                   </div> */}
                       <input
-                        className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
+                        className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2.5 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0.00"
                         step="0.01"
@@ -612,7 +614,7 @@ const CrashGameSidebar = () => {
                       />
                     </div>
                     <button
-                      className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
+                      className="w-16 hover:bg-[#5c849e68] text-lg font-bold"
                       onClick={() =>
                         dispatch(
                           setCrashValues({
@@ -627,10 +629,10 @@ const CrashGameSidebar = () => {
                     <Divider
                       flexItem
                       orientation="vertical"
-                      sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                      sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                     />
                     <button
-                      className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
+                      className="w-16 hover:bg-[#5c849e68] text-sm font-bold"
                       onClick={() =>
                         dispatch(
                           setCrashValues({
@@ -648,9 +650,9 @@ const CrashGameSidebar = () => {
                     <label>Number of Bets</label>
                   </div>
                   <div className="flex justify-between mb-2">
-                    <div className="flex border-2 w-44 rounded-md border-[#4d718768] bg-[#4d718768]">
+                    <div className="flex border-1 w-44 rounded border-[#4d718768] bg-[#4d718768]">
                       <input
-                        className="xl:w-20 lg:w-16 px-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
+                        className="xl:w-20 lg:w-16 px-2 py-2.5 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         min={1.01}
                         placeholder="1.01"
@@ -685,7 +687,7 @@ const CrashGameSidebar = () => {
                       <Divider
                         flexItem
                         orientation="vertical"
-                        sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                        sx={{ my: 1, backgroundColor: "#1A2c38", width: "2px" }}
                       />
                       <button
                         className="w-10 hover:bg-[#5c849e68]"
@@ -708,7 +710,7 @@ const CrashGameSidebar = () => {
                         <IoInfiniteSharp className="text-xl" />
                       </div>
                       <input
-                        className="xl:w-32 lg:w-[5.5rem] pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]"
+                        className="xl:w-32 lg:w-[5.5rem] pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0"
                         min={0}
@@ -731,8 +733,8 @@ const CrashGameSidebar = () => {
                       className={`${
                         onProfit.win
                           ? "bg-[#0f212e]"
-                          : "bg-[#4d718768] hover:bg-[#85afca68]"
-                      } px-5 py-2.5 rounded-md`}
+                          : "hover:bg-[#85afca68] rounded"
+                      } px-5 py-2.5 rounded`}
                       onClick={() => {
                         setOnProfit({ ...onProfit, win: true });
                         dispatch(setCrashValues({ onwin: "" }));
@@ -743,9 +745,9 @@ const CrashGameSidebar = () => {
                     <button
                       className={`${
                         onProfit.win
-                          ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                          : "bg-[#0f212e] rounded-md"
-                      } px-[0.95rem] py-2.5`}
+                          ? "hover:bg-[#85afca68]"
+                          : "bg-[#0f212e] rounded-sm"
+                      } px-[0.95rem] py-2.5 rounded`}
                       onClick={() => {
                         setOnProfit({ ...onProfit, win: false });
                       }}
@@ -763,7 +765,7 @@ const CrashGameSidebar = () => {
                         <PercentIcon fontSize="small" />
                       </div>
                       <input
-                        className="xl:w-[7.9rem] lg:w-[4.7rem] pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
+                        className="xl:w-[7.9rem] lg:w-[4.7rem] pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0"
                         name="onwin"
@@ -781,9 +783,9 @@ const CrashGameSidebar = () => {
                       <button
                         className={`${
                           onProfit.lose
-                            ? "bg-[#0f212e]"
-                            : "bg-[#4d718768] hover:bg-[#85afca68]"
-                        } px-5 py-2.5 rounded-md`}
+                            ? "bg-[#0f212e] rounded"
+                            : "hover:bg-[#85afca68] rounded"
+                        } px-5 py-2.5 rounded`}
                         onClick={() => {
                           setOnProfit({ ...onProfit, lose: true });
                           dispatch(setCrashValues({ onlose: "" }));
@@ -796,9 +798,9 @@ const CrashGameSidebar = () => {
                       <button
                         className={`${
                           onProfit.lose
-                            ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                            : "bg-[#0f212e] rounded-md"
-                        } px-[0.95rem] py-2.5`}
+                            ? "hover:bg-[#85afca68]"
+                            : "bg-[#0f212e] rounded-sm"
+                        } px-[0.95rem] py-2.5 rounded`}
                         onClick={() => {
                           setOnProfit({ ...onProfit, lose: false });
                         }}
@@ -817,7 +819,7 @@ const CrashGameSidebar = () => {
                         <PercentIcon fontSize="small" />
                       </div>
                       <input
-                        className="xl:w-[7.9rem] lg:w-[4.7rem] pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
+                        className="xl:w-[7.9rem] lg:w-[4.7rem] pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0"
                         name="onlose"
@@ -841,7 +843,7 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full pr-1.5 px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="number"
                       placeholder="0.01"
                       step="0.01"
@@ -850,7 +852,7 @@ const CrashGameSidebar = () => {
                       onChange={(e) => handleOnChange(e)}
                     />
                   </div>
-                  <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
                     <label>Stop on Loss</label>
                     <label>
                       ₹
@@ -864,7 +866,7 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full pr-1.5 px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="number"
                       placeholder="0.01"
                       step="0.01"
@@ -873,7 +875,7 @@ const CrashGameSidebar = () => {
                       onChange={(e) => handleOnChange(e)}
                     />
                   </div>
-                  <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
                     <label>Profit on Win</label>
                     <label>
                       ₹
@@ -887,7 +889,7 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                      className="w-full px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="text"
                       placeholder="0"
                       name="profitonwin"
@@ -995,7 +997,7 @@ const CrashGameSidebar = () => {
                 </div> */}
                     <input
                       type="text"
-                      className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                      className="w-full px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       placeholder="0"
                       name="profitonwin"
                       value={crashValues?.betamount * crashValues?.cashout || 0}
@@ -1032,7 +1034,7 @@ const CrashGameSidebar = () => {
             <div>
               {multiplier > 1 ? (
                 <button
-                  className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  className={`bg-[#489649] text-black mt-3.5 py-3 rounded font-semibold w-full`}
                   onClick={() => setOnClickStatus(false)}
                 >
                   Bet (Next Round)
@@ -1050,7 +1052,7 @@ const CrashGameSidebar = () => {
                     bettingStatus === false
                       ? "bg-[#489649]"
                       : "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                   onClick={() => handleOnManualBet()}
                   disabled={bettingStatus === false}
                 >
@@ -1063,13 +1065,13 @@ const CrashGameSidebar = () => {
                   ₹{crashValues?.betamount ? crashValues?.betamount : "0.00"}
                 </label>
               </div>
-              <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                   <input
-                    className="md:w-72 w-[14rem] pr-1.5 pl-2 py-2 rounded-s-md text-white bg-[#0f212e]"
+                    className="px-2 py-2 w-[16rem] rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     min={0}
@@ -1079,7 +1081,7 @@ const CrashGameSidebar = () => {
                   />
                 </div>
                 <button
-                  className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
+                  className="w-[3.3rem] hover:bg-[#5c849e68] text-lg font-bold"
                   onClick={() =>
                     dispatch(
                       setCrashValues({
@@ -1089,15 +1091,15 @@ const CrashGameSidebar = () => {
                     )
                   }
                 >
-                  1/2
+                  ½
                 </button>
                 <Divider
                   flexItem
                   orientation="vertical"
-                  sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                  sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className="w-[3rem] hover:bg-[#5c849e68] text-sm font-semibold"
+                  className="w-[3.4rem] hover:bg-[#5c849e68] text-sm font-semibold"
                   onClick={() =>
                     dispatch(
                       setCrashValues({
@@ -1107,15 +1109,15 @@ const CrashGameSidebar = () => {
                     )
                   }
                 >
-                  2x
+                  2×
                 </button>
               </div>
               <div className="text-[#b1bad3] font-semibold text-xs mt-3 mb-1">
                 <label>Cashout At</label>
               </div>
-              <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
                 <input
-                  className="w-[14rem] px-2 py-2 md:w-72 rounded-s-md text-white bg-[#0f212e]"
+                  className="px-2 py-2 w-[16.5rem] rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   min={1.01}
                   placeholder="1.01"
@@ -1131,7 +1133,7 @@ const CrashGameSidebar = () => {
                   }}
                 />
                 <button
-                  className="w-16 hover:bg-[#5c849e68]"
+                  className="w-[3.3rem] hover:bg-[#5c849e68]"
                   onClick={() => {
                     const cashoutValue =
                       parseFloat(crashValues?.cashout) || 2.0;
@@ -1150,10 +1152,10 @@ const CrashGameSidebar = () => {
                 <Divider
                   flexItem
                   orientation="vertical"
-                  sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                  sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className="w-[3rem] hover:bg-[#5c849e68]"
+                  className="w-[3.4rem] hover:bg-[#5c849e68]"
                   onClick={() => {
                     const cashoutValue =
                       parseFloat(crashValues?.cashout) || 2.0;
@@ -1182,7 +1184,7 @@ const CrashGameSidebar = () => {
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                  className="w-full px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="text"
                   placeholder="0"
                   value={crashValues?.betamount * crashValues?.cashout || 0}
@@ -1260,7 +1262,7 @@ const CrashGameSidebar = () => {
                 <div>
                   {autoBetOnClick ? (
                     <button
-                      className={` bg-[#1fff20] hover:bg-[#42ed45] text-black py-3 rounded-md font-semibold w-full`}
+                      className={` bg-[#1fff20] hover:bg-[#42ed45] text-black py-3 rounded font-semibold w-full`}
                       onClick={() => handleOnCancelAutoBet()}
                     >
                       Cancel Autobet
@@ -1271,7 +1273,7 @@ const CrashGameSidebar = () => {
                         bettingStatus === false
                           ? "bg-[#489649]"
                           : "bg-[#1fff20] hover:bg-[#42ed45]"
-                      } text-black py-3 rounded-md font-semibold w-full`}
+                      } text-black py-3 rounded font-semibold w-full`}
                       onClick={() => handleOnAutoBet()}
                     >
                       Start Autobet
@@ -1284,7 +1286,7 @@ const CrashGameSidebar = () => {
                       {crashValues?.betamount ? crashValues?.betamount : "0.00"}
                     </label>
                   </div>
-                  <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+                  <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
                     <div className="relative flex">
                       {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <RiMoneyRupeeCircleFill
@@ -1293,7 +1295,7 @@ const CrashGameSidebar = () => {
                     />
                   </div> */}
                       <input
-                        className="md:w-64 w-[13.49rem] pr-1.5 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
+                        className="w-[16.5rem] pr-1.5 pl-2 py-2.5 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0.00"
                         step="0.01"
@@ -1307,7 +1309,7 @@ const CrashGameSidebar = () => {
                       />
                     </div>
                     <button
-                      className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
+                      className="w-[3.4rem] hover:bg-[#5c849e68] text-lg font-bold"
                       onClick={() =>
                         dispatch(
                           setCrashValues({
@@ -1322,10 +1324,10 @@ const CrashGameSidebar = () => {
                     <Divider
                       flexItem
                       orientation="vertical"
-                      sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                      sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                     />
                     <button
-                      className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
+                      className="w-[3.4rem] hover:bg-[#5c849e68] text-sm font-bold"
                       onClick={() =>
                         dispatch(
                           setCrashValues({
@@ -1343,9 +1345,9 @@ const CrashGameSidebar = () => {
                     <label>Number of Bets</label>
                   </div>
                   <div className="flex justify-center mb-2">
-                    <div className="flex border-2 w-full rounded-md border-[#4d718768] bg-[#4d718768]">
+                    <div className="flex border-1 w-full rounded border-[#2F4553] bg-[#2F4553]">
                       <input
-                        className="md:w-36 w-full px-2 py-2.5 rounded-s-md text-white bg-[#0f212e]"
+                        className="md:w-36 w-full px-2 py-2.5 rounded-s-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         min={1.01}
                         placeholder="1.01"
@@ -1377,7 +1379,15 @@ const CrashGameSidebar = () => {
                       >
                         <KeyboardArrowDownIcon fontSize="small" />
                       </button>
-                      
+                      <Divider
+                        flexItem
+                        orientation="vertical"
+                        sx={{
+                          my: 1.5,
+                          backgroundColor: "#1A2c38",
+                          width: "2px",
+                        }}
+                      />
                       <button
                         className="w-12 hover:bg-[#5c849e68]"
                         onClick={() => {
@@ -1399,7 +1409,7 @@ const CrashGameSidebar = () => {
                         <IoInfiniteSharp className="text-xl" />
                       </div>
                       <input
-                        className="md:w-28 w-28 pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]"
+                        className="md:w-28 w-28 pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0"
                         min={0}
@@ -1417,13 +1427,13 @@ const CrashGameSidebar = () => {
                   <label className="text-[#b1bad3] font-semibold text-xs">
                     On win
                   </label>
-                  <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+                  <div className="flex items-center space-x-0.5  mt-1 mb-2 rounded bg-[#2F4553]">
                     <button
                       className={`${
                         onProfit.win
-                          ? "bg-[#0f212e]"
-                          : "bg-[#4d718768] hover:bg-[#85afca68]"
-                      } px-5 py-2.5 rounded-md`}
+                          ? "bg-[#0F212E] rounded"
+                          : "hover:bg-[#85afca68] rounded"
+                      } px-5 ml-0.5 py-2.5 rounded-sm`}
                       onClick={() => {
                         setOnProfit({ ...onProfit, win: true });
                         dispatch(setCrashValues({ onwin: "" }));
@@ -1434,8 +1444,8 @@ const CrashGameSidebar = () => {
                     <button
                       className={`${
                         onProfit.win
-                          ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                          : "bg-[#0f212e] rounded-md"
+                          ? "hover:bg-[#85afca68]"
+                          : "bg-[#0f212e] rounded-sm"
                       } px-[0.95rem] py-2.5`}
                       onClick={() => {
                         setOnProfit({ ...onProfit, win: false });
@@ -1454,7 +1464,7 @@ const CrashGameSidebar = () => {
                         <PercentIcon fontSize="small" />
                       </div>
                       <input
-                        className="md:w-[11.9rem] w-[9.5rem] pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
+                        className="md:w-[11.9rem] w-[9.6rem] pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0"
                         name="onwin"
@@ -1467,14 +1477,14 @@ const CrashGameSidebar = () => {
                   <label className="text-[#b1bad3] font-semibold text-xs">
                     On Lose
                   </label>
-                  <div className="flex items-center space-x-0.5 border-2 mt-1 rounded-md border-[#4d718768] bg-[#4d718768]">
+                  <div className="flex items-center space-x-0.5 mt-1 rounded-md bg-[#2F4553]">
                     <div>
                       <button
                         className={`${
                           onProfit.lose
-                            ? "bg-[#0f212e]"
-                            : "bg-[#4d718768] hover:bg-[#85afca68]"
-                        } px-5 py-2.5 rounded-md`}
+                            ? "bg-[#0f212e] rounded-sm"
+                            : "hover:bg-[#85afca68] rounded"
+                        } px-5 py-2.5 ml-0.5 rounded-sm`}
                         onClick={() => {
                           setOnProfit({ ...onProfit, lose: true });
                           dispatch(setCrashValues({ onlose: "" }));
@@ -1487,8 +1497,8 @@ const CrashGameSidebar = () => {
                       <button
                         className={`${
                           onProfit.lose
-                            ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                            : "bg-[#0f212e] rounded-md"
+                            ? "hover:bg-[#85afca68]"
+                            : "bg-[#0f212e] rounded-sm"
                         } px-[0.95rem] py-2.5`}
                         onClick={() => {
                           setOnProfit({ ...onProfit, lose: false });
@@ -1508,7 +1518,7 @@ const CrashGameSidebar = () => {
                         <PercentIcon fontSize="small" />
                       </div>
                       <input
-                        className="md:w-[11.9rem] w-[9.5rem] pr-7 pl-2 py-2.5 rounded-md text-white bg-[#0f212e]"
+                        className="md:w-[11.9rem] w-[9.6rem] pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0"
                         name="onlose"
@@ -1532,7 +1542,7 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full pr-1.5 px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="number"
                       placeholder="0.01"
                       step="0.01"
@@ -1555,7 +1565,7 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full pr-1.5 px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="number"
                       placeholder="0.01"
                       step="0.01"
@@ -1578,7 +1588,7 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full px-2 py-2.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                      className="w-full px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="text"
                       placeholder="0"
                       name="profitonwin"
@@ -1591,14 +1601,14 @@ const CrashGameSidebar = () => {
                 <div>
                   {autoBetOnClick ? (
                     <button
-                      className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                      className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded font-semibold w-full`}
                       onClick={() => handleOnCancelAutoBet()}
                     >
                       Cancel Autobet
                     </button>
                   ) : (
                     <button
-                      className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                      className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded font-semibold w-full`}
                       onClick={() => handleOnAutoBet()}
                     >
                       Start Autobet
@@ -1680,7 +1690,7 @@ const CrashGameSidebar = () => {
                     </div> */}
                     <input
                       type="text"
-                      className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                      className="w-full px-2 py-2 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       placeholder="0"
                       name="profitonwin"
                       value={crashValues?.betamount * crashValues?.cashout || 0}
@@ -1692,7 +1702,7 @@ const CrashGameSidebar = () => {
               <div className="flex justify-center items-center grow p-[5px] flex-shrink-0 mt-2">
                 <div className="flex">
                   <button
-                    className={`py-3 rounded-s-md md:w-[10rem] w-[10rem] font-semibold ${
+                    className={`py-3 rounded-s w-[10rem] font-semibold ${
                       isboardControl
                         ? "bg-[#0f212e] text-[#b1bad3]"
                         : "bg-[#4d718768] hover:bg-[#85afca68]"
@@ -1702,7 +1712,7 @@ const CrashGameSidebar = () => {
                     Controls
                   </button>
                   <button
-                    className={`py-3 rounded-e-md md:w-[10rem] w-[10rem] font-semibold ${
+                    className={`py-3 rounded-e- w-[10rem] font-semibold ${
                       !isboardControl
                         ? "bg-[#0f212e] text-[#b1bad3]"
                         : "bg-[#4d718768] hover:bg-[#85afca68]"
@@ -1719,17 +1729,21 @@ const CrashGameSidebar = () => {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 w-full">
                 <button
-                          className={`py-2 rounded-full transition-all ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                  className={`py-2 rounded-full transition-all ${
+                    isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }
                             xl:w-[8.7rem] lg:w-[4rem] md:w-[10.7rem] w-full`}
-                          onClick={() => dispatch(SwiperModel(true))}
-                        >
+                  onClick={() => dispatch(SwiperModel(true))}
+                >
                   Manual
                 </button>
-               <button
-                          className={`py-2 rounded-full transition-all ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                <button
+                  className={`py-2 rounded-full transition-all ${
+                    !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }
                             xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.7rem] w-full`}
-                          onClick={() => dispatch(SwiperModel(false))}
-                        >
+                  onClick={() => dispatch(SwiperModel(false))}
+                >
                   Auto
                 </button>
               </div>

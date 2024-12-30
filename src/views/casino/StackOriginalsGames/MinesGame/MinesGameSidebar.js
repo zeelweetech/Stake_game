@@ -186,9 +186,9 @@ function MinesGameSidebar() {
                 </label>
               </div>
               <div
-                className={`flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]`}
+                className={`flex border-1 rounded-md border-[#2F4553] bg-[#2F4553] group`}
               >
-                <div className="relative flex">
+                <div className="relative flex ">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                   </div> */}
@@ -208,16 +208,16 @@ function MinesGameSidebar() {
                       handleOnChange(e);
                       if (restored?.mineLocations?.length > 0) {
                         dispatch(setRestored({ betAmount: "" }));
-                      }
+                      } 
                     }}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none] ${
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-l-md text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${
                       showFields && "cursor-not-allowed"
                     }`}
                     disabled={showFields}
                   />
                 </div>
                 <button
-                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] ${
+                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] ${
                     showFields && "cursor-not-allowed"
                   }`}
                   onClick={() =>
@@ -238,7 +238,7 @@ function MinesGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] ${
+                  className={`w-16 text-base hover:bg-[#5c849e68] hover:border-[#557086] ${
                     showFields && "cursor-not-allowed"
                   } `}
                   onClick={() =>
@@ -262,7 +262,10 @@ function MinesGameSidebar() {
                       <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
                         <label>Mines</label>
                       </div>
-                      <div className="bg-[#2f4553] font-bold rounded-md border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none xl:w-36 lg:w-[7.4rem] p-1.5 mt-2.5">
+                      <div
+                        className="bg-[#2f4553] font-bold rounded-md border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none xl:w-36 lg:w-[7.4rem] p-1.5 mt-2.5"
+                        tabIndex={0}
+                      >
                         {restored?.mineLocations?.length > 0
                           ? restored?.mines
                           : mineValue?.mines
@@ -274,7 +277,10 @@ function MinesGameSidebar() {
                       <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
                         <label>Gems</label>
                       </div>
-                      <div className="bg-[#2f4553] font-bold rounded-md border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none xl:w-36 lg:w-[7.4rem] p-1.5 mt-2.5">
+                      <div
+                        className="bg-[#2f4553] font-bold rounded-md border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none xl:w-36 lg:w-[7.4rem] p-1.5 mt-2.5"
+                        tabIndex={0}
+                      >
                         {restored?.mineLocations?.length > 0
                           ? 25 - restored?.mines
                           : mineValue?.mines
@@ -283,7 +289,7 @@ function MinesGameSidebar() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-[#b1bad3] b flex justify-between font-semibold text-m mt-3 mb-1">
+                  <div className="text-[#b1bad3] b flex justify-between font-semibold text-m mt-3 mb-1 select-none">
                     <label>
                       Total Profit (
                       {tileSelect?.multiplier
@@ -338,7 +344,7 @@ function MinesGameSidebar() {
                   <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
                     <label>Mines</label>
                   </div>
-                  <div className="relative flex">
+                  {/* <div className="relative flex">
                     <select
                       type="select"
                       name="mines"
@@ -371,6 +377,22 @@ function MinesGameSidebar() {
                       <option value={23}>23</option>
                       <option value={24}>24</option>
                     </select>
+                  </div> */}
+                  <div className="relative flex">
+                    <select
+                      type="select"
+                      name="mines"
+                      value={mineValue?.mines}
+                      onChange={(e) => handleOnChange(e)}
+                      className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none"
+                    >
+                      {Array.from({ length: 24 }, (_, i) => (
+                        <option key={i + 1} value={i + 1}>
+                          {i + 1}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               )}
@@ -395,19 +417,19 @@ function MinesGameSidebar() {
             </div>
           ) : (
             <div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-3 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-3 mb-1 select-none">
                 <label>Bet Amount</label>
                 <label>
                   ₹{mineValue?.betamount ? mineValue?.betamount : "0.00"}
                 </label>
               </div>
-              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
-                <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
-              </div> */}
+                  <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
+                  </div> */}
                   <input
-                    className="xl:w-48 xl:ml-0 lg:w-40 lg:ml-0 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-s-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none]"
+                    className="xl:w-48 xl:ml-0 lg:w-40 lg:ml-0 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-s-md focus:border-[#557086] group-hover:border-[#557086] text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     step="0.01"
@@ -428,7 +450,7 @@ function MinesGameSidebar() {
                   />
                 </div>
                 <button
-                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] ${
+                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] group-hover:border-[#557086] ${
                     minesBetStatus && "cursor-not-allowed"
                   }`}
                   onClick={() =>
@@ -449,7 +471,7 @@ function MinesGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] ${
+                  className={`w-16 text-base hover:bg-[#5c849e68] group-hover:border-[#557086] ${
                     minesBetStatus && "cursor-not-allowed"
                   } `}
                   onClick={() =>
@@ -465,7 +487,7 @@ function MinesGameSidebar() {
                   2x
                 </button>
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1 select-none">
                 <label>Mines</label>
               </div>
               <div className="relative flex">
@@ -502,7 +524,7 @@ function MinesGameSidebar() {
                   <option value={24}>24</option>
                 </select>
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1 select-none">
                 <label>Number of Bets</label>
               </div>
               <div className="relative flex rounded-md">
@@ -518,7 +540,7 @@ function MinesGameSidebar() {
                   />
                 </div>
                 <input
-                  className="w-full pr-7 pl-2 py-1.5 font-bold rounded-md  text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full pr-7 pl-2 py-1.5 font-bold rounded-md focus:border-[#557086]  text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0"
                   min={0}
@@ -536,16 +558,16 @@ function MinesGameSidebar() {
                   }}
                 />
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1 select-none">
                 <label>On win</label>
               </div>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#4d718768]">
                 <button
                   className={`${
                     onProfit.win
                       ? "bg-[#0f212e] rounded"
                       : "rounded hover:bg-[#85afca68]"
-                  } px-3.5 py-1  rounded-sm`}
+                  } px-3.5 py-1.5 ml-0.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setMineValue({ onwin: "" }));
@@ -556,9 +578,9 @@ function MinesGameSidebar() {
                 <button
                   className={`${
                     onProfit.win
-                      ? " hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-sm"
-                  } px-[0.3rem] py-1`}
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded"
+                  } px-[0.3rem] py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -576,7 +598,7 @@ function MinesGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-20 pr-7 pl-2 py-1 xl:w-[8rem] lg:w-[5.8rem] md:w-[14rem] rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="w-20 pr-7 pl-2 py-1.5 xl:w-[8.215rem] lg:w-[5.8rem] md:w-[14rem] rounded-md text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -586,17 +608,17 @@ function MinesGameSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1 select-none">
                 <label>On Lose</label>
               </div>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 mt-1 rounded-md bg-[#4d718768]">
                 <div>
                   <button
                     className={`${
                       onProfit.lose
                         ? "bg-[#0f212e] rounded"
                         : "hover:bg-[#85afca68] rounded"
-                    } px-3.5 py-1 rounded-sm`}
+                    } px-3.5 py-1.5 ml-0.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                       dispatch(setMineValue({ onlose: "" }));
@@ -609,9 +631,9 @@ function MinesGameSidebar() {
                   <button
                     className={`${
                       onProfit.lose
-                        ? " bg-[#4d718768] hover:bg-[#85afca68]"
-                        : "bg-[#0f212e] rounded-sm"
-                    } px-[0.3rem] py-1`}
+                        ? "hover:bg-[#85afca68]"
+                        : "bg-[#0f212e] rounded"
+                    } px-[0.3rem] py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -630,7 +652,7 @@ function MinesGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-20 pr-7 pl-2 py-1 xl:w-[8rem] lg:w-[5.8rem] md:w-[14rem] rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="w-20 pr-7 pl-2 py-1.5 xl:w-[8.215rem] lg:w-[5.8rem] md:w-[14rem] rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -640,7 +662,7 @@ function MinesGameSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1 select-none">
                 <label>Stop on Profit</label>
                 <label>
                   ₹{mineValue?.stoponprofit ? mineValue?.stoponprofit : "0.00"}
@@ -651,7 +673,7 @@ function MinesGameSidebar() {
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full pr-1.5 px-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full pr-1.5 px-2 py-1.5 rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0.01"
                   step="0.01"
@@ -660,7 +682,7 @@ function MinesGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1 select-none">
                 <label>Stop on Loss</label>
                 <label>
                   ₹{mineValue?.stoponloss ? mineValue?.stoponloss : "0.00"}
@@ -671,7 +693,7 @@ function MinesGameSidebar() {
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full pr-1.5 px-2 py-1.5 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full pr-1.5 px-2 py-1.5 rounded text-white border-2 focus:border-[#557086]  hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0.01"
                   step="0.01"
@@ -1239,17 +1261,21 @@ function MinesGameSidebar() {
               <div className="flex space-x-2 w-full">
                 <button
                   className={`py-2 rounded-full transition-all ${
-                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }
                     xl:w-[8.7rem] lg:w-[4rem] md:w-[10.7rem] w-full`}
-                    onClick={() => dispatch(setIsManual(true))}>
-                    Manual
+                  onClick={() => dispatch(setIsManual(true))}
+                >
+                  Manual
                 </button>
                 <button
                   className={`py-2 rounded-full transition-all ${
-                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]" }
+                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }
                     xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.7rem] w-full`}
-                    onClick={() => dispatch(setIsManual(false))}>
-                    Auto
+                  onClick={() => dispatch(setIsManual(false))}
+                >
+                  Auto
                 </button>
               </div>
             </div>

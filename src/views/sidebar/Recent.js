@@ -19,15 +19,17 @@ const Recent = () => {
         </div>
       </div>
       <div className="h-full w-full bg-[#1a2c38]">
-        <div className="mt-8 md:mx-28 mx-4 relative">
-          <input
-            className="rounded-full text-white w-full font-semibold text-base py-2 px-10 bg-[#0f212e] duration-300 border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none focus:border-[#557086]"
-            name="search"
-            type="text"
-            placeholder="Search your game"
-          />
-          <div className="absolute left-0 top-0 pt-2.5 px-3 flex items-center cursor-pointer text-[#b1bad3]">
-            <SearchIcon />
+        <div className="flex justify-center items-center">
+          <div className="mt-8 xl:w-[70rem] lg:w-[52.5rem] md:w-[36.5rem] mx-3 w-full relative">
+            <input
+              className="rounded-full text-white w-full font-semibold text-base py-2 px-10 bg-[#0f212e] duration-300 border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none focus:border-[#557086] border:outline-none"
+              name="search"
+              type="text"
+              placeholder="Search your game"
+            />
+            <div className="absolute left-0 top-0 pt-2.5 px-3 flex items-center cursor-pointer text-[#557086]">
+              <SearchIcon />
+            </div>
           </div>
         </div>
         <div className="flex justify-center items-center ">
@@ -36,7 +38,7 @@ const Recent = () => {
           </span>
         </div>
         <div className="flex justify-center items-center">
-        <div className="xl:w-[72rem] lg:w-[55rem]  md:w-[42rem]  md:px-0 px-3 w-full pt-5 ">
+          <div className="xl:w-[70rem] lg:w-[53rem] md:w-[37rem] md:px-0 px-3 w-full pt-5 ">
             <GameTable />
           </div>
         </div>
