@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GameFooter from "../../../component/GameFooter";
+import GameFooter from "../../../component/GameFooter/GameFooter";
 import DragonSidebar from "./DragonSidebar";
 import DragonContent from "./DragonContent";
 import { DragonTowerSocket } from "../../../../socket";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LimboGameContent from "./LimboGameContent";
-import GameFooter from "../../../component/GameFooter";
+import GameFooter from "../../../component/GameFooter/GameFooter";
 import LimboGameSidebar from "./LimboGameSidebar";
 import { LimboSocket } from "../../../../socket";
 import GameContent from "../../../component/GameContent";

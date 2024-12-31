@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GameFooter from "../../../component/GameFooter";
+import GameFooter from "../../../component/GameFooter/GameFooter";
 import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";
 import KenoGameSidebar from "./KenoGameSidebar";

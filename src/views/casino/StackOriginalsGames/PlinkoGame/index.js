@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PlinkoGameSidebar from "./PlinkoGameSidebar";
 import PlinkoGameContent from "./PlinkoGameContent";
-import GameFooter from "../../../component/GameFooter";
+import GameFooter from "../../../component/GameFooter/GameFooter";
 import { PlinkoSocket } from "../../../../socket";
 import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";

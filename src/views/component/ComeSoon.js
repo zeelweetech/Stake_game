@@ -1,6 +1,6 @@
 import React from "react";
 import { RotatingLines } from "react-loader-spinner";
-import GameFooter from "./GameFooter";
+// import GameFooter from ".GameFooter/GameFooter";
 
 function ComeSoon() {
   return (
