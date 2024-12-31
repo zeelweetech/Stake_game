@@ -41,8 +41,6 @@ const Statistic = ({closeStatistic}) => {
     try {
       setLoading(true);
       const response = await getMedalsProgress({ userId });
-      console.log("++++++++++++", response);
-
       setProgressData(response || []);
     } catch (error) {
       console.error("Failed to fetch VIP progress: ", error);

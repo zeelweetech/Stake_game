@@ -80,7 +80,7 @@ function CasinoHomePage() {
   };
 
   return (
-    <div className="flex justify-center h-full bg-[#1a2c38] z-40">
+    <div className="flex justify-center h-full bg-[#1a2c38] z-40 lg:pr-12 pr-0">
       {loading ? (
         <Loader />
       ) : (

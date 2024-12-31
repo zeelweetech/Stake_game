@@ -169,8 +169,8 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
     );
 
     return (
-        <div className={`fixed h-[28rem] left-0 right-0 bg-[#0f212e] shadow-lg p-4 transition-all duration-300 ease-in-out ${isOpen ? 'bottom-[3.65rem] z-[1000]' : '-bottom-full z-0'}`} >
-            <div className="flex flex-col">
+        <div className={`fixed left-0 right-0 bg-[#0f212e] shadow-lg p-4 transition-all duration-300 ease-in-out ${isOpen ? 'bottom-[3.65rem] z-[1000] top-[3.5rem]' : ''} flex flex-col`} >
+            <div className="flex items-center">
                 <input
                     className="border-2 rounded-full w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
                     name="search"
@@ -179,23 +179,23 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
                 />
-                <div className="absolute left-0 pt-2.5 px-4 flex items-center cursor-pointer text-[#b1bad3]">
+                <div className="absolute left-7 cursor-pointer text-[#b1bad3]">
                     <SearchIcon />
                 </div>
             </div>
             <div className="py-4 flex justify-center space-x-5">
-                <button onClick={handleCasinoClick} className="text-white relative min-w-[5rem] min-h-[3rem] max-h-[5rem] flex justify-end bg-cover bg-[position:0_-15px] pr-3 aspect-[3.5/1] group">
-                    <img src={casino1} className={`h-full w -full rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${casinoClicked ? "opacity-0" : "opacity-100"}`} alt="Casino Default" />
+                <button onClick={handleCasinoClick} className="text-white relative min-w-[5rem] min-h-[3rem] max-h-[5rem] flex justify-end bg-cover bg-[position:0_-15px] aspect-[3.5/1] group">
+                    <img src={casino1} className={`h-full w-full rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${casinoClicked ? "opacity-0" : "opacity-100"}`} alt="Casino Default" />
                     <img src={casino} alt="Casino Active" className={`h-full w-full rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${casinoClicked ? "opacity-100" : "opacity-0"} group-hover:opacity-100`} />
                     <span className={`absolute inset-0 flex justify-center items-center text-sm font-bold ${isOpen ? "block" : "hidden"}`}>CASINO</span>
                 </button>
-                <button onClick={handleSportsClick} className="text-white relative min-w-[5rem] min-h-[3rem] max-h-[5rem] flex justify-end bg-cover bg-[position:0_-15px] pr-3 aspect-[3.5/1] group">
+                <button onClick={handleSportsClick} className="text-white relative min-w-[5rem] min-h-[3rem] max-h-[5rem] flex justify-end bg-cover bg-[position:0_-15px] aspect-[3.5/1] group">
                     <img src={sports} alt="Sports Default" className={`h-full w-full rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${sportsClicked ? "opacity-0" : "opacity-100 hover:opacity-0"} group-hover:opacity-100`} />
                     <img src={sports1} className={`h-full w-full rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${sportsClicked ? "opacity-100" : "opacity-0 hover:opacity-100"}`} alt="Sports Active" />
                     <span className={`absolute inset-0 flex justify-center items-center text-sm font-bold ${isOpen ? "block" : "hidden"}`}>SPORTS</span>
                 </button>
             </div>
-            <div className="overflow-y-auto h-[19.2rem]">
+            <div className="overflow-y-auto abc flex-grow">
                 {renderGroup(firstGroup, "First Group")}
                 {renderGroup(secondGroup, "Second Group")}
                 {renderGroup(thirdGroup, "Third Group")}
@@ -210,29 +210,29 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
     );
 };
 
-BottomDrawer.propTypes = {
-    items: PropTypes.arrayOf(
-        PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            icon: PropTypes.node,
-            badge: PropTypes.shape({
-                color: PropTypes.string,
-                text: PropTypes.string,
-            }),
-            dropdown: PropTypes.arrayOf(
-                PropTypes.shape({
-                    name: PropTypes.string,
-                    to: PropTypes.string,
-                    icon: PropTypes.node,
-                })
-            ),
-        })
-    ).isRequired,
-    openMenubar: PropTypes.bool.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    handleDrowerOpen: PropTypes.func.isRequired,
-    dropdownVisible: PropTypes.number,
-    setDropdownVisible: PropTypes.func.isRequired,
-};
+// BottomDrawer.propTypes = {
+//     items: PropTypes.arrayOf(
+//         PropTypes.shape({
+//             name: PropTypes.string.isRequired,
+//             icon: PropTypes.node,
+//             badge: PropTypes.shape({
+//                 color: PropTypes.string,
+//                 text: PropTypes.string,
+//             }),
+//             dropdown: PropTypes.arrayOf(
+//                 PropTypes.shape({
+//                     name: PropTypes.string,
+//                     to: PropTypes.string,
+//                     icon: PropTypes.node,
+//                 })
+//             ),
+//         })
+//     ).isRequired,
+//     openMenubar: PropTypes.bool.isRequired,
+//     isOpen: PropTypes.bool.isRequired,
+//     handleDrowerOpen: PropTypes.func.isRequired,
+//     dropdownVisible: PropTypes.number,
+//     setDropdownVisible: PropTypes.func.isRequired,
+// };
 
 export default BottomDrawer;

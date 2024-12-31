@@ -10,7 +10,7 @@ import { getAllGames } from "../../services/GameServices";
 import { getWallet, updateWallet } from "../../services/LoginServices";
 import { setWallet } from "../../features/auth/authSlice";
 import { decodedToken } from "../../resources/utility";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function MainHomePage() {
   // const [stackMenu, setStackMenu] = useState("Lobby");
@@ -18,6 +18,7 @@ function MainHomePage() {
   const [allGames, setAllGames] = useState();
   const decoded = decodedToken();
   const dispatch = useDispatch();
+  const { isBetslipOpen } = useSelector((state) => state.betslip);
 
   // const isLobby = stackMenu === "Lobby";
 
@@ -43,28 +44,30 @@ function MainHomePage() {
         const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const UpdateWalletData = async () => {
     await updateWallet({ userId: decoded?.userId })
-      .then((res) => {})
-      .catch((err) => {});
+      .then((res) => { })
+      .catch((err) => { });
   };
 
   return (
-    <div className="flex justify-center h-full bg-[#1a2c38]">
+    <div className="h-full bg-[#1a2c38] lg:pr-14 xl:pr-0 pr-0">
       {loading ? (
         <Loader />
       ) : (
         <div className="text-white">
           <Mainbar />
-          <div className="xl:px-44 lg:px-14 mt-8">
-            <StackOriginals allGames={allGames} setLoading={setLoading} />
-            <Slots/>
-            <LiveCasino allGames={allGames} />
-            <GameShows allGames={allGames} />
-            <Exclusives allGames={allGames} />
+          <div className="mt-8 flex justify-center">
+            <div>
+              <StackOriginals allGames={allGames} setLoading={setLoading} />
+              <Slots />
+              <LiveCasino allGames={allGames} />
+              <GameShows allGames={allGames} />
+              <Exclusives allGames={allGames} />
+            </div>
           </div>
         </div>
       )}

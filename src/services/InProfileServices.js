@@ -10,8 +10,6 @@ export async function getStatisticsData({id: id}) {
           },
         }
       );
-      console.log(">>>>>>>",response.data);
-      
       return response.data;
     } catch (error) {
       throw error;
