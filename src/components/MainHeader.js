@@ -15,8 +15,8 @@ import { PiVaultFill } from "react-icons/pi";
 import { BiSolidNotepad } from "react-icons/bi";
 import { BsChatDotsFill } from "react-icons/bs";
 import { setAnchorEl } from "../features/auth/authSlice";
-import { openBetslipModal } from "../features/auth/betSlipSlice";
-import { openChatModal } from "../features/auth/chatSlice";
+import { closeBetslipModal, openBetslipModal } from "../features/auth/betSlipSlice";
+import { closeChatModal, openChatModal } from "../features/auth/chatSlice";
 import Wallet from "../views/Profile/Wallet";
 import Vault from "../views/Profile/Vault";
 import Vip from "../views/Profile/Vip";
@@ -24,7 +24,7 @@ import Statistic from "../views/Profile/Statistic";
 import LogoutDialog from "../views/Profile/Logout";
 import Notification from "../views/Profile/Notification";
 
-function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
+function MainHeader({ handleRightSidebarToggle }) {
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.auth);
   const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -54,14 +54,18 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
 
   const handleChatClick = () => {
     dispatch(openChatModal())
-    handleRightSidebarToggle()
+    handleRightSidebarToggle("chats")
     setIsSidebarOpen(false);
+    openBetslipModal(false)
+    dispatch(closeBetslipModal(false))
   };
 
   const handleBetslipClick = () => {
     dispatch(openBetslipModal());
-    handleRightSidebarToggle();
+    handleRightSidebarToggle("betslips");
     setIsSidebarOpen(false);
+    openChatModal(false)
+    dispatch(closeChatModal(false))
   };
 
   const toggleTooltip = () => {
@@ -216,8 +220,7 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
                 </div>
               )}
             </div>
-
-            <div className="text-white flex items-center space-x-0.4 md:space-x-6">
+             <div className="text-white flex items-center space-x-0.4 md:space-x-6">
               <IconButton onClick={handleMenuOpen} data-menu-type="notifications">
                 <Badge color="success" variant="dot">
                   <NotificationsIcon className="text-white" fontSize="small" />
@@ -225,10 +228,8 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
               </IconButton>
               <Notification />
             </div>
-
-
             <div className="relative flex items-center z-50">
-            <p onClick={toggleSidebar} className="flex md:block hidden items-center hover:cursor-pointer">
+              <p onClick={toggleSidebar} className="md:flex hidden items-center hover:cursor-pointer">
                 <IoIosChatboxes color="white" size={18} />
               </p>
               {isSidebarOpen && (
@@ -251,10 +252,7 @@ function MainHeader({ handleRightSidebarToggle, isDrawerOpen }) {
                       <p className="text-base text-[#0f212e]">BetSlip</p>
                     </button>
                   </div>
-
-                  {/* Tooltip Arrow */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-[9999]">
-                    <div className="tooltip-arrow w-3 h-3 bg-white rotate-45"></div>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-[9999] tooltip-arrow w-3 h-3 bg-white rotate-45">
                   </div>
                 </>
               )}

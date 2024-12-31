@@ -76,7 +76,7 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
     };
 
     return (
-        <div className={`fixed left-0 h-[28rem] right-0 bg-[#0f212e] shadow-lg transition-all duration-300 ease-in-out ${openChat ? 'bottom-[3.65rem] z-[1000]' : '-bottom-full z-0'}`}>
+        <div className={`fixed left-0 h-[28rem] right-0 bg-[#0f212e] shadow-lg transition-all duration-300 ease-in-out ${openChat ? 'bottom-[3.20rem] z-[1000]' : '-bottom-full z-0'}`} >
             <div className="bg-[#0f212e] shadow-lg h-12 flex items-center justify-between px-4">
                 <button
                     onClick={toggleDropdown}
@@ -115,7 +115,7 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                     </div>
                 </div>
             )}
-            <div className="overflow-y-auto px-4" style={{ height: "calc(76.8vh - 75px)" }}>
+            <div className="overflow-y-auto px-4" style={{ height: "calc(66vh - 75px)" }}>
                 {messages.map((msg, index) => (
                     <div
                         key={index}
@@ -127,7 +127,7 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                 <div ref={messagesEndRef} />
             </div>
 
-            <div className="bg-[#213743] p-2 relative ">
+            <div className="bg-[#213743] py-2 px-2 relative ">
                 <div className="flex items-center bg-[#0f212e] p-2 rounded-md">
                     <input
                         type="text"
@@ -142,8 +142,8 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                     </span>
                 </div>
 
-                <div className="flex items-center justify-end">
-                    <button onClick={sendMessage} className="bg-[#2e7d32] text-black text-sm px-4 py-2 my-2.5 rounded-sm">
+                <div className="flex items-center justify-end py-1 ">
+                    <button onClick={sendMessage} className="bg-[#2e7d32] text-black text-sm px-4 py-2 rounded-sm">
                         Send
                     </button>
                 </div>

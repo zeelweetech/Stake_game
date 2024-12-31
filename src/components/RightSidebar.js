@@ -27,7 +27,7 @@ export const RightSidebar = ({ isDrawerOpen, handleRightSidebarToggle }) => {
   };
 
   return (
-    <div className="bg-[#0f212e] h-full">
+    <div className=" h-full">
       {/* Betslip Section */}
       {isDrawerOpen && isBetslipOpen &&  (
         <div className="text-lg font-bold bg-[#0f212e]">
