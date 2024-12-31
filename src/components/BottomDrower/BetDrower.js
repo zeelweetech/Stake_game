@@ -13,6 +13,7 @@ import { getAllBets, getMyBets } from "../../services/GameServices";
 import { logDOM } from "@testing-library/react";
 import { LuListTodo } from "react-icons/lu";
 import { decodedToken } from "../../resources/utility";
+
 const BetDrower = ({ openDrower, onClose }) => {
     const [selectedView, setSelectedView] = useState("My Bets");
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -23,7 +24,7 @@ const BetDrower = ({ openDrower, onClose }) => {
         page: 0,
         pageSize: 10,
     });
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    // const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const { userId } = useParams();
     const decoded = decodedToken();
 
@@ -42,28 +43,23 @@ const BetDrower = ({ openDrower, onClose }) => {
                 pageSize: paginationModel?.pageSize,
             });
             // console.log("llllllllllll",response);
-            
             setBetsData(response?.BetList || []);
-
             setLoading(false);
         } catch (error) {
             console.error("Failed to fetch users: ", error);
             setLoading(false);
         }
     };
-  
-    
+
+
     const getMyBetsdata = async () => {
         try {
             const response = await getMyBets({
                 userId: decoded?.userId,
                 page: paginationModel?.page + 1,
                 pageSize: paginationModel?.pageSize,
-            });
-            // console.log("mmmmmmmmmmm", response);
-            
+            }); // console.log("mmmmmmmmmmm", response);
             setBetsData(response?.response || []);
-
             setLoading(false);
         } catch (error) {
             console.error("Failed to fetch users: ", error);
@@ -135,16 +131,10 @@ const BetDrower = ({ openDrower, onClose }) => {
 
     return (
         <div className={`fixed left-0 h-[28rem] right-0 bg-[#0f212e] shadow-lg transition-all duration-300 ease-in-out ${openDrower ? 'bottom-[3.65rem] z-[1000]' : '-bottom-full z-0'}`} >
-            <div className="bg-[#0f212e] shadow-lg h-12">
-                <IconButton
-                    onClick={onClose}
-                    sx={{ color: "white", position: "absolute", top: 8, right: 8 }}
-                >
-                    <CloseIcon fontSize="small" />
-                </IconButton>
-                <button
+            <div className="flex justify-between px-3 items-center bg-[#0f212e] shadow-lg h-12 relative">
+            <button
                     onClick={toggleDropdown}
-                    className="inline-flex justify-start w-full bg-[#0f212e] px-3 py-3 text-sm font-medium text-white"
+                    className="inline-flex items-center w-full bg-[#0f212e] px-3 py-3 text-sm font-medium text-white"
                 >
                     {selectedView === "My Bets" ? <MyBets className="w-4 h-4 text-white mr-2" /> :
                         selectedView === "All Bets" ? <MyBets className="w-4 h-4 text-white mr-2" /> :
@@ -152,45 +142,50 @@ const BetDrower = ({ openDrower, onClose }) => {
                                 selectedView === "Races" ? <Races className="w-4 h-4 text-white mr-2" /> : null}
                     <span className="ml-2">{selectedView}</span>
                     {dropdownOpen ? (
-                        <ChevronDownIcon className=" ml-2 h-5 w-5" />
+                        <ChevronDownIcon className="ml-2 h-5 w-5" />
                     ) : (
                         <ChevronUpIcon className="ml-2 h-5 w-5" />
                     )}
                 </button>
 
                 {dropdownOpen && (
-                    <div className="relative">
-                        <div className="absolute top-full shadow-lg left-14 mt-2 bg-white text-black font-medium rounded-sm px-4 py-2 z-10 w-max text-center">
-                            <button
-                                onClick={() => handleViewChange("My Bets")}
-                                className={`text-gray-700 block py-1 text-sm ${selectedView === "My Bets" && "font-bold"}`}
-                            >
-                                My Bets
-                            </button>
-                            <button
-                                onClick={() => handleViewChange("All Bets")}
-                                className={`text-gray-700 block py-1 text-sm ${selectedView === "All Bets" && "font-bold"}`}
-                            >
-                                All Bets
-                            </button>
-                            <button
-                                onClick={() => handleViewChange("High Rollers")}
-                                className={`text-gray-700 block py-1 text-sm ${selectedView === "High Rollers" && "font-bold"}`}
-                            >
-                                High Rollers
-                            </button>
-                            <button
-                                onClick={() => handleViewChange("Races")}
-                                className={`text-gray-700 block py-1 text-sm ${selectedView === "Races" && "font-bold"}`}
-                            >
-                                Races
-                            </button>
-                            <div className="tooltip-arrow w-2 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 "></div>
-                        </div>
+                    <div className="absolute top-full shadow-lg left-16 bg-white text-black font-medium rounded-sm z-10 w-max text-center">
+                        <button
+                            onClick={() => handleViewChange("My Bets")}
+                            className={`text-gray-700 block py-2 px-4 text-sm ${selectedView === "My Bets" && "font-bold"}`}
+                        >
+                            My Bets
+                        </button>
+                        <button
+                            onClick={() => handleViewChange("All Bets")}
+                            className={`text-gray-700 block py-2 px-4 text-sm ${selectedView === "All Bets" && "font-bold"}`}
+                        >
+                            All Bets
+                        </button>
+                        <button
+                            onClick={() => handleViewChange("High Rollers")}
+                            className={`text-gray-700 block py-2 px-4 text-sm ${selectedView === "High Rollers" && "font-bold"}`}
+                        >
+                            High Rollers
+                        </button>
+                        <button
+                            onClick={() => handleViewChange("Races")}
+                            className={`text-gray-700 block py-2 px-4 text-sm ${selectedView === "Races" && "font-bold"}`}
+                        >
+                            Races
+                        </button>
+                        <div className="tooltip-arrow w-2 h-3 bg-white rotate-45 absolute top-[-6px] left-14 "></div>
+
                     </div>
                 )}
+                <IconButton
+                    onClick={onClose}
+                    sx={{ color: "white", position: "absolute", top: 8, right: 8 }}
+                >
+                    <CloseIcon fontSize="small" />
+                </IconButton>
             </div>
-            <div className="overflow-y-auto h-[27.5rem]">
+             <div className="overflow-y-auto h-[24.5rem]">
                 {selectedView === "My Bets" ? (
                     <div>
                         <div className="overflow-x-auto md:overflow-x-hidden scrollbar-thin">
@@ -283,7 +278,7 @@ const BetDrower = ({ openDrower, onClose }) => {
                     <div className="flex justify-center">
                         <div>
                             <div className="flex justify-center">
-                            <img src={Statistic} alt="Statistic"sx={{ fontSize: "120px", color: "#b1bad3" }} />
+                                <img src={Statistic} alt="Statistic" sx={{ fontSize: "120px", color: "#b1bad3" }} />
                             </div>
                             <p>No Trophies Data available.</p>
                         </div>

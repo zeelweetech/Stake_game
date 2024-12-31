@@ -8,11 +8,9 @@ const Generals = () => {
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [countryCode, setCountryCode] = useState("");
-    const [errors, setErrors] = useState({});
     const [tokenValid, setTokenValid] = useState(true);
     const [resendClicked, setResendClicked] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
     const decoded = decodedToken();
     const userId = decoded?.userId;
