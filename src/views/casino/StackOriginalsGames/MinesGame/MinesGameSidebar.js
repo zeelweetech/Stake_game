@@ -208,9 +208,9 @@ function MinesGameSidebar() {
                       handleOnChange(e);
                       if (restored?.mineLocations?.length > 0) {
                         dispatch(setRestored({ betAmount: "" }));
-                      } 
+                      }
                     }}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-l-md text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-l text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${
                       showFields && "cursor-not-allowed"
                     }`}
                     disabled={showFields}
@@ -259,11 +259,11 @@ function MinesGameSidebar() {
                 <div>
                   <div className="flex space-x-2 ">
                     <div>
-                      <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                      <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
                         <label>Mines</label>
                       </div>
                       <div
-                        className="bg-[#2f4553] font-bold rounded-md border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none xl:w-36 lg:w-[7.4rem] p-1.5 mt-2.5"
+                        className="bg-[#2f4553] font-bold rounded border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none xl:w-36 lg:w-[7.4rem] p-1.5 mt-2.5"
                         tabIndex={0}
                       >
                         {restored?.mineLocations?.length > 0
@@ -274,11 +274,11 @@ function MinesGameSidebar() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                      <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
                         <label>Gems</label>
                       </div>
                       <div
-                        className="bg-[#2f4553] font-bold rounded-md border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none xl:w-36 lg:w-[7.4rem] p-1.5 mt-2.5"
+                        className="bg-[#2f4553] font-bold rounded border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none xl:w-36 lg:w-[7.4rem] p-1.5 mt-2.5"
                         tabIndex={0}
                       >
                         {restored?.mineLocations?.length > 0
@@ -289,7 +289,7 @@ function MinesGameSidebar() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-[#b1bad3] b flex justify-between font-semibold text-m mt-3 mb-1 select-none">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
                     <label>
                       Total Profit (
                       {tileSelect?.multiplier
@@ -315,7 +315,10 @@ function MinesGameSidebar() {
                       ).toFixed(2)}
                     </label>
                   </div>
-                  <div className="flex justify-between items-center bg-[#2f4553]  border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded-sm p-2">
+                  <div
+                    className="flex justify-between items-center bg-[#2f4553] border-2 hover:border-[#557086] focus-within:border-[#557086] border-[#2F4553] focus:outline-none rounded p-2"
+                    tabIndex={0}
+                  >
                     <p>
                       {(
                         (mineValue?.betamount
@@ -857,7 +860,7 @@ function MinesGameSidebar() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                  <div className="text-[#b1bad3] flex justify-between  font-semibold text-m mt-3 mb-1">
                     <label>
                       Total Profit (
                       {tileSelect?.multiplier
@@ -920,6 +923,7 @@ function MinesGameSidebar() {
                       onChange={(e) => handleOnChange(e)}
                       className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
                     >
+                      {/* <div>
                       <option value={1}>1</option>
                       <option value={2}>2</option>
                       <option value={3}>3</option>
@@ -944,6 +948,12 @@ function MinesGameSidebar() {
                       <option value={22}>22</option>
                       <option value={23}>23</option>
                       <option value={24}>24</option>
+                      </div> */}
+                      {Array.from({ length: 24 }, (_, i) => (
+                        <option key={i + 1} value={i + 1}>
+                          {i + 1}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

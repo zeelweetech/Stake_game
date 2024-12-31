@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GameFooter from "../../../component/GameFooter";
+import GameFooter from "../../../component/GameFooter/GameFooter";
 import CrashGameContent from "./CrashGameContent";
 import CrashGameSidebar from "./CrashGameSidebar";
 import { CrashSocket } from "../../../../socket";

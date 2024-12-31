@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GameFooter from "../../../component/GameFooter";
+import GameFooter from "../../../component/GameFooter/GameFooter";
 import MinesGameSidebar from "./MinesGameSidebar";
 import MinesGameContent from "./MinesGameContent";
 import { MineSocket } from "../../../../socket";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GameFooter from "../../../component/GameFooter";
+import GameFooter from "../../../component/GameFooter/GameFooter";
 import WheelGameContent from "./WheelGameContent";
 import WheelGameSidebar from "./WheelGameSidebar";
 import { WheelSocket } from "../../../../socket";
