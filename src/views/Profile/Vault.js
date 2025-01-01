@@ -44,7 +44,7 @@ const Vault = ({ closeVault }) => {
     const handleDropdownClose = (currency) => {
         if (currency) {
             setSelectedCurrency(currency);
-            setAmount(currency.split(' ')[0]);
+            setAmount(currency);
         }
         setDropdownOpen(null);
     };
@@ -120,14 +120,14 @@ const Vault = ({ closeVault }) => {
                 </div>
             </DialogTitle>
             <DialogContent sx={{ backgroundColor: "#1a2c38", color: "white" }}>
-                <div className="flex flex-col items-center justify-start h-full bg-[#1a2c38]">
+                <div className="bg-[#1a2c38] flex flex-col items-center justify-center">
                     {/* Menu Buttons */}
-                    <div className="flex justify-center w-full mb-4">
-                        <div className="bg-[#0f212e] flex rounded-full p-[4px] space-x-1 font-bold">
+                    <div className="">
+                        <div className="bg-[#0f212e] flex rounded-full p-[3px] space-x-2 font-bold ">
                             {menuItems.map((item) => (
                                 <button
                                     key={item.label}
-                                    className={`py-2 lg:px-5 rounded-full flex justify-center items-center text-sm ${gameMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                                    className={`py-2 px-6 md:px-5 rounded-full flex justify-center items-center text-sm ${gameMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                                         }`}
                                     onClick={() => setGameMenu(item.label)}
                                 >
@@ -140,26 +140,29 @@ const Vault = ({ closeVault }) => {
                     {/* Currency Section */}
                     <div className="w-full flex flex-col items-center mt-4">
                         <p className="text-sm font-medium text-gray-400 mb-2">Currency</p>
-                        <FormControl sx={{ width: "35%" }}>
-                            <div
-                                onClick={handleDropdownOpen}
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
-                                    padding: "8px 16px",
-                                    backgroundColor: "#0f212e",
-                                    color: "white",
-                                    border: "1px solid #b1bad3",
-                                    borderRadius: "4px",
-                                    cursor: "pointer",
-                                }}
-                            >
-                                <Typography>{selectedCurrency}</Typography>
-                                <ExpandMoreIcon />
-                            </div>
-                        </FormControl>
+                        <div
+                            onClick={handleDropdownOpen}
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                padding: "8px 16px",
+                                backgroundColor: "#0f212e",
+                                color: "white",
+                                border: "1px solid #b1bad3",
+                                borderRadius: "4px",
+                                cursor: "pointer",
+                            }}
+                            sx={{
+                                width: { xs: "90%", sm: "50%", md: "35%" },
+                                maxWidth: "400px",
+                                margin: "auto",
+                            }}
+                        >
 
+                            <Typography>{selectedCurrency}</Typography>
+                            <ExpandMoreIcon />
+                        </div>
 
                         <Menu
                             anchorEl={dropdownOpen}
@@ -175,20 +178,18 @@ const Vault = ({ closeVault }) => {
                             }}
                         >
                             <div style={{ padding: "8px" }}>
-                                <TextField
+                                <input
+                                    type="text"
                                     placeholder="Search Currency"
                                     value={searchValue}
                                     onChange={(e) => setSearchValue(e.target.value)}
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    sx={{
+                                    style={{
+                                        width: "100%",
+                                        padding: "8px",
                                         backgroundColor: "#0f212e",
-                                        input: { color: "white" },
-                                        "& .MuiOutlinedInput-root": {
-                                            borderColor: "#b1bad3",
-                                            "&:hover fieldset": { borderColor: "#b1bad3" },
-                                        },
+                                        color: "white",
+                                        border: "1px solid #b1bad3",
+                                        borderRadius: "4px",
                                     }}
                                 />
                             </div>
@@ -207,7 +208,6 @@ const Vault = ({ closeVault }) => {
                             ))}
                         </Menu>
                     </div>
-
                     {/* Amount Input Section */}
                     <div className="w-full flex flex-col mt-4">
                         <p className="text-sm font-medium text-gray-400 mb-2">Amount</p>
@@ -225,8 +225,7 @@ const Vault = ({ closeVault }) => {
                                 }}
                             >
                                 <TextField
-                                    type="number"
-                                    // placeholder="Enter amount"
+                                    placeholder="Enter amount"
                                     value={amount}
                                     onChange={(e) => handleAmountChange(e.target.value)}
                                     InputProps={{
@@ -252,12 +251,10 @@ const Vault = ({ closeVault }) => {
                                         border: "none",
                                         cursor: "pointer",
                                     }}
-
-                                >
+                                    >
                                     Max
                                 </button>
-
-                            </div>
+                         </div>
                         </FormControl>
                         {amountError && (
                             <Typography color="error" sx={{ marginTop: "8px", fontSize: "0.875rem" }}>
@@ -265,7 +262,6 @@ const Vault = ({ closeVault }) => {
                             </Typography>
                         )}
                     </div>
-
                     {/* Password Input Section for Withdraw */}
                     <div className="w-full">
                         {gameMenu === "Withdraw" && (
@@ -277,7 +273,6 @@ const Vault = ({ closeVault }) => {
                                             display: "flex",
                                             alignItems: "center",
                                             backgroundColor: "#0f212e",
-
                                             border: "1px solid #b1bad3",
                                             borderRadius: "4px",
                                             color: "white",
@@ -286,6 +281,7 @@ const Vault = ({ closeVault }) => {
                                         }}
                                     >
                                         <TextField
+                                            placeholder="Enter Password"
                                             type={showPassword ? "text" : "password"}
                                             value={password}
                                             onChange={(e) => handlePasswordChange(e.target.value)}
@@ -330,23 +326,27 @@ const Vault = ({ closeVault }) => {
                 </div>
 
             </DialogContent>
-            <div className="bg-[#0f212e] w-full p-6 py-4">
+            <div className="bg-[#0f212e] w-full py-2">
                 <p className="text-gray-400 p-2">Improve your account security with Two-Factor Authentication</p>
-                <Button
-                    sx={{
+                <button
+                    onClick={handleEnable2FA}
+                    style={{
                         backgroundColor: "#213743",
                         color: "white",
                         width: "100%",
-                        paddingTop: "2px",
-                        "&:hover": { backgroundColor: "gray-500" },
+                        border: "none",
+                        padding: "8px 16px",
+                        cursor: "pointer",
                     }}
-                    onClick={handleEnable2FA}
+                    onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "gray")}
+                    onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#213743")}
                 >
                     Enable 2FA
-                </Button>
+                </button>
+
 
                 <div>
-                    <p className="text-gray-400 p-2">Learn more about Vault</p>
+                    <p className="text-gray-400 py-2 px-2">Learn more about Vault</p>
                 </div>
             </div>
 

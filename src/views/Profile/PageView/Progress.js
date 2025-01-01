@@ -136,7 +136,7 @@ const Progress = () => {
             )}
 
             <div className="justify-start text-left">
-                <p className="font-bold text-xl p-3">Want to achieve the next level?</p>
+                <p className="font-bold p-2 md:text-sm text-base">Want to achieve the next level?</p>
 
                 {/* Casino Section */}
                 <div className="flex items-center justify-start space-x-5 mb-2">

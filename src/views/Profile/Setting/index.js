@@ -53,6 +53,7 @@ const Setting = () => {
     } else if (setting === "Verify") {
       setVerify(true);
     }
+
   };
 
   return (
@@ -76,15 +77,14 @@ const Setting = () => {
                         ? `bg-[#2f4553] border-l-2 border-sky-500 ${item.label === "General" ? "rounded-t-lg" : item.label === "Verify" && "rounded-b-lg"}`
                         : "border-l-transparent border-l-2"
                         }`}
-                        onClick={() => {
-                          setSelectedMenu(item.label);  
-                          handleSettingClick(item.label);  
-                          setIsOpen(false);  
-                        }}
-                        className={`p-2 text-white hover:bg-[#2f4553] cursor-pointer ${
-                          selectedMenu === item.label ? "bg-[#2f4553]" : ""
+                      onClick={() => {
+                        setSelectedMenu(item.label);  
+                        handleSettingClick(item.label);  
+                        setIsOpen(false);  
+                      }}
+                      className={`p-2 text-white hover:bg-[#2f4553] cursor-pointer ${selectedMenu === item.label ? "bg-[#2f4553]" : ""
                         }`}
-                      >
+                    >
                       {item.label}
                     </li>
                   ))}
@@ -121,9 +121,8 @@ const Setting = () => {
                         handleSettingClick(item.label);  // Navigate or trigger verification
                         setIsOpen(false);  // Close dropdown after selection
                       }}
-                      className={`p-2 text-white hover:bg-[#2f4553] cursor-pointer ${
-                        selectedMenu === item.label ? "bg-[#2f4553]" : ""
-                      }`}
+                      className={`p-2 text-white hover:bg-[#2f4553] cursor-pointer ${selectedMenu === item.label ? "bg-[#2f4553]" : ""
+                        }`}
                     >
                       {item.label}
                     </div>
