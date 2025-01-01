@@ -17,9 +17,14 @@ const ChatApp = ({ onClose }) => {
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(Country[0]);
   const dispatch = useDispatch();
-
-  const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
   const messagesEndRef = useRef(null);
+  const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView();
+    }
+  }, [messages]);
 
   useEffect(() => {
     chatSocket.emit("joinCountry", selectedCountry.countryName);
@@ -142,7 +147,7 @@ const ChatApp = ({ onClose }) => {
         </div>
         {/* Send button */}
         <div className="flex items-center justify-end relative">
-          <button onClick={sendMessage} className="bg-[#2e7d32] text-black text-sm px-4 py-2 my-2.5 rounded-sm">
+          <button onClick={sendMessage} className="bg-[#1fff20] text-black font-semibold text-sm px-7 py-2 my-2.5 rounded-sm">
             Send
           </button>
         </div>

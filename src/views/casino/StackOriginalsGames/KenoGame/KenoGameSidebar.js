@@ -233,8 +233,8 @@ function KenoGameSidebar() {
                   <option>High</option>
                 </select>
               </div>
-              <button className="bg-[#2f4553] w-full rounded-sm py-2.5 my-3 font-bold text-sm" onClick={handleAutoPick}>Auto Pick</button>
-              <button className="bg-[#2f4553] w-full rounded-sm py-2.5 font-bold text-sm" onClick={() => dispatch(setSelectTile([]))}>Clear Table</button>
+              <button className="bg-[#2f4553] hover:bg-[#5c849e68] w-full rounded-sm py-2.5 my-3 font-bold text-sm" onClick={handleAutoPick}>Auto Pick</button>
+              <button className="bg-[#2f4553] hover:bg-[#5c849e68] w-full rounded-sm py-2.5 font-bold text-sm" onClick={() => dispatch(setSelectTile([]))}>Clear Table</button>
               <button
                 className={`${selectTile.length > 0 ? "bg-[#1fff20] hover:bg-[#42ed45]" : "bg-[#46a147]"} text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleOnManualBet()}
@@ -609,8 +609,8 @@ function KenoGameSidebar() {
                   <option>High</option>
                 </select>
               </div>
-              <button className="bg-[#2f4553] w-full rounded-sm py-2.5 my-3 font-bold text-sm">Auto Pick</button>
-              <button className="bg-[#2f4553] w-full rounded-sm py-2.5 font-bold text-sm">Clear Table</button>
+              <button className="bg-[#2f4553] hover:bg-[#5c849e68] w-full rounded-sm py-2.5 my-3 font-bold text-sm" onClick={handleAutoPick}>Auto Pick</button>
+              <button className="bg-[#2f4553] hover:bg-[#5c849e68] w-full rounded-sm py-2.5 font-bold text-sm" onClick={() => dispatch(setSelectTile([]))}>Clear Table</button>
             </div>
           ) : (
             <div>
@@ -891,7 +891,6 @@ function KenoGameSidebar() {
               </div>
             </div>
           )}
-
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0 mt-3">
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 w-full">

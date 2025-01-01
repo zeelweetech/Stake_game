@@ -130,9 +130,9 @@ const BetDrower = ({ openDrower, onClose }) => {
     }
 
     return (
-        <div className={`fixed left-0 h-[28rem] right-0 bg-[#0f212e] shadow-lg transition-all duration-300 ease-in-out ${openDrower ? 'bottom-[3.65rem] z-[1000]' : '-bottom-full z-0'}`} >
+        <div className={`fixed left-0 right-0 bg-[#0f212e] shadow-lg transition-all duration-300 ease-in-out ${openDrower ? 'bottom-[3.65rem] z-[1000] top-[3.5rem]' : ''} flex flex-col`} >
             <div className="flex justify-between px-3 items-center bg-[#0f212e] shadow-lg h-12 relative">
-            <button
+                <button
                     onClick={toggleDropdown}
                     className="inline-flex items-center w-full bg-[#0f212e] px-3 py-3 text-sm font-medium text-white"
                 >
@@ -185,7 +185,7 @@ const BetDrower = ({ openDrower, onClose }) => {
                     <CloseIcon fontSize="small" />
                 </IconButton>
             </div>
-             <div className="overflow-y-auto h-[24.5rem]">
+            <div className="overflow-y-auto flex-grow">
                 {selectedView === "My Bets" ? (
                     <div>
                         <div className="overflow-x-auto md:overflow-x-hidden scrollbar-thin">
@@ -275,7 +275,7 @@ const BetDrower = ({ openDrower, onClose }) => {
                         </div>
                     </div>
                 ) : selectedView === "Races" ? (
-                    <div className="flex justify-center">
+                    <div className="flex justify-center items-center h-60">
                         <div>
                             <div className="flex justify-center">
                                 <img src={Statistic} alt="Statistic" sx={{ fontSize: "120px", color: "#b1bad3" }} />

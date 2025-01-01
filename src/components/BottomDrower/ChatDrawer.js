@@ -17,9 +17,14 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
     const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState(Country[0]);
     const dispatch = useDispatch();
-
-    const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
     const messagesEndRef = useRef(null);
+    const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView();
+    }
+  }, [messages]);
 
     useEffect(() => {
         chatSocket.emit("joinCountry", selectedCountry.countryName);
@@ -76,8 +81,8 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
     };
 
     return (
-        <div className={`fixed left-0 h-[28rem] right-0 bg-[#0f212e] shadow-lg transition-all duration-300 ease-in-out ${openChat ? 'bottom-[3.20rem] z-[1000]' : '-bottom-full z-0'}`} >
-            <div className="bg-[#0f212e] shadow-lg h-12 flex items-center justify-between px-4">
+        <div className={`fixed left-0 right-0 bg-[#0f212e] shadow-lg transition-all duration-300 ease-in-out ${openChat ? 'bottom-[3.20rem] z-[1000] top-[3.5rem]' : ''} flex flex-col`} >
+            <div className="bg-[#0f212e] shadow-lg h-48 flex items-center justify-between px-4">
                 <button
                     onClick={toggleDropdown}
                     className="flex items-center text-white text-sm"
@@ -115,7 +120,7 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                     </div>
                 </div>
             )}
-            <div className="overflow-y-auto px-4" style={{ height: "calc(66vh - 75px)" }}>
+            <div className="overflow-y-auto flex-grow px-4">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
@@ -142,8 +147,8 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                     </span>
                 </div>
 
-                <div className="flex items-center justify-end py-1 ">
-                    <button onClick={sendMessage} className="bg-[#2e7d32] text-black text-sm px-4 py-2 rounded-sm">
+                <div className="flex items-center justify-end py-2">
+                    <button onClick={sendMessage} className="bg-[#1fff20] text-black font-semibold text-sm px-7 py-2 rounded-sm">
                         Send
                     </button>
                 </div>

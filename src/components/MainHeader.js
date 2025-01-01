@@ -76,7 +76,7 @@ function MainHeader({ handleRightSidebarToggle }) {
 
   return (
     <div className="z-50 relative">
-      <div className="bg-[#1a2c38] drop-shadow-2xl py-[0.30rem]">
+      <div className="bg-[#1a2c38] drop-shadow-2xl md:py-[0.30rem] py-2.5">
         <div className="flex justify-between md:justify-around items-center px-4 md:px-0 ">
           <span
             className="text-white text-3xl md:text-5xl font-extrabold italic font-sans hover:cursor-pointer"

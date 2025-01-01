@@ -195,7 +195,7 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
                     <span className={`absolute inset-0 flex justify-center items-center text-sm font-bold ${isOpen ? "block" : "hidden"}`}>SPORTS</span>
                 </button>
             </div>
-            <div className="overflow-y-auto abc flex-grow">
+            <div className="overflow-y-auto flex-grow">
                 {renderGroup(firstGroup, "First Group")}
                 {renderGroup(secondGroup, "Second Group")}
                 {renderGroup(thirdGroup, "Third Group")}
