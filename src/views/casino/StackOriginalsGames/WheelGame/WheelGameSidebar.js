@@ -9,12 +9,12 @@ import {
   setWheelValue,
 } from "../../../../features/casino/wheelSlice";
 import { Divider } from "@mui/material";
-import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import PercentIcon from "@mui/icons-material/Percent";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
 import { WheelSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
-import wheelSound from "../../../../assets/Sound/wheelSound.wav"
+import wheelSound from "../../../../assets/Sound/wheelSound.wav";
 import toast from "react-hot-toast";
 
 function WheelGameSidebar() {
@@ -23,8 +23,10 @@ function WheelGameSidebar() {
   const { id } = useParams();
   const [isManual, setIsManual] = useState(true);
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
-  const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth)
-  const { wheelValue, finalmultiplier, isBetInProgress, autoBet } = useSelector((state) => state.wheelGame);
+  const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
+  const { wheelValue, finalmultiplier, isBetInProgress, autoBet } = useSelector(
+    (state) => state.wheelGame
+  );
 
   useEffect(() => {
     const handleResize = () => setResponsiveMobile(window.innerWidth);
@@ -41,7 +43,7 @@ function WheelGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      dispatch(setIsBetInProgress(true))
+      dispatch(setIsBetInProgress(true));
       WheelSocket.emit("manualBet", {
         userId: decoded?.userId,
         gameId: id,
@@ -70,9 +72,10 @@ function WheelGameSidebar() {
           : 0,
         risk: wheelValue?.risk,
         segment: parseInt(wheelValue?.segments, 10),
-        numberOfBets: finalmultiplier?.remainingBets > 0
-          ? finalmultiplier.remainingBets - 1
-          : wheelValue?.numberofbet || "",
+        numberOfBets:
+          finalmultiplier?.remainingBets > 0
+            ? finalmultiplier.remainingBets - 1
+            : wheelValue?.numberofbet || "",
         onWins: parseInt(wheelValue?.onwin, 10),
         onLoss: parseInt(wheelValue?.onlose, 10),
         stopOnLoss: parseInt(wheelValue?.stoponloss, 10),
@@ -92,20 +95,22 @@ function WheelGameSidebar() {
   return (
     <div>
       {responsiveMobile > 768 ? (
-        <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mx-[8rem] md:mt-32 mx-3 flex flex-col p-3 bg-[#213743]">
+        <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-32 mx-3 flex flex-col p-3 bg-[#213743]">
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 overflow-hidden">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.08rem] md:w-[12.81rem] w-[11.12rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.08rem] md:w-[12.81rem] w-[11.12rem] rounded-full ${
+                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.65rem] lg:w-[7.1rem] md:w-[12.9rem] w-[11.12rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[12.9rem] w-[11.12rem] rounded-full ${
+                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }`}
                   onClick={() => setIsManual(false)}
                 >
                   Auto
@@ -117,9 +122,11 @@ function WheelGameSidebar() {
             <div>
               <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
                 <label>Bet Amount</label>
-                <label>₹{wheelValue?.betamount ? wheelValue?.betamount : '0.00'}</label>
+                <label>
+                  ₹{wheelValue?.betamount ? wheelValue?.betamount : "0.00"}
+                </label>
               </div>
-              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
@@ -131,12 +138,12 @@ function WheelGameSidebar() {
                     name="betamount"
                     value={wheelValue?.betamount}
                     onChange={(e) => handleOnChange(e)}
-                    className={`xl:w-48 lg:w-36 md:w-80 w-64 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
-                  // disabled={minesBetStatus}
+                    className={`xl:w-48 lg:w-36 md:w-80 w-64 pr-1.5 pl-2 py-2 rounded-l text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
+                    // disabled={minesBetStatus}
                   />
                 </div>
                 <button
-                  className={`w-16 text-lg font-bold hover:bg-[#5c849e68]`}
+                  className={`w-16 text-lg font-bold hover:bg-[#5c849e68] hover:border-[#557086] focus:outline-none`}
                   //     ${
                   //    minesBetStatus && "cursor-not-allowed"
                   //  }
@@ -148,7 +155,7 @@ function WheelGameSidebar() {
                       })
                     )
                   }
-                // disabled={minesBetStatus}
+                  // disabled={minesBetStatus}
                 >
                   ½
                 </button>
@@ -158,7 +165,7 @@ function WheelGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68]`}
+                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] focus:outline-none`}
                   //   ${
                   //   minesBetStatus && "cursor-not-allowed"
                   // }
@@ -170,7 +177,7 @@ function WheelGameSidebar() {
                       })
                     )
                   }
-                // disabled={minesBetStatus}
+                  // disabled={minesBetStatus}
                 >
                   2×
                 </button>
@@ -178,17 +185,18 @@ function WheelGameSidebar() {
               <div className="text-[#b1bad3] font-semibold text-m mt-1 my-2">
                 <label>Risk </label>
               </div>
-              <div className="flex border-2 rounded-md hover:border-[#557086] border-[#2F4553] bg-[#2F4553]">
+              <div className="flex rounded-md border-[#2F4553] bg-[#2F4553]">
                 <select
                   type="select"
                   name="risk"
                   value={wheelValue?.risk}
                   onChange={(e) => handleOnChange(e)}
-                  className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent`}
-                //   ${
-                //   completeBetStatus && "cursor-not-allowed"
-                // }
-                // disabled={completeBetStatus}
+                  className={`w-full px-2 py-2 text-white font-bold rounded border-2 border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none`}
+                  //   ${
+                  //   completeBetStatus && "cursor-not-allowed"
+                  // }
+                  // disabled={completeBetStatus}
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -205,7 +213,8 @@ function WheelGameSidebar() {
                     name="segments"
                     value={wheelValue?.segments}
                     onChange={(e) => handleOnChange(e)}
-                    className="w-full px-2 py-2 text-white  rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="w-full px-2 py-2 text-white font-bold  rounded border-2 border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                   >
                     <option value={10}>10</option>
                     <option value={20}>20</option>
@@ -216,7 +225,11 @@ function WheelGameSidebar() {
                 </div>
               </div>
               <button
-                className={`${isBetInProgress ? "bg-[#298629]" : "bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3.5 py-3 rounded font-semibold w-full md:block hidden`}
+                className={`${
+                  isBetInProgress
+                    ? "bg-[#298629]"
+                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                } text-black mt-3.5 py-3 rounded font-semibold w-full md:block hidden`}
                 onClick={() => handleOnManualBet()}
                 disabled={isBetInProgress}
               >
@@ -228,30 +241,40 @@ function WheelGameSidebar() {
             <div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                 <label>Bet Amount</label>
-                <label>₹{finalmultiplier?.betAmount ? Number(finalmultiplier?.betAmount).toFixed(2) : wheelValue?.betamount || '0.00'}</label>
+                <label>
+                  ₹
+                  {finalmultiplier?.betAmount
+                    ? Number(finalmultiplier?.betAmount).toFixed(2)
+                    : wheelValue?.betamount || "0.00"}
+                </label>
               </div>
-              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                   <input
-                    className="xl:w-48 lg:w-40 md:w-80 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-48 lg:w-40 md:w-80 pr-1.5 pl-2 py-2 rounded-l text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     step="0.01"
                     min={0}
                     name="betamount"
-                    value={finalmultiplier?.betAmount ? Number(finalmultiplier?.betAmount).toFixed(2) : wheelValue?.betamount}
-                    onChange={(e) => {handleOnChange(e)
+                    value={
+                      finalmultiplier?.betAmount
+                        ? Number(finalmultiplier?.betAmount).toFixed(2)
+                        : wheelValue?.betamount
+                    }
+                    onChange={(e) => {
+                      handleOnChange(e);
                       if (finalmultiplier?.betAmount) {
-                        dispatch(setFinaMultiplier({ betAmount: '' }))
+                        dispatch(setFinaMultiplier({ betAmount: "" }));
                       }
-                    }}  
+                    }}
                   />
                 </div>
                 <button
-                  className="w-16 text-lg font-bold hover:bg-[#5c849e68]"
+                  className="w-16 text-lg font-bold hover:bg-[#5c849e68] hover:border-[#557086] focus:outline-none"
                   onClick={() =>
                     dispatch(
                       setWheelValue({
@@ -269,7 +292,7 @@ function WheelGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className="w-16  text-sm font-bold hover:bg-[#5c849e68]"
+                  className="w-16  text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] focus:outline-none"
                   onClick={() =>
                     dispatch(
                       setWheelValue({
@@ -285,17 +308,18 @@ function WheelGameSidebar() {
               <div className="text-[#b1bad3] font-semibold mt-1 my-2">
                 <label>Risk </label>
               </div>
-              <div className="flex border-2 rounded-md hover:border-[#557086] border-[#2F4553] bg-[#2F4553]">
+              <div className="flex rounded-md border-[#2F4553] bg-[#2F4553]">
                 <select
                   type="select"
                   name="risk"
                   value={wheelValue?.risk}
                   onChange={(e) => handleOnChange(e)}
-                  className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent`}
-                //   ${
-                //   completeBetStatus && "cursor-not-allowed"
-                // }
-                // disabled={completeBetStatus}
+                  className={`w-full px-2 py-2 text-white font-bold  rounded border-2 border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none`}
+                  //   ${
+                  //   completeBetStatus && "cursor-not-allowed"
+                  // }
+                  // disabled={completeBetStatus}
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -306,13 +330,14 @@ function WheelGameSidebar() {
                 <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-1 my-2">
                   <label>Segments</label>
                 </div>
-                <div className="relative flex  rounded-md">
+                <div className="relative flex">
                   <select
                     type="select"
                     name="segments"
                     value={wheelValue?.segments}
                     onChange={(e) => handleOnChange(e)}
-                    className="w-full px-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="w-full px-2 py-2 text-white font-bold  rounded border-2 border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                   >
                     <option value={10}>10</option>
                     <option value={20}>20</option>
@@ -327,10 +352,18 @@ function WheelGameSidebar() {
               </div>
               <div className="relative flex rounded-md">
                 <div className="absolute flex top-1/2 right-1 -translate-y-1/2 pointer-events-none z-2">
-                  <AllInclusiveIcon className="mx-1" style={{ fontSize: 18, color: "#B1BAD3", width: "20px", height: "20px" }} />
+                  <AllInclusiveIcon
+                    className="mx-1"
+                    style={{
+                      fontSize: 18,
+                      color: "#B1BAD3",
+                      width: "20px",
+                      height: "20px",
+                    }}
+                  />
                 </div>
                 <input
-                  className="w-full pr-7 pl-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full pr-7 pl-2 py-2 rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0"
                   min={0}
@@ -340,14 +373,14 @@ function WheelGameSidebar() {
                   //   : (finalmultiplier?.remainingBets ? parseInt(finalmultiplier?.remainingBets) : wheelValue?.numberofbet)}
                   value={
                     finalmultiplier?.remainingBets > 0
-                      ? finalmultiplier.remainingBets - 1 
+                      ? finalmultiplier.remainingBets - 1
                       : wheelValue?.numberofbet || ""
                   }
                   onChange={(e) => {
                     handleOnChange(e);
 
                     if (finalmultiplier?.remainingBets > 0) {
-                      dispatch(setFinaMultiplier({ remainingBets: '' }));
+                      dispatch(setFinaMultiplier({ remainingBets: "" }));
                     }
                   }}
                 />
@@ -355,24 +388,26 @@ function WheelGameSidebar() {
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
                 <label>On win</label>
               </div>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded  bg-[#2F4553]">
                 <button
-                  className={`${onProfit.win
-                    ? "bg-[#0f212e] rounded"
-                    : "rounded hover:bg-[#85afca68]"
-                    } xl:px-2 lg:px-2 md:px-6 px-2 py-1.5 rounded-sm`}
+                  className={`${
+                    onProfit.win
+                      ? "bg-[#0f212e] rounded"
+                      : "rounded hover:bg-[#85afca68]"
+                  } xl:px-2 lg:px-2 md:px-6 px-2 ml-0.5 py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
-                    dispatch(setWheelValue({ ...wheelValue, onwin: "" }))
+                    dispatch(setWheelValue({ ...wheelValue, onwin: "" }));
                   }}
                 >
                   Reset
                 </button>
                 <button
-                  className={`${onProfit.win
-                    ? "hover:bg-[#85afca68]"
-                    : "bg-[#0f212e] rounded-sm"
-                    } px-[0.20rem] py-1.5`}
+                  className={`${
+                    onProfit.win
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded"
+                  } px-[0.20rem] py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -380,16 +415,17 @@ function WheelGameSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${onProfit.win
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.win
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-36 lg:w-[5.8rem] md:w-[15.3rem] rounded text-white bg-[#0f212e] focus:outline-non"
+                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-[9.115rem] lg:w-[5.8rem] md:w-[15.3rem] rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -402,16 +438,17 @@ function WheelGameSidebar() {
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
                 <label>On Lose</label>
               </div>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 rounded border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "bg-[#0f212e] rounded"
-                      : "hover:bg-[#85afca68] rounded"
-                      } xl:px-2 lg:px-2 md:px-6 px-2 py-1.5 rounded`}
+                    className={`${
+                      onProfit.lose
+                        ? "bg-[#0f212e] rounded"
+                        : "hover:bg-[#85afca68] rounded"
+                    } xl:px-2 lg:px-2 md:px-6 px-2 ml-0.5 py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
-                      dispatch(setWheelValue({ ...wheelValue, onlose: "" }))
+                      dispatch(setWheelValue({ ...wheelValue, onlose: "" }));
                     }}
                   >
                     Reset
@@ -419,10 +456,11 @@ function WheelGameSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-sm"
-                      } px-[0.20rem] py-1.5`}
+                    className={`${
+                      onProfit.lose
+                        ? "hover:bg-[#85afca68]"
+                        : "bg-[#0f212e] rounded"
+                    } px-[0.20rem] py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -431,16 +469,17 @@ function WheelGameSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${onProfit.lose
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.lose
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-36 rounded lg:w-[5.8rem] md:w-[15.3rem] text-white bg-[#0f212e] focus:outline-none focus:border-transparent"
+                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-[9.115rem] lg:w-[5.8rem] md:w-[15.3rem] rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -452,14 +491,17 @@ function WheelGameSidebar() {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
                 <label>Stop on Profit</label>
-                <label>₹{wheelValue?.stoponprofit ? wheelValue?.stoponprofit : '0.00'}</label>
+                <label>
+                  ₹
+                  {wheelValue?.stoponprofit ? wheelValue?.stoponprofit : "0.00"}
+                </label>
               </div>
               <div className="relative flex">
                 {/* <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full pr-1.5 px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] focus:outline-none"
+                  className="w-full pr-1.5 px-2 py-2 rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0.01"
                   step="0.01"
@@ -470,14 +512,16 @@ function WheelGameSidebar() {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
                 <label>Stop on Loss</label>
-                <label>₹{wheelValue?.stoponloss ? wheelValue?.stoponloss : '0.00'}</label>
+                <label>
+                  ₹{wheelValue?.stoponloss ? wheelValue?.stoponloss : "0.00"}
+                </label>
               </div>
               <div className="relative flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
                 {/* <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full pr-1.5 px-2 py-2 text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full pr-1.5 px-2 py-2 rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0.01"
                   step="0.01"
@@ -488,20 +532,20 @@ function WheelGameSidebar() {
               </div>
               {autoBet ? (
                 <button
-                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                  className={` bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded font-semibold w-full `}
                   onClick={() => handleOnStopAutoBet()}
                 >
                   Stop Autobet
                 </button>
               ) : (
                 <button
-                  className={`${
-                    "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
+                  className={`${"bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>
-                    wheelValue?.numberofbet === undefined || wheelValue?.numberofbet === ""
+                    wheelValue?.numberofbet === undefined ||
+                    wheelValue?.numberofbet === ""
                       ? toast.error("Please enter a number of bets")
-                      : handleOnAutoBet()}
+                      : handleOnAutoBet()
+                  }
                 >
                   Start Autobet
                 </button>
@@ -512,14 +556,16 @@ function WheelGameSidebar() {
       ) : null}
 
       {responsiveMobile <= 768 ? (
-        <div className="xl:w-80 lg:w-[16.8rem] xl:mt-0 lg:mt-0 md:w-[24.4rem] md:-ml-1 md:mt-32 mx-3 flex flex-col p-3 bg-[#213743]">
+        <div className=" xl:w-80 lg:w-[16.8rem] xl:mt-0 lg:mt-0 md:w-[24rem] md:mt-32 mx-3 flex flex-col p-3 bg-[#213743] ">
           {isManual ? (
             <div>
               <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm mb-2">
                 <label>Bet Amount</label>
-                <label>₹{wheelValue?.betamount ? wheelValue?.betamount : '0.00'}</label>
+                <label>
+                  ₹{wheelValue?.betamount ? wheelValue?.betamount : "0.00"}
+                </label>
               </div>
-              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
@@ -531,12 +577,12 @@ function WheelGameSidebar() {
                     name="betamount"
                     value={wheelValue?.betamount}
                     onChange={(e) => handleOnChange(e)}
-                    className={`xl:w-48 lg:w-36 md:w-72 w-64 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
-                  // disabled={minesBetStatus}
+                    className={`xl:w-48 lg:w-36 md:w- w-64 pr-1.5 pl-2 py-2 rounded-l-md focus:border-[#557086] group-hover:border-[#557086] text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
+                    // disabled={minesBetStatus}
                   />
                 </div>
                 <button
-                  className={`w-16 text-lg font-bold hover:bg-[#5c849e68]`}
+                  className={`w-16 text-lg font-bold hover:bg-[#5c849e68] focus:border-[#557086] focus:outline-none`}
                   //     ${
                   //    minesBetStatus && "cursor-not-allowed"
                   //  }
@@ -548,7 +594,7 @@ function WheelGameSidebar() {
                       })
                     )
                   }
-                // disabled={minesBetStatus}
+                  // disabled={minesBetStatus}
                 >
                   ½
                 </button>
@@ -558,7 +604,7 @@ function WheelGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68]`}
+                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] focus:border-[#557086] focus:outline-none`}
                   //   ${
                   //   minesBetStatus && "cursor-not-allowed"
                   // }
@@ -570,13 +616,17 @@ function WheelGameSidebar() {
                       })
                     )
                   }
-                // disabled={minesBetStatus}
+                  // disabled={minesBetStatus}
                 >
                   2×
                 </button>
               </div>
               <button
-                className={`${isBetInProgress ? "bg-[#298629]" : "bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3.5 py-3 rounded font-semibold w-full`}
+                className={`${
+                  isBetInProgress
+                    ? "bg-[#298629]"
+                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                } text-black mt-3.5 py-3 rounded font-semibold w-full focus:outline-none`}
                 onClick={() => handleOnManualBet()}
                 disabled={isBetInProgress}
               >
@@ -588,17 +638,18 @@ function WheelGameSidebar() {
                   <div className="text-[#b1bad3] font-semibold text-m mt-1 my-1">
                     <label>Risk </label>
                   </div>
-                  <div className="flex border-2 rounded-md hover:border-[#557086] border-[#2F4553] bg-[#2F4553]">
+                  <div className="flex rounded-md bg-[#2F4553]">
                     <select
                       type="select"
                       name="risk"
                       value={wheelValue?.risk}
                       onChange={(e) => handleOnChange(e)}
-                      className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent`}
-                    //   ${
-                    //   completeBetStatus && "cursor-not-allowed"
-                    // }
-                    // disabled={completeBetStatus}
+                      className={`w-full px-2 py-2 text-white font-bold rounded border-2 border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none`}
+                      //   ${
+                      //   completeBetStatus && "cursor-not-allowed"
+                      // }
+                      // disabled={completeBetStatus}
                     >
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
@@ -616,7 +667,8 @@ function WheelGameSidebar() {
                       name="segments"
                       value={wheelValue?.segments}
                       onChange={(e) => handleOnChange(e)}
-                      className="w-full px-2 py-2 text-white  rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                      className="w-full px-2 py-2 text-white font-bold rounded border-2 border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                     >
                       <option value={10}>10</option>
                       <option value={20}>20</option>
@@ -644,41 +696,53 @@ function WheelGameSidebar() {
                     //   ? "bg-[#489649]"
                     //   :
                     "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent`}
+                  } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent`}
                   onClick={() =>
-                    wheelValue?.numberofbet === undefined || wheelValue?.numberofbet === ""
+                    wheelValue?.numberofbet === undefined ||
+                    wheelValue?.numberofbet === ""
                       ? toast.error("Please enter a number of bets")
-                      : handleOnAutoBet()}
+                      : handleOnAutoBet()
+                  }
                 >
                   Start Autobet
                 </button>
               )}
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
                 <label>Bet Amount</label>
-                <label>₹{finalmultiplier?.betAmount ? Number(finalmultiplier?.betAmount).toFixed(2) : wheelValue?.betamount || '0.00'}</label>
+                <label>
+                  ₹
+                  {finalmultiplier?.betAmount
+                    ? Number(finalmultiplier?.betAmount).toFixed(2)
+                    : wheelValue?.betamount || "0.00"}
+                </label>
               </div>
-              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text text-xl absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                   <input
-                    className="xl:w-48 lg:w-40 md:w-72 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-48 lg:w-40 md:w-72 w-64 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 group-hover:border-[#557086] focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none "
                     type="number"
                     placeholder="0.00"
                     step="0.01"
                     min={0}
                     name="betamount"
-                    value={finalmultiplier?.betAmount ? Number(finalmultiplier?.betAmount).toFixed(2) : wheelValue?.betamount}
-                    onChange={(e) => {handleOnChange(e)
+                    value={
+                      finalmultiplier?.betAmount
+                        ? Number(finalmultiplier?.betAmount).toFixed(2)
+                        : wheelValue?.betamount
+                    }
+                    onChange={(e) => {
+                      handleOnChange(e);
                       if (finalmultiplier?.betAmount) {
-                        dispatch(setFinaMultiplier({ betAmount: '' }))
+                        dispatch(setFinaMultiplier({ betAmount: "" }));
                       }
                     }}
                   />
                 </div>
                 <button
-                  className="w-16 text-lg font-bold hover:bg-[#5c849e68]"
+                  className="w-16 text-lg font-bold hover:bg-[#5c849e68] focus:border-[#557086] focus:outline-none"
                   onClick={() =>
                     dispatch(
                       setWheelValue({
@@ -696,7 +760,7 @@ function WheelGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className="w-16  text-sm font-bold hover:bg-[#5c849e68]"
+                  className="w-16  text-sm font-bold hover:bg-[#5c849e68] focus:border-[#557086] focus:outline-none"
                   onClick={() =>
                     dispatch(
                       setWheelValue({
@@ -721,10 +785,10 @@ function WheelGameSidebar() {
                       value={wheelValue?.risk}
                       onChange={(e) => handleOnChange(e)}
                       className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent`}
-                    //   ${
-                    //   completeBetStatus && "cursor-not-allowed"
-                    // }
-                    // disabled={completeBetStatus}
+                      //   ${
+                      //   completeBetStatus && "cursor-not-allowed"
+                      // }
+                      // disabled={completeBetStatus}
                     >
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
@@ -742,7 +806,7 @@ function WheelGameSidebar() {
                       name="segments"
                       value={wheelValue?.segments}
                       onChange={(e) => handleOnChange(e)}
-                      className="w-full px-2 py-2 text-white  rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                      className="w-full px-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     >
                       <option value={10}>10</option>
                       <option value={20}>20</option>
@@ -759,7 +823,15 @@ function WheelGameSidebar() {
               </div>
               <div className="relative flex rounded-md">
                 <div className="absolute flex top-1/2 right-1 -translate-y-1/2 pointer-events-none z-2">
-                  <AllInclusiveIcon className="mx-1" style={{ fontSize: 18, color: "#B1BAD3", width: "20px", height: "20px" }} />
+                  <AllInclusiveIcon
+                    className="mx-1"
+                    style={{
+                      fontSize: 18,
+                      color: "#B1BAD3",
+                      width: "20px",
+                      height: "20px",
+                    }}
+                  />
                 </div>
                 <input
                   className="w-full pr-7 pl-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
@@ -769,14 +841,14 @@ function WheelGameSidebar() {
                   name="numberofbet"
                   value={
                     finalmultiplier?.remainingBets > 0
-                      ? finalmultiplier.remainingBets - 1 
+                      ? finalmultiplier.remainingBets - 1
                       : wheelValue?.numberofbet || ""
                   }
                   onChange={(e) => {
                     handleOnChange(e);
 
                     if (finalmultiplier?.remainingBets > 0) {
-                      dispatch(setFinaMultiplier({ remainingBets: '' }));
+                      dispatch(setFinaMultiplier({ remainingBets: "" }));
                     }
                   }}
                 />
@@ -784,24 +856,26 @@ function WheelGameSidebar() {
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
                 <label>On win</label>
               </div>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
                 <button
-                  className={`${onProfit.win
-                    ? "bg-[#0f212e] rounded"
-                    : "rounded hover:bg-[#85afca68]"
-                    } xl:px-2 lg:px-2 md:px-6 px-2 py-1.5 rounded-sm`}
+                  className={`${
+                    onProfit.win
+                      ? "bg-[#0f212e] rounded"
+                      : "hover:bg-[#85afca68]"
+                  } xl:px-2 lg:px-2 md:px-4 ml-0.5 px-2 py-1.5 rounded-sm`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
-                    dispatch(setWheelValue({ ...wheelValue, onwin: "" }))
+                    dispatch(setWheelValue({ ...wheelValue, onwin: "" }));
                   }}
                 >
                   Reset
                 </button>
                 <button
-                  className={`${onProfit.win
-                    ? "hover:bg-[#85afca68]"
-                    : "bg-[#0f212e] rounded-sm"
-                    } px-[0.20rem] py-1.5`}
+                  className={`${
+                    onProfit.win
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded-sm"
+                  } px-[0.20rem] py-1.5`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -809,16 +883,17 @@ function WheelGameSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${onProfit.win
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.win
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-36 lg:w-[5.8rem] md:w-[11.4rem] rounded text-white bg-[#0f212e] focus:outline-non"
+                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-36 lg:w-[5.8rem] md:w-[12.115rem] rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -831,16 +906,17 @@ function WheelGameSidebar() {
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
                 <label>On Lose</label>
               </div>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 rounded border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "bg-[#0f212e] rounded"
-                      : "hover:bg-[#85afca68] rounded"
-                      } xl:px-2 lg:px-2 md:px-6 px-2 py-1.5 rounded`}
+                    className={`${
+                      onProfit.lose
+                        ? "bg-[#0f212e] rounded-sm"
+                        : "hover:bg-[#85afca68] rounded"
+                    } xl:px-2 lg:px-2 md:px-4 ml-0.5 px-2 py-1.5 rounded-sm`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
-                      dispatch(setWheelValue({ ...wheelValue, onlose: "" }))
+                      dispatch(setWheelValue({ ...wheelValue, onlose: "" }));
                     }}
                   >
                     Reset
@@ -848,10 +924,11 @@ function WheelGameSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${onProfit.lose
-                      ? "hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-sm"
-                      } px-[0.20rem] py-1.5`}
+                    className={`${
+                      onProfit.lose
+                        ? "hover:bg-[#85afca68]"
+                        : "bg-[#0f212e] rounded-sm"
+                    } px-[0.20rem] py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -860,16 +937,17 @@ function WheelGameSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${onProfit.lose
-                    ? "opacity-50 pointer-events-none cursor-not-allowed"
-                    : ""
-                    }`}
+                  className={`relative flex ${
+                    onProfit.lose
+                      ? "opacity-50 pointer-events-none cursor-not-allowed"
+                      : ""
+                  }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-36 rounded lg:w-[5.8rem] md:w-[11.4rem] text-white bg-[#0f212e] focus:outline-none focus:border-transparent"
+                    className="w-[10.7rem] pr-7 pl-2 py-1.5 xl:w-36 rounded lg:w-[5.8rem] md:w-[12.115rem] text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -881,14 +959,17 @@ function WheelGameSidebar() {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
                 <label>Stop on Profit</label>
-                <label>₹{wheelValue?.stoponprofit ? wheelValue?.stoponprofit : '0.00'}</label>
+                <label>
+                  ₹
+                  {wheelValue?.stoponprofit ? wheelValue?.stoponprofit : "0.00"}
+                </label>
               </div>
               <div className="relative flex">
                 {/* <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full pr-1.5 px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] focus:outline-none"
+                  className="w-full pr-1.5 px-2 py-2 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0.01"
                   step="0.01"
@@ -899,14 +980,16 @@ function WheelGameSidebar() {
               </div>
               <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
                 <label>Stop on Loss</label>
-                <label>₹{wheelValue?.stoponloss ? wheelValue?.stoponloss : '0.00'}</label>
+                <label>
+                  ₹{wheelValue?.stoponloss ? wheelValue?.stoponloss : "0.00"}
+                </label>
               </div>
-              <div className="relative flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+              <div className="relative flex">
                 {/* <div className="cursor-text text-xl text-[#B1BAD3] absolute flex top-1/2 right-3.5 -translate-y-1/2 pointer-events-none z-2">
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full pr-1.5 px-2 py-2 text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full pr-1.5 px-2 py-2 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0.01"
                   step="0.01"
@@ -919,17 +1002,21 @@ function WheelGameSidebar() {
           )}
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0 mt-3">
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
-              <div className="flex space-x-2 overflow-hidden">
+              <div className="flex space-x-2 w-full">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.08rem] md:w-[10.88rem] w-[11rem] max-[375px]:w-[9.5rem] max-[414px]:w-[5rem] max-[390px]:w-[10rem] max-[430px]:w-[11.28rem] max-[412px]:w-[10.7rem] max-[360px]:w-[9.1rem] max-[400px]:w-[10.2rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 rounded-full transition-all ${
+                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }
+                              xl:w-[8.7rem] lg:w-[4rem] md:w-[10.7rem] w-full`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.65rem] lg:w-[7.1rem] md:w-[10.9rem] w-[11rem] max-[375px]:w-[9.5rem]  max-[414px]:w-[5rem] max-[390px]:w-[10rem] max-[430px]:w-[11.28rem] max-[412px]:w-[10.7rem] max-[360px]:w-[9.1rem] max-[400px]:w-[10.2rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 rounded-full transition-all ${
+                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }
+                              xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.7rem] w-full`}
                   onClick={() => setIsManual(false)}
                 >
                   Auto

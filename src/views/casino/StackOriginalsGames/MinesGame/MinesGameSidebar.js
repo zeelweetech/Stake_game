@@ -387,7 +387,7 @@ function MinesGameSidebar() {
                       name="mines"
                       value={mineValue?.mines}
                       onChange={(e) => handleOnChange(e)}
-                      className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] 
+                      className="w-full px-2 py-2 text-white border-2 rounded border-[#4d718768] bg-[#0f212e] 
                         hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                     >
                       {Array.from({ length: 24 }, (_, i) => (
@@ -405,7 +405,7 @@ function MinesGameSidebar() {
                   gameBet && !gamesOver
                     ? "bg-[#489649]"
                     : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleBetClick()}
                 // disabled={gameBet && !gamesOver && tileSelect?.tileIndex === undefined}
                 disabled={
@@ -426,13 +426,13 @@ function MinesGameSidebar() {
                   ₹{mineValue?.betamount ? mineValue?.betamount : "0.00"}
                 </label>
               </div>
-              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553] group">
+              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                   </div> */}
                   <input
-                    className="xl:w-48 xl:ml-0 lg:w-40 lg:ml-0 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-s-md focus:border-[#557086] group-hover:border-[#557086] text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-48 xl:ml-0 lg:w-40 lg:ml-0 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-s-sm focus:border-[#557086] group-hover:border-[#557086] text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     step="0.01"
@@ -499,8 +499,10 @@ function MinesGameSidebar() {
                   name="mines"
                   value={mineValue?.mines}
                   onChange={(e) => handleOnChange(e)}
-                  className="w-full px-2 py-1.5 text-white font-bold  rounded-md border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full px-2 py-1.5 text-white font-bold  rounded border-2 border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                 >
+                  {/* <div>
                   <option value={1}>1</option>
                   <option value={2}>2</option>
                   <option value={3}>3</option>
@@ -525,6 +527,12 @@ function MinesGameSidebar() {
                   <option value={22}>22</option>
                   <option value={23}>23</option>
                   <option value={24}>24</option>
+                  </div> */}
+                  {Array.from({ length: 24 }, (_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1 select-none">
@@ -543,7 +551,7 @@ function MinesGameSidebar() {
                   />
                 </div>
                 <input
-                  className="w-full pr-7 pl-2 py-1.5 font-bold rounded-md focus:border-[#557086]  text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full pr-7 pl-2 py-1.5 font-bold rounded-md focus:border-[#557086] text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0"
                   min={0}
@@ -601,7 +609,7 @@ function MinesGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-20 pr-7 pl-2 py-1.5 xl:w-[8.215rem] lg:w-[5.8rem] md:w-[14rem] rounded-md text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="w-20 pr-7 pl-2 py-1.5 xl:w-[8.215rem] lg:w-[5.8rem] md:w-[14rem] rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -718,7 +726,7 @@ function MinesGameSidebar() {
                     preSelectTile?.length > 0
                       ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer"
                       : "bg-[#489649] cursor-default"
-                  } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
+                  } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>
                     mineValue?.numberofbet === undefined ||
                     mineValue?.numberofbet === ""
@@ -747,9 +755,9 @@ function MinesGameSidebar() {
                 </label>
               </div>
               <div
-                className={`flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]`}
+                className={`flex border-1 rounded-md border-[#4d718768] bg-[#4d718768] group`}
               >
-                <div className="relative flex">
+                <div className="relative flex ">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
@@ -771,14 +779,14 @@ function MinesGameSidebar() {
                         dispatch(setRestored({ betAmount: "" }));
                       }
                     }}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2  md:w-[17rem] w-64 rounded-s-md text-white bg-[#0f212e] ${
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2  md:w-[17rem] w-64 rounded-s-md text-white border-2 group-hover:border-[#557086] focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${
                       showFields && "cursor-not-allowed"
                     }`}
                     disabled={showFields}
                   />
                 </div>
                 <button
-                  className={`w-16 text-xl hover:bg-[#5c849e68] ${
+                  className={`w-16 text-xl hover:bg-[#5c849e68] group-hover:border-[#557086] ${
                     showFields && "cursor-not-allowed"
                   }`}
                   onClick={() =>
@@ -796,10 +804,10 @@ function MinesGameSidebar() {
                 <Divider
                   flexItem
                   orientation="vertical"
-                  sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                  sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] ${
+                  className={`w-16 text-base hover:bg-[#5c849e68] group-hover:border-[#557086] ${
                     showFields && "cursor-not-allowed"
                   } `}
                   onClick={() =>
@@ -820,7 +828,7 @@ function MinesGameSidebar() {
                   gameBet && !gamesOver
                     ? "bg-[#489649]"
                     : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleBetClick()}
                 disabled={
                   gameBet &&
@@ -839,7 +847,7 @@ function MinesGameSidebar() {
                       <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-2 mb-1">
                         <label>Mines</label>
                       </div>
-                      <div className="bg-[#2f4553] border border-[#0e2433] xl:w-36 lg:w-[7.4rem] md:w-44 w-[11.5rem] p-2 mt-2.5">
+                      <div className="bg-[#2f4553] font-bold rounded border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none xl:w-36 lg:w-[7.4rem] md:w-44 w-[11.5rem] p-2 mt-2.5">
                         {restored?.mineLocations?.length > 0
                           ? restored?.mines
                           : mineValue?.mines
@@ -851,7 +859,7 @@ function MinesGameSidebar() {
                       <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-2 mb-1">
                         <label>Gems</label>
                       </div>
-                      <div className="bg-[#2f4553] border border-[#0e2433] w-[11.5rem] max-[400px]:w-[10.3rem] md:w-44 lg:w-[7.4rem] xl:w-36 p-2 mt-2.5">
+                      <div className="bg-[#2f4553] font-bold rounded border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none w-[11.5rem] max-[400px]:w-[10.3rem] md:w-44 lg:w-[7.4rem] xl:w-36 p-2 mt-2.5">
                         {restored?.mineLocations?.length > 0
                           ? 25 - restored?.mines
                           : mineValue?.mines
@@ -886,7 +894,7 @@ function MinesGameSidebar() {
                       ).toFixed(2)}
                     </label>
                   </div>
-                  <div className="flex justify-between items-center bg-[#2f4553] border border-[#0e2433] rounded p-2">
+                  <div className="flex justify-between items-center bg-[#2f4553] border-2 hover:border-[#557086] focus-within:border-[#557086] border-[#2F4553] focus:outline-none rounded p-2">
                     <p>
                       {(
                         (mineValue?.betamount
@@ -904,7 +912,7 @@ function MinesGameSidebar() {
                     {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
                   </div>
                   <button
-                    className="bg-[#2f4553] border border-[#0e2433] w-full p-2 mt-2.5"
+                    className="bg-[#2f4553] border-2 hover:border-[#557086] focus-within:border-[#557086] border-[#2F4553] focus:outline-none rounded w-full p-2 mt-2.5"
                     onClick={pickRandomTile}
                   >
                     Pick random tile
@@ -921,7 +929,8 @@ function MinesGameSidebar() {
                       name="mines"
                       value={mineValue?.mines}
                       onChange={(e) => handleOnChange(e)}
-                      className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                      className="w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                     >
                       {/* <div>
                       <option value={1}>1</option>
@@ -974,7 +983,7 @@ function MinesGameSidebar() {
                     preSelectTile?.length > 0
                       ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer"
                       : "bg-[#489649] cursor-default"
-                  } text-black mt-3 py-3 rounded-md font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
+                  } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>
                     mineValue?.numberofbet === undefined ||
                     mineValue?.numberofbet === ""
@@ -993,13 +1002,13 @@ function MinesGameSidebar() {
                   ₹{mineValue?.betamount ? mineValue?.betamount : "0.00"}
                 </label>
               </div>
-              <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                   <input
-                    className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2 md:w-[17rem] w-64 rounded-s-md text-white bg-[#0f212e]"
+                    className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2 md:w-[17rem] w-64 rounded-s-md focus:border-[#557086] group-hover:border-[#557086] text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     step="0.01"
@@ -1020,7 +1029,7 @@ function MinesGameSidebar() {
                   />
                 </div>
                 <button
-                  className={`w-16 text-xl hover:bg-[#5c849e68] ${
+                  className={`w-16 text-xl hover:bg-[#5c849e68] group-hover:border-[#557086] ${
                     minesBetStatus && "cursor-not-allowed"
                   }`}
                   onClick={() =>
@@ -1038,10 +1047,10 @@ function MinesGameSidebar() {
                 <Divider
                   flexItem
                   orientation="vertical"
-                  sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                  sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] ${
+                  className={`w-16 text-base hover:bg-[#5c849e68] group-hover:border-[#557086] ${
                     minesBetStatus && "cursor-not-allowed"
                   } `}
                   onClick={() =>
@@ -1067,8 +1076,10 @@ function MinesGameSidebar() {
                   name="mines"
                   value={mineValue?.mines}
                   onChange={(e) => handleOnChange(e)}
-                  className="w-full px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                  className="w-full px-2 py-1.5 text-white font-bold rounded border-2 border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                 >
+                  {/* <div>
                   <option value={1}>1</option>
                   <option value={2}>2</option>
                   <option value={3}>3</option>
@@ -1093,6 +1104,12 @@ function MinesGameSidebar() {
                   <option value={22}>22</option>
                   <option value={23}>23</option>
                   <option value={24}>24</option>
+                </div> */}
+                  {Array.from({ length: 24 }, (_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
@@ -1123,13 +1140,13 @@ function MinesGameSidebar() {
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">
                 <label>On win</label>
               </div>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
                 <button
                   className={`${
                     onProfit.win
-                      ? "bg-[#0f212e]"
-                      : "bg-[#4d718768] hover:bg-[#85afca68]"
-                  } px-3.5 py-1.5  rounded-md`}
+                      ? "bg-[#0f212e] rounded"
+                      : "hover:bg-[#85afca68]"
+                  } px-3.5 py-1.5 ml-0.5 rounded-sm`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setMineValue({ onwin: "" }));
@@ -1140,8 +1157,8 @@ function MinesGameSidebar() {
                 <button
                   className={`${
                     onProfit.win
-                      ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-md"
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded-sm"
                   } px-[0.3rem] py-1.5`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
@@ -1160,7 +1177,7 @@ function MinesGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.2rem] pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[12.05rem]  rounded-md text-white bg-[#0f212e]"
+                    className="w-[10.2rem] pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[12.202rem] rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -1173,14 +1190,14 @@ function MinesGameSidebar() {
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold text-m mt-1.5 mb-1">
                 <label>On Lose</label>
               </div>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
                 <div>
                   <button
                     className={`${
                       onProfit.lose
-                        ? "bg-[#0f212e]"
-                        : "bg-[#4d718768] hover:bg-[#85afca68]"
-                    } px-3.5 py-1.5 rounded-md`}
+                        ? "bg-[#0f212e] rounded-sm"
+                        : "hover:bg-[#85afca68] rounded"
+                    } px-3.5 py-1.5 ml-0.5 rounded-sm`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                       dispatch(setMineValue({ onlose: "" }));
@@ -1193,9 +1210,9 @@ function MinesGameSidebar() {
                   <button
                     className={`${
                       onProfit.lose
-                        ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                        : "bg-[#0f212e] rounded-md"
-                    } px-[0.3rem] py-1.5`}
+                        ? "hover:bg-[#85afca68]"
+                        : "bg-[#0f212e] rounded-sm"
+                    } px-[0.3rem] py-2`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -1214,7 +1231,7 @@ function MinesGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="w-[10.2rem] pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[12.05rem] rounded-md text-white bg-[#0f212e]"
+                    className="w-[10.2rem] pr-7 pl-2 py-1.5 xl:w-[8rem] lg:w-[5.8rem] md:w-[12.202rem] rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -1235,7 +1252,7 @@ function MinesGameSidebar() {
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full pr-1.5 px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                  className="w-full pr-1.5 px-2 py-1.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0.01"
                   step="0.01"
@@ -1255,7 +1272,7 @@ function MinesGameSidebar() {
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full pr-1.5 px-2 py-1.5 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]"
+                  className="w-full pr-1.5 px-2 py-1.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="number"
                   placeholder="0.01"
                   step="0.01"

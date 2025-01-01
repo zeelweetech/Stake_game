@@ -614,7 +614,7 @@ const CrashGameSidebar = () => {
                       />
                     </div>
                     <button
-                      className="w-16 hover:bg-[#5c849e68] text-lg font-bold"
+                      className="w-16 hover:bg-[#5c849e68] text-lg font-bold focus:outline-none"
                       onClick={() =>
                         dispatch(
                           setCrashValues({
@@ -632,7 +632,7 @@ const CrashGameSidebar = () => {
                       sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                     />
                     <button
-                      className="w-16 hover:bg-[#5c849e68] text-sm font-bold"
+                      className="w-16 hover:bg-[#5c849e68] text-sm font-bold focus:outline-none"
                       onClick={() =>
                         dispatch(
                           setCrashValues({
@@ -1427,7 +1427,7 @@ const CrashGameSidebar = () => {
                   <label className="text-[#b1bad3] font-semibold text-xs">
                     On win
                   </label>
-                  <div className="flex items-center space-x-0.5  mt-1 mb-2 rounded bg-[#2F4553]">
+                  <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
                     <button
                       className={`${
                         onProfit.win
@@ -1477,7 +1477,7 @@ const CrashGameSidebar = () => {
                   <label className="text-[#b1bad3] font-semibold text-xs">
                     On Lose
                   </label>
-                  <div className="flex items-center space-x-0.5 mt-1 rounded-md bg-[#2F4553]">
+                  <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
                     <div>
                       <button
                         className={`${

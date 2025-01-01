@@ -22,7 +22,7 @@ function Fairness({ setShowFairness }) {
   };
 
   const handleCopy = (id) => {
-    navigator.clipboard.value.writeText("");
+    navigator.clipboard.writeText("");
     setActiveTooltip(id);
     setTimeout(() => {
       setActiveTooltip(0);
