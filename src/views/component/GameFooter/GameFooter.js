@@ -47,10 +47,6 @@ function GameFooter() {
     setShowFairness(true);
   };
 
-  const closeFairness = () => {
-    setShowLiveStats(false);
-  };
-
   return (
     <div className="p-2 bg-[#0f212e] rounded-b-xl z-10 relative xl:w-[72rem] lg:w-[57.8rem] md:w-[24rem] md:px-0 px-3 w-full  ">
       <div className="flex justify-between items-center px-2">
