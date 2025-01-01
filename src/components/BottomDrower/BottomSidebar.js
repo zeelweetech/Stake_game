@@ -37,9 +37,7 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
     };
 
     const handleItemClick = (path) => {
-        handleDrowerOpen(); // Close the drawer
-        // setDropdownVisible(null); // Close the dropdown
-        navigate(path); // Navigate to the specified path
+        handleDrowerOpen(); 
     };
 
     const handleCasinoClick = () => {
@@ -99,7 +97,7 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
                                 <div
                                     key={idx}
                                     className="block w-full px-4 py-2 hover:bg-[#2F4553] transition-colors rounded-md cursor-pointer"
-                                    onClick={() => handleItemClick(dropdownItem.to)} // Close dropdown on item click
+                                    onClick={() => handleItemClick(dropdownItem.to)} 
                                 >
                                     {dropdownItem.name === "Setting" ? (
                                         <Link to={dropdownItem.to} className="flex items-center">
@@ -111,7 +109,7 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
                                             data-menu-type="notifications"
                                             onClick={(event) => {
                                                 dispatch(setAnchorEl(event.currentTarget));
-                                                setDropdownVisible(null); // Close dropdown on notification click
+                                                setDropdownVisible(null);
                                             }}
                                             className="flex items-center"
                                         >
@@ -130,7 +128,7 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
                                                     isLogoutDialog: dropdownItem.name === "Logout",
                                                     isNotification: dropdownItem.name === "Notification",
                                                 }));
-                                                setDropdownVisible(null); // Close dropdown on item click
+                                                setDropdownVisible(null); 
                                             }}
                                             className="flex items-center"
                                         >
@@ -209,30 +207,4 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
         </div>
     );
 };
-
-// BottomDrawer.propTypes = {
-//     items: PropTypes.arrayOf(
-//         PropTypes.shape({
-//             name: PropTypes.string.isRequired,
-//             icon: PropTypes.node,
-//             badge: PropTypes.shape({
-//                 color: PropTypes.string,
-//                 text: PropTypes.string,
-//             }),
-//             dropdown: PropTypes.arrayOf(
-//                 PropTypes.shape({
-//                     name: PropTypes.string,
-//                     to: PropTypes.string,
-//                     icon: PropTypes.node,
-//                 })
-//             ),
-//         })
-//     ).isRequired,
-//     openMenubar: PropTypes.bool.isRequired,
-//     isOpen: PropTypes.bool.isRequired,
-//     handleDrowerOpen: PropTypes.func.isRequired,
-//     dropdownVisible: PropTypes.number,
-//     setDropdownVisible: PropTypes.func.isRequired,
-// };
-
 export default BottomDrawer;
