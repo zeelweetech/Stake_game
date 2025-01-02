@@ -40,12 +40,12 @@ function DragonTowerGame() {
   });
 
   return (
-    <div className="flex justify-center w-full h-full">
-      <div className="bg-[#1a2c38] py-10 md:py-5 text-white flex justify-center items-center md:max-w-96 max-w-full">
+    <div className="flex justify-center items-center w-full h-full">
+      <div className="bg-[#1a2c38] py-10 md:py-5 text-white flex justify-center items-center md:max-w-96 max-w-full lg:-ml-[3.5rem] xl:-ml-[3.5rem]">
         <div className="w-full">
           <div
             className={`flex justify-center w-full ${
-              isMobile ? "h-[25rem]" : "h-[46rem]"
+              isMobile ? "h-[25rem]" : "h-[46rem] "
             } border-b-3`}
           >
             {!isMobile && (
@@ -70,7 +70,7 @@ function DragonTowerGame() {
             </div>
           </div>
           <div className="flex justify-center pt-5">
-            <div className="xl:w-[72rem] lg:w-[55rem] md:w-[42rem] md:px-0 px-3 w-full">
+            <div className="xl:w-[72rem] lg:w-[58rem] md:w-[42rem] md:px-0 px-3 w-full">
               <GameContent />
               <GameTable />
             </div>

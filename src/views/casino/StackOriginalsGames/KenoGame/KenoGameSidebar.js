@@ -169,13 +169,13 @@ function KenoGameSidebar() {
                 <label>Bet Amount</label>
                 <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
-              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
+              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                   <input
-                    className="xl:w-48 h-[2.4375rem] lg:w-40 md:w-72 max-sm:w-[15rem] max-[320px]:w-[12rem] pr-1.5 pl-2 py-2 rounded-l text-white border-2 border-[#2F4553] bg-[#0f212e] focus:outline-none focus:border-[#557086] hover:border-[#557086] !focus:border-[#557086]"
+                    className="xl:w-48 h-[2.4375rem] lg:w-40 md:w-72 max-sm:w-[15rem] max-[320px]:w-[12rem] pr-1.5 pl-2 py-2 rounded-l text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     min={0}
@@ -225,7 +225,8 @@ function KenoGameSidebar() {
                   name="risk"
                   value={values?.risk}
                   onChange={(e) => handleOnChange(e)}
-                  className="w-full px-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full px-2 py-2 text-white border-2 font-semibold rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                 >
                   <option>Classic</option>
                   <option>Low</option>
@@ -255,13 +256,13 @@ function KenoGameSidebar() {
                       : values?.betamount || "0.00"}
                   </label>
                 </div>
-                <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
+                <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
                   <div className="relative flex">
                     {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="xl:w-48 lg:w-40 md:w-72 sm:w-0 max-[425px]:w-72 max-[375px]:w-64 max-[320px]:w-48 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 border-[#2F4553] bg-[#0f212e] focus:outline-none focus:border-[#557086] hover:border-[#557086] !focus:border-[#557086]"
+                      className="xl:w-48 lg:w-40 md:w-72 sm:w-0 max-[425px]:w-72 max-[375px]:w-64 max-[320px]:w-48 pr-1.5 pl-2 py-2 rounded-l text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="number"
                       placeholder="0.00"
                       step="0.01"
@@ -323,7 +324,8 @@ function KenoGameSidebar() {
                     name="risk"
                     value={values?.risk}
                     onChange={(e) => handleOnChange(e)}
-                    className="w-full px-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="w-full px-2 py-2 text-white border-2 font-semibold rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                   >
                     <option>Classic</option>
                     <option>Low</option>
@@ -369,12 +371,12 @@ function KenoGameSidebar() {
               <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
                 On win
               </label>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
                 <button
                   className={`${onProfit.win
                     ? "bg-[#0f212e] rounded"
                     : "hover:bg-[#85afca68] rounded"
-                    }xl:px-2 lg:px-2 md:px-2 px-2 py-2 rounded-sm`}
+                    }xl:px-2 lg:px-2 md:px-2 px-2 py-1.5 ml-0.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setValues({ ...values, onwin: "" }));
@@ -385,8 +387,8 @@ function KenoGameSidebar() {
                 <button
                   className={`${onProfit.win
                     ? "hover:bg-[#85afca68]"
-                    : "bg-[#0f212e] rounded-sm"
-                    } px-[0.20rem] py-1.5`}
+                    : "bg-[#0f212e] rounded"
+                    } px-[0.20rem] py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -403,7 +405,7 @@ function KenoGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="xl:w-[9rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 pl-2 py-1.5 rounded text-white border-2 border-[#2F4553] bg-[#0f212e] focus:outline-none focus:border-[#557086] hover:border-[#557086] !focus:border-[#557086]"
+                    className="xl:w-[9.115rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 pl-2 py-1.5 rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onwin"
@@ -416,13 +418,13 @@ function KenoGameSidebar() {
               <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
                 On Lose
               </label>
-              <div className="flex items-center space-x-0.5 border-2 mt-1 rounded border-[#4d718768] bg-[#4d718768]">
+              <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
                 <div>
                   <button
                     className={`${onProfit.lose
                       ? "bg-[#0f212e] rounded"
                       : "hover:bg-[#85afca68] rounded"
-                      } px-2 py-2 rounded-sm`}
+                      } px-2 py-1.5 ml-0.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                       dispatch(setValues({ ...values, onlose: "" }));
@@ -434,9 +436,9 @@ function KenoGameSidebar() {
                 <div>
                   <button
                     className={`${onProfit.lose
-                      ? "bg-[#4d718768] hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-sm"
-                      } px-[0.20rem] py-1.5`}
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded"
+                      } px-[0.20rem] py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -454,7 +456,7 @@ function KenoGameSidebar() {
                     <PercentIcon fontSize="small" />
                   </div>
                   <input
-                    className="xl:w-[9rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 max-[390px]:w-[5rem] pl-2 py-1.5 rounded text-white border-2 border-[#2F4553] bg-[#0f212e] focus:outline-none focus:border-[#557086] hover:border-[#557086] !focus:border-[#557086]"
+                    className="xl:w-[9.115rem] lg:w-[5.84rem] md:w-[12.2rem] max-sm:w-[12.8rem] max-[375px]:w-[9.6rem] max-[320px]:w-[6.2rem] pr-7 max-[390px]:w-[5rem] pl-2 py-1.5 rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0"
                     name="onlose"
@@ -538,13 +540,13 @@ function KenoGameSidebar() {
                 <label>Bet Amount</label>
                 <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
-              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
+              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                   <input
-                    className="xl:w-48 lg:w-40 md:w-72 max-sm:w-[15rem] max-[320px]:w-[12rem] pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-48 lg:w-40 md:w-64 max-sm:w-[15rem] max-[320px]:w-[12rem] pr-1.5 pl-2 py-2 rounded-l text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     min={0}
@@ -601,7 +603,8 @@ function KenoGameSidebar() {
                   name="risk"
                   value={values?.risk}
                   onChange={(e) => handleOnChange(e)}
-                  className="w-full px-2 py-2 text-white rounded border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full px-2 py-2 text-white border-2 font-semibold rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                 >
                   <option>Classic</option>
                   <option>Low</option>
@@ -609,8 +612,8 @@ function KenoGameSidebar() {
                   <option>High</option>
                 </select>
               </div>
-              <button className="bg-[#2f4553] hover:bg-[#5c849e68] w-full rounded-sm py-2.5 my-3 font-bold text-sm" onClick={handleAutoPick}>Auto Pick</button>
-              <button className="bg-[#2f4553] hover:bg-[#5c849e68] w-full rounded-sm py-2.5 font-bold text-sm" onClick={() => dispatch(setSelectTile([]))}>Clear Table</button>
+              {/* <button className="bg-[#2f4553] hover:bg-[#5c849e68] w-full rounded-sm py-2.5 my-3 font-bold text-sm" onClick={handleAutoPick}>Auto Pick</button> */}
+              {/* <button className="bg-[#2f4553] hover:bg-[#5c849e68] w-full rounded-sm py-2.5 font-bold text-sm" onClick={() => dispatch(setSelectTile([]))}>Clear Table</button> */}
             </div>
           ) : (
             <div>
