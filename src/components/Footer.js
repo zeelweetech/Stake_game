@@ -22,16 +22,17 @@ import { FaYoutube } from "react-icons/fa";
 import { IoShirt } from "react-icons/io5";
 import { FaCrown } from "react-icons/fa6";
 import { FaBloggerB } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Footer() {
+  const navigate = useNavigate();
   return (
     <footer className="bg-[#071d2a] text-gray-400 py-12 px-8 z-auto mt-10">
       {/* Main Navigation Section */}
       <div className="max-w-7xl mx-auto mb-12">
         <div className="max-w-7xl mx-auto mb-12">
           <div className="flex flex-col items-start gap-2">
-            <span className="text-white text-5xl font-extrabold italic font-sans cursor-pointer">
+            <span className="text-white text-5xl font-extrabold italic font-sans cursor-pointer" onClick={() => navigate("/")}>
               Listor
             </span>
             <p className="text-sm text-gray-400">
@@ -213,7 +214,7 @@ function Footer() {
             <img src={SafeGamble} alt="Partner" className="h-11" />
             <img src={betblocker} alt="Partner" className="h-11" />
             <img src={Age} alt="Partner" className="h-11" />
-            </div>
+          </div>
         </div>
 
         {/* Partners Section */}

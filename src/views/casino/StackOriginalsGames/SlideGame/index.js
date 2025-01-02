@@ -4,44 +4,45 @@ import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";
 import SlideGameSidebar from "./SlideGameSidebar";
 import SlideGameContent from "./SlideGameContent";
+import { SlideSocket } from "../../../../socket";
 
 function SlideGame() {
       const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-    //   useEffect(() => {
-    //     const handleResize = () => {
-    //       setIsMobile(window.innerWidth <= 768);
-    //     };
+      useEffect(() => {
+        const handleResize = () => {
+          setIsMobile(window.innerWidth <= 768);
+        };
 
-    //     window.addEventListener("resize", handleResize);
+        window.addEventListener("resize", handleResize);
 
-    //     return () => {
-    //       window.removeEventListener("resize", handleResize);
-    //     };
-    //   }, []);
-    //   useEffect(() => {
-    //     LimboSocket.connect();
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+      }, []);
+      useEffect(() => {
+        SlideSocket.connect();
 
-    //     LimboSocket.on("connect", () => {
-    //       console.log("Limbo sokect connected");
-    //     });
+        SlideSocket.on("connect", () => {
+          console.log("Limbo sokect connected");
+        });
 
-    //     LimboSocket.on("disconnect", () => {
-    //       console.log("Limbo Disconnected from server");
-    //     });
+        SlideSocket.on("disconnect", () => {
+          console.log("Limbo Disconnected from server");
+        });
 
-    //     LimboSocket.on("connect_error", (error) => {
-    //       console.error("Limbo Connection Error:", error);
-    //     });
+        SlideSocket.on("connect_error", (error) => {
+          console.error("Limbo Connection Error:", error);
+        });
 
-    //     return () => {
-    //       LimboSocket.off("message");
-    //       LimboSocket.off("connect");
-    //       LimboSocket.off("disconnect");
-    //       LimboSocket.off("connect_error");
-    //       LimboSocket.disconnect();
-    //     };
-    //   }, []);
+        return () => {
+          SlideSocket.off("message");
+          SlideSocket.off("connect");
+          SlideSocket.off("disconnect");
+          SlideSocket.off("connect_error");
+          SlideSocket.disconnect();
+        };
+      }, []);
 
     return (
         

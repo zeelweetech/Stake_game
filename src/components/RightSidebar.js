@@ -17,13 +17,13 @@ export const RightSidebar = ({ isDrawerOpen, handleRightSidebarToggle }) => {
   // Close Betslip Modal and Right Sidebar
   const handleCloseBetslip = () => {
     dispatch(closeBetslipModal());
-    handleRightSidebarToggle(); // Close the sidebar
+    handleRightSidebarToggle();
   };
 
   // Close Chat Modal and Right Sidebar
   const handleCloseChat = () => {
     dispatch(closeChatModal());
-    handleRightSidebarToggle(); // Close the sidebar
+    handleRightSidebarToggle();
   };
 
   return (
@@ -47,7 +47,7 @@ export const RightSidebar = ({ isDrawerOpen, handleRightSidebarToggle }) => {
 
 RightSidebar.propTypes = {
   isDrawerOpen: PropTypes.bool.isRequired,
-  handleRightSidebarToggle: PropTypes.func.isRequired, // Ensuring the toggle function is required
+  handleRightSidebarToggle: PropTypes.func.isRequired,
 };
 
 

@@ -122,7 +122,7 @@ const ChatApp = ({ onClose }) => {
         )}
       </div>
       {/* Messages display */}
-      <div className="overflow-y-auto flex-grow" style={{ overflowY: "scroll", height: "calc(86vh - 75px)", padding: "10px 0" }}>
+      <div className="overflow-y-auto flex-grow" style={{ overflowY: "scroll", height: "calc(83vh - 80px)", padding: "10px 0" }}>
         {messages.map((msg, index) => (
           <div key={index} className={`p-2 rounded-md mb-2 ${msg.isNewUser ? "border-[#2F4553]" : "bg-[#213743]"}`}>
             {msg.content}
