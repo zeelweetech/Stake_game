@@ -868,7 +868,7 @@ function MinesGameSidebar() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-[#b1bad3] flex justify-between  font-semibold text-m mt-3 mb-1">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
                     <label>
                       Total Profit (
                       {tileSelect?.multiplier
@@ -1146,7 +1146,7 @@ function MinesGameSidebar() {
                     onProfit.win
                       ? "bg-[#0f212e] rounded"
                       : "hover:bg-[#85afca68]"
-                  } px-3.5 py-1.5 ml-0.5 rounded-sm`}
+                  } px-3.5 py-1.5 ml-0.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setMineValue({ onwin: "" }));
@@ -1158,7 +1158,7 @@ function MinesGameSidebar() {
                   className={`${
                     onProfit.win
                       ? "hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded-sm"
+                      : "bg-[#0f212e] rounded"
                   } px-[0.3rem] py-1.5`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
