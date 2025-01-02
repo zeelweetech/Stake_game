@@ -26,6 +26,12 @@ function WheelGameContent() {
   const { wheelValue, finalmultiplier, mustSpin, isSpinning } = useSelector(
     (state) => state.wheelGame
   );
+  const [buttonColor, setButtonColor] = useState("#213743"); // Default color
+
+  console.log("??????????", wheelValue);
+  console.log("jhsbjzdkzjs", finalmultiplier);
+  console.log("jh?????isSpinning", isSpinning);
+
 
   useEffect(() => {
     GetWalletData();
@@ -38,7 +44,7 @@ function WheelGameContent() {
           parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   WheelSocket.on("autoBetStop", () => {
@@ -128,16 +134,35 @@ function WheelGameContent() {
     setSegColors(segColors);
   }, [wheelValue]);
 
-  // console.log('RowByRisk', RowByRisk[wheelValue?.risk]['segment'+wheelValue?.segments][finalmultiplier?.position]?.backgroundColor);
-  // const xvalue = RowByRisk[wheelValue?.risk]['segment'+wheelValue?.segments][finalmultiplier?.position]?.xvalue
-  // const buttons = String(xvalue)
-  // console.log('RowByRisk', RowByRisk[wheelValue?.risk]['segment'+wheelValue?.segments][finalmultiplier?.position]?.xvalue,buttons);
+  console.log('RowByRisk', RowByRisk[wheelValue?.risk]['segment' + wheelValue?.segments][finalmultiplier?.position]?.backgroundColor);
+  const xvalue = RowByRisk[wheelValue?.risk]['segment' + wheelValue?.segments][finalmultiplier?.position]?.xvalue
+  const buttons = String(xvalue)
+  console.log(">>>>>>>>", xvalue);
 
+  console.log('RowByRisk', RowByRisk[wheelValue?.risk]['segment' + wheelValue?.segments][finalmultiplier?.position]?.xvalue, buttons);
+
+  const handleWheelStop = () => {
+    dispatch(setIsSpinning(false));
+    dispatch(setMustSpin(false));
+
+    // Get the color of the segment where the wheel stopped
+    const stoppingColor = RowByRisk[wheelValue?.risk]['segment' + wheelValue?.segments][finalmultiplier?.position]?.backgroundColor;
+    setButtonColor(stoppingColor);
+
+    WheelSocket.emit("betCompleted", {
+      betId: finalmultiplier?.betId,
+      userId: decoded?.userId,
+    });
+    dispatch(setIsBetInProgress(false));
+    if (finalmultiplier?.remainingBets === 1) {
+      dispatch(setAutoBet(false));
+    }
+  };
   const lowRiskButtons = (
     <>
       <button
         className={`group relative inline-block overflow-hidden font-medium border-b-[#406c82] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg
-      ${finalmultiplier?.multiplier === 0 ? "" : ""}
+      // ${finalmultiplier.multiplier === 0 ? "" : ""}
         `}
       >
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#406c82] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
@@ -194,17 +219,15 @@ function WheelGameContent() {
   const mediumRiskButtons = (
     <>
       <button
-        className={`border-b-[#406c82] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${
-          wheelValue?.segments === "30" || wheelValue?.segments === 30 ? "" : ""
-        } py-3 rounded-lg`}
+        className={`border-b-[#406c82] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30 ? "" : ""
+          } py-3 rounded-lg`}
       >
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#406c82] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative">0.00x</span>
       </button>
       <button
-        className={`border-b-[#1fff20] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${
-          wheelValue?.segments === "30" || wheelValue?.segments === 30 ? "" : ""
-        } py-3 rounded-lg`}
+        className={`border-b-[#1fff20] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30 ? "" : ""
+          } py-3 rounded-lg`}
       >
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#1fff20] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative">1.50x</span>
@@ -213,15 +236,14 @@ function WheelGameContent() {
         ""
       ) : (
         <button
-          className={`border-b-[#d5e8f2] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base${
-            wheelValue?.segments === "30" || wheelValue?.segments === 30
-              ? "px-8"
-              : "px-10"
-          } py-3 rounded-lg`}
+          className={`border-b-[#d5e8f2] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base${wheelValue?.segments === "30" || wheelValue?.segments === 30
+            ? "px-8"
+            : "px-10"
+            } py-3 rounded-lg`}
         >
           {wheelValue?.segments === "10" ? (
             <div>
-              <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
+              <span className={`absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF] ${handleWheelStop && finalmultiplier?.multiplier === 0 ? "" : ""}`}></span>
               <span className="relative">1.90x</span>
             </div>
           ) : wheelValue?.segments === "20" ? (
@@ -248,9 +270,8 @@ function WheelGameContent() {
         </button>
       )}
       <button
-        className={`border-b-[#e8e225] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-2 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${
-          wheelValue?.segments === "30" || wheelValue?.segments === 30 ? "" : ""
-        }`}
+        className={`border-b-[#e8e225] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-2 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30 ? "" : ""
+          }`}
       >
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#e8e225] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative">2.00x</span>
@@ -326,10 +347,10 @@ function WheelGameContent() {
   return (
     <div
       className={`bg-[#0f212e] flex flex-col justify-center items-center overflow-hidden rounded-t-lg max-sm:mx-3 -mt-0.2 
-    xl:w-[52rem] xl:h-[46rem] xl:ml-0
-    lg:w-[41rem] lg:h-[46rem] lg:ml-0
-    md:h-[32rem] md:w-[24rem] md:ml-[1.5rem]
-    h-full`}
+  xl:w-[52rem] xl:h-[46rem] xl:ml-0
+  lg:w-[41rem] lg:h-[46rem] lg:ml-0
+  md:h-[32rem] md:w-[24rem] md:ml-[1.5rem]
+  h-full`}
     >
       <div className="relative">
         <div className="relative">
@@ -338,18 +359,8 @@ function WheelGameContent() {
               mustStartSpinning={mustSpin}
               prizeNumber={finalmultiplier?.position}
               data={segments.length > 0 ? segments : datas}
-              onStopSpinning={() => {
-                dispatch(setIsSpinning(false));
-                dispatch(setMustSpin(false));
-                WheelSocket.emit("betCompleted", {
-                  betId: finalmultiplier?.betId,
-                  userId: decoded?.userId,
-                });
-                dispatch(setIsBetInProgress(false));
-                if (finalmultiplier?.remainingBets === 1) {
-                  dispatch(setAutoBet(false));
-                }
-              }}
+              onStopSpinning={handleWheelStop} // Use the new function
+
               spinDuration={0.1}
               disableInitialAnimation={true}
               backgroundColors={segColors}
