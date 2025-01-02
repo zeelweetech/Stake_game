@@ -54,9 +54,10 @@
 // export default App;
 import "./App.css";
 import { Toaster } from "react-hot-toast";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, ScrollRestoration } from "react-router-dom";
 import DefaultLayout from "./layout/DefaultLayout";
 import VerifyTerm from "./views/pages/register/VerifyTerm";
+import ScrollToTop from "./components/ScrollTop";
 // import DefultPage from "./defultPage";
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
         }}
       />
       <BrowserRouter>
+      <ScrollToTop/> 
         <Routes>
           <Route>
             {/* {!status ? (

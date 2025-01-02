@@ -71,20 +71,15 @@ const Vip = ({ closeVip }) => {
                         <Benifit />
                     )}
                 </div>
-                <div className="mt-4 text-center w-full bg-[#0f212e] text-white">
-                    <Button
+                <div className="text-center w-full bg-[#0f212e] text-white py-2 px-2">
+                    <button
                         onClick={handleNavigate}
-                        variant="contained"
-                        sx={{
-                            backgroundColor: "#0f212e",
-                            color: "white",
-                            "&:hover": { backgroundColor: "#09202a" },
-                        }}
-                        fullWidth
+                        className="bg-[#0f212e] text-white hover:bg-[#09202a] w-full py-2 px-4"
                     >
                         Learn more about being a Listor VIP
-                    </Button>
+                    </button>
                 </div>
+
             </DialogContent>
         </Dialog>
     );

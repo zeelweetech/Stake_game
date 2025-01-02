@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { 
+import {
   // IoClose, 
-  IoChevronBack, 
+  IoChevronBack,
   // IoChevronDown 
 } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
@@ -66,8 +66,8 @@ const Policies = () => {
         return <PokerTournamentCancellations />;
       case "CardRoomRules":
         return <CardRoomRules />;
-      case "Terms":
-        return <Terms />;
+      // case "Terms":
+      //   return <Terms />;
       default:
         return <Terms />; // Default content
     }
@@ -75,7 +75,7 @@ const Policies = () => {
 
   const handleNavigation = (link) => {
     console.log("link ", link);
-
+    
     navigate(`/Policies/${link}`); // Navigate to the dynamic route
   };
   const handleClose = () => {
@@ -83,7 +83,7 @@ const Policies = () => {
     navigate(-1);
   };
   return (
-    <div className="min-h-screen bg-[#1a2c38] text-gray-300 rounded-lg">
+    <div className="min-h-screen bg-[#1a2c38] text-gray-300 rounded-lg"> 
       {/* Header - Responsive */}
       <div className="flex items-center justify-between p-2 lg:p-6">
         <div className="flex items-center gap-4">
