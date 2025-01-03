@@ -150,28 +150,30 @@ function KenoGameContent() {
                 alt="Icon"
               />
             ) : (
-              <p className=" xl:text-xl lg::text-xl text-xs font-bold">{index + 1}</p>
+              <p className="xl:text-xl lg::text-xl md:text-sm text-xs font-bold">
+                {index + 1}
+              </p>
             )}
           </div>
         ))}
       </div>
       {selectTile.length > 0 ? (
         <div className="w-full flex justify-center items-center flex-col pt-2">
-          <div className=" px-4 md:px-0 max-sm:px-0.5 mb-3">
+          <div className="px-4 md:px-0 max-sm:px-0.5 mb-3">
             {renderButtons()}
           </div>
           {/* </div> */}
-          <div className="w-full px-4 mb-4 flex">
+          <div className=" xl:w-[50.5rem] lg:w-[37.5rem] md:w-[23.2rem] w-[21rem] px-1 mb-2.5 flex">
             {Array.from({ length: Math.min(selectTile.length + 1, 11) }).map(
               (_, index) => (
                 <button
                   key={index}
-                  className="text-white font-bold py-4 bg-[#2f4553] w-full flex items-center justify-center"
+                  className="text-white font-bold xl:text-[1.2rem] lg:text-[0.6695rem] md:text-[0.7rem] text-[0.6rem] xl:py-4 lg:py-4 md:py-2 py-1 bg-[#2f4553] w-full flex items-center justify-center"
                 >
                   {index}x
                   <img
                     src={kenoDaimond}
-                    className="w-4 h-4 ml-1"
+                    className="xl:w-4 xl:h-4 lg:w-3 lg:h-3 md:w-2.5 md:h-2.5 w-2 h-2 mx-1"
                     style={{ filter: "grayscale(100%)" }}
                     alt="Not Found"
                   />

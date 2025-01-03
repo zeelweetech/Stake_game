@@ -7,6 +7,7 @@ import LimboDiscription from "./LimboDiscription";
 import WheelDiscription from "./WheelDiscription";
 import DragonTowerDiscription from "./DragonTowerDiscription";
 import KenoDiscription from "./KenoDiscription";
+import SlideDiscription from "./SlideDiscription";
 
 function Discription() {
   const { gameName } = useParams();
@@ -26,7 +27,9 @@ function Discription() {
       case "DragonTower":
         return <DragonTowerDiscription />;
       case "keno":
-        return <KenoDiscription />
+        return <KenoDiscription />;
+      case "slide":
+        return <SlideDiscription />;
       default:
         break;
     }
