@@ -75,7 +75,7 @@ function App() {
         }}
       />
       <BrowserRouter>
-        <ScrollToTop />
+      {/* <ScrollToTop/>  */}
         <Routes>
           <Route>
             {/* {!status ? (
