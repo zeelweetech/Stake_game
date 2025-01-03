@@ -6,6 +6,7 @@ import { WheelSocket } from "../../../../socket";
 import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";
 
+
 function WheelGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -44,9 +45,8 @@ function WheelGame() {
       <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full lg:-ml-[3rem] ">
         <div className="w-full">
           <div
-            className={`flex justify-center w-full ${
-              isMobile ? "h-[24rem]" : "h-[46rem]"
-            } border-b-3`}
+            className={`flex justify-center w-full ${isMobile ? "h-[24rem]" : "h-[46rem]"
+              } border-b-3`}
           >
             {!isMobile && (
               <div className="flex-row bg-[#213743]">
@@ -63,11 +63,12 @@ function WheelGame() {
               <WheelGameSidebar />
             </div>
           )}
-         <div className="md:flex md:justify-center lg:block xl:block">
+          <div className="md:flex md:justify-center lg:block xl:block">
             <div className="max-sm:mx-3 xl:-ml-[24rem] lg:-ml-[16.9rem] md:ml-[1.5rem]">
               <hr className="border-[#213743]" />
               <GameFooter />
             </div>
+
           </div>
           <div className="flex justify-center pt-5">
             <div className="xl:w-[72rem] lg:w-[55rem] md:w-[42rem] md:px-0 px-3 w-full">
