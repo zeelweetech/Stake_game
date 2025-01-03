@@ -22,7 +22,7 @@
 //       />
 //       <BrowserRouter>
 //         <Routes>
-   
+
 //           <Route path="/" element={<DefaultLayout />}>
 //             {routes.map((route, index) =>
 //               route.children ? (
@@ -75,13 +75,13 @@ function App() {
         }}
       />
       <BrowserRouter>
-      <ScrollToTop/> 
+        <ScrollToTop />
         <Routes>
           <Route>
             {/* {!status ? (
               <Route path="/" element={<DefultPage />} />
             ) : ( */}
-              <Route path="*" name="Home" element={<DefaultLayout />} />
+            <Route path="*" name="Home" element={<DefaultLayout />} />
             {/* )} */}
             <Route path="/verifyterm" element={<VerifyTerm />} />
           </Route>

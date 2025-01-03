@@ -4,7 +4,7 @@ function Setting() {
   const [clickedIndex, setClickedIndex] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGameInfoOpen, setIsGameInfoOpen] = useState(false);
-  const [isHotkeysVisible, setIsHotkeysVisible] = useState(false);
+  const [isHotkeysVisible, setIsHotkeysVisible] = useState(false); 
 
   const menuItems = [
     {

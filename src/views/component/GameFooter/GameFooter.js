@@ -28,15 +28,12 @@ function GameFooter() {
   }, []);
 
   const handleSettingsClick = () => {
-    setShowSettings(true);
-  };
-
-  const closeSettings = () => {
-    setShowSettings(false);
+    setShowSettings(prev => !prev);
   };
 
   const handleLiveStatsClick = () => {
     setShowLiveStats(true);
+    setShowSettings(false)
   };
 
   const closeLiveStats = () => {
@@ -45,10 +42,11 @@ function GameFooter() {
 
   const handleFairness = () => {
     setShowFairness(true);
+    setShowSettings(false)
   };
 
   return (
-    <div className="p-2 bg-[#0f212e] rounded-b-xl z-10 relative xl:w-[72rem] lg:w-[57.8rem] md:w-[24rem] md:px-0 px-3 w-full  ">
+    <div className="p-2 bg-[#0f212e] rounded-b-xl z-10 relative xl:w-[72rem] lg:w-[57.8rem] md:w-[24rem] md:px-0 px-3 w-full">
       <div className="flex justify-between items-center px-2">
         <div className="space-x-9 text-[#b1bad3] relative">
           <div className="flex items-center  relative">
@@ -64,7 +62,7 @@ function GameFooter() {
                   <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-5px] left-1/2 transform -translate-x-1/2"></div>
                 </div>
               </div>
-              {showSettings && <Setting onClose={closeSettings} />}
+              {showSettings && <Setting />}
             </div>
             {!isScreenSmall && (
               <div className="group relative flex items-center py-[0.8125rem] px-[1rem]  ">

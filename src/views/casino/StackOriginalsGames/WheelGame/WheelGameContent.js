@@ -26,12 +26,6 @@ function WheelGameContent() {
   const { wheelValue, finalmultiplier, mustSpin, isSpinning } = useSelector(
     (state) => state.wheelGame
   );
-  const [buttonColor, setButtonColor] = useState("#213743"); // Default color
-
-  console.log("??????????", wheelValue);
-  console.log("jhsbjzdkzjs", finalmultiplier);
-  console.log("jh?????isSpinning", isSpinning);
-
 
   useEffect(() => {
     GetWalletData();
@@ -134,20 +128,12 @@ function WheelGameContent() {
     setSegColors(segColors);
   }, [wheelValue]);
 
-  console.log('RowByRisk', RowByRisk[wheelValue?.risk]['segment' + wheelValue?.segments][finalmultiplier?.position]?.backgroundColor);
   const xvalue = RowByRisk[wheelValue?.risk]['segment' + wheelValue?.segments][finalmultiplier?.position]?.xvalue
   const buttons = String(xvalue)
-  console.log(">>>>>>>>", xvalue);
-
-  console.log('RowByRisk', RowByRisk[wheelValue?.risk]['segment' + wheelValue?.segments][finalmultiplier?.position]?.xvalue, buttons);
 
   const handleWheelStop = () => {
     dispatch(setIsSpinning(false));
     dispatch(setMustSpin(false));
-
-    // Get the color of the segment where the wheel stopped
-    const stoppingColor = RowByRisk[wheelValue?.risk]['segment' + wheelValue?.segments][finalmultiplier?.position]?.backgroundColor;
-    setButtonColor(stoppingColor);
 
     WheelSocket.emit("betCompleted", {
       betId: finalmultiplier?.betId,
@@ -158,76 +144,41 @@ function WheelGameContent() {
       dispatch(setAutoBet(false));
     }
   };
+
   const lowRiskButtons = (
     <>
       <button
         className={`group relative inline-block overflow-hidden font-medium border-b-[#406c82] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg
-      // ${finalmultiplier.multiplier === 0 ? "" : ""}
+          ${buttons.includes('0') && 'bg-[#406c82]'}
         `}
       >
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#406c82] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative">0.00×</span>
       </button>
 
-      <button className="border-b-[#d5e8f2] group relative inline-block overflow-hidden font-medium border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
+      <button className={`border-b-[#d5e8f2] group relative inline-block overflow-hidden font-medium border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg ${buttons.includes('1.2') && 'bg-[#d5e8f2]'}`}>
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative">1.20×</span>
       </button>
 
-      <button className="group relative inline-block overflow-hidden font-medium border-b-[#1fff20] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg">
+      <button className={`group relative inline-block overflow-hidden font-medium border-b-[#1fff20] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg ${buttons.includes('1.5') && 'bg-[#1fff20]'}`}>
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#1fff20] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative group-hover:text-white -mt-2">1.50×</span>
       </button>
     </>
   );
-
-  // const lowRiskButtons = (
-  //   <>
-  //     <button
-  //     className={`group relative inline-block overflow-hidden font-medium border-b-[#406c82] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg
-  //       ${buttons?.includes('0') ? "h-0 group-hover:h-full transition-all duration-500 ease-out bg-[#406c82] animate-bgAlternate" : "h-16"}
-  //     `}
-  //   >
-  //     <span
-  //       className={`absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#406c82] transition-all duration-500 ease-out group-hover:h-full`}
-  //     ></span>
-  //     <span className="relative">0.00×</span>
-  //   </button>
-
-  //     <button
-  //       className={`border-b-[#d5e8f2] group relative inline-block overflow-hidden font-medium border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg
-  //         ${buttons?.includes('1.20×') ? "highlight-class" : ""}`}
-  //     >
-  //       <span
-  //         className="absolute left-0 right-0 bottom-0 flex max-h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-500 ease-out group-hover:max-h-32 text-white"
-  //       ></span>
-  //       <span className="relative">1.20×</span>
-  //     </button>
-
-  //     <button
-  //       className={`group relative inline-block overflow-hidden font-medium border-b-[#1fff20] border-b-8 bg-[#213743] cursor-help rounded-lg xl:px-20 xl:py-2 lg:px-16 lg:py-2 md:px-8 md:py-2 px-11 py-1 text-xs sm:text-sm md:text-base lg:text-lg
-  //         ${buttons?.includes('1.50×') ? "highlight-class" : ""}`}
-  //     >
-  //       <span
-  //         className="absolute left-0 right-0 bottom-0 flex max-h-0 w-full translate-y-0 transform bg-[#1fff20] transition-all duration-500 ease-out group-hover:max-h-32 text-white"
-  //       ></span>
-  //       <span className="relative group-hover:text-white -mt-2">1.50×</span>
-  //     </button>
-  //   </>
-  // );
-
   const mediumRiskButtons = (
     <>
       <button
         className={`border-b-[#406c82] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30 ? "" : ""
-          } py-3 rounded-lg`}
+          } ${buttons.includes('0') && 'bg-[#406c82]'} py-3 rounded-lg`}
       >
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#406c82] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative">0.00x</span>
       </button>
       <button
         className={`border-b-[#1fff20] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30 ? "" : ""
-          } py-3 rounded-lg`}
+          } ${buttons.includes('1.5') && 'bg-[#1fff20]'} py-3 rounded-lg`}
       >
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#1fff20] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative">1.50x</span>
@@ -240,29 +191,30 @@ function WheelGameContent() {
             ? "px-8"
             : "px-10"
             } py-3 rounded-lg`}
+        // ${buttons.some(version => ['1.9', '1.8', '1.7', '1.6'].includes(version)) ? 'bg-[#d5e8f2]' : ''}
         >
           {wheelValue?.segments === "10" ? (
-            <div>
+            <div className={`${buttons.includes('1.9') && 'bg-[#d5e8f2]'}`}>
               <span className={`absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF] ${handleWheelStop && finalmultiplier?.multiplier === 0 ? "" : ""}`}></span>
               <span className="relative">1.90x</span>
             </div>
           ) : wheelValue?.segments === "20" ? (
-            <div>
+            <div className={`${buttons.includes('1.8') && 'bg-[#d5e8f2]'}`}>
               <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
               <span className="relative">1.80x</span>
             </div>
           ) : wheelValue?.segments === "30" ? (
-            <div>
+            <div className={`${buttons.includes('1.7') && 'bg-[#d5e8f2]'}`}>
               <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
               <span className="relative">1.70x</span>
             </div>
           ) : wheelValue?.segments === "40" ? (
-            <div>
+            <div className={`${buttons.includes('1.6') && 'bg-[#d5e8f2]'}`}>
               <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
               <span className="relative">1.60x</span>
             </div>
           ) : (
-            <div>
+            <div className={`${buttons.includes('1.7') && 'bg-[#d5e8f2]'}`}>
               <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d5e8f2] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
               <span className="relative">1.70x</span>
             </div>
@@ -271,20 +223,20 @@ function WheelGameContent() {
       )}
       <button
         className={`border-b-[#e8e225] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-2 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${wheelValue?.segments === "30" || wheelValue?.segments === 30 ? "" : ""
-          }`}
+          } ${buttons.includes('2') && 'bg-[#e8e225]'}`}
       >
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#e8e225] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative">2.00x</span>
       </button>
       <button
-        className={`border-b-[#9322e3] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base `}
+        className={`border-b-[#9322e3] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${buttons.includes('3') && 'bg-[#9322e3]'}`}
       >
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#9322e3] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative">3.00x</span>
       </button>
       {wheelValue?.segments === "50" ? (
         <button
-          className={`border-b-[#007bff] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base`}
+          className={`border-b-[#007bff] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${buttons.includes('5') && 'bg-[#007bff]'}`}
         >
           <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#007bff] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
           <span className="relative">5.00x</span>
@@ -293,7 +245,7 @@ function WheelGameContent() {
         ""
       )}
       {wheelValue?.segments === "30" || wheelValue?.segments === 30 ? (
-        <button className="border-b-[#d18a2c] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base">
+        <button className={`border-b-[#d18a2c] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base ${buttons.includes('4') && 'bg-[#d18a2c]'}`}>
           <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#d18a2c] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
           <span className="relative">4.00x</span>
         </button>
@@ -304,38 +256,38 @@ function WheelGameContent() {
   );
   const highRiskButtons = (
     <>
-      <button className="border-b-[#406c82] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
+      <button className={`border-b-[#406c82] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg ${buttons.includes('0') && 'bg-[#406c82]'}`}>
         <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#406c82] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
         <span className="relative">0.00x</span>
       </button>
       <button className="border-b-[#de2128] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 px-14 xl:px-36  md:px-12 lg:px-28 py-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg">
         {wheelValue?.segments === "10" ? (
-          <div>
+          <div className={`${buttons.includes('9.9') && 'bg-[#de2128]'}`}>
             <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
             <span className="relative">9.90x</span>
           </div>
         ) : wheelValue?.segments === "20" ? (
-          <div>
+          <div className={`${buttons.includes('19.8') && 'bg-[#de2128]'}`}>
             <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
             <span className="relative">19.80x</span>
           </div>
         ) : wheelValue?.segments === "30" ? (
-          <div>
+          <div className={`${buttons.includes('29.7') && 'bg-[#de2128]'}`}>
             <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
             <span className="relative">29.70x</span>
           </div>
         ) : wheelValue?.segments === "40" ? (
-          <div>
+          <div className={`${buttons.includes('39.6') && 'bg-[#de2128]'}`}>
             <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
             <span className="relative">39.60x</span>
           </div>
         ) : wheelValue?.segments === "40" ? (
-          <div>
+          <div className={`${buttons.includes('49.5') && 'bg-[#de2128]'}`}>
             <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
             <span className="relative">49.50x</span>
           </div>
         ) : (
-          <div>
+          <div className={`${buttons.includes('49.5') && 'bg-[#de2128]'}`}>
             <span className="absolute left-0 right-0 bottom-0 flex h-0 w-full translate-y-0 transform bg-[#de2128] transition-all duration-300 ease-out group-hover:h-full text-[#FFFFFF]"></span>
             <span className="relative">49.50x</span>
           </div>
@@ -347,10 +299,10 @@ function WheelGameContent() {
   return (
     <div
       className={`bg-[#0f212e] flex flex-col justify-center items-center overflow-hidden rounded-t-lg max-sm:mx-3 -mt-0.2 
-  xl:w-[52rem] xl:h-[46rem] xl:ml-0
-  lg:w-[41rem] lg:h-[46rem] lg:ml-0
-  md:h-[32rem] md:w-[24rem] md:ml-[1.5rem]
-  h-full`}
+        xl:w-[52rem] xl:h-[46rem] xl:ml-0
+        lg:w-[41rem] lg:h-[46rem] lg:ml-0
+        md:h-[32rem] md:w-[24rem] md:ml-[1.5rem]
+        h-full`}
     >
       <div className="relative">
         <div className="relative">
@@ -359,7 +311,7 @@ function WheelGameContent() {
               mustStartSpinning={mustSpin}
               prizeNumber={finalmultiplier?.position}
               data={segments.length > 0 ? segments : datas}
-              onStopSpinning={handleWheelStop} // Use the new function
+              onStopSpinning={handleWheelStop}
 
               spinDuration={0.1}
               disableInitialAnimation={true}
