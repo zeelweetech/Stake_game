@@ -18,11 +18,9 @@ function CrashGame() {
 
     CrashSocket.connect();
 
-    CrashSocket.on("connect", () => {
-    });
+    CrashSocket.on("connect", () => {});
 
-    CrashSocket.on("disconnect", () => {
-    });
+    CrashSocket.on("disconnect", () => {});
 
     CrashSocket.on("connect_error", (error) => {
       console.error("Crash Connection Error:", error);
@@ -39,72 +37,44 @@ function CrashGame() {
   }, []);
 
   return (
-    // <div>
-    //   <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center w-full">
-    //     <div>
-    //       {isMobile ? (
-    //         <div className="flex flex-col">
-    //           <CrashGameContent />
-    //           <CrashGameSidebar />
-    //         </div>
-    //       ) : (
-    //         <div className="flex-row bg-center text-white flex grow w-full min-w-[30rem] h-[41.6rem] border-b-3">
-    //           <CrashGameSidebar />
-    //           <CrashGameContent />
-    //         </div>
-    //       )}
-
-    //       <div>
-    //         <hr className="border-2 border-[#213743]"></hr>
-    //         <GameFooter />
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <div className="flex justify-center">
-    //     <div className="xl:w-[72rem] lg:w-[58rem] md:w-[41rem] md:px-0 px-3 w-full">
-    //       <GameContent />
-    //       <GameTable />
-    //     </div>
-    //   </div>
-    // </div>
     <div className="flex justify-center w-full h-full">
-    <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full">
-      <div className=" w-full">
-        <div
-          className={`flex justify-center w-full  ${
-            isMobile ? "h-[26rem]" : "h-[39rem]"
-          } border-b-3`}
-        >
-          {!isMobile && (
-            <div className="flex-row bg-[#213743]">
+      <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full">
+        <div className=" w-full">
+          <div
+            className={`flex justify-center w-full  ${
+              isMobile ? "h-[26rem]" : "h-[39rem]"
+            } border-b-3`}
+          >
+            {!isMobile && (
+              <div className="flex-row bg-[#213743]">
+                <CrashGameSidebar />
+              </div>
+            )}
+            <div className="flex-grow">
+              <CrashGameContent />
+            </div>
+          </div>
+
+          {isMobile && (
+            <div className="flex flex-col">
               <CrashGameSidebar />
             </div>
-          )}  
-          <div className="flex-grow">
-            <CrashGameContent />
+          )}
+          <div className="md:flex md:justify-center lg:block xl:block">
+            <div className="max-sm:mx-3 xl:-ml-[24rem] lg:-ml-[16.9rem] xl:mt-11 lg:mt-11">
+              <hr className="border-[#213743]" />
+              <GameFooter />
+            </div>
           </div>
-        </div>
-
-        {isMobile && (
-          <div className="flex flex-col">
-            <CrashGameSidebar />
-          </div>
-        )}
-        <div className="md:flex md:justify-center lg:block xl:block">
-          <div className="max-sm:mx-3 xl:-ml-[24rem] lg:-ml-[16.9rem] xl:mt-11 lg:mt-11">
-            <hr className="border-[#213743]" />
-            <GameFooter />
-          </div>
-        </div>
-        <div className="flex justify-center pt-5">
-          <div className="xl:w-[72rem] lg:w-[58rem] md:w-[42rem] md:px-0 px-3 w-full">
-            <GameContent />
-            <GameTable />
+          <div className="flex justify-center pt-5">
+            <div className="xl:w-[72rem] lg:w-[58rem] md:w-[42rem] md:px-0 px-3 w-full">
+              <GameContent />
+              <GameTable />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   );
 }
 
