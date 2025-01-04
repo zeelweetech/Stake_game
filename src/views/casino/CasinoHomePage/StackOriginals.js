@@ -135,7 +135,7 @@ function StackOriginals({ allGames, isLobby }) {
         )}
       </div>
 
-      <div className=" ml-2 mr-2 relative mt-3">
+      <div className="mx-5 relative mt-3">
         {isLobby ? (
           <Swiper
             slidesPerView={6}

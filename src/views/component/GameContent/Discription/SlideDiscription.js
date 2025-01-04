@@ -9,21 +9,24 @@ const SlideDiscription = () => {
         <div className="md:flex block gap-5 space-y-2 md:space-y-0">
           <div className="flex justify-center items-center">
             <img
-              className="rounded-md md:w-64 w-48  flex justify-center items-center"
+              className="rounded-md md:w-64 w-48 flex justify-center items-center"
               src={SlideGame}
               alt="crashGame"
             />
           </div>
           <div>
-            <button className="text-[11px] text-white bg-[#4d718768] px-2 py-0.5 rounded-2xl cursor-default">
-              Edge: 2.00%
+            <button className="text-[12px] text-white bg-[#4d718768] px-2 py-0.5 rounded-2xl cursor-default font-bold">
+              <span className="text-[12px] font-bold text-[#B2BAD3]">
+                Edge:
+              </span>{" "}
+              2.00%
             </button>
             <div className="flex items-center space-x-2">
-              <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-2 py-0.5 rounded-2xl">
-                Listor Originals
+              <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-2 py-0.5 rounded-2xl hover:text-white">
+                Multiplayer
               </button>
-              <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-2 py-0.5 rounded-2xl">
-                Video Bingo
+              <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-2 py-0.5 rounded-2xl hover:text-white">
+                <Link to={"/StackOriginals"}>Listor Originals</Link>
               </button>
             </div>
             <p className="text-[15px] py-2 cursor-default">
@@ -328,7 +331,10 @@ const SlideDiscription = () => {
                 newest games
               </span>{" "}
               to arrive at
-              <Link to={"/"} className=" ml-1 text-white font-boldcursor-pointer ">
+              <Link
+                to={"/"}
+                className=" ml-1 text-white font-boldcursor-pointer "
+              >
                 Listor.com{" "}
               </Link>{" "}
               to avoid missing out.
@@ -378,34 +384,48 @@ const SlideDiscription = () => {
         </div>
         <div className="text-white rounded-lg cursor-default">
           <h2 className="text-xl font-bold mb-4">Game Information</h2>
-          <div className="grid grid-cols-2 justify-between">
-            <div className="font-normal p-4">Title</div>
-            <div className="text-end p-4">Slide</div>
-            <div className="font-normal p-4 text-[#B1BAD3] bg-[#213743] rounded-l">
-              Provider
-            </div>
-            <div className="text-end p-4 text-[#B1BAD3] bg-[#213743] rounded-r">
-              Listor Originals
-            </div>
-            <div className="font-normal p-4 text-[#B1BAD3]">Game Type</div>
-            <div className="text-end p-4 text-[#B1BAD3]">Original</div>
-            <div className="font-normal p-4 text-[#B1BAD3] bg-[#213743] rounded-l">
-              RTP
-            </div>
-            <div className="text-end p-4 text-[#B1BAD3] bg-[#213743] rounded-r">
-              98%
-            </div>
-            <div className="font-normal p-4 text-[#B1BAD3]">House Edge</div>
-            <div className="text-end p-4 text-[#B1BAD3]">2%</div>
-            <div className="font-normal p-4 text-[#B1BAD3] bg-[#213743] rounded-l">
-              Max Win
-            </div>
-            <div className="text-end p-4 text-[#B1BAD3] bg-[#213743] rounded-r">
-              4,294,967,000x
-            </div>
-            <div className="font-normal p-4 text-[#B1BAD3]">Volatility</div>
-            <div className="text-end p-4 text-[#B1BAD3]">Low</div>
-          </div>
+          <table className="w-full text-[#B1BAD3]">
+            <thead>
+              <tr>
+                <th className="font-normal p-4 text-left rounded-l">Title</th>
+                <th className="p-4 text-end rounded-r">Slide</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="font-normal p-4 rounded-l bg-[#213743]">
+                  Provider
+                </td>
+                <td className="text-end p-4 rounded-r bg-[#213743]">
+                  Listor Originals
+                </td>
+              </tr>
+              <tr>
+                <td className="font-normal p-4 bg-[#0f212e]">Game Type</td>
+                <td className="text-end p-4 bg-[#0f212e]">Original</td>
+              </tr>
+              <tr>
+                <td className="font-normal p-4 rounded-l bg-[#213743]">RTP</td>
+                <td className="text-end p-4 rounded-r bg-[#213743]">98%</td>
+              </tr>
+              <tr>
+                <td className="font-normal p-4 bg-[#0f212e]">House Edge</td>
+                <td className="text-end p-4 bg-[#0f212e]">2%</td>
+              </tr>
+              <tr>
+                <td className="font-normal p-4 rounded-l bg-[#213743]">
+                  Max Win
+                </td>
+                <td className="text-end p-4 rounded-r bg-[#213743]">
+                  4,294,967,000x
+                </td>
+              </tr>
+              <tr>
+                <td className="font-normal p-4 bg-[#0f212e]">Volatility</td>
+                <td className="text-end p-4 bg-[#0f212e]">Low</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </>
