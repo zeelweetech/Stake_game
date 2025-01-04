@@ -24,7 +24,7 @@ const GameContent = () => {
   ];
   return (
     <>
-      <div className="bg-[#0f212e] p-4 text-white w-full rounded-xl">
+      <div className="bg-[#0f212e] p-6 text-white w-full rounded-xl">
         {loading ? (
           <Loader />
         ) : (
@@ -34,10 +34,11 @@ const GameContent = () => {
                 {menuItems.map((item) => (
                   <button
                     key={item.label}
-                    className={`py-2 px-5 rounded-full flex justify-center items-center text-sm ${gameMenu === item.label
-                      ? "bg-[#4d718768] px-5"
-                      : "hover:bg-[#4d718768]"
-                      }`}
+                    className={`py-2 px-5 rounded-full flex justify-center items-center text-sm ${
+                      gameMenu === item.label
+                        ? "bg-[#4d718768] px-5"
+                        : "hover:bg-[#4d718768]"
+                    }`}
                     onClick={() => setGameMenu(item.label)}
                   >
                     {item.icon}
