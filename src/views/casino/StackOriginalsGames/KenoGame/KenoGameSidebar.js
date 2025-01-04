@@ -34,11 +34,11 @@ function KenoGameSidebar() {
     selectTile,
   } = useSelector((state) => state.kenoGame);
 
-  useEffect(() => {
-    const handleResize = () => setResponsiveMobile(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // useEffect(() => {
+  //   const handleResize = () => setResponsiveMobile(window.innerWidth);
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   useEffect(() => {
     GetWalletData();
