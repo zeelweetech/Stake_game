@@ -15,8 +15,10 @@ import Vip from "../../views/Profile/Vip";
 import Statistic from "../../views/Profile/Statistic";
 import LogoutDialog from "../../views/Profile/Logout";
 import Notification from "../../views/Profile/Notification";
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
-const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDropdownVisible, openMenubar }) => {
+const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDropdownVisible, openMenubar, onClose }) => {
     const [searchValue, setSearchValue] = useState("");
     const [casinoClicked, setCasinoClicked] = useState(false);
     const [sportsClicked, setSportsClicked] = useState(false);
@@ -37,7 +39,7 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
     };
 
     const handleItemClick = (path) => {
-        handleDrowerOpen(); 
+        handleDrowerOpen();
     };
 
     const handleCasinoClick = () => {
@@ -89,7 +91,7 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
                         {dropdownVisible === index ? (
                             <ChevronDownIcon className={`ml-auto ${openMenubar ? "h-5 w-5" : "h-8 w-8"}`} />
                         ) : <ChevronRightIcon className={`ml-auto ${openMenubar ? "h-5 w-5" : "h-8 w-8"}`} />
-                    }
+                        }
                     </div>
                     {dropdownVisible === index && (
                         <div className="ml-2 bg-[#213743] text-white rounded-md mt-1">
@@ -97,7 +99,7 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
                                 <div
                                     key={idx}
                                     className="block w-full px-4 py-2 hover:bg-[#2F4553] transition-colors rounded-md cursor-pointer"
-                                    onClick={() => handleItemClick(dropdownItem.to)} 
+                                    onClick={() => handleItemClick(dropdownItem.to)}
                                 >
                                     {dropdownItem.name === "Setting" ? (
                                         <Link to={dropdownItem.to} className="flex items-center">
@@ -128,7 +130,7 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
                                                     isLogoutDialog: dropdownItem.name === "Logout",
                                                     isNotification: dropdownItem.name === "Notification",
                                                 }));
-                                                setDropdownVisible(null); 
+                                                setDropdownVisible(null);
                                             }}
                                             className="flex items-center"
                                         >
@@ -168,6 +170,14 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
 
     return (
         <div className={`fixed left-0 right-0 bg-[#0f212e] shadow-lg p-4 transition-all duration-300 ease-in-out ${isOpen ? 'bottom-[3.65rem] z-[1000] top-[3.5rem]' : ''} flex flex-col`} >
+            <div className="flex justify-end px-3 items-center bg-[#0f212e] shadow-lg h-12">
+                <IconButton
+                    onClick={onClose}
+                    sx={{ color: "white" }}
+                >
+                    <CloseIcon fontSize="small" />
+                </IconButton>
+            </div>
             <div className="flex items-center">
                 <input
                     className="border-2 rounded-full w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
@@ -205,6 +215,7 @@ const BottomDrawer = ({ isOpen, items, handleDrowerOpen, dropdownVisible, setDro
                 {profilePopupOpen.isNotification && <Notification closeNotification={() => setProfilePopupOpen({ ...profilePopupOpen, isNotification: false })} />}
             </div>
         </div>
+
     );
 };
 export default BottomDrawer;

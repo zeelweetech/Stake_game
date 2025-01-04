@@ -23,6 +23,9 @@ function MobileMenubar() {
     setSportsDrowerOpen(false);
     setCasinoOpen(false)
   };
+  const handleDrowerClose = () => {
+    setIsDrawerOpen(false);
+  }
   const handleBetDrawerOpen = () => {
     setBetDrowerOpen(prevState => !prevState);
     setIsDrawerOpen(false)
@@ -105,6 +108,7 @@ function MobileMenubar() {
       <div>
           <BottomDrawer
             isOpen={isDrawerOpen}
+            onClose={handleDrowerClose}
             items={nav}
             handleDrowerOpen={handleDrawerOpen}
             dropdownVisible={dropdownVisible}

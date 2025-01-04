@@ -5,9 +5,7 @@ function LiveStats({ onClose }) {
   const [selectedOption, setSelectedOption] = useState("All");
   const [isRotated, setIsRotated] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState(false);
-  const [bounds, setBounds] = useState({});
-  const componentRef = useRef(null);
-
+  
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     setTooltipVisible(false);
@@ -23,34 +21,12 @@ function LiveStats({ onClose }) {
     setTooltipVisible(false);
     onClose();
   };
-  // useEffect(() => {
-  //   const updateBounds = () => {
-  //     const width = window.innerWidth;
-  //     const height = window.innerHeight;
 
-  //     // Get the dimensions of the component
-  //     const componentWidth = componentRef.current ? componentRef.current.offsetWidth : 0;
-  //     const componentHeight = componentRef.current ? componentRef.current.offsetHeight : 0;
-
-  //     setBounds({
-  //       left: 0,
-  //       top: 0,
-  //       right: width - componentWidth, // Adjust based on the width of your component
-  //       bottom: height - componentHeight, // Adjust based on the height of your component
-  //     });
-  //   };
-
-  //   updateBounds();
-  //   window.addEventListener("resize", updateBounds);
-    
-  //   return () => {
-  //     window.removeEventListener("resize", updateBounds);
-  //   };
-  // }, []);
   return (
-    <Draggable axis="x">
+    <Draggable axis="x"> 
+    {/* if any time changes drag the content horizontal and vertical then it will be fixed position is "axix="both" */}
       <div
-        className="fixed inset-0 flex items-end justify-end bg-scroll h-full"
+        className="fixed inset-0 flex items-end justify-end bg-scroll h-full z-9999"
         onClick={handleCloseLiveStats}
       >
         <div
@@ -111,7 +87,7 @@ function LiveStats({ onClose }) {
                       }`}
                   >
                     Bets
-                  </div>
+                 </div>
                   <div
                     onClick={() => handleOptionClick("Race")}
                     className={`hover:bg-[#9ca3af] text-base font-semibold hover:text-black cursor-pointer ${selectedOption === "Race" ? "text-[#1475E1]" : ""
