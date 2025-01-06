@@ -92,9 +92,10 @@ const ChatApp = ({ onClose }) => {
       </IconButton>
 
       {/* Dropdown for countries */}
-      <div className="inline-block text-left mb-4">
-        <button onClick={toggleDropdown} className="inline-flex items-center justify-center w-full bg-[#0f212e] px-4 py-2 text-sm font-medium text-white">
-          {selectedCountry.Icon && (
+      <div className="inline-block text-left">
+        <button onClick={toggleDropdown} 
+            className="inline-flex justify-center w-full bg-[#0f212e] px-4 py-2 text-sm font-medium text-white">
+            {selectedCountry.Icon && (
             <span className="mr-2">
               <img src={selectedCountry.Icon} alt={selectedCountry.countryName} className="h-5 w-5" />
             </span>

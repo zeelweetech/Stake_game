@@ -81,8 +81,8 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
     };
 
     return (
-        <div className={`fixed left-0 right-0 bg-[#0f212e] shadow-lg transition-all duration-300 ease-in-out ${openChat ? 'bottom-[3.20rem] z-[1000] top-[3.5rem]' : ''} flex flex-col`} >
-            <div className="bg-[#0f212e] shadow-lg h-48 flex items-center justify-between px-4">
+        <div className={`fixed left-0 right-0 bg-[#0f212e] shadow-lg duration-300 ease-in-out ${openChat ? 'bottom-[3.20rem] z-[1000] top-[3.5rem]' : ''} flex flex-col`} >
+            <div className="bg-[#0f212e] shadow-lg h-14 flex items-center justify-between px-4">
                 <button
                     onClick={toggleDropdown}
                     className="flex items-center text-white text-sm"
