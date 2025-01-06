@@ -7,10 +7,13 @@ import MyBets from "../../component/GameTable/MyBets";
 import Sports from "./Sports";
 import AllBet from "./AllBets";
 import AllBets from "../../component/GameTable/AllBets";
+import { useSelector } from "react-redux";
 
 function MyBet() {
     const [loading, setLoading] = useState(false);
     const [gameMenu, setGameMenu] = useState("Casino");
+    const { isBetslipOpen } = useSelector((state) => state.betslip);
+    const { isChatOpen } = useSelector((state) => state.chat);
 
     const menuItems = [
         { label: "Casino" },
@@ -28,7 +31,7 @@ function MyBet() {
             {loading ? (
                 <Loader />
             ) : (
-                <div className="text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10">
+                <div className="text-white font-bold pt-6 lg:px-3 xl:px-10">
                     <div className="flex items-center mx-3 mt-8 space-x-2">
                         <BiSolidNotepad
                             size={28}
@@ -59,7 +62,7 @@ function MyBet() {
                                 </div>
 
 
-                                <div>
+                                <div className={`w-full ${isBetslipOpen || isChatOpen ? "max-w-screen-lg" : "max-w-screen-xl"} mx-auto`}>
                                     {gameMenu === "Casino" ? <MyBets /> : <Sports />}
                                 </div>
                             </div>
@@ -82,7 +85,7 @@ function MyBet() {
                                         ))}
                                     </div>
                                 </div>
-                                <div>
+                                <div className={`w-full ${isBetslipOpen || isChatOpen ? "max-w-screen-lg" : "max-w-screen-xl"} mx-auto`}>
                                     {IsGameMenu === "AllBets" ? (
                                         <AllBets />
                                     ) : IsGameMenu === "High Rollers" ? (

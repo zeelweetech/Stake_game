@@ -17,7 +17,7 @@ import Exclusives from "./Exclusives";
 import { getAllGames } from "../../../services/GameServices";
 import { decodedToken } from "../../../resources/utility";
 import { getWallet, updateWallet } from "../../../services/LoginServices";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setWallet } from "../../../features/auth/authSlice";
 
 function CasinoHomePage() {
@@ -79,12 +79,15 @@ function CasinoHomePage() {
       .catch((err) => {});
   };
 
+  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
+  const { isChatOpen } = useSelector((state) => state.chat);
+
   return (
     <div className="flex justify-center h-full bg-[#1a2c38] z-40 lg:pr-12 pr-0">
       {loading ? (
         <Loader />
       ) : (
-        <div className="text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10">
+        <div className={`text-white font-bold pt-6 w-full ${isBetslipOpen || isChatOpen ? "max-w-[69rem]" : "max-w-screen-xl"} lg:px-3 xl:px-10`}>
           <SlideBar />
 
           <div className="mt-8 mx-3 relative">

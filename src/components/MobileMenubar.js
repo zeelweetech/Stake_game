@@ -67,7 +67,7 @@ function MobileMenubar() {
 
   return (
     <div>
-      <div className="px-2 py-2 bg-[#0f212e] text-white block md:hidden z-50 relative">
+      <div className="px-2 py-2 bg-[#0f212e] text-white block md:hidden">
         <div className="flex justify-around w-full items-center">
           <div className="flex flex-col px-2 items-center text-sm" onClick={handleDrawerOpen}>
             <svg className="w-4 h-4 hover:fill-white" fill="grey" viewBox="0 0 64 64">
