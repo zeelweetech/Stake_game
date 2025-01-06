@@ -71,8 +71,11 @@ function Mainbar() {
                     fontSize="small"
                     className="text-[#b1bad3] cursor-pointer"
                   />
-                  <div id="tooltip-top"
-                    role="tooltip" className="absolute bottom-full left-[-1rem] text-sm -translate-x-1/2 mb-3 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity bg-white text-[#0f212e] font-semibold rounded-md px-2 py-0.5 z-10 w-max max-w-xs xl:-ml-0 lg:-ml-0 md:-ml-0 -ml-[6rem]">
+                  <div
+                    id="tooltip-top"
+                    role="tooltip"
+                    className="absolute bottom-full left-[-1rem] text-sm -translate-x-1/2 mb-3 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity bg-white text-[#0f212e] font-semibold rounded-md px-2 py-0.5 z-10 w-max max-w-xs xl:-ml-0 lg:-ml-0 md:-ml-0 -ml-[6rem]"
+                  >
                     <p className="overflow-hidden line-clamp-3.5">
                       All bets settled on the sportsbook return a 3x (three
                       times) faster rate of progression compared to Casino (1x
@@ -80,8 +83,6 @@ function Mainbar() {
                     </p>
                     <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-6px] xl:left-[11.6rem] lg:left-[11.6rem] md:left-[11.6rem] left-[17.5rem] transform -translate-x-1/2"></div>
                   </div>
-
-
                 </div>
               </div>
             </div>
@@ -106,12 +107,12 @@ function Mainbar() {
                     progressData?.medal === "Bronze"
                       ? "#c69c6d"
                       : progressData?.medal === "Silver"
-                        ? "#b2cccc"
-                        : progressData?.medal === "Gold"
-                          ? "#fed100"
-                          : progressData?.medal === "Platinum"
-                            ? "#6fdde7"
-                            : "#2f4553"
+                      ? "#b2cccc"
+                      : progressData?.medal === "Gold"
+                      ? "#fed100"
+                      : progressData?.medal === "Platinum"
+                      ? "#6fdde7"
+                      : "#2f4553"
                   }
                 />
                 <p className="text-sm text-[#b1bad3] font-medium">
@@ -125,12 +126,12 @@ function Mainbar() {
                     progressData?.nextMedal === "Bronze"
                       ? "#c69c6d"
                       : progressData?.nextMedal === "Silver"
-                        ? "#b2cccc"
-                        : progressData?.nextMedal === "Gold"
-                          ? "#fed100"
-                          : progressData?.nextMedal === "Platinum"
-                            ? "#6fdde7"
-                            : "#2f4553"
+                      ? "#b2cccc"
+                      : progressData?.nextMedal === "Gold"
+                      ? "#fed100"
+                      : progressData?.nextMedal === "Platinum"
+                      ? "#6fdde7"
+                      : "#2f4553"
                   }
                 />
                 <p className="text-sm text-[#b1bad3] font-medium">
@@ -156,7 +157,7 @@ function Mainbar() {
                   "linear-gradient(to bottom, #017aff, transparent) 1",
               }}
             />
-            <div className="flex items-center px-3 py-2.5 space-x-">
+            <div className="flex items-center px-3 py-2.5 space-x-2">
               <img src={casinoCard} className="w-4 h-4 " alt="Not Found" />
               <p>Casino</p>
             </div>

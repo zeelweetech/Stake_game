@@ -9,7 +9,7 @@ const PlinkoDiscription = () => {
         <div className="md:flex block gap-5 space-y-2 md:space-y-0">
           <div className="flex justify-center items-center">
             <img
-              className="rounded-md md:max-w-36 w-48 flex justify-center items-center"
+              className="rounded-md xl:max-w-36 lg:max-w-40 md:max-w-44 w-48 flex justify-center items-center"
               src={plinkoGame}
               alt="plinkogame"
             />
@@ -42,9 +42,9 @@ const PlinkoDiscription = () => {
             <p className="text-[15px] pb-3 cursor-default">
               Inspired by the Japanese mechanical game known as Pachinko, Plinko
               provides players with the ability to customise your risk factor
-              and multipliers ensuring this Stake Original game is suited for
+              and multipliers ensuring this Listor Original game is suited for
               everyone at our{" "}
-              <span className="font-semibold hover:text-white cursor-pointer">
+              <span className="font-semibold text-white cursor-pointer">
                 online casino
               </span>{" "}
               !
@@ -93,20 +93,20 @@ const PlinkoDiscription = () => {
           <p className="text-[15px] pb-3 cursor-default">
             Further reading into{" "}
             <span className="font-semibold hover:text-white cursor-pointer">
-              how to play Plinko on Stake
+              how to play Plinko on Listor
             </span>{" "}
             is available on our blog.
           </p>
         </div>
         <div>
-          <h1 className="text-white text-xl font-bold py-3">
-            Why Betting Plinko Online is Safe and Fair on Stake.com
+          <h1 className="text-white text-xl font-bold py-3 cursor-default">
+            Why Betting Plinko Online is Safe and Fair on Listor.com
           </h1>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pb-3 cursor-default">
             As a{" "}
             <span className="font-semibold hover:text-white cursor-pointer">
               {" "}
-              Stake Original
+              Listor Original
             </span>{" "}
             game, Plinko is a provably fair game in which results are generated
             <span className="font-semibold hover:text-white cursor-pointer">
@@ -118,14 +118,14 @@ const PlinkoDiscription = () => {
             outcome of games is truly random and based on chance.
           </p>
           <p className="text-[15px] pb-3 cursor-default">
-            Plinko on Stake has a House Edge of 1%, ensuring a strong Return to
+            Plinko on Listor has a House Edge of 1%, ensuring a strong Return to
             Player (RTP) for a strong bankroll management game of chance like
             Plinko.
           </p>
           <p className="text-[15px] pb-3 cursor-default">
-            In addition to the verifiable fairness of results, Stake also offers
-            advanced betting features to allow players to manage the scale of
-            betting for games like Plinko. These include:
+            In addition to the verifiable fairness of results, Listor also
+            offers advanced betting features to allow players to manage the
+            scale of betting for games like Plinko. These include:
           </p>
           <ul className="list-disc pl-8 cursor-default">
             <li className="text-[15px] pb-2">
@@ -440,20 +440,20 @@ const PlinkoDiscription = () => {
             the percentage chance of landing on the destination as well as the
             profit on win based on the bet amount.
           </p>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pb-3 cursor-default">
             This provides players with the tools they need to make bets that
             suit their playing style and adjust the rows as well as risk level
             to fit their needs.
           </p>
           <p className="text-[15px] pb-3 cursor-default">
-            Plinko is a favourite of the Stake community due to its simple
+            Plinko is a favourite of the Listor community due to its simple
             gameplay and expandable betting options. Plinko is a game where the
             player sets the risk and the payouts and is beloved by players who
             have strong strategies around bankroll management and aiming for big
             wins with high payouts.
           </p>
           <p className="text-[15px] pb-3 cursor-default">
-            Plinko is a favourite of the Stake community due to its simple
+            Plinko is a favourite of the Listor community due to its simple
             gameplay and expandable betting options. Plinko is a game where the
             player sets the risk and the payouts and is beloved by players who
             have strong strategies around bankroll management and aiming for big
@@ -461,17 +461,148 @@ const PlinkoDiscription = () => {
           </p>
         </div>
         <div>
-          <h1 className="text-white text-xl font-bold pb-3  cursor-default">
-            How to Deposit for Plinko on Stake.com
+          <h1 className="text-white text-xl font-bold pb-3 cursor-default">
+            How to Deposit for Plinko on Listor.com
           </h1>
-          <p className="text-[15px] pb-3  cursor-default">
-            Playing Plinko on our Online Casino with local fiat currencies ,
-            Bitcoin or other available cryptocurrencies is easy and widely
-            available. For depositing funds into your Stake.com account to play
-            Plinko online and more, please follow the steps listed below:
+          <p className="text-[15px] pb-3 cursor-default">
+            Playing Plinko on our Online Casino with{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              local fiat currencies
+            </span>{" "}
+            ,{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              Bitcoin
+            </span>{" "}
+            or{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              other available cryptocurrencies
+            </span>{" "}
+            is easy and widely available. For depositing funds into your
+            Listor.com account to play Plinko online and more, please follow the
+            steps listed below:
           </p>
+          <ol class="ps-8 space-y-2 cursor-default">
+            <li>
+              <span class="font-semibold "> Step 1 –</span> Retrieve your
+              deposit address, located in Wallet &#62; Deposit.
+            </li>
+            <li>
+              <span class="font-semibold list-outside">Step 2 –</span> Choose
+              the method which suits your needs. We offer many supported
+              currencies including Bitcoin (BTC), Ethereum (ETH), Dogecoin
+              (Doge), Litecoin (LTC) and more.
+            </li>
+            <li>
+              <span class="font-semibold">Step 3 –</span> Use your deposit
+              address as the 'Send to' location for your wallet or exchange.
+            </li>
+            <li>
+              <span class="font-semibold">Step 4 (Optional) –</span>If you need
+              to make a deposit via fiat currency, you can buy crypto for Listor
+              via Moonpay.
+            </li>
+          </ol>
+          <style jsx>{`
+            ol {
+              list-style-type: disc;
+            }
 
-    
+            li::marker {
+              color: [#B1BAD3];
+              font-weight: 600;
+            }
+          `}</style>
+          <p className="text-[15px] pt-3 cursor-default">
+            Listor provides live support and assistance from our support staff -
+            whether it has to do with account deposits or accessing your
+            favourite casino games, we will help you out!
+          </p>
+          <p className="text-[15px] pt-3 cursor-default">
+            Moonpay has{" "}
+            <a className="items-center inline-flex ml-0.5 font-semibold cursor-pointer hover:text-white group">
+              many supported payment options
+              <svg
+                className="ml-2 h-4 w-4 text-[#B1BAD3] group-hover:text-white mb-1.5"
+                viewBox="0 0 64 64"
+                fill="currentColor"
+              >
+                <path d="M10.823 53.176h42.353V39.941h7.059v20.294H3.765V3.765h20.293v7.058H10.823v42.353Zm28.236-42.353V3.765h21.176V24.94h-7.059v-9.123L27.88 41.115l-4.994-4.995 25.297-25.296H39.06Z" />
+              </svg>
+            </a>
+            <span className="ml-1">
+              including Visa, MasterCard, Apple Pay, Google Pay and more to
+              deposit cryptocurrency for online casino games and more. For a
+              full list of supported payment options in your market, please
+              refer to the Moonpay documentation.
+            </span>{" "}
+          </p>
+          <p className="text-[15px] pt-3 cursor-default">
+            It's important to remember to only bet within your means and stay{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              Listor Smart.
+            </span>{" "}
+            Use our{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              monthly budget calculator
+            </span>{" "}
+            to help monitor your spending habits and learn more tips about
+            betting online with our{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              responsible gambling guide.
+            </span>
+          </p>
+        </div>
+        <div>
+          <h1 className="text-white text-xl font-bold pt-3 cursor-default">
+            Origins of Plinko: From Pachinko Parlours to Bob Barker to Listor
+          </h1>
+          <p className="text-[15px] pt-3 cursor-default">
+            Plinko traces its origins back to a traditional Japanese game called
+            "Pachinko," a mechanical arcade game popular since the 1920s. With
+            its captivating gameplay, Pachinko has long been a favourite pastime
+            in Japan, later inspiring the creation of Plinko for American
+            television audiences.
+          </p>
+          <p className="text-[15px] pt-3 cursor-default">
+            The Price is Right, a long-running TV game show, adapted the concept
+            of Pachinko into its iconic pricing game, Plinko, which first aired
+            on January 3, 1983. The TV version of Plinko is famous in the USA
+            and Canada with the game focusing on contestants guessing the prices
+            of small items to earn chips. They then release the chips at the top
+            of the Plinko board, hoping for them to land in high-value slots at
+            the bottom. The game offers a cash prize of up to $50,000 along with
+            smaller prizes.
+          </p>
+          <p className="text-[15px] pt-3 cursor-default">
+            While the basic concept of Plinko has remained the same, the Listor
+            version offers players a more customisable experience. Players can
+            control the risk level and number of rows in the pin pyramid,
+            allowing them to create a game that suits their preferences and
+            playing style.
+          </p>
+          <p className="text-[15px] pt-3 cursor-default">
+            The Price is Right version focuses more on the contestant's ability
+            to guess prices accurately to earn additional chips, whereas the
+            Listor version emphasises bankroll management and strategy.
+          </p>
+          <p className="text-[15px] pt-3 cursor-default">
+            Moreover, Plinko on Listor is a provably fair game with a house edge
+            of 1%, ensuring that players can confidently bet on games knowing
+            that the outcome is truly random and based on chance. The online
+            version also offers advanced betting features, such as auto betting
+            and hotkeys, making it more convenient for players to manage their
+            bets and enjoy faster-paced gameplay.
+          </p>
+          <p className="text-[15px] pt-3 cursor-default">
+            Plinko's roots can be traced back to Japan's traditional Pachinko
+            game and while The Price is Right version share a captivating
+            simplicity, Listor's adaptation adds unique features tailored to
+            online players.
+          </p>
+          <p className="text-[15px] pt-3 cursor-default">
+            The enduring appeal of Plinko makes it a timeless favourite among
+            game enthusiasts worldwide.
+          </p>
         </div>
       </div>
     </>

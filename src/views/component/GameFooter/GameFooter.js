@@ -87,10 +87,10 @@ function GameFooter() {
                   Open Live Stats
                   <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-5px] left-1/2 transform -translate-x-1/2"></div>
                 </div>
-                {/* <div className="absolute left-1/2 w-32 h-10 -mt-8 transform -translate-x-1/2 -translate-y-8 bg-white text-[#0f212e] text-sm font-semibold px-2 py-1 rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200 flex justify-center items-center">
+                <div className="absolute left-1/2 w-32 h-10 -mt-8 transform -translate-x-1/2 -translate-y-8 bg-white text-[#0f212e] text-sm font-semibold px-2 py-1 rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200 flex justify-center items-center">
                   Close Live Stats
                   <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-5px] left-1/2 transform -translate-x-1/2"></div>
-                </div> */}
+                </div>
               </div>
               {showLiveStats && <LiveStats onClose={closeLiveStats} />}
             </div>
@@ -108,7 +108,7 @@ function GameFooter() {
           </div>
         </div>
         <div>
-          <span className="text-[#b1bad3]/50 text-4xl font-extrabold italic font-sans hidden md:block w-16 sm:w-24 md:w-28">
+          <span className="text-[#b1bad3]/50 text-4xl font-extrabold italic font-sans hidden md:block w-16 sm:w-24 md:w-28 cursor-default">
             Listor
           </span>
         </div>
