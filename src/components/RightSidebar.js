@@ -27,7 +27,7 @@ export const RightSidebar = ({ isDrawerOpen, handleRightSidebarToggle }) => {
   };
 
   return (
-    <div className=" h-full">
+    <div className="h-full w-full">
       {/* Betslip Section */}
       {isDrawerOpen && isBetslipOpen &&  (
         <div className="text-lg font-bold bg-[#0f212e]">
@@ -37,7 +37,7 @@ export const RightSidebar = ({ isDrawerOpen, handleRightSidebarToggle }) => {
 
       {/* Chat Section */}
       {isDrawerOpen && isChatOpen &&  (
-        <div className="text-lg font-bold bg-[#0f212e]">
+        <div className="h-full">
           <ChatApp onClose={handleCloseChat} />
         </div>
       )}

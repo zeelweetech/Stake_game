@@ -68,9 +68,9 @@ function Betslip({ onClose }) {
   );
 
   return (
-    <div className="text-white rounded-md shadow-lg">
-      <div className="text-white rounded-md shadow-lg">
-        <IconButton
+    <div className="bg-[#0f212e]">
+    <div className="text-white p-2 rounded-md shadow-lg relative">
+    <IconButton
           onClick={onClose}
           sx={{ color: "white", position: "absolute", top: 8, right: 8 }}
         >
