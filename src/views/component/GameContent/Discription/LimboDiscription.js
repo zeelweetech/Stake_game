@@ -94,8 +94,8 @@ const LimboDiscription = () => {
             The outcomes in all Limbo betting rounds are completely randomised
             and are part of a two-step process. The first step is known as the
             float point, which is converted from generating random bytes using
-            Listor’s RNG multiplied by the max payout (1,000,000x) and the game’s
-            house edge (1%).
+            Listor’s RNG multiplied by the max payout (1,000,000x) and the
+            game’s house edge (1%).
           </p>
           <p className="text-[15px] pb-3 cursor-default">
             Next, to generate a game event with probability distribution, the
@@ -118,8 +118,8 @@ const LimboDiscription = () => {
           </h1>
           <p className="text-[15px] pb-3 cursor-default">
             While most people play Limbo with Bitcoin, you can deposit a wide
-            variety of cryptocurrencies at Listor.com to play this popular online
-            casino game.
+            variety of cryptocurrencies at Listor.com to play this popular
+            online casino game.
           </p>
           <p className="text-[15px] pb-3 cursor-default">
             You can find more information about our{" "}
@@ -148,9 +148,9 @@ const LimboDiscription = () => {
             Limbo Payouts & House Edge
           </h1>
           <p className="text-[15px] mt-3 cursor-default">
-            Theoretically, the maximum payout in Limbo is 1,000,000x your Listor,
-            but in practice, the payouts can exceed this amount. The house edge
-            of the game is set at just 1%.
+            Theoretically, the maximum payout in Limbo is 1,000,000x your
+            Listor, but in practice, the payouts can exceed this amount. The
+            house edge of the game is set at just 1%.
           </p>
           <p className="text-[15px] mt-3 cursor-default">
             As a game of multipliers, the minimum payout playable is 1.01x and

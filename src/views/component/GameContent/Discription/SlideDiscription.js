@@ -387,7 +387,7 @@ const SlideDiscription = () => {
           <table className="w-full text-[#B1BAD3]">
             <thead>
               <tr>
-                <th className="font-normal p-4 text-left rounded-l">Title</th>
+                <th className="p-4 text-left rounded-l">Title</th>
                 <th className="p-4 text-end rounded-r">Slide</th>
               </tr>
             </thead>
