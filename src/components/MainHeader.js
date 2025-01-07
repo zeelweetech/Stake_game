@@ -14,7 +14,7 @@ import { FaWallet } from "react-icons/fa";
 import { PiVaultFill } from "react-icons/pi";
 import { BiSolidNotepad } from "react-icons/bi";
 import { BsChatDotsFill } from "react-icons/bs";
-import { setAnchorEl } from "../features/auth/authSlice";
+import { setAnchorEl, setTooltipOpen } from "../features/auth/authSlice";
 import { closeBetslipModal, openBetslipModal } from "../features/auth/betSlipSlice";
 import { closeChatModal, openChatModal } from "../features/auth/chatSlice";
 import Wallet from "../views/Profile/Wallet";
@@ -23,12 +23,14 @@ import Vip from "../views/Profile/Vip";
 import Statistic from "../views/Profile/Statistic";
 import LogoutDialog from "../views/Profile/Logout";
 import Notification from "../views/Profile/Notification";
+import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 
 function MainHeader({ handleRightSidebarToggle }) {
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.auth);
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+  // const [tooltipOpen, setTooltipOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { tooltipOpen } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
 
   const [profilePopupOpen, setProfilePopupOpen] = useState({
@@ -42,13 +44,13 @@ function MainHeader({ handleRightSidebarToggle }) {
 
   const handleMenuOpen = (event) => {
     dispatch(setAnchorEl(event.currentTarget));
-    setTooltipOpen(false);
+    dispatch(setTooltipOpen(false));
     setIsSidebarOpen(false)
   };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    setTooltipOpen(false);
+    dispatch(setTooltipOpen(false));
     dispatch(setAnchorEl(false));
   };
 
@@ -69,7 +71,7 @@ function MainHeader({ handleRightSidebarToggle }) {
   };
 
   const toggleTooltip = () => {
-    setTooltipOpen((prev) => !prev);
+    dispatch(setTooltipOpen((prev) => !prev));
     setIsSidebarOpen(false)
     dispatch(setAnchorEl(false));
   };
@@ -97,7 +99,7 @@ function MainHeader({ handleRightSidebarToggle }) {
                   ...prev,
                   isWalletOpen: true,
                 }))
-                setTooltipOpen(false);
+                dispatch(setTooltipOpen(false));
                 setIsSidebarOpen(false)
                 dispatch(setAnchorEl(false));
               }}>
@@ -131,46 +133,41 @@ function MainHeader({ handleRightSidebarToggle }) {
                         ...prev,
                         isWalletOpen: true,
                       }))
-                      // closeTooltip();
+                      dispatch(setTooltipOpen(false));
                     }}
                     className="flex items-center space-x-5 py-2"
                   >
                     <FaWallet size={20} color="#0f212e" />
                     <p className="text-base text-[#0f212e]">Wallet</p>
                   </button>
-                  {profilePopupOpen.isWalletOpen && <Wallet closeWallet={() => setProfilePopupOpen({ ...profilePopupOpen, isWalletOpen: false })} />}
 
                   <button
                     onClick={() => {
                       setProfilePopupOpen((prev) => ({
                         ...prev,
                         isVaultOpen: true,
-
                       }))
+                      dispatch(setTooltipOpen(false));
                     }}
                     className="flex items-center space-x-5 py-2"
                   >
                     <PiVaultFill size={20} color="#0f212e" />
                     <p className="text-base text-[#0f212e]">Vault</p>
                   </button>
-                  {profilePopupOpen.isVaultOpen && <Vault closeVault={() => setProfilePopupOpen({ ...profilePopupOpen, isVaultOpen: false })} />}
-
 
                   <button
                     onClick={() => {
                       setProfilePopupOpen((prev) => ({
                         ...prev,
                         isVipOpen: true,
-
                       }))
+                      dispatch(setTooltipOpen(false));
                     }}
                     className="flex items-center space-x-5 py-2"
                   >
                     <MdEmojiEvents size={20} color="#0f212e" />
                     <p className="text-base text-[#0f212e]">VIP</p>
                   </button>
-                  {profilePopupOpen.isVipOpen && <Vip closeVip={() => setProfilePopupOpen({ ...profilePopupOpen, isVipOpen: false })} />}
-
 
                   <button
                     onClick={() => {
@@ -178,17 +175,19 @@ function MainHeader({ handleRightSidebarToggle }) {
                         ...prev,
                         isStatistic: true,
                       }))
+                      dispatch(setTooltipOpen(false));
                     }}
                     className="flex items-center space-x-4 py-2"
                   >
-                    <MdEmojiEvents size={20} color="#0f212e" />
+                    <LegendToggleIcon size={20} color="#0f212e" />
                     <p className="text-base text-[#0f212e]">Statistics</p>
                   </button>
-                  {profilePopupOpen.isStatistic && <Statistic closeStatistic={() => setProfilePopupOpen({ ...profilePopupOpen, isStatistic: false })} />}
-
 
                   <button
-                    onClick={() => navigate("/myBet")}
+                    onClick={() => {
+                      navigate("/myBet")
+                      dispatch(setTooltipOpen(false));
+                    }}
                     className="flex items-center space-x-5 py-2"
                   >
                     <BiSolidNotepad size={20} color="#0f212e" />
@@ -196,7 +195,11 @@ function MainHeader({ handleRightSidebarToggle }) {
                   </button>
 
                   <button
-                    onClick={() => navigate("/setting")}
+                    onClick={() => {
+                      navigate("/setting")
+                      dispatch(setTooltipOpen(false));
+                      dispatch(setAnchorEl(false));
+                    }}
                     className="flex items-center space-x-5 py-2"
                   >
                     <MdSettings size={20} color="#0f212e" />
@@ -209,18 +212,24 @@ function MainHeader({ handleRightSidebarToggle }) {
                         ...prev,
                         isLogoutDialog: true,
                       }))
+                      dispatch(setTooltipOpen(false));
                     }}
                     className="flex items-center space-x-4 py-2"
                   >
                     <LogoutIcon size={10} color="#0f212e" />
                     <p className="text-base text-[#0f212e]">Logout</p>
                   </button>
-                  {profilePopupOpen.isLogoutDialog && <LogoutDialog closeLogoutDialog={() => setProfilePopupOpen({ ...profilePopupOpen, isLogoutDialog: false })} />}
                   <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
                 </div>
               )}
+
+              {profilePopupOpen.isWalletOpen && <Wallet closeWallet={() => setProfilePopupOpen({ ...profilePopupOpen, isWalletOpen: false })} />}
+              {profilePopupOpen.isVaultOpen && <Vault closeVault={() => setProfilePopupOpen({ ...profilePopupOpen, isVaultOpen: false })} />}
+              {profilePopupOpen.isVipOpen && <Vip closeVip={() => setProfilePopupOpen({ ...profilePopupOpen, isVipOpen: false })} />}
+              {profilePopupOpen.isStatistic && <Statistic closeStatistic={() => setProfilePopupOpen({ ...profilePopupOpen, isStatistic: false })} />}
+              {profilePopupOpen.isLogoutDialog && <LogoutDialog closeLogoutDialog={() => setProfilePopupOpen({ ...profilePopupOpen, isLogoutDialog: false })} />}
             </div>
-             <div className="text-white flex items-center space-x-0.4 md:space-x-6">
+            <div className="text-white flex items-center space-x-0.4 md:space-x-6">
               <IconButton onClick={handleMenuOpen} data-menu-type="notifications">
                 <Badge color="success" variant="dot">
                   <NotificationsIcon className="text-white" fontSize="small" />

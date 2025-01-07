@@ -8,7 +8,7 @@ import Vip from "../views/Profile/Vip";
 import Statistic from "../views/Profile/Statistic";
 import LogoutDialog from "../views/Profile/Logout";
 import { useDispatch } from "react-redux";
-import { setAnchorEl } from "../features/auth/authSlice";
+import { setAnchorEl, setTooltipOpen } from "../features/auth/authSlice";
 import Notification from "../views/Profile/Notification";
 
 export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible, setDropdownVisible }) => {
@@ -25,6 +25,7 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible,
   const toggleDropdown = (index) => {
     if (!openMenubar) toggleSidebar();
     setDropdownVisible(dropdownVisible === index ? null : index);
+    dispatch(setTooltipOpen(false));
   };
 
   const firstGroup = ["Dashboard", "Favourites", "Recent", "My Bets"]
@@ -113,7 +114,7 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible,
                   className="block w-full px-4 py-2 hover:bg-[#2F4553] transition-colors rounded-md cursor-pointer"
                 >
                   {dropdownItem.name === "Setting" ? (
-                    <Link to={dropdownItem.to} className="flex items-center">
+                    <Link to={dropdownItem.to} className="flex items-center" onClick={() => dispatch(setTooltipOpen(false))}>
                       {dropdownItem.icon && (
                         <span className="mr-2 inline-block">
                           {dropdownItem.icon}
@@ -124,7 +125,10 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible,
                   ) : dropdownItem.name === "Notification" ? (
                     <button
                       data-menu-type="notifications"
-                      onClick={(event) => dispatch(setAnchorEl(event.currentTarget))}
+                      onClick={(event) => {
+                        dispatch(setAnchorEl(event.currentTarget))
+                        dispatch(setTooltipOpen(false));
+                      }}
                       className="flex items-center"
                     >
                       {dropdownItem.icon && (
@@ -143,6 +147,7 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible,
                         isLogoutDialog: dropdownItem.name === "Logout",
                         isNotification: dropdownItem.name === "Notification",
                       }))
+                      dispatch(setTooltipOpen(false));
                     }} className="flex items-center">
                       {dropdownItem.icon && (
                         <span className="mr-2 inline-block">
@@ -189,7 +194,7 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible,
       {renderGroup(secondGroup, "Second Group")}
       {renderGroup(thirdGroup, "Third Group")}
       {profilePopupOpen.isWalletOpen && <Wallet closeWallet={() => setProfilePopupOpen({ ...profilePopupOpen, isWalletOpen: false })} />}
-      {profilePopupOpen.isVaultOpen && <Vault closeVault={() => setProfilePopupOpen({ ...profilePopupOpen, isVaultOpen: false })}  />}
+      {profilePopupOpen.isVaultOpen && <Vault closeVault={() => setProfilePopupOpen({ ...profilePopupOpen, isVaultOpen: false })} />}
       {profilePopupOpen.isVipOpen && <Vip closeVip={() => setProfilePopupOpen({ ...profilePopupOpen, isVipOpen: false })} />}
       {profilePopupOpen.isStatistic && <Statistic closeStatistic={() => setProfilePopupOpen({ ...profilePopupOpen, isStatistic: false })} />}
       {profilePopupOpen.isLogoutDialog && <LogoutDialog closeLogoutDialog={() => setProfilePopupOpen({ ...profilePopupOpen, isLogoutDialog: false })} />}
