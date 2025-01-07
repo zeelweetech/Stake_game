@@ -83,7 +83,7 @@ function DefaultLayout() {
       <div
         className={`flex flex-col lg:fixed md:relative xl:relative relative bg-[#1a2c38] z-40 h-full
         ${!isMobile ? (openMenubar ? "ml-[14%] md:ml-[19%] lg:ml-[15%]" : "ml-14") : "ml-0 w-full"}
-        ${isBetslipOpen || isChatOpen ? "mr-[14%] md:mr-[25%] lg:mr-[25%] xl:mr-[19%] w-screen" : "mr-0 w-screen"}
+        ${isBetslipOpen || isChatOpen ? "mr-[14%] md:mr-[28%] lg:mr-[24%] xl:mr-[19%] w-screen" : "mr-0 w-screen"}
         transition-all duration-300 ease-in-out`}
       >
         {localStorage.getItem("token") ? (
@@ -112,8 +112,8 @@ function DefaultLayout() {
       {/* Right Sidebar for Betslip or Chat */}
       {!isMobile && (isBetslipOpen || isChatOpen) && (
         <div
-          className={`fixed right-0 text-white h-full overflow-hidden
-           ${isBetslipOpen || isChatOpen ? "w-72 md:w-[28%] lg:w-[24%] xl:w-[19%]" : "w-0"} 
+          className={`fixed right-0 text-white overflow-hidden
+           ${isBetslipOpen || isChatOpen ? "w-72 xl:h-full md:w-[28%] lg:w-[24%] xl:w-[19%]" : "w-0"} 
            transition-all duration-300 ease-in-out lg:absolute lg:top-0 lg:right-0 z-50`}
         >
           <RightSidebar

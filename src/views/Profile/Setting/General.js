@@ -1,5 +1,5 @@
 
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { decodedToken } from "../../../resources/utility";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
@@ -45,7 +45,7 @@ const Generals = () => {
             setTokenValid(false);
         }
     }, []);
-   const handleResendEmail = () => {
+    const handleResendEmail = () => {
         setResendClicked(true);
         if (tokenValid && email) {
             alert(`Decoded Email: ${email}`);
@@ -253,21 +253,19 @@ const Generals = () => {
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         />
-                        <div className="border-b p-2 1px border-gray-400 mt-1"></div>
+                        <div className="border-b p-1 1px border-gray-400 mt-1"></div>
 
-                        {/* Submit Button */}
-                        <div className="flex justify-end mt-4">
-                            <Button
-                                variant="contained"
-                                color="success"
+                        <div className="flex justify-end p-1">
+                            <button
                                 onClick={handleSubmitPhone}
-                                sx={{ color: "black" }}
+                                className="bg-[#2E7D32] text-black py-1.5 px-2 rounded"
                             >
                                 Submit
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 </div>
+                // </div>
             )}
         </div>
 
