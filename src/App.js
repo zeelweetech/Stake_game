@@ -57,8 +57,6 @@ import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes, ScrollRestoration } from "react-router-dom";
 import DefaultLayout from "./layout/DefaultLayout";
 import VerifyTerm from "./views/pages/register/VerifyTerm";
-import ScrollToTop from "./components/ScrollTop";
-// import DefultPage from "./defultPage";
 
 function App() {
   const status = localStorage.getItem("status");
@@ -75,8 +73,7 @@ function App() {
         }}
       />
       <BrowserRouter>
-      {/* <ScrollToTop/>  */}
-        <Routes>
+       <Routes>
           <Route>
             {/* {!status ? (
               <Route path="/" element={<DefultPage />} />

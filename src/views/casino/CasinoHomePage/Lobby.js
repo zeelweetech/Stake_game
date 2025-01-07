@@ -15,7 +15,7 @@ import Exclusives from "./Exclusives";
 import { getAllGames } from "../../../services/GameServices";
 import { decodedToken } from "../../../resources/utility";
 import { getWallet, updateWallet } from "../../../services/LoginServices";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setWallet } from "../../../features/auth/authSlice";
 import { Link } from "react-router-dom";
 
@@ -27,7 +27,8 @@ function Lobby() {
   const dispatch = useDispatch();
 
   const isLobby = stackMenu === "Lobby";
-
+  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
+  const { isChatOpen } = useSelector((state) => state.chat);
   const menuItems = [
     { label: "Lobby", icon: <TbCherryFilled color="#b1bad3" fontSize={15} /> },
     {
@@ -63,12 +64,12 @@ function Lobby() {
   };
 
   return (
-    <div className="flex justify-center h-full bg-[#1a2c38]">
+    <div className={`flex justify-center h-full bg-[#1a2c38]`}>
       {loading ? (
         <Loader />
       ) : (
-        <div className="text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10">
-                    <div className="flex items-center mx-3 mt-8 space-x-2">
+<div className={`text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10 `}>
+<div className="flex items-center mx-3 mt-8 space-x-2">
           <TbCherryFilled 
             size={28}
             className="text-[#b1bad3] hover:text-white"

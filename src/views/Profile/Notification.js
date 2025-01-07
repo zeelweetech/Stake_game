@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import notification from "../../assets/img/Notification.png";
@@ -8,15 +8,23 @@ import { setAnchorEl } from "../../features/auth/authSlice";
 const Notification = () => {
     const { anchorEl } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
+    useEffect(() => {
+        const handleResize = () => {
+            setResponsiveMobile(window.innerWidth);
+        };
 
+        window.addEventListener("resize", handleResize);
+        // Cleanup event listener on component unmount
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
     const handleClose = () => {
         dispatch(setAnchorEl(null));
 
     };
-
     return (
         <div
-            className="fixed top-14 right-36 w-80 bg-[#0f212e] rounded-lg shadow-lg p-4 z-50"
+            className="fixed top-14 right-8 md:right-36 w-80 bg-[#0f212e] rounded-lg shadow-lg p-4 z-50"
             style={{ display: anchorEl ? "block" : "none" }}
         >
             <div className="flex justify-between items-center">
