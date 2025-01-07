@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import routes from "../routes";
 import Loader from "../views/component/Loader";
-import Footer from "./Footer";
+// import Footer from "./Footer";
 
 function Content() {
   return (
