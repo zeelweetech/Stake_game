@@ -219,7 +219,7 @@ function LimboGameSidebar() {
                   className="w-full p-[0.4375rem] py-1.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#2F4553] focus:outline-none"
                   type="text"
                   placeholder="0"
-                  value={values?.betamount * (values?.multiplier || 2.0) || 0}
+                  value={values?.betamount * (values?.multiplier || 2.0) || "0.00"}
                   disabled
                 />
               </div>
@@ -597,7 +597,7 @@ function LimboGameSidebar() {
                   className="w-full h-[2.4375rem] p-[0.4375rem] rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#2F4553] focus:outline-none"
                   type="text"
                   placeholder="0"
-                  value={values?.betamount * (values?.multiplier || 2.0) || 0}
+                  value={values?.betamount * (values?.multiplier || 2.0) || "0.00"}
                   disabled
                 />
               </div>

@@ -1,13 +1,11 @@
 
 import React, { useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import { IconButton, Typography, FormControl, TextField } from "@mui/material";
+import { IconButton, FormControl, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { MdOutlineEventNote } from "react-icons/md";
 import sportsTable from "../../../assets/img/sportsTable.png";
 import { PiCurrencyBtcFill } from "react-icons/pi";
 import MyAllBet from "./pageview/myAllBet";
-import { useSelector } from "react-redux";
 
 function Betslip({ onClose }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -19,17 +17,18 @@ function Betslip({ onClose }) {
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+    setTooltip(false)
   };
 
   const toggleTooltip = () => {
     setTooltip(!tooltip);
+    setDropdownOpen(false);
   };
 
   const handleViewChange = (view) => {
     setSelectedView(view);
     setDropdownOpen(false);
   };
-
 
   const handleAmountChange = (value) => {
     const parsedValue = parseFloat(value);
@@ -69,8 +68,8 @@ function Betslip({ onClose }) {
 
   return (
     <div className="bg-[#0f212e]">
-    <div className="text-white p-2 rounded-md shadow-lg relative">
-    <IconButton
+      <div className="text-white rounded-md shadow-lg relative">
+        <IconButton
           onClick={onClose}
           sx={{ color: "white", position: "absolute", top: 8, right: 8 }}
         >
@@ -220,7 +219,7 @@ function Betslip({ onClose }) {
               </div>
             </div>
 
-            <div className="mt-5 absolute bottom-0 w-full bg-[#213743] p-[10px]">
+            <div className="absolute bottom-16 right-0 w-full bg-[#213743] p-[10px]">
               {gameMenu === "Single" ? (
                 <div className="bg-[#213743] p-4 space-y-2 ">
                   {/* Total Stake Section */}

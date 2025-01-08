@@ -6,7 +6,7 @@ const token = localStorage.getItem("token");
 const initialState = {
   isSwiper: true,
   isboardControl: true,
-  crashValues: {},
+  crashValues: { cashout: 2.00 },
   gameStatusData: {},
   xValue: "",
   bettingStatus: "",
