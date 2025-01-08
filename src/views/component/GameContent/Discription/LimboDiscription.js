@@ -1,5 +1,6 @@
 import React from "react";
 import LimboGame from "../../../../assets/img/limboGame.avif";
+import { Link } from "react-router-dom";
 
 const LimboDiscription = () => {
   return (
@@ -21,9 +22,11 @@ const LimboDiscription = () => {
               1.00%
             </button>
             <div>
-              <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-2 py-0.5 rounded-2xl">
-                Listor Originals
-              </button>
+              <div className="flex items-center space-x-2">
+                <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-2 py-0.5 rounded-2xl hover:text-white">
+                  <Link to={"/StackOriginals"}>Listor Originals</Link>
+                </button>
+              </div>
             </div>
             <p className="text-[15px] py-4 cursor-default">
               Limbo is an online casino game that offers unrivalled gameplay and

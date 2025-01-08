@@ -315,12 +315,13 @@ const DragonTowerDiscription = () => {
             <span className="font-semibold hover:text-white cursor-pointer">
               Listor Vault
             </span>{" "}
-            to securely store your funds online for all future gameplay at Listor
-            Casino. You can also read our{" "}
+            to securely store your funds online for all future gameplay at
+            Listor Casino. You can also read our{" "}
             <span className="font-semibold hover:text-white cursor-pointer">
               crypto security guide
             </span>{" "}
-            to learn more about keeping your funds safe and secure at Listor.com.
+            to learn more about keeping your funds safe and secure at
+            Listor.com.
           </p>
           <p className="text-[15px] pb-3 cursor-default">
             Please always remember to bet within your means and{" "}

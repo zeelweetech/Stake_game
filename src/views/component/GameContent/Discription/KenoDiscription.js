@@ -5,67 +5,80 @@ import { Link } from "react-router-dom";
 const KenoDiscription = () => {
   return (
     <>
-      <div className="py-3 xl:max-w-[58rem] md:w-full text-[#b1bad3]">
+      <div className="pt-3 xl:max-w-[52rem] md:w-full min-h-screen text-[#b1bad3]">
         <div className="md:flex block gap-5 space-y-2 md:space-y-0">
-          <div>
+          <div className="flex justify-center items-center">
             <img
-              className="rounded-lg w-48 md:w-[30rem]"
+              className="rounded-md xl:max-w-36 lg:max-w-40 md:max-w-44 w-48 flex justify-center items-center"
               src={KenoGame}
-              alt="crashGame"
+              alt="kenoGame"
             />
           </div>
           <div>
-            <button className="text-[11px] bg-[#4d718768] px-2 py-0.5 rounded-2xl">
-              Edge: 1.00%
+            <button className="text-[12px] text-white bg-[#4d718768] px-2 py-0.5 rounded-2xl cursor-default font-bold">
+              <span className="text-[12px] font-bold text-[#B2BAD3]">
+                Edge:
+              </span>{" "}
+              1.00%
             </button>
             <div className="flex items-center space-x-2">
-              <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-2 py-0.5 rounded-2xl">
-                Listor Originals
+              <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-2 py-0.5 rounded-2xl hover:text-white">
+                <Link to={"/StackOriginals"}>Listor Originals</Link>
               </button>
-              <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-2 py-0.5 rounded-2xl">
+              <button className="text-[12px] mt-2 font-bold bg-[#4d718768] px-2 py-0.5 rounded-2xl hover:text-white">
                 Video Bingo
               </button>
             </div>
-            <p className="text-[15px] py-2">
-              Enjoy the best fast-paced online keno game at Listor Casino ,
-              that's easy to play and fun to win!
+            <p className="text-[15px] py-2 cursor-default">
+              Enjoy the best fast-paced online keno game at{" "}
+              <span className="font-semibold hover:text-white cursor-pointer">
+                Listor Casino
+              </span>{" "}
+              , that's easy to play and fun to win!
             </p>
-            <p className="text-[15px] py-1">
-              Keno is a game of chance, similar to the lottery and bingo , and
-              extremely popular amongst modern casinos. In traditional keno, you
-              can choose 10-20 numbers ranging from 1-80. After making your
-              selection and placing your bets, 20 numbers are randomly drawn,
-              and if you’ve picked correctly, you will receive your winnings
-              based on the associated pay table.
+            <p className="text-[15px] py-1 cursor-default">
+              Keno is a game of chance, similar to the lottery and{" "}
+              <span className="font-semibold hover:text-white cursor-pointer">
+                bingo
+              </span>{" "}
+              , and extremely popular amongst modern casinos. In traditional
+              keno, you can choose 10-20 numbers ranging from 1-80. After making
+              your selection and placing your bets, 20 numbers are randomly
+              drawn, and if you’ve picked correctly, you will receive your
+              winnings based on the associated pay table.
             </p>
           </div>
         </div>
         <div>
-          <p className="text-[15px] pt-2">
+          <p className="text-[15px] pt-2 cursor-default">
             The game has its roots in ancient China but has become one of the
             most popular games today at online and brick-and-mortar casinos.
             Although traditional keno is still extremely popular, many keno
             variations, such as our Listor Original, is additional fun for
             players!
           </p>
-          <p className="text-[15px] py-3">
+          <p className="text-[15px] py-3 cursor-default">
             You can play keno online at Listor Casino, and thanks to our
             effortless deposit process, you can start playing in no time.
           </p>
-          <p className="text-[15px]">
+          <p className="text-[15px] cursor-default">
             So, if you’re keen to enjoy a straightforward yet super engaging
             online game, read on to find out what you need to get started. Delve
-            even deeper with our comprehensive guide on how to play keno .
+            even deeper with our comprehensive guide on{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              how to play keno
+            </span>{" "}
+            .
           </p>
-          <h1 className="text-white text-2xl font-bold pt-4">
+          <h1 className="text-white text-2xl font-semibold pt-4 cursor-default">
             History of Keno Casino Games
           </h1>
-          <p className="text-[15px] py-3">
+          <p className="text-[15px] py-3 cursor-default">
             It’s thought that the game of keno that we know and love today
             originated in China, even though the word “keno” has Latin roots. In
             China, the game has a legendary origin story.
           </p>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pb-3 cursor-default">
             It’s said that the invention of keno saved an ancient Chinese city
             from destruction at a time of war, and the game's popularity in the
             years that followed helped to fund the Great Wall of China.
@@ -110,29 +123,29 @@ const KenoDiscription = () => {
           <h1 className="text-white text-2xl font-bold pb-3">
             Traditional Keno Games
           </h1>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pb-3 cursor-default">
             In many respects, keno is one of the simplest games you can play at{" "}
-            <Link to={"/"} className="text-white font-bold">
+            <Link to={"/"} className="text-white font-bold cursor-pointer">
               Listor.com{" "}
             </Link>
             .In traditional games, your job is to select the number of
             consecutive draws (10-20 numbers) on a sheet of paper, ranging from
             1-80. In this regard, it’s similar to bingo and lottery games.
           </p>
-          <p className="text-[15px] pb-2">
+          <p className="text-[15px] pb-2 cursor-default">
             When the balls are drawn, you receive a payout depending on how many
             numbers you select accurately. Traditionally, keno is played with a
             ball machine with imprinted with numbers, which are entered into a
             transparent container, where they are spun and drawn.
           </p>
-          <p className="text-[15px] py-3">
+          <p className="text-[15px] py-3 cursor-default">
             Ultimately, the more consecutive numbers you match on your keno
             card, the bigger your payout. One thing to note about keno is that
             the payouts in a single game will differ from platform to platform,
             so it’s important to check the paytable before placing a bet, so you
             know what you can win by making accurate selections.
           </p>
-          <p className="text-[15px] py-3">
+          <p className="text-[15px] py-3 cursor-default">
             Traditional keno games are extremely straightforward and have been
             popular for generations. But thanks to technological advancements
             and the prominence of online gaming, keno games today have many
@@ -140,25 +153,29 @@ const KenoDiscription = () => {
           </p>
         </div>
         <div>
-          <h1 className="text-white text-2xl font-bold pb-3">
+          <h1 className="text-white text-2xl font-semibold pb-3 cursor-default">
             How to Play Keno Game Online
           </h1>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pb-3 cursor-default">
             As is the case with online slots and table games , online keno is
             extremely popular today. In online keno, the structure and
             objectives of the game remain the same.
           </p>
-          <p className="text-[15px] pb-3">
-            The main difference is that online keno games rely on a random
-            number generator (RNG) to reveal the winning numbers instead of a
-            draw, which is the case in traditional keno.
+          <p className="text-[15px] pb-3 cursor-default">
+            The main difference is that online keno games rely on a
+            <span className="font-semibold hover:text-white cursor-pointer">
+              {" "}
+              random number generator (RNG)
+            </span>{" "}
+            to reveal the winning numbers instead of a draw, which is the case
+            in traditional keno.
           </p>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pb-3 cursor-default">
             Another significant benefit of online keno games is that they
             typically comprise excellent graphics and are sometimes themed,
             making things more aesthetically pleasing and engaging for players.
           </p>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pb-3 cursor-default">
             One of the best things about online keno is that you can play
             wherever you are, and you don’t need to wait for carrier pigeons to
             bring you the results! Instead, you can easily make your selections
@@ -166,32 +183,54 @@ const KenoDiscription = () => {
             seconds, with keno bonus offers and casino promotions available at
             Listor.
           </p>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pb-3 cursor-default">
             Before playing keno online, remember that it’s a game of luck. It’s
             not like certain card games that incorporate an element of skill and
             strategy, as the result of keno is based on a random number
             generator. However, there are still tips and tricks that can be
             incorporated, especially when playing the free demo game !
           </p>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pb-3 cursor-default">
             Once you've had a go at our exciting keno game, play around with
-            more Listor Original casino games online, including Limbo , Dice ,
-            Plinko , Mines , and Crash !
+            more Listor Original casino games online, including{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              Limbo
+            </span>{" "}
+            ,{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              Plinko
+            </span>{" "}
+            ,{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              Mines
+            </span>{" "}
+            , and{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              Crash
+            </span>{" "}
+            !
           </p>
-          <p className="text-[15px] pb-3">
-            Also check out our range of video bingo games , and learn more with
-            our guide to playing casino bingo .
+          <p className="text-[15px] pb-3 cursor-default">
+            Also check out our range of{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              video bingo games
+            </span>{" "}
+            , and learn more with our{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              guide to playing casino bingo
+            </span>{" "}
+            .
           </p>
         </div>
         <div>
-          <h1 className="text-white text-2xl font-bold pb-3">
+          <h1 className="text-white text-2xl font-semibold pb-3 cursor-default">
             Variations of Keno Games
           </h1>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pb-3 cursor-default">
             You might come across several variations of keno online, so it’s
             important to be aware of them. Some of the variations include:
           </p>
-          <ul className="list-disc pl-8">
+          <ul className="list-disc pl-8 cursor-default">
             <li className="text-[15px] pb-2">
               Power keno: The main feature of power keno is that you win a 4x
               multiplier if the last ball drawn in the game is one of your
@@ -223,13 +262,15 @@ const KenoDiscription = () => {
               real-life dealer, as opposed to RNG.
             </li>
           </ul>
-          <p className="text-[15px] pb-3">
-            You can discover similar lottery-style and chance games in our guide
-            to the best online lottery games on Listor!
+          <p className="text-[15px] pb-3 cursor-default">
+            You can discover similar lottery-style and chance games in our{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              guide to the best online lottery games on Listor!
+            </span>
           </p>
         </div>
         <div>
-          <h1 className="text-white text-2xl font-bold pb-3">
+          <h1 className="text-white text-2xl font-bold pb-3 cursor-default">
             Tips for Playing Keno Games Online
           </h1>
           <p className="text-[15px] pb-3">
@@ -265,55 +306,145 @@ const KenoDiscription = () => {
           </ul>
         </div>
         <div>
-          <h1 className="text-white text-2xl font-bold pb-3">
+          <h1 className="text-white text-2xl font-semibold pb-3 cursor-default">
             How to Make a Deposit to Play Keno Online
           </h1>
-          <p className="text-[15px] pb-3">
-            Playing keno online for local currencies, Bitcoin or other available
-            cryptocurrencies is easy on the Listor casino. You can deposit funds
-            into your Listor.com account by following these simple steps listed
-            below:
+          <p className="text-[15px] pb-3 cursor-default">
+            Playing keno online for local currencies,{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              Bitcoin
+            </span>{" "}
+            or{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              other available cryptocurrencies
+            </span>{" "}
+            is easy on the Listor casino. You can deposit funds into your
+            Listor.com account by following these simple steps listed below:
           </p>
-          <ul className="list-disc pl-8">
-            <li className="text-[15px] pb-2">
-              Step 1 - Retrieve your deposit address, located in Wallet {">"}{" "}
-              Deposit.
+          <ol class="ps-8 space-y-2 cursor-default">
+            <li>
+              <span className="font-semibold "> Step 1 –</span> Retrieve your
+              deposit address, located in Wallet {">"} Deposit.
             </li>
-            <li className="text-[15px] pb-2">
-              Step 2 - Choose the method which suits your needs. We offer many
-              supported currencies including Bitcoin (BTC), Ethereum (ETH),
-              Dogecoin (Doge) and many more. You can find more information about
-              our local currency options on our community forum, as well as our
-              local currency payment guide.
+            <li>
+              <span className="font-semibold "> Step 2 –</span> You can also
+              Choose the method which suits your needs. We offer many supported
+              currencies including Bitcoin (BTC), Ethereum (ETH), Dogecoin
+              (Doge) and many more. You can find more information about our
+              <a className="items-center inline-flex ml-0.5 font-semibold cursor-pointer hover:text-white group">
+                local currency options
+                <svg
+                  className="h-4 w-4 ml-1 text-[#B1BAD3] group-hover:text-white"
+                  viewBox="0 0 64 64"
+                  fill="currentColor"
+                >
+                  <path d="M10.823 53.176h42.353V39.941h7.059v20.294H3.765V3.765h20.293v7.058H10.823v42.353Zm28.236-42.353V3.765h21.176V24.94h-7.059v-9.123L27.88 41.115l-4.994-4.995 25.297-25.296H39.06Z" />
+                </svg>
+              </a>
+              <span className="ml-0.5 cursor-default">
+                {" "}
+                on our community forum, as well as our
+              </span>
+              <span className="font-semibold ml-1 hover:text-white cursor-pointer">
+                local currency payment guide.
+              </span>{" "}
             </li>
-            <li className="text-[15px] pb-2">
-              Step 3 - Use your deposit address as the 'Send to' location for
-              your wallet or exchange.
+            <li>
+              <span class="font-semibold">Step 3 –</span> Use your deposit
+              address as the 'Send to' location for your wallet or exchange.
             </li>
-            <li className="text-[15px] pb-2">
-              Step 4 (Optional) - If you need to deposit fiat currency, you can
-              buy crypto for Listor via Moonpay .
+            <li>
+              <span class="font-semibold">Step 4 (Optional) –</span> If you need
+              to deposit fiat currency, you can buy crypto for Listor via
+              <a className="items-center inline-flex ml-0.5 font-semibold cursor-pointer hover:text-white group">
+                Moonpay{" "}
+                <svg
+                  className="ml-1 h-4 w-4 text-[#B1BAD3] group-hover:text-white"
+                  viewBox="0 0 64 64"
+                  fill="currentColor"
+                >
+                  <path d="M10.823 53.176h42.353V39.941h7.059v20.294H3.765V3.765h20.293v7.058H10.823v42.353Zm28.236-42.353V3.765h21.176V24.94h-7.059v-9.123L27.88 41.115l-4.994-4.995 25.297-25.296H39.06Z" />
+                </svg>
+              </a>{" "}
+              .
             </li>
-          </ul>
-          <p className="text-[15px] pb-3">
-            The best way to enjoy Listor Original games is with a bankroll
-            boost. You can access thecurrent promotions to play these games
-            includingdaily races ,weekly raffles, andDrops and Wins to keep your
-            bankroll full.
+          </ol>
+          <style jsx>{`
+            ol {
+              list-style-type: decimal;
+            }
+
+            li::marker {
+              color: [#B1BAD3];
+              font-weight: 600;
+            }
+          `}</style>
+          <p className="text-[15px] pt-3 cursor-default">
+            The best way to enjoy Listor Original games is with a bankroll boost.
+            You can access thecurrent promotions to play these games including{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              daily races{" "}
+            </span>{" "}
+            ,
+            <span className="font-semibold hover:text-white cursor-pointer">
+              weekly raffles{" "}
+            </span>
+            , and{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              Drops and Wins
+            </span>{" "}
+            to keep your bankroll full.
           </p>
-          <p className="text-[15px] pb-3">
-            We also invite you to learn more about the exclusive rewards
-            available via the Listor VIP Club to access great value promotions
-            and offers as you play. Check out our Listor VIP Club FAQs for more
-            information and discover how you could earn members-only rewards
-            such as a dedicated VIP Host , rakeback and reload bonuses!
+          <p className="text-[15px] pt-3 cursor-default">
+            We also invite you to learn more about the{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              exclusive rewards{" "}
+            </span>
+            available via the{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              Listor VIP Club{" "}
+            </span>
+            to access great value promotions and offers as you play. Check out
+            our{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              Listor VIP Club FAQs
+            </span>{" "}
+            for more information and discover how you could earn members-only
+            rewards such as a{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              dedicated VIP Host
+            </span>{" "}
+            ,{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              rakeback
+            </span>{" "}
+            and{" "}
+            <span className="font-semibold hover:text-white cursor-pointer">
+              reload bonuses!
+            </span>
           </p>
-          <p className="text-[15px] pb-3">
-            Listor provides information on our help center as well as live
-            support and assistance from our support staff - whether it has to do
-            with account deposits or slots game access, we are here to help!
+          <p className="text-[15px] pt-3 cursor-default">
+            Listor provides information on our{" "}
+            <a className="items-center inline-flex ml-0.5 font-semibold cursor-pointer hover:text-white group">
+              help center
+              <svg
+                className="ml-1 h-4 w-4 text-[#B1BAD3] group-hover:text-white mb-1.5"
+                viewBox="0 0 64 64"
+                fill="currentColor"
+              >
+                <path d="M10.823 53.176h42.353V39.941h7.059v20.294H3.765V3.765h20.293v7.058H10.823v42.353Zm28.236-42.353V3.765h21.176V24.94h-7.059v-9.123L27.88 41.115l-4.994-4.995 25.297-25.296H39.06Z" />
+              </svg>
+            </a>
+            <span className="ml-1">
+              as well as{" "}
+              <span className="font-semibold hover:text-white cursor-pointer">
+                live support and assistance
+              </span>{" "}
+              from our support staff - whether it has to do with account
+              deposits or slots game access, we are here to help!
+            </span>{" "}
           </p>
-          <p className="text-[15px] pb-3">
+          <p className="text-[15px] pt-3 cursor-default">
             The customer support team at Listor are available to troubleshoot
             issues with game providers, online deposits, withdrawals, bonuses,
             gambling safety, self-exclusion and provide quality customer service
