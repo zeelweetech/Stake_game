@@ -6,8 +6,8 @@ import diamondIcon from "../../../../assets/img/Diamond.png";
 import { decodedToken } from "../../../../resources/utility";
 import { MineSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
-import winSound from "../../../../assets/Sound/winSound.wav"
-import bombSound from "../../../../assets/Sound/bombSound.wav"
+import winSound from "../../../../assets/Sound/winSound.wav";
+import bombSound from "../../../../assets/Sound/bombSound.wav";
 import {
   setGamesOver,
   setGameBet,
@@ -30,7 +30,7 @@ function MinesGameContent() {
   const [images, setImages] = useState(Array(25).fill(null));
   const [revealed, setRevealed] = useState(Array(25).fill(false));
   const [zoomClass, setZoomClass] = useState(Array(25).fill(false));
-  const [fundsToastShown, setFundsToastShown] = useState(false)
+  const [fundsToastShown, setFundsToastShown] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showautoBetResult, setShowautoBetResult] = useState(false);
   const gameOverProcessedRef = useRef(false);
@@ -154,9 +154,9 @@ function MinesGameContent() {
       const { clickedMine, remainingMines } = data;
       handleGameOver(clickedMine, remainingMines);
       dispatch(setShowFields(false));
-      dispatch(setTileSelect({}))
-      dispatch(setRestored({}))
-      dispatch(setCashoutResult(false))
+      dispatch(setTileSelect({}));
+      dispatch(setRestored({}));
+      dispatch(setCashoutResult(false));
       gameOverProcessedRef.current = true;
     }
   });
@@ -210,7 +210,7 @@ function MinesGameContent() {
   };
 
   MineSocket.on("cashoutSuccess", (data) => {
-    dispatch(setCashoutResult(data))
+    dispatch(setCashoutResult(data));
 
     const newImages = Array(25).fill(null);
     const newRevealed = Array(25).fill(false);
@@ -239,7 +239,9 @@ function MinesGameContent() {
 
   const placeBombs = (totalTiles, bombCount, selectedTileIndex) => {
     const bombPositions = new Set();
-    while (bombPositions.size < (restored?.mines ? restored?.mines : bombCount)) {
+    while (
+      bombPositions.size < (restored?.mines ? restored?.mines : bombCount)
+    ) {
       const randomIndex = Math.floor(Math.random() * totalTiles);
       if (randomIndex !== selectedTileIndex) {
         bombPositions.add(randomIndex);
@@ -249,9 +251,9 @@ function MinesGameContent() {
   };
 
   MineSocket.on("betResult", (data) => {
-    dispatch(setAutoBetResult(data))
+    dispatch(setAutoBetResult(data));
     if (data?.round === 0 && data?.round >= 0) {
-      dispatch(setAutoBet(false))
+      dispatch(setAutoBet(false));
     }
 
     if (!isManual && data?.mineLocations?.length > 0) {
@@ -259,20 +261,35 @@ function MinesGameContent() {
       const newRevealed = [...revealed];
 
       data?.mineLocations?.forEach((tileIndex) => {
-        newImages[tileIndex] = { icon: bombIcon, size: isMobile ? 60 : preSelectTile.includes(tileIndex) ? 75 : 70, className: preSelectTile.includes(tileIndex) ? "bomb-blast" : "", opacity: preSelectTile.includes(tileIndex) ? "" : 0.5 };
+        newImages[tileIndex] = {
+          icon: bombIcon,
+          size: isMobile ? 60 : preSelectTile.includes(tileIndex) ? 75 : 70,
+          className: preSelectTile.includes(tileIndex) ? "bomb-blast" : "",
+          opacity: preSelectTile.includes(tileIndex) ? "" : 0.5,
+        };
         newRevealed[tileIndex] = true;
       });
 
       data?.result?.forEach(({ tileIndex, mine }) => {
         if (!mine) {
-          newImages[tileIndex] = { icon: diamondIcon, size: isMobile ? 60 : 100 };
+          newImages[tileIndex] = {
+            icon: diamondIcon,
+            size: isMobile ? 60 : 100,
+          };
           newRevealed[tileIndex] = true;
         }
       });
 
       newImages.forEach((image, index) => {
-        if (!data?.mineLocations?.includes(index) && !data?.result?.some((r) => r.tileIndex === index)) {
-          newImages[index] = { icon: diamondIcon, size: isMobile ? 60 : 75, opacity: 0.5 };
+        if (
+          !data?.mineLocations?.includes(index) &&
+          !data?.result?.some((r) => r.tileIndex === index)
+        ) {
+          newImages[index] = {
+            icon: diamondIcon,
+            size: isMobile ? 60 : 75,
+            opacity: 0.5,
+          };
           newRevealed[index] = true;
         }
       });
@@ -281,7 +298,10 @@ function MinesGameContent() {
         setTimeout(() => {
           setImages(newImages);
           setRevealed(newRevealed);
-          if ((cashoutResult && !gameBet) || (autoBetResult?.isWin === true && autoBetResult?.round >= 0)) {
+          if (
+            (cashoutResult && !gameBet) ||
+            (autoBetResult?.isWin === true && autoBetResult?.round >= 0)
+          ) {
             setShowautoBetResult(true);
 
             const timeout = setTimeout(() => {
@@ -299,7 +319,7 @@ function MinesGameContent() {
   });
 
   const handleClick = (index) => {
-    const maxSelectableTiles = 25 - mineValue?.mines
+    const maxSelectableTiles = 25 - mineValue?.mines;
     if (gamesOver || revealed[index] || (isManual && !gameBet)) return;
 
     if (isManual) {
@@ -318,7 +338,9 @@ function MinesGameContent() {
 
     if (!isManual) {
       if (preSelectTile.includes(index)) {
-        dispatch(setPreSelectTile(preSelectTile.filter((tile) => tile !== index)));
+        dispatch(
+          setPreSelectTile(preSelectTile.filter((tile) => tile !== index))
+        );
       } else if (preSelectTile.length < maxSelectableTiles) {
         dispatch(setPreSelectTile([...preSelectTile, index]));
       }
@@ -328,35 +350,86 @@ function MinesGameContent() {
   };
 
   return (
-    <div className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${isMobile ? ' max-sm:mx-2' : 'xl:w-[52rem] lg:w-[40rem]'}`}>
+    <div
+      className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${
+        isMobile ? " max-sm:mx-2" : "xl:w-[51rem] lg:w-[40rem]"
+      }`}
+    >
       {cashoutResult && !gameBet && (
-        <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
+        <div
+          className={`mt-4 ${
+            isMobile ? "w-32" : "w-40"
+          } py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}
+        >
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
-            <p>{cashoutResult?.winAmount ? cashoutResult.winAmount.toFixed(2) : autoBetResult?.winAmount ? autoBetResult?.winAmount.toFixed(2) : "0.00"}₹</p>
+            <p>
+              {cashoutResult?.winAmount
+                ? cashoutResult.winAmount.toFixed(2)
+                : autoBetResult?.winAmount
+                ? autoBetResult?.winAmount.toFixed(2)
+                : "0.00"}
+              ₹
+            </p>
             {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
           </div>
         </div>
       )}
       {showautoBetResult && (
-        <div className={`mt-4 ${isMobile ? 'w-32' : 'w-40'} py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}>
+        <div
+          className={`mt-4 ${
+            isMobile ? "w-32" : "w-40"
+          } py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20`}
+        >
           <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
           <div className="flex items-center justify-center space-x-1">
-            <p>{cashoutResult?.winAmount ? cashoutResult.winAmount.toFixed(2) : autoBetResult?.winAmount ? autoBetResult?.winAmount.toFixed(2) : "0.00"}₹</p>
+            <p>
+              {cashoutResult?.winAmount
+                ? cashoutResult.winAmount.toFixed(2)
+                : autoBetResult?.winAmount
+                ? autoBetResult?.winAmount.toFixed(2)
+                : "0.00"}
+              ₹
+            </p>
             {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
           </div>
         </div>
       )}
-      <div className={`grid ${isMobile ? 'grid-cols-5 gap-1.5' : 'grid-cols-5 gap-2'} relative z-10 p-1.5 max-sm:w-full`}>
+      <div
+        className={`grid ${
+          isMobile ? "grid-cols-5 gap-1.5" : "grid-cols-5 gap-2"
+        } relative z-10 p-1.5 max-sm:w-full`}
+      >
         {images?.map((img, index) => (
           <div
             key={index}
-            className={`flex justify-center items-center w-full ${isMobile ? 'md:w-[4.35rem] p-2 md:h-[4.35rem w-[4.6rem] h-[4.35rem] ' : 'xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]'} bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""}`}
+            className={`flex justify-center items-center w-full ${
+              isMobile
+                ? "md:w-[4.35rem] p-2 md:h-[4.35rem w-[4.6rem] h-[4.35rem] "
+                : "xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]"
+            } bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${
+              zoomClass[index] ? "zoom-in-out" : ""
+            }`}
             onClick={() => handleClick(index)}
             style={{
-              backgroundColor: revealed[index] || gamesOver ? "#071824" : preSelectTile.includes(index) && !isManual ? "#9000ff" : "#2f4553",
-              border: !isManual && autoBetResult?.mineLocations?.length > 0 && preSelectTile.includes(index) ? "7px solid #9000ff" : "",
-              borderBottom: !isManual && autoBetResult?.mineLocations?.length > 0 && preSelectTile.includes(index) ? "12px solid #7100c7" : "",
+              backgroundColor:
+                revealed[index] || gamesOver
+                  ? "#071824"
+                  : preSelectTile.includes(index) && !isManual
+                  ? "#9000ff"
+                  : "#2f4553",
+              border:
+                !isManual &&
+                autoBetResult?.mineLocations?.length > 0 &&
+                preSelectTile.includes(index)
+                  ? "7px solid #9000ff"
+                  : "",
+              borderBottom:
+                !isManual &&
+                autoBetResult?.mineLocations?.length > 0 &&
+                preSelectTile.includes(index)
+                  ? "12px solid #7100c7"
+                  : "",
               cursor: revealed[index] ? "not-allowed" : "pointer",
             }}
           >
@@ -367,7 +440,9 @@ function MinesGameContent() {
                   height: img.size,
                   opacity: img.opacity || 1,
                 }}
-                className={`flex justify-center items-center ${revealed[index] || gamesOver ? "reveal-animation" : "hidden"} ${img.className || ""}`}
+                className={`flex justify-center items-center ${
+                  revealed[index] || gamesOver ? "reveal-animation" : "hidden"
+                } ${img.className || ""}`}
                 src={img.icon}
                 alt="Icon"
               />

@@ -299,7 +299,7 @@ function WheelGameContent() {
   return (
     <div
       className={`bg-[#0f212e] flex flex-col justify-center items-center overflow-hidden rounded-t-lg max-sm:mx-3 -mt-0.2 
-        xl:w-[52rem] xl:h-[46rem] xl:ml-0
+        xl:w-[51rem] xl:h-[46rem] xl:ml-0
         lg:w-[41rem] lg:h-[46rem] lg:ml-0
         md:h-[32rem] md:w-[24rem] md:ml-[1.5rem]
         h-full`}

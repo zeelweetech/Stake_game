@@ -46,7 +46,7 @@ function LimboGame() {
 
   return (
     <div className="flex justify-center w-full h-full">
-      <div className="bg-[#1a2c38] md:py-10 py-4 text-white  flex justify-center items-center md:max-w-96 max-w-full">
+      <div className="bg-[#1a2c38] md:py-10 py-4 text-white  flex justify-center items-center md:max-w-96 max-w-full xl:-ml-0 lg:-ml-[3rem]">
         <div className="w-full">
           <div
             className={`flex justify-center w-full  ${
@@ -57,7 +57,7 @@ function LimboGame() {
               <div className="flex-row bg-[#213743] rounded-tl-xl">
                 <LimboGameSidebar />
               </div>
-            )}  
+            )}
             <div className="flex-grow">
               <LimboGameContent />
             </div>
@@ -68,14 +68,14 @@ function LimboGame() {
               <LimboGameSidebar />
             </div>
           )}
-           <div className="md:flex md:justify-center lg:block xl:block">
-            <div className="max-sm:mx-3 xl:-ml-[24rem] lg:-ml-[16.9rem]">
+          <div className="md:flex md:justify-center lg:block xl:block">
+            <div className="max-sm:mx-3 xl:-ml-[23.5rem] lg:-ml-[16.9rem]">
               <hr className="border-[#213743]" />
               <GameFooter />
             </div>
           </div>
           <div className="flex justify-center pt-5">
-            <div className="xl:w-[72rem] lg:w-[55rem] md:w-[42rem] mx-0 md:px-0 px-3 w-full">
+            <div className="xl:w-[71rem] lg:w-[58rem] md:w-[42rem] mx-0 md:px-0 px-3 w-full">
               <GameContent />
               <GameTable />
             </div>

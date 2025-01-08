@@ -843,11 +843,11 @@ function MinesGameSidebar() {
               {showFields ? (
                 <div>
                   <div className="flex space-x-2">
-                    <div>
+                    <div className="w-full">
                       <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-2 mb-1">
                         <label>Mines</label>
                       </div>
-                      <div className="bg-[#2f4553] font-bold rounded border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none xl:w-36 lg:w-[7.4rem] md:w-44 w-[11.5rem] p-2 mt-2.5">
+                      <div className="bg-[#2f4553] font-bold rounded border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none w-full sm:w-[11rem] md:w-44 lg:w-[7.4rem] xl:w-36 p-2 mt-2.5">
                         {restored?.mineLocations?.length > 0
                           ? restored?.mines
                           : mineValue?.mines
@@ -855,11 +855,11 @@ function MinesGameSidebar() {
                           : restored?.mines}
                       </div>
                     </div>
-                    <div>
+                    <div className="w-full">
                       <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-2 mb-1">
                         <label>Gems</label>
                       </div>
-                      <div className="bg-[#2f4553] font-bold rounded border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none w-[11.5rem] max-[400px]:w-[10.3rem] md:w-44 lg:w-[7.4rem] xl:w-36 p-2 mt-2.5">
+                      <div className="bg-[#2f4553] font-bold rounded border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] focus:outline-none w-full sm:w-[11rem] md:w-44 lg:w-[7.4rem] xl:w-36 p-2 mt-2.5">
                         {restored?.mineLocations?.length > 0
                           ? 25 - restored?.mines
                           : mineValue?.mines
@@ -868,6 +868,7 @@ function MinesGameSidebar() {
                       </div>
                     </div>
                   </div>
+
                   <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
                     <label>
                       Total Profit (

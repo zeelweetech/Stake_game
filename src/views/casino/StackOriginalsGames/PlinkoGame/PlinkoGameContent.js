@@ -62,7 +62,7 @@ function PlinkoGameContent() {
       mdQuery.removeListener(handleScreenChange);
     };
   }, []);
-  
+
   useEffect(() => {
     const handleInsufficientFunds = (data) => {
       if (!fundsToastShown) {
@@ -117,15 +117,17 @@ function PlinkoGameContent() {
         ?.map((data, index) => (
           <button
             key={index}
-            className={`xl:w-16 xl:-ml-5 lg:w-12 lg:ml-64 py-3 text-black font-bold border-b border-black ${data?.multiplier <= 1
+            className={`xl:w-16 xl:-ml-5 lg:w-12 lg:ml-64 py-3 text-black font-bold border-b border-black ${
+              data?.multiplier <= 1
                 ? "bg-amber-300"
                 : data?.multiplier === 2 ||
                   data?.multiplier === 3 ||
                   data?.multiplier === 5
-                  ? "bg-amber-500"
-                  : "bg-red-600"
-              } ${index === 0 ? "rounded-t-xl" : index === 3 ? "rounded-b-xl" : ""
-              }`}
+                ? "bg-amber-500"
+                : "bg-red-600"
+            } ${
+              index === 0 ? "rounded-t-xl" : index === 3 ? "rounded-b-xl" : ""
+            }`}
             style={{ transitionDelay: `${index * 0.1}s` }}
           >
             {data?.multiplier}x
@@ -137,22 +139,21 @@ function PlinkoGameContent() {
 
   return (
     <div
-      className={`bg-[#0f212e] xl:w-[52rem] lg:w-[41rem] h-full w-[25.2rem] flex flex-col md:flex-row justify-center items-center select-none relative 
-        ${isMdScreen ? " rounded-t-lg mas-sm" : "md:mx-0 mx-2 w-10"} 
-        max-sm:h-[25rem] rounded-t-lg mx-3`}
+      className={`bg-[#0f212e] xl:w-[51rem] lg:w-[41rem] md:w-[24rem] max-sm:mx-3 h-full flex flex-col justify-center select-none relative
+        ${isMdScreen ? "rounded-t-xl" : "rounded-tr-xl"} `}
     >
-     <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
+      <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
         <canvas
-          className="md:mt-12 max-sm:mb-[6rem] xl:w-[90vw] xl:h-[90vh] xl:max-w-[800px] xl:max-h-[700px] 
-                  lg:w-[90vw] lg:h-[150vh] lg:max-w-[697px] lg:max-h-[710px] 
-                  md:w-[80vw] md:h-[70vh] mt-28 sm:h-[20rem]
+          className="max-sm:mb-[6rem] xl:w-[90vw] xl:h-[90vh] xl:max-w-[800px] xl:max-h-[700px] xl:-ml-0
+                  lg:w-[90vw] lg:h-[150vh] lg:max-w-[697px] lg:max-h-[710px] lg:-ml-0
+                  md:w-[80vw] md:h-[70vh] mt-28 sm:h-[20rem] md:mt-12 md:-ml-8 
                   max-w-[450px] max-h-[430px] sm:w-[400px] max-sm:w-[100%] max-sm:h-[30rem]"
           ref={canvasRef}
-        width="800"
-        height="710"
-      ></canvas>
+          width="800"
+          height="710"
+        ></canvas>
       </div>
-       {/* <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
+      {/* <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
         <canvas
           className={`${
             values?.rows === "8" || values?.rows === 8
@@ -180,7 +181,7 @@ function PlinkoGameContent() {
           height="510"
         ></canvas>
       </div> */}
-      <div className="flex flex-col xl:w-80 lg:w-80 lg:mt-14 md:ml-[17rem] md:w-14 max-sm:mb-36 max-sm:ml-[19rem] max-sm:w-10 relative xl:left-[19rem] xl:-top-40 lg:left-30 lg:-top-40 md:left-[1rem] md:-top-[1rem]">
+      <div className="flex flex-col lg:mt-14 md:ml-[17rem] md:w-14 max-sm:mb-36 max-sm:ml-[19rem] max-sm:w-10 relative xl:left-[15rem] xl:-top-40 lg:left-30 lg:-top-40 md:left-[1rem] md:-top-[1rem]">
         {renderMultiplierButtons()}
       </div>
     </div>

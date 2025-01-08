@@ -30,7 +30,7 @@ function LimboGameContent() {
       userId: decoded?.userId,
       gameId: id,
     });
-  }, [])
+  }, []);
 
   LimboSocket.on("limbobetResult", (data) => {
     dispatch(setLimboStatusData(data));
@@ -42,7 +42,7 @@ function LimboGameContent() {
 
   LimboSocket.on("autoBetStop", (data) => {
     dispatch(setStopAutoBet(false));
-  })
+  });
 
   useEffect(() => {
     GetRendomFiveData();
@@ -57,18 +57,18 @@ function LimboGameContent() {
         console.log("error", error);
       });
   };
-  
-    useEffect(() => {
-      const handleResize = () => {
-        setIsMobile(window.innerWidth <= 768);
-      };
-  
-      window.addEventListener("resize", handleResize);
-  
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (limboStatusData?.actualMultiplier) {
@@ -87,7 +87,7 @@ function LimboGameContent() {
         } else {
           setDisplayedMultiplier(targetMultiplier.toFixed(2));
           clearInterval(interval);
-          GetRendomFiveData()
+          GetRendomFiveData();
 
           LimboSocket.emit("betCompleted", {
             betId: limboStatusData?.betId,
@@ -118,7 +118,7 @@ function LimboGameContent() {
   //       } else {
   //         clearInterval(interval);
   //       }
-  //     }, 5); 
+  //     }, 5);
 
   //     return () => clearInterval(interval);
   //   }
@@ -157,27 +157,30 @@ function LimboGameContent() {
     if (Math.floor(displayedMultiplier) === Math.floor(actualMultiplier)) {
       if (actualMultiplier >= targetMultiplier) {
         return "text-[#1fff20]";
-      }
-      else {
+      } else {
         return "text-[#F44336]";
       }
     }
     return "text-white";
   };
 
-  console.log("");
-  
-
   return (
-    <div className={`xl:w-[52rem] lg:w-[41rem] max-sm:mx-3 h-full  flex flex-col justify-center select-none relative bg-[#0f212e] ${isMobile ? "rounded-t-xl" : "rounded-tr-xl"} `}>
+    <div
+      className={`xl:w-[51rem] lg:w-[41rem] max-sm:mx-3 h-full  flex flex-col justify-center select-none relative bg-[#0f212e] ${
+        isMobile ? "rounded-t-xl" : "rounded-tr-xl"
+      } `}
+    >
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
             return (
               <div key={index}>
                 <button
-                  className={`p-2.5 ${item?.isWin === true ? "bg-[#00E701] text-black font-bold" : "bg-[#2F4553] text-white font-bold"
-                    } rounded-full`}
+                  className={`p-2.5 ${
+                    item?.isWin === true
+                      ? "bg-[#00E701] text-black font-bold"
+                      : "bg-[#2F4553] text-white font-bold"
+                  } rounded-full`}
                 >{`${item?.multiplier}x`}</button>
               </div>
             );
@@ -187,7 +190,9 @@ function LimboGameContent() {
         </button> */}
       </div>
       <div className="flex-grow flex items-center justify-center">
-        <p className={`xl:text-9xl lg:text-9xl md:text-7xl text-8xl font-semibold ${getLastValueColor()}`}>
+        <p
+          className={`xl:text-9xl lg:text-9xl md:text-7xl text-8xl font-semibold ${getLastValueColor()}`}
+        >
           {displayedMultiplier}x
         </p>
       </div>
@@ -205,7 +210,7 @@ function LimboGameContent() {
                 />
               </div> */}
               <input
-                className="w-[23.5rem] xl:w-96 lg:w-64 md:w-40 max-sm:w-36 max-[320px]:w-32 pr-1.5 pl-2 py-2 border-2 border-[#2f4553] hover:border-[#557086] focus:border-[#557086]  rounded-md text-white bg-[#0f212e] outline-none"
+                className="w-[23.5rem] xl:w-[23rem] lg:w-72 md:w-40 max-sm:w-36 max-[320px]:w-32 pr-1.5 pl-2 py-2 border-2 border-[#2f4553] hover:border-[#557086] focus:border-[#557086]  rounded-md text-white bg-[#0f212e] outline-none"
                 type="number"
                 placeholder="0.00"
                 step="0.01"
@@ -229,7 +234,7 @@ function LimboGameContent() {
                 />
               </div> */}
               <input
-                className="w-[23.5rem] xl:w-96 lg:w-64 md:w-40 max-sm:w-36 max-[320px]:w-32 pr-1.5 pl-2 py-2 border-2 border-[#2f4553] hover:border-[#557086] focus:border-[#557086] rounded-md text-white bg-[#0f212e] outline-none"
+                className="w-[23.5rem] xl:w-[23rem] lg:w-72 md:w-40 max-sm:w-36 max-[320px]:w-32 pr-1.5 pl-2 py-2 border-2 border-[#2f4553] hover:border-[#557086] focus:border-[#557086] rounded-md text-white bg-[#0f212e] outline-none"
                 type="number"
                 placeholder="0.00"
                 step="0.01"

@@ -321,7 +321,7 @@ function CrashGameContent() {
   // };
 
   return (
-    <div className="xl:w-[52rem] lg:w-[41rem] max-sm:mx-3.5 xl:h-[41.7rem] lg:h-[41.8rem] h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
+    <div className="xl:w-[51rem] lg:w-[41rem] max-sm:mx-3.5 xl:h-[41.7rem] lg:h-[41.8rem] h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {

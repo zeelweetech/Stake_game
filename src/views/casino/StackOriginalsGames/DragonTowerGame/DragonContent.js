@@ -101,7 +101,7 @@ function DragonContent() {
           parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -221,9 +221,16 @@ function DragonContent() {
   });
 
   const handleBoxClick = (rowIndex, boxIndex) => {
-    const isRowActive = isManual && gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
+    const isRowActive =
+      isManual &&
+      gameBet &&
+      (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
     if (gameBet && !isGameOver && isRowActive) {
-      if (clickedBoxes[rowIndex] !== undefined || rowIndex < rowsIndex + 1 || (isManual && !gameBet)) {
+      if (
+        clickedBoxes[rowIndex] !== undefined ||
+        rowIndex < rowsIndex + 1 ||
+        (isManual && !gameBet)
+      ) {
         return;
       }
 
@@ -315,20 +322,19 @@ function DragonContent() {
   const skullImage = SkullImages(values.difficulty);
 
   return (
-    <div className="flex flex-col items-center bg-cover">
+    <div className=" dragonBackImage  max-sm:mx-3 flex flex-col items-center bg-cover">
       <div
-        className="dragonBackImage rounded-t-lg
-            xl:w-[52rem] xl:h-[46rem] xl:mx-0 xl:py-8 xl:max-w-full
+        className=" rounded-t-lg
+            xl:w-[51rem] xl:h-[46rem] xl:mx-0 xl:py-8 xl:max-w-full
             lg:h-[46rem] lg:w-[41rem] lg:mx-0 lg:max-w-full
-            md:h-[30rem] md:mx-[4rem] md:max-w-96 
-            sm:mx-[2rem] 
-            mx-[-6rem] h-[28rem]"
+            md:h-[30rem] md:mx-[-4rem] md:max-w-96 
+            sm:mx-[2rem] mx-[-6rem] h-[28rem]"
       >
         <div className="flex flex-col items-center relative">
           <div className="flex justify-center">
             <img
               src={dragonFrame}
-              className="w-[25rem] h-[96] sm:w-60  sm:h-64 xl:-mt-3 md:mt-3 md:w-[30rem] md:h-[28.5rem] lg:w-[39rem] lg:h-[40rem] xl:w-[39rem] xl:h-[40rem]"
+              className="w-[25rem] h-[96] sm:w-60 sm:h-64 xl:-mt-3 md:mt-3 md:w-[30rem] md:h-[28.5rem] lg:w-[39rem] lg:h-[40rem] xl:w-[39rem] xl:h-[40rem]"
               alt="Not Found"
             />
           </div>
@@ -338,13 +344,16 @@ function DragonContent() {
                 {cashoutResult?.multiplier}x
               </p>
               <div className="flex items-center justify-center space-x-1">
-                <p>{cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}₹</p>
+                <p>
+                  {cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}
+                  ₹
+                </p>
                 {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
               </div>
             </div>
           )}
           <div
-            className={`flex flex-col xl:gap-3 lg:gap-3 md:gap-2 gap-3 bg-[#182433] xl:w-[30.6rem] lg:w-[30.58rem] lg:h-[30rem] md:w-[18.79rem] p-3 xl:mt-[-31.2rem] lg:mt-[-31.2rem] md:mt-[-23rem] md:h-[22rem] md:mx-[3.1rem] w-[19.9rem] h-[21.2rem] -mt-[22.2rem] border-2 border-gray-800 shadow-lg`}
+            className={`flex flex-col xl:gap-3 lg:gap-3 md:gap-2 gap-3 bg-[#182433] xl:w-[30.6rem] lg:w-[30.58rem] lg:h-[30rem] md:w-[18.8rem] p-3 xl:mt-[-31.2rem] lg:mt-[-31.2rem] md:mt-[-23rem] md:h-[22rem] md:mx-[3.1rem] w-[19.6rem] h-[21.2rem] -mt-[22.2rem] border-2 border-gray-800 shadow-lg`}
           >
             {(() => {
               const rowElements = [];
@@ -353,47 +362,70 @@ function DragonContent() {
                 for (let boxIndex = 0; boxIndex < boxesPerRow; boxIndex++) {
                   const isRestoredEgg = restorData[rowIndex]?.[boxIndex] === 1;
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
-                  const isHighlighted = !isManual && preSelectTile[rowIndex] === boxIndex;
+                  const isHighlighted =
+                    !isManual && preSelectTile[rowIndex] === boxIndex;
                   const imageToShow = isHighlighted
                     ? null // No image when highlighted
                     : isGameOver
-                      ? rowIndex === gameOverResult?.skullRowIndex && boxIndex === gameOverResult?.skullBoxIndex
-                        ? skullImage
-                        : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || isSelected || rowIndex === gameOverResult?.skullRowIndex
-                          ? eggImage
-                          : Boxsvg
-                      : isRestoredEgg
-                        ? eggImage
-                        : isSelected ? eggImage : Boxsvg;
-                  const isRowActive = isManual && gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
+                    ? rowIndex === gameOverResult?.skullRowIndex &&
+                      boxIndex === gameOverResult?.skullBoxIndex
+                      ? skullImage
+                      : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) ||
+                        isRestoredEgg ||
+                        isSelected ||
+                        rowIndex === gameOverResult?.skullRowIndex
+                      ? eggImage
+                      : Boxsvg
+                    : isRestoredEgg
+                    ? eggImage
+                    : isSelected
+                    ? eggImage
+                    : Boxsvg;
+                  const isRowActive =
+                    isManual &&
+                    gameBet &&
+                    (rowIndex === 0 ||
+                      clickedBoxes[rowIndex - 1] !== undefined);
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
-                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center cursor-pointer ${isGameOver
-                        ? "bg-[#213743]"
-                        : (gameBet && rowIndex === 0) ||
-                          clickedBoxes[rowIndex - 1] !== undefined
+                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center cursor-pointer ${
+                        isGameOver
+                          ? "bg-[#213743]"
+                          : (gameBet && rowIndex === 0) ||
+                            clickedBoxes[rowIndex - 1] !== undefined
                           ? "bg-[#00e701] w-10"
                           : "bg-[#213743]"
-                        } ${clickedBoxes[rowIndex] !== undefined
+                      } ${
+                        clickedBoxes[rowIndex] !== undefined
                           ? "bg-[#213743] opacity-100"
-                          : isGameOver && isManual ? "opacity-50" : "opacity-100"
-                        } ${isSelected ? "opacity-100" : isGameOver && isManual ? "opacity-50" : "opacity-100"
-                        }  ${isRowActive && isManual
+                          : isGameOver && isManual
+                          ? "opacity-50"
+                          : "opacity-100"
+                      } ${
+                        isSelected
+                          ? "opacity-100"
+                          : isGameOver && isManual
+                          ? "opacity-50"
+                          : "opacity-100"
+                      }  ${
+                        isRowActive && isManual
                           ? "bg-[#00e701]"
                           : "bg-[#213743]"
-                        } ${!isManual && preSelectTile[rowIndex] === boxIndex ? "bg-[#9000ff] border-2 border-[#7100c7]" : ""}`}
-                      onClick={() =>
-                        handleBoxClick(rowIndex, boxIndex)
-                      }
+                      } ${
+                        !isManual && preSelectTile[rowIndex] === boxIndex
+                          ? "bg-[#9000ff] border-2 border-[#7100c7]"
+                          : ""
+                      }`}
+                      onClick={() => handleBoxClick(rowIndex, boxIndex)}
                     >
-                      {imageToShow &&
+                      {imageToShow && (
                         <img
                           src={imageToShow}
                           alt="Not Found"
                           className="w-auto h-full object-cover rounded-md"
                         />
-                      }
+                      )}
                     </div>
                   );
                 }
