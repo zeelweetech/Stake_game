@@ -7,7 +7,6 @@ import EmojiPicker from 'emoji-picker-react';
 import { useDispatch, useSelector } from "react-redux";
 import { setEmoji } from "../../../features/auth/emojiSlice";
 import { Country } from "./country";
-
 const chatSocket = io('http://192.168.29.203:3002', { path: '/ws' });
 
 const ChatApp = ({ onClose }) => {
@@ -19,6 +18,8 @@ const ChatApp = ({ onClose }) => {
   const dispatch = useDispatch();
   const messagesEndRef = useRef(null);
   const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
+  const emojiPickerRef = useRef(null);
+  const dropDownRef = useRef(null);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -67,6 +68,7 @@ const ChatApp = ({ onClose }) => {
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+    setEmojiPickerVisible(false)
   };
 
   const handleEmojiClick = (emoji) => {
@@ -78,6 +80,8 @@ const ChatApp = ({ onClose }) => {
 
   const toggleEmojiPicker = () => {
     setEmojiPickerVisible(!emojiPickerVisible);
+    setDropdownOpen(false);
+
   };
 
   const handleKeyPress = (event) => {
@@ -85,17 +89,41 @@ const ChatApp = ({ onClose }) => {
       sendMessage();
     }
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (emojiPickerVisible && emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
+        setEmojiPickerVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [emojiPickerVisible]);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownOpen && dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick)
+    };
+  }, [dropdownOpen])
+
   return (
-    <div className="text-white p-2 rounded-md shadow-lg relative bg-[#0f212e]">
-      <IconButton onClick={onClose} sx={{ color: "white", position: "absolute", top: 8, right: 8 }}>
+    <div className="text-white p-2 rounded-md shadow-lg relative bg-[#0f212e] flex flex-col h-screen">
+      <IconButton onClick={onClose} sx={{ color: "white", position: "absolute", top: 15, right: 8 }}>
         <CloseIcon fontSize="small" />
       </IconButton>
 
       {/* Dropdown for countries */}
       <div className="inline-block text-left">
-        <button onClick={toggleDropdown} 
-            className="inline-flex justify-center w-full bg-[#0f212e] px-4 py-2 text-sm font-medium text-white">
-            {selectedCountry.Icon && (
+        <button onClick={toggleDropdown}
+          className="inline-flex justify-start w-full bg-[#0f212e] px-4 py-2 text-sm font-medium text-white">
+          {selectedCountry.Icon && (
             <span className="mr-2">
               <img src={selectedCountry.Icon} alt={selectedCountry.countryName} className="h-5 w-5" />
             </span>
@@ -109,7 +137,7 @@ const ChatApp = ({ onClose }) => {
         </button>
         {dropdownOpen && (
           <div className="relative">
-            <div className="absolute top-full shadow-lg text-black font-medium rounded-sm py-2 z-10">
+            <div ref={dropDownRef} className="absolute top-full shadow-lg text-black font-medium rounded-sm py-2 z-10">
               {Country.map((item, index) => (
                 <div key={index} onClick={() => changeCountry(item.countryName)} className="cursor-pointer w-36 pl-2 py-2 bg-white hover:bg-[#b1bad3]">
                   <div className="flex items-center space-x-2">
@@ -123,7 +151,7 @@ const ChatApp = ({ onClose }) => {
         )}
       </div>
       {/* Messages display */}
-      <div className="overflow-y-auto flex-grow" style={{ overflowY: "scroll", height: "calc(83vh - 80px)", padding: "10px 0" }}>
+      <div className="overflow-y-auto flex-grow h-96">
         {messages.map((msg, index) => (
           <div key={index} className={`p-2 rounded-md mb-2 ${msg.isNewUser ? "border-[#2F4553]" : "bg-[#213743]"}`}>
             {msg.content}
@@ -132,7 +160,7 @@ const ChatApp = ({ onClose }) => {
         <div ref={messagesEndRef} />
       </div>
       {/* Message input and send button */}
-      <div className="bg-[#213743] p-3 relative">
+      <div className="bg-[#213743] p-3 relative w-full">
         <div className="flex items-center text-white sticky bg-[#0f212e] w-full">
           <input
             type="text"
@@ -154,23 +182,19 @@ const ChatApp = ({ onClose }) => {
         </div>
         {/* Emoji Picker */}
         {emojiPickerVisible && (
-          <div className="absolute bottom-16 left-0 z-50">
+          <div ref={emojiPickerRef} className="absolute bottom-32 left-0 z-50 bg-gray-700 rounded-lg shadow-lg">
             <EmojiPicker
-              set="apple"
-              emojiSize={24}
-              emojiSpacing={8}
-              emojiVersion={12.0}
-              onEmojiClick={handleEmojiClick}
-              styles={{
-                backgroundColor: "#2e4960",
-                indicatorColor: "#b04c2d",
-                fontColor: "lightgrey",
-                searchBackgroundColor: "#263d51",
-                tabsFontColor: "#8cdce4",
-                searchFontColor: "lightgrey",
-                skinTonePickerBackgroundColor: "#284155",
-              }}
-            />
+                        onEmojiClick={(_, emoji) => handleEmojiClick(emoji)}
+                        className="custom-emoji-picker"
+                        height={300} 
+                        width={300}  
+                        size="25"
+                        searchDisabled
+                        suggestedEmojisMode={false}
+                        previewConfig
+                        skinTonesDisabled
+                    />
+          
           </div>
         )}
       </div>
@@ -179,3 +203,13 @@ const ChatApp = ({ onClose }) => {
 };
 
 export default ChatApp;
+
+
+// {emojiPickerVisible && (
+//   <div ref={emojiPickerRef} className="absolute bottom-32 left-0 z-50 bg-gray-700 rounded-lg shadow-lg">
+//     <EmojiPicker
+//       onEmojiClick={(_, emoji) => handleEmojiClick(emoji)}
+//    />
+  
+//   </div>
+// )}

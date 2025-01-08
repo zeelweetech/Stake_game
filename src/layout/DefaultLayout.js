@@ -113,7 +113,7 @@ function DefaultLayout() {
       {!isMobile && (isBetslipOpen || isChatOpen) && (
         <div
           className={`fixed right-0 text-white overflow-hidden
-           ${isBetslipOpen || isChatOpen ? "w-72 xl:h-full md:w-[28%] lg:w-[24%] xl:w-[19%]" : "w-0"} 
+           ${isBetslipOpen || isChatOpen ? "w-72 md:w-[28%] lg:w-[24%] xl:w-[19%]" : "w-0"} 
            transition-all duration-300 ease-in-out lg:absolute lg:top-0 lg:right-0 z-50`}
         >
           <RightSidebar
