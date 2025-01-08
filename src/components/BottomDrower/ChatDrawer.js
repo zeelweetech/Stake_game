@@ -7,6 +7,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { useDispatch, useSelector } from "react-redux";
 import { setEmoji } from "../../../src/features/auth/emojiSlice";
 import { Country } from "../../../src/views/rightSidebarView/chat/country";
+import { Picker } from "emoji-mart";
 
 const chatSocket = io('http://192.168.29.203:3002', { path: '/ws' });
 
@@ -19,12 +20,15 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
     const dispatch = useDispatch();
     const messagesEndRef = useRef(null);
     const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
+    const emojiPickerRef = useRef(null);
+    const dropDownRef = useRef(null);
+    
 
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView();
-    }
-  }, [messages]);
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView();
+        }
+    }, [messages]);
 
     useEffect(() => {
         chatSocket.emit("joinCountry", selectedCountry.countryName);
@@ -67,8 +71,15 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
         }
     };
 
-    const toggleDropdown = () => setDropdownOpen((prev) => !prev);
-    const toggleEmojiPicker = () => setEmojiPickerVisible((prev) => !prev);
+    const toggleDropdown = () => {
+        setEmojiPickerVisible(false);
+        setDropdownOpen((prev) => !prev);
+    }
+
+    const toggleEmojiPicker = () => {
+        setEmojiPickerVisible((prev) => !prev);
+        setDropdownOpen(false);
+    }
 
     const handleEmojiClick = (emoji) => {
         setMessage((prev) => prev + emoji.emoji);
@@ -80,6 +91,30 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
         if (event.key === "Enter") sendMessage();
     };
 
+    // Close emoji picker when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (emojiPickerVisible && emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
+                setEmojiPickerVisible(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [emojiPickerVisible]);
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (dropdownOpen && dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleOutsideClick);
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick)
+        };
+    }, [dropdownOpen])
     return (
         <div className={`fixed left-0 right-0 bg-[#0f212e] shadow-lg duration-300 ease-in-out ${openChat ? 'bottom-[3.20rem] z-[1000] top-[3.5rem]' : ''} flex flex-col`} >
             <div className="bg-[#0f212e] shadow-lg h-14 flex items-center justify-between px-4">
@@ -106,7 +141,7 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
             </div>
             {dropdownOpen && (
                 <div className="relative">
-                    <div className="absolute top-full shadow-lg left-9 mt-2 bg-white text-black font-medium rounded-sm py-2 z-10 w-max text-center">
+                    <div ref={dropDownRef} className="absolute top-full shadow-lg left-9 mt-2 bg-white text-black font-medium rounded-sm py-2 z-10 w-max text-center">
                         {Country.map((item, index) => (
                             <div key={index} onClick={() => changeCountry(item.countryName)} className="cursor-pointer w-36 pl-2 py-2 bg-white hover:bg-[#b1bad3]">
                                 <div className="flex items-center space-x-2">
@@ -116,7 +151,6 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                             </div>
                         ))}
                         <div className="tooltip-arrow w-2 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 "></div>
-
                     </div>
                 </div>
             )}
@@ -151,11 +185,26 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                     <button onClick={sendMessage} className="bg-[#1fff20] text-black font-semibold text-sm px-7 py-2 rounded-sm">
                         Send
                     </button>
+                    
                 </div>
 
                 {emojiPickerVisible && (
-                    <div className="absolute bottom-16 left-0 z-50">
-                        <EmojiPicker onEmojiClick={handleEmojiClick} />
+                    <div ref={emojiPickerRef} className="absolute bottom-28 z-50">
+                        <EmojiPicker
+                            onEmojiClick={(_, emoji) => handleEmojiClick(emoji)}
+                            className="custom-emoji-picker"
+                            height={300}
+                            width={300}
+                            size="25"
+                            searchDisabled
+                            suggestedEmojisMode={false}
+                            previewConfig
+                            skinTonesDisabled
+                            // reactionsDefaultOpen
+                            // onReactionClick
+                            // allowExpandReactions
+                            // {defaultCaption: string;} 
+                        />
                     </div>
                 )}
             </div>

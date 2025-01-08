@@ -37,7 +37,7 @@ export const RightSidebar = ({ isDrawerOpen, handleRightSidebarToggle }) => {
 
       {/* Chat Section */}
       {isDrawerOpen && isChatOpen &&  (
-        <div className="h-full">
+        <div className="h-full md:h-full lg:h-full xl:h-full">
           <ChatApp onClose={handleCloseChat} />
         </div>
       )}
