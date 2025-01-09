@@ -28,12 +28,12 @@ function GameFooter() {
   }, []);
 
   const handleSettingsClick = () => {
-    setShowSettings(prev => !prev);
+    setShowSettings((prev) => !prev);
   };
 
   const handleLiveStatsClick = () => {
     setShowLiveStats(true);
-    setShowSettings(false)
+    setShowSettings(false);
   };
 
   const closeLiveStats = () => {
@@ -42,7 +42,7 @@ function GameFooter() {
 
   const handleFairness = () => {
     setShowFairness(true);
-    setShowSettings(false)
+    setShowSettings(false);
   };
 
   return (

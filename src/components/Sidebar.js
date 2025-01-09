@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { SidebarNav } from "./SidebarNav";
 import casino from "../assets/img/casino.png";
 import casino1 from "../assets/img/casino1.jpg";
-import sports from "../assets/img/sports.png"
+import sports from "../assets/img/sports.png";
 import sports1 from "../assets/img/sports1.png";
 import BottomDrawer from "./BottomDrower/BottomSidebar";
 
@@ -47,10 +47,13 @@ function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
     >
       <div className=" h-14 px-1 py-[0.70rem] shadow-2xl shadow-black">
         <div className="flex items-center">
-          <button onClick={() => {
-            handleDrawerToggle()
-            setDropdownVisible(null);
-          }} className="text-white ml-2 mt-[0.4rem]">
+          <button
+            onClick={() => {
+              handleDrawerToggle();
+              setDropdownVisible(null);
+            }}
+            className="text-white ml-2 mt-[0.4rem]"
+          >
             <MenuIcon />
           </button>
           <button
@@ -59,17 +62,23 @@ function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
           >
             <img
               src={casino1}
-              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${casinoClicked ? "opacity-0" : "opacity-100 "
-                }`}
+              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${
+                casinoClicked ? "opacity-0" : "opacity-100 "
+              }`}
               alt="Not Found"
             />
             <img
               src={casino}
               alt="Not Found"
-              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${casinoClicked ? "opacity-100" : "opacity-0"
-                } group-hover:opacity-100`}
+              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${
+                casinoClicked ? "opacity-100" : "opacity-0"
+              } group-hover:opacity-100`}
             />
-            <span className={`absolute mt-8 inset-0 flex justify-center items-center xl:text-base lg:text-xs md:text-xs font-bold ${openMenubar ? "block" : "hidden  "}`}>
+            <span
+              className={`absolute mt-8 inset-0 flex justify-center items-center xl:text-base lg:text-xs md:text-xs font-bold ${
+                openMenubar ? "block" : "hidden  "
+              }`}
+            >
               CASINO
             </span>
           </button>
@@ -80,16 +89,24 @@ function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
             <img
               src={sports}
               alt="Not Found"
-              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${sportsClicked ? "opacity-0" : "opacity-100 hover:opacity-0"
-                } group-hover:opacity-100`}
+              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${
+                sportsClicked ? "opacity-0" : "opacity-100 hover:opacity-0"
+              } group-hover:opacity-100`}
             />
             <img
               src={sports1}
-              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${sportsClicked ? "opacity-100" : "opacity-0 hover:opacity-100"
-                }`}
+              className={`h-10 w-28 -mt-1 rounded absolute transition-opacity duration-300 group-hover:opacity-100 ${
+                sportsClicked ? "opacity-100" : "opacity-0 hover:opacity-100"
+              }`}
               alt="Not Found"
             />
-  <span className={`absolute mt-8 inset-0 flex justify-center items-center xl:text-base lg:text-xs md:text-xs font-bold ${openMenubar ? "block" : "hidden  "}`}>              SPORTS
+            <span
+              className={`absolute mt-8 inset-0 flex justify-center items-center xl:text-base lg:text-xs md:text-xs font-bold ${
+                openMenubar ? "block" : "hidden  "
+              }`}
+            >
+              {" "}
+              SPORTS
             </span>
           </button>
         </div>
@@ -104,10 +121,8 @@ function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
             setDropdownVisible={setDropdownVisible}
             handleMenuOpen={handleNotificationClick} // Pass the notification click handler
 
-          // setDropdownVisible={setDropdownVisible} // Pass dropdown state setter
-
+            // setDropdownVisible={setDropdownVisible} // Pass dropdown state setter
           />
-         
 
           {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
             <li key={text} className="flex items-center p-2 pl-4 space-x-4">
