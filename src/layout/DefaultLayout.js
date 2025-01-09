@@ -80,6 +80,7 @@ function DefaultLayout() {
           />
         </div>
       )}
+      
       <div
         className={`flex flex-col lg:fixed md:relative xl:relative relative bg-[#1a2c38] z-40 h-full
         ${!isMobile ? (openMenubar ? "ml-[14%] md:ml-[19%] lg:ml-[15%]" : "ml-14") : "ml-0 w-full"}

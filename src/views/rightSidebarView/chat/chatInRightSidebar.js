@@ -115,7 +115,7 @@ const ChatApp = ({ onClose }) => {
 
   return (
     <div className="text-white p-2 rounded-md shadow-lg relative bg-[#0f212e] flex flex-col h-screen">
-      <IconButton onClick={onClose} sx={{ color: "white", position: "absolute", top: 15, right: 8 }}>
+      <IconButton onClick={onClose} sx={{ color: "white", position: "absolute", top: 9, right: 8 }}>
         <CloseIcon fontSize="small" />
       </IconButton>
 

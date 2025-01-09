@@ -1,6 +1,4 @@
 import { useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
-import { IconButton, Typography, FormControl, TextField } from "@mui/material";
 import sportsTable from "../../../../assets/img/sportsTable.png"
 
 function MyAllBet() {
@@ -18,7 +16,7 @@ function MyAllBet() {
   ];
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full">
       <div className="flex justify-center mb-4">
         <div className="bg-[#1a2c38] flex rounded-full p-[4px] space-x-1 font-bold">
           {menuItems.map((item) => (
@@ -62,8 +60,8 @@ function MyAllBet() {
         </div>
       </div>
 
-      <div className="bg-[#1a2c38] py-4 bottom-0 fixed w-full flex justify-center">
-        <button className="text-white bg-[#2F4553] text-sm py-2 rounded font-medium w-full">
+      <div className="bg-[#1a2c38] p-4 bottom-0 fixed w-full">
+        <button className="text-white bg-[#2F4553] text-sm py-2 rounded font-medium w-40">
           View All
         </button>
       </div>

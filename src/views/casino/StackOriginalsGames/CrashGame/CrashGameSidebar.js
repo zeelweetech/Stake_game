@@ -40,7 +40,7 @@ const CrashGameSidebar = () => {
   const {
     isSwiper,
     isboardControl,
-    crashValues = { cashout: 2.00 },
+    crashValues,
     gameStatusData,
     bettingStatus,
     combinedData,
@@ -115,7 +115,7 @@ const CrashGameSidebar = () => {
       dispatch(
         setCrashValues({
           betamount: "",
-          cashout: "",
+          cashout: '2.00',
           numberofbet: "",
           onwin: "",
           onlose: "",
@@ -640,21 +640,19 @@ const CrashGameSidebar = () => {
                   <div className="flex justify-between mb-2">
                     <div className="flex border-1 w-44 rounded border-[#4d718768] bg-[#4d718768]">
                       <input
-                        className="xl:w-20 lg:w-16 px-2 py-2.5 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                        className={`xl:w-20 lg:w-16 px-2 py-2.5 rounded-l-md text-white border-2 ${crashValues?.cashout < 1.01 ? "border-[#ed4163]" : "border-[#2F4553] hover:border-[#557086]"} hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
                         type="number"
                         min={1.01}
                         placeholder="1.01"
                         name="cashout"
-                        value={crashValues?.cashout || ""}
+                        value={crashValues?.cashout}
                         onChange={(e) => handleOnChange(e)}
-                        onBlur={(e) => {
-                          if (!e.target.value) {
-                            handleOnChange({
-                              target: { name: "cashout", value: "2.00" },
-                            });
-                          }
-                        }}
                       />
+                      {crashValues?.cashout < 1.01 && (
+                        <div className="absolute bottom-full left-0 mb-6 text-black bg-white font-semibold px-2 py-2 text-sm rounded shadow-lg">
+                          this must be greater than or equal to 1.01
+                        </div>
+                      )}
                       <button
                         className="w-10 hover:bg-[#5c849e68]"
                         onClick={() => {
@@ -709,12 +707,12 @@ const CrashGameSidebar = () => {
                             : crashValues?.numberofbet
                         }
                         onChange={(e) => handleOnChange(e)}
-                        // onChange={(e) => {
-                        //   handleOnChange(e);
-                        //   if (autoBetResult?.round > 0) {
-                        //     dispatch(setAutoBetResult({ round: "" }));
-                        //   }
-                        // }}
+                      // onChange={(e) => {
+                      //   handleOnChange(e);
+                      //   if (autoBetResult?.round > 0) {
+                      //     dispatch(setAutoBetResult({ round: "" }));
+                      //   }
+                      // }}
                       />
                     </div>
                   </div>
