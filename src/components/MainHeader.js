@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
@@ -32,6 +32,7 @@ function MainHeader({ handleRightSidebarToggle }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { tooltipOpen } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
+  const tooltipRef = useRef(null);
 
   const [profilePopupOpen, setProfilePopupOpen] = useState({
     isWalletOpen: false,
@@ -41,6 +42,18 @@ function MainHeader({ handleRightSidebarToggle }) {
     isNotification: false,
     isLogoutDialog: false
   });
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (isSidebarOpen && tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+        setIsSidebarOpen(false);      
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick)
+    };
+  }, [isSidebarOpen])
 
   const handleMenuOpen = (event) => {
     dispatch(setAnchorEl(event.currentTarget));
@@ -244,6 +257,7 @@ function MainHeader({ handleRightSidebarToggle }) {
               {isSidebarOpen && (
                 <>
                   <div
+                    ref={tooltipRef}
                     className="flex flex-col absolute top-full right-0 md:-left-8 lg:-left-8 xl:left-1/2 left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-lg z-[9999] w-max max-w-xs text-center"
                   >
                     <button

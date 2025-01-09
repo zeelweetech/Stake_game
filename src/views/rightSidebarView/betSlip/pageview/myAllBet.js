@@ -18,7 +18,7 @@ function MyAllBet() {
   ];
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full">
       <div className="flex justify-center mb-4">
         <div className="bg-[#1a2c38] flex rounded-full p-[4px] space-x-1 font-bold">
           {menuItems.map((item) => (

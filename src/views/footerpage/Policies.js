@@ -20,6 +20,7 @@ import CardRoomRules from "./cardRoomRules";
 
 
 const Policies = () => {
+
   const navigate = useNavigate();
   const { section } = useParams(); // Get the dynamic route parameter
   const [
@@ -75,7 +76,7 @@ const Policies = () => {
 
   const handleNavigation = (link) => {
     console.log("link ", link);
-    
+
     navigate(`/Policies/${link}`); // Navigate to the dynamic route
   };
   const handleClose = () => {
@@ -83,13 +84,13 @@ const Policies = () => {
     navigate(-1);
   };
   return (
-    <div className="min-h-screen bg-[#1a2c38] text-gray-300 rounded-lg"> 
+    <div className="min-h-screen bg-[#1a2c38] text-gray-300 rounded-lg">
       {/* Header - Responsive */}
-      <div className="flex items-center justify-between p-2 lg:p-6">
-        <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between p-2 lg:px-6 lg:pt-6 sticky top-0">
+        <div className="flex items-center">
           {/* Back button - Only visible on mobile/tablet */}
 
-          <h1 className="text-xl font-semibold text-white">Policies</h1>
+          <h1 className="text-xl font-semibold text-white sticky top-0">Policies</h1>
         </div>
       </div>
       <div className="flex flex-col lg:flex-row">
@@ -107,13 +108,11 @@ const Policies = () => {
                 </button>
               </div>
 
-
               <div className="bg-[#0F212E] rounded-lg p-2 ml-2">
                 <select
                   onChange={(e) => handleNavigation(e.target.value)}
                   className="w-full bg-transparent appearance-none cursor-pointer pr-8 py-1 text-white
-    [&>option]:bg-white [&>option]:text-black focus:outline-none focus:ring-0 focus:border-none"
-                >
+    [&>option]:bg-white [&>option]:text-black focus:outline-none focus:ring-0 focus:border-none ">
                   {links.map((item) => (
                     <option
                       key={item.name}
@@ -136,7 +135,7 @@ const Policies = () => {
             </div>
           </div>
 
-          <nav className="hidden lg:block space-y-2 bg-[#0F212E] rounded-lg mt-3">
+          <nav className="hidden lg:block y-1 bg-[#0F212E] rounded-lg mt-3 sticky top-20">
             {links.map((item) => (
               <div
                 key={item.name}
@@ -152,8 +151,6 @@ const Policies = () => {
         </div>
         <div className="flex-1 p-4 lg:p-8 bg-[#1a2c38]">
           <div className="max-w-6xl mx-auto">
-
-
             {/* Main Content */}
             <div className="bg-[#0F212E] rounded-lg p-4 lg:p-6">
               {getContent(section)}

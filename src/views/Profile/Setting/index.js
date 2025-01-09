@@ -117,9 +117,9 @@ const Setting = () => {
                     <div
                       key={item.label}
                       onClick={() => {
-                        setSelectedMenu(item.label);  // Update selected menu item
-                        handleSettingClick(item.label);  // Navigate or trigger verification
-                        setIsOpen(false);  // Close dropdown after selection
+                        setSelectedMenu(item.label);  
+                        handleSettingClick(item.label);  
+                        setIsOpen(false);  
                       }}
                       className={`p-2 text-white hover:bg-[#2f4553] cursor-pointer ${selectedMenu === item.label ? "bg-[#2f4553]" : ""
                         }`}

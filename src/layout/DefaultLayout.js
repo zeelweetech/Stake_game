@@ -119,6 +119,7 @@ function DefaultLayout() {
           <RightSidebar
             isDrawerOpen={isBetslipOpen || isChatOpen}
             handleRightSidebarToggle={handleRightSidebarToggle}
+            
           />
         </div>
       )}

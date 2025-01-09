@@ -26,6 +26,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Footer() {
   const navigate = useNavigate();
+ 
   return (
     <footer className="bg-[#071d2a] text-gray-400 py-12 px-8 z-auto mt-10">
       {/* Main Navigation Section */}
@@ -152,28 +153,10 @@ function Footer() {
               <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
                 <li><a href="/vip-club" className="hover:text-white">VIP Club</a></li>
                 <li><a href="#" className="hover:text-white">Affiliate</a></li>
-                <li>   <Link
-                  to="/policies/Privacy"
-                  className=" hover:text-white transition-colors"
-                >
-                  Privacy Policy
-                </Link></li>
-                <li><Link
-                  to="/policies/AntiMoneyLaunderings"
-                  className=" hover:text-white transition-colors"
-                  onClick={() => window.scrollTo(0, 0)}
-                >
-                  AML Policy
-                </Link></li>
-                <li>
-                  <Link
-                    to="/policies/Terms"
-                    className=" hover:text-white transition-colors"
-                  >
-                    Terms of Service
-                  </Link>
-                </li>
-              </ul>
+                <li><a href="/policies/Privacy" className=" hover:text-white transition-colors" onClick={() => window.scroll(0, 0)}>Privacy Policy</a></li>
+                <li><a href="/policies/AntiMoneyLaunderings" className=" hover:text-white transition-colors"onClick={() => window.scroll(0,0)}>AML Policy</a></li>
+                <li><a href="/policies/Terms" className=" hover:text-white transition-colors">Terms of Service</a></li>
+             </ul>
             </div>
           </div>
           {/* <div>

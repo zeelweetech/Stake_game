@@ -54,14 +54,25 @@
 // export default App;
 import "./App.css";
 import { Toaster } from "react-hot-toast";
-import { BrowserRouter, Route, Routes, ScrollRestoration } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DefaultLayout from "./layout/DefaultLayout";
 import VerifyTerm from "./views/pages/register/VerifyTerm";
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function App() {
   const status = localStorage.getItem("status");
+
+  // const ScrollToTop = () => {
+  //   const { pathname } = useLocation();
+  //   console.log("Navigated toswssssssssssss:", pathname);
+  //   window.scrollTo(0, 0);
+  //   return null;
+  // };
+
   return (
-    <>
+    <BrowserRouter>
+      {/* <ScrollToTop /> */}
       <Toaster
         position="bottom-right"
         toastOptions={{
@@ -72,19 +83,16 @@ function App() {
           },
         }}
       />
-      <BrowserRouter>
-       <Routes>
-          <Route>
-            {/* {!status ? (
-              <Route path="/" element={<DefultPage />} />
-            ) : ( */}
-            <Route path="*" name="Home" element={<DefaultLayout />} />
-            {/* )} */}
-            <Route path="/verifyterm" element={<VerifyTerm />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+      <Routes>
+        <Route path="*" element={<DefaultLayout />} />
+        <Route path="/verifyterm" element={<VerifyTerm />} />
+        {/* Uncomment and adjust the following lines if you want to conditionally render routes */}
+        {/* {!status ? (
+          <Route path="/" element={<DefultPage />} />
+        ) : ( */}
+        {/* )} */}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
