@@ -32,6 +32,7 @@ export const RightSidebar = ({ isDrawerOpen, handleRightSidebarToggle }) => {
       {isDrawerOpen && isBetslipOpen &&  (
         <div className="text-lg font-bold bg-[#0f212e] h-screen">
           <Betslip onClose={handleCloseBetslip} />
+          {/* {console.log("lllllllllll",isBetslipOpen)} */}
         </div>
       )}
 
