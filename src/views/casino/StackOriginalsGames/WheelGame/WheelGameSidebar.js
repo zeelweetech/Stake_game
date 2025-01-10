@@ -95,7 +95,7 @@ function WheelGameSidebar() {
   return (
     <div>
       {responsiveMobile > 768 ? (
-        <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-32 mx-3 flex flex-col p-3 bg-[#213743]">
+        <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-32 mx-3 flex flex-col p-3 bg-[#213743] rounded-tl-lg">
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 overflow-hidden">

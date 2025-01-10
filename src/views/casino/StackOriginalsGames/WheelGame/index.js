@@ -41,7 +41,7 @@ function WheelGame() {
 
   return (
     <div className="flex justify-center w-full h-full">
-      <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full xl:-ml-0 lg:-ml-[3rem]">
+      <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full xl:-ml-0 lg:-ml-[3.4rem]">
         <div className="w-full">
           <div
             className={`flex justify-center w-full ${
@@ -49,7 +49,7 @@ function WheelGame() {
             } border-b-3`}
           >
             {!isMobile && (
-              <div className="flex-row bg-[#213743]">
+              <div className="flex-row bg-[#213743] rounded-tl-lg">
                 <WheelGameSidebar />
               </div>
             )}

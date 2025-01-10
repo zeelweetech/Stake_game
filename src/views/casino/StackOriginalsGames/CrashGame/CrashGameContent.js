@@ -17,9 +17,7 @@ import {
 
 import { IoIosTrendingUp } from "react-icons/io";
 import { BsIncognito } from "react-icons/bs";
-import {
-  RiMoneyRupeeCircleFill,
-} from "react-icons/ri";
+import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { CrashSocket } from "../../../../socket";
 import {
@@ -59,18 +57,30 @@ function CrashGameContent() {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
   const [chartRefData, setChartRefData] = useState();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const decoded = decodedToken();
 
   // CrashSocket.on("multiplierUpdate", (data) => {
   //   dispatch(setMultiplier(data?.multiplier));
   // });
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     CrashSocket.emit("joinGame", {
       userId: decoded?.userId,
       gameId: id,
     });
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (bettingStatus === true) {
@@ -206,7 +216,7 @@ function CrashGameContent() {
       if (!isNaN(newMultiplier)) {
         const lastMultiplier =
           chartInstance.current.data.datasets[0].data[
-          chartInstance.current.data.datasets[0].data.length - 1
+            chartInstance.current.data.datasets[0].data.length - 1
           ];
         const smoothMultiplier = lastMultiplier * 0.9 + newMultiplier * 0.1;
 
@@ -321,15 +331,20 @@ function CrashGameContent() {
   // };
 
   return (
-    <div className="xl:w-[51rem] lg:w-[41rem] max-sm:mx-3.5 xl:h-[41.7rem] lg:h-[41.8rem] h-full flex flex-col justify-center select-none relative bg-[#0f212e] rounded-tr-lg">
+    <div
+      className={`xl:w-[51rem] lg:w-[41rem] max-sm:mx-3.5 xl:h-[41.7rem] lg:h-[41.8rem] h-full flex flex-col justify-center select-none relative bg-[#0f212e] ${
+        isMobile ? "rounded-t-lg" : "rounded-tr-lg"
+      }`}
+    >
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs font-semibold pr-3">
         {topXData?.length > 0 &&
           [...topXData].reverse()?.map((item, index) => {
             return (
               <div key={index}>
                 <button
-                  className={`p-2.5 ${item?.crashPoint > 3 ? "bg-[#1fff20]" : "bg-white"
-                    } rounded-full text-xs`}
+                  className={`p-2.5 ${
+                    item?.crashPoint > 3 ? "bg-[#1fff20]" : "bg-white"
+                  } rounded-full text-xs`}
                 >
                   {`${item?.crashPoint}`}
                 </button>
@@ -341,17 +356,19 @@ function CrashGameContent() {
         </button>
       </div>
       <div className="flex flex-col items-center justify-between flex-grow w-full xl:max-w-[55rem] lg:max-w-[41rem] md:max-w-[25rem] item-center mt-10 relative">
-        <div
-          className=" xl:h-[35rem] lg:h-[34rem] md:h-[20rem] sm:max-w-full max-w-[95vw] sm:h-[20rem]"
-        >
-          <canvas ref={chartRef} className="h-[22rem] xl:w-[50rem] lg:w-full md:w-full max-sm:w-[345px]"></canvas>
+        <div className=" xl:h-[35rem] lg:h-[34rem] md:h-[20rem] sm:max-w-full max-w-[95vw] sm:h-[20rem]">
+          <canvas
+            ref={chartRef}
+            className="h-[22rem] xl:w-[50rem] lg:w-full md:w-full max-sm:w-[345px]"
+          ></canvas>
         </div>
         <div className="absolute top-1/2 transform -translate-y-1/2 flex flex-col items-center w-full text-white font-bold text-center">
           <div className="flex-grow flex items-center justify-center">
             <div>
               <p
-                className={`text-4xl sm:text-5xl ${multiplier === xValue ? "text-red-500" : "text-white"
-                  }`}
+                className={`text-4xl sm:text-5xl ${
+                  multiplier === xValue ? "text-red-500" : "text-white"
+                }`}
               >
                 {multiplier}x
               </p>
@@ -370,24 +387,23 @@ function CrashGameContent() {
           <div className="flex flex-col space-y-1.5 xl:ml-[33rem] lg:ml-[31rem] md:ml-[15rem] sm:ml-28 ml-48 ">
             {visibleData?.length > 0
               ? visibleData?.map((data, index) => (
-                <button
-                  key={index}
-                  className="py-1 px-1 border-2 border-[#4d718768] bg-[#213743] rounded-full opacity-75"
-                >
-                  <div className="flex items-center space-x-1 ">
-                    <BsIncognito />
-                    <p className="text-white text-xs">Hidden</p> ₹
-                    {/* <RiMoneyRupeeCircleFill color="yellow" size={10} /> */}
-                    <p className="text-[#00F701]">{data?.amount}</p>
-                  </div>
-                </button>
-              ))
+                  <button
+                    key={index}
+                    className="py-1 px-1 border-2 border-[#4d718768] bg-[#213743] rounded-full opacity-75"
+                  >
+                    <div className="flex items-center space-x-1 ">
+                      <BsIncognito />
+                      <p className="text-white text-xs">Hidden</p> ₹
+                      {/* <RiMoneyRupeeCircleFill color="yellow" size={10} /> */}
+                      <p className="text-[#00F701]">{data?.amount}</p>
+                    </div>
+                  </button>
+                ))
               : ""}
           </div>
         </div>
       </div>
     </div>
-
   );
 }
 

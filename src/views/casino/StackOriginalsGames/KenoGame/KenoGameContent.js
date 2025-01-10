@@ -86,8 +86,10 @@ function KenoGameContent() {
 
   return (
     <div
-      className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg lg:p-4 md:p-1.5 ${
-        isMobile ? " max-sm:mx-3" : "xl:w-[51rem] lg:w-[39rem]"
+      className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center lg:p-4 md:p-1.5 ${
+        isMobile
+          ? " max-sm:mx-3 rounded-t-lg"
+          : "xl:w-[51rem] lg:w-[39rem] rounded-tr-lg"
       }`}
     >
       <div
