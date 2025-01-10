@@ -46,7 +46,7 @@ function GameFooter() {
   };
 
   return (
-    <div className="p-2 bg-[#0f212e] rounded-b-xl z-10 relative xl:w-[71rem] lg:w-[57.8rem] md:w-[24rem] md:px-0 px-3 w-full">
+    <div className="p-2 bg-[#0f212e] rounded-b-lg z-10 relative xl:w-[71rem] lg:w-[57.8rem] md:w-[24rem] md:px-0 px-3 w-full">
       <div className="flex justify-between items-center px-2">
         <div className="space-x-9 text-[#b1bad3] relative">
           <div className="flex items-center  relative">

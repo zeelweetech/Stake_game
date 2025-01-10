@@ -18,7 +18,7 @@ function SlideGameContent() {
   return (
     <div
       className={`xl:w-[51rem] lg:w-[39rem] max-sm:mx-3 h-full text-center flex flex-col justify-center select-none relative bg-[#0f212e] ${
-        isMobile ? "rounded-t-xl" : "rounded-tr-xl"
+        isMobile ? "rounded-t-lg" : "rounded-tr-lg"
       } `}
     >
       {/* <div className="flex justify-center text-white"> */}

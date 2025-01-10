@@ -351,8 +351,10 @@ function MinesGameContent() {
 
   return (
     <div
-      className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center rounded-t-lg ${
-        isMobile ? " max-sm:mx-2" : "xl:w-[51rem] lg:w-[40rem]"
+      className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center ${
+        isMobile
+          ? " max-sm:mx-2 rounded-t-lg"
+          : "xl:w-[51rem] lg:w-[40rem] rounded-tr-lg"
       }`}
     >
       {cashoutResult && !gameBet && (

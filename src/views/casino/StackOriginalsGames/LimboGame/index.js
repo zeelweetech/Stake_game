@@ -54,7 +54,7 @@ function LimboGame() {
             } border-b-3`}
           >
             {!isMobile && (
-              <div className="flex-row bg-[#213743] rounded-tl-xl">
+              <div className="flex-row bg-[#213743] rounded-tl-lg">
                 <LimboGameSidebar />
               </div>
             )}

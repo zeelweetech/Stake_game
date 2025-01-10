@@ -167,7 +167,7 @@ function LimboGameContent() {
   return (
     <div
       className={`xl:w-[51rem] lg:w-[41rem] max-sm:mx-3 h-full  flex flex-col justify-center select-none relative bg-[#0f212e] ${
-        isMobile ? "rounded-t-xl" : "rounded-tr-xl"
+        isMobile ? "rounded-t-lg" : "rounded-tr-lg"
       } `}
     >
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs pr-3">

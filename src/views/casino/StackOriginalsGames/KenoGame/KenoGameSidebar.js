@@ -152,7 +152,7 @@ function KenoGameSidebar() {
   return (
     <div>
       {responsiveMobile > 768 ? (
-        <div className="xl:w-80 lg:w-[18.75rem] max-sm:mx-3 flex flex-col p-3">
+        <div className="xl:w-80 lg:w-[18.75rem] max-sm:mx-3 flex flex-col p-3 rounded-tr-lg">
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2">

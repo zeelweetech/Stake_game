@@ -49,7 +49,7 @@ function MinesGame() {
             } border-b-3`}
           >
             {!isMobile && (
-              <div className="flex-row bg-[#213743]">
+              <div className="flex-row bg-[#213743] rounded-tl-lg">
                 <MinesGameSidebar />
               </div>
             )}

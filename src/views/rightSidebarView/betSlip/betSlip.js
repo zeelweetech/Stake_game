@@ -125,7 +125,7 @@ function Betslip({ onClose }) {
                       {menuItems.map((item) => (
                         <button
                           key={item.label}
-                          className={`py-2 lg:px-5 rounded-full flex justify-center items-center text-sm ${gameMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}`}
+                          className={`py-2 px-5 rounded-full flex justify-center items-center text-sm ${gameMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}`}
                           onClick={() => setGameMenu(item.label)}
                         >
                           {item.label === "Single" && (
@@ -219,7 +219,7 @@ function Betslip({ onClose }) {
               </div>
             </div>
 
-            <div className="absolute bottom-16 right-0 w-full bg-[#213743] p-[10px]">
+            <div className="absolute bottom-[4.2rem] right-0 w-full bg-[#213743]">
               {gameMenu === "Single" ? (
                 <div className="bg-[#213743] p-4 space-y-2 ">
                   {/* Total Stake Section */}
@@ -236,7 +236,7 @@ function Betslip({ onClose }) {
 
                   {/* Place Single Button */}
                   <div className="text-center">
-                    <button className="text-white bg-sky-600 text-sm p-2 w-80 rounded font-medium">
+                    <button className="text-white bg-sky-600 text-sm p-2 w-full rounded font-medium">
                       Place Single Button
                     </button>
                   </div>

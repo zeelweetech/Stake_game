@@ -175,7 +175,7 @@ function DragonSidebar() {
   return (
     <div>
       {responsiveMobile > 768 ? (
-        <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-16 md:mx-[4rem] -mx-12 m-12 flex flex-col p-3 bg-[#213743] rouded">
+        <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-16 md:mx-[4rem] -mx-12 m-12 flex flex-col p-3 bg-[#213743] rounded-tl-lg">
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2">

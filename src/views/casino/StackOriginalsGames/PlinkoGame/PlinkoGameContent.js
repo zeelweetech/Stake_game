@@ -19,7 +19,8 @@ function PlinkoGameContent() {
   const decoded = decodedToken();
   const canvasRef = useRef();
   const [ballManager, setBallManager] = useState();
-  const [isMdScreen, setIsMdScreen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
   const [fundsToastShown, setFundsToastShown] = useState(false);
   const { finalMultiplier, values, lastMultipliers } = useSelector(
     (state) => state.plinkoGame
@@ -47,19 +48,14 @@ function PlinkoGameContent() {
   };
 
   useEffect(() => {
-    const mdQuery = window.matchMedia(
-      "(min-width: 768px) and (max-width: 1023px)"
-    );
-
-    const handleScreenChange = () => {
-      setIsMdScreen(mdQuery.matches);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
     };
 
-    handleScreenChange();
-    mdQuery.addListener(handleScreenChange);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      mdQuery.removeListener(handleScreenChange);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -140,7 +136,7 @@ function PlinkoGameContent() {
   return (
     <div
       className={`bg-[#0f212e] xl:w-[51rem] lg:w-[41rem] md:w-[24rem] max-sm:mx-3 h-full flex flex-col justify-center select-none relative
-        ${isMdScreen ? "rounded-t-xl" : "rounded-tr-xl"} `}
+        ${isMobile ? "rounded-t-lg" : "rounded-tr-lg"} `}
     >
       <div className="flex justify-center items-center mb-8 md:mb-16 overflow-hidden absolute">
         <canvas

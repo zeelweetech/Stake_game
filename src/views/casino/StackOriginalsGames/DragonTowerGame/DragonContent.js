@@ -43,6 +43,8 @@ function DragonContent() {
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
   const [fundsToastShown, setFundsToastShown] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
   const gameOverProcessedRef = useRef(false);
   const {
     isManual,
@@ -79,6 +81,18 @@ function DragonContent() {
       DragonTowerSocket.off("Insufficientfund", handleInsufficientFunds);
     };
   }, [fundsToastShown]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const resetGame = () => {
     dispatch(setClickedBoxes({}));
@@ -322,9 +336,13 @@ function DragonContent() {
   const skullImage = SkullImages(values.difficulty);
 
   return (
-    <div className=" dragonBackImage  max-sm:mx-3 flex flex-col items-center bg-cover">
+    <div
+      className={`dragonBackImage max-sm:mx-3 flex flex-col items-center bg-cover ${
+        isMobile ? "rounded-t-lg" : "rounded-tr-lg"
+      }`}
+    >
       <div
-        className=" rounded-t-lg
+        className="
             xl:w-[51rem] xl:h-[46rem] xl:mx-0 xl:py-8 xl:max-w-full
             lg:h-[46rem] lg:w-[41rem] lg:mx-0 lg:max-w-full
             md:h-[30rem] md:mx-[-4rem] md:max-w-96 
