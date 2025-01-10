@@ -27,8 +27,6 @@ function Lobby() {
   const dispatch = useDispatch();
 
   const isLobby = stackMenu === "Lobby";
-  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
-  const { isChatOpen } = useSelector((state) => state.chat);
   const menuItems = [
     { label: "Lobby", icon: <TbCherryFilled color="#b1bad3" fontSize={15} /> },
     {
@@ -66,7 +64,7 @@ function Lobby() {
   return (
     <div className={`flex justify-center h-full bg-[#1a2c38]`}>
       {loading ? (
-        <Loader />
+        <Loader />  
       ) : (
 <div className={`text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10 `}>
 <div className="flex items-center mx-3 mt-8 space-x-2">

@@ -22,7 +22,6 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
     const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
     const emojiPickerRef = useRef(null);
     const dropDownRef = useRef(null);
-    
 
     useEffect(() => {
         if (messagesEndRef.current) {
@@ -154,7 +153,7 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                     </div>
                 </div>
             )}
-            <div className="overflow-y-auto flex-grow px-4">
+            <div className="overflow-y-auto flex-grow px-4 h-96">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
@@ -185,7 +184,7 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                     <button onClick={sendMessage} className="bg-[#1fff20] text-black font-semibold text-sm px-7 py-2 rounded-sm">
                         Send
                     </button>
-                    
+
                 </div>
 
                 {emojiPickerVisible && (
@@ -200,10 +199,10 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                             suggestedEmojisMode={false}
                             previewConfig
                             skinTonesDisabled
-                            // reactionsDefaultOpen
-                            // onReactionClick
-                            // allowExpandReactions
-                            // {defaultCaption: string;} 
+                        // reactionsDefaultOpen
+                        // onReactionClick
+                        // allowExpandReactions
+                        // {defaultCaption: string;} 
                         />
                     </div>
                 )}
