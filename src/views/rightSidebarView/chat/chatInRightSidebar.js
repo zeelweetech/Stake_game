@@ -52,7 +52,7 @@ const ChatApp = ({ onClose }) => {
         taggedUserId,
         createdAt: new Date(),
       };
-      console.log("sdknkadmfcna,m....", newMessageData);
+      // console.log("sdknkadmfcna,m....", newMessageData);
 
       chatSocket.emit("chatMessage", newMessageData);
       setMessage("");

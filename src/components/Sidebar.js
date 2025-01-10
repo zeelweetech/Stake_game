@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import EmailIcon from "@mui/icons-material/Email";
 import MenuIcon from "@mui/icons-material/Menu";
 // import InboxIcon from "@mui/icons-material/Inbox";
@@ -11,13 +11,19 @@ import casino1 from "../assets/img/casino1.jpg";
 import sports from "../assets/img/sports.png";
 import sports1 from "../assets/img/sports1.png";
 import BottomDrawer from "./BottomDrower/BottomSidebar";
+import { useSelector } from "react-redux";
 
-function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
+function Sidebar({ handleDrawerToggle, handleMenuOpen }) {
   const [casinoClicked, setCasinoClicked] = useState(false);
   const [sportsClicked, setSportsClicked] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(null);
   const navigate = useNavigate();
   // const [dropdownVisible, setDropdownVisible] = useState(null); // Track which dropdown is open
+  const { openMenubar } = useSelector((state) => state.auth);
+  const sidebarRef = useRef(null);
+
+  // console.log("mmmmmmmm",openMenubar);
+
 
   const handleCasinoClick = () => {
     setCasinoClicked((prev) => !prev);
@@ -39,9 +45,26 @@ function Sidebar({ openMenubar, handleDrawerToggle, handleMenuOpen }) {
     handleMenuOpen(event);
   };
 
+
+  // Close sidebar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+          if (openMenubar && window.innerWidth <= 1024) {
+               handleDrawerToggle();
+        }
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenubar, handleDrawerToggle]);
+
   return (
     <div
-      className={`h-full ${openMenubar ? "block" : "hidden md:block "} 
+      ref={sidebarRef}
+      className={`${openMenubar ? "block" : "hidden md:block "} 
       ${openMenubar && "md:text-white"} 
        md:bg-none overflow-x-hidden`}
     >
