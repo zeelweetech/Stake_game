@@ -7,11 +7,11 @@ import Vault from "../views/Profile/Vault";
 import Vip from "../views/Profile/Vip";
 import Statistic from "../views/Profile/Statistic";
 import LogoutDialog from "../views/Profile/Logout";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAnchorEl, setTooltipOpen } from "../features/auth/authSlice";
 import Notification from "../views/Profile/Notification";
 
-export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible, setDropdownVisible }) => {
+export const SidebarNav = ({ items, toggleSidebar, dropdownVisible, setDropdownVisible }) => {
   const [profilePopupOpen, setProfilePopupOpen] = useState({
     isWalletOpen: false,
     isVaultOpen: false,
@@ -21,6 +21,7 @@ export const SidebarNav = ({ items, openMenubar, toggleSidebar, dropdownVisible,
     isLogoutDialog: false
   });
   const dispatch = useDispatch();
+  const { openMenubar } = useSelector((state) => state.auth);
 
   const toggleDropdown = (index) => {
     if (!openMenubar) toggleSidebar();

@@ -24,6 +24,9 @@ function CasinoHomePage() {
   const [stackMenu, setStackMenu] = useState("Lobby");
   const [loading, setLoading] = useState(false);
   const [allGames, setAllGames] = useState();
+  const { openMenubar } = useSelector((state) => state.auth);
+  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
+  const { isChatOpen } = useSelector((state) => state.chat);
   const decoded = decodedToken();
   const dispatch = useDispatch();
 
@@ -70,24 +73,21 @@ function CasinoHomePage() {
         const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const UpdateWalletData = async () => {
     await updateWallet({ userId: decoded?.userId })
-      .then((res) => {})
-      .catch((err) => {});
+      .then((res) => { })
+      .catch((err) => { });
   };
 
-  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
-  const { isChatOpen } = useSelector((state) => state.chat);
-
   return (
-    <div className="flex justify-center h-full bg-[#1a2c38] z-40 lg:pr-12 pr-0">
+    <div className="flex justify-center h-full bg-[#1a2c38] z-40 lg:pr-12 pr-0 xl:pr-0">
       {loading ? (
         <Loader />
       ) : (
-        <div className={`text-white font-bold pt-6 w-full ${isBetslipOpen || isChatOpen ? "max-w-[69rem]" : "max-w-screen-xl"} lg:px-3 xl:px-10`}>
+        <div className={`text-white font-bold pt-6 w-full ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[69rem]" : "max-w-screen-xl"} lg:px-3 xl:px-10`}>
           <SlideBar />
 
           <div className="mt-8 mx-3 relative">
@@ -107,11 +107,10 @@ function CasinoHomePage() {
               {menuItems.map((item) => (
                 <button
                   key={item.label}
-                  className={`py-2 px-5 rounded-full flex justify-center space-x-1.5 items-center ${
-                    stackMenu === item.label
+                  className={`py-2 px-5 rounded-full flex justify-center space-x-1.5 items-center ${stackMenu === item.label
                       ? "bg-[#4d718768]"
                       : "hover:bg-[#4d718768]"
-                  }`}
+                    }`}
                   onClick={() => setStackMenu(item.label)}
                 >
                   {item.icon}

@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  // IoClose, 
-  IoChevronBack,
-  // IoChevronDown 
-} from "react-icons/io5";
+import { IoChevronBack } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import Privacy from "./Privacy";
 import AntiMoneyLaunderings from "./AntiMoneyLaunderings";
@@ -18,14 +14,10 @@ import RacingRules from "./RacingRules";
 import PokerTournamentCancellations from "./PokerTournamentCancellations";
 import CardRoomRules from "./cardRoomRules";
 
-
 const Policies = () => {
-
   const navigate = useNavigate();
   const { section } = useParams(); // Get the dynamic route parameter
-  const [
-    // isOpen, 
-    setIsOpen] = useState(true);
+  const [selectedLink, setSelectedLink] = useState(section || "Terms"); // Track the selected link
   const links = [
     { name: "Terms of service", link: "Terms" },
     { name: "Wager Requirement", link: "WagerRequirement" },
@@ -35,12 +27,12 @@ const Policies = () => {
     { name: "Providers", link: "Providers" },
     { name: "Sportsbook", link: "sportsbook" },
     { name: "Cookies Policy", link: "Cookies" },
-    // { name: "Coin Mixing", link: "coin-mixing" },
     { name: "Self-Exclusion", link: "self-exclusion" },
     { name: "Racing Rules", link: "racing-rules" },
     { name: "Poker Card Room Rules", link: "CardRoomRules" },
     { name: "Poker Refund Policy", link: "PokerTournamentCancellations" },
   ];
+
   const getContent = (section) => {
     switch (section) {
       case "Privacy":
@@ -51,8 +43,6 @@ const Policies = () => {
         return <AntiMoneyLaunderings />;
       case "coin-mixing":
         return <CoinMixing />;
-      case "providers":
-        return <Providers />;
       case "sportsbook":
         return <Sportsbook />;
       case "Cookies":
@@ -67,31 +57,21 @@ const Policies = () => {
         return <PokerTournamentCancellations />;
       case "CardRoomRules":
         return <CardRoomRules />;
-      // case "Terms":
-      //   return <Terms />;
       default:
         return <Terms />; // Default content
     }
   };
 
   const handleNavigation = (link) => {
-    console.log("link ", link);
+    setSelectedLink(link); 
+    navigate(`/Policies/${link}`); 
+  };
 
-    navigate(`/Policies/${link}`); // Navigate to the dynamic route
-  };
-  const handleClose = () => {
-    setIsOpen(false);
-    navigate(-1);
-  };
   return (
     <div className="min-h-screen bg-[#1a2c38] text-gray-300 rounded-lg">
       {/* Header - Responsive */}
       <div className="flex items-center justify-between p-2 lg:px-6 lg:pt-6 sticky top-0">
-        <div className="flex items-center">
-          {/* Back button - Only visible on mobile/tablet */}
-
-          <h1 className="text-xl font-semibold text-white sticky top-0">Policies</h1>
-        </div>
+        <h1 className="text-xl font-semibold text-white block lg:sticky lg:top-0 lg:bg-[#1a2c38] lg:z-10">Policies</h1>
       </div>
       <div className="flex flex-col lg:flex-row">
         {/* Sidebar - Full width on mobile, fixed width on desktop */}
@@ -107,34 +87,25 @@ const Policies = () => {
                   <IoChevronBack size={20} />
                 </button>
               </div>
-
               <div className="bg-[#0F212E] rounded-lg p-2 ml-2">
-                <select
+              <select
                   onChange={(e) => handleNavigation(e.target.value)}
-                  className="w-full bg-transparent appearance-none cursor-pointer pr-8 py-1 text-white
-    [&>option]:bg-white [&>option]:text-black focus:outline-none focus:ring-0 focus:border-none ">
+                  className="w-full bg-transparent appearance-none cursor-pointer pr-8 py-1 text-white focus:outline-none focus:ring-0 focus:border-none"
+                  value={selectedLink}
+              >
                   {links.map((item) => (
                     <option
                       key={item.name}
                       value={item.link}
-                      className="text-black bg-white hover:bg-gray-100 p-6 m-6"
-                      style={{
-                        backgroundColor: 'white',
-                        color: 'black',
-                        padding: '8px 16px',
-                      }}
+                      className={`text-black bg-white hover:bg-gray-100 p-6 m-6 ${selectedLink === item.link ? 'bg-gray-300' : ''}`} // Change background color if selected
                     >
                       {item.name}
                     </option>
                   ))}
                 </select>
-                {/* <div className="absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
-                  <IoChevronDown size={16} />
-                </div> */}
               </div>
             </div>
           </div>
-
           <nav className="hidden lg:block y-1 bg-[#0F212E] rounded-lg mt-3 sticky top-20">
             {links.map((item) => (
               <div

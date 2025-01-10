@@ -7,6 +7,7 @@ const initialState = {
   isVerifyTermModelOpen: false,
   wallet: 0,
   anchorEl: null,
+  openMenubar: false,
 
   // profilePopupOpen state
   tooltipOpen: false
@@ -46,9 +47,11 @@ const authSlice = createSlice({
     setAnchorEl: (state, action) => {
       state.anchorEl = action.payload;
     },
-
     setTooltipOpen: (state, action) => {
       state.tooltipOpen = action.payload
+    },
+    setOpenMenubar: (state, action) => {
+      state.openMenubar = action.payload
     }
   },
 });
@@ -64,7 +67,8 @@ export const {
   closeVerifyTermModel,
   setWallet,
   setAnchorEl,
-  setTooltipOpen
+  setTooltipOpen,
+  setOpenMenubar
 } = authSlice.actions;
 
 export default authSlice.reducer;

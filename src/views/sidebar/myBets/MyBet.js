@@ -14,6 +14,7 @@ function MyBet() {
     const [gameMenu, setGameMenu] = useState("Casino");
     const { isBetslipOpen } = useSelector((state) => state.betslip);
     const { isChatOpen } = useSelector((state) => state.chat);
+    const { openMenubar } = useSelector((state) => state.auth);
 
     const menuItems = [
         { label: "Casino" },
@@ -62,7 +63,7 @@ function MyBet() {
                                 </div>
 
 
-                                <div className={`w-full ${isBetslipOpen || isChatOpen ? "max-w-screen-lg" : "max-w-screen-xl"} mx-auto`}>
+                                <div className={`w-full ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-screen-lg" : "xl:max-w-screen-xl lg:max-w-screen-md md:max-w-screen-sm"} mx-auto`}>
                                     {gameMenu === "Casino" ? <MyBets /> : <Sports />}
                                 </div>
                             </div>
@@ -85,7 +86,7 @@ function MyBet() {
                                         ))}
                                     </div>
                                 </div>
-                                <div className={`w-full ${isBetslipOpen || isChatOpen ? "max-w-screen-lg" : "max-w-screen-xl"} mx-auto`}>
+                                <div className={`w-full ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-screen-lg" : "max-w-screen-xl lg:max-w-screen-md md:max-w-screen-sm"} mx-auto`}>
                                     {IsGameMenu === "AllBets" ? (
                                         <AllBets />
                                     ) : IsGameMenu === "High Rollers" ? (

@@ -17,18 +17,19 @@ import {
   closeChatModal,
   setChatType,
 } from "../features/auth/chatSlice";
+import { setOpenMenubar } from "../features/auth/authSlice";
 
 function DefaultLayout() {
-  const [openMenubar, setOpenMenubar] = useState(false);
+  // const [openMenubar, setOpenMenubar] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
-
+  const { openMenubar } = useSelector((state) => state.auth);
   // Handle toggle for Menubar
   const handleDrawerToggle = () => {
-    setOpenMenubar((prevOpen) => !prevOpen);
+    dispatch(setOpenMenubar(!openMenubar)); 
   };
 
   // Handle toggle for right sidebar (Betslip or Chat)
@@ -80,11 +81,14 @@ function DefaultLayout() {
           />
         </div>
       )}
-      <div
-        className={`flex flex-col lg:fixed md:relative xl:relative relative bg-[#1a2c38] z-40 h-full
+     <div
+        className={`flex flex-col lg:fixed md:relative xl:relative bg-[#1a2c38] z-40 h-full xyz
         ${!isMobile ? (openMenubar ? "ml-[14%] md:ml-[19%] lg:ml-[15%]" : "ml-14") : "ml-0 w-full"}
         ${isBetslipOpen || isChatOpen ? "mr-[14%] md:mr-[28%] lg:mr-[24%] xl:mr-[19%] w-screen" : "mr-0 w-screen"}
         transition-all duration-300 ease-in-out`}
+      // className={`flex flex-col fixed top-0 right-0 bg-[#1a2c38] z-50 h-full
+      //   ${!isMobile ? (openMenubar ? "w-[calc(100%-14%)] md:w-[calc(100%-19%)] lg:w-[calc(100%-15%)]" : "w-[calc(100%-3.5rem)]") : "w-full"}
+      //   transition-width duration-300 ease-in-out`}
       >
         {localStorage.getItem("token") ? (
           <MainHeader
@@ -113,8 +117,8 @@ function DefaultLayout() {
       {!isMobile && (isBetslipOpen || isChatOpen) && (
         <div
           className={`fixed right-0 text-white overflow-hidden
-           ${isBetslipOpen || isChatOpen ? "w-72 md:w-[28%] lg:w-[24%] xl:w-[19%]" : "w-0"} 
-           transition-all duration-300 ease-in-out lg:absolute lg:top-0 lg:right-0 z-50`}
+            ${isBetslipOpen || isChatOpen ? "w-72 md:w-[28%] lg:w-[24%] xl:w-[19%]" : "w-0"}
+            transition-all duration-300 ease-in-out lg:absolute lg:top-0 lg:right-0 z-50`} 
         >
           <RightSidebar
             isDrawerOpen={isBetslipOpen || isChatOpen}

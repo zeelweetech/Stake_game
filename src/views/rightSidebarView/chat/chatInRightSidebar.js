@@ -52,7 +52,7 @@ const ChatApp = ({ onClose }) => {
         taggedUserId,
         createdAt: new Date(),
       };
-      console.log("sdknkadmfcna,m....", newMessageData);
+      // console.log("sdknkadmfcna,m....", newMessageData);
 
       chatSocket.emit("chatMessage", newMessageData);
       setMessage("");
@@ -184,7 +184,7 @@ const ChatApp = ({ onClose }) => {
         {emojiPickerVisible && (
           <div ref={emojiPickerRef} className="absolute bottom-32 left-0 z-50 bg-gray-700 rounded-lg shadow-lg">
             <EmojiPicker
-                        onEmojiClick={(_, emoji) => handleEmojiClick(emoji)}
+                        onEmojiClick={(emoji) => handleEmojiClick(emoji)}
                         className="custom-emoji-picker"
                         height={300} 
                         width={300}  
@@ -194,11 +194,10 @@ const ChatApp = ({ onClose }) => {
                         previewConfig
                         skinTonesDisabled
                     />
-          
-          </div>
-        )}
-      </div>
-    </div>
+                     </div>
+                  )}
+              </div>
+            </div>
   );
 };
 
