@@ -15,6 +15,7 @@ import { IoIosTrendingUp } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import { setWallet } from "../../../../features/auth/authSlice";
 import { decodedToken } from "../../../../resources/utility";
+import limboGameResult from "../../../../assets/Sound/limboGameResult.wav"
 
 function LimboGameContent() {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ function LimboGameContent() {
 
   LimboSocket.on("limbobetResult", (data) => {
     dispatch(setLimboStatusData(data));
+
+    // const audio = new Audio(limboGameResult);
+    // audio.play();
   });
 
   LimboSocket.on("walletBalance", (data) => {
@@ -166,9 +170,8 @@ function LimboGameContent() {
 
   return (
     <div
-      className={`xl:w-[51rem] lg:w-[41rem] max-sm:mx-3 h-full  flex flex-col justify-center select-none relative bg-[#0f212e] ${
-        isMobile ? "rounded-t-lg" : "rounded-tr-lg"
-      } `}
+      className={`xl:w-[51rem] lg:w-[41rem] max-sm:mx-3 h-full  flex flex-col justify-center select-none relative bg-[#0f212e] ${isMobile ? "rounded-t-lg" : "rounded-tr-lg"
+        } `}
     >
       <div className="mt-4 flex justify-end space-x-2 text-black text-xs pr-3">
         {topXData?.length > 0 &&
@@ -176,11 +179,10 @@ function LimboGameContent() {
             return (
               <div key={index}>
                 <button
-                  className={`p-2.5 ${
-                    item?.isWin === true
-                      ? "bg-[#00E701] text-black font-bold"
-                      : "bg-[#2F4553] text-white font-bold"
-                  } rounded-full`}
+                  className={`p-2.5 ${item?.isWin === true
+                    ? "bg-[#00E701] text-black font-bold"
+                    : "bg-[#2F4553] text-white font-bold"
+                    } rounded-full`}
                 >{`${item?.multiplier}x`}</button>
               </div>
             );

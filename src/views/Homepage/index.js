@@ -45,13 +45,13 @@ function MainHomePage() {
           parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const UpdateWalletData = async () => {
     await updateWallet({ userId: decoded?.userId })
-      .then((res) => {})
-      .catch((err) => {});
+      .then((res) => { })
+      .catch((err) => { });
   };
 
   return (
@@ -64,9 +64,13 @@ function MainHomePage() {
           <div className="mt-8 flex justify-center">
             <div>
               <StackOriginals allGames={allGames} setLoading={setLoading} />
-              <Slots />
+              <div className="my-10">
+                <Slots />
+              </div>
               <LiveCasino allGames={allGames} />
-              <GameShows allGames={allGames} />
+              <div className="my-10">
+                <GameShows allGames={allGames} />
+              </div>
               <Exclusives allGames={allGames} />
             </div>
           </div>

@@ -14,6 +14,7 @@ import { FaWallet } from "react-icons/fa";
 import { PiVaultFill } from "react-icons/pi";
 import { BiSolidNotepad } from "react-icons/bi";
 import { BsChatDotsFill } from "react-icons/bs";
+import walletIcon from "../assets/svg/wallet.svg"
 import { setAnchorEl, setTooltipOpen } from "../features/auth/authSlice";
 import { closeBetslipModal, openBetslipModal } from "../features/auth/betSlipSlice";
 import { closeChatModal, openChatModal } from "../features/auth/chatSlice";
@@ -104,9 +105,8 @@ function MainHeader({ handleRightSidebarToggle }) {
               <p className="text-sm md:text-base">
                 ₹{wallet ? wallet : 0}
               </p>
-
             </button>
-            <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-3 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base"
+            <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-3 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base md:block hidden"
               onClick={() => {
                 setProfilePopupOpen((prev) => ({
                   ...prev,
@@ -118,11 +118,14 @@ function MainHeader({ handleRightSidebarToggle }) {
               }}>
               Wallet
             </button>
+            <button className="md:hidden block w-10 h-10 bg-[#1475e1] hover:bg-[#396ca8] rounded-r-md p-2.5">  
+              <img src={walletIcon} alt="Not found"/>
+            </button>
             {profilePopupOpen.isWalletOpen && <Wallet closeWallet={() => setProfilePopupOpen({ ...profilePopupOpen, isWalletOpen: false })} />}
           </div>
           <div className="text-white flex items-center space-x-0.4 md:space-x-6">
             <button className="flex items-center space-x-1.5 font-medium">
-              <IoMdSearch className="text-sm w-10 h-6 md:text-base md:block hidden " />
+              <IoMdSearch className="text-sm w-10 h-6 md:text-base md:block hidden" />
               <p className="md:block hidden text-sm md:text-base md:space-x-1">
                 Search
               </p>

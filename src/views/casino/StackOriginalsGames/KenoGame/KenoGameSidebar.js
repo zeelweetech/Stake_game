@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { decodedToken } from "../../../../resources/utility";
 import toast from "react-hot-toast";
 import { getWallet } from "../../../../services/LoginServices";
+import kenoTileSelect from "../../../../assets/Sound/kenoGameSound.wav"
 import { KenoSocket } from "../../../../socket";
 import {
   setIsSwiper,
@@ -51,7 +52,7 @@ function KenoGameSidebar() {
           parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -142,7 +143,8 @@ function KenoGameSidebar() {
       const randomIndex = Math.floor(Math.random() * totalBoxes);
       if (!selectedBoxes.has(randomIndex)) {
         selectedBoxes.add(randomIndex);
-
+        const audio = new Audio(kenoTileSelect);
+        audio.play();
         dispatch(setSelectTile(Array.from(selectedBoxes)));
         await new Promise((resolve) => setTimeout(resolve, 200));
       }
@@ -157,17 +159,15 @@ function KenoGameSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2">
                 <button
-                  className={`py-2 xl:w-[8.65rem] lg:w-[8.07rem] md:w-[10.7rem] w-[11rem] rounded-full ${
-                    isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }`}
+                  className={`py-2 xl:w-[8.65rem] lg:w-[8.07rem] md:w-[10.7rem] w-[11rem] rounded-full ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }`}
                   onClick={() => dispatch(setIsSwiper(true))}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.73rem] lg:w-[8.07rem] md:w-[11rem] w-[10.3rem] rounded-full ${
-                    !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }`}
+                  className={`py-2 xl:w-[8.73rem] lg:w-[8.07rem] md:w-[11rem] w-[10.3rem] rounded-full ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }`}
                   onClick={() => dispatch(setIsSwiper(false))}
                 >
                   Auto
@@ -177,7 +177,7 @@ function KenoGameSidebar() {
           </div>
           {isSwiper ? (
             <div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-2 mb-1 select-none">
                 <label>Bet Amount</label>
                 <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
@@ -228,7 +228,7 @@ function KenoGameSidebar() {
                   2×
                 </button>
               </div>
-              <div className="text-[#b1bad3] text-sm font-semibold text-m mt-2 mb-1">
+              <div className="text-[#b1bad3] text-sm font-semibold text-m mt-2 mb-1 select-none">
                 <label>Risk</label>
               </div>
               <div className="flex rounded bg-[#0f212e] focus:outline-none focus:border-transparent">
@@ -259,11 +259,10 @@ function KenoGameSidebar() {
                 Clear Table
               </button>
               <button
-                className={`${
-                  selectTile.length > 0
-                    ? "bg-[#1fff20] hover:bg-[#42ed45]"
-                    : "bg-[#46a147]"
-                } text-black mt-3.5 py-3 rounded font-semibold w-full`}
+                className={`${selectTile.length > 0
+                  ? "bg-[#1fff20] hover:bg-[#42ed45]"
+                  : "bg-[#46a147]"
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleOnManualBet()}
                 disabled={selectTile.length > 0}
               >
@@ -273,7 +272,7 @@ function KenoGameSidebar() {
           ) : (
             <div>
               <div>
-                <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
+                <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2 select-none">
                   <label>Bet Amount</label>
                   <label>
                     ₹
@@ -339,7 +338,7 @@ function KenoGameSidebar() {
                     2×
                   </button>
                 </div>
-                <div className="text-[#b1bad3] text-sm font-semibold text-m mt-2 mb-1">
+                <div className="text-[#b1bad3] text-sm font-semibold text-m mt-2 mb-1 select-none">
                   <label>Risk</label>
                 </div>
                 <div className="flex rounded bg-[#0f212e] focus:outline-none focus:border-transparent">
@@ -357,7 +356,7 @@ function KenoGameSidebar() {
                     <option>High</option>
                   </select>
                 </div>
-                <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+                <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                   <label>Number of Bets</label>
                 </div>
                 <div className="relative flex">
@@ -392,16 +391,15 @@ function KenoGameSidebar() {
                   />
                 </div>
               </div>
-              <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+              <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                 On win
               </label>
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
                 <button
-                  className={`${
-                    onProfit.win
-                      ? "bg-[#0f212e] rounded"
-                      : "hover:bg-[#85afca68] rounded"
-                  }xl:px-2 lg:px-2 md:px-2 px-2 py-1.5 ml-0.5 rounded`}
+                  className={`${onProfit.win
+                    ? "bg-[#0f212e] rounded"
+                    : "hover:bg-[#85afca68] rounded"
+                    }xl:px-2 lg:px-2 md:px-2 px-2 py-1.5 ml-0.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setValues({ ...values, onwin: "" }));
@@ -410,11 +408,10 @@ function KenoGameSidebar() {
                   Reset
                 </button>
                 <button
-                  className={`${
-                    onProfit.win
-                      ? "hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded"
-                  } px-[0.20rem] py-1.5 rounded`}
+                  className={`${onProfit.win
+                    ? "hover:bg-[#85afca68]"
+                    : "bg-[#0f212e] rounded"
+                    } px-[0.20rem] py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -422,11 +419,10 @@ function KenoGameSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${
-                    onProfit.win
-                      ? "opacity-50 pointer-events-none cursor-not-allowed"
-                      : ""
-                  }`}
+                  className={`relative flex ${onProfit.win
+                    ? "opacity-50 pointer-events-none cursor-not-allowed"
+                    : ""
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -442,17 +438,16 @@ function KenoGameSidebar() {
                   />
                 </div>
               </div>
-              <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
+              <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1 select-none">
                 On Lose
               </label>
               <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
-                        ? "bg-[#0f212e] rounded"
-                        : "hover:bg-[#85afca68] rounded"
-                    } px-2 py-1.5 ml-0.5 rounded`}
+                    className={`${onProfit.lose
+                      ? "bg-[#0f212e] rounded"
+                      : "hover:bg-[#85afca68] rounded"
+                      } px-2 py-1.5 ml-0.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                       dispatch(setValues({ ...values, onlose: "" }));
@@ -463,11 +458,10 @@ function KenoGameSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
-                        ? "hover:bg-[#85afca68]"
-                        : "bg-[#0f212e] rounded"
-                    } px-[0.20rem] py-1.5 rounded`}
+                    className={`${onProfit.lose
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded"
+                      } px-[0.20rem] py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -476,11 +470,10 @@ function KenoGameSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${
-                    onProfit.lose
-                      ? "opacity-50 pointer-events-none cursor-not-allowed"
-                      : ""
-                  }`}
+                  className={`relative flex ${onProfit.lose
+                    ? "opacity-50 pointer-events-none cursor-not-allowed"
+                    : ""
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -496,7 +489,7 @@ function KenoGameSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-2 mb-1 select-none">
                 <label>Stop on Profit</label>
                 <label>
                   ₹{values?.stoponprofit ? values?.stoponprofit : "0.00"}
@@ -516,7 +509,7 @@ function KenoGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-2 mb-1 select-none">
                 <label>Stop on Loss</label>
                 <label>
                   ₹{values?.stoponloss ? values?.stoponloss : "0.00"}
@@ -545,14 +538,13 @@ function KenoGameSidebar() {
                 </button>
               ) : (
                 <button
-                  className={`${
-                    selectTile.length > 0
-                      ? "bg-[#1fff20] hover:bg-[#42ed45]"
-                      : "bg-[#46a147]"
-                  } text-black mt-3 py-3 rounded font-semibold w-full`}
+                  className={`${selectTile.length > 0
+                    ? "bg-[#1fff20] hover:bg-[#42ed45]"
+                    : "bg-[#46a147]"
+                    } text-black mt-3 py-3 rounded font-semibold w-full`}
                   onClick={() =>
                     values?.autoBetCount === undefined ||
-                    values?.autoBetCount === ""
+                      values?.autoBetCount === ""
                       ? toast.error("Please enter a number of bets")
                       : handleOnAutoBet()
                   }
@@ -569,7 +561,7 @@ function KenoGameSidebar() {
         <div className="xl:w-80 lg:w-[16.8rem] max-sm:mx-3 flex flex-col p-3 bg-[#213743]">
           {isSwiper ? (
             <div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mb-2">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mb-2 select-none">
                 <label>Bet Amount</label>
                 <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
@@ -621,17 +613,16 @@ function KenoGameSidebar() {
                 </button>
               </div>
               <button
-                className={`${
-                  selectTile.length > 0
-                    ? "bg-[#1fff20] hover:bg-[#42ed45]"
-                    : "bg-[#46a147]"
-                } text-black mt-3.5 py-3 rounded font-semibold w-full`}
+                className={`${selectTile.length > 0
+                  ? "bg-[#1fff20] hover:bg-[#42ed45]"
+                  : "bg-[#46a147]"
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleOnManualBet()}
                 disabled={selectTile.length > 0}
               >
                 Bet
               </button>
-              <div className="text-[#b1bad3] text-sm font-semibold text-m mt-2 mb-1">
+              <div className="text-[#b1bad3] text-sm font-semibold text-m mt-2 mb-1 select-none">
                 <label>Risk</label>
               </div>
               <div className="flex rounded bg-[#0f212e] focus:outline-none focus:border-transparent">
@@ -664,17 +655,16 @@ function KenoGameSidebar() {
                   </button>
                 ) : (
                   <button
-                    className={`${
-                      selectTile.length > 0
-                        ? "bg-[#1fff20] hover:bg-[#42ed45]"
-                        : "bg-[#46a147]"
-                    } text-black mt-3 py-3 rounded font-semibold w-full`}
+                    className={`${selectTile.length > 0
+                      ? "bg-[#1fff20] hover:bg-[#42ed45]"
+                      : "bg-[#46a147]"
+                      } text-black mt-3 py-3 rounded font-semibold w-full`}
                     onClick={() => handleOnAutoBet()}
                   >
                     Start Autobet
                   </button>
                 )}
-                <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
+                <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2 select-none">
                   <label>Bet Amount</label>
                   <label>
                     ₹
@@ -740,7 +730,7 @@ function KenoGameSidebar() {
                     2×
                   </button>
                 </div>
-                <div className="text-[#b1bad3] text-sm font-semibold text-m mt-2 mb-1">
+                <div className="text-[#b1bad3] text-sm font-semibold text-m mt-2 mb-1 select-none">
                   <label>Risk</label>
                 </div>
                 <div className="flex rounded bg-[#0f212e] focus:outline-none focus:border-transparent">
@@ -758,7 +748,7 @@ function KenoGameSidebar() {
                     <option>High</option>
                   </select>
                 </div>
-                <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+                <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                   <label>Number of Bets</label>
                 </div>
                 <div className="relative flex">
@@ -793,16 +783,15 @@ function KenoGameSidebar() {
                   />
                 </div>
               </div>
-              <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+              <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                 On win
               </label>
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
                 <button
-                  className={`${
-                    onProfit.win
-                      ? "bg-[#0f212e] rounded"
-                      : "hover:bg-[#85afca68] rounded"
-                  }xl:px-2 lg:px-2 md:px-2 px-2 py-1.5 ml-0.5 rounded`}
+                  className={`${onProfit.win
+                    ? "bg-[#0f212e] rounded"
+                    : "hover:bg-[#85afca68] rounded"
+                    }xl:px-2 lg:px-2 md:px-2 px-2 py-1.5 ml-0.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setValues({ ...values, onwin: "" }));
@@ -811,11 +800,10 @@ function KenoGameSidebar() {
                   Reset
                 </button>
                 <button
-                  className={`${
-                    onProfit.win
-                      ? "hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded"
-                  } px-[0.20rem] py-1.5 rounded`}
+                  className={`${onProfit.win
+                    ? "hover:bg-[#85afca68]"
+                    : "bg-[#0f212e] rounded"
+                    } px-[0.20rem] py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -823,11 +811,10 @@ function KenoGameSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${
-                    onProfit.win
-                      ? "opacity-50 pointer-events-none cursor-not-allowed"
-                      : ""
-                  }`}
+                  className={`relative flex ${onProfit.win
+                    ? "opacity-50 pointer-events-none cursor-not-allowed"
+                    : ""
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -843,17 +830,16 @@ function KenoGameSidebar() {
                   />
                 </div>
               </div>
-              <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
+              <label className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1 select-none">
                 On Lose
               </label>
               <div className="flex items-center space-x-0.5  mt-1 rounded  bg-[#2F4553]">
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
-                        ? "bg-[#0f212e] rounded"
-                        : "hover:bg-[#85afca68] rounded"
-                    } px-2 py-1.5 ml-0.5 rounded`}
+                    className={`${onProfit.lose
+                      ? "bg-[#0f212e] rounded"
+                      : "hover:bg-[#85afca68] rounded"
+                      } px-2 py-1.5 ml-0.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                       dispatch(setValues({ ...values, onlose: "" }));
@@ -864,11 +850,10 @@ function KenoGameSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
-                        ? "hover:bg-[#85afca68]"
-                        : "bg-[#0f212e] rounded"
-                    } px-[0.20rem] py-1.5 rounded`}
+                    className={`${onProfit.lose
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded"
+                      } px-[0.20rem] py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -877,11 +862,10 @@ function KenoGameSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${
-                    onProfit.lose
-                      ? "opacity-50 pointer-events-none cursor-not-allowed"
-                      : ""
-                  }`}
+                  className={`relative flex ${onProfit.lose
+                    ? "opacity-50 pointer-events-none cursor-not-allowed"
+                    : ""
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -897,7 +881,7 @@ function KenoGameSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-2 mb-1 select-none">
                 <label>Stop on Profit</label>
                 <label>
                   ₹{values?.stoponprofit ? values?.stoponprofit : "0.00"}
@@ -917,7 +901,7 @@ function KenoGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-2 mb-1 select-none">
                 <label>Stop on Loss</label>
                 <label>
                   ₹{values?.stoponloss ? values?.stoponloss : "0.00"}
@@ -943,18 +927,16 @@ function KenoGameSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 w-full">
                 <button
-                  className={`py-2 rounded-full transition-all ${
-                    isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }
+                  className={`py-2 rounded-full transition-all ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }
                             xl:w-[8.7rem] lg:w-[5rem] md:w-[10.7rem] w-full`}
                   onClick={() => dispatch(setIsSwiper(true))}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 rounded-full transition-all ${
-                    !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }
+                  className={`py-2 rounded-full transition-all ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }
                             xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.7rem] w-full`}
                   onClick={() => dispatch(setIsSwiper(false))}
                 >

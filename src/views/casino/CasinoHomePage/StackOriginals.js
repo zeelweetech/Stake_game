@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllGames } from "../../../services/GameServices";
 import { setAllGame } from "../../../features/casino/allGameSlice";
 
-function StackOriginals({ allGames, isLobby }) {
+function StackOriginals({ isLobby }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const swiperRef = useRef(null);
@@ -96,7 +96,7 @@ function StackOriginals({ allGames, isLobby }) {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <div className="flex items-center mx-3 mt-8 space-x-2">
+        <div className="flex items-center mx-3 space-x-2">
           <BsFire fontSize={20} className="text-[#b1bad3] hover:text-white" />
           <Link className="text-lg font-medium text-white">Listor Originals</Link>
         </div>

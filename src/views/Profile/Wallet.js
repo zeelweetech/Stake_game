@@ -25,7 +25,7 @@ const Wallet = ({closeWallet}) => {
         <p className="font-bold text-2xl py-2 p-6">Let's setup your wallet & get started!</p>
         <div>
           <p className="p-6">
-            Confirm your email & quickly verify your account details to get started using Stake.
+            Confirm your email & quickly verify your account details to get started using Listor.
             This will allow you to deposit & withdraw your funds seamlessly.
           </p>
         </div>

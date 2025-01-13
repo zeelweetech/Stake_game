@@ -102,7 +102,7 @@ function CasinoHomePage() {
             </div>
           </div>
 
-          <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 mx-3 my-7">
+          <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 mx-3 my-7 scrollbar-thin">
             <div className="bg-[#0f212e] flex rounded-full p-[5px] flex-shrink-0 space-x-2 text-xs">
               {menuItems.map((item) => (
                 <button
@@ -121,7 +121,7 @@ function CasinoHomePage() {
           </div>
 
           {/* Main Content */}
-          <div className="flex flex-col space-y-6">
+          <div className="flex flex-col space-y-6 mt-10">
             {stackMenu === "Lobby" ? (
               <>
                 <StackOriginals

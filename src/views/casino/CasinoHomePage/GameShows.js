@@ -39,7 +39,7 @@ function GameShows({ allGames, isLobby }) {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <div className="flex items-center mx-3 mt-8 space-x-2">
+        <div className="flex items-center mx-3 space-x-2">
           <FaGift
             fontSize="small"
             className="text-[#b1bad3] hover:text-white"

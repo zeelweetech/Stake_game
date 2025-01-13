@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSelectTile } from "../../../../features/casino/kenoSlice";
 import kenoDaimond from "../../../../assets/svg/kenoDaimond.svg";
 import { rowFileConfigs } from "./KenoJson";
+import kenoTileSelect from "../../../../assets/Sound/kenoGameSound.wav"
 
 function KenoGameContent() {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ function KenoGameContent() {
       dispatch(setSelectTile(selectTile.filter((tile) => tile !== index)));
     } else {
       if (selectTile.length < 10) {
+        const audio = new Audio(kenoTileSelect);
+        audio.play();
         dispatch(setSelectTile([...selectTile, index]));
       }
     }
@@ -86,37 +89,33 @@ function KenoGameContent() {
 
   return (
     <div
-      className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center lg:p-4 md:p-1.5 ${
-        isMobile
-          ? " max-sm:mx-3 rounded-t-lg"
-          : "xl:w-[51rem] lg:w-[39rem] rounded-tr-lg"
-      }`}
+      className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center lg:p-4 md:p-1.5 ${isMobile
+        ? " max-sm:mx-3 rounded-t-lg"
+        : "xl:w-[51rem] lg:w-[39rem] rounded-tr-lg"
+        }`}
     >
       <div
-        className={`grid ${
-          isMobile
-            ? "grid-cols-8 gap-1.5"
-            : "grid-cols-8 xl:gap-x-3 lg:gap-x-2 md:gap-x-3 gap-x-3 gap-y-1.5"
-        } relative z-10 p-1.5 max-sm:w-full`}
+        className={`grid ${isMobile
+          ? "grid-cols-8 gap-1.5"
+          : "grid-cols-8 xl:gap-x-3 lg:gap-x-2 md:gap-x-3 gap-x-3 gap-y-1.5"
+          } relative z-10 p-1.5 max-sm:w-full`}
       >
         {images?.map((img, index) => (
           <div
             key={index}
-            className={`flex justify-center items-center w-full ${
-              isMobile
-                ? "md:w-[2.6rem] p-2 md:h-[2.7rem] w-[2.5431rem] h-[2.5431rem] "
-                : "xl:w-[5.3rem] lg:w-[4.2rem] xl:h-[5.3rem] lg:h-[4.2rem]"
-            } bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${
-              zoomClass[index] ? "zoom-in-out" : ""
-            }`}
+            className={`flex justify-center items-center w-full ${isMobile
+              ? "md:w-[2.6rem] p-2 md:h-[2.7rem] w-[2.5431rem] h-[2.5431rem] "
+              : "xl:w-[5.3rem] lg:w-[4.2rem] xl:h-[5.3rem] lg:h-[4.2rem]"
+              } bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""
+              }`}
             onClick={() => handleClick(index)}
             style={{
               // backgroundColor: revealed[index] || gamesOver ? "#071824" : "#2f4553",
               backgroundColor: revealed[index]
                 ? "#071824"
                 : selectTile?.includes(index)
-                ? "#9000ff"
-                : "#2f4553",
+                  ? "#9000ff"
+                  : "#2f4553",
               borderBottom: selectTile?.includes(index)
                 ? "8px solid #7100c7"
                 : "8px solid #253742",
@@ -125,8 +124,8 @@ function KenoGameContent() {
                 selectTile.length < 10
                   ? "1"
                   : selectTile?.includes(index)
-                  ? "1"
-                  : "0.6",
+                    ? "1"
+                    : "0.6",
             }}
           >
             {img ? (
@@ -137,9 +136,8 @@ function KenoGameContent() {
                   opacity: img.opacity || 1,
                 }}
                 // className={`flex justify-center items-center ${revealed[index] || gamesOver ? "reveal-animation" : "hidden"} ${img.className || ""}`}
-                className={`flex justify-center items-center ${
-                  revealed[index] ? "reveal-animation" : "hidden"
-                } ${img.className || ""}`}
+                className={`flex justify-center items-center ${revealed[index] ? "reveal-animation" : "hidden"
+                  } ${img.className || ""}`}
                 src={img.icon}
                 alt="Icon"
               />
