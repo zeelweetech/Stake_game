@@ -52,28 +52,28 @@ function Lobby() {
         const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const UpdateWalletData = async () => {
     await updateWallet({ userId: decoded?.userId })
-      .then((res) => {})
-      .catch((err) => {});
+      .then((res) => { })
+      .catch((err) => { });
   };
 
   return (
-    <div className={`flex justify-center h-full bg-[#1a2c38]`}>
+    <div className={`flex items-center h-full bg-[#1a2c38]`}>
       {loading ? (
-        <Loader />  
+        <Loader />
       ) : (
-<div className={`text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10 `}>
-<div className="flex items-center mx-3 mt-8 space-x-2">
-          <TbCherryFilled 
-            size={28}
-            className="text-[#b1bad3] hover:text-white"
-          />
-          <Link className="text-lg font-medium text-white">Lobby</Link>
-        </div>
+        <div className={`text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10 `}>
+          <div className="flex items-center mx-3 mt-8 space-x-2">
+            <TbCherryFilled
+              size={28}
+              className="text-[#b1bad3] hover:text-white"
+            />
+            <Link className="text-lg font-medium text-white">Lobby</Link>
+          </div>
           <div className="flex flex-col space-y-6">
             {stackMenu === "Lobby" ? (
               <>
@@ -115,7 +115,7 @@ function Lobby() {
                 setLoading={setLoading}
                 isLobby={false}
               />
-            ) : stackMenu === "Live Casino" ? (         
+            ) : stackMenu === "Live Casino" ? (
               <LiveCasino
                 allGames={allGames}
                 setLoading={setLoading}
@@ -144,3 +144,4 @@ function Lobby() {
 }
 
 export default Lobby;
+

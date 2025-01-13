@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
@@ -42,6 +42,15 @@ export const SidebarNav = ({ items, toggleSidebar, dropdownVisible, setDropdownV
     "New Releases",
   ];
   const thirdGroup = ["Profile"];
+  //  // Effect to manage body scroll
+  //  useEffect(() => {
+  //   const isAnyPopupOpen = Object.values(profilePopupOpen).some(open => open);
+  //   document.body.style.overflow = isAnyPopupOpen ? 'hidden' : 'auto';
+    
+  //   return () => {
+  //     document.body.style.overflow = 'auto'; // Cleanup on unmount
+  //   };
+  // }, [profilePopupOpen]);
 
   // firstGroup and secondGroup 
   const navLink = (name, icon, badge, indent = false, index) => (
@@ -74,7 +83,7 @@ export const SidebarNav = ({ items, toggleSidebar, dropdownVisible, setDropdownV
       return (
         <div
           key={index}
-          className="flex flex-col items-start pl-1 font-semibold hover:bg-[#213743]"
+          className="flex flex-col items-start pl-1 font-semibold"
         >
           <div
             onClick={() => toggleDropdown(index)}
@@ -179,7 +188,7 @@ export const SidebarNav = ({ items, toggleSidebar, dropdownVisible, setDropdownV
   };
 
   const renderGroup = (groupItems, groupName) => (
-    <div key={groupName} className="bg-[#213743] mb-2 rounded-sm p-1 mx-1.5  ">
+    <div key={groupName} className="bg-[#213743] mb-2 rounded-sm p-1 mx-1.5">
       <ul>
         {items
           .filter((item) => groupItems.includes(item.name))
@@ -189,7 +198,7 @@ export const SidebarNav = ({ items, toggleSidebar, dropdownVisible, setDropdownV
   );
 
   return (
-    <div>
+    <div className="full-screen-container">
       {renderGroup(firstGroup, "First Group")}
       {/* {renderGroup(Games, "Games")} */}
       {renderGroup(secondGroup, "Second Group")}

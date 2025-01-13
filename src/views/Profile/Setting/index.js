@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MdSettings } from "react-icons/md";
+import { MdClose, MdSettings } from "react-icons/md";
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import { useNavigate, useParams } from "react-router-dom";
 import Generals from "./General";
@@ -55,6 +55,9 @@ const Setting = () => {
     }
 
   };
+  const handleClose = () => {
+    navigate("/dashboard");
+  };
 
   return (
     <div className="bg-[#1a2c38] py-2 h-full">
@@ -62,28 +65,33 @@ const Setting = () => {
         <Loader />
       ) : (
         <div className="ml-4">
-          <div className="text-white flex items-center space-x-4 w-full xl:px-10 md:px-2 py-2">
-            <MdSettings size={22} />
-            <p className="text-xl py-0">Settings</p>
+          <div className="text-white flex justify-between items-center w-full xl:px-10 md:px-2 px-5 py-2">
+            <div className="flex justify-between items-center space-x-2">
+              <MdSettings size={22} />
+              <p className="text-xl py-0">Settings</p>
+            </div>
+
+            <MdClose
+              size={22}
+              className="cursor-pointer right-0"
+              onClick={handleClose}
+            />
           </div>
           {responsiveMobile > 768 ? (
             <div className="flex">
-              <div className="bg-[#0f212e] text-white rounded-lg shadow-lg h-full flex flex-col items-start m-10 mt-5">
-                <ul className="space-y-2">
+              <div className="bg-[#0f212e] text-white rounded-lg shadow-lg h-full flex flex-col items-start ml-5 mt-5">
+                <ul className="text-start w-32">
                   {menuItems.map((item) => (
                     <li
                       key={item.label}
-                      className={`cursor-pointer hover:bg-[#2f4553] w-40 p-2 ${section === item.value
-                        ? `bg-[#2f4553] border-l-2 border-sky-500 ${item.label === "General" ? "rounded-t-lg" : item.label === "Verify" && "rounded-b-lg"}`
-                        : "border-l-transparent border-l-2"
-                        }`}
+                      className={`cursor-pointer w-40 ${section === item.value
+                        ? `text-white font-bold ${item.label === "General" ? "rounded-t-lg" : item.label === "Verify" && "rounded-b-lg"}`
+                        : ""} p-3 text-white hover:bg-[#071824] cursor-pointer ${selectedMenu === item.label ? "bg-[#071824] border-l-4 border-[#1475e1]" : ""}`}
                       onClick={() => {
-                        setSelectedMenu(item.label);  
-                        handleSettingClick(item.label);  
-                        setIsOpen(false);  
+                        setSelectedMenu(item.label);
+                        handleSettingClick(item.label);
+                        setIsOpen(false);
                       }}
-                      className={`p-2 text-white hover:bg-[#2f4553] cursor-pointer ${selectedMenu === item.label ? "bg-[#2f4553]" : ""
-                        }`}
                     >
                       {item.label}
                     </li>
@@ -96,13 +104,12 @@ const Setting = () => {
               </div>
             </div>
           ) : (
-            <div className="">
-
+            <div>
               <div className="relative py-2">
                 <div
                   onClick={() => setIsOpen(!isOpen)}
-                  className="bg-[#0f212e] text-white border border-gray-500 w-28 rounded cursor-pointer flex justify-between items-center p-1"
-                >
+                  className="bg-[#0f212e] text-white border border-gray-500 w-28 rounded cursor-pointer flex justify-between items-center p-1 md:mx-0 mx-5"
+                > 
                   <span>{selectedMenu}</span>
                   {isOpen ? (
                     <ChevronUpIcon className="ml-2 h-5 w-5" />
@@ -117,9 +124,9 @@ const Setting = () => {
                     <div
                       key={item.label}
                       onClick={() => {
-                        setSelectedMenu(item.label);  
-                        handleSettingClick(item.label);  
-                        setIsOpen(false);  
+                        setSelectedMenu(item.label);
+                        handleSettingClick(item.label);
+                        setIsOpen(false);
                       }}
                       className={`p-2 text-white hover:bg-[#2f4553] cursor-pointer ${selectedMenu === item.label ? "bg-[#2f4553]" : ""
                         }`}
