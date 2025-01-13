@@ -32,7 +32,7 @@ const Verify = ({ setVerify }) => {
   useEffect(() => {
     const decoded = decodedToken();
     if (decoded) {
-      setEmail(decoded?.email || "");  
+      setEmail(decoded?.email || "");
     }
   }, []);
 
@@ -70,32 +70,26 @@ const Verify = ({ setVerify }) => {
           Please check your email & click the Verification link to
           activate your account.
         </p>
-        <div className="text-white pt-3">Email</div>
-        <TextField
+        <div className="text-white pt-3">Email<span className="text-red-500"> *</span></div>
+        <input
           autoFocus
           placeholder="Email"
           name="email"
           type="text"
-          fullWidth
-          value={email}  
-          onChange={handleEmailChange}  
-          error={!!errors.email}
-          helperText={errors.email}
-          sx={{
-            my: 1,
-            input: {
-              color: "#b1bad3",
-            },
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderColor: "#2f4553",
-              },
-              "&:hover fieldset": {
-                borderColor: "#2f4553",
-              },
-            },
+          value={email}
+          onChange={handleEmailChange}
+          className={`bg-[#0f212e] border-2 border-[#2F4553] hover:border-[#557086] focus:outline-none 
+            text-white w-full h-10 px-2`}
+          onFocus={(e) => {
+            e.target.style.borderColor = '#2f4553'; 
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = '#2f4553'; 
           }}
         />
+        {errors.email && (
+          <div style={{ color: 'red', marginTop: '4px' }}>{errors.email}</div>
+        )}
         <div className="text text-white text-end">Resend email</div>
       </DialogContent>
       <DialogActions>
@@ -114,7 +108,7 @@ const Verify = ({ setVerify }) => {
             },
           }}
         >
-          Continue
+          Submit
         </Button>
       </DialogActions>
     </Dialog>

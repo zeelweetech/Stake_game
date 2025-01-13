@@ -172,6 +172,13 @@ tr:nth-child(even) {
   /* --epr-emoji-size: 10px; */
   /* display: none!important; */
 }
+.full-screen-container {
+  height: 90vh; /* Full height of the viewport */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  position: relative; /* Positioning context for child elements */
+
+}
 
 
 @tailwind base;

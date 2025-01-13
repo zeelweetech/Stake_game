@@ -31,7 +31,7 @@ const Session = () => {
   return (
     <div>
       {responsiveMobile > 768 ? (
-        <div className="bg-[#0f212e] w-full md:w-[85%] lg:w-[90%] text-white rounded-lg p-6">        {/* <div className="mb-4"> */}
+        <div className="bg-[#0f212e] w-full md:w-[85%] lg:w-[98%] text-white rounded-lg p-6">        {/* <div className="mb-4"> */}
         <div className="font-bold text-gray-400 text-sm">Session Filter</div>
         <div className="relative">
           <div
@@ -63,9 +63,9 @@ const Session = () => {
         </div>
 
         <div className="overflow-x-auto py-2 lg:w-[99%]">
-          <table className="min-w-full text-left border-collapse border border-gray-400">
+          <table className="min-w-full text-left">
             <thead>
-              <tr className="bg-[#1a2c38]">
+              <tr className="">
                 <th className="py-4 px-4">Browser</th>
                 <th className="px-4">Near</th>
                 <th className="px-4">IP Address</th>
@@ -74,7 +74,7 @@ const Session = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="border-t">
+              <tr className="bg-[#4d718768] rounded-3xl">
                 <td className="py-4 px-4">Chrome (Unknown)</td>
                 <td className="px-4">FR, Paris</td>
                 <td className="px-4">46.250.226.163</td>
@@ -126,7 +126,7 @@ const Session = () => {
          <div className="overflow-x-auto py-2 lg:w-[99%]">
            <table className="min-w-full text-left border-collapse border border-gray-400">
              <thead>
-               <tr className="bg-[#1a2c38]">
+               <tr>
                  <th className="py-4 px-4">Browser</th>
                  <th className="px-4">Near</th>
                  <th className="px-4">IP Address</th>
@@ -135,7 +135,7 @@ const Session = () => {
                </tr>
              </thead>
              <tbody>
-               <tr className="border-t">
+               <tr className="bg-[#4d718768] rounded-3xl">
                  <td className="py-4 px-4">Chrome (Unknown)</td>
                  <td className="px-4">FR, Paris</td>
                  <td className="px-4">46.250.226.163</td>

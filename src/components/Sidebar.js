@@ -136,7 +136,7 @@ function Sidebar({ handleDrawerToggle, handleMenuOpen }) {
       </div>
       <div className="mt-4">
         <ul className="space-y-2 rounded-md">
-          <SidebarNav
+          <SidebarNav 
             items={nav}
             openMenubar={openMenubar}
             toggleSidebar={handleDrawerToggle}

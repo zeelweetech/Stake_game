@@ -122,7 +122,7 @@ const Security = () => {
             {responsiveMobile > 768 ? (
                 <div className="bg-[#0f212e] text-white rounded-lg p-10">
                     <div className="bg-[#1a2c38] border border-gray-500 text-white rounded-lg p-4 w-120 space-y-3">
-                    {/* <div className="flex flex-col"> */}
+                        {/* <div className="flex flex-col"> */}
                         <div className="flex justify-start mb-4">
                             <h2 className="text-lg font-semibold">Password</h2>
                         </div>
@@ -132,125 +132,83 @@ const Security = () => {
                             <p className="text-sm font-medium text-gray-400">
                                 Old Password <span className="text-red-500">*</span>
                             </p>
-                            <FormControl>
-                                <TextField
+                            <div className="relative">
+                                <input
                                     name="oldPassword"
                                     placeholder="Enter Old Password"
                                     type={showPassword.oldPassword ? "text" : "password"}
                                     value={values.oldPassword}
                                     onChange={handleInputChange}
-                                    error={!!error.oldPassword}
-                                    helperText={error.oldPassword}
-                                    sx={{
-                                        backgroundColor: "#0f212e",
-                                        "& .MuiOutlinedInput-root": {
-                                            border: "1px solid gray",
-                                            width: "100%",
-                                            height: "40px",
-
-                                        },
-                                        "& .MuiInputBase-input": {
-                                            color: "white",
-                                        },
-                                    }}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    onClick={() => togglePasswordVisibility("oldPassword")}
-                                                    edge="end"
-                                                    sx={{ color: "white" }}
-                                                >
-                                                    {showPassword.oldPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
+                                    className={`border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none 
+                        bg-[#0f212e] text-white w-96 h-10 px-2`}
                                 />
-                            </FormControl>
+                                <IconButton
+                                    onClick={() => togglePasswordVisibility("oldPassword")}
+                                    edge="end"
+                                    className="right-11"
+                                    sx={{ color: "white" }}
+                                >
+                                    {showPassword.oldPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </div>
+                            {error.oldPassword && (
+                                <p className="text-red-500 text-xs">{error.oldPassword}</p>
+                            )}
                         </div>
 
                         {/* New Password */}
-                        <div className="mb-4">
-                            <p className="text-sm font-medium text-gray-400">New Password <span className="text-red-500">*</span></p>
-                            <FormControl>
-                                <TextField
-                                    name="newPassword"
-                                    placeholder="Enter New Password"
-                                    type={showPassword.newPassword ? "text" : "password"}
-                                    value={values.newPassword}
-                                    onChange={handleInputChange}
-                                    error={!!error.newPassword}
-                                    helperText={error.newPassword}
-                                    sx={{
-                                        backgroundColor: "#0f212e",
-                                        "& .MuiOutlinedInput-root": {
-                                            border: "1px solid gray",
-                                            width: "100%",
-                                            height: "40px",
-
-                                        },
-                                        "& .MuiInputBase-input": {
-                                            color: "white",
-                                        },
-                                    }}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    onClick={() => togglePasswordVisibility("newPassword")}
-                                                    edge="end"
-                                                    sx={{ color: "white" }}
-                                                >
-                                                    {showPassword.newPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </FormControl>
+                        <div className="mb-4 relative">
+                            <p className="text-sm font-medium text-gray-400">
+                                New Password <span className="text-red-500">*</span>
+                            </p>
+                            <input
+                                name="newPassword"
+                                placeholder="Enter New Password"
+                                type={showPassword.newPassword ? "text" : "password"}
+                                value={values.newPassword}
+                                onChange={handleInputChange}
+                                className={`border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none 
+                                    bg-[#0f212e] text-white w-96 h-10 px-2`}
+                            />
+                            <IconButton
+                                onClick={() => togglePasswordVisibility("newPassword")}
+                                edge="end"
+                                className="right-11"
+                                sx={{ color: "white" }}
+                            >
+                                {showPassword.newPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                            {error.newPassword && (
+                                <p className="text-red-500 text-xs">{error.newPassword}</p>
+                            )}
                         </div>
 
                         {/* Confirm Password */}
-                        <div className="mb-6">
-                            <p className="text-sm font-medium text-gray-400">Confirm Password <span className="text-red-500">*</span></p>
-                            <FormControl>
-                                <TextField
-                                    name="confirmPassword"
-                                    placeholder="Confirm Password"
-                                    type={showPassword.confirmPassword ? "text" : "password"}
-                                    value={values.confirmPassword}
-                                    onChange={handleInputChange}
-                                    error={!!error.confirmPassword}
-                                    helperText={error.confirmPassword}
-                                    sx={{
-                                        backgroundColor: "#0f212e",
-                                        "& .MuiOutlinedInput-root": {
-                                            border: "1px solid gray",
-                                            height: "40px",
-
-                                        },
-                                        "& .MuiInputBase-input": {
-                                            color: "white",
-                                        },
-                                    }}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    onClick={() => togglePasswordVisibility("confirmPassword")}
-                                                    edge="end"
-                                                    sx={{ color: "white" }}
-                                                >
-                                                    {showPassword.confirmPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </FormControl>
+                        <div className="mb-6 relative">
+                            <p className="text-sm font-medium text-gray-400">
+                                Confirm Password <span className="text-red-500">*</span>
+                            </p>
+                            <input
+                                name="confirmPassword"
+                                placeholder="Confirm Password"
+                                type={showPassword.confirmPassword ? "text" : "password"}
+                                value={values.confirmPassword}
+                                onChange={handleInputChange}
+                                className={`border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none 
+                    bg-[#0f212e] text-white w-96 h-10 px-2`}
+                            />
+                            <IconButton
+                                onClick={() => togglePasswordVisibility("confirmPassword")}
+                                edge="end"
+                                className="right-11"
+                                sx={{ color: "white" }}
+                            >
+                                {showPassword.confirmPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                            {error.confirmPassword && (
+                                <p className="text-red-500 text-xs">{error.confirmPassword}</p>
+                            )}
                         </div>
-
                         <div className="border-b pt-2 border-gray-500 w-full mt-1"></div>
 
                         {/* Save Button */}
@@ -268,7 +226,6 @@ const Security = () => {
                                 Save
                             </Button>
                         </div>
-                        {/* </div> */}
 
                     </div>
                 </div>
@@ -283,128 +240,169 @@ const Security = () => {
                         </div>
 
                         {/* Old Password */}
-                        <div className="space-y-2">
+                        <div className="space-y-2 mb-4 relative">
                             <p className="text-sm font-medium text-gray-400">
                                 Old Password <span className="text-red-500">*</span>
                             </p>
-                            <FormControl>
-                                <TextField
+                            <div className="flex">
+                                <input
                                     name="oldPassword"
                                     placeholder="Enter Old Password"
                                     type={showPassword.oldPassword ? "text" : "password"}
                                     value={values.oldPassword}
                                     onChange={handleInputChange}
-                                    error={!!error.oldPassword}
-                                    helperText={error.oldPassword}
-                                    sx={{
-                                        backgroundColor: "#0f212e",
-                                        "& .MuiOutlinedInput-root": {
-                                            border: "1px solid gray",
-                                            width: "100%",
-                                            height: "40px",
-
-                                        },
-                                        "& .MuiInputBase-input": {
-                                            color: "white",
-                                        },
-                                    }}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    onClick={() => togglePasswordVisibility("oldPassword")}
-                                                    edge="end"
-                                                    sx={{ color: "white" }}
-                                                >
-                                                    {showPassword.oldPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
+                                    className={`bg-[#0f212e] border-2 border-[#2F4553] hover:border-[#557086] focus:outline-none 
+                    text-white w-full h-10 px-2`}
                                 />
-                            </FormControl>
+                                <IconButton
+                                    onClick={() => togglePasswordVisibility("oldPassword")}
+                                    edge="end"
+                                    className="right-10"
+                                    sx={{ color: "white" }}
+                                >
+                                    {showPassword.oldPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </div>
+                            {error.oldPassword && (
+                                <p className="text-red-500 text-xs">{error.oldPassword}</p>
+                            )}
                         </div>
+                        {/* <div className="space-y-2">
+                            <p className="text-sm font-medium text-gray-400">
+                                Old Password <span className="text-red-500">*</span>
+                            </p>
+                            <div className="relative">
+                                <input
+                                    name="oldPassword"
+                                    placeholder="Enter Old Password"
+                                    type={showPassword.oldPassword ? "text" : "password"}
+                                    value={values.oldPassword}
+                                    onChange={handleInputChange}
+                                    className={`border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none 
+                        bg-[#0f212e] text-white w-96 h-10 px-2`}
+                                />
+                                <IconButton
+                                    onClick={() => togglePasswordVisibility("oldPassword")}
+                                    edge="end"
+                                    className="right-11"
+                                    sx={{ color: "white" }}
+                                >
+                                    {showPassword.oldPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </div>
+                            {error.oldPassword && (
+                                <p className="text-red-500 text-xs">{error.oldPassword}</p>
+                            )}
+                        </div> */}
+
 
                         {/* New Password */}
-                        <div className="mb-4">
-                            <p className="text-sm font-medium text-gray-400">New Password <span className="text-red-500">*</span></p>
-                            <FormControl>
-                                <TextField
+                        <div className="mb-4 relative">
+                            <p className="text-sm font-medium text-gray-400">
+                                New Password <span className="text-red-500">*</span>
+                            </p>
+                            <div className="flex">
+                                <input
                                     name="newPassword"
                                     placeholder="Enter New Password"
                                     type={showPassword.newPassword ? "text" : "password"}
                                     value={values.newPassword}
                                     onChange={handleInputChange}
-                                    error={!!error.newPassword}
-                                    helperText={error.newPassword}
-                                    sx={{
-                                        backgroundColor: "#0f212e",
-                                        "& .MuiOutlinedInput-root": {
-                                            border: "1px solid gray",
-                                            width: "100%",
-                                            height: "40px",
-
-                                        },
-                                        "& .MuiInputBase-input": {
-                                            color: "white",
-                                        },
-                                    }}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    onClick={() => togglePasswordVisibility("newPassword")}
-                                                    edge="end"
-                                                    sx={{ color: "white" }}
-                                                >
-                                                    {showPassword.newPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
+                                    className={`bg-[#0f212e] border-2 border-[#2F4553] hover:border-[#557086] focus:outline-none 
+                    text-white w-full h-10 px-2`}
                                 />
-                            </FormControl>
+                                <IconButton
+                                    onClick={() => togglePasswordVisibility("newPassword")}
+                                    edge="end"
+                                    className="right-10"
+                                    sx={{ color: "white" }}
+                                >
+                                    {showPassword.newPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </div>
+                            {error.newPassword && (
+                                <p className="text-red-500 text-xs">{error.newPassword}</p>
+                            )}
                         </div>
+                        {/* <div className="mb-4 relative">
+                            <p className="text-sm font-medium text-gray-400">
+                                New Password <span className="text-red-500">*</span>
+                            </p>
+                            <input
+                                name="newPassword"
+                                placeholder="Enter New Password"
+                                type={showPassword.newPassword ? "text" : "password"}
+                                value={values.newPassword}
+                                onChange={handleInputChange}
+                                className={`border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none 
+                                    bg-[#0f212e] text-white w-96 h-10 px-2`}
+                            />
+                            <IconButton
+                                onClick={() => togglePasswordVisibility("newPassword")}
+                                edge="end"
+                                className="right-11"
+                                sx={{ color: "white" }}
+                            >
+                                {showPassword.newPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                            {error.newPassword && (
+                                <p className="text-red-500 text-xs">{error.newPassword}</p>
+                            )}
+                        </div> */}
 
                         {/* Confirm Password */}
-                        <div className="mb-6">
-                            <p className="text-sm font-medium text-gray-400">Confirm Password <span className="text-red-500">*</span></p>
-                            <FormControl>
-                                <TextField
+                        <div className="mb-6 relative">
+                            <p className="text-sm font-medium text-gray-400">
+                                Confirm Password <span className="text-red-500">*</span>
+                            </p>
+                            <div className="flex">
+                                <input
                                     name="confirmPassword"
                                     placeholder="Confirm Password"
                                     type={showPassword.confirmPassword ? "text" : "password"}
                                     value={values.confirmPassword}
                                     onChange={handleInputChange}
-                                    error={!!error.confirmPassword}
-                                    helperText={error.confirmPassword}
-                                    sx={{
-                                        backgroundColor: "#0f212e",
-                                        "& .MuiOutlinedInput-root": {
-                                            border: "1px solid gray",
-                                            height: "40px",
-
-                                        },
-                                        "& .MuiInputBase-input": {
-                                            color: "white",
-                                        },
-                                    }}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    onClick={() => togglePasswordVisibility("confirmPassword")}
-                                                    edge="end"
-                                                    sx={{ color: "white" }}
-                                                >
-                                                    {showPassword.confirmPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
+                                    className={`bg-[#0f212e] border-2 border-[#2F4553] hover:border-[#557086] focus:outline-none 
+                    text-white w-full h-10 px-2`}
                                 />
-                            </FormControl>
+                                <IconButton
+                                    onClick={() => togglePasswordVisibility("confirmPassword")}
+                                    edge="end"
+                                    className="right-10"
+                                    sx={{ color: "white" }}
+                                >
+                                    {showPassword.confirmPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </div>
+                            {error.confirmPassword && (
+                                <p className="text-red-500 text-xs">{error.confirmPassword}</p>
+                            )}
                         </div>
+                        {/* <div className="mb-6 relative">
+                            <p className="text-sm font-medium text-gray-400">
+                                Confirm Password <span className="text-red-500">*</span>
+                            </p>
+                            <input
+                                name="confirmPassword"
+                                placeholder="Confirm Password"
+                                type={showPassword.confirmPassword ? "text" : "password"}
+                                value={values.confirmPassword}
+                                onChange={handleInputChange}
+                                className={`border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none 
+                    bg-[#0f212e] text-white w-96 h-10 px-2`}
+                            />
+                            <IconButton
+                                onClick={() => togglePasswordVisibility("confirmPassword")}
+                                edge="end"
+                                className="right-11"
+                                sx={{ color: "white" }}
+                            >
+                                {showPassword.confirmPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                            {error.confirmPassword && (
+                                <p className="text-red-500 text-xs">{error.confirmPassword}</p>
+                            )}
+                        </div> */}
 
                         <div className="border-b pt-2 border-gray-500 w-full mt-1"></div>
 

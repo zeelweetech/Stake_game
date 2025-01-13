@@ -62,6 +62,16 @@ const Generals = () => {
         alert(`Phone number submitted: ${countryCode} ${phoneNumber}`);
 
     };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (isOpen) setIsOpen(false);
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isOpen]);
+
     return (
         <div>
             {responsiveMobile > 768 ? (
@@ -70,13 +80,13 @@ const Generals = () => {
                         {/* Email Section */}
                         <div className="py-3 text-xl">
                             Email
-                            <div className="border-b pt-2 border-gray-500 w-[95%] mt-1"></div>
+                            <div className="border-b pt-2 border-gray-100 w-[100%] mt-1"></div>
                         </div>
                         <div>
                             <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400">Email</p>
 
                             <input
-                                className="bg-[#0f212e] p-2 xl:w-96 w-full"
+                                className="p-2 xl:w-96 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#2f4553] focus:outline-none"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -108,14 +118,14 @@ const Generals = () => {
                         <p className="font-normal text-sm pt-2 mt-1 text-gray-400">
                             We only service areas that are listed in the available country code list.
                         </p>
-                        <div className="border-b pt-4 border-gray-500 w-[95%] mt-1"></div>
+                        <div className="border-b pt-4 border-gray-500 w-[100%] mt-1"></div>
 
                         {/* Country Code Dropdown */}
-                        <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400"> Country Code </p>
+                        <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400"> Country Code<span className="text-red-500"> *</span> </p>
                         <div className="relative mt-[-0.5rem] xl:w-[50%] w-full">
                             <div
                                 onClick={() => setIsOpen(!isOpen)}
-                                className="flex items-center justify-between xl:w-[85%] w-full p-2 bg-[#0f212e] text-white border border-[#b1bad3] rounded cursor-pointer">
+                                className="flex items-center justify-between xl:w-[85%] w-full p-2 bg-[#0f212e] text-white border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded cursor-pointer">
                                 <span>{countryCode ? `Selected: ${countryCode}` : "Select Country Code"}</span>
                                 {isOpen ? (
                                     <ChevronUpIcon className="ml-2 h-5 w-5" />
@@ -125,7 +135,7 @@ const Generals = () => {
                             </div>
                             {isOpen && (
                                 <div
-                                    className="absolute z-10 xl:w-[85%] w-full bg-[#0f212e] text-white border border-[#b1bad3] max-h-[170px] overflow-y-auto rounded">
+                                    className="absolute z-10 xl:w-[85%] w-full bg-[#0f212e] text-white border-2 border-[#557086] max-h-[170px] overflow-y-auto rounded">
                                     {countryCodes.map((item) => (
                                         <div
                                             key={item.code}
@@ -143,10 +153,10 @@ const Generals = () => {
 
                         </div>
                         {/* Phone Number Input */}
-                        <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400 ">Phone Number</p>
+                        <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400">Phone Number<span className="text-red-500"> *</span></p>
                         <input
                             placeholder="Enter Phone number"
-                            className="bg-[#0f212e] p-2 xl:w-[43%] w-full"
+                            className="bg-[#0f212e] p-2 xl:w-[43%] w-full border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         />
@@ -179,7 +189,7 @@ const Generals = () => {
                             <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400">Email</p>
 
                             <input
-                                className="bg-[#0f212e] p-2 xl:w-96 w-full"
+                                className="p-2 xl:w-96 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#2f4553] focus:outline-none"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -218,7 +228,7 @@ const Generals = () => {
                         <div className="relative mt-[-0.5rem] xl:w-[50%] w-full">
                             <div
                                 onClick={() => setIsOpen(!isOpen)}
-                                className="flex items-center justify-between xl:w-[80%] w-full p-2 bg-[#0f212e] text-white border border-[#b1bad3] rounded cursor-pointer">
+                                className="flex items-center justify-between xl:w-[85%] w-full p-2 bg-[#0f212e] text-white border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none rounded cursor-pointer">
                                 <span>{countryCode ? `Selected: ${countryCode}` : "Select Country Code"}</span>
                                 {isOpen ? (
                                     <ChevronUpIcon className="ml-2 h-5 w-5" />
@@ -228,7 +238,7 @@ const Generals = () => {
                             </div>
                             {isOpen && (
                                 <div
-                                    className="absolute z-10 xl:w-[80%] w-full bg-[#0f212e] text-white border border-[#b1bad3] max-h-[170px] overflow-y-auto rounded">
+                                    className="absolute z-10 xl:w-[80%] w-full border-2 border-[#557086] bg-[#0f212e] text-white max-h-[170px] overflow-y-auto rounded">
                                     {countryCodes.map((item) => (
                                         <div
                                             key={item.code}
@@ -246,10 +256,10 @@ const Generals = () => {
 
                         </div>
                         {/* Phone Number Input */}
-                        <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400 ">Phone Number</p>
+                        <p className="mt-0 mb-2 py-2 text-sm font-medium text-gray-400 ">Phone Number<span className="text-red-500">*</span></p>
                         <input
                             placeholder="Enter Phone number"
-                            className="bg-[#0f212e] p-2 xl:w-[43%] w-full"
+                            className="bg-[#0f212e] p-2 xl:w-[43%] w-full border-2 border-[#2F4553] hover:border-[#557086] focus:outline-none"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         />
