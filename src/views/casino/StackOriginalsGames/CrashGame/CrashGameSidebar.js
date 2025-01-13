@@ -64,7 +64,7 @@ const CrashGameSidebar = () => {
           parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -115,7 +115,7 @@ const CrashGameSidebar = () => {
       dispatch(
         setCrashValues({
           betamount: "",
-          cashout: '2.00',
+          cashout: "2.00",
           numberofbet: "",
           onwin: "",
           onlose: "",
@@ -291,10 +291,11 @@ const CrashGameSidebar = () => {
               </button>
             ) : (
               <button
-                className={`${bettingStatus === false
-                  ? "bg-[#489649]"
-                  : "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                className={`${
+                  bettingStatus === false
+                    ? "bg-[#489649]"
+                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                } text-black mt-3 py-3 rounded font-semibold w-full`}
                 onClick={() => handleOnAutoBet()}
               >
                 Start Autobet
@@ -305,15 +306,17 @@ const CrashGameSidebar = () => {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-44 w-[10.3rem] rounded-full ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-44 w-[10.3rem] rounded-full ${
+                    isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }`}
                   onClick={() => dispatch(SwiperModel(true))}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.6rem] lg:w-[7.1rem] md:w-44 w-[10.3rem] rounded-full ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-44 w-[10.3rem] rounded-full ${
+                    !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }`}
                   onClick={() => dispatch(SwiperModel(false))}
                 >
                   Auto
@@ -323,19 +326,19 @@ const CrashGameSidebar = () => {
           </div>
           {isSwiper ? (
             <div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1 select-none">
                 <label>Bet Amount</label>
                 <label>
                   ₹{crashValues?.betamount ? crashValues?.betamount : "0.00"}
                 </label>
               </div>
-              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553]">
+              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                   <input
-                    className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     min={0}
@@ -345,7 +348,7 @@ const CrashGameSidebar = () => {
                   />
                 </div>
                 <button
-                  className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
+                  className="w-16 hover:bg-[#5c849e68] text-sm font-semibold hover:border-[#557086]"
                   onClick={() =>
                     dispatch(
                       setCrashValues({
@@ -363,7 +366,7 @@ const CrashGameSidebar = () => {
                   sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
                 />
                 <button
-                  className="w-16 hover:bg-[#5c849e68] text-sm font-semibold"
+                  className="w-16 hover:bg-[#5c849e68] text-sm font-semibold hover:border-[#557086] hover:rounded-r"
                   onClick={() =>
                     dispatch(
                       setCrashValues({
@@ -376,12 +379,16 @@ const CrashGameSidebar = () => {
                   2×
                 </button>
               </div>
-              <div className="text-[#b1bad3] font-semibold text-xs mt-3 mb-1">
+              <div className="text-[#b1bad3] font-semibold text-sm mt-3 mb-1 select-none">
                 <label>Cashout At</label>
               </div>
-              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553] relative">
+              <div className="flex border-1 rounded-md border-[#2F4553] bg-[#2F4553] relative group">
                 <input
-                  className={`xl:w-48 lg:w-40 px-2 py-2 md:w-60 rounded-l-md text-white border-2 ${crashValues?.cashout < 1.01 ? "border-[#ed4163]" : "border-[#2F4553] hover:border-[#557086]"} bg-[#0f212e] focus:outline-none`}
+                  className={`xl:w-48 lg:w-40 px-2 py-2 md:w-60 rounded-l-md text-white border-2 ${
+                    crashValues?.cashout < 1.01
+                      ? "border-[#ed4163]"
+                      : "border-[#2F4553] hover:border-[#557086]"
+                  } bg-[#0f212e] focus:outline-none focus:border-[#557086] group-hover:border-[#557086]`}
                   type="number"
                   min={1.01}
                   placeholder="2.00"
@@ -395,7 +402,7 @@ const CrashGameSidebar = () => {
                   </div>
                 )}
                 <button
-                  className="w-16 hover:bg-[#5c849e68]"
+                  className="w-16 hover:bg-[#5c849e68] hover:border-[#557086]"
                   onClick={() => {
                     const cashoutValue =
                       parseFloat(crashValues?.cashout) || 2.0;
@@ -417,7 +424,7 @@ const CrashGameSidebar = () => {
                   sx={{ my: 1.5, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
                 />
                 <button
-                  className="w-16 hover:bg-[#5c849e68]"
+                  className="w-16 hover:bg-[#5c849e68] hover:border-[#557086] hover:rounded-r"
                   onClick={() => {
                     const cashoutValue =
                       parseFloat(crashValues?.cashout) || 2.0;
@@ -432,7 +439,7 @@ const CrashGameSidebar = () => {
                   <KeyboardArrowUpIcon fontSize="small" />
                 </button>
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1 select-none">
                 <label>Profit on Win</label>
                 <label>
                   ₹
@@ -446,33 +453,38 @@ const CrashGameSidebar = () => {
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#2F4553] focus:outline-none"
+                  className={`w-full px-2 py-2 rounded text-white border-2 
+              hover:border-[#557086] border-[#2F4553] bg-[#2F4553] 
+              focus:outline-none focus:border-[#557086]`}
                   type="text"
                   placeholder="0.00"
-                  value={crashValues?.betamount * crashValues?.cashout || '0.00'}
-                  disabled
+                  value={
+                    crashValues?.betamount * crashValues?.cashout || "0.00"
+                  }
+                  Disabled
                 />
               </div>
               {multiplier > 1 ? (
                 <button
-                  className={`bg-[#489649] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  className={`bg-[#489649] text-black mt-3.5 py-3 rounded font-semibold w-full `}
                   onClick={() => setOnClickStatus(false)}
                 >
                   Bet (Next Round)
                 </button>
               ) : onClickStatus ? (
                 <button
-                  className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  className={`bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded font-semibold w-full`}
                   onClick={() => handleOnCancelBet()}
                 >
                   Cancel
                 </button>
               ) : (
                 <button
-                  className={`${bettingStatus === false
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3.5 py-3 rounded-md font-semibold w-full`}
+                  className={`${
+                    bettingStatus === false
+                      ? "bg-[#489649]"
+                      : "bg-[#1fff20] hover:bg-[#42ed45]"
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                   onClick={() => handleOnManualBet()}
                   disabled={bettingStatus === false}
                 >
@@ -480,12 +492,12 @@ const CrashGameSidebar = () => {
                 </button>
               )}
 
-              <div className="flex justify-between mt-3">
+              <div className="flex justify-between mt-3 select-none">
                 <div className="flex items-center space-x-1 font-semibold">
                   <SupervisorAccountIcon className="text-[#b1bad3]" />
                   <p>{combinedData?.length}</p>
                 </div>
-                <div className="flex items-center space-x-1 font-semibold">
+                <div className="flex items-center space-x-1 font-semibold select-none">
                   {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
                   <p>
                     ₹
@@ -503,46 +515,47 @@ const CrashGameSidebar = () => {
                   </p>
                 </div>
               </div>
-              <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 overflow-y-auto h-64">
+              <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 overflow-y-auto h-64 select-none">
                 {combinedData?.length > 0
                   ? combinedData?.map((item, index) => (
-                    <div
-                      className="flex justify-between fadeIn"
-                      key={index}
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <div className="flex items-center">
-                        <BsIncognito />
-                        <p className="text-[#b1bad3] font-semibold text-xs">
-                          {item.username}
-                        </p>
-                      </div>
-                      <div>
-                        {item?.multiplier < multiplier
-                          ? item?.multiplier
-                          : item?.cashoutMultiplier < multiplier
+                      <div
+                        className="flex justify-between fadeIn"
+                        key={index}
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                      >
+                        <div className="flex items-center">
+                          <BsIncognito />
+                          <p className="text-[#b1bad3] font-semibold text-xs">
+                            {item.username}
+                          </p>
+                        </div>
+                        <div>
+                          {item?.multiplier < multiplier
+                            ? item?.multiplier
+                            : item?.cashoutMultiplier < multiplier
                             ? `${item?.cashoutMultiplier}x`
                             : "-"}
-                      </div>
-                      <div className="flex items-center">
-                        <div className="flex">
-                          {/* <RiMoneyRupeeCircleFill color="yellow" /> */}
-                          <div
-                            className={`${item.cashoutMultiplier ||
-                              item?.multiplier === "-"
-                              ? "text-white font-bold"
-                              : item.cashoutMultiplier < multiplier ||
-                                item?.multiplier < multiplier
-                                ? "text-[#1fff20]"
-                                : "text-white font-semibold"
+                        </div>
+                        <div className="flex items-center">
+                          <div className="flex">
+                            {/* <RiMoneyRupeeCircleFill color="yellow" /> */}
+                            <div
+                              className={`${
+                                item.cashoutMultiplier ||
+                                item?.multiplier === "-"
+                                  ? "text-white font-bold"
+                                  : item.cashoutMultiplier < multiplier ||
+                                    item?.multiplier < multiplier
+                                  ? "text-[#1fff20]"
+                                  : "text-white font-semibold"
                               }`}
-                          >
-                            ₹{item?.amount}
+                            >
+                              ₹{item?.amount}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    ))
                   : ""}
               </div>
             </div>
@@ -551,19 +564,21 @@ const CrashGameSidebar = () => {
               <div className="flex grow p-[5px] flex-shrink-0  mt-2">
                 <div className="flex">
                   <button
-                    className={`py-3 rounded-s xl:w-[8.9rem] lg:w-[7.2rem]  font-semibold ${isboardControl
-                      ? "bg-[#0f212e] text-[#b1bad3]"
-                      : "bg-[#4d718768] hover:bg-[#85afca68]"
-                      }`}
+                    className={`py-3 rounded-s xl:w-[8.9rem] lg:w-[7.2rem]  font-semibold ${
+                      isboardControl
+                        ? "bg-[#0f212e] text-[#b1bad3]"
+                        : "bg-[#4d718768] hover:bg-[#85afca68]"
+                    }`}
                     onClick={() => dispatch(BoardControlModel(true))}
                   >
                     Controls
                   </button>
                   <button
-                    className={`py-3 rounded-e xl:w-[8.9rem] lg:w-[7.2rem] font-semibold ${!isboardControl
-                      ? "bg-[#0f212e] text-[#b1bad3]"
-                      : "bg-[#4d718768] hover:bg-[#85afca68]"
-                      }`}
+                    className={`py-3 rounded-e xl:w-[8.9rem] lg:w-[7.2rem] font-semibold ${
+                      !isboardControl
+                        ? "bg-[#0f212e] text-[#b1bad3]"
+                        : "bg-[#4d718768] hover:bg-[#85afca68]"
+                    }`}
                     onClick={() => dispatch(BoardControlModel(false))}
                   >
                     Leaderboard
@@ -572,14 +587,14 @@ const CrashGameSidebar = () => {
               </div>
               {isboardControl ? (
                 <div>
-                  <div className="text-[#b1bad3] flex justify-between font-semibold my-1">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold my-1 select-none">
                     <label>Bet Amount</label>
                     <label>
                       ₹
                       {crashValues?.betamount ? crashValues?.betamount : "0.00"}
                     </label>
                   </div>
-                  <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
+                  <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
                     <div className="relative flex">
                       {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <RiMoneyRupeeCircleFill
@@ -588,7 +603,7 @@ const CrashGameSidebar = () => {
                     />
                   </div> */}
                       <input
-                        className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2.5 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                        className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2.5 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] group-hover:border-[#557086] focus:border-[#557086] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0.00"
                         step="0.01"
@@ -602,7 +617,7 @@ const CrashGameSidebar = () => {
                       />
                     </div>
                     <button
-                      className="w-16 hover:bg-[#5c849e68] text-lg font-bold focus:outline-none"
+                      className="w-16 hover:bg-[#5c849e68] text-lg font-bold hover:border-[#557086] focus:outline-none"
                       onClick={() =>
                         dispatch(
                           setCrashValues({
@@ -620,7 +635,7 @@ const CrashGameSidebar = () => {
                       sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                     />
                     <button
-                      className="w-16 hover:bg-[#5c849e68] text-sm font-bold focus:outline-none"
+                      className="w-16 hover:bg-[#5c849e68] text-sm font-bold rounded-r hover:border-[#557086] focus:outline-none"
                       onClick={() =>
                         dispatch(
                           setCrashValues({
@@ -633,14 +648,18 @@ const CrashGameSidebar = () => {
                       2×
                     </button>
                   </div>
-                  <div className="text-[#b1bad3] flex justify-between font-semibold mt-3 mb-1">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold mt-3 mb-1 select-none">
                     <label>Cashout At</label>
                     <label>Number of Bets</label>
                   </div>
                   <div className="flex justify-between mb-2">
-                    <div className="flex border-1 w-44 rounded border-[#4d718768] bg-[#4d718768]">
+                    <div className="flex border-1 w-44 rounded border-[#4d718768] bg-[#4d718768] group">
                       <input
-                        className={`xl:w-20 lg:w-16 px-2 py-2.5 rounded-l-md text-white border-2 ${crashValues?.cashout < 1.01 ? "border-[#ed4163]" : "border-[#2F4553] hover:border-[#557086]"} hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
+                        className={`xl:w-20 lg:w-16 px-2 py-2.5 rounded-l-md text-white border-2 ${
+                          crashValues?.cashout < 1.01
+                            ? "border-[#ed4163]"
+                            : "border-[#2F4553] hover:border-[#557086]"
+                        } hover:border-[#557086] focus:border-[#557086] border-[#2F4553] group-hover:border-[#557086] bg-[#0f212e] focus:outline-none`}
                         type="number"
                         min={1.01}
                         placeholder="1.01"
@@ -676,7 +695,7 @@ const CrashGameSidebar = () => {
                         sx={{ my: 1, backgroundColor: "#1A2c38", width: "2px" }}
                       />
                       <button
-                        className="w-10 hover:bg-[#5c849e68]"
+                        className="w-10 hover:bg-[#5c849e68] rounded-r"
                         onClick={() => {
                           const cashoutValue =
                             parseFloat(crashValues?.cashout) || 2.0;
@@ -696,7 +715,7 @@ const CrashGameSidebar = () => {
                         <IoInfiniteSharp className="text-xl" />
                       </div>
                       <input
-                        className="xl:w-32 lg:w-[5.5rem] pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                        className="xl:w-32 lg:w-[5.5rem] pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0"
                         min={0}
@@ -707,24 +726,25 @@ const CrashGameSidebar = () => {
                             : crashValues?.numberofbet
                         }
                         onChange={(e) => handleOnChange(e)}
-                      // onChange={(e) => {
-                      //   handleOnChange(e);
-                      //   if (autoBetResult?.round > 0) {
-                      //     dispatch(setAutoBetResult({ round: "" }));
-                      //   }
-                      // }}
+                        // onChange={(e) => {
+                        //   handleOnChange(e);
+                        //   if (autoBetResult?.round > 0) {
+                        //     dispatch(setAutoBetResult({ round: "" }));
+                        //   }
+                        // }}
                       />
                     </div>
                   </div>
-                  <label className="text-[#b1bad3] font-semibold text-xs">
+                  <label className="text-[#b1bad3] font-semibold text-xs select-none">
                     On win
                   </label>
                   <div className="flex items-center space-x-0.5 border-2 mt-1 mb-2 rounded-md border-[#4d718768] bg-[#4d718768]">
                     <button
-                      className={`${onProfit.win
-                        ? "bg-[#0f212e]"
-                        : "hover:bg-[#85afca68] rounded"
-                        } px-5 py-2.5 rounded`}
+                      className={`${
+                        onProfit.win
+                          ? "bg-[#0f212e]"
+                          : "hover:bg-[#85afca68] rounded"
+                      } px-5 py-2.5 rounded`}
                       onClick={() => {
                         setOnProfit({ ...onProfit, win: true });
                         dispatch(setCrashValues({ onwin: "" }));
@@ -733,10 +753,11 @@ const CrashGameSidebar = () => {
                       Reset
                     </button>
                     <button
-                      className={`${onProfit.win
-                        ? "hover:bg-[#85afca68]"
-                        : "bg-[#0f212e] rounded-sm"
-                        } px-[0.95rem] py-2.5 rounded`}
+                      className={`${
+                        onProfit.win
+                          ? "hover:bg-[#85afca68]"
+                          : "bg-[#0f212e] rounded-sm"
+                      } px-[0.95rem] py-2.5 rounded`}
                       onClick={() => {
                         setOnProfit({ ...onProfit, win: false });
                       }}
@@ -744,10 +765,11 @@ const CrashGameSidebar = () => {
                       Increase by:
                     </button>
                     <div
-                      className={`relative flex ${onProfit.win
-                        ? "opacity-50 pointer-events-none cursor-not-allowed"
-                        : ""
-                        }`}
+                      className={`relative flex ${
+                        onProfit.win
+                          ? "opacity-50 pointer-events-none cursor-not-allowed"
+                          : ""
+                      }`}
                     >
                       <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                         <PercentIcon fontSize="small" />
@@ -763,16 +785,17 @@ const CrashGameSidebar = () => {
                       />
                     </div>
                   </div>
-                  <label className="text-[#b1bad3] font-semibold text-xs">
+                  <label className="text-[#b1bad3] font-semibold text-xs select-none">
                     On Lose
                   </label>
                   <div className="flex items-center space-x-0.5 border-2 mt-1 rounded-md border-[#4d718768] bg-[#4d718768]">
                     <div>
                       <button
-                        className={`${onProfit.lose
-                          ? "bg-[#0f212e] rounded"
-                          : "hover:bg-[#85afca68] rounded"
-                          } px-5 py-2.5 rounded`}
+                        className={`${
+                          onProfit.lose
+                            ? "bg-[#0f212e] rounded"
+                            : "hover:bg-[#85afca68] rounded"
+                        } px-5 py-2.5 rounded`}
                         onClick={() => {
                           setOnProfit({ ...onProfit, lose: true });
                           dispatch(setCrashValues({ onlose: "" }));
@@ -783,10 +806,11 @@ const CrashGameSidebar = () => {
                     </div>
                     <div>
                       <button
-                        className={`${onProfit.lose
-                          ? "hover:bg-[#85afca68]"
-                          : "bg-[#0f212e] rounded-sm"
-                          } px-[0.95rem] py-2.5 rounded`}
+                        className={`${
+                          onProfit.lose
+                            ? "hover:bg-[#85afca68]"
+                            : "bg-[#0f212e] rounded-sm"
+                        } px-[0.95rem] py-2.5 rounded`}
                         onClick={() => {
                           setOnProfit({ ...onProfit, lose: false });
                         }}
@@ -795,10 +819,11 @@ const CrashGameSidebar = () => {
                       </button>
                     </div>
                     <div
-                      className={`relative flex ${onProfit.lose
-                        ? "opacity-50 pointer-events-none cursor-not-allowed"
-                        : ""
-                        }`}
+                      className={`relative flex ${
+                        onProfit.lose
+                          ? "opacity-50 pointer-events-none cursor-not-allowed"
+                          : ""
+                      }`}
                     >
                       <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                         <PercentIcon fontSize="small" />
@@ -814,7 +839,7 @@ const CrashGameSidebar = () => {
                       />
                     </div>
                   </div>
-                  <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1 select-none">
                     <label>Stop on Profit</label>
                     <label>
                       ₹
@@ -828,7 +853,7 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] focus:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="number"
                       placeholder="0.01"
                       step="0.01"
@@ -837,7 +862,7 @@ const CrashGameSidebar = () => {
                       onChange={(e) => handleOnChange(e)}
                     />
                   </div>
-                  <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1 select-none">
                     <label>Stop on Loss</label>
                     <label>
                       ₹
@@ -851,7 +876,7 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="number"
                       placeholder="0.01"
                       step="0.01"
@@ -874,12 +899,14 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                      className="w-full px-2 py-2.5 rounded text-white border-2 focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="text"
                       placeholder="0"
                       name="profitonwin"
-                      value={crashValues?.betamount * crashValues?.cashout || '0.00'}
-                      disabled
+                      value={
+                        crashValues?.betamount * crashValues?.cashout || "0.00"
+                      }
+                      Disabled
                     />
                   </div>
                   <div>
@@ -892,10 +919,11 @@ const CrashGameSidebar = () => {
                       </button>
                     ) : (
                       <button
-                        className={`${bettingStatus === false
-                          ? "bg-[#489649]"
-                          : "bg-[#1fff20] hover:bg-[#42ed45]"
-                          } text-black mt-3 py-3 rounded-md font-semibold w-full`}
+                        className={`${
+                          bettingStatus === false
+                            ? "bg-[#489649]"
+                            : "bg-[#1fff20] hover:bg-[#42ed45]"
+                        } text-black mt-3 py-3 rounded-md font-semibold w-full`}
                         onClick={() => handleOnAutoBet()}
                       >
                         Start Autobet
@@ -933,41 +961,42 @@ const CrashGameSidebar = () => {
                   <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 text-base overflow-y-auto h-[23rem]">
                     {combinedData?.length > 0
                       ? combinedData?.map((item, index) => (
-                        <div
-                          className="flex justify-between"
-                          key={index}
-                          style={{ animationDelay: `${index * 0.1}s` }}
-                        >
-                          <div className="flex items-center">
-                            <BsIncognito />
-                            <p className="text-[#b1bad3]">{item.username}</p>
-                          </div>
-                          <div>
-                            {item?.multiplier < multiplier
-                              ? item?.multiplier
-                              : item?.cashoutMultiplier < multiplier
+                          <div
+                            className="flex justify-between"
+                            key={index}
+                            style={{ animationDelay: `${index * 0.1}s` }}
+                          >
+                            <div className="flex items-center">
+                              <BsIncognito />
+                              <p className="text-[#b1bad3]">{item.username}</p>
+                            </div>
+                            <div>
+                              {item?.multiplier < multiplier
+                                ? item?.multiplier
+                                : item?.cashoutMultiplier < multiplier
                                 ? `${item?.cashoutMultiplier}x`
                                 : "-"}
-                          </div>
-                          <div className="flex items-center font-bold">
-                            <div
-                              className={`${item?.cashoutMultiplier ||
-                                item?.multiplier === "-"
-                                ? "text-white"
-                                : item?.cashoutMultiplier ||
-                                  item?.multiplier < multiplier
-                                  ? "text-[#1fff20]"
-                                  : "text-white"
+                            </div>
+                            <div className="flex items-center font-bold">
+                              <div
+                                className={`${
+                                  item?.cashoutMultiplier ||
+                                  item?.multiplier === "-"
+                                    ? "text-white"
+                                    : item?.cashoutMultiplier ||
+                                      item?.multiplier < multiplier
+                                    ? "text-[#1fff20]"
+                                    : "text-white"
                                 }`}
-                            >
-                              <div className="flex">
-                                {/* <RiMoneyRupeeCircleFill color="yellow" /> */}
-                                <div>₹{item?.amount}</div>
+                              >
+                                <div className="flex">
+                                  {/* <RiMoneyRupeeCircleFill color="yellow" /> */}
+                                  <div>₹{item?.amount}</div>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))
+                        ))
                       : ""}
                   </div>
                   <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1.5">
@@ -983,7 +1012,9 @@ const CrashGameSidebar = () => {
                       className="w-full px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       placeholder="0"
                       name="profitonwin"
-                      value={crashValues?.betamount * crashValues?.cashout || '0.00'}
+                      value={
+                        crashValues?.betamount * crashValues?.cashout || "0.00"
+                      }
                       disabled
                     />
                   </div>
@@ -1031,39 +1062,38 @@ const CrashGameSidebar = () => {
                 </button>
               ) : (
                 <button
-                  className={`${bettingStatus === false
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
-                    } text-black mt-3.5 py-3 rounded font-semibold w-full`}
+                  className={`${
+                    bettingStatus === false
+                      ? "bg-[#489649]"
+                      : "bg-[#1fff20] hover:bg-[#42ed45]"
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                   onClick={() => handleOnManualBet()}
                   disabled={bettingStatus === false}
                 >
                   Bet
                 </button>
               )}
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-3 mb-1 select-none">
                 <label>Bet Amount</label>
                 <label>
                   ₹{crashValues?.betamount ? crashValues?.betamount : "0.00"}
                 </label>
               </div>
-              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
-                <div className="relative flex">
-                  {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
+              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
+                {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
-                  <input
-                    className="px-2 py-2 w-[16rem] rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
-                    type="number"
-                    placeholder="0.00"
-                    min={0}
-                    name="betamount"
-                    value={crashValues?.betamount}
-                    onChange={(e) => handleOnChange(e)}
-                  />
-                </div>
+                <input
+                  className="px-2 py-2 w-[16.5rem] rounded-l text-white border-2 focus:hover:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  type="number"
+                  placeholder="0.00"
+                  min={0}
+                  name="betamount"
+                  value={crashValues?.betamount}
+                  onChange={(e) => handleOnChange(e)}
+                />
                 <button
-                  className="w-[3.3rem] hover:bg-[#5c849e68] text-lg font-bold"
+                  className="w-[3.3rem] hover:bg-[#5c849e68] text-lg font-semibold hover:border-[#557086]"
                   onClick={() =>
                     dispatch(
                       setCrashValues({
@@ -1081,7 +1111,7 @@ const CrashGameSidebar = () => {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className="w-[3.4rem] hover:bg-[#5c849e68] text-sm font-semibold"
+                  className="w-[3.4rem] hover:bg-[#5c849e68] text-sm font-semibold hover:border-[#557086] focus:border-[#557086]"
                   onClick={() =>
                     dispatch(
                       setCrashValues({
@@ -1094,12 +1124,12 @@ const CrashGameSidebar = () => {
                   2×
                 </button>
               </div>
-              <div className="text-[#b1bad3] font-semibold text-xs mt-3 mb-1">
+              <div className="text-[#b1bad3] font-semibold text-xs mt-3 mb-1 select-none">
                 <label>Cashout At</label>
               </div>
-              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
+              <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
                 <input
-                  className="px-2 py-2 w-[16.5rem] rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="px-2 py-2 w-[16.5rem] rounded-l text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:border-[#557086] group-hover:border-[#557086] focus:outline-none"
                   type="number"
                   min={1.01}
                   placeholder="1.01"
@@ -1115,7 +1145,7 @@ const CrashGameSidebar = () => {
                   }}
                 />
                 <button
-                  className="w-[3.3rem] hover:bg-[#5c849e68]"
+                  className="w-[3.3rem] hover:bg-[#5c849e68] hover:border-[#557086]"
                   onClick={() => {
                     const cashoutValue =
                       parseFloat(crashValues?.cashout) || 2.0;
@@ -1137,7 +1167,7 @@ const CrashGameSidebar = () => {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className="w-[3.4rem] hover:bg-[#5c849e68]"
+                  className="w-[3.4rem] hover:bg-[#5c849e68] hover:border-[#557086]"
                   onClick={() => {
                     const cashoutValue =
                       parseFloat(crashValues?.cashout) || 2.0;
@@ -1166,7 +1196,7 @@ const CrashGameSidebar = () => {
               <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
             </div> */}
                 <input
-                  className="w-full px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                  className="w-full px-2 py-2 rounded-md text-white border-2 hover:border-[#557086] focus:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                   type="text"
                   placeholder="0"
                   value={crashValues?.betamount * crashValues?.cashout || 0}
@@ -1199,41 +1229,42 @@ const CrashGameSidebar = () => {
               <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 overflow-y-auto h-64">
                 {combinedData?.length > 0
                   ? combinedData?.map((item, index) => (
-                    <div
-                      className="flex justify-between fadeIn"
-                      key={index}
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <div className="flex items-center">
-                        <BsIncognito />
-                        <p className="text-[#b1bad3]">{item.username}</p>
-                      </div>
-                      <div>
-                        {item?.multiplier < multiplier
-                          ? item?.multiplier
-                          : item?.cashoutMultiplier < multiplier
+                      <div
+                        className="flex justify-between fadeIn"
+                        key={index}
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                      >
+                        <div className="flex items-center">
+                          <BsIncognito />
+                          <p className="text-[#b1bad3]">{item.username}</p>
+                        </div>
+                        <div>
+                          {item?.multiplier < multiplier
+                            ? item?.multiplier
+                            : item?.cashoutMultiplier < multiplier
                             ? `${item?.cashoutMultiplier}x`
                             : "-"}
-                      </div>
-                      <div className="flex items-center font-bold">
-                        <div className="flex">
-                          {/* <RiMoneyRupeeCircleFill color="yellow" /> */}
-                          <div
-                            className={`${item.cashoutMultiplier ||
-                              item?.multiplier === "-"
-                              ? "text-white"
-                              : item.cashoutMultiplier < multiplier ||
-                                item?.multiplier < multiplier
-                                ? "text-[#1fff20]"
-                                : "text-white"
+                        </div>
+                        <div className="flex items-center font-bold">
+                          <div className="flex">
+                            {/* <RiMoneyRupeeCircleFill color="yellow" /> */}
+                            <div
+                              className={`${
+                                item.cashoutMultiplier ||
+                                item?.multiplier === "-"
+                                  ? "text-white"
+                                  : item.cashoutMultiplier < multiplier ||
+                                    item?.multiplier < multiplier
+                                  ? "text-[#1fff20]"
+                                  : "text-white"
                               }`}
-                          >
-                            ₹{item?.amount}
+                            >
+                              ₹{item?.amount}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    ))
                   : ""}
               </div>
             </div>
@@ -1250,10 +1281,11 @@ const CrashGameSidebar = () => {
                     </button>
                   ) : (
                     <button
-                      className={`${bettingStatus === false
-                        ? "bg-[#489649]"
-                        : "bg-[#1fff20] hover:bg-[#42ed45]"
-                        } text-black py-3 rounded font-semibold w-full`}
+                      className={`${
+                        bettingStatus === false
+                          ? "bg-[#489649]"
+                          : "bg-[#1fff20] hover:bg-[#42ed45]"
+                      } text-black py-3 rounded font-semibold w-full`}
                       onClick={() => handleOnAutoBet()}
                     >
                       Start Autobet
@@ -1266,7 +1298,7 @@ const CrashGameSidebar = () => {
                       {crashValues?.betamount ? crashValues?.betamount : "0.00"}
                     </label>
                   </div>
-                  <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553]">
+                  <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
                     <div className="relative flex">
                       {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <RiMoneyRupeeCircleFill
@@ -1275,7 +1307,7 @@ const CrashGameSidebar = () => {
                     />
                   </div> */}
                       <input
-                        className="w-[16.5rem] pr-1.5 pl-2 py-2.5 rounded-l-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                        className="w-[16.5rem] pr-1.5 pl-2 py-2.5 rounded-l-md text-white border-2 hover:border-[#557086] group-hover:border-[#557086] focus:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0.00"
                         step="0.01"
@@ -1325,9 +1357,9 @@ const CrashGameSidebar = () => {
                     <label>Number of Bets</label>
                   </div>
                   <div className="flex justify-center mb-2">
-                    <div className="flex border-1 w-full rounded border-[#2F4553] bg-[#2F4553]">
+                    <div className="flex border-1 w-full rounded border-[#2F4553] bg-[#2F4553] group">
                       <input
-                        className="md:w-36 w-full px-2 py-2.5 rounded-s-md text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                        className="md:w-36 w-full px-2 py-2.5 rounded-s-md text-white border-2 hover:border-[#557086] focus:border-[#557086] group-hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         min={1.01}
                         placeholder="1.01"
@@ -1389,7 +1421,7 @@ const CrashGameSidebar = () => {
                         <IoInfiniteSharp className="text-xl" />
                       </div>
                       <input
-                        className="md:w-28 w-28 pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                        className="md:w-28 w-28 pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] focus:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                         type="number"
                         placeholder="0"
                         min={0}
@@ -1409,10 +1441,11 @@ const CrashGameSidebar = () => {
                   </label>
                   <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
                     <button
-                      className={`${onProfit.win
-                        ? "bg-[#0F212E] rounded"
-                        : "hover:bg-[#85afca68] rounded"
-                        } px-5 ml-0.5 py-2.5 rounded-sm`}
+                      className={`${
+                        onProfit.win
+                          ? "bg-[#0F212E] rounded"
+                          : "hover:bg-[#85afca68] rounded"
+                      } px-5 ml-0.5 py-2.5 rounded-sm`}
                       onClick={() => {
                         setOnProfit({ ...onProfit, win: true });
                         dispatch(setCrashValues({ onwin: "" }));
@@ -1421,10 +1454,11 @@ const CrashGameSidebar = () => {
                       Reset
                     </button>
                     <button
-                      className={`${onProfit.win
-                        ? "hover:bg-[#85afca68]"
-                        : "bg-[#0f212e] rounded-sm"
-                        } px-[0.95rem] py-2.5`}
+                      className={`${
+                        onProfit.win
+                          ? "hover:bg-[#85afca68]"
+                          : "bg-[#0f212e] rounded-sm"
+                      } px-[0.95rem] py-2.5`}
                       onClick={() => {
                         setOnProfit({ ...onProfit, win: false });
                       }}
@@ -1432,10 +1466,11 @@ const CrashGameSidebar = () => {
                       Increase by:
                     </button>
                     <div
-                      className={`relative flex ${onProfit.win
-                        ? "opacity-50 pointer-events-none cursor-not-allowed"
-                        : ""
-                        }`}
+                      className={`relative flex ${
+                        onProfit.win
+                          ? "opacity-50 pointer-events-none cursor-not-allowed"
+                          : ""
+                      }`}
                     >
                       <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                         <PercentIcon fontSize="small" />
@@ -1457,10 +1492,11 @@ const CrashGameSidebar = () => {
                   <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
                     <div>
                       <button
-                        className={`${onProfit.lose
-                          ? "bg-[#0f212e] rounded-sm"
-                          : "hover:bg-[#85afca68] rounded"
-                          } px-5 py-2.5 ml-0.5 rounded-sm`}
+                        className={`${
+                          onProfit.lose
+                            ? "bg-[#0f212e] rounded-sm"
+                            : "hover:bg-[#85afca68] rounded"
+                        } px-5 py-2.5 ml-0.5 rounded-sm`}
                         onClick={() => {
                           setOnProfit({ ...onProfit, lose: true });
                           dispatch(setCrashValues({ onlose: "" }));
@@ -1471,10 +1507,11 @@ const CrashGameSidebar = () => {
                     </div>
                     <div>
                       <button
-                        className={`${onProfit.lose
-                          ? "hover:bg-[#85afca68]"
-                          : "bg-[#0f212e] rounded-sm"
-                          } px-[0.95rem] py-2.5`}
+                        className={`${
+                          onProfit.lose
+                            ? "hover:bg-[#85afca68]"
+                            : "bg-[#0f212e] rounded-sm"
+                        } px-[0.95rem] py-2.5`}
                         onClick={() => {
                           setOnProfit({ ...onProfit, lose: false });
                         }}
@@ -1483,10 +1520,11 @@ const CrashGameSidebar = () => {
                       </button>
                     </div>
                     <div
-                      className={`relative flex ${onProfit.lose
-                        ? "opacity-50 pointer-events-none cursor-not-allowed"
-                        : ""
-                        }`}
+                      className={`relative flex ${
+                        onProfit.lose
+                          ? "opacity-50 pointer-events-none cursor-not-allowed"
+                          : ""
+                      }`}
                     >
                       <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                         <PercentIcon fontSize="small" />
@@ -1516,7 +1554,7 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] focus:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="number"
                       placeholder="0.01"
                       step="0.01"
@@ -1539,7 +1577,7 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                      className="w-full pr-1.5 px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] focus:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="number"
                       placeholder="0.01"
                       step="0.01"
@@ -1562,12 +1600,12 @@ const CrashGameSidebar = () => {
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
                 </div> */}
                     <input
-                      className="w-full px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                      className="w-full px-2 py-2.5 rounded text-white border-2 hover:border-[#557086] focus:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                       type="text"
                       placeholder="0"
                       name="profitonwin"
                       value={crashValues?.betamount * crashValues?.cashout || 0}
-                      disabled
+                      Disabled
                     />
                   </div>
                 </div>
@@ -1616,41 +1654,42 @@ const CrashGameSidebar = () => {
                   <div className="bg-[#0f212e] px-2 py-1 rounded-sm mt-3 text-base overflow-y-auto h-[23rem]">
                     {combinedData?.length > 0
                       ? combinedData?.map((item, index) => (
-                        <div
-                          className="flex justify-between"
-                          key={index}
-                          style={{ animationDelay: `${index * 0.1}s` }}
-                        >
-                          <div className="flex items-center">
-                            <BsIncognito />
-                            <p className="text-[#b1bad3]">{item.username}</p>
-                          </div>
-                          <div>
-                            {item?.multiplier < multiplier
-                              ? item?.multiplier
-                              : item?.cashoutMultiplier < multiplier
+                          <div
+                            className="flex justify-between"
+                            key={index}
+                            style={{ animationDelay: `${index * 0.1}s` }}
+                          >
+                            <div className="flex items-center">
+                              <BsIncognito />
+                              <p className="text-[#b1bad3]">{item.username}</p>
+                            </div>
+                            <div>
+                              {item?.multiplier < multiplier
+                                ? item?.multiplier
+                                : item?.cashoutMultiplier < multiplier
                                 ? `${item?.cashoutMultiplier}x`
                                 : "-"}
-                          </div>
-                          <div className="flex items-center">
-                            <div
-                              className={`${item?.cashoutMultiplier ||
-                                item?.multiplier === "-"
-                                ? "text-white"
-                                : item?.cashoutMultiplier ||
-                                  item?.multiplier < multiplier
-                                  ? "text-[#1fff20]"
-                                  : "text-white"
+                            </div>
+                            <div className="flex items-center">
+                              <div
+                                className={`${
+                                  item?.cashoutMultiplier ||
+                                  item?.multiplier === "-"
+                                    ? "text-white"
+                                    : item?.cashoutMultiplier ||
+                                      item?.multiplier < multiplier
+                                    ? "text-[#1fff20]"
+                                    : "text-white"
                                 }`}
-                            >
-                              <div className="flex">
-                                {/* <RiMoneyRupeeCircleFill color="yellow" /> */}
-                                <div>₹{item?.amount}</div>
+                              >
+                                <div className="flex">
+                                  {/* <RiMoneyRupeeCircleFill color="yellow" /> */}
+                                  <div>₹{item?.amount}</div>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))
+                        ))
                       : ""}
                   </div>
                   <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1.5">
@@ -1675,19 +1714,21 @@ const CrashGameSidebar = () => {
               <div className="flex justify-center items-center grow p-[5px] flex-shrink-0 mt-2">
                 <div className="flex">
                   <button
-                    className={`py-3 rounded-s w-[10rem] font-semibold ${isboardControl
-                      ? "bg-[#0f212e] text-[#b1bad3]"
-                      : "bg-[#4d718768] hover:bg-[#85afca68]"
-                      }`}
+                    className={`py-3 rounded-s w-[10rem] font-semibold ${
+                      isboardControl
+                        ? "bg-[#0f212e] text-[#b1bad3]"
+                        : "bg-[#4d718768] hover:bg-[#85afca68]"
+                    }`}
                     onClick={() => dispatch(BoardControlModel(true))}
                   >
                     Controls
                   </button>
                   <button
-                    className={`py-3 rounded-e- w-[10rem] font-semibold ${!isboardControl
-                      ? "bg-[#0f212e] text-[#b1bad3]"
-                      : "bg-[#4d718768] hover:bg-[#85afca68]"
-                      }`}
+                    className={`py-3 rounded-e- w-[10rem] font-semibold ${
+                      !isboardControl
+                        ? "bg-[#0f212e] text-[#b1bad3]"
+                        : "bg-[#4d718768] hover:bg-[#85afca68]"
+                    }`}
                     onClick={() => dispatch(BoardControlModel(false))}
                   >
                     Leaderboard
@@ -1700,16 +1741,18 @@ const CrashGameSidebar = () => {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 w-full">
                 <button
-                  className={`py-2 rounded-full transition-all ${isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }
+                  className={`py-2 rounded-full transition-all ${
+                    isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }
                             xl:w-[8.7rem] lg:w-[4rem] md:w-[10.7rem] w-full`}
                   onClick={() => dispatch(SwiperModel(true))}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 rounded-full transition-all ${!isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }
+                  className={`py-2 rounded-full transition-all ${
+                    !isSwiper ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                  }
                             xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.7rem] w-full`}
                   onClick={() => dispatch(SwiperModel(false))}
                 >

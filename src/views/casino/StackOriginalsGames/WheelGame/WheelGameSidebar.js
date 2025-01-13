@@ -120,7 +120,7 @@ function WheelGameSidebar() {
           </div>
           {isManual ? (
             <div>
-              <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
+              <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2 select-none">
                 <label>Bet Amount</label>
                 <label>
                   ₹{wheelValue?.betamount ? wheelValue?.betamount : "0.00"}
@@ -182,7 +182,7 @@ function WheelGameSidebar() {
                   2×
                 </button>
               </div>
-              <div className="text-[#b1bad3] font-semibold text-m mt-1 my-2">
+              <div className="text-[#b1bad3] font-semibold text-m mt-1 my-2 select-none">
                 <label>Risk </label>
               </div>
               <div className="flex rounded-md border-[#2F4553] bg-[#2F4553]">
@@ -204,7 +204,7 @@ function WheelGameSidebar() {
                 </select>
               </div>
               <div>
-                <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-1 my-2 ">
+                <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-1 my-2 select-none">
                   <label>Segments</label>
                 </div>
                 <div className="relative flex rounded-md ">
@@ -239,7 +239,7 @@ function WheelGameSidebar() {
             </div>
           ) : (
             <div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2 select-none">
                 <label>Bet Amount</label>
                 <label>
                   ₹
@@ -305,7 +305,7 @@ function WheelGameSidebar() {
                   2×
                 </button>
               </div>
-              <div className="text-[#b1bad3] font-semibold mt-1 my-2">
+              <div className="text-[#b1bad3] font-semibold mt-1 my-2 select-none">
                 <label>Risk </label>
               </div>
               <div className="flex rounded-md border-[#2F4553] bg-[#2F4553]">
@@ -327,7 +327,7 @@ function WheelGameSidebar() {
                 </select>
               </div>
               <div>
-                <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-1 my-2">
+                <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-1 my-2 select-none">
                   <label>Segments</label>
                 </div>
                 <div className="relative flex">
@@ -347,7 +347,7 @@ function WheelGameSidebar() {
                   </select>
                 </div>
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                 <label>Number of Bets</label>
               </div>
               <div className="relative flex rounded-md">
@@ -385,7 +385,7 @@ function WheelGameSidebar() {
                   }}
                 />
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                 <label>On win</label>
               </div>
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded  bg-[#2F4553]">
@@ -435,7 +435,7 @@ function WheelGameSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1 select-none">
                 <label>On Lose</label>
               </div>
               <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
@@ -489,7 +489,7 @@ function WheelGameSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1 select-none">
                 <label>Stop on Profit</label>
                 <label>
                   ₹
@@ -510,7 +510,7 @@ function WheelGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1 select-none">
                 <label>Stop on Loss</label>
                 <label>
                   ₹{wheelValue?.stoponloss ? wheelValue?.stoponloss : "0.00"}
@@ -559,7 +559,7 @@ function WheelGameSidebar() {
         <div className=" xl:w-80 lg:w-[16.8rem] xl:mt-0 lg:mt-0 md:w-[24rem] md:mt-32 mx-3 flex flex-col p-3 bg-[#213743] ">
           {isManual ? (
             <div>
-              <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm mb-2">
+              <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm mb-2 select-none">
                 <label>Bet Amount</label>
                 <label>
                   ₹{wheelValue?.betamount ? wheelValue?.betamount : "0.00"}
@@ -635,7 +635,7 @@ function WheelGameSidebar() {
               </button>
               <div className="flex justify-center space-x-2 mt-1">
                 <div className="w-full">
-                  <div className="text-[#b1bad3] font-semibold text-m mt-1 my-1">
+                  <div className="text-[#b1bad3] font-semibold text-m mt-1 my-1 select-none">
                     <label>Risk </label>
                   </div>
                   <div className="flex rounded-md bg-[#2F4553]">
@@ -658,7 +658,7 @@ function WheelGameSidebar() {
                   </div>
                 </div>
                 <div className="w-full">
-                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-1 my-1">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-1 my-1 select-none">
                     <label>Segments</label>
                   </div>
                   <div className="relative flex rounded-md">
@@ -707,7 +707,7 @@ function WheelGameSidebar() {
                   Start Autobet
                 </button>
               )}
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2 select-none">
                 <label>Bet Amount</label>
                 <label>
                   ₹
@@ -775,7 +775,7 @@ function WheelGameSidebar() {
               </div>
               <div className="flex justify-center space-x-2 mt-1">
                 <div className="w-full">
-                  <div className="text-[#b1bad3] font-semibold text-m mt-1 my-1">
+                  <div className="text-[#b1bad3] font-semibold text-m mt-1 my-1 select-none">
                     <label>Risk </label>
                   </div>
                   <div className="flex border-2 rounded-md hover:border-[#557086] border-[#2F4553] bg-[#2F4553]">
@@ -797,7 +797,7 @@ function WheelGameSidebar() {
                   </div>
                 </div>
                 <div className="w-full">
-                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-1 my-1">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-1 my-1 select-none">
                     <label>Segments</label>
                   </div>
                   <div className="relative flex rounded-md">
@@ -818,7 +818,7 @@ function WheelGameSidebar() {
                 </div>
               </div>
 
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                 <label>Number of Bets</label>
               </div>
               <div className="relative flex rounded-md">
@@ -853,7 +853,7 @@ function WheelGameSidebar() {
                   }}
                 />
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                 <label>On win</label>
               </div>
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
@@ -903,7 +903,7 @@ function WheelGameSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1 select-none">
                 <label>On Lose</label>
               </div>
               <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
@@ -957,7 +957,7 @@ function WheelGameSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1 select-none">
                 <label>Stop on Profit</label>
                 <label>
                   ₹
@@ -978,7 +978,7 @@ function WheelGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-xs mt-2 mb-1 select-none">
                 <label>Stop on Loss</label>
                 <label>
                   ₹{wheelValue?.stoponloss ? wheelValue?.stoponloss : "0.00"}
