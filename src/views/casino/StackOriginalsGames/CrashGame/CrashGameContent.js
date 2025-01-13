@@ -342,7 +342,7 @@ function CrashGameContent() {
             return (
               <div key={index}>
                 <button
-                  className={`p-2.5 ${
+                  className={`p-2.5 max-sm:mt-5 ${
                     item?.crashPoint > 3 ? "bg-[#1fff20]" : "bg-white"
                   } rounded-full text-xs`}
                 >
@@ -351,7 +351,7 @@ function CrashGameContent() {
               </div>
             );
           })}
-        <button className="px-2.5 py-2.5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
+        <button className="px-2.5 py-2.5  max-sm:mt-5 text-lg bg-[#4d718768] font-semibold hover:bg-[#9abfd668] rounded-full">
           <IoIosTrendingUp color="white" />
         </button>
       </div>

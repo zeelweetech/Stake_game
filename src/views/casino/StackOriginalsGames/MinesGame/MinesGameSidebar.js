@@ -179,7 +179,7 @@ function MinesGameSidebar() {
           </div>
           {isManual ? (
             <div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1 select-none">
                 <label>Bet Amount</label>
                 <label>
                   ₹{mineValue?.betamount ? mineValue?.betamount : "0.00"}
@@ -251,7 +251,7 @@ function MinesGameSidebar() {
                   }
                   disabled={showFields}
                 >
-                  2x
+                  2×
                 </button>
               </div>
 
@@ -259,7 +259,7 @@ function MinesGameSidebar() {
                 <div>
                   <div className="flex space-x-2 ">
                     <div>
-                      <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
+                      <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1 select-none">
                         <label>Mines</label>
                       </div>
                       <div
@@ -344,7 +344,7 @@ function MinesGameSidebar() {
                 </div>
               ) : (
                 <div>
-                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                  <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1 select-none">
                     <label>Mines</label>
                   </div>
                   {/* <div className="relative flex">
@@ -387,7 +387,7 @@ function MinesGameSidebar() {
                       name="mines"
                       value={mineValue?.mines}
                       onChange={(e) => handleOnChange(e)}
-                      className="w-full px-2 py-2 text-white border-2 rounded border-[#4d718768] bg-[#0f212e] 
+                      className="w-full px-2 py-1.5 text-white border-2 rounded border-[#4d718768] bg-[#0f212e] 
                         hover:border-[#557086] focus:border-[#557086] focus:outline-none"
                     >
                       {Array.from({ length: 24 }, (_, i) => (

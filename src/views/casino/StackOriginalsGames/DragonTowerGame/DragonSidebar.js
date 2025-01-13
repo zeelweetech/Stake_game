@@ -204,7 +204,7 @@ function DragonSidebar() {
           </div>
           {isManual ? (
             <div>
-              <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
+              <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2 select-none">
                 <label>Bet Amount</label>
                 <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
@@ -282,7 +282,7 @@ function DragonSidebar() {
                 </button>
               </div>
               <div>
-                <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2">
+                <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2 select-none">
                   <label>Difficulty</label>
                 </div>
                 <div
@@ -315,12 +315,12 @@ function DragonSidebar() {
               {showRandomField && (
                 <div>
                   <button
-                    className="bg-[#2f4553] hover:bg-[#5c849e68] rounded w-full p-2 mt-2.5"
+                    className="bg-[#2f4553] hover:bg-[#5c849e68] rounded w-full p-2 mt-2.5 select-none"
                     onClick={pickRandomTile}
                   >
                     Pick random tile
                   </button>
-                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 border-none focus:outline-none focus:border-transparent">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 border-none focus:outline-none focus:border-transparent select-none">
                     <label>
                       Total Profit (
                       {tileSelected?.multiplier
@@ -389,7 +389,7 @@ function DragonSidebar() {
             </div>
           ) : (
             <div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2 select-none">
                 <label>Bet Amount</label>
                 <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
@@ -451,7 +451,7 @@ function DragonSidebar() {
                   2×
                 </button>
               </div>
-              <div className="text-[#b1bad3] text-sm font-semibold text-m mt-1 my-2">
+              <div className="text-[#b1bad3] text-sm font-semibold text-m mt-1 my-2 select-none">
                 <label>Difficulty</label>
               </div>
               <div className="flex rounded bg-[#0f212e] focus:outline-none focus:border-transparent">
@@ -470,7 +470,7 @@ function DragonSidebar() {
                   <option value="master">Master</option>
                 </select>
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                 <label>Number of Bets</label>
               </div>
               <div className="relative flex rounded-md">
@@ -495,7 +495,7 @@ function DragonSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                 <label>On win</label>
               </div>
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
@@ -545,7 +545,7 @@ function DragonSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1 select-none">
                 <label>On Lose</label>
               </div>
               <div className="flex items-center space-x-0.5  mt-1 rounded bg-[#2F4553]">
@@ -599,7 +599,7 @@ function DragonSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#B1BAD3] font-bold flex justify-between text-xs mt-2 mb-1">
+              <div className="text-[#B1BAD3] font-bold flex justify-between text-xs mt-2 mb-1 select-none">
                 <label>Stop on Profit</label>
                 <label>
                   ₹{values?.stoponprofit ? values?.stoponprofit : "0.00"}
@@ -619,7 +619,7 @@ function DragonSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1 select-none">
                 <label>Stop on Loss</label>
                 <label>
                   ₹{values?.stoponloss ? values?.stoponloss : "0.00"}
@@ -672,7 +672,7 @@ function DragonSidebar() {
         <div className="xl:w-80 lg:w-[16.8rem] xl:mx-0 lg:mx-0 xl:mt-0 lg:mt-0 md:mt-20 md:mx-[0.0rem] mx-3 m-12 flex flex-col p-3 bg-[#213743] rouded">
           {isManual ? (
             <div>
-              <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2">
+              <div className="text-[#B1BAD3] flex justify-between font-semibold text-sm my-2 select-none">
                 <label>Bet Amount</label>
                 <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
@@ -765,7 +765,7 @@ function DragonSidebar() {
                 {gameBet && !isGameOver ? "Cashout" : "Bet"}
               </button>
               <div>
-                <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2">
+                <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-1 my-2 select-none">
                   <label>Difficulty</label>
                 </div>
                 <div
@@ -796,12 +796,12 @@ function DragonSidebar() {
               {showRandomField && (
                 <div>
                   <button
-                    className="bg-[#2f4553] hover:bg-[#5c849e68] rounded w-full p-2 mt-2.5"
+                    className="bg-[#2f4553] hover:bg-[#5c849e68] rounded w-full p-2 mt-2.5 select-none"
                     onClick={pickRandomTile}
                   >
                     Pick random tile
                   </button>
-                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 ">
+                  <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
                     <label>
                       Total Profit (
                       {tileSelected?.multiplier
@@ -874,7 +874,7 @@ function DragonSidebar() {
                   Start Autobet
                 </button>
               )}
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold my-2 select-none">
                 <label>Bet Amount</label>
                 <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
@@ -936,7 +936,7 @@ function DragonSidebar() {
                   2x
                 </button>
               </div>
-              <div className="text-[#b1bad3] text-sm font-semibold text-m mt-1 my-2">
+              <div className="text-[#b1bad3] text-sm font-semibold text-m mt-1 my-2 select-none">
                 <label>Difficulty</label>
               </div>
               <div className="relative flex">
@@ -955,7 +955,7 @@ function DragonSidebar() {
                   <option value="master">Master</option>
                 </select>
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                 <label>Number of Bets</label>
               </div>
               <div className="relative flex rounded-md">
@@ -980,7 +980,7 @@ function DragonSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">
                 <label>On win</label>
               </div>
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2f4553]">
@@ -1030,7 +1030,7 @@ function DragonSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1">
+              <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1.5 mb-1 select-none">
                 <label>On Lose</label>
               </div>
               <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2f4553]">
@@ -1084,7 +1084,7 @@ function DragonSidebar() {
                   />
                 </div>
               </div>
-              <div className="text-[#B1BAD3] font-bold flex justify-between text-xs mt-2 mb-1">
+              <div className="text-[#B1BAD3] font-bold flex justify-between text-xs mt-2 mb-1 select-none">
                 <label>Stop on Profit</label>
                 <label>
                   ₹{values?.stoponprofit ? values?.stoponprofit : "0.00"}
@@ -1104,7 +1104,7 @@ function DragonSidebar() {
                   onChange={(e) => handleOnChange(e)}
                 />
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-bold text-xs mt-2 mb-1 select-none">
                 <label>Stop on Loss</label>
                 <label>
                   ₹{values?.stoponloss ? values?.stoponloss : "0.00"}

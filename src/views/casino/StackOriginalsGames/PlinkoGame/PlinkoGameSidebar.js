@@ -117,11 +117,11 @@ function PlinkoGameSidebar() {
           </div>
           {isManual ? (
             <div>
-              <div className=" text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+              <div className=" text-[#b1bad3] flex justify-between font-semibold my-1 select-none">
                 <label>Bet Amount</label>
                 <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
-              <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex border-1 rounded border-[#4d718768] bg-[#4d718768] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl " />
@@ -133,14 +133,14 @@ function PlinkoGameSidebar() {
                     name="betamount"
                     value={values?.betamount}
                     onChange={(e) => handleOnChange(e)}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[13rem] sm:w-[10rem] w-60 rounded-s-md text-white bg-[#0f212e] ${
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[13rem] sm:w-[10rem] w-60 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${
                       completeBetStatus && "cursor-not-allowed"
                     }`}
                     disabled={completeBetStatus}
                   />
                 </div>
                 <button
-                  className={`w-16 text-xs  hover:bg-[#5c849e68] ${
+                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] ${
                     completeBetStatus && "cursor-not-allowed"
                   }`}
                   onClick={() =>
@@ -158,10 +158,10 @@ function PlinkoGameSidebar() {
                 <Divider
                   flexItem
                   orientation="vertical"
-                  sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                  sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-xs hover:bg-[#5c849e68] ${
+                  className={`w-16 text-base hover:bg-[#5c849e68] hover:border-[#557086] hover:rounded-r ${
                     completeBetStatus && "cursor-not-allowed"
                   }`}
                   onClick={() =>
@@ -174,21 +174,22 @@ function PlinkoGameSidebar() {
                   }
                   disabled={completeBetStatus}
                 >
-                  2x
+                  2×
                 </button>
               </div>
-              <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1">
+              <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1 select-none">
                 <label>Risk </label>
               </div>
-              <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex relative">
                 <select
                   type="select"
                   name="risk"
                   value={values?.risk}
                   onChange={(e) => handleOnChange(e)}
-                  className={`w-full px-2 py-2 rounded-s-md text-white bg-[#0f212e] ${
-                    completeBetStatus && "cursor-not-allowed"
-                  }`}
+                  className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${
+                          completeBetStatus && "cursor-not-allowed"
+                        }`}
                   disabled={completeBetStatus}
                 >
                   <option value="low">Low</option>
@@ -196,7 +197,7 @@ function PlinkoGameSidebar() {
                   <option value="high">High</option>
                 </select>
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
                 <label>Rows</label>
               </div>
               <div className="relative flex">
@@ -205,9 +206,10 @@ function PlinkoGameSidebar() {
                   name="rows"
                   value={values?.rows}
                   onChange={(e) => handleOnChange(e)}
-                  className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] ${
-                    completeBetStatus && "cursor-not-allowed"
-                  }`}
+                  className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${
+                          completeBetStatus && "cursor-not-allowed"
+                        }`}
                   disabled={completeBetStatus}
                 >
                   <option value={8}>8</option>
@@ -222,7 +224,7 @@ function PlinkoGameSidebar() {
                 </select>
               </div>
               <button
-                className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded-md font-semibold w-full"
+                className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3.5 py-3 rounded font-semibold w-full"
                 onClick={() => {
                   handleOnBet("manualBet");
                 }}
@@ -231,15 +233,15 @@ function PlinkoGameSidebar() {
               </button>
             </div>
           ) : (
-            <div className="text-m">
+            <div>
               <div>
-                <div className="text-[#b1bad3] flex justify-between font-semibold my-1">
+                <div className="text-[#b1bad3] flex justify-between font-semibold my-1 select-none">
                   <label>Bet Amount</label>
                   <label>
                     ₹{values?.betamount ? values?.betamount : "0.00"}
                   </label>
                 </div>
-                <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+                <div className="flex border-1 rounded border-[#4d718768] bg-[#4d718768] group">
                   <div className="relative flex">
                     {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                   <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
@@ -252,14 +254,14 @@ function PlinkoGameSidebar() {
                       name="betamount"
                       value={values?.betamount}
                       onChange={(e) => handleOnChange(e)}
-                      className={`w-48 pr-1.5 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e] ${
+                      className={`w-48 pr-1.5 pl-2 py-2 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${
                         completeBetStatus && "cursor-not-allowed"
                       }`}
                       disabled={completeBetStatus}
                     />
                   </div>
                   <button
-                    className={`w-16 hover:bg-[#5c849e68] ${
+                    className={`w-16 text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] ${
                       completeBetStatus && "cursor-not-allowed"
                     }`}
                     onClick={() =>
@@ -277,10 +279,10 @@ function PlinkoGameSidebar() {
                   <Divider
                     flexItem
                     orientation="vertical"
-                    sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                    sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                   />
                   <button
-                    className={`w-16 hover:bg-[#5c849e68]`}
+                    className={`w-16 text-base hover:bg-[#5c849e68] hover:border-[#557086] hover:rounded-r`}
                     onClick={() =>
                       dispatch(
                         setValues({
@@ -291,19 +293,20 @@ function PlinkoGameSidebar() {
                     }
                     disabled={completeBetStatus}
                   >
-                    2x
+                    2×
                   </button>
                 </div>
-                <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1">
+                <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1 select-none">
                   <label>Risk</label>
                 </div>
-                <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+                <div className="flex relative">
                   <select
                     type="select"
                     name="risk"
                     value={values?.risk}
                     onChange={(e) => handleOnChange(e)}
-                    className={`w-full px-2 py-2 rounded-s-md text-white bg-[#0f212e]`}
+                    className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none`}
                     disabled={completeBetStatus}
                   >
                     <option value="low">Low</option>
@@ -311,7 +314,7 @@ function PlinkoGameSidebar() {
                     <option value="high">High</option>
                   </select>
                 </div>
-                <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
                   <label>Rows</label>
                 </div>
                 <div className="relative flex">
@@ -320,7 +323,8 @@ function PlinkoGameSidebar() {
                     name="rows"
                     value={values?.rows}
                     onChange={(e) => handleOnChange(e)}
-                    className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]`}
+                    className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none`}
                     disabled={completeBetStatus}
                   >
                     <option value={8}>8</option>
@@ -334,7 +338,7 @@ function PlinkoGameSidebar() {
                     <option value={16}>16</option>
                   </select>
                 </div>
-                <div className="text-[#b1bad3] justify-between font-semibold mt-3 mb-1">
+                <div className="text-[#b1bad3] justify-between font-semibold mt-3 mb-1 select-none">
                   <label>Number of Bets</label>
                 </div>
                 <div className="justify-between mb-2">
@@ -355,7 +359,7 @@ function PlinkoGameSidebar() {
                           : values?.numberofbets
                       }
                       onChange={(e) => handleOnChange(e)}
-                      className={`w-full pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]`}
+                      className={`w-full pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none`}
                       disabled={completeBetStatus}
                     />
                   </div>
@@ -393,11 +397,11 @@ function PlinkoGameSidebar() {
         >
           {isManual ? (
             <div>
-              <div className=" text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+              <div className=" text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
                 <label>Bet Amount</label>
                 <label>₹{values?.betamount ? values?.betamount : "0.00"}</label>
               </div>
-              <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex rounded border-[#4d718768] bg-[#4d718768] group">
                 <div className="relative flex">
                   {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                       <RiMoneyRupeeCircleFill color="yellow" className="text-xl " />
@@ -409,14 +413,14 @@ function PlinkoGameSidebar() {
                     name="betamount"
                     value={values?.betamount}
                     onChange={(e) => handleOnChange(e)}
-                    className={`xl:w-48 lg:w-36  pr-1.5 pl-2 py-2 md:w-[16rem] sm:w-[10rem] w-64 rounded-s-md text-white bg-[#0f212e] ${
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[16rem] sm:w-[10rem] w-64 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${
                       completeBetStatus && "cursor-not-allowed"
                     }`}
                     disabled={completeBetStatus}
                   />
                 </div>
                 <button
-                  className={`w-16 text-xs  hover:bg-[#5c849e68] ${
+                  className={`w-16 text-xs hover:bg-[#5c849e68] ${
                     completeBetStatus && "cursor-not-allowed"
                   }`}
                   onClick={() =>
@@ -434,7 +438,7 @@ function PlinkoGameSidebar() {
                 <Divider
                   flexItem
                   orientation="vertical"
-                  sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                  sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
                   className={`w-16 text-xs hover:bg-[#5c849e68] ${
@@ -454,25 +458,26 @@ function PlinkoGameSidebar() {
                 </button>
               </div>
               <button
-                className="bg-[#1fff20] hover:bg-[#42ed45] text-black font-bold mt-3.5 py-3 rounded-md w-full"
+                className="bg-[#1fff20] hover:bg-[#42ed45] text-black font-bold mt-3.5 py-3 rounded w-full"
                 onClick={() => {
                   handleOnBet("manualBet");
                 }}
               >
                 Bet
               </button>
-              <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1">
+              <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1 select-none">
                 <label>Risk </label>
               </div>
-              <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+              <div className="flex relative">
                 <select
                   type="select"
                   name="risk"
                   value={values?.risk}
                   onChange={(e) => handleOnChange(e)}
-                  className={`w-full px-2 py-2 rounded-s-md text-white bg-[#0f212e] ${
-                    completeBetStatus && "cursor-not-allowed"
-                  }`}
+                  className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${
+                          completeBetStatus && "cursor-not-allowed"
+                        }`}
                   disabled={completeBetStatus}
                 >
                   <option value="low">Low</option>
@@ -480,7 +485,7 @@ function PlinkoGameSidebar() {
                   <option value="high">High</option>
                 </select>
               </div>
-              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+              <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
                 <label>Rows</label>
               </div>
               <div className="relative flex">
@@ -489,9 +494,10 @@ function PlinkoGameSidebar() {
                   name="rows"
                   value={values?.rows}
                   onChange={(e) => handleOnChange(e)}
-                  className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e] ${
-                    completeBetStatus && "cursor-not-allowed"
-                  }`}
+                  className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${
+                          completeBetStatus && "cursor-not-allowed"
+                        }`}
                   disabled={completeBetStatus}
                 >
                   <option value={8}>8</option>
@@ -510,7 +516,8 @@ function PlinkoGameSidebar() {
                   <div className="flex space-x-2 w-full">
                     <button
                       className={`py-2 rounded-full transition-all ${
-                        isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]" }
+                        isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                      }
                         xl:w-[8.7rem] lg:w-[4rem] md:w-[10.94rem] w-full`}
                       onClick={() => setIsManual(true)}
                     >
@@ -518,7 +525,8 @@ function PlinkoGameSidebar() {
                     </button>
                     <button
                       className={`py-2 rounded-full transition-all ${
-                        !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                        !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                      }
                       xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.94rem] w-full`}
                       onClick={() => setIsManual(false)}
                     >
@@ -533,14 +541,14 @@ function PlinkoGameSidebar() {
               <div>
                 {stopAutoBet ? (
                   <button
-                    className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
+                    className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded font-semibold w-full"
                     onClick={() => handleOnStopAutoBet()}
                   >
                     Stop Autobet
                   </button>
                 ) : (
                   <button
-                    className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded-md font-semibold w-full"
+                    className="bg-[#1fff20] hover:bg-[#42ed45] text-black mt-3 py-3 rounded font-semibold w-full"
                     onClick={() =>
                       values?.numberofbets === "" || 0
                         ? toast.error("Please enter a number of bets")
@@ -550,13 +558,13 @@ function PlinkoGameSidebar() {
                     Start Autobet
                   </button>
                 )}
-                <div className="text-[#b1bad3] flex justify-between font-semibold my-1">
+                <div className="text-[#b1bad3] flex justify-between font-semibold my-1 select-none">
                   <label>Bet Amount</label>
                   <label>
                     ₹{values?.betamount ? values?.betamount : "0.00"}
                   </label>
                 </div>
-                <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+                <div className="flex rounded border-[#4d718768] bg-[#4d718768] group">
                   <div className="relative flex">
                     {/* <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                         <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
@@ -569,7 +577,7 @@ function PlinkoGameSidebar() {
                       name="betamount"
                       value={values?.betamount}
                       onChange={(e) => handleOnChange(e)}
-                      className={`w-64 pr-1.5 pl-2 py-2.5 rounded-s-md text-white bg-[#0f212e] ${
+                      className={`w-64 pr-1.5 pl-2 py-2.5 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${
                         completeBetStatus && "cursor-not-allowed"
                       }`}
                       disabled={completeBetStatus}
@@ -594,10 +602,10 @@ function PlinkoGameSidebar() {
                   <Divider
                     flexItem
                     orientation="vertical"
-                    sx={{ my: 1, backgroundColor: "rgba(0, 0, 0, 0.12)" }}
+                    sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                   />
                   <button
-                    className={`w-16 hover:bg-[#5c849e68]`}
+                    className={`w-16 hover:bg-[#5c849e68] hover:rounded-r`}
                     onClick={() =>
                       dispatch(
                         setValues({
@@ -611,16 +619,17 @@ function PlinkoGameSidebar() {
                     2×
                   </button>
                 </div>
-                <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1">
+                <div className="text-[#b1bad3] font-semibold text-m mt-3 mb-1 select-none">
                   <label>Risk</label>
                 </div>
-                <div className="flex border-2 rounded-md border-[#4d718768] bg-[#4d718768]">
+                <div className="flex relative">
                   <select
                     type="select"
                     name="risk"
                     value={values?.risk}
                     onChange={(e) => handleOnChange(e)}
-                    className={`w-full px-2 py-2 rounded-s-md text-white bg-[#0f212e]`}
+                    className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none`}
                     disabled={completeBetStatus}
                   >
                     <option value="low">Low</option>
@@ -628,7 +637,7 @@ function PlinkoGameSidebar() {
                     <option value="high">High</option>
                   </select>
                 </div>
-                <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1">
+                <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
                   <label>Rows</label>
                 </div>
                 <div className="relative flex">
@@ -637,7 +646,8 @@ function PlinkoGameSidebar() {
                     name="rows"
                     value={values?.rows}
                     onChange={(e) => handleOnChange(e)}
-                    className={`w-full px-2 py-2 text-white border-2 rounded-md border-[#4d718768] bg-[#0f212e]`}
+                    className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none`}
                     disabled={completeBetStatus}
                   >
                     <option value={8}>8</option>
@@ -651,7 +661,7 @@ function PlinkoGameSidebar() {
                     <option value={16}>16</option>
                   </select>
                 </div>
-                <div className="text-[#b1bad3] justify-between font-semibold mt-3 mb-1">
+                <div className="text-[#b1bad3] justify-between font-semibold mt-3 mb-1 select-none">
                   <label>Number of Bets</label>
                 </div>
                 <div className="justify-between mb-2">
@@ -672,7 +682,7 @@ function PlinkoGameSidebar() {
                           : values?.numberofbets
                       }
                       onChange={(e) => handleOnChange(e)}
-                      className={`w-full pr-7 pl-2 py-2.5 rounded-md  text-white bg-[#0f212e]`}
+                      className={`w-full pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none`}
                       disabled={completeBetStatus}
                     />
                   </div>
@@ -682,7 +692,8 @@ function PlinkoGameSidebar() {
                     <div className="flex space-x-2 w-full">
                       <button
                         className={`py-2 rounded-full transition-all ${
-                          isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"  }
+                          isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                        }
                           xl:w-[8.7rem] lg:w-[4rem] md:w-[10.94rem] w-full`}
                         onClick={() => setIsManual(true)}
                       >
