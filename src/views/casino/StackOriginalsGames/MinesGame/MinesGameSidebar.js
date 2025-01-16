@@ -274,7 +274,7 @@ function MinesGameSidebar() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-[#b1bad3] flex justify-between font-semibold text-m mt-3 mb-1 select-none">
+                      <div className="text-[#b1bad3] flex justify-between font-semibold text-sm mt-3 mb-1 select-none">
                         <label>Gems</label>
                       </div>
                       <div
@@ -779,7 +779,7 @@ function MinesGameSidebar() {
                         dispatch(setRestored({ betAmount: "" }));
                       }
                     }}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2  md:w-[17rem] w-64 rounded-s-md text-white border-2 group-hover:border-[#557086] focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[17rem] w-64 rounded-s-md text-white border-2 group-hover:border-[#557086] focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${
                       showFields && "cursor-not-allowed"
                     }`}
                     disabled={showFields}
@@ -912,12 +912,12 @@ function MinesGameSidebar() {
                     </p>
                     {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
                   </div>
-                  <button
+                  {/* <button
                     className="bg-[#2f4553] border-2 hover:border-[#557086] focus-within:border-[#557086] border-[#2F4553] focus:outline-none rounded w-full p-2 mt-2.5"
                     onClick={pickRandomTile}
                   >
                     Pick random tile
-                  </button>
+                  </button> */}
                 </div>
               ) : (
                 <div>
@@ -1009,7 +1009,7 @@ function MinesGameSidebar() {
                 <RiMoneyRupeeCircleFill color="yellow" className="text-xl" />
               </div> */}
                   <input
-                    className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2 md:w-[17rem] w-64 rounded-s-md focus:border-[#557086] group-hover:border-[#557086] text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
+                    className="xl:w-48 lg:w-40 pr-1.5 pl-2 py-2 md:w-[17rem] w-64 rounded-s text-white border-2 group-hover:border-[#557086] focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none"
                     type="number"
                     placeholder="0.00"
                     step="0.01"

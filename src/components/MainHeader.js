@@ -2,9 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
-import {
-  Badge, IconButton,
-} from "@mui/material";
+import { Badge, IconButton } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { IoIosChatboxes } from "react-icons/io";
 import { MdEmojiEvents, MdOutlineEventNote, MdSettings } from "react-icons/md";
@@ -14,9 +12,12 @@ import { FaWallet } from "react-icons/fa";
 import { PiVaultFill } from "react-icons/pi";
 import { BiSolidNotepad } from "react-icons/bi";
 import { BsChatDotsFill } from "react-icons/bs";
-import walletIcon from "../assets/svg/wallet.svg"
+import walletIcon from "../assets/svg/wallet.svg";
 import { setAnchorEl, setTooltipOpen } from "../features/auth/authSlice";
-import { closeBetslipModal, openBetslipModal } from "../features/auth/betSlipSlice";
+import {
+  closeBetslipModal,
+  openBetslipModal,
+} from "../features/auth/betSlipSlice";
 import { closeChatModal, openChatModal } from "../features/auth/chatSlice";
 import Wallet from "../views/Profile/Wallet";
 import Vault from "../views/Profile/Vault";
@@ -24,7 +25,7 @@ import Vip from "../views/Profile/Vip";
 import Statistic from "../views/Profile/Statistic";
 import LogoutDialog from "../views/Profile/Logout";
 import Notification from "../views/Profile/Notification";
-import LegendToggleIcon from '@mui/icons-material/LegendToggle';
+import LegendToggleIcon from "@mui/icons-material/LegendToggle";
 
 function MainHeader({ handleRightSidebarToggle }) {
   const navigate = useNavigate();
@@ -32,8 +33,9 @@ function MainHeader({ handleRightSidebarToggle }) {
   // const [tooltipOpen, setTooltipOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { tooltipOpen } = useSelector((state) => state.auth);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const tooltipRef = useRef(null);
+  const personIconRef = useRef(null);
 
   const [profilePopupOpen, setProfilePopupOpen] = useState({
     isWalletOpen: false,
@@ -41,25 +43,31 @@ function MainHeader({ handleRightSidebarToggle }) {
     isVipOpen: false,
     isStatistic: false,
     isNotification: false,
-    isLogoutDialog: false
+    isLogoutDialog: false,
   });
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (isSidebarOpen && tooltipRef.current && !tooltipRef.current.contains(event.target)) {
-        setIsSidebarOpen(false);      
+      if (
+        tooltipOpen &&
+        tooltipRef.current &&
+        !tooltipRef.current.contains(event.target) &&
+        personIconRef.current &&
+        !personIconRef.current.contains(event.target)
+      ) {
+        dispatch(setTooltipOpen(false));
       }
     };
     document.addEventListener("mousedown", handleOutsideClick);
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick)
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [isSidebarOpen])
+  }, [tooltipOpen, dispatch]);
 
   const handleMenuOpen = (event) => {
     dispatch(setAnchorEl(event.currentTarget));
     dispatch(setTooltipOpen(false));
-    setIsSidebarOpen(false)
+    setIsSidebarOpen(false);
   };
 
   const toggleSidebar = () => {
@@ -69,24 +77,24 @@ function MainHeader({ handleRightSidebarToggle }) {
   };
 
   const handleChatClick = () => {
-    dispatch(openChatModal())
-    handleRightSidebarToggle("chats")
+    dispatch(openChatModal());
+    handleRightSidebarToggle("chats");
     setIsSidebarOpen(false);
-    openBetslipModal(false)
-    dispatch(closeBetslipModal(false))
+    openBetslipModal(false);
+    dispatch(closeBetslipModal(false));
   };
 
   const handleBetslipClick = () => {
     dispatch(openBetslipModal());
     handleRightSidebarToggle("betslips");
     setIsSidebarOpen(false);
-    openChatModal(false)
-    dispatch(closeChatModal(false))
+    openChatModal(false);
+    dispatch(closeChatModal(false));
   };
 
   const toggleTooltip = () => {
     dispatch(setTooltipOpen((prev) => !prev));
-    setIsSidebarOpen(false)
+    setIsSidebarOpen(false);
     dispatch(setAnchorEl(false));
   };
 
@@ -101,32 +109,44 @@ function MainHeader({ handleRightSidebarToggle }) {
             Listor
           </span>
           <div className="flex items-center md:space-x-0">
-            <button className="flex bg-[#0f212e] items-center space-x-1 px-2 md:px-5 py-2 md:py-3 rounded-s-md text-white font-medium">
-              <p className="text-sm md:text-base">
-                ₹{wallet ? wallet : 0}
-              </p>
+            <button className="flex bg-[#0f212e] items-center space-x-1 px-2 md:px-5 py-2.5 md:py-3 rounded-s-md text-white font-medium">
+              <p className="text-sm md:text-base">₹{wallet ? wallet : 0}</p>
             </button>
-            <button className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-3 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base md:block hidden"
+            <button
+              className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-3 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base md:block hidden"
               onClick={() => {
                 setProfilePopupOpen((prev) => ({
                   ...prev,
                   isWalletOpen: true,
-                }))
+                }));
                 dispatch(setTooltipOpen(false));
-                setIsSidebarOpen(false)
+                setIsSidebarOpen(false);
                 dispatch(setAnchorEl(false));
-              }}>
+              }}
+            >
               Wallet
             </button>
-            <button className="md:hidden block w-10 h-10 bg-[#1475e1] hover:bg-[#396ca8] rounded-r-md p-2.5">  
-              <img src={walletIcon} alt="Not found"/>
+            <button className="md:hidden block w-10 h-10 bg-[#1475e1] hover:bg-[#396ca8] rounded-r-md p-2.5">
+              <img src={walletIcon} alt="Not found" />
             </button>
-            {profilePopupOpen.isWalletOpen && <Wallet closeWallet={() => setProfilePopupOpen({ ...profilePopupOpen, isWalletOpen: false })} />}
+            {profilePopupOpen.isWalletOpen && (
+              <Wallet
+                closeWallet={() =>
+                  setProfilePopupOpen({
+                    ...profilePopupOpen,
+                    isWalletOpen: false,
+                  })
+                }
+              />
+            )}
           </div>
           <div className="text-white flex items-center space-x-0.4 md:space-x-6">
             <button className="flex items-center space-x-1.5 font-medium">
               <IoMdSearch className="text-sm w-10 h-6 md:text-base md:block hidden" />
-              <p className="md:block hidden text-sm md:text-base md:space-x-1">
+              <p
+                className="md:block hidden text-sm md:text-base md:space-x-1"
+                ref={personIconRef}
+              >
                 Search
               </p>
             </button>
@@ -141,20 +161,23 @@ function MainHeader({ handleRightSidebarToggle }) {
 
               {tooltipOpen && (
                 <div
-                  className="flex flex-col absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-sm w-max max-w-xs text-center"
+                  className="flex flex-col absolute top-full left-1/2 -translate-x-1/2 mt-5 bg-white text-black text-sm font-medium rounded py-1 shadow-sm w-max max-w-xs text-center"
+                  ref={tooltipRef}
                 >
                   <button
                     onClick={() => {
                       setProfilePopupOpen((prev) => ({
                         ...prev,
                         isWalletOpen: true,
-                      }))
+                      }));
                       dispatch(setTooltipOpen(false));
                     }}
-                    className="flex items-center space-x-5 py-2"
+                    className="flex items-center space-x-3 p-3 hover:bg-[#B1BAD3]"
                   >
                     <FaWallet size={20} color="#0f212e" />
-                    <p className="text-base text-[#0f212e]">Wallet</p>
+                    <p className="text-base text-[#2F4553] hover:text-black font-semibold">
+                      Wallet
+                    </p>
                   </button>
 
                   <button
@@ -162,13 +185,21 @@ function MainHeader({ handleRightSidebarToggle }) {
                       setProfilePopupOpen((prev) => ({
                         ...prev,
                         isVaultOpen: true,
-                      }))
+                      }));
                       dispatch(setTooltipOpen(false));
                     }}
-                    className="flex items-center space-x-5 py-2"
+                    className="flex items-center space-x-3 p-3 hover:bg-[#B1BAD3]"
                   >
-                    <PiVaultFill size={20} color="#0f212e" />
-                    <p className="text-base text-[#0f212e]">Vault</p>
+                    <PiVaultFill
+                      style={{
+                        color: "#2F4553",
+                        width: "22px",
+                        height: "25px",
+                      }}
+                    />
+                    <p className="text-base text-[#2F4553] hover:text-black font-semibold">
+                      Vault
+                    </p>
                   </button>
 
                   <button
@@ -176,13 +207,21 @@ function MainHeader({ handleRightSidebarToggle }) {
                       setProfilePopupOpen((prev) => ({
                         ...prev,
                         isVipOpen: true,
-                      }))
+                      }));
                       dispatch(setTooltipOpen(false));
                     }}
-                    className="flex items-center space-x-5 py-2"
+                    className="flex items-center space-x-3 p-3 hover:bg-[#B1BAD3]"
                   >
-                    <MdEmojiEvents size={20} color="#0f212e" />
-                    <p className="text-base text-[#0f212e]">VIP</p>
+                    <MdEmojiEvents
+                      style={{
+                        color: "#2F4553",
+                        width: "22px",
+                        height: "25px",
+                      }}
+                    />
+                    <p className="text-base text-[#2F4553] hover:text-black font-semibold">
+                      VIP
+                    </p>
                   </button>
 
                   <button
@@ -190,36 +229,60 @@ function MainHeader({ handleRightSidebarToggle }) {
                       setProfilePopupOpen((prev) => ({
                         ...prev,
                         isStatistic: true,
-                      }))
+                      }));
                       dispatch(setTooltipOpen(false));
                     }}
-                    className="flex items-center space-x-4 py-2"
+                    className="flex items-center space-x-3 p-3 hover:bg-[#B1BAD3]"
                   >
-                    <LegendToggleIcon size={20} color="#0f212e" />
-                    <p className="text-base text-[#0f212e]">Statistics</p>
+                    <LegendToggleIcon
+                      style={{
+                        color: "#2F4553",
+                        width: "22px",
+                        height: "25px",
+                      }}
+                    />
+                    <p className="text-base text-[#2F4553] hover:text-black font-semibold">
+                      Statistics
+                    </p>
                   </button>
 
                   <button
                     onClick={() => {
-                      navigate("/myBet")
+                      navigate("/myBet");
                       dispatch(setTooltipOpen(false));
                     }}
-                    className="flex items-center space-x-5 py-2"
+                    className="flex items-center space-x-3 p-3 hover:bg-[#B1BAD3]"
                   >
-                    <BiSolidNotepad size={20} color="#0f212e" />
-                    <p className="text-base text-[#0f212e]">My Bets</p>
+                    <BiSolidNotepad
+                      style={{
+                        color: "#2F4553",
+                        width: "22px",
+                        height: "25px",
+                      }}
+                    />
+                    <p className="text-base text-[#2F4553] hover:text-black font-semibold">
+                      My Bets
+                    </p>
                   </button>
 
                   <button
                     onClick={() => {
-                      navigate("/setting")
+                      navigate("/setting");
                       dispatch(setTooltipOpen(false));
                       dispatch(setAnchorEl(false));
                     }}
-                    className="flex items-center space-x-5 py-2"
+                    className="flex items-center space-x-3 p-3 hover:bg-[#B1BAD3]"
                   >
-                    <MdSettings size={20} color="#0f212e" />
-                    <p className="text-base text-[#0f212e]">Setting</p>
+                    <MdSettings
+                      style={{
+                        color: "#2F4553",
+                        width: "22px",
+                        height: "25px",
+                      }}
+                    />
+                    <p className="text-base text-[#2F4553] hover:text-black font-semibold">
+                      Setting
+                    </p>
                   </button>
 
                   <button
@@ -227,26 +290,83 @@ function MainHeader({ handleRightSidebarToggle }) {
                       setProfilePopupOpen((prev) => ({
                         ...prev,
                         isLogoutDialog: true,
-                      }))
+                      }));
                       dispatch(setTooltipOpen(false));
                     }}
-                    className="flex items-center space-x-4 py-2"
+                    className="flex items-center space-x-3 p-3 hover:bg-[#B1BAD3]"
                   >
-                    <LogoutIcon size={10} color="#0f212e" />
-                    <p className="text-base text-[#0f212e]">Logout</p>
+                    <LogoutIcon
+                      style={{
+                        color: "#2F4553",
+                        width: "22px",
+                        height: "25px",
+                      }}
+                    />
+                    <p className="text-base text-[#2F4553] hover:text-black font-semibold">
+                      Logout
+                    </p>
                   </button>
-                  <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 transform -translate-x-1/2 mt-1"></div>
+                  {/* <div className="tooltip-arrow w-2.5 h-2.5 bg-white rotate-45 absolute top-[-8px] left-1/2 transform -translate-x-1/2 mt-1"></div> */}
+                  <div className="border-x-8 border-x-transparent border-b-[10px] top-[-8px] left-1/2 absolute -translate-x-1/2 border-b-white"></div>
                 </div>
               )}
 
-              {profilePopupOpen.isWalletOpen && <Wallet closeWallet={() => setProfilePopupOpen({ ...profilePopupOpen, isWalletOpen: false })} />}
-              {profilePopupOpen.isVaultOpen && <Vault closeVault={() => setProfilePopupOpen({ ...profilePopupOpen, isVaultOpen: false })} />}
-              {profilePopupOpen.isVipOpen && <Vip closeVip={() => setProfilePopupOpen({ ...profilePopupOpen, isVipOpen: false })} />}
-              {profilePopupOpen.isStatistic && <Statistic closeStatistic={() => setProfilePopupOpen({ ...profilePopupOpen, isStatistic: false })} />}
-              {profilePopupOpen.isLogoutDialog && <LogoutDialog closeLogoutDialog={() => setProfilePopupOpen({ ...profilePopupOpen, isLogoutDialog: false })} />}
+              {profilePopupOpen.isWalletOpen && (
+                <Wallet
+                  closeWallet={() =>
+                    setProfilePopupOpen({
+                      ...profilePopupOpen,
+                      isWalletOpen: false,
+                    })
+                  }
+                />
+              )}
+              {profilePopupOpen.isVaultOpen && (
+                <Vault
+                  closeVault={() =>
+                    setProfilePopupOpen({
+                      ...profilePopupOpen,
+                      isVaultOpen: false,
+                    })
+                  }
+                />
+              )}
+              {profilePopupOpen.isVipOpen && (
+                <Vip
+                  closeVip={() =>
+                    setProfilePopupOpen({
+                      ...profilePopupOpen,
+                      isVipOpen: false,
+                    })
+                  }
+                />
+              )}
+              {profilePopupOpen.isStatistic && (
+                <Statistic
+                  closeStatistic={() =>
+                    setProfilePopupOpen({
+                      ...profilePopupOpen,
+                      isStatistic: false,
+                    })
+                  }
+                />
+              )}
+              {profilePopupOpen.isLogoutDialog && (
+                <LogoutDialog
+                  closeLogoutDialog={() =>
+                    setProfilePopupOpen({
+                      ...profilePopupOpen,
+                      isLogoutDialog: false,
+                    })
+                  }
+                />
+              )}
             </div>
             <div className="text-white flex items-center space-x-0.4 md:space-x-6">
-              <IconButton onClick={handleMenuOpen} data-menu-type="notifications">
+              <IconButton
+                onClick={handleMenuOpen}
+                data-menu-type="notifications"
+              >
                 <Badge color="success" variant="dot">
                   <NotificationsIcon className="text-white" fontSize="small" />
                 </Badge>
@@ -254,14 +374,17 @@ function MainHeader({ handleRightSidebarToggle }) {
               <Notification />
             </div>
             <div className="relative flex items-center z-50">
-              <p onClick={toggleSidebar} className="md:flex hidden items-center hover:cursor-pointer">
+              <p
+                onClick={toggleSidebar}
+                className="md:flex hidden items-center hover:cursor-pointer"
+              >
                 <IoIosChatboxes color="white" size={18} />
               </p>
               {isSidebarOpen && (
                 <>
                   <div
                     ref={tooltipRef}
-                    className="flex flex-col absolute top-full right-0 md:-left-8 lg:-left-8 xl:left-1/2 left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-lg z-[9999] w-max max-w-xs text-center"
+                    className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-1/2 left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-lg z-[9999] w-max max-w-xs text-center"
                   >
                     <button
                       className="flex items-center space-x-4 py-2"
@@ -278,8 +401,7 @@ function MainHeader({ handleRightSidebarToggle }) {
                       <p className="text-base text-[#0f212e]">BetSlip</p>
                     </button>
                   </div>
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-[9999] tooltip-arrow w-3 h-3 bg-white rotate-45">
-                  </div>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-[9999] tooltip-arrow w-3 h-3 bg-white rotate-45"></div>
                 </>
               )}
             </div>
@@ -291,6 +413,3 @@ function MainHeader({ handleRightSidebarToggle }) {
 }
 
 export default MainHeader;
-
-
-
