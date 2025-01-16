@@ -55,7 +55,7 @@ function MainHomePage() {
   };
 
   return (
-    <div className="h-full bg-[#1a2c38] lg:pr-14 xl:pr-0 pr-0">
+    <div className="h-full bg-[#1a2c38]">
       {loading ? (
         <Loader />
       ) : (
@@ -64,13 +64,9 @@ function MainHomePage() {
           <div className="mt-8 flex justify-center">
             <div>
               <StackOriginals allGames={allGames} setLoading={setLoading} />
-              <div className="my-10">
-                <Slots />
-              </div>
+              <Slots />
               <LiveCasino allGames={allGames} />
-              <div className="my-10">
-                <GameShows allGames={allGames} />
-              </div>
+              <GameShows allGames={allGames} />
               <Exclusives allGames={allGames} />
             </div>
           </div>

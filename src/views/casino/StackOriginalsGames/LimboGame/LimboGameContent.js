@@ -9,13 +9,12 @@ import {
 } from "../../../../features/casino/limboSlice";
 import {
   getGameRandomFiveData,
-  getRandomFiveData,
 } from "../../../../services/CasinoServices";
-import { IoIosTrendingUp } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import { setWallet } from "../../../../features/auth/authSlice";
 import { decodedToken } from "../../../../resources/utility";
 import limboGameResult from "../../../../assets/Sound/limboGameResult.wav"
+import limboGameWin from "../../../../assets/Sound/limboGameWin.wav"
 
 function LimboGameContent() {
   const dispatch = useDispatch();
@@ -36,8 +35,8 @@ function LimboGameContent() {
   LimboSocket.on("limbobetResult", (data) => {
     dispatch(setLimboStatusData(data));
 
-    // const audio = new Audio(limboGameResult);
-    // audio.play();
+      // const audio = new Audio(limboGameResult);
+      // audio.play();
   });
 
   LimboSocket.on("walletBalance", (data) => {
@@ -97,6 +96,11 @@ function LimboGameContent() {
             betId: limboStatusData?.betId,
             userId: decoded?.userId,
           });
+
+          if (targetMultiplier >= parseFloat(values?.multiplier || 2)) {
+            const winAudio = new Audio(limboGameWin);
+            winAudio.play();
+          }
         }
       }, 3);
 
@@ -107,26 +111,6 @@ function LimboGameContent() {
       return () => clearInterval(interval);
     }
   }, [limboStatusData?.actualMultiplier]);
-
-  // useEffect(() => {
-  //   if (limboStatusData?.actualMultiplier) {
-  //     const targetMultiplier = parseFloat(limboStatusData.actualMultiplier);
-  //     const incrementCount = 50; // Set the number of increments for smoother transition (e.g., 50 steps)
-  //     const incrementValue = targetMultiplier / incrementCount;
-
-  //     let currentMultiplier = 1.0;
-  //     const interval = setInterval(() => {
-  //       if (currentMultiplier < targetMultiplier) {
-  //         currentMultiplier += incrementValue;
-  //         setDisplayedMultiplier(currentMultiplier.toFixed(2));
-  //       } else {
-  //         clearInterval(interval);
-  //       }
-  //     }, 5);
-
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [limboStatusData?.actualMultiplier]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;

@@ -62,11 +62,11 @@ function Lobby() {
   };
 
   return (
-    <div className={`flex items-center h-full bg-[#1a2c38]`}>
+    <div className={`flex justify-center items-center h-full bg-[#1a2c38]`}>
       {loading ? (
         <Loader />
       ) : (
-        <div className={`text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10 `}>
+        <div className={`text-white font-bold pt-6 w-full max-w-screen-xl lg:px-3 xl:px-10`}>
           <div className="flex items-center mx-3 mt-8 space-x-2">
             <TbCherryFilled
               size={28}

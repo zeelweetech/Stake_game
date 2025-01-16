@@ -83,11 +83,11 @@ function CasinoHomePage() {
   };
 
   return (
-    <div className="flex justify-center h-full bg-[#1a2c38] z-40 lg:pr-12 pr-0 xl:pr-0">
+    <div className="flex justify-center h-full bg-[#1a2c38] z-40">
       {loading ? (
         <Loader />
       ) : (
-        <div className={`text-white font-bold pt-6 w-full ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[69rem]" : "max-w-screen-xl"} lg:px-3 xl:px-10`}>
+        <div className={`text-white font-bold pt-6 w-full container mx-auto ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[69rem]" : "max-w-screen-xl"} lg:px-3 xl:px-10`}>
           <SlideBar />
 
           <div className="mt-8 mx-3 relative">
@@ -103,7 +103,7 @@ function CasinoHomePage() {
           </div>
 
           <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 mx-3 my-7 scrollbar-thin">
-            <div className="bg-[#0f212e] flex rounded-full p-[5px] flex-shrink-0 space-x-2 text-xs">
+            <div className="bg-[#0f212e] flex rounded-full p-[5px] space-x-2 text-xs">
               {menuItems.map((item) => (
                 <button
                   key={item.label}
