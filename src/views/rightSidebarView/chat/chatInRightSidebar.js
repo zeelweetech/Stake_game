@@ -149,7 +149,7 @@ const ChatApp = ({ onClose }) => {
             <div className="relative">
               <div
                 ref={dropDownRef}
-                className="absolute top-full shadow-lg text-black font-medium rounded-sm py-2 z-10"
+                className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-16 left-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm py-1 shadow-lg z-[9999]"
               >
                 {Country.map((item, index) => (
                   <div
@@ -163,13 +163,16 @@ const ChatApp = ({ onClose }) => {
                     </div>
                   </div>
                 ))}
+                {/* Tooltip arrow */}
+                <div className="absolute bottom-full left-1/2 mt-1 z-[9999] bg-white"></div>
               </div>
             </div>
           )}
+
         </div>
         <IconButton
           onClick={onClose}
-          sx={{ color: "white", position: "absolute", top: 9, right: 8 }}
+          sx={{ color: "white", position: "absolute", right: 8 }}
         >
           <CloseIcon fontSize="small" />
         </IconButton>
@@ -179,9 +182,8 @@ const ChatApp = ({ onClose }) => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`p-2 rounded-md mb-2 ${
-              msg.isNewUser ? "border-[#2F4553]" : "bg-[#213743] mx-2"
-            }`}
+            className={`p-2 rounded-md mb-2 ${msg.isNewUser ? "border-[#2F4553]" : "bg-[#213743] mx-2"
+              }`}
           >
             {msg.content}
           </div>
