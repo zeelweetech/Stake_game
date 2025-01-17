@@ -5,7 +5,7 @@ const initialState = {
   isRegisterModelOpen: false,
   isForgotPasswordModelOpen: false,
   isVerifyTermModelOpen: false,
-  wallet: 0,
+  wallet: '',
   anchorEl: null,
   openMenubar: false,
 

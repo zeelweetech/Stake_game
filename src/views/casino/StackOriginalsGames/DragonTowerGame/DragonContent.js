@@ -44,7 +44,6 @@ function DragonContent() {
   const [cashoutVisible, setCashoutVisible] = useState(false);
   const [fundsToastShown, setFundsToastShown] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
   const gameOverProcessedRef = useRef(false);
   const {
     isManual,
@@ -115,7 +114,7 @@ function DragonContent() {
           parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -143,7 +142,7 @@ function DragonContent() {
   }, []);
 
   DragonTowerSocket.on("walletBalance", (data) => {
-    dispatch(setWallet(data?.walletBalance));
+    // dispatch(setWallet(data?.walletBalance));
   });
 
   DragonTowerSocket.on("gameStarted", (data) => {
@@ -337,9 +336,8 @@ function DragonContent() {
 
   return (
     <div
-      className={`dragonBackImage max-sm:mx-3 flex flex-col items-center bg-cover ${
-        isMobile ? "rounded-t-lg" : "rounded-tr-lg"
-      }`}
+      className={`dragonBackImage max-sm:mx-3 flex flex-col items-center bg-cover ${isMobile ? "rounded-t-lg" : "rounded-tr-lg"
+        }`}
     >
       <div
         className="
@@ -385,20 +383,20 @@ function DragonContent() {
                   const imageToShow = isHighlighted
                     ? null // No image when highlighted
                     : isGameOver
-                    ? rowIndex === gameOverResult?.skullRowIndex &&
-                      boxIndex === gameOverResult?.skullBoxIndex
-                      ? skullImage
-                      : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) ||
-                        isRestoredEgg ||
-                        isSelected ||
-                        rowIndex === gameOverResult?.skullRowIndex
-                      ? eggImage
-                      : Boxsvg
-                    : isRestoredEgg
-                    ? eggImage
-                    : isSelected
-                    ? eggImage
-                    : Boxsvg;
+                      ? rowIndex === gameOverResult?.skullRowIndex &&
+                        boxIndex === gameOverResult?.skullBoxIndex
+                        ? skullImage
+                        : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) ||
+                          isRestoredEgg ||
+                          isSelected ||
+                          rowIndex === gameOverResult?.skullRowIndex
+                          ? eggImage
+                          : Boxsvg
+                      : isRestoredEgg
+                        ? eggImage
+                        : isSelected
+                          ? eggImage
+                          : Boxsvg;
                   const isRowActive =
                     isManual &&
                     gameBet &&
@@ -407,34 +405,29 @@ function DragonContent() {
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
-                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center cursor-pointer ${
-                        isGameOver
-                          ? "bg-[#213743]"
-                          : (gameBet && rowIndex === 0) ||
-                            clickedBoxes[rowIndex - 1] !== undefined
+                      className={`rounded-md w-full xl:h-10 lg:h-10 md:h-[1.80rem] h-6 flex justify-center items-center cursor-pointer ${isGameOver
+                        ? "bg-[#213743]"
+                        : (gameBet && rowIndex === 0) ||
+                          clickedBoxes[rowIndex - 1] !== undefined
                           ? "bg-[#00e701] w-10"
                           : "bg-[#213743]"
-                      } ${
-                        clickedBoxes[rowIndex] !== undefined
+                        } ${clickedBoxes[rowIndex] !== undefined
                           ? "bg-[#213743] opacity-100"
                           : isGameOver && isManual
-                          ? "opacity-50"
-                          : "opacity-100"
-                      } ${
-                        isSelected
+                            ? "opacity-50"
+                            : "opacity-100"
+                        } ${isSelected
                           ? "opacity-100"
                           : isGameOver && isManual
-                          ? "opacity-50"
-                          : "opacity-100"
-                      }  ${
-                        isRowActive && isManual
+                            ? "opacity-50"
+                            : "opacity-100"
+                        }  ${isRowActive && isManual
                           ? "bg-[#00e701]"
                           : "bg-[#213743]"
-                      } ${
-                        !isManual && preSelectTile[rowIndex] === boxIndex
+                        } ${!isManual && preSelectTile[rowIndex] === boxIndex
                           ? "bg-[#9000ff] border-2 border-[#7100c7]"
                           : ""
-                      }`}
+                        }`}
                       onClick={() => handleBoxClick(rowIndex, boxIndex)}
                     >
                       {imageToShow && (

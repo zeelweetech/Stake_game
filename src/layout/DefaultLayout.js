@@ -99,7 +99,7 @@ function DefaultLayout() {
             transition-all duration-300 ease-in-out`}`}
  > */}
       <div
-        className={`${isTablet ? `flex flex-col relative bg-[#1a2c38] z-30 h-full w-full transition-opacity ${openMenubar && "opacity-50"} duration-300 ease-in-out`
+        className={`${isTablet ? `flex flex-col relative bg-[#1a2c38] z-30 h-full w-full ml-0 md:ml-14 lg:ml-14 xl:ml-0 transition-opacity ${openMenubar && "opacity-50"} duration-300 ease-in-out`
           : `flex flex-col relative bg-[#1a2c38] z-40 h-full
           ${!isMobile ? (openMenubar ? "w-[calc(100%-14%)] md:w-[calc(100%-19%)] lg:w-[calc(100%-15%)] ml-[14%] md:ml-[19%] lg:ml-[15%]" : "w-[calc(100%-3.5rem)] ml-14") : "ml-0 w-full"}
         ${isBetslipOpen || isChatOpen ? "mr-[14%] md:mr-[28%] lg:mr-[24%] xl:mr-[19%] w-screen" : "mr-0 w-screen"}
