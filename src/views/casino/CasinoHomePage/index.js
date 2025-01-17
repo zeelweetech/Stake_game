@@ -87,7 +87,7 @@ function CasinoHomePage() {
       {loading ? (
         <Loader />
       ) : (
-        <div className={`text-white font-bold pt-6 w-full container mx-auto ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[69rem]" : "max-w-screen-xl"} lg:px-3 xl:px-10`}>
+        <div className={`text-white font-bold pt-6 w-full mx-auto ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[55rem] xl:px-8" : "max-w-screen-xl"}lg:px-3 xl:px-10 abc`}>
           <SlideBar />
 
           <div className="mt-8 mx-3 relative">

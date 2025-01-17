@@ -76,7 +76,7 @@ function DefaultLayout() {
       {!isMobile && (
         <div
           className={`fixed left-0 bg-[#0f212e] text-white h-full overflow-hidden z-40
-          ${openMenubar ? "w-[15%] md:w-[19%] lg:w-[15%]" : "w-14"} 
+          ${openMenubar ? "w-[15%] md:w-[26%] lg:w-[22%] xl:w-[15%]" : "w-14"} 
           transition-width duration-300 ease-in-out`}
         >
           <Sidebar
@@ -102,7 +102,7 @@ function DefaultLayout() {
         className={`${isTablet ? `flex flex-col relative bg-[#1a2c38] z-30 h-full w-full ml-0 md:ml-14 lg:ml-14 xl:ml-0 transition-opacity ${openMenubar && "opacity-50"} duration-300 ease-in-out`
           : `flex flex-col relative bg-[#1a2c38] z-40 h-full
           ${!isMobile ? (openMenubar ? "w-[calc(100%-14%)] md:w-[calc(100%-19%)] lg:w-[calc(100%-15%)] ml-[14%] md:ml-[19%] lg:ml-[15%]" : "w-[calc(100%-3.5rem)] ml-14") : "ml-0 w-full"}
-        ${isBetslipOpen || isChatOpen ? "mr-[14%] md:mr-[28%] lg:mr-[24%] xl:mr-[19%] w-screen" : "mr-0 w-screen"}
+        ${isBetslipOpen || isChatOpen ? "mr-[14%] md:mr-[28%] lg:mr-[24%] xl:mr-[22%] w-screen" : "mr-0 w-screen"}
         transition-all duration-300 ease-in-out`}`}
       >
         {localStorage.getItem("token") ? (
@@ -131,9 +131,9 @@ function DefaultLayout() {
       {/* Right Sidebar for Betslip or Chat */}
       {!isMobile && (isBetslipOpen || isChatOpen) && (
         <div
-          className={`fixed right-0 text-white overflow-hidden
-            ${isBetslipOpen || isChatOpen ? "w-72 md:w-[28%] lg:w-[24%] xl:w-[19%]" : "w-0"}
-            transition-all duration-300 ease-in-out lg:absolute lg:top-0 lg:right-0 z-50`}
+          className={`relative lg:relative md:relative xl:fixed right-0 text-white overflow-hidden
+            ${isBetslipOpen || isChatOpen ? "w-72 md:w-[28%] lg:w-[24%] xl:w-[22%]" : "w-0"}
+            transition-all duration-300 ease-in-out z-50`}
         >
           <RightSidebar
             isDrawerOpen={isBetslipOpen || isChatOpen}

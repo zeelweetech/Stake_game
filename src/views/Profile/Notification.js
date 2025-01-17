@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import notification from "../../assets/img/Notification.png";
@@ -9,22 +9,41 @@ const Notification = () => {
     const { anchorEl } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const [responsiveMobile, setResponsiveMobile] = useState(window.innerWidth);
+    const notificationRef = useRef(null);
+
     useEffect(() => {
         const handleResize = () => {
             setResponsiveMobile(window.innerWidth);
         };
 
         window.addEventListener("resize", handleResize);
-        // Cleanup event listener on component unmount
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                notificationRef.current &&
+                !notificationRef.current.contains(event.target)
+            ) {
+                dispatch(setAnchorEl(null));
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [dispatch]);
+
     const handleClose = () => {
         dispatch(setAnchorEl(null));
-
     };
+
     return (
         <div
-            className="fixed top-14 right-8 md:right-36 w-80 bg-[#0f212e] rounded-lg shadow-lg p-4 z-50"
+            ref={notificationRef}
+            className="fixed top-16 right-8 md:right-[4rem] w-80 bg-[#0f212e] rounded-lg shadow-lg p-4 z-50"
             style={{ display: anchorEl ? "block" : "none" }}
         >
             <div className="flex justify-between items-center">
@@ -41,8 +60,8 @@ const Notification = () => {
                     alt="Not Found"
                 />
             </div>
-            <p className="text-white font-medium text-sm">No Notifications Available</p>
-            <p className="text-[#b1bad3]">Your interactions will be visible here</p>
+            <p className="text-white font-medium text-sm text-center">No Notifications Available</p>
+            <p className="text-[#b1bad3 text-center">Your interactions will be visible here</p>
         </div>
     );
 };
