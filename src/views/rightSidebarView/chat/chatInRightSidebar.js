@@ -7,6 +7,8 @@ import EmojiPicker from "emoji-picker-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmoji } from "../../../features/auth/emojiSlice";
 import { Country } from "./country";
+import { CiShare1 } from "react-icons/ci";
+import { decodedToken } from "../../../resources/utility";
 const chatSocket = io("http://192.168.29.203:3002", { path: "/ws" });
 
 const ChatApp = ({ onClose }) => {
@@ -20,6 +22,11 @@ const ChatApp = ({ onClose }) => {
   const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
   const emojiPickerRef = useRef(null);
   const dropDownRef = useRef(null);
+  
+  const decoded = decodedToken();
+  const userId = decoded?.userId;
+  console.log(userId,"MMMMMMMMM");
+  
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -30,6 +37,8 @@ const ChatApp = ({ onClose }) => {
   useEffect(() => {
     chatSocket.emit("joinCountry", selectedCountry.countryName);
     chatSocket.on("chatMessage", (newMessage) => {
+      console.log(">>>>>>>>", newMessage);
+      console.log("User  ID of the sender:", newMessage.userId); 
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
@@ -42,23 +51,23 @@ const ChatApp = ({ onClose }) => {
     };
   }, [selectedCountry]);
   const sendMessage = () => {
-    if (message.trim()) {
-      const userId = "USER_128";
-      const taggedUserId = "user456";
-      const newMessageData = {
-        userId,
-        content: message,
-        country: selectedCountry.countryName,
-        taggedUserId,
-        createdAt: new Date(),
-      };
-      // console.log("sdknkadmfcna,m....", newMessageData);
-
-      chatSocket.emit("chatMessage", newMessageData);
-      setMessage("");
+    if (!userId) {
+        console.log("User  Id is Not Available. Cannot Message Send");
+        return;
     }
-  };
+    if (message.trim()) {
+        const newMessageData = {
+            userId, 
+            content: message,
+            country: selectedCountry.countryName,
+            taggedUserId: "user456",
+            createdAt: new Date(),
+        };
 
+        chatSocket.emit("chatMessage", newMessageData);
+        setMessage("");
+    }
+};
   const changeCountry = (newCountry) => {
     const countryObj = Country.find((item) => item.countryName === newCountry);
     setSelectedCountry(countryObj);
@@ -127,7 +136,7 @@ const ChatApp = ({ onClose }) => {
         <div>
           <button
             onClick={toggleDropdown}
-            className="inline-flex justify-start w-full bg-[#0f212e] px-4 py-2 text-sm font-medium text-white"
+            className="inline-flex justify-start w-full bg-[#0f212e] py-3 text-sm font-medium text-white"
           >
             {selectedCountry.Icon && (
               <span className="mr-2">
@@ -145,6 +154,7 @@ const ChatApp = ({ onClose }) => {
               <ChevronUpIcon className="ml-2 h-5 w-5" />
             )}
           </button>
+
           {dropdownOpen && (
             <div className="relative">
               <div
@@ -170,12 +180,16 @@ const ChatApp = ({ onClose }) => {
           )}
 
         </div>
-        <IconButton
-          onClick={onClose}
-          sx={{ color: "white", position: "absolute", right: 8 }}
-        >
-          <CloseIcon fontSize="small" />
-        </IconButton>
+
+        <div className="flex items-center">
+          <CiShare1 className="text-white text-xl cursor-pointer" />
+          <IconButton
+            onClick={onClose}
+            sx={{ color: "white" }}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </div>
       </div>
       {/* Messages display */}
       <div className="overflow-y-auto flex-grow h-96">
@@ -252,11 +266,4 @@ const ChatApp = ({ onClose }) => {
 
 export default ChatApp;
 
-// {emojiPickerVisible && (
-//   <div ref={emojiPickerRef} className="absolute bottom-32 left-0 z-50 bg-gray-700 rounded-lg shadow-lg">
-//     <EmojiPicker
-//       onEmojiClick={(_, emoji) => handleEmojiClick(emoji)}
-//    />
 
-//   </div>
-// )}

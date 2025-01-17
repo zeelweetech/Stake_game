@@ -36,6 +36,7 @@ function MainHeader({ handleRightSidebarToggle }) {
   const dispatch = useDispatch();
   const tooltipRef = useRef(null);
   const personIconRef = useRef(null);
+  const chatRef = useRef(null);
 
   const [profilePopupOpen, setProfilePopupOpen] = useState({
     isWalletOpen: false,
@@ -57,12 +58,16 @@ function MainHeader({ handleRightSidebarToggle }) {
       ) {
         dispatch(setTooltipOpen(false));
       }
+      if (isSidebarOpen && chatRef.current && !chatRef.current.contains(event.target)) {
+        setIsSidebarOpen(false);
+      }
     };
+
     document.addEventListener("mousedown", handleOutsideClick);
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [tooltipOpen, dispatch]);
+  }, [tooltipOpen, isSidebarOpen, dispatch]);
 
   const handleMenuOpen = (event) => {
     dispatch(setAnchorEl(event.currentTarget));
@@ -145,7 +150,6 @@ function MainHeader({ handleRightSidebarToggle }) {
               <IoMdSearch className="text-sm w-10 h-6 md:text-base md:block hidden" />
               <p
                 className="md:block hidden text-sm md:text-base md:space-x-1"
-                ref={personIconRef}
               >
                 Search
               </p>
@@ -154,6 +158,7 @@ function MainHeader({ handleRightSidebarToggle }) {
             <div className="relative flex items-center">
               <p
                 onClick={toggleTooltip}
+                ref={personIconRef}
                 className="flex items-center hover:cursor-pointer"
               >
                 <IoPerson color="white" size={16} />
@@ -174,7 +179,13 @@ function MainHeader({ handleRightSidebarToggle }) {
                     }}
                     className="flex items-center space-x-3 p-3 hover:bg-[#B1BAD3]"
                   >
-                    <FaWallet size={20} color="#0f212e" />
+                     <FaWallet
+                      style={{
+                        color: "#2F4553",
+                        width: "25px",
+                        height: "25px",
+                      }}
+                    />
                     <p className="text-base text-[#2F4553] hover:text-black font-semibold">
                       Wallet
                     </p>
@@ -373,8 +384,9 @@ function MainHeader({ handleRightSidebarToggle }) {
               </IconButton>
               <Notification />
             </div>
-            <div className="relative flex items-center z-50">
+            <div className="relative flex items-center z-50" ref={chatRef}>
               <p
+                // ref={chatRef}
                 onClick={toggleSidebar}
                 className="md:flex hidden items-center hover:cursor-pointer"
               >
@@ -383,7 +395,6 @@ function MainHeader({ handleRightSidebarToggle }) {
               {isSidebarOpen && (
                 <>
                   <div
-                    ref={tooltipRef}
                     className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-1/2 left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-lg z-[9999] w-max max-w-xs text-center"
                   >
                     <button
