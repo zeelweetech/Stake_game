@@ -16,21 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DragonTowerSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import { decodedToken } from "../../../../resources/utility";
-import {
-  setBoxsIndex,
-  setClickedBoxes,
-  setCompleteFundStatus,
-  setGameBet,
-  setGameOverResult,
-  setIsGameOver,
-  setPreSelectTile,
-  setRestodMultiplier,
-  setRestor,
-  setRestorData,
-  setRowsIndex,
-  setShowRandomField,
-  setTileSelected,
-} from "../../../../features/casino/dragonTowerSlice";
+import { setBoxsIndex, setClickedBoxes, setCompleteFundStatus, setGameBet, setGameOverResult, setIsGameOver, setPreSelectTile, setRestodMultiplier, setRestor, setRestorData, setRowsIndex, setShowRandomField, setTileSelected } from "../../../../features/casino/dragonTowerSlice";
 import toast from "react-hot-toast";
 import dragontowerSound from "../../../../assets/Sound/dragontowerSound.wav";
 import dragontowerbombSound from "../../../../assets/Sound/dragontowerbomb.wav";
@@ -142,7 +128,10 @@ function DragonContent() {
   }, []);
 
   DragonTowerSocket.on("walletBalance", (data) => {
-    // dispatch(setWallet(data?.walletBalance));
+    console.log("wallet data ",data);
+    
+    // dispatch(setWallet(data?.walletBalance))
+    // dispatch((prev) => ({ ...prev, wallet: data?.walletBalance }))
   });
 
   DragonTowerSocket.on("gameStarted", (data) => {
