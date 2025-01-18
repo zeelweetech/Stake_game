@@ -22,11 +22,10 @@ const ChatApp = ({ onClose }) => {
   const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
   const emojiPickerRef = useRef(null);
   const dropDownRef = useRef(null);
-  
+
   const decoded = decodedToken();
   const userId = decoded?.userId;
-  console.log(userId,"MMMMMMMMM");
-  
+  console.log(userId, "MMMMMMMMM");
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -38,7 +37,7 @@ const ChatApp = ({ onClose }) => {
     chatSocket.emit("joinCountry", selectedCountry.countryName);
     chatSocket.on("chatMessage", (newMessage) => {
       console.log(">>>>>>>>", newMessage);
-      console.log("User  ID of the sender:", newMessage.userId); 
+      console.log("User  ID of the sender:", newMessage.userId);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
@@ -52,22 +51,22 @@ const ChatApp = ({ onClose }) => {
   }, [selectedCountry]);
   const sendMessage = () => {
     if (!userId) {
-        console.log("User  Id is Not Available. Cannot Message Send");
-        return;
+      console.log("User  Id is Not Available. Cannot Message Send");
+      return;
     }
     if (message.trim()) {
-        const newMessageData = {
-            userId, 
-            content: message,
-            country: selectedCountry.countryName,
-            taggedUserId: "user456",
-            createdAt: new Date(),
-        };
+      const newMessageData = {
+        userId,
+        content: message,
+        country: selectedCountry.countryName,
+        taggedUserId: "user456",
+        createdAt: new Date(),
+      };
 
-        chatSocket.emit("chatMessage", newMessageData);
-        setMessage("");
+      chatSocket.emit("chatMessage", newMessageData);
+      setMessage("");
     }
-};
+  };
   const changeCountry = (newCountry) => {
     const countryObj = Country.find((item) => item.countryName === newCountry);
     setSelectedCountry(countryObj);
@@ -131,15 +130,15 @@ const ChatApp = ({ onClose }) => {
 
   return (
     <div className="text-white rounded-md shadow-lg relative bg-[#0f212e] flex flex-col h-screen">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center p-[0.70rem]">
         {/* Dropdown for countries */}
         <div>
           <button
             onClick={toggleDropdown}
-            className="inline-flex justify-start w-full bg-[#0f212e] py-3 text-sm font-medium text-white"
+            className="inline-flex justify-start w-full bg-[#0f212e] text-sm font-medium text-white"
           >
             {selectedCountry.Icon && (
-              <span className="mr-2">
+              <span>
                 <img
                   src={selectedCountry.Icon}
                   alt={selectedCountry.countryName}
@@ -159,16 +158,20 @@ const ChatApp = ({ onClose }) => {
             <div className="relative">
               <div
                 ref={dropDownRef}
-                className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-16 left-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm py-1 shadow-lg z-[9999]"
+                className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-2 left-1/2 -mt-2 bg-white text-black text-sm font-medium rounded py-1 shadow-lg z-[9999]"
               >
                 {Country.map((item, index) => (
                   <div
                     key={index}
                     onClick={() => changeCountry(item.countryName)}
-                    className="cursor-pointer w-36 pl-2 py-2 bg-white hover:bg-[#b1bad3]"
+                    className="cursor-pointer w-32 p-2 bg-white hover:bg-[#b1bad3]"
                   >
                     <div className="flex items-center space-x-2">
-                      <img src={item.Icon} className="w-5" alt="Not Found" />
+                      <img
+                        src={item.Icon}
+                        className="w-5 h-5"
+                        alt="Not Found"
+                      />
                       <p>{item.countryName}</p>
                     </div>
                   </div>
@@ -178,15 +181,11 @@ const ChatApp = ({ onClose }) => {
               </div>
             </div>
           )}
-
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
           <CiShare1 className="text-white text-xl cursor-pointer" />
-          <IconButton
-            onClick={onClose}
-            sx={{ color: "white" }}
-          >
+          <IconButton onClick={onClose} sx={{ color: "white" }}>
             <CloseIcon fontSize="small" />
           </IconButton>
         </div>
@@ -196,8 +195,9 @@ const ChatApp = ({ onClose }) => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`p-2 rounded-md mb-2 ${msg.isNewUser ? "border-[#2F4553]" : "bg-[#213743] mx-2"
-              }`}
+            className={`p-2 rounded-md mb-2 ${
+              msg.isNewUser ? "border-[#2F4553]" : "bg-[#213743] mx-2"
+            }`}
           >
             {msg.content}
           </div>
@@ -206,7 +206,7 @@ const ChatApp = ({ onClose }) => {
       </div>
       {/* Message input and send button */}
       <div className="bg-[#213743] p-2.5 relative w-full">
-        <div className="flex items-center text-white sticky bg-[#0f212e] w-full">
+        <div className="flex items-center text-white sticky bg-[#0f212e] rounded  w-full">
           <input
             type="text"
             value={message}
@@ -265,5 +265,3 @@ const ChatApp = ({ onClose }) => {
 };
 
 export default ChatApp;
-
-

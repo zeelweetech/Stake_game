@@ -113,7 +113,7 @@ function PlinkoGameContent() {
         ?.map((data, index) => (
           <button
             key={index}
-            className={`xl:w-16 xl:-ml-5 lg:w-12 lg:ml-64 py-3 text-black font-bold border-b border-black ${
+            className={`xl:w-14 xl:-ml-5 lg:w-12 lg:ml-64 py-3 text-black font-bold border-b border-black ${
               data?.multiplier <= 1
                 ? "bg-amber-300"
                 : data?.multiplier === 2 ||
@@ -177,7 +177,7 @@ function PlinkoGameContent() {
           height="510"
         ></canvas>
       </div> */}
-      <div className="flex flex-col lg:mt-14 md:ml-[17rem] md:w-14 max-sm:mb-36 max-sm:ml-[19rem] max-sm:w-10 relative xl:left-[15rem] xl:-top-40 lg:left-30 lg:-top-40 md:left-[1rem] md:-top-[1rem]">
+      <div className="flex flex-col relative justify-end items-end xl:pr-7 lg:pr-7 md:pr-4 pr-5 xl:-top-20 lg:-top-20 md:-top-[2rem] -top-5">
         {renderMultiplierButtons()}
       </div>
     </div>

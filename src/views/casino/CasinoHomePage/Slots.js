@@ -8,9 +8,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { getAllGames } from "../../../services/GameServices";
+// import { getAllGames } from "../../../services/GameServices";
 import { useDispatch, useSelector } from "react-redux";
-import { setAllGame } from "../../../features/casino/allGameSlice";
+// import { setAllGame } from "../../../features/casino/allGameSlice";
 
 function Slots({ isLobby }) {
   const [loading, setLoading] = useState(false);
