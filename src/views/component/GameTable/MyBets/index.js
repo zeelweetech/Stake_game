@@ -94,7 +94,7 @@ const MyBets = () => {
                     color: "white",
                   },
                   overflowY: "hidden",
-                  width: "100%",  // Make the grid take full width of the container
+                 // Make the grid take full width of the container
                 }}
               />
             </div>

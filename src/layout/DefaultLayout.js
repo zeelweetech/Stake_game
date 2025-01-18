@@ -132,7 +132,7 @@ function DefaultLayout() {
       {!isMobile && (isBetslipOpen || isChatOpen) && (
         <div
           className={`relative lg:relative md:relative xl:fixed right-0 text-white overflow-hidden
-            ${isBetslipOpen || isChatOpen ? "w-72 md:w-[28%] lg:w-[24%] xl:w-[22%]" : "w-0"}
+            ${isBetslipOpen || isChatOpen ? "w-72 md:w-[35%] lg:w-[32%] xl:w-[22%]" : "w-0"}
             transition-all duration-300 ease-in-out z-50`}
         >
           <RightSidebar

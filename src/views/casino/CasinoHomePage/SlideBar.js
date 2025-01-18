@@ -10,6 +10,7 @@ import ChaosCollecter from "../../../assets/img/ChaosCollecter.jpg";
 import LevelUp from "../../../assets/img/LevelUp.jpg";
 import MultiplierRace from "../../../assets/img/MultiplierRace.jpg";
 import ChristmasRace from "../../../assets/img/ChristmasRace.png";
+import { useSelector } from "react-redux";
 
 function SlideBar() {
   const [swiperState, setSwiperState] = useState({
@@ -19,6 +20,12 @@ function SlideBar() {
 
   const [LearnMore, setLearnMore] = useState(false);
   const [Racenow, setRaceNow] = useState(false);
+  const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false);
+  const [isRightDrawerOpen, setIsRightDrawerOpen] = useState(false);
+  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
+  const { isChatOpen } = useSelector((state) => state.chat);
+  const { openMenubar } = useSelector((state) => state.auth);
+
   const initialTime = {
     days: 5,
     hours: 2,
@@ -35,7 +42,7 @@ function SlideBar() {
         seconds--;
       } else {
         seconds = 59;
-        if (minutes > 24) {
+        if (minutes > 0) {
           minutes--;
         } else {
           minutes = 59;
@@ -57,54 +64,6 @@ function SlideBar() {
 
     return () => clearInterval(interval);
   }, [timeLeft]);
-
-  // const initialTime = {
-  //   days: 1,
-  //   hours: 2,
-  //   minutes: 1,
-  //   seconds: 10,
-  // };
-
-  // const loadTime = () => {
-  //   const savedTime = localStorage.getItem("timeLeft");
-  //   return savedTime ? JSON.parse(savedTime) : initialTime;
-  // };
-
-  // const [timeLeft, setTimeLeft] = useState(loadTime);
-
-  // useEffect(() => {
-  //   const countdown = () => {
-  //     let { days, hours, minutes, seconds } = timeLeft;
-
-  //     if (seconds > 0) {
-  //       seconds--;
-  //     } else {
-  //       seconds = 59;
-  //       if (minutes > 0) {
-  //         minutes--;
-  //       } else {
-  //         minutes = 59;
-  //         if (hours > 0) {
-  //           hours--;
-  //         } else {
-  //           hours = 23;
-  //           if (days > 0) {
-  //             days--;
-  //           }
-  //         }
-  //       }
-  //     }
-
-  //     const updatedTime = { days, hours, minutes, seconds };
-  //     setTimeLeft(updatedTime);
-  //     // Persist the updated time to localStorage
-  //     localStorage.setItem("timeLeft", JSON.stringify(updatedTime));
-  //   };
-
-  //   const interval = setInterval(countdown, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, [timeLeft]);
 
   const promoGame = [
     {
@@ -173,8 +132,17 @@ function SlideBar() {
     setRaceNow(false);
   };
 
+  const toggleLeftDrawer = () => {
+    setIsLeftDrawerOpen(!isLeftDrawerOpen);
+  };
+
+  const toggleRightDrawer = () => {
+    setIsRightDrawerOpen(!isRightDrawerOpen);
+  };
+
   return (
-    <div className="w-full max-w-screen-xl relative">
+    <div className={`w-full lg:px-3 xl:px-3 ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[54rem]" : "max-w-screen-xl"}`}>
+
       <div className="flex items-center">
         <Swiper
           navigation={true}
@@ -199,8 +167,8 @@ function SlideBar() {
         >
           {promoGame.map((Data, index) => (
             <SwiperSlide key={index} className="pl-2">
-              <div className="flex justify-between items-center bg-[#213743] w-full h-[13.75rem] pl-4 rounded-md hover:cursor-pointer">
-                <div className="flex flex-col space-y-8 justify-around w-44">
+              <div className="flex flex-col md:flex-row justify-between items-center bg-[#213743] w-full h-auto md:h-[13.75rem] pl-4 rounded-md hover:cursor-pointer">
+                <div className="flex flex-col space-y-4 justify-around w-full md:w-44">
                   <div>
                     <button className="bg-white text-black text-sm font-semibold px-1 rounded-sm">
                       Promo
@@ -217,10 +185,10 @@ function SlideBar() {
                     {Data.gameButton}
                   </button>
                 </div>
-                <div>
+                <div className="flex justify-center">
                   <img
                     src={Data.gameImage}
-                    className="w-48 h-48"
+                    className="w-full h-auto md:w-48 md:h-48 rounded-md"
                     alt="Not Found"
                   />
                 </div>
@@ -236,7 +204,7 @@ function SlideBar() {
           onClick={closeLearnMore}
         >
           <div
-            className="bg-[#213743] text-white rounded-lg shadow-lg w-[90%] max-w-lg p-4 relative overflow-auto xl:max-h-[680px] xl:mt-5 lg:max-h-[600px] max-h-[600px] bg-"
+            className="bg-[#213743] text-white rounded-lg shadow-lg w-[90%] max-w-lg p-4 relative overflow-auto xl:max-h-[680px] lg:max-h-[600px] max-h-[600px]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center">
@@ -255,34 +223,14 @@ function SlideBar() {
               <img src={WeeklyRaffle} alt="" className="w-[20rem] rounded-md" />
             </div>
             <div className="flex justify-start space-x-2 text-base font-bold">
-              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
-                <span className="flex justify-center">{timeLeft.days}</span>
-                <span className="flex justify-center text-[#B1BAD3]">
-                  {" "}
-                  Day{" "}
-                </span>
-              </div>
-              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
-                <span className="flex justify-center">{timeLeft.hours}</span>
-                <span className="flex justify-center text-[#B1BAD3]">
-                  {" "}
-                  Hour{" "}
-                </span>
-              </div>
-              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
-                <span className="flex justify-center">{timeLeft.minutes}</span>
-                <span className="flex justify-center text-[#B1BAD3]">
-                  {" "}
-                  Min{" "}
-                </span>
-              </div>
-              <div className="bg-[#0F212E] w-[56px] h-[3.375rem] px-3 py-1 -mt-16">
-                <span className="flex justify-center">{timeLeft.seconds}</span>
-                <span className="flex justify-center text-[#B1BAD3]">
-                  {" "}
-                  Sec{" "}
-                </span>
-              </div>
+              {Object.entries(timeLeft).map(([key, value]) => (
+                <div key={key} className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
+                  <span className="flex justify-center">{value}</span>
+                  <span className="flex justify-center text-[#B1BAD3]">
+                    {key.charAt(0).toUpperCase() + key.slice(1, 3)}{" "}
+                  </span>
+                </div>
+              ))}
             </div>
             <div className="text-center bg-[#1a2c38] rounded-sm p-4">
               <div className="flex justify-between items-center ">
@@ -320,7 +268,7 @@ function SlideBar() {
           onClick={closeRacenow}
         >
           <div
-            className="bg-[#213743] text-white rounded-lg shadow-lg w-[90%] max-w-lg p-4  relative overflow-auto xl:max-h-[670px] xl:mt-3 lg:max-h-[600px]  max-h-[600px] bg-"
+            className="bg-[#213743] text-white rounded-lg shadow-lg w-[90%] max-w-lg p-4 relative overflow-auto xl:max-h-[670px] lg:max-h-[600px] max-h-[600px]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center">
@@ -344,34 +292,14 @@ function SlideBar() {
               />
             </div>
             <div className="flex justify-start space-x-2 text-base font-bold">
-              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
-                <span className="flex justify-center">{timeLeft.days}</span>
-                <span className="flex justify-center text-[#B1BAD3]">
-                  {" "}
-                  Day{" "}
-                </span>
-              </div>
-              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
-                <span className="flex justify-center">{timeLeft.hours}</span>
-                <span className="flex justify-center text-[#B1BAD3]">
-                  {" "}
-                  Hour{" "}
-                </span>
-              </div>
-              <div className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
-                <span className="flex justify-center">{timeLeft.minutes}</span>
-                <span className="flex justify-center text-[#B1BAD3]">
-                  {" "}
-                  Min{" "}
-                </span>
-              </div>
-              <div className="bg-[#0F212E] w-[56px] h-[3.375rem] px-3 py-1 -mt-16">
-                <span className="flex justify-center">{timeLeft.seconds}</span>
-                <span className="flex justify-center text-[#B1BAD3]">
-                  {" "}
-                  Sec{" "}
-                </span>
-              </div>
+              {Object.entries(timeLeft).map(([key, value]) => (
+                <div key={key} className="bg-[#0F212E] w-[54px] h-[3.375rem] px-3 py-1 -mt-16">
+                  <span className="flex justify-center">{value}</span>
+                  <span className="flex justify-center text-[#B1BAD3]">
+                    {key.charAt(0).toUpperCase() + key.slice(1, 3)}{" "}
+                  </span>
+                </div>
+              ))}
             </div>
             <div className="bg-[#1a2c38] text-white rounded-sm shadow-md p-4 flex items-center justify-between space-x-4">
               <div className="text-center flex-1">
@@ -420,4 +348,4 @@ function SlideBar() {
   );
 }
 
-export default SlideBar;
+export default SlideBar; 

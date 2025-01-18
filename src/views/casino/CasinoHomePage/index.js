@@ -19,6 +19,7 @@ import { decodedToken } from "../../../resources/utility";
 import { getWallet, updateWallet } from "../../../services/LoginServices";
 import { useDispatch, useSelector } from "react-redux";
 import { setWallet } from "../../../features/auth/authSlice";
+import Lobby from "./Lobby";
 
 function CasinoHomePage() {
   const [stackMenu, setStackMenu] = useState("Lobby");
@@ -87,8 +88,9 @@ function CasinoHomePage() {
       {loading ? (
         <Loader />
       ) : (
-        <div className={`text-white font-bold pt-6 w-full mx-auto ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[55rem] xl:px-8" : "max-w-screen-xl"}lg:px-3 xl:px-10 abc`}>
-          <SlideBar />
+        <div className={`text-white font-bold pt-6 container mx-auto`}>
+
+          {/* <SlideBar /> */}
 
           <div className="mt-8 mx-3 relative">
             <input
@@ -102,14 +104,14 @@ function CasinoHomePage() {
             </div>
           </div>
 
-          <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 mx-3 my-7 scrollbar-thin">
+          <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 mx-3 my-7 md:w-[41rem] xl:w-full lg:w-full scrollbar-thin">
             <div className="bg-[#0f212e] flex rounded-full p-[5px] space-x-2 text-xs">
               {menuItems.map((item) => (
                 <button
                   key={item.label}
                   className={`py-2 px-5 rounded-full flex justify-center space-x-1.5 items-center ${stackMenu === item.label
-                      ? "bg-[#4d718768]"
-                      : "hover:bg-[#4d718768]"
+                    ? "bg-[#4d718768]"
+                    : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setStackMenu(item.label)}
                 >
@@ -119,70 +121,29 @@ function CasinoHomePage() {
               ))}
             </div>
           </div>
-
-          {/* Main Content */}
-          <div className="flex flex-col space-y-6 mt-10">
+          <div className="flex flex-col space-y-6">
             {stackMenu === "Lobby" ? (
               <>
-                <StackOriginals
-                  allGames={allGames}
-                  setLoading={setLoading}
-                  isLobby={isLobby}
-                />
-                <Slots
-                  // allGames={allGames}
-                  setLoading={setLoading}
-                  isLobby={isLobby}
-                />
-                <LiveCasino
-                  allGames={allGames}
-                  setLoading={setLoading}
-                  isLobby={isLobby}
-                />
-                <GameShows
-                  allGames={allGames}
-                  setLoading={setLoading}
-                  isLobby={isLobby}
-                />
-                <Exclusives
-                  allGames={allGames}
-                  setLoading={setLoading}
-                  isLobby={isLobby}
-                />
+                <StackOriginals allGames={allGames} setLoading={setLoading} />
+                <Slots allGames={allGames} setLoading={setLoading} />
+                <LiveCasino allGames={allGames} setLoading={setLoading} />
+                <GameShows allGames={allGames} setLoading={setLoading} />
+                <Exclusives allGames={allGames} setLoading={setLoading} />
               </>
             ) : stackMenu === "Listor Originals" ? (
-              <StackOriginals
-                allGames={allGames}
-                setLoading={setLoading}
-                isLobby={false}
-              />
+              <StackOriginals allGames={allGames} setLoading={setLoading} />
             ) : stackMenu === "Slot" ? (
-              <Slots
-                // allGames={allGames}
-                setLoading={setLoading}
-                isLobby={false}
-              />
+              <Slots setLoading={setLoading} />
             ) : stackMenu === "Live Casino" ? (
-              <LiveCasino
-                allGames={allGames}
-                setLoading={setLoading}
-                isLobby={false}
-              />
+              <LiveCasino allGames={allGames} setLoading={setLoading} />
             ) : stackMenu === "Game Shows" ? (
-              <GameShows
-                allGames={allGames}
-                setLoading={setLoading}
-                isLobby={false}
-              />
+              <GameShows allGames={allGames} setLoading={setLoading} />
             ) : stackMenu === "Listor Exclusives" ? (
-              <Exclusives
-                allGames={allGames}
-                setLoading={setLoading}
-                isLobby={false}
-              />
+              <Exclusives allGames={allGames} setLoading={setLoading} />
             ) : (
               <div className="text-center pt-5">Coming Soon: New Releases</div>
             )}
+
           </div>
         </div>
       )}
@@ -191,3 +152,10 @@ function CasinoHomePage() {
 }
 
 export default CasinoHomePage;
+
+
+
+
+
+
+{/* <div className={`text-white font-bold pt-6 w-full container mx-auto ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[55rem]" : "max-w-screen-xl"} lg:px-3 xl:px-10`}>          <SlideBar /> */ }

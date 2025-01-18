@@ -8,7 +8,7 @@ import { format } from "date-fns";
 
 const AllBets = () => {
   const [betsData, setBetsData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // Set loading to true initially
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
@@ -17,20 +17,21 @@ const AllBets = () => {
 
   useEffect(() => {
     getAllBetsdata();
-  }, [paginationModel?.page, paginationModel?.pageSize]);
+  }, [paginationModel.page, paginationModel.pageSize]);
 
   const getAllBetsdata = async () => {
+    setLoading(true); // Set loading to true when fetching data
     try {
       const response = await getAllBets({
-        page: paginationModel?.page + 1,
-        pageSize: paginationModel?.pageSize,
+        page: paginationModel.page + 1,
+        pageSize: paginationModel.pageSize,
       });
       setBetsData(response?.BetList || []);
       setTotalCount(response?.pagination?.totalBets);
-      setLoading(false);
     } catch (error) {
-      console.error("Failed to fetch users: ", error);
-      setLoading(false);
+      console.error("Failed to fetch bets: ", error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching data
     }
   };
 
@@ -50,7 +51,7 @@ const AllBets = () => {
         <Loader />
       ) : (
         <div className="overflow-x-auto w-full max-w-[1200px]">
-          <div style={{ width: "100%", overflowX: "auto" }} className="overflow-x-auto md:overflow-x-hidden scrollbar-thin">
+          <div className="overflow-x-auto scrollbar-thin">
             <DataGrid
               rows={rows}
               columns={Columns()}
