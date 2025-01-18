@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { DialogContent } from "@mui/material";
 import MyBets from "../../component/GameTable/MyBets";
 import Sports from "./Sports";
-// import AllBet from "./AllBets";
 import AllBets from "../../component/GameTable/AllBets";
 import { useSelector } from "react-redux";
 
@@ -15,10 +14,12 @@ function MyBet() {
   const { isBetslipOpen } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
   const { openMenubar } = useSelector((state) => state.auth);
-
-  const menuItems = [{ label: "Casino" }, { label: "Sports" }];
   const [IsGameMenu, setIsGameMenu] = useState("AllBets");
 
+  const menuItems = [
+    { label: "Casino" },
+    { label: "Sports" }
+  ];
   const subMenuItems = [
     { label: "AllBets" },
     { label: "High Rollers" },
@@ -47,11 +48,10 @@ function MyBet() {
                       <button
                         key={item.label}
                         className={`py-2.5 px-5 rounded-full flex justify-start items-center text-sm 
-                                                    ${
-                                                      gameMenu === item.label
-                                                        ? "bg-[#4d718768]"
-                                                        : "hover:bg-[#4d718768]"
-                                                    }`}
+                                                    ${gameMenu === item.label
+                            ? "bg-[#4d718768]"
+                            : "hover:bg-[#4d718768]"
+                          }`}
                         onClick={() => setGameMenu(item.label)}
                       >
                         <p className="text-white">{item.label}</p>
@@ -60,11 +60,10 @@ function MyBet() {
                   </div>
                 </div>
                 <div
-                  className={`w-full ${
-                    (isBetslipOpen || isChatOpen) && openMenubar
+                  className={`w-full 
                       ? "max-w-screen-lg"
                       : "xl:max-w-screen-xl lg:max-w-screen-md md:max-w-screen-sm max-w-sm md:px-0 px-4"
-                  } mx-auto`}
+                    } mx-auto`}
                 >
                   {gameMenu === "Casino" ? <MyBets /> : <Sports />}
                 </div>
@@ -80,12 +79,12 @@ function MyBet() {
                       <button
                         key={item.label}
                         className={`py-2.5 px-4 rounded-full flex justify-start items-center text-sm 
-                                                    ${
-                                                      IsGameMenu === item.label
-                                                        ? "bg-[#4d718768]"
-                                                        : "hover:bg-[#4d718768]"
-                                                    }`}
-                        onClick={() => setGameMenu(item.label)}
+                                                    ${IsGameMenu === item.label
+                            ? "bg-[#4d718768]"
+                            : "hover:bg-[#4d718768]"
+                          }`}
+                        onClick={() => setIsGameMenu(item.label)}
+
                       >
                         <p className="text-white">{item.label}</p>
                       </button>
@@ -93,11 +92,10 @@ function MyBet() {
                   </div>
                 </div>
                 <div
-                  className={`w-full ${
-                    isBetslipOpen || (isChatOpen && openMenubar)
+                  className={`w-full ${isBetslipOpen || (isChatOpen && openMenubar)
                       ? "max-w-screen-lg"
                       : "xl:max-w-screen-xl max-w-sm lg:max-w-screen-md md:max-w-screen-sm md:px-0 px-4"
-                  } mx-auto`}
+                    } mx-auto`}
                 >
                   {IsGameMenu === "AllBets" ? (
                     <AllBets />
@@ -106,12 +104,12 @@ function MyBet() {
                       High Rollers content goes here.
                     </p>
                   ) : // <AllBets />
-                  IsGameMenu === "Race Leaderboard" ? (
-                    <p className="text-center">
-                      Race Leaderboard content goes here.
-                    </p>
-                  ) : // <AllBets />
-                  null}
+                    IsGameMenu === "Race Leaderboard" ? (
+                      <p className="text-center">
+                        Race Leaderboard content goes here.
+                      </p>
+                    ) : // <AllBets />
+                      null}
                 </div>
               </div>
             </DialogContent>
