@@ -1,12 +1,13 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { IconButton, FormControl, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import sportsTable from "../../../assets/img/sportsTable.png";
 import { PiCurrencyBtcFill } from "react-icons/pi";
 import MyAllBet from "./pageview/myAllBet";
-
+import { ReactComponent as BetSlip } from "../../../assets/svg/BetSlip.svg";
+import { ReactComponent as MyBet } from "../../../assets/svg/MyBet.svg"
 function Betslip({ onClose }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [gameMenu, setGameMenu] = useState("Single");
@@ -14,6 +15,8 @@ function Betslip({ onClose }) {
   const [amountError, setAmountError] = useState("");
   const [amount, setAmount] = useState(0);
   const [selectedView, setSelectedView] = useState("Bet Slip");
+  const betSlipRef = useRef(null);
+  const tooltipRef = useRef(null);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -44,27 +47,23 @@ function Betslip({ onClose }) {
     { label: "Single" },
     { label: "Multi" },
   ];
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      const isDropdownClick = betSlipRef.current && betSlipRef.current.contains(event.target);
+      const isTooltipClick = tooltipRef.current && tooltipRef.current.contains(event.target);
 
-  const betSlipIcon = (
-    <svg
-      className="w-4 h-4 text-white mr-2"
-      fill="currentColor"
-      viewBox="0 0 64 64"
-    >
-      <path d="M.001 3.549v7.12h7.12v49.786h6.214c.778-3.122 3.556-5.398 6.866-5.398a7.07 7.07 0 0 1 6.856 5.348l.01.048h9.974c.778-3.122 3.556-5.398 6.866-5.398a7.07 7.07 0 0 1 6.856 5.348l.01.048h6.16V10.665h7.066v-7.12L.001 3.549Zm35.546 37.334h-17.76v-5.334h17.76v5.334Zm10.668-14.214H17.789v-5.334h28.426v5.334Z" />
-    </svg>
-  );
+      if (!isDropdownClick && !isTooltipClick) {
+        setDropdownOpen(false);
+        setTooltip(false);
+      }
+    };
 
-  // SVG Path for My Bets Icon
-  const myBetsIcon = (
-    <svg
-      className="w-4 h-4 text-white mr-2"
-      fill="currentColor"
-      viewBox="0 0 64 64"
-    >
-      <path d="M63.998 14.213H14.215v49.783h6.16c.8-3.108 3.576-5.366 6.88-5.366a7.1 7.1 0 0 1 6.869 5.318l.01.05h9.945c.8-3.108 3.576-5.366 6.88-5.366s6.08 2.26 6.87 5.318l.01.05h6.159V14.213ZM27.946 51.251l-6.613-6.694 3.785-3.785 2.934 2.933 7.76-7.76 3.654 3.786-11.52 11.52Zm28.932-4.32H45.625v-5.334h11.253v5.334Zm0-18.479H21.335V23.12h35.543v5.333ZM49.785 0v7.12H7.122v42.663H.002V0h49.783Z" />
-    </svg>
-  );
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [dropdownOpen, tooltip]);
+
 
   return (
     <div className="bg-[#0f212e]">
@@ -75,14 +74,18 @@ function Betslip({ onClose }) {
         >
           <CloseIcon fontSize="small" />
         </IconButton>
-        {/* BetSlip dropdown button */}
-        <div className="inline-block text-left mb-4 py-2">
+        {/* {/ BetSlip dropdown button /} */}
+        <div className="inline-block text-left mb-4 py-2"ref={betSlipRef}>
           <button
             onClick={toggleDropdown}
             className="inline-flex justify-center w-full bg-[#0f212e] px-4 py-2 text-sm font-medium text-white"
           >
-            {/* <MdOutlineEventNote size={20} color="#0ffff" /> */}
-            {selectedView === "Bet Slip" ? betSlipIcon : myBetsIcon}
+            {/* {/ <MdOutlineEventNote size={20} color="#0ffff" /> /} */}
+            {selectedView === "Bet Slip" ? (
+              <BetSlip className="w-4 h-4 mr-2" />
+            ) : (
+              <MyBet className="w-4 h-4 mr-2" />
+            )}
             <span className="ml-2">{selectedView}</span>
             {dropdownOpen ? (
               <ChevronDownIcon className="ml-2 h-5 w-5" />
@@ -91,9 +94,10 @@ function Betslip({ onClose }) {
             )}
           </button>
 
-          {/* Dropdown Menu */}
+          {/* {/ Dropdown Menu /} */}
           {dropdownOpen && (
-            <div className="relative">
+            <div className="relative"
+              ref={betSlipRef}>
               <div className="absolute top-full shadow-lg left-1/2 mt-2 bg-white text-black font-medium rounded-sm px-4 py-2 z-10 w-max text-center">
                 <button
                   onClick={() => handleViewChange("Bet Slip")}
@@ -108,7 +112,7 @@ function Betslip({ onClose }) {
                   My Bets
                 </button>
 
-                {/* Tooltip Arrow */}
+                {/* {/ Tooltip Arrow /} */}
                 <div className="tooltip-arrow w-2 h-3 bg-white rotate-45 absolute top-[-6px] left-1/2 "></div>
               </div>
             </div>
@@ -155,10 +159,12 @@ function Betslip({ onClose }) {
               </div>
               <hr className="border-t-2 border-gray-600" />
 
-              {/* Clear All Button */}
-              <div className="flex justify-between items-center pt-2">
+              {/* {/ Clear All Button /} */}
+              <div className="flex justify-between items-center pt-2"
+                ref={tooltipRef}>
                 <button
                   onClick={toggleTooltip}
+
                   className="bg-[#0f212e] text-sm font-medium text-white flex items-center"
                 >
                   <span className="left-0 text-left px-3">Accept Any Odds</span>
@@ -178,10 +184,10 @@ function Betslip({ onClose }) {
                 </div>
               </div>
 
-              {/* Tooltip Menu */}
+              {/* {/ Tooltip Menu /} */}
               {tooltip && (
-                <div className="relative">
-                  <div className="absolute top-full transform -translate-x-1/2 left-32 mt-2 bg-white text-black text-sm font-medium rounded-sm px-2 py-2 shadow-sm z-10 w-max text-center">
+                <div className="relative" ref={tooltipRef}>
+                  <div className="absolute top-full transform -translate-x-1/2 left-32 mt-2 bg-white text-black text-sm font-medium rounded-sm px-2 py-2 shadow-sm z-10 w-max text-center" ref={tooltipRef}>
                     <button
                       onClick={() => console.log("Accept Any Odds Clicked")}
                       className="text-gray-700 p-2 block text-sm"
@@ -201,13 +207,13 @@ function Betslip({ onClose }) {
                       No Odds Changes Accepted
                     </button>
 
-                    {/* Tooltip Arrow */}
+                    {/* {/ Tooltip Arrow /} */}
                     <div className="tooltip-arrow w-2 h-3 left-32 bg-white rotate-45 absolute top-[-6px] transform -translate-x-1/2"></div>
                   </div>
                 </div>
               )}
 
-              {/* Empty Bet Slip Message */}
+              {/* {/ Empty Bet Slip Message /} */}
               <div className="flex justify-center min-h-96 items-center">
                 <div>
                   <div className="flex justify-center">
@@ -222,19 +228,19 @@ function Betslip({ onClose }) {
             <div className="absolute bottom-[4.2rem] right-0 w-full bg-[#213743]">
               {gameMenu === "Single" ? (
                 <div className="bg-[#213743] p-4 space-y-2 ">
-                  {/* Total Stake Section */}
+                  {/* {/ Total Stake Section /} */}
                   <div className="flex justify-between items-center">
                     <p className="text-xs text-white">Total Stake</p>
                     <p className="text-xs text-white font-medium">{`0.00000000 ₹`}</p>
                   </div>
 
-                  {/* Est. Payout Section */}
+                  {/* {/ Est. Payout Section /} */}
                   <div className="flex justify-between items-center">
                     <p className="text-xs text-white">Est. Payout</p>
                     <p className="text-xs text-white font-medium">{`0.00000000 ₹`}</p>
                   </div>
 
-                  {/* Place Single Button */}
+                  {/* {/ Place Single Button /} */}
                   <div className="text-center">
                     <button className="text-white bg-sky-600 text-sm p-2 w-full rounded font-medium">
                       Place Single Button
@@ -279,7 +285,7 @@ function Betslip({ onClose }) {
                     </FormControl>
                   </div>
 
-                  {/* Total Stake and Est. Payout for Multi */}
+                  {/* {/ Total Stake and Est. Payout for Multi /} */}
                   <div className="bg-[#213743] p-4 space-y-2">
                     <div className="flex justify-between items-center">
                       <p className="text-xs text-white">Total Stake</p>
