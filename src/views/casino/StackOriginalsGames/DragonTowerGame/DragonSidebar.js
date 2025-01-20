@@ -22,8 +22,9 @@ import {
 import { DragonTowerSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import { useParams } from "react-router-dom";
-import { openRegisterModel } from "../../../../features/auth/authSlice";
+import { openRegisterModel, setWallet } from "../../../../features/auth/authSlice";
 import toast from "react-hot-toast";
+import { getWallet } from "../../../../services/LoginServices";
 
 function DragonSidebar() {
   const dispatch = useDispatch();
@@ -51,6 +52,20 @@ function DragonSidebar() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+    useEffect(() => {
+      GetWalletData();
+    }, []);
+  
+    const GetWalletData = async () => {
+      await getWallet({ id: decoded?.userId })
+        .then((res) => {
+          const wallet =
+            parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
+          dispatch(setWallet(wallet.toFixed(2)));
+        })
+        .catch((err) => {});
+    };
 
   useEffect(() => {
     if (restor && restor.difficulty) {

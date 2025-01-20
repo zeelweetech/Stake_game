@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Boxsvg from "../../../../assets/svg/DragonTowerBox.svg";
 import dragonFrame from "../../../../assets/img/dragonFrame.jpg";
 import easyEgg from "../../../../assets/img/easyEgg.svg";
@@ -21,7 +21,6 @@ import toast from "react-hot-toast";
 import dragontowerSound from "../../../../assets/Sound/dragontowerSound.wav";
 import dragontowerbombSound from "../../../../assets/Sound/dragontowerbomb.wav";
 import { setWallet } from "../../../../features/auth/authSlice";
-import { getWallet } from "../../../../services/LoginServices";
 
 function DragonContent() {
   const { id } = useParams();
@@ -44,6 +43,13 @@ function DragonContent() {
     preSelectTile,
   } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
+
+  DragonTowerSocket.on("walletBalance", (data) => {
+    console.log("wallet data ", data);
+
+    dispatch(setWallet(data?.walletBalance))
+    // dispatch(setWallet(data.walletBalance.toFixed(2)))
+  });
 
   useEffect(() => {
     const handleInsufficientFunds = (data) => {
@@ -90,20 +96,6 @@ function DragonContent() {
   };
 
   useEffect(() => {
-    GetWalletData();
-  }, []);
-
-  const GetWalletData = async () => {
-    await getWallet({ id: decoded?.userId })
-      .then((res) => {
-        const wallet =
-          parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
-        dispatch(setWallet(wallet.toFixed(2)));
-      })
-      .catch((err) => { });
-  };
-
-  useEffect(() => {
     DragonTowerSocket.emit("joinGame", {
       userId: decoded?.userId,
       gameId: id,
@@ -127,20 +119,16 @@ function DragonContent() {
     });
   }, []);
 
-  DragonTowerSocket.on("walletBalance", (data) => {
-    console.log("wallet data ",data);
-    
-    // dispatch(setWallet(data?.walletBalance))
-    // dispatch((prev) => ({ ...prev, wallet: data?.walletBalance }))
-  });
-
   DragonTowerSocket.on("gameStarted", (data) => {
+    console.log("gameStarted data", data);
+
     setCashoutVisible(false);
     resetGame();
     gameOverProcessedRef.current = false;
   });
 
   DragonTowerSocket.on("tileSelected", (data) => {
+    console.log("tileSelected data", data);
     dispatch(setTileSelected(data));
   });
 
@@ -218,18 +206,12 @@ function DragonContent() {
     // dispatch(setIsGameOver(true));
   });
 
-  DragonTowerSocket.on("walletBalance", (data) => {
-    // dispatch(setWallet(data?.walletBalance));
-  });
-
   const handleBoxClick = (rowIndex, boxIndex) => {
-    const isRowActive =
-      isManual &&
-      gameBet &&
-      (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
+    const isRowActive = isManual && gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
+
     if (gameBet && !isGameOver && isRowActive) {
       if (
-        clickedBoxes[rowIndex] !== undefined ||
+        // clickedBoxes[rowIndex] !== undefined ||
         rowIndex < rowsIndex + 1 ||
         (isManual && !gameBet)
       ) {
@@ -386,11 +368,7 @@ function DragonContent() {
                         : isSelected
                           ? eggImage
                           : Boxsvg;
-                  const isRowActive =
-                    isManual &&
-                    gameBet &&
-                    (rowIndex === 0 ||
-                      clickedBoxes[rowIndex - 1] !== undefined);
+                  const isRowActive = isManual && gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
                   boxElements.push(
                     <div
                       key={`${rowIndex}-${boxIndex}`}
