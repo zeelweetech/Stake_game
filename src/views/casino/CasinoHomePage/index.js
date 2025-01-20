@@ -19,7 +19,6 @@ import { decodedToken } from "../../../resources/utility";
 import { getWallet, updateWallet } from "../../../services/LoginServices";
 import { useDispatch, useSelector } from "react-redux";
 import { setWallet } from "../../../features/auth/authSlice";
-import Lobby from "./Lobby";
 
 function CasinoHomePage() {
   const [stackMenu, setStackMenu] = useState("Lobby");
@@ -71,7 +70,7 @@ function CasinoHomePage() {
   const GetWalletData = async () => {
     await getWallet({ id: decoded?.userId })
       .then((res) => {
-        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount)
+        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
       .catch((err) => { });
@@ -84,17 +83,15 @@ function CasinoHomePage() {
   };
 
   return (
-    <div className="flex justify-center h-full bg-[#1a2c38] z-40">
+    <div className="flex flex-col md:flex-row justify-center bg-[#1a2c38] z-40">
       {loading ? (
         <Loader />
       ) : (
         <div className={`text-white font-bold pt-6 container mx-auto`}>
-
           {/* <SlideBar /> */}
-
-          <div className="mt-8 mx-3 relative">
+          <div className="mt-8 md:mx-auto lg:mx-auto xl:mx-16 relative">
             <input
-              className="border-2 rounded-full w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
+              className="border-2 rounded-full w-full md:w-auto xl:w-full lg:w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
               name="search"
               type="text"
               placeholder="Search your game"
@@ -104,7 +101,7 @@ function CasinoHomePage() {
             </div>
           </div>
 
-          <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 mx-3 my-7 md:w-[41rem] xl:w-full lg:w-full scrollbar-thin">
+          <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 my-7 mx-auto md:w-[28rem] xl:w-[90%] lg:w-[38rem] scrollbar-thin">
             <div className="bg-[#0f212e] flex rounded-full p-[5px] space-x-2 text-xs">
               {menuItems.map((item) => (
                 <button
@@ -143,7 +140,6 @@ function CasinoHomePage() {
             ) : (
               <div className="text-center pt-5">Coming Soon: New Releases</div>
             )}
-
           </div>
         </div>
       )}
@@ -152,10 +148,3 @@ function CasinoHomePage() {
 }
 
 export default CasinoHomePage;
-
-
-
-
-
-
-{/* <div className={`text-white font-bold pt-6 w-full container mx-auto ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[55rem]" : "max-w-screen-xl"} lg:px-3 xl:px-10`}>          <SlideBar /> */ }
