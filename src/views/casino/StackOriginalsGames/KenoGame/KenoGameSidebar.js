@@ -20,8 +20,10 @@ import {
   setStopAutoBet,
   setValues,
 } from "../../../../features/casino/kenoSlice";
+import { useParams } from "react-router-dom";
 
 function KenoGameSidebar() {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const decoded = decodedToken();
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
@@ -75,10 +77,6 @@ function KenoGameSidebar() {
     };
   }, [fundsToastShown]);
 
-  KenoSocket.on("WalletNotFound", (data) => {
-    toast.error(data?.message);
-  });
-
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     dispatch(setValues({ ...values, [name]: value }));
@@ -87,34 +85,41 @@ function KenoGameSidebar() {
   const handleOnManualBet = () => {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
+      console.log("+++++++++++++++++++++++++++++++");
     } else {
-      KenoSocket.emit("limboPlaceBet", {
+      KenoSocket.emit("kenoPlaceBet", {
+        gameId: id,
         userId: decoded?.userId,
         betAmount: values?.betamount ? values?.betamount : 0,
-        multiplier: values?.multiplier ? values?.multiplier : 2,
+        risk: values?.risk,
+        selectedNumbers: selectTile,
         betType: "Manual",
       });
+      console.log("***********************");
     }
+    
   };
+  console.log("selectTile", selectTile);
+  
 
   const handleOnAutoBet = () => {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      KenoSocket.emit("limboPlaceBet", {
-        userId: decoded?.userId,
-        betAmount: values?.betamount ? values?.betamount : 0,
-        multiplier: values?.multiplier ? values?.multiplier : 2,
-        autoBetCount:
-          kenoStatusData?.autoBetRound > 0
-            ? kenoStatusData?.autoBetRound - 1
-            : parseInt(values?.autoBetCount) || "",
-        onWins: parseInt(values?.onwin, 10),
-        onLoss: parseInt(values?.onlose, 10),
-        stopOnProfit: parseInt(values?.stoponprofit, 10),
-        stopOnLoss: parseInt(values?.stoponloss, 10),
-        betType: "Auto",
-      });
+      // KenoSocket.emit("limboPlaceBet", {
+      //   userId: decoded?.userId,
+      //   betAmount: values?.betamount ? values?.betamount : 0,
+      //   multiplier: values?.multiplier ? values?.multiplier : 2,
+      //   autoBetCount:
+      //     kenoStatusData?.autoBetRound > 0
+      //       ? kenoStatusData?.autoBetRound - 1
+      //       : parseInt(values?.autoBetCount) || "",
+      //   onWins: parseInt(values?.onwin, 10),
+      //   onLoss: parseInt(values?.onlose, 10),
+      //   stopOnProfit: parseInt(values?.stoponprofit, 10),
+      //   stopOnLoss: parseInt(values?.stoponloss, 10),
+      //   betType: "Auto",
+      // });
       dispatch(setStopAutoBet(true));
     }
   };
@@ -124,17 +129,6 @@ function KenoGameSidebar() {
     dispatch(setStopAutoBet(false));
   };
 
-  // const handleAutoPick = () => {
-  //   const totalBoxes = 40;
-  //   const randomBoxes = new Set();
-
-  //   while (randomBoxes.size < 10) {
-  //     const randomIndex = Math.floor(Math.random() * totalBoxes);
-  //     randomBoxes.add(randomIndex);
-  //   }
-
-  //   dispatch(setSelectTile(Array.from(randomBoxes)));
-  // };
   const handleAutoPick = async () => {
     const totalBoxes = 40;
     const selectedBoxes = new Set();
@@ -264,7 +258,7 @@ function KenoGameSidebar() {
                   : "bg-[#46a147]"
                   } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleOnManualBet()}
-                disabled={selectTile.length > 0}
+                // disabled={selectTile.length > 0}
               >
                 Bet
               </button>

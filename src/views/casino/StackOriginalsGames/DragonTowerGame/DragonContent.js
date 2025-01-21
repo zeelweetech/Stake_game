@@ -47,9 +47,22 @@ function DragonContent() {
   DragonTowerSocket.on("walletBalance", (data) => {
     console.log("wallet data ", data);
 
-    dispatch(setWallet(data?.walletBalance))
+    // dispatch(setWallet(data?.walletBalance))
     // dispatch(setWallet(data.walletBalance.toFixed(2)))
   });
+
+  //  useEffect(() => {
+  //   const handleWalletBalance = (data) => {
+  //     console.log("wallet data ", data);
+  //     dispatch(setWallet(data?.walletBalance));
+  //   };
+
+  //   DragonTowerSocket.on("walletBalance", handleWalletBalance);
+
+  //   return () => {
+  //     DragonTowerSocket.off("walletBalance", handleWalletBalance);
+  //   };
+  // }, [dispatch]);
 
   useEffect(() => {
     const handleInsufficientFunds = (data) => {
@@ -211,7 +224,7 @@ function DragonContent() {
 
     if (gameBet && !isGameOver && isRowActive) {
       if (
-        // clickedBoxes[rowIndex] !== undefined ||
+        clickedBoxes[rowIndex] !== undefined ||
         rowIndex < rowsIndex + 1 ||
         (isManual && !gameBet)
       ) {

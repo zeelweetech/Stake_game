@@ -4,6 +4,7 @@ import { setSelectTile } from "../../../../features/casino/kenoSlice";
 import kenoDaimond from "../../../../assets/svg/kenoDaimond.svg";
 import { rowFileConfigs } from "./KenoJson";
 import kenoTileSelect from "../../../../assets/Sound/kenoGameSound.wav"
+import { KenoSocket } from "../../../../socket";
 
 function KenoGameContent() {
   const dispatch = useDispatch();
@@ -16,6 +17,10 @@ function KenoGameContent() {
   );
   // const decoded = decodedToken();
 
+  KenoSocket.on('gameResult', (data) => {
+    console.log("data , ", data);
+  })
+
   const handleClick = (index) => {
     // if (gamesOver || revealed[index] || (isManual && !gameBet)) return;
     if (revealed[index]) return;
@@ -26,7 +31,7 @@ function KenoGameContent() {
       if (selectTile.length < 10) {
         const audio = new Audio(kenoTileSelect);
         audio.play();
-        dispatch(setSelectTile([...selectTile, index]));
+        dispatch(setSelectTile([...selectTile, index + 1]));
       }
     }
   };
