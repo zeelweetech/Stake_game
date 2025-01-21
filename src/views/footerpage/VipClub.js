@@ -25,13 +25,13 @@ const VipClub = () => {
   const dispatch = useDispatch();
   const [progressData, setProgressData] = useState([]);
   const [
+    ,
     // loading
-    ,setLoading] = useState(false);
+    setLoading,
+  ] = useState(false);
   const decoded = decodedToken();
   const [activeLink, setActiveLink] = useState("General");
-  const { isRegisterModelOpen
-    , isVerifyTermModelOpen 
-  } = useSelector(
+  const { isRegisterModelOpen, isVerifyTermModelOpen } = useSelector(
     (state) => state.auth
   );
 
@@ -231,26 +231,43 @@ const VipClub = () => {
                 className="mb-6 lg:mb-0 xl:ml-40 lg:ml-28 xl:w-[21rem] lg: w-[20rem]"
               >
                 <div className="bg-[#0f212e] w-full md:w-80 px-5 py-7 border text-white border-[#2f4553]">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center font-semibold cursor-default">
                     <p>{progressData?.userName || "User"}</p>
                     <FaRegStar size={22} color="#2f4553" />
                   </div>
                   <div className="flex justify-between mt-10">
                     <div className="flex items-center space-x-2.5">
-                      <Link className="text-sm font-medium">
+                      <Link className="text-sm font-medium cursor-default">
                         Your VIP Progress
                       </Link>
-                      <FaArrowRight
+                      {/* <FaArrowRight
                         size={13}
                         className="mt-1"
                         color="#b1bad3"
-                      />
+                      /> */}
                     </div>
                     <div className="flex items-center space-x-1">
                       <p className="text-sm font-medium">
                         {progressData?.vipProgress || "0.00%"}
                       </p>
-                      <InfoIcon fontSize="small" className="text-[#b1bad3]" />
+                      <div className="group relative flex items-center">
+                        <InfoIcon
+                          fontSize="small"
+                          className="text-[#b1bad3] cursor-pointer"
+                        />
+                        <div
+                          id="tooltip-top"
+                          role="tooltip"
+                          className="absolute bottom-full left-[-1rem] text-sm -translate-x-1/2 mb-3 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity bg-white text-[#0f212e] font-semibold rounded-md px-2 py-0.5 z-10 w-max max-w-xs xl:-ml-0 lg:-ml-0 md:-ml-0 -ml-[6rem]"
+                        >
+                          <p className="overflow-hidden line-clamp-3.5">
+                            All bets settled on the sportsbook return a 3x
+                            (three times) faster rate of progression compared to
+                            Casino (1x progression). Voided bets are excluded.
+                          </p>
+                          <div className="tooltip-arrow w-3 h-3 bg-white rotate-45 absolute bottom-[-6px] xl:left-[11.6rem] lg:left-[11.6rem] md:left-[11.6rem] left-[17.5rem] transform -translate-x-1/2"></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -700,7 +717,7 @@ const VipClub = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-[#213743] p-6 rounded-lg text-white shadow-md flex space-x-4">
               <div>
-                <img src={boost1} alt=""/>
+                <img src={boost1} alt="" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold">Boost</h3>
