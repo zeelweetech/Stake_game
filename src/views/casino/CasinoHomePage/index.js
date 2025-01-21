@@ -14,7 +14,7 @@ import Slots from "./Slots";
 import LiveCasino from "./LiveCasino";
 import GameShows from "./GameShows";
 import Exclusives from "./Exclusives";
-import { getAllGames } from "../../../services/GameServices";
+import { getAllGames, searchGames } from "../../../services/GameServices";
 import { decodedToken } from "../../../resources/utility";
 import { getWallet, updateWallet } from "../../../services/LoginServices";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +24,7 @@ function CasinoHomePage() {
   const [stackMenu, setStackMenu] = useState("Lobby");
   const [loading, setLoading] = useState(false);
   const [allGames, setAllGames] = useState();
+  const [search, setSearch] = useState("");
   const { openMenubar } = useSelector((state) => state.auth);
   const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
@@ -55,12 +56,18 @@ function CasinoHomePage() {
     GetAllGames();
     UpdateWalletData();
     GetWalletData();
+    // SearchGame();
   }, []);
 
   const GetAllGames = async () => {
-    await getAllGames()
+    await getAllGames({
+      // games: search,
+    })
       .then((response) => {
         setAllGames(response);
+        // setSearch(response?.gameName)
+        console.log(">>>>>>>>>>>",response?.gameName);
+        
       })
       .catch((error) => {
         console.log("error", error);
@@ -81,20 +88,24 @@ function CasinoHomePage() {
       .then((res) => { })
       .catch((err) => { });
   };
-
+  
   return (
     <div className="flex flex-col md:flex-row justify-center bg-[#1a2c38] z-40">
       {loading ? (
         <Loader />
       ) : (
         <div className={`text-white font-bold pt-6 container mx-auto`}>
-          {/* <SlideBar /> */}
+          <SlideBar />
           <div className="mt-8 md:mx-auto lg:mx-auto xl:mx-16 relative">
             <input
               className="border-2 rounded-full w-full md:w-auto xl:w-full lg:w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
-              name="search"
+              value={search}
               type="text"
               placeholder="Search your game"
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+
             />
             <div className="absolute left-0 top-0 pt-2.5 px-3 flex items-center cursor-pointer text-[#b1bad3]">
               <SearchIcon />
