@@ -43,6 +43,9 @@ const authSlice = createSlice({
     },
     setWallet: (state, action) => {
       state.wallet = action.payload;
+      // console.log("????????",state.wallet);
+      // console.log("*********",action.payload);
+      
     },
     setAnchorEl: (state, action) => {
       state.anchorEl = action.payload;

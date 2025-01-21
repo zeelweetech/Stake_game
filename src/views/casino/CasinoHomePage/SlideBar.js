@@ -141,7 +141,7 @@ function SlideBar() {
   };
 
   return (
-    <div className={`w-full lg:px-3 xl:px-3 ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[54rem]" : "max-w-screen-xl"}`}>
+    <div className={`lg:px-3 xl:px-3 ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[53rem]" : "max-w-screen-xl"}`}>
 
       <div className="flex items-center">
         <Swiper

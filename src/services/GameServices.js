@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getAllGames() {
+export async function getAllGames({games: games}) {
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_LOCAL_URL}/game/get`,
@@ -15,6 +15,23 @@ export async function getAllGames() {
     throw error;
   }
 }
+// `${process.env.REACT_APP_LOCAL_URL}/game/get?search=${games}`,
+
+// export async function searchGames(game) {
+//   try {
+//     const response = await axios.get(
+//       `${process.env.REACT_APP_LOCAL_URL}/game/get?search=${game}`,
+//       {
+//         headers: {
+//           Authorization: localStorage.getItem("token"),
+//         },
+//       }
+//     );
+//     return response.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
 export async function getAllBets({
   page: page, pageSize: pageSize
