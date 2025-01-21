@@ -9,6 +9,7 @@ import SportBook from "../../assets/img/SportBook.png";
 import casinoCard from "../../assets/img/card.png";
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import { decodedToken } from "../../resources/utility";
+import VIP from "../Profile/Vip";
 import { getMedalsProgress } from "../../services/LoginServices";
 
 function Mainbar() {
@@ -16,12 +17,15 @@ function Mainbar() {
   const navigate = useNavigate();
   const [progressData, setProgressData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showVIP, setShowVIP] = useState(false);
   const decoded = decodedToken();
 
   useEffect(() => {
     getUserProgress();
   }, [userId]);
-
+  const handleToggle = () => {
+    setShowVIP((prev) => !prev); // Toggle the state
+  };
   const getUserProgress = async () => {
     try {
       const response = await getMedalsProgress({
@@ -53,17 +57,30 @@ function Mainbar() {
           className="mb-6 lg:mb-0"
         >
           <div className="bg-[#0f212e] xl:w-[20.5rem] w-[22rem] md:w-80 p-5 border border-[#2f4553]">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between font-semibold cursor-default items-center">
               <p>{progressData?.userName || "User"}</p>
               <FaRegStar size={22} color="#2f4553" />
             </div>
             <div className="flex justify-between mt-10">
-              <div className="flex items-center space-x-2.5">
+              {/* <div className="flex items-center space-x-2.5">
                 <Link className="text-sm font-medium">Your VIP Progress</Link>
                 <FaArrowRight size={13} className="mt-1" color="#b1bad3" />
+              </div> */}
+              <div
+                className="flex items-center space-x-2.5 cursor-pointer group"
+                onClick={handleToggle}
+              >
+                <p className="text-sm text-white font-medium transform transition-transform duration-100 ease-in group-hover:translate-x-2">
+                  Your VIP Progress
+                </p>
+                <FaArrowRight
+                  size={13}
+                  className="text-[#b1bad3] mt-1 font-bold group-hover:text-white group-hover:translate-x-2 transition-transform duration-100 ease-in"
+                />
               </div>
+              {showVIP && <VIP closeVip={handleToggle} />}
               <div className="flex items-center space-x-1 relative">
-                <p className="text-sm font-medium">
+                <p className="text-sm font-medium cursor-default">
                   {progressData?.vipProgress || "0.00%"}
                 </p>
                 <div className="group relative flex items-center">

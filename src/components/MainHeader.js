@@ -58,7 +58,11 @@ function MainHeader({ handleRightSidebarToggle }) {
       ) {
         dispatch(setTooltipOpen(false));
       }
-      if (isSidebarOpen && chatRef.current && !chatRef.current.contains(event.target)) {
+      if (
+        isSidebarOpen &&
+        chatRef.current &&
+        !chatRef.current.contains(event.target)
+      ) {
         setIsSidebarOpen(false);
       }
     };
@@ -114,11 +118,11 @@ function MainHeader({ handleRightSidebarToggle }) {
             Listor
           </span>
           <div className="flex items-center md:space-x-0">
-            <button className="flex bg-[#0f212e] items-center space-x-1 px-2 md:px-5 py-2.5 md:py-3 rounded-s-md text-white font-medium">
+            <button className="flex bg-[#0f212e] items-center space-x-1 px-2 py-2.5 md:px-[1rem] md:py-[0.8125rem] rounded-s text-white font-medium">
               <p className="text-sm md:text-base">₹{wallet ? wallet : 0}</p>
             </button>
             <button
-              className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r-md px-3 py-[0.5rem] md:px-5 md:py-[0.72rem] font-medium text-sm md:text-base md:block hidden"
+              className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r px-3 py-[0.5rem] md:px-[1rem] md:py-[0.8125rem] font-medium text-sm md:text-base md:block hidden"
               onClick={() => {
                 setProfilePopupOpen((prev) => ({
                   ...prev,
@@ -148,9 +152,7 @@ function MainHeader({ handleRightSidebarToggle }) {
           <div className="text-white flex items-center space-x-0.4 md:space-x-6">
             <button className="flex items-center space-x-1.5 font-medium">
               <IoMdSearch className="text-sm w-10 h-6 md:text-base md:block hidden" />
-              <p
-                className="md:block hidden text-sm md:text-base md:space-x-1"
-              >
+              <p className="md:block hidden text-sm md:text-base md:space-x-1">
                 Search
               </p>
             </button>
@@ -179,7 +181,7 @@ function MainHeader({ handleRightSidebarToggle }) {
                     }}
                     className="flex items-center space-x-3 p-3 hover:bg-[#B1BAD3]"
                   >
-                     <FaWallet
+                    <FaWallet
                       style={{
                         color: "#2F4553",
                         width: "25px",
@@ -394,9 +396,7 @@ function MainHeader({ handleRightSidebarToggle }) {
               </p>
               {isSidebarOpen && (
                 <>
-                  <div
-                    className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-1/2 left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-lg z-[9999] w-max max-w-xs text-center"
-                  >
+                  <div className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-1/2 left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-lg z-[9999] w-max max-w-xs text-center">
                     <button
                       className="flex items-center space-x-4 py-2"
                       onClick={handleChatClick}

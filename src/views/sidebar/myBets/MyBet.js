@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Loader from "../../component/Loader";
-import { BiSolidNotepad } from "react-icons/bi";
+// import { BiSolidNotepad } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { DialogContent } from "@mui/material";
 import MyBets from "../../component/GameTable/MyBets";
@@ -17,10 +17,7 @@ function MyBet() {
   const { openMenubar } = useSelector((state) => state.auth);
   const [isGameMenu, setIsGameMenu] = useState("AllBets");
 
-  const menuItems = [
-    { label: "Casino" },
-    { label: "Sports" }
-  ];
+  const menuItems = [{ label: "Casino" }, { label: "Sports" }];
   const subMenuItems = [
     { label: "AllBets" },
     { label: "High Rollers" },
@@ -35,7 +32,9 @@ function MyBet() {
         <div className="text-white font-bold pt-6 w-full mx-auto lg:w-[70%] xl:w-[90%] md:w-[80%]">
           <div className="flex items-center space-x-1 px-4 md:px-24">
             <BetSlip className="w-4 h-4" />
-            <Link to="#" className="text-lg font-medium text-white">My Bets</Link>
+            <Link to="#" className="text-lg font-medium text-white">
+              My Bets
+            </Link>
           </div>
 
           {/* Main Menu Section */}
@@ -47,7 +46,11 @@ function MyBet() {
                     <button
                       key={item.label}
                       className={`py-2.5 px-4 rounded-full flex justify-start items-center text-sm 
-                        ${gameMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}`}
+                        ${
+                          gameMenu === item.label
+                            ? "bg-[#4d718768]"
+                            : "hover:bg-[#4d718768]"
+                        }`}
                       onClick={() => setGameMenu(item.label)}
                     >
                       <p className="text-white">{item.label}</p>
@@ -71,7 +74,11 @@ function MyBet() {
                     <button
                       key={item.label}
                       className={`py-2.5 px-4 rounded-full flex justify-start items-center text-sm 
-                        ${isGameMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}`}
+                        ${
+                          isGameMenu === item.label
+                            ? "bg-[#4d718768]"
+                            : "hover:bg-[#4d718768]"
+                        }`}
                       onClick={() => setIsGameMenu(item.label)}
                     >
                       <p className="text-white">{item.label}</p>
@@ -86,7 +93,9 @@ function MyBet() {
                 ) : isGameMenu === "High Rollers" ? (
                   <p className="text-center">High Rollers content goes here.</p>
                 ) : isGameMenu === "Race Leaderboard" ? (
-                  <p className="text-center">Race Leaderboard content goes here.</p>
+                  <p className="text-center">
+                    Race Leaderboard content goes here.
+                  </p>
                 ) : null}
               </div>
             </div>
