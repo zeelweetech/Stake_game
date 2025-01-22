@@ -16,6 +16,7 @@ import { KenoSocket } from "../../../../socket";
 import {
   setIsSwiper,
   setKenoStatusData,
+  setMunulGameResult,
   setSelectTile,
   setStopAutoBet,
   setValues,
@@ -35,6 +36,7 @@ function KenoGameSidebar() {
     kenoStatusData,
     stopAutoBet,
     selectTile,
+    munulGameResult
   } = useSelector((state) => state.kenoGame);
 
   // useEffect(() => {
@@ -85,7 +87,6 @@ function KenoGameSidebar() {
   const handleOnManualBet = () => {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
-      console.log("+++++++++++++++++++++++++++++++");
     } else {
       KenoSocket.emit("kenoPlaceBet", {
         gameId: id,
@@ -95,12 +96,8 @@ function KenoGameSidebar() {
         selectedNumbers: selectTile,
         betType: "Manual",
       });
-      console.log("***********************");
     }
-    
   };
-  console.log("selectTile", selectTile);
-  
 
   const handleOnAutoBet = () => {
     if (!localStorage.getItem("token")) {
@@ -248,17 +245,20 @@ function KenoGameSidebar() {
               </button>
               <button
                 className="bg-[#2f4553] hover:bg-[#5c849e68] w-full rounded-sm py-2.5 font-bold text-sm"
-                onClick={() => dispatch(setSelectTile([]))}
+                onClick={() => {
+                  dispatch(setMunulGameResult())
+                  dispatch(setSelectTile([]))
+                }}
               >
                 Clear Table
               </button>
               <button
-                className={`${selectTile.length > 0
+                className={`${selectTile?.length > 0
                   ? "bg-[#1fff20] hover:bg-[#42ed45]"
                   : "bg-[#46a147]"
                   } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleOnManualBet()}
-                // disabled={selectTile.length > 0}
+              // disabled={selectTile.length > 0}
               >
                 Bet
               </button>

@@ -9,6 +9,7 @@ const initialState = {
   images: Array(40).fill(null),
   revealed: Array(40).fill(false),
   zoomClass: Array(40).fill(false),
+  munulGameResult: '',
 };
 
 const kenoGameSlice = createSlice({
@@ -39,9 +40,12 @@ const kenoGameSlice = createSlice({
     setZoomClass(state, action) {
       state.zoomClass = action.payload;
     },
+    setMunulGameResult(state, action) {
+      state.munulGameResult = action.payload;
+    },
   },
 });
 
-export const { setSelectTile, setIsSwiper, setValues, setKenoStatusData, setStopAutoBet, setImages, setRevealed, setZoomClass } = kenoGameSlice.actions;
+export const { setSelectTile, setIsSwiper, setValues, setKenoStatusData, setStopAutoBet, setImages, setRevealed, setZoomClass, setMunulGameResult } = kenoGameSlice.actions;
 
 export default kenoGameSlice.reducer;

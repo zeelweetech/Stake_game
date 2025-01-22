@@ -33,6 +33,7 @@ function StackOriginals({ isLobby }) {
   const handleAllGame = (gameName, id) => {
     setLoading(true);
     navigate(`/casino/${gameName}/${id}`);
+    
     switch (gameName) {
       case "Crash":
         return CrashSocket.emit("joinGame", {
