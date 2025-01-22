@@ -251,10 +251,7 @@ const VipClub = () => {
                         {progressData?.vipProgress || "0.00%"}
                       </p>
                       <div className="group relative flex items-center">
-                        <InfoIcon
-                          fontSize="small"
-                          className="text-[#b1bad3] cursor-pointer"
-                        />
+                        <InfoIcon fontSize="small" className="text-[#b1bad3]" />
                         <div
                           id="tooltip-top"
                           role="tooltip"
