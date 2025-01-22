@@ -1,12 +1,67 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import bannerfavourites from "../../assets/img/bannerfavourites.png";
 import SearchIcon from "@mui/icons-material/Search";
 import GameTable from "../component/GameTable/index";
-
+import { useNavigate } from "react-router-dom";
+import { searchGames } from "../../services/GameServices";
+import CloseIcon from "@mui/icons-material/Close";
+import { IconButton } from "@mui/material";
 const Recent = () => {
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [dropdown, setDropdown] = useState(false);
+  const navigate = useNavigate();
+  const dropdownRef = useRef()
+
+  const handleSearch = async (e) => {
+    const searchTerm = e.target.value;
+    setSearch(searchTerm);
+    setDropdown(true);
+
+    if (searchTerm.trim() === "") {
+      setSearchResult([]);
+      setDropdown(false);
+      return;
+    }
+    setDropdown(true)
+    try {
+      const response = await searchGames({ game: searchTerm });
+      if (response && Array.isArray(response.games)) {
+        setSearchResult(response.games);
+      } else {
+        console.error("Unexpected response format:", response);
+        setSearchResult([]);
+      }
+    } catch (error) {
+      console.error("Error searching games:", error);
+      setSearchResult([]);
+    }
+  };
+
+  const handleGameSelect = (game) => {
+    navigate(`/casino/${game.gameName}/${game.id}`);
+  };
+  const clearSearch = () => {
+    setSearch("");
+    setSearchResult([]);
+    setDropdown(false);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
-    <>
-      <div className="bg-[#213743] w-full">
+    <div className={`${dropdown ? "opacity-60" : ""}`}>
+      <div className={`bg-[#213743] w-full1`}>
         <div className="rounded-lg flex flex-col md:flex-row justify-between items-center relative p-4">
           <div className="text-white font-semibold text-xl md:text-2xl cursor-default">
             Recent
@@ -20,16 +75,44 @@ const Recent = () => {
       </div>
       <div className="h-full w-full bg-[#1a2c38]">
         <div className="flex justify-center items-center">
-          <div className="mt-8 w-full max-w-[70rem] mx-3 relative">
+          <div className="mt-8 md:mx-auto lg:mx-auto xl:mx-16 text-white font-bold pt-6 container mx-auto relative">
             <input
-              className="rounded-full text-white w-full font-semibold text-base py-2 px-10 bg-[#0f212e] duration-300 border-2 hover:border-[#557086] border-[#2F4553] focus:outline-none focus:border-[#557086]"
-              name="search"
+              className="border-2 rounded-full w-full md:w-auto xl:w-full lg:w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
+              value={search}
               type="text"
               placeholder="Search your game"
+              onChange={handleSearch}
+              onFocus={() => setDropdown(true)}
             />
-            <div className="absolute left-0 top-0 pt-2.5 px-3 flex items-center cursor-pointer text-[#557086]">
+            <div className="absolute left-0 top-0 pt-9 px-3 flex items-center cursor-pointer text-[#557086]">
               <SearchIcon />
             </div>
+            {search && (
+              <div
+                className="absolute right-0 top-0 pt-7 px-3 flex items-center cursor-pointer text-[#557086]"
+              >
+                <IconButton onClick={clearSearch} sx={{ color: "white" }}>
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </div>
+            )}
+            {dropdown && (
+              <div  ref={dropdownRef} className=" bg-[#0f212e] border border-[#213743] flex space-x-4 rounded-md p-5 my-2 w-full z-50">
+                {Array.isArray(searchResult) && searchResult.map((game) => (
+                  <div
+                    key={game.id} // Add a key for each game
+                    onClick={() => handleGameSelect(game)} // Use the new handler
+                    className="cursor-pointer"
+                  >
+                    <img
+                      src={game.gameImage}
+                      alt={game.gameName}
+                      className="w-32 h-44 rounded-md"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <div className="flex justify-center items-center">
@@ -43,7 +126,7 @@ const Recent = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

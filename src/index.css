@@ -241,6 +241,7 @@ tr:nth-child(even) {
   }
 }
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -79,11 +79,15 @@ const ChatApp = ({ onClose }) => {
     setEmojiPickerVisible(false);
   };
 
-  const handleEmojiClick = (emoji) => {
-    const emojiString = emoji.emoji;
-    setMessage((prevMessage) => prevMessage + emojiString);
-    dispatch(setEmoji(emojiString));
-    setEmojiPickerVisible(false);
+  const handleEmojiClick = (emojiObject) => {
+    const emoji = emojiObject.emoji;
+
+    const cursorPosition = document.querySelector('input').selectionStart;
+    const textBeforeCursor = message.slice(0, cursorPosition);
+    const textAfterCursor = message.slice(cursorPosition);
+
+    setMessage(textBeforeCursor + emoji + textAfterCursor);
+    dispatch(setEmoji(emoji));
   };
 
   const toggleEmojiPicker = () => {
@@ -195,11 +199,11 @@ const ChatApp = ({ onClose }) => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`p-2 rounded-md mb-2 ${
-              msg.isNewUser ? "border-[#2F4553]" : "bg-[#213743] mx-2"
-            }`}
+            className={`p-2 rounded-md mb-2 ${msg.isNewUser ? "border-[#2F4553]" : "bg-[#213743] mx-2"
+              }`}
           >
-            {msg.content}
+            <span style={{ color: '#B1BAD3' }}>{msg.username}</span> :  {msg.content}
+            {/* <span style={{ color: 'white' }}>{msg.content}</span> */}
           </div>
         ))}
         <div ref={messagesEndRef} />
@@ -247,14 +251,16 @@ const ChatApp = ({ onClose }) => {
             className="absolute bottom-32 left-0 z-50 bg-gray-700 rounded-lg shadow-lg"
           >
             <EmojiPicker
-              onEmojiClick={(_, emoji) => handleEmojiClick(emoji)}
+              onEmojiClick={handleEmojiClick}
               className="custom-emoji-picker"
               height={300}
               width={300}
               size="25"
               searchDisabled
               suggestedEmojisMode={false}
-              previewConfig
+              previewConfig={{
+                showPreview: false
+              }}
               skinTonesDisabled
             />
           </div>
