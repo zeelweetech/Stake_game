@@ -84,10 +84,7 @@ function Mainbar() {
                   {progressData?.vipProgress || "0.00%"}
                 </p>
                 <div className="group relative flex items-center">
-                  <InfoIcon
-                    fontSize="small"
-                    className="text-[#b1bad3] cursor-pointer"
-                  />
+                  <InfoIcon fontSize="small" className="text-[#b1bad3]" />
                   <div
                     id="tooltip-top"
                     role="tooltip"
@@ -116,7 +113,7 @@ function Mainbar() {
                 }}
               ></div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between cursor-default">
               <div className="flex items-center space-x-1">
                 <FaRegStar
                   size={18}

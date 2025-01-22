@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getAllGames({games: games}) {
+export async function getAllGames() {
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_LOCAL_URL}/game/get`,
