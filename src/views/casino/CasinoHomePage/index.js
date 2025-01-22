@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Loader from "../../component/Loader";
 import SlideBar from "./SlideBar";
 import StackOriginals from "./StackOriginals";
@@ -19,97 +19,163 @@ import { decodedToken } from "../../../resources/utility";
 import { getWallet, updateWallet } from "../../../services/LoginServices";
 import { useDispatch, useSelector } from "react-redux";
 import { setWallet } from "../../../features/auth/authSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import CloseIcon from "@mui/icons-material/Close";
+import { IconButton } from "@mui/material";
 
 function CasinoHomePage() {
   const [stackMenu, setStackMenu] = useState("Lobby");
   const [loading, setLoading] = useState(false);
-  const [allGames, setAllGames] = useState();
-  const [search, setSearch] = useState("");
-  const { openMenubar } = useSelector((state) => state.auth);
-  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
-  const { isChatOpen } = useSelector((state) => state.chat);
+  const [allGames, setAllGames] = useState([]);
+  const [search, setSearch] = useState();
+  const [searchResult, setSearchResult] = useState([]);
+  const [dropdown, setDropdown] = useState(false);
+  const { id, gameName } = useParams()
+  // const { openMenubar } = useSelector((state) => state.auth);
+  // const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
+  // const { isChatOpen } = useSelector((state) => state.chat);
   const decoded = decodedToken();
   const dispatch = useDispatch();
-
-  const isLobby = stackMenu === "Lobby";
+  const navigate = useNavigate();
+  const dropdownRef = useRef();
 
   const menuItems = [
     { label: "Lobby", icon: <TbCherryFilled color="#b1bad3" fontSize={15} /> },
-    {
-      label: "Listor Originals",
-      icon: <BsFire color="#b1bad3" fontSize={15} />,
-    },
+    { label: "Listor Originals", icon: <BsFire color="#b1bad3" fontSize={15} /> },
     { label: "Slot", icon: <Filter7Icon className="text-[#b1bad3]" /> },
     { label: "Live Casino", icon: <InboxIcon className="text-[#b1bad3]" /> },
     { label: "Game Shows", icon: <FaGift color="#b1bad3" fontSize={15} /> },
-    {
-      label: "Listor Exclusives",
-      icon: <BsBookmarkStarFill color="#b1bad3" fontSize={15} />,
-    },
-    {
-      label: "New Releases",
-      icon: <IoIosRocket color="#b1bad3" fontSize={20} />,
-    },
+    { label: "Listor Exclusives", icon: <BsBookmarkStarFill color="#b1bad3" fontSize={15} /> },
+    { label: "New Releases", icon: <IoIosRocket color="#b1bad3" fontSize={20} /> },
   ];
 
   useEffect(() => {
     GetAllGames();
     UpdateWalletData();
     GetWalletData();
-    // SearchGame();
   }, []);
 
   const GetAllGames = async () => {
-    await getAllGames({
-      // games: search,
-    })
-      .then((response) => {
-        setAllGames(response);
-        // setSearch(response?.gameName)
-        console.log(">>>>>>>>>>>",response?.gameName);
-        
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+    try {
+      const response = await getAllGames();
+      setAllGames(response);
+    } catch (error) {
+      console.log("Error fetching games:", error);
+    }
   };
 
   const GetWalletData = async () => {
-    await getWallet({ id: decoded?.userId })
-      .then((res) => {
-        const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
-        dispatch(setWallet(wallet.toFixed(2)));
-      })
-      .catch((err) => { });
+    try {
+      const res = await getWallet({ id: decoded?.userId });
+      const wallet = parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
+      dispatch(setWallet(wallet.toFixed(2)));
+    } catch (error) {
+      console.log("Error fetching wallet:", error);
+    }
   };
 
   const UpdateWalletData = async () => {
-    await updateWallet({ userId: decoded?.userId })
-      .then((res) => { })
-      .catch((err) => { });
+    try {
+      await updateWallet({ userId: decoded?.userId });
+    } catch (error) {
+      console.log("Error updating wallet:", error);
+    }
   };
-  
+
+  const handleSearch = async (e) => {
+    const searchTerm = e.target.value;
+    setSearch(searchTerm);
+    setDropdown(true);
+
+    if (searchTerm.trim() === "") {
+      setSearchResult(allGames);
+      setDropdown(false);
+      return;
+    }
+    setDropdown(true);
+    try {
+      const response = await searchGames({ game: searchTerm });
+      // console.log("API Response:", response);
+      if (response && Array.isArray(response.games)) {
+        setSearchResult(response.games);
+      } else {
+        console.error("Unexpected response format:", response);
+        setSearchResult([]);
+      }
+    } catch (error) {
+      console.error("Error searching games:", error);
+      setSearchResult([]);
+    }
+  };
+
+  const handleGameSelect = (game) => {
+    navigate(`/casino/${game.gameName}/${game.id}`);
+  }
+  // console.log("Type of searchResult:", searchResult);
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const clearSearch = () => {
+    setSearch("");
+    setSearchResult([]);
+    setDropdown(false);
+  };
+
   return (
     <div className="flex flex-col md:flex-row justify-center bg-[#1a2c38] z-40">
       {loading ? (
         <Loader />
       ) : (
         <div className={`text-white font-bold pt-6 container mx-auto`}>
-          <SlideBar />
+          {/* <SlideBar /> */}
           <div className="mt-8 md:mx-auto lg:mx-auto xl:mx-16 relative">
             <input
               className="border-2 rounded-full w-full md:w-auto xl:w-full lg:w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
               value={search}
               type="text"
               placeholder="Search your game"
-              onChange={(e) => {
-                setSearch(e.target.value);
-              }}
-
+              onChange={handleSearch}
+              onFocus={() => setDropdown(true)}
             />
             <div className="absolute left-0 top-0 pt-2.5 px-3 flex items-center cursor-pointer text-[#b1bad3]">
               <SearchIcon />
             </div>
+            {search && (
+              <div
+                className="absolute right-0 top-0 pt-1 px-3 flex items-center cursor-pointer text-[#557086]"
+              >
+                <IconButton onClick={clearSearch} sx={{ color: "white" }}>
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </div>
+            )}
+            {dropdown && (
+              <div ref={dropdownRef} className=" bg-[#0f212e] border border-[#213743] flex space-x-4 rounded-md p-5 my-2 w-full z-50">
+                {Array.isArray(searchResult) && searchResult.map((game) => (
+                  <div
+                    key={game.id} // Add a key for each game
+                    onClick={() => handleGameSelect(game)} // Use the new handler
+                    className="cursor-pointer"
+                  >
+                    <img
+                      src={game.gameImage}
+                      alt={game.gameName}
+                      className="w-32 h-44 rounded-md"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 my-7 mx-auto md:w-[28rem] xl:w-[90%] lg:w-[38rem] scrollbar-thin">
@@ -117,9 +183,7 @@ function CasinoHomePage() {
               {menuItems.map((item) => (
                 <button
                   key={item.label}
-                  className={`py-2 px-5 rounded-full flex justify-center space-x-1.5 items-center ${stackMenu === item.label
-                    ? "bg-[#4d718768]"
-                    : "hover:bg-[#4d718768]"
+                  className={`py-2 px-5 rounded-full flex justify-center space-x-1.5 items-center ${stackMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
                     }`}
                   onClick={() => setStackMenu(item.label)}
                 >
@@ -132,22 +196,22 @@ function CasinoHomePage() {
           <div className="flex flex-col space-y-6">
             {stackMenu === "Lobby" ? (
               <>
-                <StackOriginals allGames={allGames} setLoading={setLoading} />
-                <Slots allGames={allGames} setLoading={setLoading} />
-                <LiveCasino allGames={allGames} setLoading={setLoading} />
-                <GameShows allGames={allGames} setLoading={setLoading} />
-                <Exclusives allGames={allGames} setLoading={setLoading} />
+                <StackOriginals allGames={search ? searchResult : allGames} setLoading={setLoading} />
+                <Slots allGames={search ? searchResult : allGames} setLoading={setLoading} />
+                <LiveCasino allGames={search ? searchResult : allGames} setLoading={setLoading} />
+                <GameShows allGames={search ? searchResult : allGames} setLoading={setLoading} />
+                <Exclusives allGames={search ? searchResult : allGames} setLoading={setLoading} />
               </>
             ) : stackMenu === "Listor Originals" ? (
-              <StackOriginals allGames={allGames} setLoading={setLoading} />
+              <StackOriginals allGames={search ? searchResult : allGames} setLoading={setLoading} />
             ) : stackMenu === "Slot" ? (
-              <Slots setLoading={setLoading} />
+              <Slots allGames={search ? searchResult : allGames} setLoading={setLoading} />
             ) : stackMenu === "Live Casino" ? (
-              <LiveCasino allGames={allGames} setLoading={setLoading} />
+              <LiveCasino allGames={search ? searchResult : allGames} setLoading={setLoading} />
             ) : stackMenu === "Game Shows" ? (
-              <GameShows allGames={allGames} setLoading={setLoading} />
+              <GameShows allGames={search ? searchResult : allGames} setLoading={setLoading} />
             ) : stackMenu === "Listor Exclusives" ? (
-              <Exclusives allGames={allGames} setLoading={setLoading} />
+              <Exclusives allGames={search ? searchResult : allGames} setLoading={setLoading} />
             ) : (
               <div className="text-center pt-5">Coming Soon: New Releases</div>
             )}

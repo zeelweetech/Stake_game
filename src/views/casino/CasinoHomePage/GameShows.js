@@ -9,8 +9,7 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllGames } from "../../../services/GameServices";
-import { setAllGame } from "../../../features/casino/allGameSlice";
+
 
 function GameShows({ allGames, isLobby }) {
   const [loading, setLoading] = useState(false);
@@ -19,7 +18,9 @@ function GameShows({ allGames, isLobby }) {
   const navButtonsRef = useRef(null);
   const dispatch = useDispatch()
   const allGame = useSelector((state) => state.allGame)
-
+  const { isChatOpen } = useSelector((state) => state.chat);
+  const { isBetslipOpen } = useSelector((state) => state.betslip);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const handleAllGame = (gameName, id) => {
     setLoading(true);
     navigate(`/casino/${gameName}/${id}`);
@@ -33,8 +34,23 @@ function GameShows({ allGames, isLobby }) {
       swiperRef.current.swiper.params.navigation.nextEl = nextButton;
       swiperRef.current.swiper.navigation.init();
       swiperRef.current.swiper.navigation.update();
+      swiperRef.current.swiper.params.slidesPerView = getVisibleGamesCount();
+      swiperRef.current.swiper.params.slidesPerGroup = getVisibleGamesCount();
     }
   }, []);
+
+  const getVisibleGamesCount = () => {
+    const screenWidth = window.innerWidth;
+    const isDrawerOpen = isChatOpen || isBetslipOpen;
+
+    if (screenWidth >= 1024) {
+      return isDrawerOpen ? 4 : 6; // Show 4 games when drawer open, 6 when closed on large screens
+    } else if (screenWidth <= 768) {
+      return 3; // Show 3 games on mobile
+    } else {
+      return isDrawerOpen ? 3 : 4; // Show 3 games when drawer open, 4 when closed on medium screens
+    }
+  };
 
   return (
     <div className={`${!isLobby && "flex justify-center"}`}>
@@ -85,8 +101,8 @@ function GameShows({ allGames, isLobby }) {
         <div className=" ml-2 mr-2  relative mt-3">
           {isLobby ? (
             <Swiper
-              slidesPerView={6}
-              slidesPerGroup={6}
+              slidesPerView={getVisibleGamesCount()}
+              slidesPerGroup={getVisibleGamesCount()}
               navigation
               modules={[Navigation]}
               ref={swiperRef}
@@ -109,12 +125,12 @@ function GameShows({ allGames, isLobby }) {
                   slidesPerGroup: 2,
                 },
                 768: {
-                  slidesPerView: 4,
-                  slidesPerGroup: 4,
+                  slidesPerView: isChatOpen || isBetslipOpen ? 3 : 4,
+                  slidesPerGroup: isChatOpen || isBetslipOpen ? 3 : 4,
                 },
                 1024: {
-                  slidesPerView: 6,
-                  slidesPerGroup: 6,
+                  slidesPerView: isChatOpen || isBetslipOpen ? 4 : 6,
+                  slidesPerGroup: isChatOpen || isBetslipOpen ? 4 : 6,
                 },
               }}
             >
@@ -141,8 +157,16 @@ function GameShows({ allGames, isLobby }) {
               )}
             </Swiper>
           ) : (
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0">
-              {allGame?.allGame?.games?.map((gameShows, index) =>
+            <div className={`grid ${windowWidth >= 1024
+              ? isChatOpen || isBetslipOpen
+                ? 'md:grid-cols-4'
+                : 'md:grid-cols-6'
+              : windowWidth <= 768
+                ? 'grid-cols-3'
+                : isChatOpen || isBetslipOpen
+                  ? 'md:grid-cols-3'
+                  : 'md:grid-cols-4'
+              } gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0`}>              {allGame?.allGame?.games?.map((gameShows, index) =>
                 gameShows?.gameType === "GameShows" ? (
                   <div key={index}>
                     <div className="text-center">
