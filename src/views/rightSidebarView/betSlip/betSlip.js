@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { IconButton, FormControl, TextField } from "@mui/material";
@@ -7,7 +6,7 @@ import sportsTable from "../../../assets/img/sportsTable.png";
 import { PiCurrencyBtcFill } from "react-icons/pi";
 import MyAllBet from "./pageview/myAllBet";
 import { ReactComponent as BetSlip } from "../../../assets/svg/BetSlip.svg";
-import { ReactComponent as MyBet } from "../../../assets/svg/MyBet.svg"
+import { ReactComponent as MyBet } from "../../../assets/svg/MyBet.svg";
 function Betslip({ onClose }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [gameMenu, setGameMenu] = useState("Single");
@@ -20,7 +19,7 @@ function Betslip({ onClose }) {
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
-    setTooltip(false)
+    setTooltip(false);
   };
 
   const toggleTooltip = () => {
@@ -43,14 +42,13 @@ function Betslip({ onClose }) {
     setAmount(value);
   };
 
-  const menuItems = [
-    { label: "Single" },
-    { label: "Multi" },
-  ];
+  const menuItems = [{ label: "Single" }, { label: "Multi" }];
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      const isDropdownClick = betSlipRef.current && betSlipRef.current.contains(event.target);
-      const isTooltipClick = tooltipRef.current && tooltipRef.current.contains(event.target);
+      const isDropdownClick =
+        betSlipRef.current && betSlipRef.current.contains(event.target);
+      const isTooltipClick =
+        tooltipRef.current && tooltipRef.current.contains(event.target);
 
       if (!isDropdownClick && !isTooltipClick) {
         setDropdownOpen(false);
@@ -64,7 +62,6 @@ function Betslip({ onClose }) {
     };
   }, [dropdownOpen, tooltip]);
 
-
   return (
     <div className="bg-[#0f212e]">
       <div className="text-white rounded-md shadow-lg relative">
@@ -75,7 +72,7 @@ function Betslip({ onClose }) {
           <CloseIcon fontSize="small" />
         </IconButton>
         {/* {/ BetSlip dropdown button /} */}
-        <div className="inline-block text-left mb-4 py-2"ref={betSlipRef}>
+        <div className="inline-block text-left mb-4 py-2" ref={betSlipRef}>
           <button
             onClick={toggleDropdown}
             className="inline-flex justify-center w-full bg-[#0f212e] px-4 py-2 text-sm font-medium text-white"
@@ -96,18 +93,21 @@ function Betslip({ onClose }) {
 
           {/* {/ Dropdown Menu /} */}
           {dropdownOpen && (
-            <div className="relative"
-              ref={betSlipRef}>
+            <div className="relative" ref={betSlipRef}>
               <div className="absolute top-full shadow-lg left-1/2 mt-2 bg-white text-black font-medium rounded-sm px-4 py-2 z-10 w-max text-center">
                 <button
                   onClick={() => handleViewChange("Bet Slip")}
-                  className={`text-gray-700 block py-1 text-sm ${selectedView === "Bet Slip" && "font-bold"}`}
+                  className={`text-gray-700 block py-1 text-sm ${
+                    selectedView === "Bet Slip" && "font-bold"
+                  }`}
                 >
                   Bet Slip
                 </button>
                 <button
                   onClick={() => handleViewChange("My Bets")}
-                  className={`text-gray-700 block py-1 text-sm ${selectedView === "My Bets" && "font-bold"}`}
+                  className={`text-gray-700 block py-1 text-sm ${
+                    selectedView === "My Bets" && "font-bold"
+                  }`}
                 >
                   My Bets
                 </button>
@@ -129,7 +129,11 @@ function Betslip({ onClose }) {
                       {menuItems.map((item) => (
                         <button
                           key={item.label}
-                          className={`py-2 px-5 rounded-full flex justify-center items-center text-sm ${gameMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}`}
+                          className={`py-2 px-5 rounded-full flex justify-center items-center text-sm ${
+                            gameMenu === item.label
+                              ? "bg-[#4d718768]"
+                              : "hover:bg-[#4d718768]"
+                          }`}
                           onClick={() => setGameMenu(item.label)}
                         >
                           {item.label === "Single" && (
@@ -160,11 +164,12 @@ function Betslip({ onClose }) {
               <hr className="border-t-2 border-gray-600" />
 
               {/* {/ Clear All Button /} */}
-              <div className="flex justify-between items-center pt-2"
-                ref={tooltipRef}>
+              <div
+                className="flex justify-between items-center pt-2"
+                ref={tooltipRef}
+              >
                 <button
                   onClick={toggleTooltip}
-
                   className="bg-[#0f212e] text-sm font-medium text-white flex items-center"
                 >
                   <span className="left-0 text-left px-3">Accept Any Odds</span>
@@ -187,7 +192,10 @@ function Betslip({ onClose }) {
               {/* {/ Tooltip Menu /} */}
               {tooltip && (
                 <div className="relative" ref={tooltipRef}>
-                  <div className="absolute top-full transform -translate-x-1/2 left-32 mt-2 bg-white text-black text-sm font-medium rounded-sm px-2 py-2 shadow-sm z-10 w-max text-center" ref={tooltipRef}>
+                  <div
+                    className="absolute top-full transform -translate-x-1/2 left-32 mt-2 bg-white text-black text-sm font-medium rounded-sm px-2 py-2 shadow-sm z-10 w-max text-center"
+                    ref={tooltipRef}
+                  >
                     <button
                       onClick={() => console.log("Accept Any Odds Clicked")}
                       className="text-gray-700 p-2 block text-sm"
@@ -195,13 +203,17 @@ function Betslip({ onClose }) {
                       Accept Any Odds
                     </button>
                     <button
-                      onClick={() => console.log("Accept Only Higher Odds Clicked")}
+                      onClick={() =>
+                        console.log("Accept Only Higher Odds Clicked")
+                      }
                       className="text-gray-700 p-2 block text-sm"
                     >
                       Accept Only Higher Odds
                     </button>
                     <button
-                      onClick={() => console.log("No Odds Changes Accepted Clicked")}
+                      onClick={() =>
+                        console.log("No Odds Changes Accepted Clicked")
+                      }
                       className="text-gray-700 p-2 block text-sm"
                     >
                       No Odds Changes Accepted
@@ -250,39 +262,38 @@ function Betslip({ onClose }) {
               ) : gameMenu === "Multi" ? (
                 <div>
                   <div className="w-full flex flex-col mt-4">
-                    <FormControl sx={{ width: "100%" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          backgroundColor: "#0f212e",
-                          padding: "8px 12px",
-                          border: "1px solid #b1bad3",
-                          borderRadius: "4px",
-                          color: "white",
-                          gap: "8px",
+                    {/* <FormControl sx={{ width: "100%" }}> */}
+                    <div
+                      className="mx-2 border-2 flex justify-between items-center border-[#2F4553] hover:border-[#557086] p-2 bg-[#0f212e] rounded text-white"
+                      style={
+                        {
+                          // display: "flex",
+                          // alignItems: "center",
+                          // // gap: "8px",
+                        }
+                      }
+                    >
+                      <TextField
+                        className="flex-grow bg-transparent text-white [&_input]:text-white [&_.MuiOutlinedInput-root]:h-[22px] [&_.MuiOutlinedInput-root_fieldset]:border-none"
+                        type="number"
+                        value={amount}
+                        onChange={(e) => handleAmountChange(e.target.value)}
+                        InputProps={{
+                          inputProps: { min: 0 },
                         }}
-                      >
-                        <TextField
-                          type="number"
-                          value={amount}
-                          onChange={(e) => handleAmountChange(e.target.value)}
-                          InputProps={{
-                            inputProps: { min: 0 },
-                          }}
-                          sx={{
-                            flexGrow: 1,
-                            backgroundColor: "transparent",
-                            input: { color: "white" },
-                            "& .MuiOutlinedInput-root": {
-                              height: "25px",
-                              "& fieldset": { border: "none" },
-                            },
-                          }}
-                        />
-                        <PiCurrencyBtcFill color="#FFD700" />
-                      </div>
-                    </FormControl>
+                        // sx={{
+                        //   flexGrow: 1,
+                        //   backgroundColor: "transparent",
+                        //   input: { color: "white" },
+                        //   "& .MuiOutlinedInput-root": {
+                        //     height: "25px",
+                        //     "& fieldset": { border: "none" },
+                        //   },
+                        // }}
+                      />
+                      {/* <PiCurrencyBtcFill color="#FFD700" /> */}₹
+                    </div>
+                    {/* </FormControl> */}
                   </div>
 
                   {/* {/ Total Stake and Est. Payout for Multi /} */}
