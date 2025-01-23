@@ -119,10 +119,10 @@ function MainHeader({ handleRightSidebarToggle }) {
           </span>
           <div className="flex items-center md:space-x-0">
             <button className="flex bg-[#0f212e] items-center space-x-1 px-2 py-2.5 md:px-[1rem] md:py-[0.8125rem] rounded-s text-white font-medium">
-              <p className="text-sm md:text-base">₹{wallet ? wallet : 0}</p>
+              <p className="text-sm">₹{wallet ? wallet : 0}</p>
             </button>
             <button
-              className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r px-3 py-[0.5rem] md:px-[1rem] md:py-[0.8125rem] font-medium text-sm md:text-base md:block hidden"
+              className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r px-3 py-[0.5rem] md:px-[1rem] md:py-[0.8125rem] font-medium text-sm md:block hidden"
               onClick={() => {
                 setProfilePopupOpen((prev) => ({
                   ...prev,
@@ -136,7 +136,19 @@ function MainHeader({ handleRightSidebarToggle }) {
               Wallet
             </button>
             <button className="md:hidden block w-10 h-10 bg-[#1475e1] hover:bg-[#396ca8] rounded-r-md p-2.5">
-              <img src={walletIcon} alt="Not found" />
+              <img
+                src={walletIcon}
+                alt="Not found"
+                onClick={() => {
+                  setProfilePopupOpen((prev) => ({
+                    ...prev,
+                    isWalletOpen: true,
+                  }));
+                  dispatch(setTooltipOpen(false));
+                  setIsSidebarOpen(false);
+                  dispatch(setAnchorEl(false));
+                }}
+              />
             </button>
             {profilePopupOpen.isWalletOpen && (
               <Wallet
@@ -396,23 +408,29 @@ function MainHeader({ handleRightSidebarToggle }) {
               </p>
               {isSidebarOpen && (
                 <>
-                  <div className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-1/2 left-1/2 -translate-x-1/2 mt-2 bg-white text-black text-sm font-medium rounded-sm px-4 py-2 shadow-lg z-[9999] w-max max-w-xs text-center">
+                  <div className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-1/2 left-1/2 -translate-x-1/2 mt-5 bg-white text-black text-sm font-medium rounded py-1 shadow-lg z-[9999] w-max max-w-xs text-center">
                     <button
-                      className="flex items-center space-x-4 py-2"
+                      className="flex items-center gap-2 p-3 hover:bg-[#b1bad3] w-full group"
                       onClick={handleChatClick}
                     >
-                      <BsChatDotsFill size={20} color="#0f212e" />
-                      <p className="text-base text-[#0f212e]">Chat</p>
+                      <BsChatDotsFill size={16} color="#2F4553" />
+                      <p className="text-sm font-medium text-[#2F4553] group-hover:text-black">
+                        Chat
+                      </p>
                     </button>
+
                     <button
-                      className="flex items-center space-x-4 py-2"
+                      className="flex items-center gap-2 p-3 hover:bg-[#b1bad3] w-full group"
                       onClick={handleBetslipClick}
                     >
-                      <MdOutlineEventNote size={20} color="#0f212e" />
-                      <p className="text-base text-[#0f212e]">BetSlip</p>
+                      <MdOutlineEventNote size={16} color="#2F4553" />
+                      <p className="text-sm text-[#2F4553] font-medium group-hover:text-black">
+                        BetSlip
+                      </p>
                     </button>
                   </div>
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-[9999] tooltip-arrow w-3 h-3 bg-white rotate-45"></div>
+                  {/* <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-[9999] tooltip-arrow w-3 h-3 bg-white rotate-45"></div> */}
+                  <div className="border-x-8 border-x-transparent border-b-[11px] top-full mt-3 left-1/2 absolute z-[9999] -translate-x-1/2 border-b-white"></div>
                 </>
               )}
             </div>

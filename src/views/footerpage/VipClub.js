@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaRegStar } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa6";
+// import { FaArrowRight } from "react-icons/fa6";
 import InfoIcon from "@mui/icons-material/Info";
 import { getMedalsProgress } from "../../services/LoginServices";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
@@ -792,7 +792,7 @@ const VipClub = () => {
                       className={`w-full text-sm p-2 md:p-4 cursor-pointer  ${
                         activeLink === link.label
                           ? "bg-[#2c4a5a] text-white font-bold border-l-4 border-[#1475e1]"
-                          : "bg-[#0f212e] text-white  font-bold hover:bg-[#2c4a5a] hover:border-l-4 border-[#1475e1]"
+                          : "bg-[#0f212e] text-white font-bold hover:bg-[#2c4a5a] hover:border-l-4 border-[#1475e1]"
                       }`}
                     >
                       {link.label}
@@ -807,21 +807,20 @@ const VipClub = () => {
             </div>
           </div>
         </div>
-        <div className="bg-[#213743] text-white py-8 px-4 xl:mx-40  md:mx-3 mx-8 rounded-lg">
+        <div className="bg-[#213743] text-white p-6 xl:mx-40  md:mx-3 mx-8 rounded-lg">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
             <div className="text-center md:text-left">
-              <h3 className="text-lg font-semibold">
+              <h3 className="text-lg font-semibold text-start">
                 Live, 24-hour customer support
               </h3>
-              <p className="text-sm mt-1 text-[#babad3]">
+              <p className="text-sm mt-1 text-[#babad3] text-start">
                 Real support from real people. We're available through instant
                 live chat and email to help you.
               </p>
             </div>
             <div className="mt-4 md:mt-0 flex flex-col md:flex-row items-end space-y-2">
               <div className="relative">
-                <p className="text-[#babad3] text-sm">Preferred language</p>
-                <label for="language" className="sr-only "></label>
+                <p className="text-[#babad3] text-sm ">Preferred language</p>
                 <select
                   id="language"
                   className="bg-[#0F212E] text-white font-semibold text-sm rounded px-3 py-2 xl:w-28 xl:mt-6 lg:w-28 lg:mt-2 md:w-28  mt-1 w-72 focus:outline-none"
