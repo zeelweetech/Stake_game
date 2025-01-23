@@ -8,6 +8,7 @@ import {
   setAutoBetOnClick,
   setBoxsIndex,
   setClickedBoxes,
+  setDragonAutoBetResult,
   setGameBet,
   setGameOverResult,
   setIsGameOver,
@@ -45,6 +46,7 @@ function DragonSidebar() {
     rowsIndex = 0,
     autoBetOnClick,
     preSelectTile,
+    dragonAutoBetResult
   } = useSelector((state) => state.dragonTowerGame);
 
   useEffect(() => {
@@ -166,22 +168,21 @@ function DragonSidebar() {
       DragonTowerSocket.emit("dragonTowerPlaceAutoBet", {
         userId: decoded?.userId,
         gameId: id,
-        // preSelectedTiles: preSelectTile,
+        autoBetTiles: preSelectTile,
         betAmount: values?.betamount,
         difficulty: values?.difficulty,
-        // numberOfBets:
-        //   autoBetResult?.round > 0
-        //     ? autoBetResult.round
-        //     : values?.numberofbet || "",
-        numberOfBets: values?.numberofbet,
+        numberOfBets: dragonAutoBetResult?.currentBet > 0 ? dragonAutoBetResult?.currentBet : values?.numberofbet || "",
         onWins: parseInt(values?.onwin, 10),
         onLoss: parseInt(values?.onlose, 10),
         stopOnLoss: parseInt(values?.stoponloss, 10),
         stopOnProfit: parseInt(values?.stoponprofit, 10),
+
       });
       dispatch(setAutoBetOnClick(true));
     }
   };
+
+  console.log("dragonAutoBetResult", dragonAutoBetResult);
 
   const handleOnStopAutoBet = () => {
     // DragonTowerSocket.emit("StopAutoBet");
@@ -499,8 +500,20 @@ function DragonSidebar() {
                   placeholder="0"
                   min={0}
                   name="numberofbet"
-                  value={values?.numberofbet || ""}
-                  onChange={(e) => handleOnChange(e)}
+                  // value={values?.numberofbet || ""}
+                  // onChange={(e) => handleOnChange(e)}
+
+                  value={
+                    dragonAutoBetResult?.currentBet > 0
+                      ? dragonAutoBetResult?.currentBet - 1
+                      : parseInt(values?.numberofbet) || ""
+                  }
+                  onChange={(e) => {
+                    handleOnChange(e);
+                    if (dragonAutoBetResult?.currentBet > 0) {
+                      dispatch(setDragonAutoBetResult({ currentBet: "" }));
+                    }
+                  }}
                 />
               </div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">

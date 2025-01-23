@@ -23,6 +23,7 @@ const initialState = {
   // auto part state
   preSelectTile: [],
   autoBetOnClick: false,
+  dragonAutoBetResult: ""
 };
 
 const dragonTowerGameSlice = createSlice({
@@ -82,9 +83,12 @@ const dragonTowerGameSlice = createSlice({
     setAutoBetOnClick(state, action) {
       state.autoBetOnClick = action.payload
     },
+    setDragonAutoBetResult(state, action) {
+      state.dragonAutoBetResult = action.payload
+    },
   },
 });
 
-export const { setIsManual, setCompleteFundStatus, setValues, setBettingStatus, setShowRandomField, setGameBet, setTileSelected, setRestor, setRestodMultiplier, setIsGameOver, setRowsIndex, setBoxsIndex, setClickedBoxes, setGameOverResult, setRestorData, setPreSelectTile, setAutoBetOnClick } = dragonTowerGameSlice.actions;
+export const { setIsManual, setCompleteFundStatus, setValues, setBettingStatus, setShowRandomField, setGameBet, setTileSelected, setRestor, setRestodMultiplier, setIsGameOver, setRowsIndex, setBoxsIndex, setClickedBoxes, setGameOverResult, setRestorData, setPreSelectTile, setAutoBetOnClick, setDragonAutoBetResult } = dragonTowerGameSlice.actions;
 
 export default dragonTowerGameSlice.reducer;

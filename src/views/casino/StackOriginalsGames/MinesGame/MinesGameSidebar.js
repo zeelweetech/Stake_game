@@ -736,7 +736,6 @@ function MinesGameSidebar() {
                   // disabled={preSelectTile?.length > 0}
                 >
                   Start Autobet
-                  {/* {console.log("preSelectTile", preSelectTile)} */}
                 </button>
               )}
             </div>

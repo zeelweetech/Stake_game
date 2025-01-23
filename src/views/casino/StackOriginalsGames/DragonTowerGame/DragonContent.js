@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DragonTowerSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import { decodedToken } from "../../../../resources/utility";
-import { setBoxsIndex, setClickedBoxes, setCompleteFundStatus, setGameBet, setGameOverResult, setIsGameOver, setPreSelectTile, setRestodMultiplier, setRestor, setRestorData, setRowsIndex, setShowRandomField, setTileSelected } from "../../../../features/casino/dragonTowerSlice";
+import { setAutoBetOnClick, setBoxsIndex, setClickedBoxes, setCompleteFundStatus, setDragonAutoBetResult, setGameBet, setGameOverResult, setIsGameOver, setPreSelectTile, setRestodMultiplier, setRestor, setRestorData, setRowsIndex, setShowRandomField, setTileSelected } from "../../../../features/casino/dragonTowerSlice";
 import toast from "react-hot-toast";
 import dragontowerSound from "../../../../assets/Sound/dragontowerSound.wav";
 import dragontowerbombSound from "../../../../assets/Sound/dragontowerbomb.wav";
@@ -41,6 +41,7 @@ function DragonContent() {
     clickedBoxes,
     restorData,
     preSelectTile,
+    dragonAutoBetResult
   } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
@@ -219,6 +220,17 @@ function DragonContent() {
     // dispatch(setIsGameOver(true));
   });
 
+  DragonTowerSocket.on("autoBetResult", (data) => {
+    // console.log('data', data);
+    // console.log('preSelectTile ',preSelectTile);
+
+    dispatch(setDragonAutoBetResult(data))
+
+    if (data?.currentBet === 1 && data?.currentBet >= 1) {
+      dispatch(setAutoBetOnClick(false));
+    }
+  });
+
   const handleBoxClick = (rowIndex, boxIndex) => {
     const isRowActive = isManual && gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
 
@@ -362,18 +374,15 @@ function DragonContent() {
                 for (let boxIndex = 0; boxIndex < boxesPerRow; boxIndex++) {
                   const isRestoredEgg = restorData[rowIndex]?.[boxIndex] === 1;
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
-                  const isHighlighted =
-                    !isManual && preSelectTile[rowIndex] === boxIndex;
+                  const isHighlighted = !isManual && preSelectTile[rowIndex] === boxIndex;
+
                   const imageToShow = isHighlighted
-                    ? null // No image when highlighted
+                    ? null
                     : isGameOver
                       ? rowIndex === gameOverResult?.skullRowIndex &&
                         boxIndex === gameOverResult?.skullBoxIndex
                         ? skullImage
-                        : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) ||
-                          isRestoredEgg ||
-                          isSelected ||
-                          rowIndex === gameOverResult?.skullRowIndex
+                        : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || isSelected || rowIndex === gameOverResult?.skullRowIndex
                           ? eggImage
                           : Boxsvg
                       : isRestoredEgg
