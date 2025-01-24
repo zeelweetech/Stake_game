@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import { IconButton, FormControl, TextField } from "@mui/material";
+import {
+  IconButton,
+  // FormControl,
+  TextField,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import sportsTable from "../../../assets/img/sportsTable.png";
-import { PiCurrencyBtcFill } from "react-icons/pi";
+// import { PiCurrencyBtcFill } from "react-icons/pi";
 import MyAllBet from "./pageview/myAllBet";
 import { ReactComponent as BetSlip } from "../../../assets/svg/BetSlip.svg";
 import { ReactComponent as MyBet } from "../../../assets/svg/MyBet.svg";
@@ -165,18 +169,20 @@ function Betslip({ onClose }) {
 
               {/* {/ Clear All Button /} */}
               <div
-                className="flex justify-between items-center pt-2"
+                className="flex justify-between items-center pt-2 px-3 py-2"
                 ref={tooltipRef}
               >
                 <button
                   onClick={toggleTooltip}
-                  className="bg-[#0f212e] text-sm font-medium text-white flex items-center"
+                  className="bg-[#0f212e] text-sm font-medium text-[#B1BAD3] gap-2 flex items-center group"
                 >
-                  <span className="left-0 text-left px-3">Accept Any Odds</span>
+                  <span className="left-0 text-left hover:text-white ">
+                    Accept Any Odds
+                  </span>
                   {tooltip ? (
-                    <ChevronDownIcon className="ml-2 h-5 w-5" />
+                    <ChevronDownIcon className=" h-5 w-5 group-hover:text-white" />
                   ) : (
-                    <ChevronUpIcon className="ml-2 h-5 w-5" />
+                    <ChevronUpIcon className=" h-5 w-5 group-hover:text-white" />
                   )}
                 </button>
                 <div className="relative">
@@ -193,12 +199,12 @@ function Betslip({ onClose }) {
               {tooltip && (
                 <div className="relative" ref={tooltipRef}>
                   <div
-                    className="absolute top-full transform -translate-x-1/2 left-32 mt-2 bg-white text-black text-sm font-medium rounded-sm px-2 py-2 shadow-sm z-10 w-max text-center"
+                    className="absolute top-full transform  -translate-x-1/2 left-32 mt-2 bg-white text-black text-sm font-medium rounded-sm  py-2 shadow-sm z-10 w-max text-center"
                     ref={tooltipRef}
                   >
                     <button
                       onClick={() => console.log("Accept Any Odds Clicked")}
-                      className="text-gray-700 p-2 block text-sm"
+                      className="text-gray-700 p-2 block text-sm text-start hover:bg-[#B1BAD3] w-full"
                     >
                       Accept Any Odds
                     </button>
@@ -206,7 +212,7 @@ function Betslip({ onClose }) {
                       onClick={() =>
                         console.log("Accept Only Higher Odds Clicked")
                       }
-                      className="text-gray-700 p-2 block text-sm"
+                      className="text-gray-700 p-2 block text-sm text-start hover:bg-red-500 w-full"
                     >
                       Accept Only Higher Odds
                     </button>
@@ -214,13 +220,13 @@ function Betslip({ onClose }) {
                       onClick={() =>
                         console.log("No Odds Changes Accepted Clicked")
                       }
-                      className="text-gray-700 p-2 block text-sm"
+                      className="text-gray-700 p-2 block text-sm  hover:bg-red-500 w-full"
                     >
                       No Odds Changes Accepted
                     </button>
 
                     {/* {/ Tooltip Arrow /} */}
-                    <div className="tooltip-arrow w-2 h-3 left-32 bg-white rotate-45 absolute top-[-6px] transform -translate-x-1/2"></div>
+                    <div className="tooltip-arrow w-2 h-3 left-32 bg-white rotate-45 absolute top-[-5px] transform -translate-x-1/2"></div>
                   </div>
                 </div>
               )}

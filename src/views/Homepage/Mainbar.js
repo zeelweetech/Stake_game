@@ -34,7 +34,7 @@ function Mainbar() {
       setProgressData(response || []);
       setLoading(false);
     } catch (error) {
-      console.error("Failed to fetch users: ", error);
+      // console.error("Failed to fetch users: ", error);
       setLoading(false);
     }
   };

@@ -13,6 +13,7 @@ import { PiVaultFill } from "react-icons/pi";
 import { BiSolidNotepad } from "react-icons/bi";
 import { BsChatDotsFill } from "react-icons/bs";
 import walletIcon from "../assets/svg/wallet.svg";
+// import stakeLogo from "../assets/img/stakeLogo.png";
 import { setAnchorEl, setTooltipOpen } from "../features/auth/authSlice";
 import {
   closeBetslipModal,
@@ -111,8 +112,14 @@ function MainHeader({ handleRightSidebarToggle }) {
     <div className="z-50 relative">
       <div className="bg-[#1a2c38] drop-shadow-2xl md:py-[0.30rem] py-2.5">
         <div className="flex justify-between md:justify-around items-center px-4 md:px-0 ">
+          {/* <img
+            src={stakeLogo}
+            className="w-12 h-12 sm:w-16 sm:h-16 cursor-pointer"
+            alt="Stake Logo"
+            onClick={() => navigate("/casino/home")}
+          /> */}
           <span
-            className="text-white text-3xl md:text-5xl font-extrabold italic font-sans hover:cursor-pointer"
+            className="text-white text-3xl xl:text-3xl lg:text-3xl md:text-2xl font-extrabold italic font-sans transition active:scale-[0.98] select-none hover:cursor-pointer"
             onClick={() => navigate("/")}
           >
             Listor
@@ -408,7 +415,7 @@ function MainHeader({ handleRightSidebarToggle }) {
               </p>
               {isSidebarOpen && (
                 <>
-                  <div className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-1/2 left-1/2 -translate-x-1/2 mt-5 bg-white text-black text-sm font-medium rounded py-1 shadow-lg z-[9999] w-max max-w-xs text-center">
+                  <div className="flex flex-col absolute top-full md:-left-1 lg:left-3 xl:left-1/2 left-1/2 -translate-x-1/2 mt-5 bg-white text-black text-sm font-medium rounded py-1 shadow-lg z-[9999] w-max max-w-xs text-center">
                     <button
                       className="flex items-center gap-2 p-3 hover:bg-[#b1bad3] w-full group"
                       onClick={handleChatClick}

@@ -1,5 +1,5 @@
 import React from "react";
-import stakeLogo from "../assets/img/stakeLogo.png";
+// import stakeLogo from "../assets/img/stakeLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { openLoginModel, openRegisterModel } from "../features/auth/authSlice";
@@ -7,9 +7,9 @@ import Login from "../views/pages/login/Login";
 import Register from "../views/pages/register/Register";
 import ForgotPassword from "../views/pages/forgotpassword/ForgotPassword";
 import VerifyTerm from "../views/pages/register/VerifyTerm";
-import { openBetslipModal } from "../features/auth/betSlipSlice";
-import { isChatModelOpen } from "../features/auth/chatSlice";
-import RightSidebar from "./RightSidebar";
+// import { openBetslipModal } from "../features/auth/betSlipSlice";
+// import { isChatModelOpen } from "../features/auth/chatSlice";
+// import RightSidebar from "./RightSidebar";
 
 function Header() {
   const navigate = useNavigate();
@@ -23,7 +23,6 @@ function Header() {
 
   const { isBetslipOpen } = useSelector((state) => state.betslip);
   console.log("openBetslipModel:", isBetslipOpen);
-
 
   const { isChatOpen } = useSelector((state) => state.chat);
   console.log("isChatModelOpen:", isChatOpen);
@@ -47,7 +46,7 @@ function Header() {
             onClick={() => navigate("/casino/home")}
           /> */}
           <span
-            className="text-white text-5xl md:text-3xl lg:text-4xl xl:text-5xl font-extrabold italic font-sans cursor-pointer"
+            className="text-white text-5xl md:text-3xl lg:text-4xl xl:text-5xl font-extrabold italic transition active:scale-[0.98] select-none font-sans cursor-pointer"
             onClick={() => navigate("/")}
           >
             Listor
@@ -55,7 +54,7 @@ function Header() {
           <div className="flex items-center space-x-4 sm:space-x-6">
             <Link
               onClick={handleOnLogin}
-              className="text-white text-sm sm:text-lg hover:underline"
+              className="text-white text-sm sm:text-lg"
             >
               Sign In
             </Link>
