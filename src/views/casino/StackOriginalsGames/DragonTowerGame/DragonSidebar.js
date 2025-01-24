@@ -182,8 +182,6 @@ function DragonSidebar() {
     }
   };
 
-  console.log("dragonAutoBetResult", dragonAutoBetResult);
-
   const handleOnStopAutoBet = () => {
     // DragonTowerSocket.emit("StopAutoBet");
     dispatch(setAutoBetOnClick(false));
@@ -502,7 +500,6 @@ function DragonSidebar() {
                   name="numberofbet"
                   // value={values?.numberofbet || ""}
                   // onChange={(e) => handleOnChange(e)}
-
                   value={
                     dragonAutoBetResult?.currentBet > 0
                       ? dragonAutoBetResult?.currentBet - 1
@@ -983,8 +980,17 @@ function DragonSidebar() {
                   placeholder="0"
                   min={0}
                   name="numberofbet"
-                  value={values?.numberofbet || ""}
-                  onChange={(e) => handleOnChange(e)}
+                  value={
+                    dragonAutoBetResult?.currentBet > 0
+                      ? dragonAutoBetResult?.currentBet - 1
+                      : parseInt(values?.numberofbet) || ""
+                  }
+                  onChange={(e) => {
+                    handleOnChange(e);
+                    if (dragonAutoBetResult?.currentBet > 0) {
+                      dispatch(setDragonAutoBetResult({ currentBet: "" }));
+                    }
+                  }}
                 />
               </div>
               <div className="text-[#b1bad3] text-sm flex justify-between font-semibold mt-1 mb-1 select-none">

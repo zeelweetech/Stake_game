@@ -221,8 +221,8 @@ function DragonContent() {
   });
 
   DragonTowerSocket.on("autoBetResult", (data) => {
-    // console.log('data', data);
-    // console.log('preSelectTile ',preSelectTile);
+    console.log('data', data);
+    console.log('preSelectTile ', preSelectTile);
 
     dispatch(setDragonAutoBetResult(data))
 
@@ -376,6 +376,18 @@ function DragonContent() {
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
                   const isHighlighted = !isManual && preSelectTile[rowIndex] === boxIndex;
 
+                  // const abcdefg = preSelectTile.map((data) => {
+                  //   console.log('abcdefg0', data);
+                  //   return data.key;
+                  // });
+                  const abc = preSelectTile[boxIndex] === dragonAutoBetResult?.result?.lostIndex?.value
+                  const isLostIndex = !isManual 
+                  // && preSelectTile[boxIndex] === dragonAutoBetResult?.result?.lostIndex?.value
+                  && abc ? preSelectTile[rowIndex] === dragonAutoBetResult?.result?.lostIndex?.value : false;
+                  
+                  // console.log("rowIndex.toString()", rowIndex.toString());
+                  // console.log("boxIndex", boxIndex);
+
                   const imageToShow = isHighlighted
                     ? null
                     : isGameOver
@@ -389,7 +401,7 @@ function DragonContent() {
                         ? eggImage
                         : isSelected
                           ? eggImage
-                          : Boxsvg;
+                          : isLostIndex ? skullImage : Boxsvg;
                   const isRowActive = isManual && gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
                   boxElements.push(
                     <div
