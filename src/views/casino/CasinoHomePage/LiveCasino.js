@@ -46,13 +46,23 @@ function LiveCasino({ allGames, isLobby }) {
     const isDrawerOpen = isChatOpen || isBetslipOpen;
 
     if (screenWidth >= 1024) {
-      return isDrawerOpen ? 4 : 6; // Show 4 games when drawer open, 6 when closed on large screens
+      return isDrawerOpen ? 5 : 6; // Show 4 games when drawer open, 6 when closed on large screens
     } else if (screenWidth <= 768) {
-      return 3; // Show 3 games on mobile
+      return isDrawerOpen ? 3 : 4;// Show 3 games on mobile
     } else {
-      return isDrawerOpen ? 3 : 4; // Show 3 games when drawer open, 4 when closed on medium screens
+      return isDrawerOpen ? 4 : 5; // Show 3 games when drawer open, 4 when closed on medium screens
     }
   };
+  //  // Add function to get image class based on screen size and drawer state
+  //  const getImageClass = () => {
+  //   const isDrawerOpen = isChatOpen || isBetslipOpen;
+    
+  //   if (windowWidth <= 768 && isDrawerOpen) {
+  //     return "w-[9rem] h-[12rem]"; // Smaller size when drawer open on mobile
+  //   }
+    
+  //   return "xl:w-44 lg:w-36 lg:h-48 xl:h-56"; // Default size
+  // };
 
   return (
     <div className={`${!isLobby && "flex justify-center"}`}>
@@ -131,8 +141,8 @@ function LiveCasino({ allGames, isLobby }) {
                   slidesPerGroup: isChatOpen || isBetslipOpen ? 3 : 4,
                 },
                 1024: {
-                  slidesPerView: isChatOpen || isBetslipOpen ? 4 : 6,
-                  slidesPerGroup: isChatOpen || isBetslipOpen ? 4 : 6,
+                  slidesPerView: isChatOpen || isBetslipOpen ? 5 : 6,
+                  slidesPerGroup: isChatOpen || isBetslipOpen ? 5 : 6,
                 },
               }}
             >
@@ -142,7 +152,7 @@ function LiveCasino({ allGames, isLobby }) {
                     <div className="text-center">
                       <img
                         src={liveCasino.gameImage}
-                        className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
+                        className="xl:w-48 lg:w-36 lg:h-48 xl:h-64 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
                         alt="Not Found"
                         onClick={() => handleAllGame(liveCasino?.gameName, liveCasino?.id)}
                       />
@@ -161,13 +171,13 @@ function LiveCasino({ allGames, isLobby }) {
           ) : (
             <div className={`grid ${windowWidth >= 1024
               ? isChatOpen || isBetslipOpen
-                ? 'md:grid-cols-4'
+                ? 'md:grid-cols-5'
                 : 'md:grid-cols-6'
-              : windowWidth <= 768
-                ? 'grid-cols-3'
-                : isChatOpen || isBetslipOpen
-                  ? 'md:grid-cols-3'
-                  : 'md:grid-cols-4'
+                : windowWidth <= 768 
+                  ? 'grid-cols-4' 
+                  : isChatOpen || isBetslipOpen 
+                    ? 'md:grid-cols-3' 
+                    : 'md:grid-cols-4'
               } gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0`}>
               {allGame?.allGame?.games?.map((liveCasino, index) =>
                 liveCasino?.gameType === "LiveCasino" ? (
@@ -175,7 +185,7 @@ function LiveCasino({ allGames, isLobby }) {
                     <div className="text-center">
                       <img
                         src={liveCasino.gameImage}
-                        className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
+                        className={`mx-auto rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]`}
                         alt="Not Found"
                         onClick={() => handleAllGame(liveCasino?.gameName, liveCasino?.id)}
                       />
