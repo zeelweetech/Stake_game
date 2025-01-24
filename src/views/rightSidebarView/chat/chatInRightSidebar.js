@@ -162,7 +162,7 @@ const ChatApp = ({ onClose }) => {
             <div className="relative">
               <div
                 ref={dropDownRef}
-                className="flex flex-col absolute top-full md:-left-8 lg:-left-8 xl:left-2 left-1/2 -mt-2 bg-white text-black text-sm font-medium rounded py-1 shadow-lg z-[9999]"
+                className="flex flex-col absolute top-4 md:left-4 lg:left-0 xl:left-2 left-1/2 -mt-2 bg-white text-black text-sm font-medium rounded py-1 shadow-lg z-[9999]"
               >
                 {Country.map((item, index) => (
                   <div
@@ -227,7 +227,7 @@ const ChatApp = ({ onClose }) => {
           </div>
         </div>
         {/* Send button */}
-        <div className="mt-2 flex items-center justify-end relative gap-x-2 abc">
+        <div className="mt-2 flex items-center justify-end relative gap-x-2">
           <div className="py-3 px-4 bg-[#2F4553] text-sm cursor-pointer hover:bg-[#557086] rounded">
             <svg
               className="w-4 h-4 text-white"
