@@ -1,9 +1,4 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-} from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import LegendToggleIcon from "@mui/icons-material/LegendToggle";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
@@ -16,7 +11,7 @@ import Trophies from "./PageView/Trophies";
 import Raffles from "./PageView/Raffles";
 import Races from "./PageView/Races";
 
-const Statistic = ({closeStatistic}) => {
+const Statistic = ({ closeStatistic }) => {
   const [gameMenu, setGameMenu] = useState("Statistic");
   const [progressData, setProgressData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -33,7 +28,6 @@ const Statistic = ({closeStatistic}) => {
   useEffect(() => {
     if (userId) {
       getVipProgress();
-
     }
   }, [userId]);
 
@@ -97,7 +91,9 @@ const Statistic = ({closeStatistic}) => {
                   className="h-full shadow-lg rounded-[10px]"
                   style={{
                     width: progressData?.vipProgress || "0%",
-                    backgroundColor: progressData?.vipProgress ? "#1475e1" : "#2f4553",
+                    backgroundColor: progressData?.vipProgress
+                      ? "#1475e1"
+                      : "#2f4553",
                   }}
                 ></div>
               </div>
@@ -110,12 +106,12 @@ const Statistic = ({closeStatistic}) => {
                       progressData?.medal === "Bronze"
                         ? "#c69c6d"
                         : progressData?.medal === "Silver"
-                          ? "#b2cccc"
-                          : progressData?.medal === "Gold"
-                            ? "#fed100"
-                            : progressData?.medal === "Platinum"
-                              ? "#6fdde7"
-                              : "#2f4553"
+                        ? "#b2cccc"
+                        : progressData?.medal === "Gold"
+                        ? "#fed100"
+                        : progressData?.medal === "Platinum"
+                        ? "#6fdde7"
+                        : "#2f4553"
                     }
                   />
                   <p className="text-sm text-[#b1bad3] font-medium">
@@ -129,12 +125,12 @@ const Statistic = ({closeStatistic}) => {
                       progressData?.nextMedal === "Bronze"
                         ? "#c69c6d"
                         : progressData?.nextMedal === "Silver"
-                          ? "#b2cccc"
-                          : progressData?.nextMedal === "Gold"
-                            ? "#fed100"
-                            : progressData?.nextMedal === "Platinum"
-                              ? "#6fdde7"
-                              : "#2f4553"
+                        ? "#b2cccc"
+                        : progressData?.nextMedal === "Gold"
+                        ? "#fed100"
+                        : progressData?.nextMedal === "Platinum"
+                        ? "#6fdde7"
+                        : "#2f4553"
                     }
                   />
                   <p className="text-sm text-[#b1bad3] font-medium">
@@ -154,7 +150,9 @@ const Statistic = ({closeStatistic}) => {
                 {menuItems.map((item) => (
                   <button
                     key={item.label}
-                    className={`py-2 md:px-5 px-3 rounded-full ${gameMenu === item.label ? "bg-[#4d718768]" : ""}`}
+                    className={`py-2 md:px-5 px-3 rounded-full ${
+                      gameMenu === item.label ? "bg-[#4d718768]" : ""
+                    }`}
                     onClick={() => {
                       setGameMenu(item.label);
                       // if (item.label === "Statistic") ;
@@ -167,7 +165,9 @@ const Statistic = ({closeStatistic}) => {
             </DialogContent>
 
             <div className="flex justify-center">
-              <DialogContent sx={{ backgroundColor: "#1a2c38", color: "#b1bad3" }}>
+              <DialogContent
+                sx={{ backgroundColor: "#1a2c38", color: "#b1bad3" }}
+              >
                 {gameMenu === "Statistic" ? (
                   <GetStatistic userId={userId} />
                 ) : gameMenu === "Trophies" ? (
@@ -177,11 +177,12 @@ const Statistic = ({closeStatistic}) => {
                 ) : gameMenu === "Raffles" ? (
                   <Raffles />
                 ) : (
-                  <LegendToggleIcon sx={{ fontSize: "120px", color: "#b1bad3" }} />
+                  <LegendToggleIcon
+                    sx={{ fontSize: "120px", color: "#b1bad3" }}
+                  />
                 )}
               </DialogContent>
             </div>
-
           </div>
         </div>
       </div>
@@ -190,4 +191,3 @@ const Statistic = ({closeStatistic}) => {
 };
 
 export default Statistic;
-

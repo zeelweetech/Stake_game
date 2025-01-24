@@ -115,7 +115,7 @@ function Setting() {
                 }
               }}
             >
-              <div className="bg-[#1a2c38] text-white rounded-lg shadow-lg w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-xl xl:max-w-xl p-4 relative">
+              <div className="bg-[#1a2c38] text-white rounded-lg shadow-lg w-[90%] max-w-md sm:max-w-lg md:max-w-lg lg:max-w-lg xl:max-w-md p-4 relative">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-lg font-semibold flex items-center">
                     <span className="mr-2">
@@ -138,7 +138,7 @@ function Setting() {
                   </button>
                 </div>
 
-                <p className="text-sm text-gray-300 mb-6">
+                <p className="text-sm text-gray-300 mb-6 text-center">
                   Are you sure you want to enable the max bet button?
                 </p>
 
