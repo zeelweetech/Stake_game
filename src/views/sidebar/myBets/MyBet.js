@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Loader from "../../component/Loader";
 // import { BiSolidNotepad } from "react-icons/bi";
 import { Link } from "react-router-dom";
@@ -12,12 +12,34 @@ import { ReactComponent as BetSlip } from "../../../assets/svg/BetSlip.svg";
 function MyBet() {
   const [loading, setLoading] = useState(false);
   const [gameMenu, setGameMenu] = useState("Casino");
+  const [isGameMenu, setIsGameMenu] = useState("AllBets");
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
   const { isBetslipOpen } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
   const { openMenubar } = useSelector((state) => state.auth);
-  const [isGameMenu, setIsGameMenu] = useState("AllBets");
 
-  const menuItems = [{ label: "Casino" }, { label: "Sports" }];
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const getContainerClass = () => {
+    if (windowWidth <= 768) {
+      return isChatOpen || isBetslipOpen ? 'w-[90%]' : 'w-full';
+    }
+    return openMenubar ? 'lg:w-[70%] xl:w-[85%] md:w-[80%]' : 'lg:w-[80%] xl:w-[90%] md:w-[85%]';
+  };
+
+  const menuItems = [
+    { label: "Casino" }, 
+    { label: "Sports" }
+  ];
+
   const subMenuItems = [
     { label: "AllBets" },
     { label: "High Rollers" },
@@ -25,81 +47,91 @@ function MyBet() {
   ];
 
   return (
-    <div className="flex justify-center h-full bg-[#1a2c38]">
+    <div className="flex justify-center min-h-screen bg-[#1a2c38]">
       {loading ? (
-        <Loader />
+        <div className="flex items-center justify-center min-h-[400px]">
+          <Loader />
+        </div>
       ) : (
-        <div className="text-white font-bold pt-6 w-full mx-auto lg:w-[70%] xl:w-[90%] md:w-[80%]">
-          <div className="flex items-center space-x-1 px-4 md:px-24">
-            <BetSlip className="w-4 h-4" />
-            <Link to="#" className="text-lg font-medium text-white">
-              My Bets
-            </Link>
+        <div className={`text-white font-bold pt-6 ${getContainerClass()} mx-auto px-4`}>
+          {/* Header */}
+          <div className="flex items-center space-x-2 mb-6">
+            <BetSlip className="w-5 h-5 text-[#b1bad3]" />
+            <h1 className="text-xl font-medium text-white">My Bets</h1>
           </div>
 
-          {/* Main Menu Section */}
-          <DialogContent sx={{ backgroundColor: "#1a2c38", color: "white" }}>
-            <div className="flex flex-col justify-center px-4 md:px-16 h-full bg-[#1a2c38]">
-              <div className="flex justify-start w-full mb-4">
-                <div className="bg-[#0f212e] flex rounded-full p-[4px] space-x-1 font-bold">
-                  {menuItems.map((item) => (
-                    <button
-                      key={item.label}
-                      className={`py-2.5 px-4 rounded-full flex justify-start items-center text-sm 
-                        ${
-                          gameMenu === item.label
-                            ? "bg-[#4d718768]"
-                            : "hover:bg-[#4d718768]"
-                        }`}
-                      onClick={() => setGameMenu(item.label)}
-                    >
-                      <p className="text-white">{item.label}</p>
-                    </button>
-                  ))}
+          {/* Main Content */}
+          <div className="space-y-8">
+            {/* Main Menu Section */}
+            <div className="bg-[#1a2c38] rounded-lg">
+              <div className="flex flex-col space-y-4">
+                {/* Game Type Menu */}
+                <div className="overflow-x-auto">
+                  <div className="bg-[#0f212e] inline-flex rounded-full p-1 space-x-4 min-w-max">
+                    {menuItems.map((item) => (
+                      <button
+                        key={item.label}
+                        className={`py-2 px-4 rounded-full text-sm transition-colors
+                          ${gameMenu === item.label 
+                            ? "bg-[#4d718768] text-white" 
+                            : "text-[#b1bad3] hover:bg-[#4d718768] hover:text-white"
+                          }`}
+                        onClick={() => setGameMenu(item.label)}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Game Content */}
+                <div className="">
+                  {gameMenu === "Casino" ? <MyBets /> : <Sports />}
                 </div>
               </div>
-
-              <div className={`mx-auto lg:w-[70%] xl:w-[90%] md:w-[80%]`}>
-                {gameMenu === "Casino" ? <MyBets /> : <Sports />}
-              </div>
             </div>
-          </DialogContent>
 
-          {/* Sub Menu Section */}
-          <DialogContent sx={{ backgroundColor: "#1a2c38", color: "white" }}>
-            <div className="flex flex-col justify-start px-4 md:px-16 h-full bg-[#1a2c38]">
-              <div className="flex justify-start w-full mb-4">
-                <div className="bg-[#0f212e] flex rounded-full p-[4px] space-x-1 font-bold">
-                  {subMenuItems.map((item) => (
-                    <button
-                      key={item.label}
-                      className={`py-2.5 px-4 rounded-full flex justify-start items-center text-sm 
-                        ${
-                          isGameMenu === item.label
-                            ? "bg-[#4d718768]"
-                            : "hover:bg-[#4d718768]"
-                        }`}
-                      onClick={() => setIsGameMenu(item.label)}
-                    >
-                      <p className="text-white">{item.label}</p>
-                    </button>
-                  ))}
+            {/* Sub Menu Section */}
+            <div className="bg-[#1a2c38] rounded-lg">
+              <div className="flex flex-col space-y-4">
+                {/* Sub Menu */}
+                <div className="overflow-x-auto scrollbar-thin">
+                  <div className="bg-[#0f212e] inline-flex rounded-full p-1 space-x-4 min-w-max">
+                    {subMenuItems.map((item) => (
+                      <button
+                        key={item.label}
+                        className={`py-2 px-2 rounded-full text-sm transition-colors
+                          ${isGameMenu === item.label 
+                            ? "bg-[#4d718768] text-white" 
+                            : "text-[#b1bad3] hover:bg-[#4d718768] hover:text-white"
+                          }`}
+                        onClick={() => setIsGameMenu(item.label)}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sub Menu Content */}
+                <div className="w-full">
+                  {isGameMenu === "AllBets" ? (
+                    <AllBets />
+                  ) : isGameMenu === "High Rollers" ? (
+                    <div className="text-center p-8 bg-[#213743] rounded-lg">
+                      <p className="text-lg">High Rollers</p>
+                      <p className="text-sm text-gray-400 mt-2">Coming Soon</p>
+                    </div>
+                  ) : (
+                    <div className="text-center p-8 bg-[#213743] rounded-lg">
+                      <p className="text-lg">Race Leaderboard</p>
+                      <p className="text-sm text-gray-400 mt-2">Coming Soon</p>
+                    </div>
+                  )}
                 </div>
               </div>
-
-              <div className={`mx-auto lg:w-[70%] xl:w-[90%] md:w-[80%]`}>
-                {isGameMenu === "AllBets" ? (
-                  <AllBets />
-                ) : isGameMenu === "High Rollers" ? (
-                  <p className="text-center">High Rollers content goes here.</p>
-                ) : isGameMenu === "Race Leaderboard" ? (
-                  <p className="text-center">
-                    Race Leaderboard content goes here.
-                  </p>
-                ) : null}
-              </div>
             </div>
-          </DialogContent>
+          </div>
         </div>
       )}
     </div>

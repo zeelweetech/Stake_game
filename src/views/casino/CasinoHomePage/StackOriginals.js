@@ -100,12 +100,14 @@ function StackOriginals({ isLobby }) {
     const screenWidth = window.innerWidth;
     const isDrawerOpen = isChatOpen || isBetslipOpen;
 
-    if (screenWidth >= 1024) {
-      return isDrawerOpen ? 4 : 7; // Show 4 games when drawer open, 6 when closed on large screens
+    if (screenWidth <= 425) {
+      return 3; 
     } else if (screenWidth <= 768) {
-      return isDrawerOpen ? 3 : 4; // Show 3 games on mobile
+      return isDrawerOpen ? 3 : 4; 
+    } else if (screenWidth >= 1024) {
+      return isDrawerOpen ? 4 : 7; 
     } else {
-      return isDrawerOpen ? 4 : 5; // Show 3 games when drawer open, 4 when closed on medium screens
+      return isDrawerOpen ? 4 : 5; 
     }
   };
 
@@ -190,7 +192,7 @@ function StackOriginals({ isLobby }) {
           {isLobby ? (
             <Swiper
               slidesPerView={getVisibleGamesCount()}
-              slidesPerGroup={getVisibleGamesCount()}
+              slidesPerGroup={1} // Changed to 1 for smoother sliding
               navigation
               modules={[Navigation]}
               ref={swiperRef}
@@ -198,38 +200,42 @@ function StackOriginals({ isLobby }) {
               breakpoints={{
                 320: {
                   slidesPerView: 3,
-                  slidesPerGroup: 3,
+                  slidesPerGroup: 1,
                 },
                 375: {
                   slidesPerView: 3,
-                  slidesPerGroup: 3,
+                  slidesPerGroup: 1,
                 },
                 425: {
                   slidesPerView: 3,
-                  slidesPerGroup: 3,
+                  slidesPerGroup: 1,
                 },
                 640: {
-                  slidesPerView: 3,
-                  slidesPerGroup: 3,
+                  slidesPerView: isChatOpen || isBetslipOpen ? 3 : 4,
+                  slidesPerGroup: 1,
                 },
                 768: {
                   slidesPerView: isChatOpen || isBetslipOpen ? 3 : 4,
-                  slidesPerGroup: isChatOpen || isBetslipOpen ? 3 : 4,
+                  slidesPerGroup: 1,
                 },
                 1024: {
-                  slidesPerView: isChatOpen || isBetslipOpen ? 5 : 6,
-                  slidesPerGroup: isChatOpen || isBetslipOpen ? 5 : 6,
+                  slidesPerView: isChatOpen || isBetslipOpen ? 4 : 7,
+                  slidesPerGroup: 1,
                 },
               }}
             >
               {allGame?.allGame?.games?.map((gameData, index) =>
                 gameData?.gameType === "casino" ||
-                  gameData?.gameType === "Casino" ? (
+                gameData?.gameType === "Casino" ? (
                   <SwiperSlide key={index}>
                     <div className="text-center">
                       <img
                         src={gameData.gameImage}
-                        className="xl:w-44 lg:w-36 lg:h-48 xl:h-56 rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
+                        className={`${
+                          windowWidth <= 425 
+                            ? 'w-24 h-32' // Smaller size for 425px and below
+                            : 'xl:w-44 lg:w-36 lg:h-48 xl:h-56'
+                        } rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]`}
                         alt="Not Found"
                         onClick={() =>
                           handleAllGame(gameData?.gameName, gameData?.id)
@@ -249,15 +255,17 @@ function StackOriginals({ isLobby }) {
             </Swiper>
           ) : (
             <div className={`grid ${
-              windowWidth >= 1024 
-                ? isChatOpen || isBetslipOpen 
-                  ? 'md:grid-cols-5' 
-                  : 'md:grid-cols-6'
-                : windowWidth <= 768 
-                  ? 'grid-cols-4' 
-                  : isChatOpen || isBetslipOpen 
-                    ? 'md:grid-cols-3' 
-                    : 'md:grid-cols-4'
+              windowWidth <= 425
+                ? 'grid-cols-3'
+                : windowWidth >= 1024 
+                  ? isChatOpen || isBetslipOpen 
+                    ? 'md:grid-cols-4' 
+                    : 'md:grid-cols-6'
+                  : windowWidth <= 768 
+                    ? 'grid-cols-4' 
+                    : isChatOpen || isBetslipOpen 
+                      ? 'md:grid-cols-3' 
+                      : 'md:grid-cols-4'
             } gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0`}>
               {allGame?.allGame?.games?.map((gameData, index) =>
                 gameData?.gameType === "casino" ||

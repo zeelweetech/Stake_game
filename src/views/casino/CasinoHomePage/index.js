@@ -32,12 +32,13 @@ function CasinoHomePage() {
   const [dropdown, setDropdown] = useState(false);
   const { id, gameName } = useParams()
   // const { openMenubar } = useSelector((state) => state.auth);
-  // const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
-  // const { isChatOpen } = useSelector((state) => state.chat);
+  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
+  const { isChatOpen } = useSelector((state) => state.chat);
   const decoded = decodedToken();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dropdownRef = useRef();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const menuItems = [
     { label: "Lobby", icon: <TbCherryFilled color="#b1bad3" fontSize={15} /> },
@@ -131,6 +132,22 @@ function CasinoHomePage() {
     setDropdown(false);
   };
 
+  const getMenuContainerClass = () => {
+    if (windowWidth <= 768) {
+      return isChatOpen || isBetslipOpen 
+        ? "w-[20rem]" 
+        : "w-[40rem]";
+    } else if (windowWidth <= 1024) {
+      return isChatOpen || isBetslipOpen
+        ? "w-[30rem]"
+        : "w-[45rem]";
+    } else {
+      return isChatOpen || isBetslipOpen
+        ? "w-[35rem]"
+        : "w-[90%]";
+    }
+  };
+
   return (
     <div className="flex flex-col md:flex-row justify-center bg-[#1a2c38] z-40">
       {loading ? (
@@ -138,17 +155,17 @@ function CasinoHomePage() {
       ) : (
         <div className={`text-white font-bold pt-6 container mx-auto`}>
           {/* <SlideBar /> */}
-          <div className="mt-8 md:mx-auto lg:mx-auto xl:mx-16 relative">
-            <input
-              className="border-2 rounded-full w-full md:w-auto xl:w-full lg:w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
-              value={search}
-              type="text"
-              placeholder="Search your game"
-              onChange={handleSearch}
-              onFocus={() => setDropdown(true)}
-            />
-            <div className="absolute left-0 top-0 pt-2.5 px-3 flex items-center cursor-pointer text-[#b1bad3]">
-              <SearchIcon />
+          <div className="px-4 md:px-8 pt-8 max-w-7xl mx-auto relative">
+        <div className="relative">
+          <input
+            className="border-2 rounded-full w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50] text-white"
+            value={search}
+            type="text"
+            placeholder="Search your game"
+            onChange={handleSearch}
+            onFocus={() => setDropdown(true)}
+          />
+          <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-[#557086]" />
             </div>
             {search && (
               <div
@@ -178,13 +195,15 @@ function CasinoHomePage() {
             )}
           </div>
 
-          <div className="flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 my-7 mx-auto md:w-[28rem] xl:w-[90%] lg:w-[38rem] scrollbar-thin">
-            <div className="bg-[#0f212e] flex rounded-full p-[5px] space-x-2 text-xs">
+          <div className={`flex overflow-x-auto overflow-y-hidden touch-scroll transform translate-z-0 my-7 mx-auto ${getMenuContainerClass()} scrollbar-thin`}>
+            <div className="bg-[#0f212e] flex rounded-full p-[5px] space-x-2 text-xs w-full">
               {menuItems.map((item) => (
                 <button
                   key={item.label}
-                  className={`py-2 px-5 rounded-full flex justify-center space-x-1.5 items-center ${stackMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                    }`}
+                  className={`py-2 px-3 md:px-5 rounded-full flex justify-center space-x-1.5 items-center whitespace-nowrap flex-shrink-0
+                    ${stackMenu === item.label ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"}
+                    ${windowWidth <= 768 && (isChatOpen || isBetslipOpen) ? 'text-[10px] px-2' : 'text-xs'}
+                  `}
                   onClick={() => setStackMenu(item.label)}
                 >
                   {item.icon}

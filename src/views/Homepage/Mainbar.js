@@ -11,6 +11,7 @@ import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import { decodedToken } from "../../resources/utility";
 import VIP from "../Profile/Vip";
 import { getMedalsProgress } from "../../services/LoginServices";
+import { useSelector } from "react-redux";
 
 function Mainbar() {
   const { userId } = useParams();
@@ -19,7 +20,8 @@ function Mainbar() {
   const [loading, setLoading] = useState(false);
   const [showVIP, setShowVIP] = useState(false);
   const decoded = decodedToken();
-
+  const { isBetslipOpen } = useSelector((state) => state.betslip);
+  const {isChatOpen} = useSelector((state) => state.chat)
   useEffect(() => {
     getUserProgress();
   }, [userId]);

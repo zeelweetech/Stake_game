@@ -25,7 +25,6 @@ const ChatApp = ({ onClose }) => {
 
   const decoded = decodedToken();
   const userId = decoded?.userId;
-  console.log(userId, "MMMMMMMMM");
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -36,19 +35,19 @@ const ChatApp = ({ onClose }) => {
   useEffect(() => {
     chatSocket.emit("joinCountry", selectedCountry.countryName);
     chatSocket.on("chatMessage", (newMessage) => {
-      console.log(">>>>>>>>", newMessage);
-      console.log("User  ID of the sender:", newMessage.userId);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
     chatSocket.on("changeCountryResponse", (newChat) => {
       setMessages(newChat);
     });
+    
     return () => {
       chatSocket.off("chatMessage");
       chatSocket.off("changeCountryResponse");
     };
   }, [selectedCountry]);
+  
   const sendMessage = () => {
     if (!userId) {
       console.log("User  Id is Not Available. Cannot Message Send");

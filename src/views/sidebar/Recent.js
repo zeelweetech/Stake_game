@@ -74,18 +74,18 @@ const Recent = () => {
         </div>
       </div>
       <div className="h-full w-full bg-[#1a2c38]">
-        <div className="flex justify-center items-center">
-          <div className="mt-8 md:mx-auto lg:mx-auto xl:mx-16 text-white font-bold pt-6 container mx-auto relative">
-            <input
-              className="border-2 rounded-full w-full md:w-auto xl:w-full lg:w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50]"
-              value={search}
-              type="text"
-              placeholder="Search your game"
-              onChange={handleSearch}
-              onFocus={() => setDropdown(true)}
-            />
-            <div className="absolute left-0 top-0 pt-9 px-3 flex items-center cursor-pointer text-[#557086]">
-              <SearchIcon />
+      <div className="px-4 md:px-8 pt-8 max-w-7xl mx-auto relative">
+        <div className="relative">
+          <input
+            className="border-2 rounded-full w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50] text-white"
+            value={search}
+            type="text"
+            placeholder="Search your game"
+            onChange={handleSearch}
+            onFocus={() => setDropdown(true)}
+          />
+          <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-[#557086]" />
+          {/* <SearchIcon /> */}
             </div>
             {search && (
               <div
@@ -126,7 +126,7 @@ const Recent = () => {
           </div>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 
