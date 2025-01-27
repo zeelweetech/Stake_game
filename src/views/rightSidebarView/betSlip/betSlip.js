@@ -212,7 +212,7 @@ function Betslip({ onClose }) {
                       onClick={() =>
                         console.log("Accept Only Higher Odds Clicked")
                       }
-                      className="text-gray-700 p-2 block text-sm text-start hover:bg-red-500 w-full"
+                      className="text-gray-700 p-2 block text-sm text-start hover:bg-[#B1BAD3] w-full"
                     >
                       Accept Only Higher Odds
                     </button>
@@ -220,7 +220,7 @@ function Betslip({ onClose }) {
                       onClick={() =>
                         console.log("No Odds Changes Accepted Clicked")
                       }
-                      className="text-gray-700 p-2 block text-sm  hover:bg-red-500 w-full"
+                      className="text-gray-700 p-2 block text-sm  hover:bg-[#B1BAD3] w-full"
                     >
                       No Odds Changes Accepted
                     </button>

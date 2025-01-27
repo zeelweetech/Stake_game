@@ -33,7 +33,10 @@ function MainHeader({ handleRightSidebarToggle }) {
   const { wallet } = useSelector((state) => state.auth);
   // const [tooltipOpen, setTooltipOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const { tooltipOpen } = useSelector((state) => state.auth);
+  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
+  const { isChatOpen } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
   const tooltipRef = useRef(null);
   const personIconRef = useRef(null);
@@ -47,6 +50,18 @@ function MainHeader({ handleRightSidebarToggle }) {
     isNotification: false,
     isLogoutDialog: false,
   });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -118,8 +133,10 @@ function MainHeader({ handleRightSidebarToggle }) {
             alt="Stake Logo"
             onClick={() => navigate("/casino/home")}
           /> */}
+
           <span
-            className="text-white text-3xl xl:text-3xl lg:text-3xl md:text-2xl font-extrabold italic font-sans transition active:scale-[0.98] select-none hover:cursor-pointer"
+            className={`text-white text-3xl xl:text-3xl lg:text-3xl md:text-2xl font-extrabold italic font-sans transition active:scale-[0.98] select-none hover:cursor-pointer
+               ${isBetslipOpen || isChatOpen ? "lg:block md:hidden " : ""}`}
             onClick={() => navigate("/")}
           >
             Listor
@@ -128,24 +145,10 @@ function MainHeader({ handleRightSidebarToggle }) {
             <button className="flex bg-[#0f212e] items-center space-x-1 px-2 py-2.5 md:px-[1rem] md:py-[0.8125rem] rounded-s text-white font-medium">
               <p className="text-sm">₹{wallet ? wallet : 0}</p>
             </button>
-            <button
-              className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r px-3 py-[0.5rem] md:px-[1rem] md:py-[0.8125rem] font-medium text-sm md:block hidden"
-              onClick={() => {
-                setProfilePopupOpen((prev) => ({
-                  ...prev,
-                  isWalletOpen: true,
-                }));
-                dispatch(setTooltipOpen(false));
-                setIsSidebarOpen(false);
-                dispatch(setAnchorEl(false));
-              }}
-            >
-              Wallet
-            </button>
-            <button className="md:hidden block w-10 h-10 bg-[#1475e1] hover:bg-[#396ca8] rounded-r-md p-2.5">
-              <img
-                src={walletIcon}
-                alt="Not found"
+
+            {screenWidth >= 1024 ? (
+              <button
+                className="bg-[#1475e1] hover:bg-[#396ca8] text-white rounded-r px-3 py-[0.5rem] md:px-[1rem] md:py-[0.8125rem] font-medium text-sm hidden lg:block"
                 onClick={() => {
                   setProfilePopupOpen((prev) => ({
                     ...prev,
@@ -155,8 +158,27 @@ function MainHeader({ handleRightSidebarToggle }) {
                   setIsSidebarOpen(false);
                   dispatch(setAnchorEl(false));
                 }}
-              />
-            </button>
+              >
+                Wallet
+              </button>
+            ) : screenWidth <= 768 && screenWidth >= 320 ? (
+              <button className="w-10 h-10 md:h-[2.9rem] bg-[#1475e1] hover:bg-[#396ca8] rounded-r-md p-2.5">
+                <img
+                  src={walletIcon}
+                  alt="Not found"
+                  onClick={() => {
+                    setProfilePopupOpen((prev) => ({
+                      ...prev,
+                      isWalletOpen: true,
+                    }));
+                    dispatch(setTooltipOpen(false));
+                    setIsSidebarOpen(false);
+                    dispatch(setAnchorEl(false));
+                  }}
+                />
+              </button>
+            ) : null}
+
             {profilePopupOpen.isWalletOpen && (
               <Wallet
                 closeWallet={() =>
@@ -171,7 +193,7 @@ function MainHeader({ handleRightSidebarToggle }) {
           <div className="text-white flex items-center space-x-0.4 md:space-x-6">
             <button className="flex items-center space-x-1.5 font-medium">
               <IoMdSearch className="text-sm w-10 h-6 md:text-base md:block hidden" />
-              <p className="md:block hidden text-sm md:text-base md:space-x-1">
+              <p className="hidden lg:block text-sm lg:text-base space-x-1">
                 Search
               </p>
             </button>
