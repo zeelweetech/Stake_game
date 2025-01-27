@@ -5,6 +5,7 @@ import nav from "../nav";
 import BetDrower from "./BottomDrower/BetDrower";
 import ChatDrower from "./BottomDrower/ChatDrawer";
 import SportsDrower from "./BottomDrower/SportsDrower";
+import ChatApp from "../views/rightSidebarView/chat/chatInRightSidebar";
 
 function MobileMenubar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

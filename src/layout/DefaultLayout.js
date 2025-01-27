@@ -102,7 +102,7 @@ function DefaultLayout() {
         className={`${isTablet ? `flex flex-col relative bg-[#1a2c38] z-30 h-full w-full ml-0 md:ml-14 lg:ml-14 xl:ml-0 transition-opacity ${openMenubar && "opacity-50"} duration-300 ease-in-out`
           : `flex flex-col relative bg-[#1a2c38] z-40 h-full
           ${!isMobile ? (openMenubar ? "w-[calc(100%-14%)] md:w-[calc(100%-19%)] lg:w-[calc(100%-15%)] ml-[14%] md:ml-[19%] lg:ml-[15%]" : "w-[calc(100%-3.5rem)] ml-14") : "ml-0 w-full"}
-        ${isBetslipOpen || isChatOpen ? "mr-[14%] md:mr-[65%] lg:mr-[46%] xl:mr-[24%] w-screen" : "mr-0 w-screen"}
+        ${isBetslipOpen || isChatOpen ? "mr-[14%] md:mr-[80%] lg:mr-[58%] xl:mr-[24%] w-screen" : "mr-0 w-screen"}
         transition-all duration-300 ease-in-out`}`}
       >
         {localStorage.getItem("token") ? (
@@ -132,7 +132,7 @@ function DefaultLayout() {
       {!isMobile && (isBetslipOpen || isChatOpen) && (
         <div
           className={`relative lg:relative md:relative xl:fixed right-0 text-white overflow-hidden
-            ${isBetslipOpen || isChatOpen ? "w-72 md:w-[65%] lg:w-[46%] xl:w-[24%]" : "w-0"}
+            ${isBetslipOpen || isChatOpen ? "w-72 md:w-[80%] lg:w-[58%] xl:w-[24%]" : "w-0"}
             transition-all duration-300 ease-in-out z-50`}
         >
           <RightSidebar
