@@ -28,6 +28,7 @@ function DragonContent() {
   const [cashoutResult, setCashoutResult] = useState(null);
   const [cashoutVisible, setCashoutVisible] = useState(false);
   const [fundsToastShown, setFundsToastShown] = useState(false);
+  const [showautoBetResult, setShowautoBetResult] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const gameOverProcessedRef = useRef(false);
   const {
@@ -41,7 +42,8 @@ function DragonContent() {
     clickedBoxes,
     restorData,
     preSelectTile,
-    dragonAutoBetResult
+    dragonAutoBetResult,
+    autoBetOnClick
   } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
@@ -224,10 +226,30 @@ function DragonContent() {
     console.log('data', data);
     console.log('preSelectTile ', preSelectTile);
 
-    dispatch(setDragonAutoBetResult(data))
 
     if (data?.currentBet === 1 && data?.currentBet >= 1) {
       dispatch(setAutoBetOnClick(false));
+    }
+    // handleGameOverResult();
+
+    if (data?.currentBet >= 1) {
+      setTimeout(() => {
+        dispatch(setDragonAutoBetResult(data))
+        if ((cashoutResult && !gameBet) ||
+          (dragonAutoBetResult?.result?.status === "won" && dragonAutoBetResult?.currentBet >= 1)
+        ) {
+          setShowautoBetResult(true);
+
+          const timeout = setTimeout(() => {
+            setShowautoBetResult(false);
+          }, 2000);
+
+          return () => clearTimeout(timeout);
+        }
+        setTimeout(() => {
+          dispatch(setDragonAutoBetResult())
+        }, 2000);
+      }, 1000);
     }
   });
 
@@ -364,6 +386,22 @@ function DragonContent() {
               </div>
             </div>
           )}
+          {showautoBetResult && dragonAutoBetResult?.result?.status === "won" && (
+            <div className="xl:mt-80 lg:mt-80 md:mt-56 mt-52 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
+              <p className="text-3xl font-medium">{cashoutResult?.multiplier}x</p>
+              <div className="flex items-center justify-center space-x-1">
+                <p>
+                  {cashoutResult?.winAmount
+                    ? cashoutResult.winAmount.toFixed(2)
+                    : dragonAutoBetResult?.result?.winAmount
+                      ? dragonAutoBetResult?.result?.winAmount.toFixed(2)
+                      : "0.00"}
+                  ₹
+                </p>
+                {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
+              </div>
+            </div>
+          )}
           <div
             className={`flex flex-col xl:gap-3 lg:gap-3 md:gap-2 gap-3 bg-[#182433] xl:w-[30.6rem] lg:w-[30.58rem] lg:h-[30rem] md:w-[18.8rem] p-3 xl:mt-[-31.2rem] lg:mt-[-31.2rem] md:mt-[-23rem] md:h-[22rem] md:mx-[3.1rem] w-[19.6rem] h-[21.2rem] -mt-[22.2rem] border-2 border-gray-800 shadow-lg`}
           >
@@ -376,17 +414,11 @@ function DragonContent() {
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
                   const isHighlighted = !isManual && preSelectTile[rowIndex] === boxIndex;
 
-                  // const abcdefg = preSelectTile.map((data) => {
-                  //   console.log('abcdefg0', data);
-                  //   return data.key;
-                  // });
-                  const abc = preSelectTile[boxIndex] === dragonAutoBetResult?.result?.lostIndex?.value
-                  const isLostIndex = !isManual 
-                  // && preSelectTile[boxIndex] === dragonAutoBetResult?.result?.lostIndex?.value
-                  && abc ? preSelectTile[rowIndex] === dragonAutoBetResult?.result?.lostIndex?.value : false;
-                  
-                  // console.log("rowIndex.toString()", rowIndex.toString());
-                  // console.log("boxIndex", boxIndex);
+                  const lostIndex = dragonAutoBetResult?.result?.lostIndex;
+                  const shouldShowSkullImage =
+                    lostIndex &&
+                    preSelectTile[rowIndex] === lostIndex.value &&
+                    parseInt(lostIndex.key) === rowIndex
 
                   const imageToShow = isHighlighted
                     ? null
@@ -401,7 +433,9 @@ function DragonContent() {
                         ? eggImage
                         : isSelected
                           ? eggImage
-                          : isLostIndex ? skullImage : Boxsvg;
+                          : shouldShowSkullImage ? skullImage
+                            : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || isSelected || rowIndex === gameOverResult?.skullRowIndex ? eggImage
+                              : Boxsvg;
                   const isRowActive = isManual && gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
                   boxElements.push(
                     <div
@@ -425,9 +459,9 @@ function DragonContent() {
                         }  ${isRowActive && isManual
                           ? "bg-[#00e701]"
                           : "bg-[#213743]"
-                        } ${!isManual && preSelectTile[rowIndex] === boxIndex
+                        } ${!isManual && preSelectTile[rowIndex] === boxIndex && !autoBetOnClick
                           ? "bg-[#9000ff] border-2 border-[#7100c7]"
-                          : ""
+                          : "bg-[#213743]"
                         }`}
                       onClick={() => handleBoxClick(rowIndex, boxIndex)}
                     >
