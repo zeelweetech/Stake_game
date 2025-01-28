@@ -215,6 +215,8 @@ function DragonContent() {
   };
 
   DragonTowerSocket.on("cashoutSuccess", (data) => {
+    console.log("cashoutSuccess data", data);
+
     setCashoutResult(data);
     setCashoutVisible(true);
     dispatch(setTileSelected({}));
@@ -223,14 +225,8 @@ function DragonContent() {
   });
 
   DragonTowerSocket.on("autoBetResult", (data) => {
-    console.log('data', data);
-    console.log('preSelectTile ', preSelectTile);
-
-
-    if (data?.currentBet === 1 && data?.currentBet >= 1) {
-      dispatch(setAutoBetOnClick(false));
-    }
-    // handleGameOverResult();
+    console.log('data', data?.result?.lostIndex);
+    // console.log('preSelectTile ', preSelectTile)
 
     if (data?.currentBet >= 1) {
       setTimeout(() => {
@@ -247,9 +243,12 @@ function DragonContent() {
           return () => clearTimeout(timeout);
         }
         setTimeout(() => {
+          if (data?.currentBet === 1 && data?.currentBet >= 1) {
+            dispatch(setAutoBetOnClick(false));
+          }
           dispatch(setDragonAutoBetResult())
         }, 2000);
-      }, 1000);
+      });
     }
   });
 
@@ -352,6 +351,17 @@ function DragonContent() {
   const eggImage = EggImages(values.difficulty);
   const skullImage = SkullImages(values.difficulty);
 
+  const getRandomEggImageIndices = (boxesPerRow) => {
+    const indices = [];
+    while (indices.length < 2) {
+      const randomIndex = Math.floor(Math.random() * boxesPerRow);
+      if (!indices.includes(randomIndex)) {
+        indices.push(randomIndex);
+      }
+    }
+    return indices;
+  };
+
   return (
     <div
       className={`dragonBackImage max-sm:mx-3 flex flex-col items-center bg-cover ${isMobile ? "rounded-t-lg" : "rounded-tr-lg"
@@ -409,6 +419,8 @@ function DragonContent() {
               const rowElements = [];
               for (let rowIndex = rows - 1; rowIndex >= 0; rowIndex--) {
                 const boxElements = [];
+                const eggImageIndices = getRandomEggImageIndices(boxesPerRow)
+
                 for (let boxIndex = 0; boxIndex < boxesPerRow; boxIndex++) {
                   const isRestoredEgg = restorData[rowIndex]?.[boxIndex] === 1;
                   const isSelected = clickedBoxes[rowIndex] === boxIndex;
@@ -418,24 +430,26 @@ function DragonContent() {
                   const shouldShowSkullImage =
                     lostIndex &&
                     preSelectTile[rowIndex] === lostIndex.value &&
-                    parseInt(lostIndex.key) === rowIndex
+                    parseInt(lostIndex.key) === rowIndex 
+                    // preSelectTile[rowIndex] === lostIndex.value;
 
-                  const imageToShow = isHighlighted
-                    ? null
-                    : isGameOver
-                      ? rowIndex === gameOverResult?.skullRowIndex &&
-                        boxIndex === gameOverResult?.skullBoxIndex
-                        ? skullImage
-                        : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || isSelected || rowIndex === gameOverResult?.skullRowIndex
-                          ? eggImage
-                          : Boxsvg
-                      : isRestoredEgg
-                        ? eggImage
-                        : isSelected
-                          ? eggImage
-                          : shouldShowSkullImage ? skullImage
-                            : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || isSelected || rowIndex === gameOverResult?.skullRowIndex ? eggImage
-                              : Boxsvg;
+                  const imageToShow = shouldShowSkullImage ? skullImage
+                    : eggImageIndices.includes(boxIndex) && !isManual && autoBetOnClick
+                      ? eggImage
+                      : (isHighlighted
+                        ? null
+                        : isGameOver
+                          ? rowIndex === gameOverResult?.skullRowIndex &&
+                            boxIndex === gameOverResult?.skullBoxIndex
+                            ? skullImage
+                            : gameOverResult?.eggRows[rowIndex]?.includes(boxIndex) || isRestoredEgg || isSelected || rowIndex === gameOverResult?.skullRowIndex
+                              ? eggImage
+                              : Boxsvg
+                          : isRestoredEgg
+                            ? eggImage
+                            : isSelected
+                              ? eggImage
+                              : Boxsvg)
                   const isRowActive = isManual && gameBet && (rowIndex === 0 || clickedBoxes[rowIndex - 1] !== undefined);
                   boxElements.push(
                     <div
@@ -461,7 +475,7 @@ function DragonContent() {
                           : "bg-[#213743]"
                         } ${!isManual && preSelectTile[rowIndex] === boxIndex && !autoBetOnClick
                           ? "bg-[#9000ff] border-2 border-[#7100c7]"
-                          : "bg-[#213743]"
+                          : autoBetOnClick && preSelectTile[rowIndex] === boxIndex && "bg-[#213743]"
                         }`}
                       onClick={() => handleBoxClick(rowIndex, boxIndex)}
                     >
