@@ -103,7 +103,7 @@ const AllBets = () => {
   }));
 
   return (
-    <div className={`w-full px-4 ${windowWidth <= 1024 && (isChatOpen || isBetslipOpen) ? 'max-w-[600px]' : ''}`}>
+    <div className={`w-full ${windowWidth <= 1024 && (isChatOpen || isBetslipOpen) ? 'max-w-[600px]' : ''}`}>
       {loading ? (
         <div className="flex justify-center items-center min-h-[200px]">
           <Loader />
@@ -125,7 +125,7 @@ const AllBets = () => {
           <p className="text-sm text-gray-400 mt-2">No bets have been placed yet</p>
         </div>
       ) : (
-        <div className="rounded-lg overflow-hidden bg-[#1a2c38] shadow-lg">
+        <div className="rounded-lg overflow-hidden bg-[#1a2c38] shadow-lg overflow-y-hidden touch-scroll transform translate-z-0 scrollbar-thin">
           <DataGrid
             rows={rows}
             columns={getResponsiveColumns()}

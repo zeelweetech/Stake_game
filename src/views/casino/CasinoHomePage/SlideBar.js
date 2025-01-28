@@ -20,8 +20,8 @@ function SlideBar() {
 
   const [LearnMore, setLearnMore] = useState(false);
   const [Racenow, setRaceNow] = useState(false);
-  const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false);
-  const [isRightDrawerOpen, setIsRightDrawerOpen] = useState(false);
+  // const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false);
+  // const [isRightDrawerOpen, setIsRightDrawerOpen] = useState(false);
   const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
   const { openMenubar } = useSelector((state) => state.auth);
@@ -132,23 +132,24 @@ function SlideBar() {
     setRaceNow(false);
   };
 
-  const toggleLeftDrawer = () => {
-    setIsLeftDrawerOpen(!isLeftDrawerOpen);
-  };
+  // const toggleLeftDrawer = () => {
+  //   setIsLeftDrawerOpen(!isLeftDrawerOpen);
+  // };
 
-  const toggleRightDrawer = () => {
-    setIsRightDrawerOpen(!isRightDrawerOpen);
-  };
+  // const toggleRightDrawer = () => {
+  //   setIsRightDrawerOpen(!isRightDrawerOpen);
+  // };
 
   return (
-    <div className={`lg:px-3 xl:px-3 ${isBetslipOpen || isChatOpen && openMenubar ? "max-w-[53rem]" : "max-w-screen-xl"}`}>
-
-      <div className="flex items-center">
+    <div className={`${isBetslipOpen || isChatOpen ? "max-w-[53rem] pr-4" : ""} mx-auto`}>
+      <div className="flex items-center justify-center">
         <Swiper
           navigation={true}
           modules={[Navigation]}
           slidesPerView={3}
           slidesPerGroup={3}
+          spaceBetween={0}
+          className="w-full"
           onSlideChange={(swiper) => {
             setSwiperState({
               isBeginning: swiper.isBeginning,
@@ -156,19 +157,35 @@ function SlideBar() {
             });
           }}
           breakpoints={{
-            1536: { slidesPerView: 3, slidesPerGroup: 3 },
-            1280: { slidesPerView: 3, slidesPerGroup: 3 },
-            1024: { slidesPerView: 2, slidesPerGroup: 2 },
-            768: { slidesPerView: 2, slidesPerGroup: 2 },
+            1536: { 
+              slidesPerView: 3,
+              slidesPerGroup: 3,
+              spaceBetween: 8
+            },
+            1280: { 
+              slidesPerView: 3,
+              slidesPerGroup: 3,
+              spaceBetween: 8
+            },
+            1024: { 
+              slidesPerView: isBetslipOpen || isChatOpen ? 2 : 2,
+              slidesPerGroup: 2,
+              spaceBetween: 8
+            },
+            768: { 
+              slidesPerView: 2,
+              slidesPerGroup: 2,
+              spaceBetween: 8
+            },
             425: { slidesPerView: 1, slidesPerGroup: 1 },
             375: { slidesPerView: 1, slidesPerGroup: 1 },
-            320: { slidesPerView: 1, slidesPerGroup: 1 },
+            320: { slidesPerView: 1, slidesPerGroup: 1 }
           }}
         >
           {promoGame.map((Data, index) => (
-            <SwiperSlide key={index} className="pl-2">
-              <div className="flex flex-col md:flex-row justify-between items-center bg-[#213743] w-full h-auto md:h-[13.75rem] pl-4 rounded-md hover:cursor-pointer">
-                <div className="flex flex-col space-y-4 justify-around w-full md:w-44">
+            <SwiperSlide key={index} className="flex justify-center">
+              <div className="flex flex-col md:flex-row justify-between items-center bg-[#213743] w-full h-auto md:h-[13.75rem] rounded-md hover:cursor-pointer">
+                <div className="flex flex-col space-y-4 justify-around w-full md:w-44 p-4">
                   <div>
                     <button className="bg-white text-black text-sm font-semibold px-1 rounded-sm">
                       Promo
@@ -185,7 +202,7 @@ function SlideBar() {
                     {Data.gameButton}
                   </button>
                 </div>
-                <div className="flex justify-center">
+                <div className="flex justify-center p-4">
                   <img
                     src={Data.gameImage}
                     className="w-full h-auto md:w-48 md:h-48 rounded-md"
@@ -330,7 +347,7 @@ function SlideBar() {
             </div>
 
             <p className="text-base font-normal text-[#B1BAD3] leading-6 mt-3 p-1">
-              Join Stake’s $10m Christmas Race! Over the next 30 days, every bet
+              Join Stake's $10m Christmas Race! Over the next 30 days, every bet
               you place - whether in sports or casino - helps you climb the
               leaderboard and secure a spot among the top 25,000 racers. The
               higher you rank, the bigger your prize! Once the race ends, all

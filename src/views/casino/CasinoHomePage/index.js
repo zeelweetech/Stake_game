@@ -153,8 +153,8 @@ function CasinoHomePage() {
       {loading ? (
         <Loader />
       ) : (
-        <div className={`text-white font-bold pt-6 container mx-auto`}>
-          {/* <SlideBar /> */}
+        <div className={`text-white font-bold pt-6 container`}>
+          <SlideBar />
           <div className="px-4 md:px-8 pt-8 max-w-7xl mx-auto relative">
         <div className="relative">
           <input
@@ -169,7 +169,7 @@ function CasinoHomePage() {
             </div>
             {search && (
               <div
-                className="absolute right-0 top-0 pt-1 px-3 flex items-center cursor-pointer text-[#557086]"
+                className="absolute right-7 top-8 pt-1 px-3 flex items-center cursor-pointer text-[#557086]"
               >
                 <IconButton onClick={clearSearch} sx={{ color: "white" }}>
                   <CloseIcon fontSize="small" />

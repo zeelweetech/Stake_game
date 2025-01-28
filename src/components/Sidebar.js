@@ -39,6 +39,8 @@ function Sidebar({ handleDrawerToggle, handleMenuOpen }) {
         window.innerWidth <= 1024
       ) {
         handleDrawerToggle(false);
+        // setDropdownVisible(null);
+
       }
     };
 
@@ -50,13 +52,13 @@ function Sidebar({ handleDrawerToggle, handleMenuOpen }) {
 
   return (
     <div
-      ref={sidebarRef}
+      
       className={`${
         openMenubar ? "block" : "hidden md:block"
       } md:bg-none overflow-x-hidden`}
     >
       <div className="h-[3.7rem] px-1 py-2 shadow-2xl shadow-black">
-        <div className="flex items-center">
+        <div className="flex items-center"ref={sidebarRef}>
           <button
             onClick={() => {
               handleDrawerToggle();
