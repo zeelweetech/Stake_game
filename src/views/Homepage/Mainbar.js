@@ -21,7 +21,7 @@ function Mainbar() {
   const [showVIP, setShowVIP] = useState(false);
   const decoded = decodedToken();
   const { isBetslipOpen } = useSelector((state) => state.betslip);
-  const {isChatOpen} = useSelector((state) => state.chat)
+  const { isChatOpen } = useSelector((state) => state.chat);
   useEffect(() => {
     getUserProgress();
   }, [userId]);
@@ -43,7 +43,11 @@ function Mainbar() {
   return (
     <div className="w-full">
       <div
-        className="h-auto flex flex-col lg:flex-row justify-evenly items-center p-4"
+        className={`h-auto flex flex-col lg:flex-row justify-evenly items-center p-4 ${
+          isBetslipOpen || isChatOpen
+            ? "flex xl:flex-row lg:flex-col md:flex-col gap-y-5"
+            : ""
+        }`}
         style={{
           backgroundImage: `url(${mainbarBGimage})`,
           backgroundSize: "cover",
@@ -58,16 +62,12 @@ function Mainbar() {
           }}
           className="mb-6 lg:mb-0"
         >
-          <div className="bg-[#0f212e] xl:w-[20.5rem] w-[22rem] md:w-80 p-5 border border-[#2f4553]">
+          <div className="bg-[#0f212e] xl:w-[20.5rem] w-[22rem] md:w-96 p-6 border border-[#2f4553]">
             <div className="flex justify-between font-semibold cursor-default items-center">
               <p>{progressData?.userName || "User"}</p>
               <FaRegStar size={22} color="#2f4553" />
             </div>
             <div className="flex justify-between mt-10">
-              {/* <div className="flex items-center space-x-2.5">
-                <Link className="text-sm font-medium">Your VIP Progress</Link>
-                <FaArrowRight size={13} className="mt-1" color="#b1bad3" />
-              </div> */}
               <div
                 className="flex items-center space-x-2.5 cursor-pointer group"
                 onClick={handleToggle}
@@ -158,7 +158,11 @@ function Mainbar() {
           </div>
         </div>
 
-        <div className="flex md:flex-row md:space-x-1 md:space-y-0">
+        <div
+          className={`flex md:flex-row md:space-x-1 md:space-y-0 ${
+            isBetslipOpen || isChatOpen ? "flex flex-row" : ""
+          } `}
+        >
           <div
             className="bg-[#1a2c38] h-full hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px] mx-3"
             onClick={() => navigate("/casino/home")}

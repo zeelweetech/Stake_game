@@ -235,11 +235,12 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
           {isVisible && (
             <div
               className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70"
-              // onClick={(e) => {
-              //   if (e.target === e.currentTarget) {
-              //     // handleCloseHotkeys();
-              //   }
-              // }}
+              onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                  setIsVisible(false);
+                  // handleCloseHotkeys();
+                }
+              }}
             >
               <div className="bg-[#1a2c38] text-white rounded-xl w-[93%] relative">
                 <div className="flex justify-between items-center p-4">
@@ -258,7 +259,7 @@ const ChatDrawer = ({ openChat, onCloseChat }) => {
                   <button
                     className="text-gray-400 hover:text-white w-5 h-5"
                     aria-label="Close"
-                    // onClick={handleCloseHotkeys}
+                    onClick={() => setIsVisible(false)}
                   >
                     ✖
                   </button>

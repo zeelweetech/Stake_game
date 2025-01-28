@@ -421,9 +421,9 @@ function MainHeader({ handleRightSidebarToggle }) {
                 onClick={handleMenuOpen}
                 data-menu-type="notifications"
               >
-                <Badge color="success" variant="dot">
-                  <NotificationsIcon className="text-white" fontSize="small" />
-                </Badge>
+                {/* <Badge color="success" variant="dot"> */}
+                <NotificationsIcon className="text-white" fontSize="small" />
+                {/* </Badge> */}
               </IconButton>
               <Notification />
             </div>

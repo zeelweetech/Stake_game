@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Loader from "../../component/Loader";
 // import { BiSolidNotepad } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import { DialogContent } from "@mui/material";
+// import { Link } from "react-router-dom";
+// import { DialogContent } from "@mui/material";
 import MyBets from "../../component/GameTable/MyBets";
 import Sports from "./Sports";
 import AllBets from "../../component/GameTable/AllBets";
@@ -10,11 +10,11 @@ import { useSelector } from "react-redux";
 import { ReactComponent as BetSlip } from "../../../assets/svg/BetSlip.svg";
 
 function MyBet() {
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [gameMenu, setGameMenu] = useState("Casino");
   const [isGameMenu, setIsGameMenu] = useState("AllBets");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  
+
   const { isBetslipOpen } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
   const { openMenubar } = useSelector((state) => state.auth);
@@ -24,21 +24,20 @@ function MyBet() {
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const getContainerClass = () => {
     if (windowWidth <= 768) {
-      return isChatOpen || isBetslipOpen ? 'w-[90%]' : 'w-full';
+      return isChatOpen || isBetslipOpen ? "w-[90%]" : "w-full";
     }
-    return openMenubar ? 'lg:w-[70%] xl:w-[85%] md:w-[80%]' : 'lg:w-[80%] xl:w-[90%] md:w-[85%]';
+    return openMenubar
+      ? "lg:w-[70%] xl:w-[85%] md:w-[80%]"
+      : "lg:w-[80%] xl:w-[90%] md:w-[85%]";
   };
 
-  const menuItems = [
-    { label: "Casino" }, 
-    { label: "Sports" }
-  ];
+  const menuItems = [{ label: "Casino" }, { label: "Sports" }];
 
   const subMenuItems = [
     { label: "AllBets" },
@@ -53,7 +52,9 @@ function MyBet() {
           <Loader />
         </div>
       ) : (
-        <div className={`text-white font-bold pt-6 ${getContainerClass()} mx-auto px-4`}>
+        <div
+          className={`text-white font-bold pt-6 ${getContainerClass()} mx-auto px-4`}
+        >
           {/* Header */}
           <div className="flex items-center space-x-2 mb-6">
             <BetSlip className="w-5 h-5 text-[#b1bad3]" />
@@ -72,9 +73,10 @@ function MyBet() {
                       <button
                         key={item.label}
                         className={`py-2 px-4 rounded-full text-sm transition-colors
-                          ${gameMenu === item.label 
-                            ? "bg-[#4d718768] text-white" 
-                            : "text-[#b1bad3] hover:bg-[#4d718768] hover:text-white"
+                          ${
+                            gameMenu === item.label
+                              ? "bg-[#4d718768] text-white"
+                              : "text-[#b1bad3] hover:bg-[#4d718768] hover:text-white"
                           }`}
                         onClick={() => setGameMenu(item.label)}
                       >
@@ -101,9 +103,10 @@ function MyBet() {
                       <button
                         key={item.label}
                         className={`py-2 px-2 rounded-full text-sm transition-colors
-                          ${isGameMenu === item.label 
-                            ? "bg-[#4d718768] text-white" 
-                            : "text-[#b1bad3] hover:bg-[#4d718768] hover:text-white"
+                          ${
+                            isGameMenu === item.label
+                              ? "bg-[#4d718768] text-white"
+                              : "text-[#b1bad3] hover:bg-[#4d718768] hover:text-white"
                           }`}
                         onClick={() => setIsGameMenu(item.label)}
                       >
