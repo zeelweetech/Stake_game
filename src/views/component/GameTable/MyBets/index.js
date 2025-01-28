@@ -122,7 +122,7 @@ const MyBets = () => {
   }));
 
   return (
-    <div className={`${getContainerClass()} mx-auto px-4`}>
+    <div className={`${getContainerClass()} mx-auto`}>
       {loading ? (
         <div className="flex justify-center items-center min-h-[200px]">
           <Loader />
@@ -145,7 +145,7 @@ const MyBets = () => {
         </div>
       ) : (
         <div className="space-y-4">
-          <div className="rounded-lg overflow-hidden bg-[#1a2c38] shadow-lg">
+          <div className="rounded-lg overflow-hidden bg-[#1a2c38] shadow-lg overflow-y-hidden touch-scroll transform translate-z-0 scrollbar-thin">
             <DataGrid
               rows={rows}
               columns={getResponsiveColumns()}

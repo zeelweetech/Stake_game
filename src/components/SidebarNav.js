@@ -76,6 +76,14 @@ export const SidebarNav = ({ items, toggleSidebar, dropdownVisible, setDropdownV
     </li>
   );
 
+  const handleProfileItemClick = () => {
+    // Close sidebar and dropdown on profile item click for 1024px screens
+    if (window.innerWidth <= 1024) {
+      // toggleSidebar();
+      setDropdownVisible(false);
+    }
+  };
+
   // thirdGroup profile view
   const navItem = (item, index, indent = false) => {
     const { name, badge, icon, dropdown, ...rest } = item;
@@ -124,7 +132,14 @@ export const SidebarNav = ({ items, toggleSidebar, dropdownVisible, setDropdownV
                   className="block w-full px-4 py-2 hover:bg-[#2F4553] transition-colors rounded-md cursor-pointer"
                 >
                   {dropdownItem.name === "Setting" ? (
-                    <Link to={dropdownItem.to} className="flex items-center" onClick={() => dispatch(setTooltipOpen(false))}>
+                    <Link 
+                      to={dropdownItem.to} 
+                      className="flex items-center" 
+                      onClick={() => {
+                        dispatch(setTooltipOpen(false));
+                        handleProfileItemClick();
+                      }}
+                    >
                       {dropdownItem.icon && (
                         <span className="mr-2 inline-block">
                           {dropdownItem.icon}
@@ -136,8 +151,9 @@ export const SidebarNav = ({ items, toggleSidebar, dropdownVisible, setDropdownV
                     <button
                       data-menu-type="notifications"
                       onClick={(event) => {
-                        dispatch(setAnchorEl(event.currentTarget))
+                        dispatch(setAnchorEl(event.currentTarget));
                         dispatch(setTooltipOpen(false));
+                        handleProfileItemClick();
                       }}
                       className="flex items-center"
                     >
@@ -147,18 +163,22 @@ export const SidebarNav = ({ items, toggleSidebar, dropdownVisible, setDropdownV
                       <span>{dropdownItem.name}</span>
                     </button>
                   ) : (
-                    <button onClick={() => {
-                      setProfilePopupOpen((prev) => ({
-                        ...prev,
-                        isWalletOpen: dropdownItem.name === "Wallet",
-                        isVaultOpen: dropdownItem.name === "Vault",
-                        isVipOpen: dropdownItem.name === "VIP",
-                        isStatistic: dropdownItem.name === "Statistics",
-                        isLogoutDialog: dropdownItem.name === "Logout",
-                        isNotification: dropdownItem.name === "Notification",
-                      }))
-                      dispatch(setTooltipOpen(false));
-                    }} className="flex items-center">
+                    <button 
+                      onClick={() => {
+                        setProfilePopupOpen((prev) => ({
+                          ...prev,
+                          isWalletOpen: dropdownItem.name === "Wallet",
+                          isVaultOpen: dropdownItem.name === "Vault",
+                          isVipOpen: dropdownItem.name === "VIP",
+                          isStatistic: dropdownItem.name === "Statistics",
+                          isLogoutDialog: dropdownItem.name === "Logout",
+                          isNotification: dropdownItem.name === "Notification",
+                        }));
+                        dispatch(setTooltipOpen(false));
+                        handleProfileItemClick();
+                      }} 
+                      className="flex items-center"
+                    >
                       {dropdownItem.icon && (
                         <span className="mr-2 inline-block">
                           {dropdownItem.icon}
