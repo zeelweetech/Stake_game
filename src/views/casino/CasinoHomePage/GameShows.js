@@ -191,10 +191,7 @@ function GameShows({ allGames, isLobby }) {
                     <div className="text-center">
                       <img
                         src={gameShows.gameImage}
-                        className={`${
-                          windowWidth <= 425 
-                            ? 'w-24 h-32' 
-                            : 'xl:w-48 lg:w-36 lg:h-48 xl:h-64'
+                        className={`${'xl:w-48 lg:w-36 lg:h-48 xl:h-64'
                         } rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]`}
                         alt="Not Found"
                         onClick={() => handleAllGame(gameShows?.gameName, gameShows?.id)}
