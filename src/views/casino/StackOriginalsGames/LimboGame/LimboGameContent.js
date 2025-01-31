@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import { RiMoneyRupeeCircleFill } from "react-icons/ri";
-import { LimboSocket } from "../../../../socket";
+// import { LimboSocket } from "../../../../socket";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setLimboStatusData,
@@ -16,7 +16,7 @@ import { decodedToken } from "../../../../resources/utility";
 import limboGameResult from "../../../../assets/Sound/limboGameResult.wav"
 import limboGameWin from "../../../../assets/Sound/limboGameWin.wav"
 
-function LimboGameContent() {
+function LimboGameContent({limboGameSocket}) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const decoded = decodedToken();
@@ -25,25 +25,25 @@ function LimboGameContent() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [topXData, setTopXData] = useState([]);
 
-  useEffect(() => {
-    LimboSocket.emit("joinGame", {
-      userId: decoded?.userId,
-      gameId: id,
-    });
-  }, []);
+  // useEffect(() => {
+  //   limboGameSocket.emit("joinGame", {
+  //     userId: decoded?.userId,
+  //     gameId: id,
+  //   });
+  // }, []);
 
-  LimboSocket.on("limbobetResult", (data) => {
+  limboGameSocket.on("limbobetResult", (data) => {
     dispatch(setLimboStatusData(data));
 
       // const audio = new Audio(limboGameResult);
       // audio.play();
   });
 
-  LimboSocket.on("walletBalance", (data) => {
+  limboGameSocket.on("walletBalance", (data) => {
     dispatch(setWallet(data?.walletBalance));
   });
 
-  LimboSocket.on("autoBetStop", (data) => {
+  limboGameSocket.on("autoBetStop", (data) => {
     dispatch(setStopAutoBet(false));
   });
 
@@ -92,7 +92,7 @@ function LimboGameContent() {
           clearInterval(interval);
           GetRendomFiveData();
 
-          LimboSocket.emit("betCompleted", {
+          limboGameSocket.emit("betCompleted", {
             betId: limboStatusData?.betId,
             userId: decoded?.userId,
           });

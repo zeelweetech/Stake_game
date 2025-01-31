@@ -9,14 +9,14 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { decodedToken } from "../../../resources/utility";
-import {
-  CrashSocket,
-  DragonTowerSocket,
-  LimboSocket,
-  MineSocket,
-  PlinkoSocket,
-  WheelSocket,
-} from "../../../socket";
+// import {
+//   CrashSocket,
+//   DragonTowerSocket,
+//   LimboSocket,
+//   MineSocket,
+//   PlinkoSocket,
+//   WheelSocket,
+// } from "../../../socket";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllGames } from "../../../services/GameServices";
 import { setAllGame } from "../../../features/casino/allGameSlice";
@@ -36,41 +36,42 @@ function StackOriginals({ isLobby }) {
     setLoading(true);
     navigate(`/casino/${gameName}/${id}`);
     
-    switch (gameName) {
-      case "Crash":
-        return CrashSocket.emit("joinGame", {
-          userId: decoded?.userId,
-          gameId: id,
-        });
-      case "Plinko":
-        return PlinkoSocket.emit("joinGame", {
-          userId: decoded?.userId,
-          gameId: id,
-        });
-      case "Mines":
-        return MineSocket.emit("joinGame", {
-          userId: decoded?.userId,
-          gameId: id,
-        });
-      case "DragonTower":
-        return DragonTowerSocket.emit("joinGame", {
-          userId: decoded?.userId,
-          gameId: id,
-        });
-      case "Limbo":
-        return LimboSocket.emit("joinGame", {
-          userId: decoded?.userId,
-          gameId: id,
-        });
-      case "Wheel":
-        return WheelSocket.emit("joinGame", {
-          userId: decoded?.userId,
-          gameId: id,
-        });
-      default:
-        break;
-    }
+    // switch (gameName) {
+    //   case "Crash":
+    //     return CrashSocket.emit("joinGame", {
+    //       userId: decoded?.userId,
+    //       gameId: id,
+    //     });
+    //   case "Plinko":
+    //     return PlinkoSocket.emit("joinGame", {
+    //       userId: decoded?.userId,
+    //       gameId: id,
+    //     });
+    //   case "Mines":
+    //     return MineSocket.emit("joinGame", {
+    //       userId: decoded?.userId,
+    //       gameId: id,
+    //     });
+    //   case "DragonTower":
+    //     return DragonTowerSocket.emit("joinGame", {
+    //       userId: decoded?.userId,
+    //       gameId: id,
+    //     });
+    //   case "Limbo":
+    //     return LimboSocket?.emit("joinGame", {
+    //       userId: decoded?.userId,
+    //       gameId: id,
+    //     });
+    //   case "Wheel":
+    //     return WheelSocket.emit("joinGame", {
+    //       userId: decoded?.userId,
+    //       gameId: id,
+    //     });
+    //   default:
+    //     break;
+    // }
   };
+
   useEffect(() => {
     GetAllGames();
   }, []);

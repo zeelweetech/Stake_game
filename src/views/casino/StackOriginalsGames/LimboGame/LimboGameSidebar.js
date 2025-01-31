@@ -14,13 +14,13 @@ import {
   setWallet,
 } from "../../../../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { LimboSocket } from "../../../../socket";
+// import { LimboSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import toast from "react-hot-toast";
 import { getWallet } from "../../../../services/LoginServices";
 import limjboGameBet from "../../../../assets/Sound/limjboGameBet.wav"
 
-function LimboGameSidebar() {
+function LimboGameSidebar({limboGameSocket}) {
   const dispatch = useDispatch();
   const decoded = decodedToken();
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
@@ -58,7 +58,7 @@ function LimboGameSidebar() {
         // dispatch(setCompleteBetStatus(false));
       }
     };
-    LimboSocket.on("Insufficientfund", handleInsufficientFunds);
+    limboGameSocket.on("Insufficientfund", handleInsufficientFunds);
 
     const resetToastFlag = () => {
       setFundsToastShown(false);
@@ -66,11 +66,11 @@ function LimboGameSidebar() {
 
     return () => {
       resetToastFlag();
-      LimboSocket.off("Insufficientfund", handleInsufficientFunds);
+      limboGameSocket.off("Insufficientfund", handleInsufficientFunds);
     };
   }, [fundsToastShown]);
 
-  LimboSocket.on("WalletNotFound", (data) => {
+  limboGameSocket.on("WalletNotFound", (data) => {
     toast.error(data?.message);
   });
 
@@ -83,7 +83,7 @@ function LimboGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      LimboSocket.emit("limboPlaceBet", {
+      limboGameSocket.emit("limboPlaceBet", {
         userId: decoded?.userId,
         betAmount: values?.betamount ? values?.betamount : 0,
         multiplier: values?.multiplier ? values?.multiplier : 2,
@@ -104,7 +104,7 @@ function LimboGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      LimboSocket.emit("limboPlaceBet", {
+      limboGameSocket.emit("limboPlaceBet", {
         userId: decoded?.userId,
         betAmount: values?.betamount ? values?.betamount : 0,
         multiplier: values?.multiplier ? values?.multiplier : 2,
@@ -126,7 +126,7 @@ function LimboGameSidebar() {
   };
 
   const handleOnStopAutoBet = () => {
-    LimboSocket.emit("stopAutoBet", { userId: decoded?.userId });
+    limboGameSocket.emit("stopAutoBet", { userId: decoded?.userId });
     dispatch(setStopAutoBet(false));
   };
 

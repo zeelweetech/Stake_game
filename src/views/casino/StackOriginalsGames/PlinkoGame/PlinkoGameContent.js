@@ -79,11 +79,6 @@ function PlinkoGameContent() {
     };
   }, [fundsToastShown]);
 
-  PlinkoSocket.on("Insufficientfund", (data) => {
-    toast.error(data?.message);
-    dispatch(setCompleteBetStatus(false));
-  });
-
   PlinkoSocket.on("plinkoBetResult", (data) => {
     dispatch(setFinalMultiplier(data));
   });
@@ -114,16 +109,17 @@ function PlinkoGameContent() {
           <button
             key={index}
             className={`xl:w-14 xl:-ml-5 lg:w-12 lg:ml-64 py-3 text-black font-bold border-b border-black ${data?.multiplier <= 1
-                ? "bg-amber-300"
-                : data?.multiplier === 2 ||
-                  data?.multiplier === 3 ||
-                  data?.multiplier === 5
-                  ? "bg-amber-500"
-                  : "bg-red-600"
+              ? "bg-amber-300"
+              : data?.multiplier >= 1 && data?.multiplier <= 2 ||
+                data?.multiplier === 3 ||
+                data?.multiplier === 5
+                ? "bg-amber-500"
+                : "bg-red-600"
               } ${index === 0 ? "rounded-t-xl" : index === 3 ? "rounded-b-xl" : ""
               }`}
             style={{ transitionDelay: `${index * 0.1}s` }}
           >
+            {console.log("data", data)}
             {data?.multiplier}x
           </button>
         ));
