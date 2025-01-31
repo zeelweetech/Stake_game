@@ -22,6 +22,8 @@ function Mainbar() {
   const decoded = decodedToken();
   const { isBetslipOpen } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
   useEffect(() => {
     getUserProgress();
   }, [userId]);
@@ -40,6 +42,25 @@ function Mainbar() {
       setLoading(false);
     }
   };
+
+  const getVIPProgressWidth = () => {
+    if (windowWidth <= 425) {
+      return "w-[20rem]";
+    } else if (windowWidth <= 768) {
+      return isChatOpen || isBetslipOpen 
+        ? "w-[16rem]"
+        : "w-[22rem]";
+    } else if (windowWidth <= 1024) {
+      return isChatOpen || isBetslipOpen
+        ? "w-[18rem]"
+        : "w-96";
+    } else {
+      return isChatOpen || isBetslipOpen
+        ? "w-[20.5rem]"
+        : "w-[20.5rem]";
+    }
+  };
+
   return (
     <div className="w-full">
       <div
@@ -62,7 +83,7 @@ function Mainbar() {
           }}
           className="mb-6 lg:mb-0"
         >
-          <div className="bg-[#0f212e] xl:w-[20.5rem] w-[22rem] md:w-96 p-6 border border-[#2f4553]">
+          <div className={`bg-[#0f212e] ${getVIPProgressWidth()} p-6 border border-[#2f4553] overflow-hidden transition-all duration-300`}>
             <div className="flex justify-between font-semibold cursor-default items-center">
               <p>{progressData?.userName || "User"}</p>
               <FaRegStar size={22} color="#2f4553" />
@@ -209,5 +230,5 @@ function Mainbar() {
     </div>
   );
 }
-
+        
 export default Mainbar;

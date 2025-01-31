@@ -137,25 +137,25 @@ function SlideBar() {
 
   const getMenuContainerClass = () => {
     if (windowWidth <= 425) {
-      return "max-w-[22rem]"
-    }else if (windowWidth <= 768) {
+      return "w-full max-w-[22rem]"
+    } else if (windowWidth <= 768) {
       return isChatOpen || isBetslipOpen 
-        ? "max-w-[25rem] px-2"
-        : "max-w-[90%] px-2";
+        ? "w-full max-w-[25rem]" 
+        : "w-full max-w-[95%]";
     } else if (windowWidth <= 1024) {
       return isChatOpen || isBetslipOpen
-        ? "max-w-[33rem]"
-        : "max-w-[85%]";
+        ? "w-full max-w-[33rem]"
+        : "w-full max-w-[85%]";
     } else {
       return isChatOpen || isBetslipOpen
-        ? "max-w-[57rem]"
-        : "max-w-[95%]";
+        ? "w-full max-w-[57rem]"
+        : "w-full max-w-[80rem]";
     }
   };
 
   return (
-    <div className={`${getMenuContainerClass()} mx-auto`}>
-      <div className="flex items-center justify-center">
+    <div className="w-full">
+      <div className={`${getMenuContainerClass()} mx-auto`}>
         <Swiper
           key={key}
           navigation={true}
@@ -174,37 +174,22 @@ function SlideBar() {
             1536: { 
               slidesPerView: 3,
               slidesPerGroup: 3,
-              spaceBetween: 8
             },
             1280: { 
               slidesPerView: isChatOpen || isBetslipOpen ? 2 : 3,
               slidesPerGroup: isChatOpen || isBetslipOpen ? 2 : 3,
-              spaceBetween: 8
             },
             1024: { 
               slidesPerView: isChatOpen || isBetslipOpen ? 1 : 2,
               slidesPerGroup: isChatOpen || isBetslipOpen ? 1 : 2,
-              spaceBetween: 8
             },
             768: { 
               slidesPerView: isChatOpen || isBetslipOpen ? 1 : 2,
               slidesPerGroup: isChatOpen || isBetslipOpen ? 1 : 2,
-              spaceBetween: 8
             },
             425: { 
-              slidesPerView: 1, 
+              slidesPerView: 1,
               slidesPerGroup: 1,
-              spaceBetween: 8 
-            },
-            375: { 
-              slidesPerView: 1, 
-              slidesPerGroup: 1,
-              spaceBetween: 8 
-            },
-            320: { 
-              slidesPerView: 1, 
-              slidesPerGroup: 1,
-              spaceBetween: 8 
             }
           }}
         >
@@ -392,254 +377,3 @@ function SlideBar() {
 }
 
 export default SlideBar; 
-
-
-// import React, { useState, useEffect } from "react";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/swiper-bundle.css";
-// import { Navigation } from "swiper/modules";
-// import DailyRaces from "../../../assets/img/DailyRaces.jpg";
-// import WeeklyRaffle from "../../../assets/img/WeeklyRaffle.png";
-// import ConquerCasino from "../../../assets/img/ConquerCasino.jpg";
-// import StackEddie from "../../../assets/img/StackEddie.jpg";
-// import ChaosCollecter from "../../../assets/img/ChaosCollecter.jpg";
-// import LevelUp from "../../../assets/img/LevelUp.jpg";
-// import MultiplierRace from "../../../assets/img/MultiplierRace.jpg";
-// import ChristmasRace from "../../../assets/img/ChristmasRace.png";
-// import { useSelector } from "react-redux";
-
-// function SlideBar() {
-//   const [swiperState, setSwiperState] = useState({
-//     isBeginning: true,
-//     isEnd: false,
-//   });
-
-//   const [LearnMore, setLearnMore] = useState(false);
-//   const [Racenow, setRaceNow] = useState(false);
-//   const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
-//   const { isChatOpen } = useSelector((state) => state.chat);
-//   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-//   const [key, setKey] = useState(0);
-
-//   const initialTime = {
-//     days: 5,
-//     hours: 2,
-//     minutes: 1,
-//     seconds: 10,
-//   };
-// //when the window resize update the state
-//   useEffect(() => {
-//     setKey(prevKey => prevKey + 1);
-//   }, [isBetslipOpen, isChatOpen, windowWidth]);
-  
-//   const [timeLeft, setTimeLeft] = useState(initialTime);
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setTimeLeft((prevTime) => {
-//         let { days, hours, minutes, seconds } = prevTime;
-  
-//         if (seconds > 0) seconds--;
-//         else {
-//           seconds = 59;
-//           if (minutes > 0) minutes--;
-//           else {
-//             minutes = 59;
-//             if (hours > 0) hours--;
-//             else {
-//               hours = 23;
-//               if (days > 0) days--;
-//             }
-//           }
-//         }
-//         return { days, hours, minutes, seconds };
-//       });
-//     }, 1000);
-  
-//     return () => clearInterval(interval);
-//   }, []);
-  
-//   useEffect(() => {
-//     const handleResize = () => setWindowWidth(window.innerWidth);
-//     window.addEventListener("resize", handleResize);
-//     return () => window.removeEventListener("resize", handleResize);
-//   }, []);
-  
-//   const promoGame = [
-//     {
-//       Game: "Daily Races",
-//       gameDescription: "Play in our $100,000 Daily Races Read More",
-//       gameButton: "Race Now",
-//       gameImage: DailyRaces,
-//     },
-//     {
-//       Game: "Weekly Raffle",
-//       gameDescription: "Share in $75,000 each week Read More",
-//       gameButton: "Learn More",
-//       gameImage: WeeklyRaffle,
-//     },
-//     {
-//       Game: "Conquer the Casino",
-//       gameDescription: "Win a share in $50,000 every week Read More",
-//       gameButton: "Play Now",
-//       gameImage: ConquerCasino,
-//     },
-//     {
-//       Game: "Listor vs Eddie",
-//       gameDescription: "Win a share in $30,000 every week Read More",
-//       gameButton: "Play Now",
-//       gameImage: StackEddie,
-//     },
-//     {
-//       Game: "Chaos Collector",
-//       gameDescription: "Win a share in $10,000 every week Read More",
-//       gameButton: "Play Now",
-//       gameImage: ChaosCollecter,
-//     },
-//     {
-//       Game: "The Level Up",
-//       gameDescription: "Win a share in $20,000 every week Read More",
-//       gameButton: "Play Now",
-//       gameImage: LevelUp,
-//     },
-//     {
-//       Game: "Multiplier Race",
-//       gameDescription: "Win a share in $10,000 every week Read More",
-//       gameButton: "Play Now",
-//       gameImage: MultiplierRace,
-//     },
-//     {
-//       Game: "$10 Million Christmas Race",
-//       gameDescription: "Race To The New Year Read More",
-//       gameButton: "Race now",
-//       gameImage: ChristmasRace,
-//     },
-//   ];
-
-//   const handleButtonClick = (gameButton) => {
-//     if (gameButton === "Learn More") {
-//       setLearnMore(true);
-//     } else if (gameButton === "Race now") {
-//       setRaceNow(true);
-//     }
-//   };
-
-//   const closeLearnMore = () => {
-//     setLearnMore(false);
-//   };
-
-//   const closeRacenow = () => {
-//     setRaceNow(false);
-//   };
-
-//   const getMenuContainerClass = () => {
-//     if (windowWidth <= 425) {
-//       return "max-w-[22rem]"
-//     }else if (windowWidth <= 768) {
-//       return isChatOpen || isBetslipOpen 
-//         ? "max-w-[25rem]"
-//         : "max-w-[81%]";
-//     } else if (windowWidth <= 1024) {
-//       return isChatOpen || isBetslipOpen
-//         ? "max-w-[33rem]"
-//         : "max-w-[85%]";
-//     } else {
-//       return isChatOpen || isBetslipOpen
-//         ? "max-w-[57rem]"
-//         : "max-w-[50%]";
-//     }
-//   };
-
-//   return (
-//     <div className={`${getMenuContainerClass()} mx-auto`}>
-//       <div className="">
-//         <Swiper
-//           key={key}
-//           navigation={true}
-//           modules={[Navigation]}
-//           slidesPerView={3}
-//           slidesPerGroup={3}
-//           spaceBetween={8}
-//           className="w-full"
-//           onSlideChange={(swiper) => {
-//             setSwiperState({
-//               isBeginning: swiper.isBeginning,
-//               isEnd: swiper.isEnd,
-//             });
-//           }}
-//           breakpoints={{
-//             1536: { 
-//               slidesPerView: 3,
-//               slidesPerGroup: 3,
-//               spaceBetween: 8
-//             },
-//             1280: { 
-//               slidesPerView: isChatOpen || isBetslipOpen ? 2 : 3,
-//               slidesPerGroup: isChatOpen || isBetslipOpen ? 2 : 3,
-//               spaceBetween: 8
-//             },
-//             1024: { 
-//               slidesPerView: isChatOpen || isBetslipOpen ? 1 : 2,
-//               slidesPerGroup: isChatOpen || isBetslipOpen ? 1 : 2,
-//               spaceBetween: 8
-//             },
-//             768: { 
-//               slidesPerView: isChatOpen || isBetslipOpen ? 1 : 2,
-//               slidesPerGroup: isChatOpen || isBetslipOpen ? 1 : 2,
-//               spaceBetween: 8
-//             },
-//             425: { 
-//               slidesPerView: 1, 
-//               slidesPerGroup: 1,
-//               spaceBetween: 8 
-//             },
-//             375: { 
-//               slidesPerView: 1, 
-//               slidesPerGroup: 1,
-//               spaceBetween: 8 
-//             },
-//             320: { 
-//               slidesPerView: 1, 
-//               slidesPerGroup: 1,
-//               spaceBetween: 8 
-//             }
-//           }}
-//         >
-//           {promoGame.map((Data, index) => (
-//             <SwiperSlide key={index} className="">
-//               <div className="flex flex-col md:flex-row justify-between items-center bg-[#213743] w-full h-auto md:h-[13.75rem] rounded-md hover:cursor-pointer">
-//                 <div className="flex flex-col space-y-4 justify-around w-full md:w-44 p-4">
-//                   <div>
-//                     <button className="bg-white text-black text-sm font-semibold px-1 rounded-sm">
-//                       Promo
-//                     </button>
-//                     <p className="text-lg font-semibold py-1 break-words">{Data.Game}</p>
-//                     <p className="text-xs leading-5 w-full md:w-36 break-words">
-//                       {Data.gameDescription}
-//                     </p>
-//                   </div>
-//                   <button
-//                     className="border border-white w-full md:w-28 hover:bg-[#8aaec22c] text-xs font-semibold py-2 md:py-3 rounded-md"
-//                     onClick={() => handleButtonClick(Data.gameButton)}
-//                   >
-//                     {Data.gameButton}
-//                   </button>
-//                 </div>
-//                 <div className="flex justify-center p-4 w-full md:w-auto">
-//                   <img
-//                     src={Data.gameImage}
-//                     className="w-full h-auto md:w-48 md:h-48 rounded-md object-cover"
-//                     alt="Not Found"
-//                   />
-//                 </div>
-//               </div>
-//             </SwiperSlide>
-//           ))}
-//         </Swiper>
-//       </div>
-
-     
-//     </div>
-//   );
-// }
-
-// export default SlideBar

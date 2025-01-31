@@ -10,7 +10,7 @@ import { Country } from "../../../src/views/rightSidebarView/chat/country";
 import { decodedToken } from "../../resources/utility";
 // import { Picker } from "emoji-mart";
 
-const chatSocket = io("http://192.168.29.203:3002", { path: "/ws" });
+const chatSocket = io(process.env.REACT_APP_CHAT_URL, { path: "/ws" });
 
 const ChatDrawer = ({ openChat, onCloseChat }) => {
   const [message, setMessage] = useState("");
