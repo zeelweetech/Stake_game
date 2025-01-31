@@ -6,7 +6,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { setEmoji } from "../../../features/auth/emojiSlice";
 import { Country } from "./country";
 import { decodedToken } from "../../../resources/utility";
-const chatSocket = io("http://192.168.29.203:3002", { path: "/ws" });
+
+// Create a singleton socket instance
+let chatSocket;
+const getChatSocket = () => {
+  if (!chatSocket) {
+    chatSocket = io(process.env.REACT_APP_CHAT_URL, { 
+      path: "/ws",
+      reconnection: false, // Prevent auto reconnection
+      transports: ['websocket']
+    });
+  }
+  return chatSocket;
+};
+
+const disconnectSocket = () => {
+  if (chatSocket) {
+    chatSocket.disconnect();
+    chatSocket = null;
+  }
+};
 
 const ChatApp = ({ onClose }) => {
   const [message, setMessage] = useState("");
@@ -20,9 +39,22 @@ const ChatApp = ({ onClose }) => {
   const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
   const emojiPickerRef = useRef(null);
   const dropDownRef = useRef(null);
+  const socketRef = useRef(null);
 
   const decoded = decodedToken();
   const userId = decoded?.userId;
+
+  // Initialize socket connection
+  useEffect(() => {
+    socketRef.current = getChatSocket();
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.removeAllListeners();
+        disconnectSocket();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -31,24 +63,34 @@ const ChatApp = ({ onClose }) => {
   }, [messages]);
 
   useEffect(() => {
-    chatSocket.emit("joinCountry", selectedCountry.countryName);
-    chatSocket.on("chatMessage", (newMessage) => {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-    });
+    if (!socketRef.current) return;
 
-    chatSocket.on("changeCountryResponse", (newChat) => {
+    const socket = socketRef.current;
+    
+    // Join country room
+    socket.emit("joinCountry", selectedCountry.countryName);
+    
+    // Setup message listeners
+    const handleNewMessage = (newMessage) => {
+      setMessages(prevMessages => [...prevMessages, newMessage]);
+    };
+
+    const handleCountryChange = (newChat) => {
       setMessages(newChat);
-    });
+    };
+
+    socket.on("chatMessage", handleNewMessage);
+    socket.on("changeCountryResponse", handleCountryChange);
 
     return () => {
-      chatSocket.off("chatMessage");
-      chatSocket.off("changeCountryResponse");
+      socket.off("chatMessage", handleNewMessage);
+      socket.off("changeCountryResponse", handleCountryChange);
     };
   }, [selectedCountry]);
 
   const sendMessage = () => {
-    if (!userId) {
-      console.log("User  Id is Not Available. Cannot Message Send");
+    if (!userId || !socketRef.current) {
+      console.log("Cannot send message - user not logged in or socket not connected");
       return;
     }
     if (message.trim()) {
@@ -60,14 +102,17 @@ const ChatApp = ({ onClose }) => {
         createdAt: new Date(),
       };
 
-      chatSocket.emit("chatMessage", newMessageData);
+      socketRef.current.emit("chatMessage", newMessageData);
       setMessage("");
     }
   };
+
   const changeCountry = (newCountry) => {
+    if (!socketRef.current) return;
+    
     const countryObj = Country.find((item) => item.countryName === newCountry);
     setSelectedCountry(countryObj);
-    chatSocket.emit("changeCountry", newCountry);
+    socketRef.current.emit("changeCountry", newCountry);
     setDropdownOpen(false);
   };
 
@@ -132,6 +177,13 @@ const ChatApp = ({ onClose }) => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [dropdownOpen]);
+
+  // Handle component unmount
+  useEffect(() => {
+    return () => {
+      disconnectSocket();
+    };
+  }, []);
 
   return (
     <div className="text-white rounded-md shadow-lg relative bg-[#0f212e] flex flex-col h-screen">
@@ -307,7 +359,7 @@ const ChatApp = ({ onClose }) => {
                 <div className="flex items-center justify-center max-h-[83vh] overflow-y-auto">
                   <div className="w-full font-normal rounded-lg space-y-4 overflow-y-auto max-h-[80vh]">
                     <div className="px-4 pb-4 flex gap-y-2 gap-x-2 flex-col ">
-                      <ol className="list-decimal pl-6 space-y-2 text-[#B1BAD3] text-sm">
+                      {/* <ol className="list-decimal pl-6 space-y-2 text-[#B1BAD3] text-sm">
                         <li>
                           Don't spam & don't use excessive capital letters when
                           chatting.
@@ -353,8 +405,8 @@ const ChatApp = ({ onClose }) => {
                           No politics & no religion talk in chat; this one is
                           strictly forbidden.
                         </li>
-                      </ol>
-                      <p className="flex justify-center items-center text-center text-sm text-[#b1BAD3]">
+                      </ol> */}
+                      {/* <p className="flex justify-center items-center text-center text-sm text-[#b1BAD3]">
                         Our full rulel can be found on our&nbsp;
                         <a className="items-center inline-flex font-semibold text-white gap-x-2">
                           forum
@@ -367,7 +419,7 @@ const ChatApp = ({ onClose }) => {
                           </svg>
                         </a>
                         <span className="cursor-default">&nbsp;.</span>
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </div>
