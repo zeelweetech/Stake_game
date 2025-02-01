@@ -37,6 +37,7 @@ function MainHeader({ handleRightSidebarToggle }) {
   const { tooltipOpen } = useSelector((state) => state.auth);
   const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
+  const [showMessage, setShowMessage] = useState(false);
   const dispatch = useDispatch();
   const tooltipRef = useRef(null);
   const personIconRef = useRef(null);
@@ -191,13 +192,28 @@ function MainHeader({ handleRightSidebarToggle }) {
             )}
           </div>
           <div className="text-white flex items-center space-x-0.4 md:space-x-6">
-            <button className="flex items-center space-x-1.5 font-medium">
+            <button
+              className="flex items-center space-x-1.5 font-medium"
+              onClick={() => setShowMessage(true)}
+            >
               <IoMdSearch className="text-sm w-10 h-6 md:text-base md:block hidden" />
               <p className="hidden lg:block text-sm lg:text-base space-x-1">
                 Search
               </p>
             </button>
 
+            {/* <button
+              className="flex items-center space-x-1.5 font-medium px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+              onClick={() => setShowMessage(true)}
+            >
+              <IoMdSearch className="text-sm w-5 h-5 md:text-base" />
+              <p className="hidden lg:block text-sm lg:text-base">Search</p>
+            </button> */}
+            {showMessage && (
+              <div className="absolute top-14 left-1/2 transform -translate-x-1/2 bg-gray-900/80 text-white text-xs px-3 py-2 rounded-lg shadow-md">
+                Search button clicked!
+              </div>
+            )}
             <div className="relative flex items-center">
               <p
                 onClick={toggleTooltip}

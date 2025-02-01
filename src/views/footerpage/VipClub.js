@@ -225,10 +225,11 @@ const VipClub = () => {
             >
               <div
                 style={{
+                  width: "auto",
                   border: "8px solid transparent",
                   borderImage: "linear-gradient(to bottom, #213743, #0f212e) 1",
                 }}
-                className="mb-6 lg:mb-0 xl:ml-40 lg:ml-28 xl:w-[21rem] lg: w-[20rem]"
+                className="mb-6 lg:mb-0 xl:ml-40 lg:ml-28 xl:w-[21rem] lg:w-[20rem]"
               >
                 <div className="bg-[#0f212e] w-full md:w-80 px-5 py-7 border text-white border-[#2f4553]">
                   <div className="flex justify-between items-center font-semibold cursor-default">

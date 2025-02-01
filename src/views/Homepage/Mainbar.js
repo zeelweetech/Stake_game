@@ -23,7 +23,7 @@ function Mainbar() {
   const { isBetslipOpen } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  
+
   useEffect(() => {
     getUserProgress();
   }, [userId]);
@@ -47,17 +47,11 @@ function Mainbar() {
     if (windowWidth <= 425) {
       return "w-[20rem]";
     } else if (windowWidth <= 768) {
-      return isChatOpen || isBetslipOpen 
-        ? "w-[16rem]"
-        : "w-[22rem]";
+      return isChatOpen || isBetslipOpen ? "w-[16rem]" : "w-[22rem]";
     } else if (windowWidth <= 1024) {
-      return isChatOpen || isBetslipOpen
-        ? "w-[18rem]"
-        : "w-96";
+      return isChatOpen || isBetslipOpen ? "w-[18rem]" : "w-96";
     } else {
-      return isChatOpen || isBetslipOpen
-        ? "w-[20.5rem]"
-        : "w-[20.5rem]";
+      return isChatOpen || isBetslipOpen ? "w-[20.5rem]" : "w-[20.5rem]";
     }
   };
 
@@ -78,12 +72,15 @@ function Mainbar() {
       >
         <div
           style={{
+            width: "Auto",
             border: "8px solid transparent",
             borderImage: "linear-gradient(to bottom, #213743, #0f212e) 1",
           }}
           className="mb-6 lg:mb-0"
         >
-          <div className={`bg-[#0f212e] ${getVIPProgressWidth()} p-6 border border-[#2f4553] overflow-hidden transition-all duration-300`}>
+          <div
+            className={`${getVIPProgressWidth()}  bg-[#0f212e] max-80 md:w-[23rem] p-6 border text-white border-[#2f4553]`}
+          >
             <div className="flex justify-between font-semibold cursor-default items-center">
               <p>{progressData?.userName || "User"}</p>
               <FaRegStar size={22} color="#2f4553" />
@@ -230,5 +227,5 @@ function Mainbar() {
     </div>
   );
 }
-        
+
 export default Mainbar;
