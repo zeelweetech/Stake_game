@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import bombIcon from "../../../../assets/img/bomb.svg";
 import diamondIcon from "../../../../assets/img/Diamond.png";
 import { decodedToken } from "../../../../resources/utility";
-import { MineSocket } from "../../../../socket";
+// import { MineSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import winSound from "../../../../assets/Sound/winSound.wav";
 import bombSound from "../../../../assets/Sound/bombSound.wav";
@@ -24,7 +24,7 @@ import {
 import toast from "react-hot-toast";
 import { setWallet } from "../../../../features/auth/authSlice";
 
-function MinesGameContent() {
+function MinesGameContent({ mineGameSocket }) {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [images, setImages] = useState(Array(25).fill(null));
@@ -60,12 +60,7 @@ function MinesGameContent() {
   }, []);
 
   useEffect(() => {
-    MineSocket.emit("joinGame", {
-      userId: decoded?.userId,
-      gameId: id,
-    });
-
-    MineSocket.on("gameRestored", (data, currentMultiplier) => {
+    mineGameSocket.on("gameRestored", (data, currentMultiplier) => {
       dispatch(setRestored(data));
       dispatch(setRestoredMultiplier(currentMultiplier));
 
@@ -95,7 +90,7 @@ function MinesGameContent() {
         setFundsToastShown(true);
       }
     };
-    MineSocket.on("Insufficientfund", handleInsufficientFunds);
+    mineGameSocket.on("Insufficientfund", handleInsufficientFunds);
 
     const resetToastFlag = () => {
       setFundsToastShown(false);
@@ -103,16 +98,16 @@ function MinesGameContent() {
 
     return () => {
       resetToastFlag();
-      MineSocket.off("Insufficientfund", handleInsufficientFunds);
+      mineGameSocket.off("Insufficientfund", handleInsufficientFunds);
     };
   }, [fundsToastShown]);
 
-  MineSocket.on("walletBalance", (data) => {
+  mineGameSocket.on("walletBalance", (data) => {
     console.log("walletBalance walletBalance data", data);
     // dispatch(setWallet(data?.walletBalance));
   });
 
-  MineSocket.on("gameStarted", (data) => {
+  mineGameSocket.on("gameStarted", (data) => {
     dispatch(setGameStart(data));
     setImages(Array(25).fill(null));
     setRevealed(Array(25).fill(false));
@@ -122,7 +117,7 @@ function MinesGameContent() {
   });
 
   // game tile selected event
-  MineSocket.on("tileSelected", (data) => {
+  mineGameSocket.on("tileSelected", (data) => {
     dispatch(setTileSelect(data));
     handleTileSelection(data.tileIndex, data.isBomb);
   });
@@ -150,7 +145,7 @@ function MinesGameContent() {
   };
 
   // game Over event
-  MineSocket.on("gameOver", (data) => {
+  mineGameSocket.on("gameOver", (data) => {
     if (!gameOverProcessedRef.current) {
       const { clickedMine, remainingMines } = data;
       handleGameOver(clickedMine, remainingMines);
@@ -210,7 +205,7 @@ function MinesGameContent() {
     setRevealed(newRevealed);
   };
 
-  MineSocket.on("cashoutSuccess", (data) => {
+  mineGameSocket.on("cashoutSuccess", (data) => {
     dispatch(setCashoutResult(data));
 
     const newImages = Array(25).fill(null);
@@ -251,7 +246,7 @@ function MinesGameContent() {
     return Array.from(bombPositions);
   };
 
-  MineSocket.on("betResult", (data) => {
+  mineGameSocket.on("betResult", (data) => {
     dispatch(setAutoBetResult(data));
     if (data?.round === 0 && data?.round >= 0) {
       dispatch(setAutoBet(false));
@@ -329,7 +324,7 @@ function MinesGameContent() {
         audio.play();
       }
 
-      MineSocket.emit("selectTile", {
+      mineGameSocket.emit("selectTile", {
         userId: decoded?.userId.toString(),
         gameId: id,
         tileIndex: index,
@@ -353,8 +348,8 @@ function MinesGameContent() {
   return (
     <div
       className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center ${isMobile
-          ? " max-sm:mx-2 rounded-t-lg"
-          : "xl:w-[51rem] lg:w-[40rem] rounded-tr-lg"
+        ? " max-sm:mx-2 rounded-t-lg"
+        : "xl:w-[51rem] lg:w-[40rem] rounded-tr-lg"
         }`}
     >
       {cashoutResult && !gameBet && (
@@ -403,8 +398,8 @@ function MinesGameContent() {
           <div
             key={index}
             className={`flex justify-center items-center w-full ${isMobile
-                ? "md:w-[4.35rem] p-2 md:h-[4.35rem w-[4.6rem] h-[4.35rem] "
-                : "xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]"
+              ? "md:w-[4.35rem] p-2 md:h-[4.35rem w-[4.6rem] h-[4.35rem] "
+              : "xl:w-28 lg:w-[6.7rem] xl:h-28 lg:h-[7rem]"
               } bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""
               }`}
             onClick={() => handleClick(index)}

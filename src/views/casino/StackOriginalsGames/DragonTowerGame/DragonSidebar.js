@@ -20,14 +20,14 @@ import {
   setShowRandomField,
   setValues,
 } from "../../../../features/casino/dragonTowerSlice";
-import { DragonTowerSocket } from "../../../../socket";
+// import { DragonTowerSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import { useParams } from "react-router-dom";
 import { openRegisterModel, setWallet } from "../../../../features/auth/authSlice";
 import toast from "react-hot-toast";
 import { getWallet } from "../../../../services/LoginServices";
 
-function DragonSidebar() {
+function DragonSidebar({ dragonGameSocket }) {
   const dispatch = useDispatch();
   const decoded = decodedToken();
   const { id } = useParams();
@@ -93,7 +93,7 @@ function DragonSidebar() {
 
   const handleBetClick = () => {
     if (gameBet && !isGameOver) {
-      DragonTowerSocket.emit("cashout", {
+      dragonGameSocket.emit("cashout", {
         userId: decoded?.userId.toString(),
         gameId: id,
         betId: restor?.betId,
@@ -105,7 +105,7 @@ function DragonSidebar() {
       if (!localStorage.getItem("token")) {
         dispatch(openRegisterModel());
       } else {
-        DragonTowerSocket.emit("dragonTowerPlaceBet", {
+        dragonGameSocket.emit("dragonTowerPlaceBet", {
           userId: decoded?.userId.toString(),
           gameId: id,
           betAmount: values?.betamount,
@@ -145,7 +145,7 @@ function DragonSidebar() {
     while (clickedBoxes[randomRowIndex] !== undefined) {
       randomRowIndex = (randomRowIndex + 1) % rows;
     }
-    DragonTowerSocket.emit("selectTile", {
+    dragonGameSocket.emit("selectTile", {
       userId: decoded?.userId.toString(),
       gameId: id,
       tileIndex: randomBoxIndex,
@@ -165,7 +165,7 @@ function DragonSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      DragonTowerSocket.emit("dragonTowerPlaceAutoBet", {
+      dragonGameSocket.emit("dragonTowerPlaceAutoBet", {
         userId: decoded?.userId,
         gameId: id,
         autoBetTiles: preSelectTile,

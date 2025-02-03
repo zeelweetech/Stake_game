@@ -4,10 +4,16 @@ import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";
 import KenoGameSidebar from "./KenoGameSidebar";
 import KenoGameContent from "./KenoGameContent";
-import { KenoSocket } from "../../../../socket";
+// import { KenoSocket } from "../../../../socket";
+import { io } from "socket.io-client";
+import { decodedToken } from "../../../../resources/utility";
+import { useParams } from "react-router-dom";
 
 function KenoGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const { id } = useParams();
+  const decoded = decodedToken();
+  const kenoGameSocket = io(process.env.REACT_APP_KENO_URL, { path: "/ws" });
 
   useEffect(() => {
     const handleResize = () => {
@@ -21,26 +27,26 @@ function KenoGame() {
     };
   }, []);
   useEffect(() => {
-    KenoSocket.connect();
+    kenoGameSocket.connect();
 
-    KenoSocket.on("connect", () => {
-      console.log("Keno sokect connected");
-    });
+    // kenoGameSocket.on("connect", () => {
+    //   console.log("Keno sokect connected");
+    // });
 
-    KenoSocket.on("disconnect", () => {
+    kenoGameSocket.on("disconnect", () => {
       console.log("Keno Disconnected from server");
     });
 
-    KenoSocket.on("connect_error", (error) => {
+    kenoGameSocket.on("connect_error", (error) => {
       console.error("Keno Connection Error:", error);
     });
 
     return () => {
-      KenoSocket.off("message");
-      KenoSocket.off("connect");
-      KenoSocket.off("disconnect");
-      KenoSocket.off("connect_error");
-      KenoSocket.disconnect();
+      kenoGameSocket.off("message");
+      kenoGameSocket.off("connect");
+      kenoGameSocket.off("disconnect");
+      kenoGameSocket.off("connect_error");
+      kenoGameSocket.disconnect();
     };
   }, []);
 
@@ -55,17 +61,17 @@ function KenoGame() {
           >
             {!isMobile && (
               <div className="flex-row bg-[#213743] rounded-tl-lg">
-                <KenoGameSidebar />
+                <KenoGameSidebar kenoGameSocket={kenoGameSocket} />
               </div>
             )}
             <div className="flex-grow">
-              <KenoGameContent />
+              <KenoGameContent kenoGameSocket={kenoGameSocket} />
             </div>
           </div>
 
           {isMobile && (
             <div className="flex flex-col">
-              <KenoGameSidebar />
+              <KenoGameSidebar kenoGameSocket={kenoGameSocket} />
             </div>
           )}
           <div className="md:flex md:justify-center lg:block xl:block">

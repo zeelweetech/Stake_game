@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import PlinkoGameSidebar from "./PlinkoGameSidebar";
 import PlinkoGameContent from "./PlinkoGameContent";
 import GameFooter from "../../../component/GameFooter/GameFooter";
-import { PlinkoSocket } from "../../../../socket";
+// import { PlinkoSocket } from "../../../../socket";
 import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";
+import { useParams } from "react-router-dom";
+import { decodedToken } from "../../../../resources/utility";
+import { io } from "socket.io-client";
 
 function PlinkoGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const { id } = useParams();
+  const decoded = decodedToken();
+  const plinkoGameSocket = io(process.env.REACT_APP_PLINKO_URL, { path: "/ws" });
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,26 +28,31 @@ function PlinkoGame() {
   }, []);
 
   useEffect(() => {
-    PlinkoSocket.connect();
+    plinkoGameSocket.connect();
 
-    PlinkoSocket.on("connect", () => {
-      console.log("Plinko socket connected");
+    // plinkoGameSocket.on("connect", () => {
+    //   console.log("Plinko socket connected");
+    // });
+
+    plinkoGameSocket.emit("joinGame", {
+      userId: decoded?.userId,
+      gameId: id,
     });
 
-    PlinkoSocket.on("disconnect", () => {
+    plinkoGameSocket.on("disconnect", () => {
       console.log("Plinko disconnected from server");
     });
 
-    PlinkoSocket.on("connect_error", (error) => {
+    plinkoGameSocket.on("connect_error", (error) => {
       console.error("Plinko Connection Error:", error);
     });
 
     return () => {
-      PlinkoSocket.off("message");
-      PlinkoSocket.off("connect");
-      PlinkoSocket.off("disconnect");
-      PlinkoSocket.off("connect_error");
-      PlinkoSocket.disconnect();
+      plinkoGameSocket.off("message");
+      plinkoGameSocket.off("connect");
+      plinkoGameSocket.off("disconnect");
+      plinkoGameSocket.off("connect_error");
+      plinkoGameSocket.disconnect();
     };
   }, []);
 
@@ -50,23 +61,22 @@ function PlinkoGame() {
       <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full xl:-ml-0 lg:-ml-[3rem]">
         <div className="w-full">
           <div
-            className={`flex justify-center w-full ${
-              isMobile ? "h-[25rem]" : "h-[39rem]"
-            } border-b-3`}
+            className={`flex justify-center w-full ${isMobile ? "h-[25rem]" : "h-[39rem]"
+              } border-b-3`}
           >
             {!isMobile && (
               <div className="flex-row bg-[#213743] rounded-tl-lg">
-                <PlinkoGameSidebar />
+                <PlinkoGameSidebar plinkoGameSocket={plinkoGameSocket} />
               </div>
             )}
             <div className="flex-grow">
-              <PlinkoGameContent />
+              <PlinkoGameContent plinkoGameSocket={plinkoGameSocket} />
             </div>
           </div>
 
           {isMobile && (
             <div className="flex flex-col">
-              <PlinkoGameSidebar />
+              <PlinkoGameSidebar plinkoGameSocket={plinkoGameSocket} />
             </div>
           )}
           <div className="md:flex md:justify-center lg:block xl:block">

@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import GameFooter from "../../../component/GameFooter/GameFooter";
 import MinesGameSidebar from "./MinesGameSidebar";
 import MinesGameContent from "./MinesGameContent";
-import { MineSocket } from "../../../../socket";
+// import { MineSocket } from "../../../../socket";
 import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";
+import { useParams } from "react-router-dom";
+import { decodedToken } from "../../../../resources/utility";
+import { io } from "socket.io-client";
 
 function MinesGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const { id } = useParams();
+  const decoded = decodedToken();
+  const mineGameSocket = io(process.env.REACT_APP_MINE_URL, { path: "/ws" });
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,20 +28,25 @@ function MinesGame() {
   }, []);
 
   useEffect(() => {
-    MineSocket.connect();
+    mineGameSocket.connect();
 
-    MineSocket.on("connect", () => {
-      console.log("Mine sokect connected");
+    // mineGameSocket.on("connect", () => {
+    //   console.log("Mine sokect connected");
+    // });
+
+    mineGameSocket.emit("joinGame", {
+      userId: decoded?.userId,
+      gameId: id,
     });
 
-    MineSocket.on("disconnect", () => {
+    mineGameSocket.on("disconnect", () => {
       console.log("Mine Disconnected from server");
     });
 
     return () => {
-      MineSocket.off("connect");
-      MineSocket.off("disconnect");
-      MineSocket.disconnect();
+      mineGameSocket.off("connect");
+      mineGameSocket.off("disconnect");
+      mineGameSocket.disconnect();
     };
   });
 
@@ -50,17 +61,17 @@ function MinesGame() {
           >
             {!isMobile && (
               <div className="flex-row bg-[#213743] rounded-tl-lg">
-                <MinesGameSidebar />
+                <MinesGameSidebar mineGameSocket={mineGameSocket} />
               </div>
             )}
             <div className="flex-grow">
-              <MinesGameContent />
+              <MinesGameContent mineGameSocket={mineGameSocket} />
             </div>
           </div>
 
           {isMobile && (
             <div className="flex flex-col">
-              <MinesGameSidebar />
+              <MinesGameSidebar mineGameSocket={mineGameSocket} />
             </div>
           )}
           <div className="md:flex md:justify-center lg:block xl:block">

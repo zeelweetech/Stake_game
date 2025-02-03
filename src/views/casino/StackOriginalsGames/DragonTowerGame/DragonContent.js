@@ -13,7 +13,7 @@ import expertSkull from "../../../../assets/svg/expertSkull.svg";
 import hardSkull from "../../../../assets/svg/hardSkull.svg";
 // import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { DragonTowerSocket } from "../../../../socket";
+// import { dragonGameSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import { decodedToken } from "../../../../resources/utility";
 import { setAutoBetOnClick, setBoxsIndex, setClickedBoxes, setCompleteFundStatus, setDragonAutoBetResult, setGameBet, setGameOverResult, setIsGameOver, setPreSelectTile, setRestodMultiplier, setRestor, setRestorData, setRowsIndex, setShowRandomField, setTileSelected } from "../../../../features/casino/dragonTowerSlice";
@@ -22,7 +22,7 @@ import dragontowerSound from "../../../../assets/Sound/dragontowerSound.wav";
 import dragontowerbombSound from "../../../../assets/Sound/dragontowerbomb.wav";
 import { setWallet } from "../../../../features/auth/authSlice";
 
-function DragonContent() {
+function DragonContent({ dragonGameSocket }) {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [cashoutResult, setCashoutResult] = useState(null);
@@ -47,7 +47,7 @@ function DragonContent() {
   } = useSelector((state) => state.dragonTowerGame);
   const decoded = decodedToken();
 
-  DragonTowerSocket.on("walletBalance", (data) => {
+  dragonGameSocket.on("walletBalance", (data) => {
     console.log("wallet data ", data);
 
     // dispatch(setWallet(data?.walletBalance))
@@ -60,10 +60,10 @@ function DragonContent() {
   //     dispatch(setWallet(data?.walletBalance));
   //   };
 
-  //   DragonTowerSocket.on("walletBalance", handleWalletBalance);
+  //   dragonGameSocket.on("walletBalance", handleWalletBalance);
 
   //   return () => {
-  //     DragonTowerSocket.off("walletBalance", handleWalletBalance);
+  //     dragonGameSocket.off("walletBalance", handleWalletBalance);
   //   };
   // }, [dispatch]);
 
@@ -77,7 +77,7 @@ function DragonContent() {
         dispatch(setGameBet(false));
       }
     };
-    DragonTowerSocket.on("Insufficientfund", handleInsufficientFunds);
+    dragonGameSocket.on("Insufficientfund", handleInsufficientFunds);
 
     const resetToastFlag = () => {
       setFundsToastShown(false);
@@ -85,7 +85,7 @@ function DragonContent() {
 
     return () => {
       resetToastFlag();
-      DragonTowerSocket.off("Insufficientfund", handleInsufficientFunds);
+      dragonGameSocket.off("Insufficientfund", handleInsufficientFunds);
     };
   }, [fundsToastShown]);
 
@@ -112,12 +112,7 @@ function DragonContent() {
   };
 
   useEffect(() => {
-    DragonTowerSocket.emit("joinGame", {
-      userId: decoded?.userId,
-      gameId: id,
-    });
-
-    DragonTowerSocket.on("gameRestored", (data, currentMultiplier) => {
+    dragonGameSocket.on("gameRestored", (data, currentMultiplier) => {
       dispatch(setRestor(data));
       dispatch(setRestodMultiplier(currentMultiplier));
       dispatch(setRestorData(data.restoreData));
@@ -135,7 +130,7 @@ function DragonContent() {
     });
   }, []);
 
-  DragonTowerSocket.on("gameStarted", (data) => {
+  dragonGameSocket.on("gameStarted", (data) => {
     console.log("gameStarted data", data);
 
     setCashoutVisible(false);
@@ -143,12 +138,12 @@ function DragonContent() {
     gameOverProcessedRef.current = false;
   });
 
-  DragonTowerSocket.on("tileSelected", (data) => {
+  dragonGameSocket.on("tileSelected", (data) => {
     console.log("tileSelected data", data);
     dispatch(setTileSelected(data));
   });
 
-  DragonTowerSocket.on("gameOver", (data) => {
+  dragonGameSocket.on("gameOver", (data) => {
     handleGameOverResult();
     if (!gameOverProcessedRef.current) {
       dispatch(setIsGameOver(true));
@@ -214,7 +209,7 @@ function DragonContent() {
     );
   };
 
-  DragonTowerSocket.on("cashoutSuccess", (data) => {
+  dragonGameSocket.on("cashoutSuccess", (data) => {
     console.log("cashoutSuccess data", data);
 
     setCashoutResult(data);
@@ -224,7 +219,7 @@ function DragonContent() {
     // dispatch(setIsGameOver(true));
   });
 
-  DragonTowerSocket.on("autoBetResult", (data) => {
+  dragonGameSocket.on("autoBetResult", (data) => {
     console.log('data', data);
 
     if (data?.currentBet >= 1) {
@@ -295,7 +290,7 @@ function DragonContent() {
       }
 
       if (isManual) {
-        DragonTowerSocket.emit("selectTile", {
+        dragonGameSocket.emit("selectTile", {
           userId: decoded?.userId.toString(),
           gameId: id,
           tileIndex: boxIndex,

@@ -4,10 +4,16 @@ import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";
 import SlideGameSidebar from "./SlideGameSidebar";
 import SlideGameContent from "./SlideGameContent";
-import { SlideSocket } from "../../../../socket";
+import { useParams } from "react-router-dom";
+import { decodedToken } from "../../../../resources/utility";
+import { io } from "socket.io-client";
+// import { SlideSocket } from "../../../../socket";
 
 function SlideGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const { id } = useParams();
+  const decoded = decodedToken();
+  const slideGameSocket = io(process.env.REACT_APP_SLIDE_URL, { path: "/ws" });
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,27 +26,28 @@ function SlideGame() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   // useEffect(() => {
-  //   SlideSocket.connect();
+  //   slideGameSocket.connect();
 
-  //   SlideSocket.on("connect", () => {
-  //     console.log("Limbo sokect connected");
-  //   });
+  //   // slideGameSocket.on("connect", () => {
+  //   //   console.log("Limbo sokect connected");
+  //   // });
 
-  //   SlideSocket.on("disconnect", () => {
+  //   slideGameSocket.on("disconnect", () => {
   //     console.log("Limbo Disconnected from server");
   //   });
 
-  //   SlideSocket.on("connect_error", (error) => {
+  //   slideGameSocket.on("connect_error", (error) => {
   //     console.error("Limbo Connection Error:", error);
   //   });
 
   //   return () => {
-  //     SlideSocket.off("message");
-  //     SlideSocket.off("connect");
-  //     SlideSocket.off("disconnect");
-  //     SlideSocket.off("connect_error");
-  //     SlideSocket.disconnect();
+  //     slideGameSocket.off("message");
+  //     slideGameSocket.off("connect");
+  //     slideGameSocket.off("disconnect");
+  //     slideGameSocket.off("connect_error");
+  //     slideGameSocket.disconnect();
   //   };
   // }, []);
 
@@ -54,17 +61,17 @@ function SlideGame() {
           >
             {!isMobile && (
               <div className="flex-row bg-[#213743] rounded-tl-lg">
-                <SlideGameSidebar />
+                <SlideGameSidebar slideGameSocket={slideGameSocket} />
               </div>
             )}
             <div className="flex-grow">
-              <SlideGameContent />
+              <SlideGameContent slideGameSocket={slideGameSocket} />
             </div>
           </div>
 
           {isMobile && (
             <div className="flex flex-col">
-              <SlideGameSidebar />
+              <SlideGameSidebar slideGameSocket={slideGameSocket} />
             </div>
           )}
           <div className="md:flex md:justify-center lg:block xl:block">

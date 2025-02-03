@@ -25,12 +25,12 @@ const token = localStorage.getItem("token");
 //   }
 // })
 
-export const CrashSocket = io(process.env.REACT_APP_CRASH_URL, {
-  path: "/ws",
-  extraHeaders: {
-    Authorization: `token: ${token}`,
-  },
-});
+// export const CrashSocket = io(process.env.REACT_APP_CRASH_URL, {
+//   path: "/ws",
+//   extraHeaders: {
+//     Authorization: `token: ${token}`,
+//   },
+// });
 
 export const PlinkoSocket = io(process.env.REACT_APP_PLINKO_URL, {
   path: "/ws",
@@ -39,12 +39,12 @@ export const PlinkoSocket = io(process.env.REACT_APP_PLINKO_URL, {
   },
 });
 
-export const MineSocket = io(process.env.REACT_APP_MINE_URL, {
-  path: "/ws",
-  extraHeaders: {
-    Authorization: `token: ${token}`,
-  },
-});
+// export const MineSocket = io(process.env.REACT_APP_MINE_URL, {
+//   path: "/ws",
+//   extraHeaders: {
+//     Authorization: `token: ${token}`,
+//   },
+// });
 
 export const WheelSocket = io(process.env.REACT_APP_WHEEL_URL, {
   path: "/ws",
@@ -60,23 +60,23 @@ export const WheelSocket = io(process.env.REACT_APP_WHEEL_URL, {
 //   },
 // });
 
-export const DragonTowerSocket = io(process.env.REACT_APP_DRAGONTOWER_URL, {
-  path: "/ws",
-  extraHeaders: {
-    Authorization: `token: ${token}`,
-  },
-});
+// export const DragonTowerSocket = io(process.env.REACT_APP_DRAGONTOWER_URL, {
+//   path: "/ws",
+//   extraHeaders: {
+//     Authorization: `token: ${token}`,
+//   },
+// });
 
-export const KenoSocket = io(process.env.REACT_APP_KENO_URL, {
-  path: "/ws",
-  extraHeaders: {
-    Authorization: `token: ${token}`,
-  },
-});
+// export const KenoSocket = io(process.env.REACT_APP_KENO_URL, {
+//   path: "/ws",
+//   extraHeaders: {
+//     Authorization: `token: ${token}`,
+//   },
+// });
 
-export const SlideSocket = io(process.env.REACT_APP_SLIDE_URL, {
-  path: "/ws",
-  extraHeaders: {
-    Authorization: `token: ${token}`,
-  },
-});
+// export const SlideSocket = io(process.env.REACT_APP_SLIDE_URL, {
+//   path: "/ws",
+//   extraHeaders: {
+//     Authorization: `token: ${token}`,
+//   },
+// });

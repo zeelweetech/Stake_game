@@ -4,10 +4,10 @@ import { setMunulGameResult, setSelectTile } from "../../../../features/casino/k
 import kenoDaimond from "../../../../assets/svg/kenoDaimond.svg";
 import { rowFileConfigs } from "./KenoJson";
 import kenoTileSelect from "../../../../assets/Sound/kenoGameSound.wav"
-import { KenoSocket } from "../../../../socket";
+// import { KenoSocket } from "../../../../socket";
 import kenoDaimonds from "../../../../assets/img/kenoDaimond.png"
 
-function KenoGameContent() {
+function KenoGameContent({ kenoGameSocket }) {
   const dispatch = useDispatch();
   // const [images, setImages] = useState(Array(40).fill(null));
   // const [revealed, setRevealed] = useState(Array(40).fill(false));
@@ -16,7 +16,7 @@ function KenoGameContent() {
   const { selectTile, images, revealed, zoomClass, values, munulGameResult } = useSelector((state) => state.kenoGame);
   // const decoded = decodedToken()
 
-  KenoSocket.on('gameResult', (data) => {
+  kenoGameSocket.on('gameResult', (data) => {
     // console.log("data , ", data);
     dispatch(setMunulGameResult(data))
   })

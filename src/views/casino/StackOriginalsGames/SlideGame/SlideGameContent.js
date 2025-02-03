@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function SlideGameContent() {
+function SlideGameContent({ slideGameSocket }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [skullPosition, setSkullPosition] = useState({ rowIndex: null, boxIndex: null });
 
@@ -42,16 +42,16 @@ function SlideGameContent() {
 
   const renderBox = (rowIndex, boxIndex) => {
     const isSkull = skullPosition.rowIndex === rowIndex && skullPosition.boxIndex === boxIndex;
-    
+
     return (
-      <div 
+      <div
         key={`${rowIndex}-${boxIndex}`}
         className="w-20 h-20 bg-gray-700 m-1 rounded flex items-center justify-center"
       >
         {isSkull && (
-          <img 
-            src="/images/skull.png" 
-            alt="Skull" 
+          <img
+            src="/images/skull.png"
+            alt="Skull"
             className="w-16 h-16 object-contain"
           />
         )}
@@ -61,9 +61,8 @@ function SlideGameContent() {
 
   return (
     <div
-      className={`xl:w-[51rem] lg:w-[39rem] max-sm:mx-3 h-full text-center flex flex-col justify-center select-none relative bg-[#0f212e] ${
-        isMobile ? "rounded-t-lg" : "rounded-tr-lg"
-      } `}
+      className={`xl:w-[51rem] lg:w-[39rem] max-sm:mx-3 h-full text-center flex flex-col justify-center select-none relative bg-[#0f212e] ${isMobile ? "rounded-t-lg" : "rounded-tr-lg"
+        } `}
     >
       <div className="flex flex-col items-center p-4">
         {gridStructure.map((row, rowIndex) => (

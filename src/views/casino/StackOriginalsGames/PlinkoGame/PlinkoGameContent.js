@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { PlinkoSocket } from "../../../../socket";
+// import { PlinkoSocket } from "../../../../socket";
 import {
   setCompleteBetStatus,
   setFinalMultiplier,
@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import { getWallet } from "../../../../services/LoginServices";
 import { useParams } from "react-router-dom";
 
-function PlinkoGameContent() {
+function PlinkoGameContent({ plinkoGameSocket }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const decoded = decodedToken();
@@ -25,13 +25,6 @@ function PlinkoGameContent() {
   const { finalMultiplier, values, lastMultipliers } = useSelector(
     (state) => state.plinkoGame
   );
-
-  useEffect(() => {
-    PlinkoSocket.emit("joinGame", {
-      userId: decoded?.userId,
-      gameId: id,
-    });
-  }, []);
 
   useEffect(() => {
     GetWalletData();
@@ -67,7 +60,7 @@ function PlinkoGameContent() {
         dispatch(setCompleteBetStatus(false));
       }
     };
-    PlinkoSocket.on("Insufficientfund", handleInsufficientFunds);
+    plinkoGameSocket.on("Insufficientfund", handleInsufficientFunds);
 
     const resetToastFlag = () => {
       setFundsToastShown(false);
@@ -75,15 +68,15 @@ function PlinkoGameContent() {
 
     return () => {
       resetToastFlag();
-      PlinkoSocket.off("Insufficientfund", handleInsufficientFunds);
+      plinkoGameSocket.off("Insufficientfund", handleInsufficientFunds);
     };
   }, [fundsToastShown]);
 
-  PlinkoSocket.on("plinkoBetResult", (data) => {
+  plinkoGameSocket.on("plinkoBetResult", (data) => {
     dispatch(setFinalMultiplier(data));
   });
 
-  PlinkoSocket.on("walletBalance", (data) => {
+  plinkoGameSocket.on("walletBalance", (data) => {
     dispatch(setWallet(data?.walletBalance));
   });
 
@@ -114,7 +107,7 @@ function PlinkoGameContent() {
                 data?.multiplier === 3 ||
                 data?.multiplier === 5
                 ? "bg-amber-500"
-                : "bg-red-600"
+                : data?.multiplier >= 10 ? "bg-[#ff003f]" : "bg-[#ff4827]"
               } ${index === 0 ? "rounded-t-xl" : index === 3 ? "rounded-b-xl" : ""
               }`}
             style={{ transitionDelay: `${index * 0.1}s` }}

@@ -12,7 +12,7 @@ import { decodedToken } from "../../../../resources/utility";
 import toast from "react-hot-toast";
 import { getWallet } from "../../../../services/LoginServices";
 import kenoTileSelect from "../../../../assets/Sound/kenoGameSound.wav"
-import { KenoSocket } from "../../../../socket";
+// import { KenoSocket } from "../../../../socket";
 import {
   setIsSwiper,
   setKenoStatusData,
@@ -23,7 +23,7 @@ import {
 } from "../../../../features/casino/kenoSlice";
 import { useParams } from "react-router-dom";
 
-function KenoGameSidebar() {
+function KenoGameSidebar({ kenoGameSocket }) {
   const { id } = useParams();
   const dispatch = useDispatch();
   const decoded = decodedToken();
@@ -67,7 +67,7 @@ function KenoGameSidebar() {
         // dispatch(setCompleteBetStatus(false));
       }
     };
-    KenoSocket.on("Insufficientfund", handleInsufficientFunds);
+    kenoGameSocket.on("Insufficientfund", handleInsufficientFunds);
 
     const resetToastFlag = () => {
       setFundsToastShown(false);
@@ -75,7 +75,7 @@ function KenoGameSidebar() {
 
     return () => {
       resetToastFlag();
-      KenoSocket.off("Insufficientfund", handleInsufficientFunds);
+      kenoGameSocket.off("Insufficientfund", handleInsufficientFunds);
     };
   }, [fundsToastShown]);
 
@@ -88,7 +88,7 @@ function KenoGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      KenoSocket.emit("kenoPlaceBet", {
+      kenoGameSocket.emit("kenoPlaceBet", {
         gameId: id,
         userId: decoded?.userId,
         betAmount: values?.betamount ? values?.betamount : 0,
@@ -103,7 +103,7 @@ function KenoGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      // KenoSocket.emit("limboPlaceBet", {
+      // kenoGameSocket.emit("limboPlaceBet", {
       //   userId: decoded?.userId,
       //   betAmount: values?.betamount ? values?.betamount : 0,
       //   multiplier: values?.multiplier ? values?.multiplier : 2,
@@ -122,7 +122,7 @@ function KenoGameSidebar() {
   };
 
   const handleOnStopAutoBet = () => {
-    KenoSocket.emit("stopAutoBet", { userId: decoded?.userId });
+    kenoGameSocket.emit("stopAutoBet", { userId: decoded?.userId });
     dispatch(setStopAutoBet(false));
   };
 

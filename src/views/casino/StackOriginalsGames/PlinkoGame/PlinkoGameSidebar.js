@@ -10,11 +10,11 @@ import {
   setStopAutoBet,
   setValues,
 } from "../../../../features/casino/plinkoSlice";
-import { PlinkoSocket } from "../../../../socket";
+// import { PlinkoSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import toast from "react-hot-toast";
 
-function PlinkoGameSidebar() {
+function PlinkoGameSidebar({ plinkoGameSocket }) {
   const dispatch = useDispatch();
   const decoded = decodedToken();
   const [isManual, setIsManual] = useState(true);
@@ -58,7 +58,7 @@ function PlinkoGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      PlinkoSocket.emit("plinkoPlaceBet", {
+      plinkoGameSocket.emit("plinkoPlaceBet", {
         userId: decoded.userId,
         betAmount: values?.betamount ? values?.betamount : 0,
         rows: values?.rows,
@@ -67,8 +67,8 @@ function PlinkoGameSidebar() {
           name === "autoBet" && finalMultiplier?.remainingBets === 1
             ? values?.numberofbets || ""
             : finalMultiplier?.remainingBets
-            ? parseInt(finalMultiplier?.remainingBets) - 1
-            : values?.numberofbets,
+              ? parseInt(finalMultiplier?.remainingBets) - 1
+              : values?.numberofbets,
       });
       dispatch(setCompleteBetStatus(true));
       if (name === "manualBet") {
@@ -80,7 +80,7 @@ function PlinkoGameSidebar() {
   };
 
   const handleOnStopAutoBet = () => {
-    PlinkoSocket.emit("stopAutoBet", { userId: decoded?.userId });
+    plinkoGameSocket.emit("stopAutoBet", { userId: decoded?.userId });
     dispatch(setStopAutoBet(false));
     dispatch(setCompleteBetStatus(false));
   };
@@ -89,25 +89,22 @@ function PlinkoGameSidebar() {
     <div>
       {responsiveMobile > 768 ? (
         <div
-          className={`ml-2 max-sm:mr-2 xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] ${
-            isMdScreen ? "md:mx-40" : "md:mx-0 rounded-tl-lg"
-          } `}
+          className={`ml-2 max-sm:mr-2 xl:w-80 lg:w-[16.8rem] flex flex-col p-3 bg-[#213743] ${isMdScreen ? "md:mx-40" : "md:mx-0 rounded-tl-lg"
+            } `}
         >
           <div className="flex overflow-x-auto overflow-y-hidden transform translate-z-0">
             <div className="bg-[#0f212e] flex grow rounded-full p-[4px] flex-shrink-0">
               <div className="flex space-x-2">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[10.4rem] w-[10.4rem] rounded-full ${
-                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[10.4rem] w-[10.4rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.8rem] lg:w-[7.2rem] md:w-[11.4rem] w-[10.4rem] rounded-full ${
-                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }`}
+                  className={`py-2 xl:w-[8.8rem] lg:w-[7.2rem] md:w-[11.4rem] w-[10.4rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }`}
                   onClick={() => setIsManual(false)}
                 >
                   Auto
@@ -133,16 +130,14 @@ function PlinkoGameSidebar() {
                     name="betamount"
                     value={values?.betamount}
                     onChange={(e) => handleOnChange(e)}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[13rem] sm:w-[10rem] w-60 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${
-                      completeBetStatus && "cursor-not-allowed"
-                    }`}
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[13rem] sm:w-[10rem] w-60 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${completeBetStatus && "cursor-not-allowed"
+                      }`}
                     disabled={completeBetStatus}
                   />
                 </div>
                 <button
-                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] ${
-                    completeBetStatus && "cursor-not-allowed"
-                  }`}
+                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] ${completeBetStatus && "cursor-not-allowed"
+                    }`}
                   onClick={() =>
                     dispatch(
                       setValues({
@@ -161,9 +156,8 @@ function PlinkoGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] hover:border-[#557086] hover:rounded-r ${
-                    completeBetStatus && "cursor-not-allowed"
-                  }`}
+                  className={`w-16 text-base hover:bg-[#5c849e68] hover:border-[#557086] hover:rounded-r ${completeBetStatus && "cursor-not-allowed"
+                    }`}
                   onClick={() =>
                     dispatch(
                       setValues({
@@ -187,9 +181,8 @@ function PlinkoGameSidebar() {
                   value={values?.risk}
                   onChange={(e) => handleOnChange(e)}
                   className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
-                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${
-                          completeBetStatus && "cursor-not-allowed"
-                        }`}
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${completeBetStatus && "cursor-not-allowed"
+                    }`}
                   disabled={completeBetStatus}
                 >
                   <option value="low">Low</option>
@@ -207,9 +200,8 @@ function PlinkoGameSidebar() {
                   value={values?.rows}
                   onChange={(e) => handleOnChange(e)}
                   className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
-                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${
-                          completeBetStatus && "cursor-not-allowed"
-                        }`}
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${completeBetStatus && "cursor-not-allowed"
+                    }`}
                   disabled={completeBetStatus}
                 >
                   <option value={8}>8</option>
@@ -254,16 +246,14 @@ function PlinkoGameSidebar() {
                       name="betamount"
                       value={values?.betamount}
                       onChange={(e) => handleOnChange(e)}
-                      className={`w-48 pr-1.5 pl-2 py-2 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${
-                        completeBetStatus && "cursor-not-allowed"
-                      }`}
+                      className={`w-48 pr-1.5 pl-2 py-2 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${completeBetStatus && "cursor-not-allowed"
+                        }`}
                       disabled={completeBetStatus}
                     />
                   </div>
                   <button
-                    className={`w-16 text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] ${
-                      completeBetStatus && "cursor-not-allowed"
-                    }`}
+                    className={`w-16 text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] ${completeBetStatus && "cursor-not-allowed"
+                      }`}
                     onClick={() =>
                       dispatch(
                         setValues({
@@ -355,8 +345,8 @@ function PlinkoGameSidebar() {
                         finalMultiplier?.remainingBets === 1
                           ? values?.numberofbets || ""
                           : finalMultiplier?.remainingBets
-                          ? parseInt(finalMultiplier?.remainingBets) - 1
-                          : values?.numberofbets
+                            ? parseInt(finalMultiplier?.remainingBets) - 1
+                            : values?.numberofbets
                       }
                       onChange={(e) => handleOnChange(e)}
                       className={`w-full pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none`}
@@ -391,9 +381,8 @@ function PlinkoGameSidebar() {
 
       {responsiveMobile <= 768 ? (
         <div
-          className={` max-sm:mx-3 xl:w-80 lg:w-[16.8rem] flex flex-col p-2 bg-[#213743] ${
-            isMdScreen ? "md:-ml-[0rem]" : ""
-          } `}
+          className={` max-sm:mx-3 xl:w-80 lg:w-[16.8rem] flex flex-col p-2 bg-[#213743] ${isMdScreen ? "md:-ml-[0rem]" : ""
+            } `}
         >
           {isManual ? (
             <div>
@@ -413,16 +402,14 @@ function PlinkoGameSidebar() {
                     name="betamount"
                     value={values?.betamount}
                     onChange={(e) => handleOnChange(e)}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[16rem] sm:w-[10rem] w-64 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${
-                      completeBetStatus && "cursor-not-allowed"
-                    }`}
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[16rem] sm:w-[10rem] w-64 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${completeBetStatus && "cursor-not-allowed"
+                      }`}
                     disabled={completeBetStatus}
                   />
                 </div>
                 <button
-                  className={`w-16 text-xs hover:bg-[#5c849e68] ${
-                    completeBetStatus && "cursor-not-allowed"
-                  }`}
+                  className={`w-16 text-xs hover:bg-[#5c849e68] ${completeBetStatus && "cursor-not-allowed"
+                    }`}
                   onClick={() =>
                     dispatch(
                       setValues({
@@ -441,9 +428,8 @@ function PlinkoGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-xs hover:bg-[#5c849e68] ${
-                    completeBetStatus && "cursor-not-allowed"
-                  }`}
+                  className={`w-16 text-xs hover:bg-[#5c849e68] ${completeBetStatus && "cursor-not-allowed"
+                    }`}
                   onClick={() =>
                     dispatch(
                       setValues({
@@ -475,9 +461,8 @@ function PlinkoGameSidebar() {
                   value={values?.risk}
                   onChange={(e) => handleOnChange(e)}
                   className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
-                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${
-                          completeBetStatus && "cursor-not-allowed"
-                        }`}
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${completeBetStatus && "cursor-not-allowed"
+                    }`}
                   disabled={completeBetStatus}
                 >
                   <option value="low">Low</option>
@@ -495,9 +480,8 @@ function PlinkoGameSidebar() {
                   value={values?.rows}
                   onChange={(e) => handleOnChange(e)}
                   className={`w-full px-2 py-2 border-2 rounded border-[#4d718768] bg-[#0f212e] 
-                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${
-                          completeBetStatus && "cursor-not-allowed"
-                        }`}
+                        hover:border-[#557086] focus:border-[#557086] focus:outline-none ${completeBetStatus && "cursor-not-allowed"
+                    }`}
                   disabled={completeBetStatus}
                 >
                   <option value={8}>8</option>
@@ -515,18 +499,16 @@ function PlinkoGameSidebar() {
                 <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
                   <div className="flex space-x-2 w-full">
                     <button
-                      className={`py-2 rounded-full transition-all ${
-                        isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                      }
+                      className={`py-2 rounded-full transition-all ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                        }
                         xl:w-[8.7rem] lg:w-[4rem] md:w-[10.94rem] w-full`}
                       onClick={() => setIsManual(true)}
                     >
                       Manual
                     </button>
                     <button
-                      className={`py-2 rounded-full transition-all ${
-                        !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                      }
+                      className={`py-2 rounded-full transition-all ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                        }
                       xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.94rem] w-full`}
                       onClick={() => setIsManual(false)}
                     >
@@ -577,16 +559,14 @@ function PlinkoGameSidebar() {
                       name="betamount"
                       value={values?.betamount}
                       onChange={(e) => handleOnChange(e)}
-                      className={`w-64 pr-1.5 pl-2 py-2.5 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${
-                        completeBetStatus && "cursor-not-allowed"
-                      }`}
+                      className={`w-64 pr-1.5 pl-2 py-2.5 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none ${completeBetStatus && "cursor-not-allowed"
+                        }`}
                       disabled={completeBetStatus}
                     />
                   </div>
                   <button
-                    className={`w-16 hover:bg-[#5c849e68] ${
-                      completeBetStatus && "cursor-not-allowed"
-                    }`}
+                    className={`w-16 hover:bg-[#5c849e68] ${completeBetStatus && "cursor-not-allowed"
+                      }`}
                     onClick={() =>
                       dispatch(
                         setValues({
@@ -678,8 +658,8 @@ function PlinkoGameSidebar() {
                         finalMultiplier?.remainingBets === 1
                           ? values?.numberofbets || ""
                           : finalMultiplier?.remainingBets
-                          ? parseInt(finalMultiplier?.remainingBets) - 1
-                          : values?.numberofbets
+                            ? parseInt(finalMultiplier?.remainingBets) - 1
+                            : values?.numberofbets
                       }
                       onChange={(e) => handleOnChange(e)}
                       className={`w-full pr-7 pl-2 py-2.5 rounded text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none`}
@@ -691,18 +671,16 @@ function PlinkoGameSidebar() {
                   <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
                     <div className="flex space-x-2 w-full">
                       <button
-                        className={`py-2 rounded-full transition-all ${
-                          isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                        }
+                        className={`py-2 rounded-full transition-all ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                          }
                           xl:w-[8.7rem] lg:w-[4rem] md:w-[10.94rem] w-full`}
                         onClick={() => setIsManual(true)}
                       >
                         Manual
                       </button>
                       <button
-                        className={`py-2 rounded-full transition-all ${
-                          !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                        }
+                        className={`py-2 rounded-full transition-all ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                          }
                                         xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.94rem] w-full`}
                         onClick={() => setIsManual(false)}
                       >

@@ -15,7 +15,7 @@ import {
   // setRevealed,
   setShowFields,
 } from "../../../../features/casino/minesSlice";
-import { MineSocket } from "../../../../socket";
+// import { MineSocket } from "../../../../socket";
 import { decodedToken } from "../../../../resources/utility";
 import { useParams } from "react-router-dom";
 import {
@@ -25,7 +25,7 @@ import {
 import { getWallet } from "../../../../services/LoginServices";
 import toast from "react-hot-toast";
 
-function MinesGameSidebar() {
+function MinesGameSidebar({ mineGameSocket }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [onProfit, setOnProfit] = useState({ win: true, lose: true });
@@ -70,7 +70,7 @@ function MinesGameSidebar() {
           parseFloat(res?.currentAmount) + parseFloat(res?.bonusAmount);
         dispatch(setWallet(wallet.toFixed(2)));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleOnChange = (e) => {
@@ -80,7 +80,7 @@ function MinesGameSidebar() {
 
   const handleBetClick = () => {
     if (gameBet && !gamesOver) {
-      MineSocket.emit("cashout", {
+      mineGameSocket.emit("cashout", {
         userId: decoded?.userId.toString(),
         gameId: id,
       });
@@ -92,7 +92,7 @@ function MinesGameSidebar() {
         dispatch(openRegisterModel());
       } else {
         // onStartGame(mineValue.betamount);
-        MineSocket.emit("minePlaceBet", {
+        mineGameSocket.emit("minePlaceBet", {
           userId: decoded?.userId.toString(),
           gameId: id,
           totalMines: mineValue?.mines,
@@ -109,7 +109,7 @@ function MinesGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      MineSocket.emit("StartAutoBet", {
+      mineGameSocket.emit("StartAutoBet", {
         userId: decoded?.userId,
         gameId: id,
         preSelectedTiles: preSelectTile,
@@ -129,7 +129,7 @@ function MinesGameSidebar() {
   };
 
   const handleOnStopAutoBet = () => {
-    MineSocket.emit("StopAutoBet");
+    mineGameSocket.emit("StopAutoBet");
     dispatch(setAutoBet(false));
   };
 
@@ -140,7 +140,7 @@ function MinesGameSidebar() {
       index = Math.floor(Math.random() * 25);
     }
 
-    MineSocket.emit("selectTile", {
+    mineGameSocket.emit("selectTile", {
       userId: decoded?.userId.toString(),
       gameId: id,
       tileIndex: index,
@@ -159,17 +159,15 @@ function MinesGameSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[12rem] w-[11rem] rounded-full ${
-                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.09rem] md:w-[12rem] w-[11rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }`}
                   onClick={() => dispatch(setIsManual(true))}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] w-[11.7rem] rounded-full ${
-                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[8.1rem] md:w-[13.3rem] w-[11.7rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }`}
                   onClick={() => dispatch(setIsManual(false))}
                 >
                   Auto
@@ -201,8 +199,8 @@ function MinesGameSidebar() {
                       mineValue?.betamount
                         ? mineValue?.betamount
                         : restored?.mineLocations?.length > 0
-                        ? restored?.betAmount
-                        : mineValue?.betamount || ""
+                          ? restored?.betAmount
+                          : mineValue?.betamount || ""
                     }
                     onChange={(e) => {
                       handleOnChange(e);
@@ -210,16 +208,14 @@ function MinesGameSidebar() {
                         dispatch(setRestored({ betAmount: "" }));
                       }
                     }}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-l text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${
-                      showFields && "cursor-not-allowed"
-                    }`}
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-1.5 md:w-[20rem] rounded-l text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showFields && "cursor-not-allowed"
+                      }`}
                     disabled={showFields}
                   />
                 </div>
                 <button
-                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] ${
-                    showFields && "cursor-not-allowed"
-                  }`}
+                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] hover:border-[#557086] ${showFields && "cursor-not-allowed"
+                    }`}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -238,9 +234,8 @@ function MinesGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] hover:border-[#557086] ${
-                    showFields && "cursor-not-allowed"
-                  } `}
+                  className={`w-16 text-base hover:bg-[#5c849e68] hover:border-[#557086] ${showFields && "cursor-not-allowed"
+                    } `}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -269,8 +264,8 @@ function MinesGameSidebar() {
                         {restored?.mineLocations?.length > 0
                           ? restored?.mines
                           : mineValue?.mines
-                          ? mineValue?.mines
-                          : restored?.mines}
+                            ? mineValue?.mines
+                            : restored?.mines}
                       </div>
                     </div>
                     <div>
@@ -284,8 +279,8 @@ function MinesGameSidebar() {
                         {restored?.mineLocations?.length > 0
                           ? 25 - restored?.mines
                           : mineValue?.mines
-                          ? gems
-                          : 25 - restored?.mines}
+                            ? gems
+                            : 25 - restored?.mines}
                       </div>
                     </div>
                   </div>
@@ -295,8 +290,8 @@ function MinesGameSidebar() {
                       {tileSelect?.multiplier
                         ? tileSelect?.multiplier
                         : restored?.mineLocations?.length > 0
-                        ? restoredMultiplier
-                        : "1.00"}
+                          ? restoredMultiplier
+                          : "1.00"}
                       )
                     </label>
                     <label>
@@ -305,13 +300,13 @@ function MinesGameSidebar() {
                         (mineValue?.betamount
                           ? mineValue?.betamount
                           : restored?.mineLocations?.length > 0
-                          ? restored?.betAmount
-                          : 0) *
+                            ? restored?.betAmount
+                            : 0) *
                         (tileSelect?.multiplier
                           ? tileSelect?.multiplier
                           : restored?.mineLocations?.length > 0
-                          ? restoredMultiplier
-                          : 0.0)
+                            ? restoredMultiplier
+                            : 0.0)
                       ).toFixed(2)}
                     </label>
                   </div>
@@ -324,13 +319,13 @@ function MinesGameSidebar() {
                         (mineValue?.betamount
                           ? mineValue?.betamount
                           : restored?.mineLocations?.length > 0
-                          ? restored?.betAmount
-                          : 0) *
+                            ? restored?.betAmount
+                            : 0) *
                         (tileSelect?.multiplier
                           ? tileSelect?.multiplier
                           : restored?.mineLocations?.length > 0
-                          ? restoredMultiplier
-                          : 0.0)
+                            ? restoredMultiplier
+                            : 0.0)
                       ).toFixed(2)}
                     </p>
                     {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
@@ -401,11 +396,10 @@ function MinesGameSidebar() {
               )}
 
               <button
-                className={`${
-                  gameBet && !gamesOver
+                className={`${gameBet && !gamesOver
                     ? "bg-[#489649]"
                     : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3.5 py-3 rounded font-semibold w-full`}
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleBetClick()}
                 // disabled={gameBet && !gamesOver && tileSelect?.tileIndex === undefined}
                 disabled={
@@ -441,8 +435,8 @@ function MinesGameSidebar() {
                       mineValue?.betamount
                         ? mineValue?.betamount
                         : restored?.mineLocations?.length > 0
-                        ? restored?.betAmount
-                        : mineValue?.betamount || ""
+                          ? restored?.betAmount
+                          : mineValue?.betamount || ""
                     }
                     onChange={(e) => {
                       handleOnChange(e);
@@ -453,9 +447,8 @@ function MinesGameSidebar() {
                   />
                 </div>
                 <button
-                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] group-hover:border-[#557086] ${
-                    minesBetStatus && "cursor-not-allowed"
-                  }`}
+                  className={`w-16 text-sm font-bold hover:bg-[#5c849e68] group-hover:border-[#557086] ${minesBetStatus && "cursor-not-allowed"
+                    }`}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -474,9 +467,8 @@ function MinesGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] group-hover:border-[#557086] ${
-                    minesBetStatus && "cursor-not-allowed"
-                  } `}
+                  className={`w-16 text-base hover:bg-[#5c849e68] group-hover:border-[#557086] ${minesBetStatus && "cursor-not-allowed"
+                    } `}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -574,11 +566,10 @@ function MinesGameSidebar() {
               </div>
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#4d718768]">
                 <button
-                  className={`${
-                    onProfit.win
+                  className={`${onProfit.win
                       ? "bg-[#0f212e] rounded"
                       : "rounded hover:bg-[#85afca68]"
-                  } px-3.5 py-1.5 ml-0.5 rounded`}
+                    } px-3.5 py-1.5 ml-0.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setMineValue({ onwin: "" }));
@@ -587,11 +578,10 @@ function MinesGameSidebar() {
                   Reset
                 </button>
                 <button
-                  className={`${
-                    onProfit.win
+                  className={`${onProfit.win
                       ? "hover:bg-[#85afca68]"
                       : "bg-[#0f212e] rounded"
-                  } px-[0.3rem] py-1.5 rounded`}
+                    } px-[0.3rem] py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -599,11 +589,10 @@ function MinesGameSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${
-                    onProfit.win
+                  className={`relative flex ${onProfit.win
                       ? "opacity-50 pointer-events-none cursor-not-allowed"
                       : ""
-                  }`}
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2 ">
                     <PercentIcon fontSize="small" />
@@ -625,11 +614,10 @@ function MinesGameSidebar() {
               <div className="flex items-center space-x-0.5 mt-1 rounded-md bg-[#4d718768]">
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
+                    className={`${onProfit.lose
                         ? "bg-[#0f212e] rounded"
                         : "hover:bg-[#85afca68] rounded"
-                    } px-3.5 py-1.5 ml-0.5 rounded`}
+                      } px-3.5 py-1.5 ml-0.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                       dispatch(setMineValue({ onlose: "" }));
@@ -640,11 +628,10 @@ function MinesGameSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
+                    className={`${onProfit.lose
                         ? "hover:bg-[#85afca68]"
                         : "bg-[#0f212e] rounded"
-                    } px-[0.3rem] py-1.5`}
+                      } px-[0.3rem] py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -653,11 +640,10 @@ function MinesGameSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${
-                    onProfit.lose
+                  className={`relative flex ${onProfit.lose
                       ? "opacity-50 pointer-events-none cursor-not-allowed"
                       : ""
-                  }`}
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -722,18 +708,17 @@ function MinesGameSidebar() {
                 </button>
               ) : (
                 <button
-                  className={`${
-                    preSelectTile?.length > 0
+                  className={`${preSelectTile?.length > 0
                       ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer"
                       : "bg-[#489649] cursor-default"
-                  } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
+                    } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>
                     mineValue?.numberofbet === undefined ||
-                    mineValue?.numberofbet === ""
+                      mineValue?.numberofbet === ""
                       ? toast.error("Please enter a number of bets")
                       : handleOnAutoBet()
                   }
-                  // disabled={preSelectTile?.length > 0}
+                // disabled={preSelectTile?.length > 0}
                 >
                   Start Autobet
                 </button>
@@ -769,8 +754,8 @@ function MinesGameSidebar() {
                       mineValue?.betamount
                         ? mineValue?.betamount
                         : restored?.mineLocations?.length > 0
-                        ? restored?.betAmount
-                        : mineValue?.betamount || ""
+                          ? restored?.betAmount
+                          : mineValue?.betamount || ""
                     }
                     onChange={(e) => {
                       handleOnChange(e);
@@ -778,16 +763,14 @@ function MinesGameSidebar() {
                         dispatch(setRestored({ betAmount: "" }));
                       }
                     }}
-                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[17rem] w-64 rounded-s-md text-white border-2 group-hover:border-[#557086] focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${
-                      showFields && "cursor-not-allowed"
-                    }`}
+                    className={`xl:w-48 lg:w-36 pr-1.5 pl-2 py-2 md:w-[17rem] w-64 rounded-s-md text-white border-2 group-hover:border-[#557086] focus:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none ${showFields && "cursor-not-allowed"
+                      }`}
                     disabled={showFields}
                   />
                 </div>
                 <button
-                  className={`w-16 text-xl hover:bg-[#5c849e68] group-hover:border-[#557086] ${
-                    showFields && "cursor-not-allowed"
-                  }`}
+                  className={`w-16 text-xl hover:bg-[#5c849e68] group-hover:border-[#557086] ${showFields && "cursor-not-allowed"
+                    }`}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -806,9 +789,8 @@ function MinesGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] group-hover:border-[#557086] ${
-                    showFields && "cursor-not-allowed"
-                  } `}
+                  className={`w-16 text-base hover:bg-[#5c849e68] group-hover:border-[#557086] ${showFields && "cursor-not-allowed"
+                    } `}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -823,11 +805,10 @@ function MinesGameSidebar() {
                 </button>
               </div>
               <button
-                className={`${
-                  gameBet && !gamesOver
+                className={`${gameBet && !gamesOver
                     ? "bg-[#489649]"
                     : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3.5 py-3 rounded font-semibold w-full`}
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleBetClick()}
                 disabled={
                   gameBet &&
@@ -850,8 +831,8 @@ function MinesGameSidebar() {
                         {restored?.mineLocations?.length > 0
                           ? restored?.mines
                           : mineValue?.mines
-                          ? mineValue?.mines
-                          : restored?.mines}
+                            ? mineValue?.mines
+                            : restored?.mines}
                       </div>
                     </div>
                     <div className="w-full">
@@ -862,8 +843,8 @@ function MinesGameSidebar() {
                         {restored?.mineLocations?.length > 0
                           ? 25 - restored?.mines
                           : mineValue?.mines
-                          ? gems
-                          : 25 - restored?.mines}
+                            ? gems
+                            : 25 - restored?.mines}
                       </div>
                     </div>
                   </div>
@@ -874,8 +855,8 @@ function MinesGameSidebar() {
                       {tileSelect?.multiplier
                         ? tileSelect?.multiplier
                         : restored?.mineLocations?.length > 0
-                        ? restoredMultiplier
-                        : "1.00"}
+                          ? restoredMultiplier
+                          : "1.00"}
                       )
                     </label>
                     <label>
@@ -884,13 +865,13 @@ function MinesGameSidebar() {
                         (mineValue?.betamount
                           ? mineValue?.betamount
                           : restored?.mineLocations?.length > 0
-                          ? restored?.betAmount
-                          : 0) *
+                            ? restored?.betAmount
+                            : 0) *
                         (tileSelect?.multiplier
                           ? tileSelect?.multiplier
                           : restored?.mineLocations?.length > 0
-                          ? restoredMultiplier
-                          : 0.0)
+                            ? restoredMultiplier
+                            : 0.0)
                       ).toFixed(2)}
                     </label>
                   </div>
@@ -900,13 +881,13 @@ function MinesGameSidebar() {
                         (mineValue?.betamount
                           ? mineValue?.betamount
                           : restored?.mineLocations?.length > 0
-                          ? restored?.betAmount
-                          : 0) *
+                            ? restored?.betAmount
+                            : 0) *
                         (tileSelect?.multiplier
                           ? tileSelect?.multiplier
                           : restored?.mineLocations?.length > 0
-                          ? restoredMultiplier
-                          : 0.0)
+                            ? restoredMultiplier
+                            : 0.0)
                       ).toFixed(2)}
                     </p>
                     {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
@@ -979,18 +960,17 @@ function MinesGameSidebar() {
                 </button>
               ) : (
                 <button
-                  className={`${
-                    preSelectTile?.length > 0
+                  className={`${preSelectTile?.length > 0
                       ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer"
                       : "bg-[#489649] cursor-default"
-                  } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
+                    } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>
                     mineValue?.numberofbet === undefined ||
-                    mineValue?.numberofbet === ""
+                      mineValue?.numberofbet === ""
                       ? toast.error("Please enter a number of bets")
                       : handleOnAutoBet()
                   }
-                  // disabled={preSelectTile?.length > 0}
+                // disabled={preSelectTile?.length > 0}
                 >
                   Start Autobet
                   {/* {console.log("preSelectTile", preSelectTile)} */}
@@ -1017,8 +997,8 @@ function MinesGameSidebar() {
                       mineValue?.betamount
                         ? mineValue?.betamount
                         : restored?.mineLocations?.length > 0
-                        ? restored?.betAmount
-                        : mineValue?.betamount || ""
+                          ? restored?.betAmount
+                          : mineValue?.betamount || ""
                     }
                     onChange={(e) => {
                       handleOnChange(e);
@@ -1029,9 +1009,8 @@ function MinesGameSidebar() {
                   />
                 </div>
                 <button
-                  className={`w-16 text-xl hover:bg-[#5c849e68] group-hover:border-[#557086] ${
-                    minesBetStatus && "cursor-not-allowed"
-                  }`}
+                  className={`w-16 text-xl hover:bg-[#5c849e68] group-hover:border-[#557086] ${minesBetStatus && "cursor-not-allowed"
+                    }`}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -1050,9 +1029,8 @@ function MinesGameSidebar() {
                   sx={{ my: 1.5, backgroundColor: "#1A2c38", width: "2px" }}
                 />
                 <button
-                  className={`w-16 text-base hover:bg-[#5c849e68] group-hover:border-[#557086] ${
-                    minesBetStatus && "cursor-not-allowed"
-                  } `}
+                  className={`w-16 text-base hover:bg-[#5c849e68] group-hover:border-[#557086] ${minesBetStatus && "cursor-not-allowed"
+                    } `}
                   onClick={() =>
                     dispatch(
                       setMineValue({
@@ -1142,11 +1120,10 @@ function MinesGameSidebar() {
               </div>
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
                 <button
-                  className={`${
-                    onProfit.win
+                  className={`${onProfit.win
                       ? "bg-[#0f212e] rounded"
                       : "hover:bg-[#85afca68]"
-                  } px-3.5 py-1.5 ml-0.5 rounded`}
+                    } px-3.5 py-1.5 ml-0.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setMineValue({ onwin: "" }));
@@ -1155,11 +1132,10 @@ function MinesGameSidebar() {
                   Reset
                 </button>
                 <button
-                  className={`${
-                    onProfit.win
+                  className={`${onProfit.win
                       ? "hover:bg-[#85afca68]"
                       : "bg-[#0f212e] rounded"
-                  } px-[0.3rem] py-1.5`}
+                    } px-[0.3rem] py-1.5`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -1167,11 +1143,10 @@ function MinesGameSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${
-                    onProfit.win
+                  className={`relative flex ${onProfit.win
                       ? "opacity-50 pointer-events-none cursor-not-allowed"
                       : ""
-                  }`}
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2 ">
                     <PercentIcon fontSize="small" />
@@ -1193,11 +1168,10 @@ function MinesGameSidebar() {
               <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
+                    className={`${onProfit.lose
                         ? "bg-[#0f212e] rounded-sm"
                         : "hover:bg-[#85afca68] rounded"
-                    } px-3.5 py-1.5 ml-0.5 rounded-sm`}
+                      } px-3.5 py-1.5 ml-0.5 rounded-sm`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                       dispatch(setMineValue({ onlose: "" }));
@@ -1208,11 +1182,10 @@ function MinesGameSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
+                    className={`${onProfit.lose
                         ? "hover:bg-[#85afca68]"
                         : "bg-[#0f212e] rounded-sm"
-                    } px-[0.3rem] py-2`}
+                      } px-[0.3rem] py-2`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -1221,11 +1194,10 @@ function MinesGameSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${
-                    onProfit.lose
+                  className={`relative flex ${onProfit.lose
                       ? "opacity-50 pointer-events-none cursor-not-allowed"
                       : ""
-                  }`}
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -1287,18 +1259,16 @@ function MinesGameSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 w-full">
                 <button
-                  className={`py-2 rounded-full transition-all ${
-                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }
+                  className={`py-2 rounded-full transition-all ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }
                     xl:w-[8.7rem] lg:w-[4rem] md:w-[10.7rem] w-full`}
                   onClick={() => dispatch(setIsManual(true))}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 rounded-full transition-all ${
-                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }
+                  className={`py-2 rounded-full transition-all ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }
                     xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.7rem] w-full`}
                   onClick={() => dispatch(setIsManual(false))}
                 >
