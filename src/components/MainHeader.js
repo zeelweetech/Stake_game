@@ -201,19 +201,6 @@ function MainHeader({ handleRightSidebarToggle }) {
                 Search
               </p>
             </button>
-
-            {/* <button
-              className="flex items-center space-x-1.5 font-medium px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
-              onClick={() => setShowMessage(true)}
-            >
-              <IoMdSearch className="text-sm w-5 h-5 md:text-base" />
-              <p className="hidden lg:block text-sm lg:text-base">Search</p>
-            </button> */}
-            {showMessage && (
-              <div className="absolute top-14 left-1/2 transform -translate-x-1/2 bg-gray-900/80 text-white text-xs px-3 py-2 rounded-lg shadow-md">
-                Search button clicked!
-              </div>
-            )}
             <div className="relative flex items-center">
               <p
                 onClick={toggleTooltip}
