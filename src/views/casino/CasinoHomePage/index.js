@@ -135,8 +135,24 @@ function CasinoHomePage() {
   const getMenuContainerClass = () => {
     if (windowWidth <= 768) {
       return isChatOpen || isBetslipOpen 
-        ? "w-[20rem]" 
-        : "w-[40rem]";
+        ? "w-[12rem]" 
+        : "w-[35rem]";
+    } else if (windowWidth <= 1024) {
+      return isChatOpen || isBetslipOpen
+        ? "w-[30rem]"
+        : "w-[45rem]";
+    } else {
+      return isChatOpen || isBetslipOpen
+        ? "w-[57rem]"
+        : "w-[80rem]";
+    }
+  };
+
+  const getSubMenuClass = () => {
+    if (windowWidth <= 768) {
+      return isChatOpen || isBetslipOpen 
+        ? "w-[22rem]" 
+        : "w-[37rem]";
     } else if (windowWidth <= 1024) {
       return isChatOpen || isBetslipOpen
         ? "w-[30rem]"
@@ -208,7 +224,7 @@ function CasinoHomePage() {
 
           {/* Menu Section */}
           <div className="flex justify-center my-7 text-white">
-            <div className={`${getMenuContainerClass()} overflow-x-auto scrollbar-thin`}>
+            <div className={`${getSubMenuClass()} overflow-x-auto scrollbar-thin`}>
               <div className="bg-[#0f212e] flex rounded-full p-[5px] space-x-2 text-xs min-w-max">
                 {menuItems.map((item) => (
                   <button

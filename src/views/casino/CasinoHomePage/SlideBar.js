@@ -140,8 +140,8 @@ function SlideBar() {
       return "w-full max-w-[22rem]"
     } else if (windowWidth <= 768) {
       return isChatOpen || isBetslipOpen 
-        ? "w-full max-w-[25rem]" 
-        : "w-full max-w-[95%]";
+        ? "w-full max-w-[20rem]" 
+        : "w-full max-w-[38rem]";
     } else if (windowWidth <= 1024) {
       return isChatOpen || isBetslipOpen
         ? "w-full max-w-[33rem]"
