@@ -47,9 +47,9 @@ function Mainbar() {
     if (windowWidth <= 425) {
       return "w-[20rem]";
     } else if (windowWidth <= 768) {
-      return isChatOpen || isBetslipOpen ? "w-[16rem]" : "w-[22rem]";
+      return isChatOpen || isBetslipOpen ? "w-[18rem]" : "w-[22rem]";
     } else if (windowWidth <= 1024) {
-      return isChatOpen || isBetslipOpen ? "w-[18rem]" : "w-96";
+      return isChatOpen || isBetslipOpen ? "w-[18rem]" : "w-[22rem]";
     } else {
       return isChatOpen || isBetslipOpen ? "w-[20.5rem]" : "w-[20.5rem]";
     }
@@ -79,7 +79,7 @@ function Mainbar() {
           className="mb-6 lg:mb-0"
         >
           <div
-            className={`${getVIPProgressWidth()}  bg-[#0f212e] max-80 md:w-[23rem] p-6 border text-white border-[#2f4553]`}
+            className={`${getVIPProgressWidth()}  bg-[#0f212e] max-80 overflow-hidden p-6 border text-white border-[#2f4553]`}
           >
             <div className="flex justify-between font-semibold cursor-default items-center">
               <p>{progressData?.userName || "User"}</p>

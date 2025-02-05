@@ -76,12 +76,12 @@ const Favourites = () => {
     setDropdown(false);
   };
 
-  const getContainerClass = () => {
-    if (windowWidth <= 768) {
-      return isChatOpen || isBetslipOpen ? 'w-[90%]' : 'w-full';
-    }
-    return 'w-full max-w-[50rem]';
-  };
+  // const getContainerClass = () => {
+  //   if (windowWidth <= 768) {
+  //     return isChatOpen || isBetslipOpen ? 'w-[20rem]' : 'w-[70rem]';
+  //   }
+  //   return 'w-full max-w-[50rem]';
+  // };
 
   return (
     <div className="relative">
@@ -103,7 +103,7 @@ const Favourites = () => {
         </div>
 
         {/* Search Section */}
-        <div className="px-4 md:px-8 pt-8 max-w-7xl mx-auto relative">
+        <div className="px-4 pt-8 max-w-7xl mx-auto relative">
           <div className="relative">
             <input
               className="border-2 rounded-full w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50] text-white"
@@ -168,11 +168,10 @@ const Favourites = () => {
           </div>
 
           {/* Game Table */}
-          <div className="flex justify-center">
-            <div className={getContainerClass()}>
+            <div>
               <GameTable />
             </div>
-          </div>
+  
         </div>
       </div>
     </div>
