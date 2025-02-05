@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import GameFooter from "../../../component/GameFooter/GameFooter";
 import WheelGameContent from "./WheelGameContent";
 import WheelGameSidebar from "./WheelGameSidebar";
-import { WheelSocket } from "../../../../socket";
+// import { WheelSocket } from "../../../../socket";
 import GameContent from "../../../component/GameContent";
 import GameTable from "../../../component/GameTable";
+import { io } from "socket.io-client";
+import { decodedToken } from "../../../../resources/utility";
+import { useParams } from "react-router-dom";
 
 function WheelGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const { id } = useParams();
+  const decoded = decodedToken();
+  const wheelGameSocket = io(process.env.REACT_APP_WHEEL_URL, { path: "/ws" });
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,45 +28,49 @@ function WheelGame() {
   }, []);
 
   useEffect(() => {
-    WheelSocket.connect();
+    wheelGameSocket.connect();
 
-    WheelSocket.on("connect", () => {
-      console.log("wheel sokect connected");
+    // wheelGameSocket.on("connect", () => {
+    //   console.log("wheel sokect connected");
+    // });
+
+    wheelGameSocket.emit("joinGame", {
+      userId: decoded?.userId,
+      gameId: id,
     });
 
-    WheelSocket.on("disconnect", () => {
+    wheelGameSocket.on("disconnect", () => {
       console.log("wheel Disconnected from server");
     });
 
     return () => {
-      WheelSocket.off("connect");
-      WheelSocket.off("disconnect");
-      WheelSocket.disconnect();
+      wheelGameSocket.off("connect");
+      wheelGameSocket.off("disconnect");
+      wheelGameSocket.disconnect();
     };
-  });
+  }, [decoded?.userId, id]);
 
   return (
     <div className="flex justify-center w-full h-full">
       <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full xl:-ml-0 lg:-ml-[3.4rem]">
         <div className="w-full">
           <div
-            className={`flex justify-center w-full ${
-              isMobile ? "h-[24rem]" : "h-[46rem]"
-            } border-b-3`}
+            className={`flex justify-center w-full ${isMobile ? "h-[24rem]" : "h-[46rem]"
+              } border-b-3`}
           >
             {!isMobile && (
               <div className="flex-row bg-[#213743] rounded-tl-lg">
-                <WheelGameSidebar />
+                <WheelGameSidebar wheelGameSocket={wheelGameSocket} />
               </div>
             )}
             <div className="flex-grow">
-              <WheelGameContent />
+              <WheelGameContent wheelGameSocket={wheelGameSocket} />
             </div>
           </div>
 
           {isMobile && (
             <div className="flex flex-col">
-              <WheelGameSidebar />
+              <WheelGameSidebar wheelGameSocket={wheelGameSocket} />
             </div>
           )}
           <div className="md:flex md:justify-center lg:block xl:block">

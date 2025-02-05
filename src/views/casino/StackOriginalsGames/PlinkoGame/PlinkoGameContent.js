@@ -20,7 +20,6 @@ function PlinkoGameContent({ plinkoGameSocket }) {
   const canvasRef = useRef();
   const [ballManager, setBallManager] = useState();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
   const [fundsToastShown, setFundsToastShown] = useState(false);
   const { finalMultiplier, values, lastMultipliers } = useSelector(
     (state) => state.plinkoGame

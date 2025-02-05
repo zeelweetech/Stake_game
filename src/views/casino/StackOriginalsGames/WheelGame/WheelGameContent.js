@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from "react";
-import { WheelSocket } from "../../../../socket";
+import React, { memo, useEffect, useMemo, useState } from "react";
+// import { WheelSocket } from "../../../../socket";
 import { RowByRisk } from "./WheelJason";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,12 +17,11 @@ import { getWallet } from "../../../../services/LoginServices";
 import { setWallet } from "../../../../features/auth/authSlice";
 import { debounce } from "@mui/material";
 
-function WheelGameContent() {
+function WheelGameContent({ wheelGameSocket }) {
   const dispatch = useDispatch();
   const decoded = decodedToken();
   const [segments, setSegments] = useState([]);
   const [segColors, setSegColors] = useState([]);
-  // const [isMdScreen, setIsMdScreen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [fundsToastShown, setFundsToastShown] = useState(false);
   const { wheelValue, finalmultiplier, mustSpin, isSpinning } = useSelector(
@@ -43,7 +42,7 @@ function WheelGameContent() {
       .catch((err) => { });
   };
 
-  WheelSocket.on("autoBetStop", () => {
+  wheelGameSocket.on("autoBetStop", () => {
     dispatch(setAutoBet(false));
   });
 
@@ -51,7 +50,7 @@ function WheelGameContent() {
     return debounce((data) => dispatch(setWallet(data?.walletBalance)), 300);
   }, [dispatch]);
 
-  WheelSocket.on("walletBalance", (data) => {
+  wheelGameSocket.on("walletBalance", (data) => {
     console.log("wallet data", data);
     // dispatch(setWallet(data?.walletBalance));
     // dispatch(setWallet((prev) => ({ ...prev, wallet: data?.walletBalance })))
@@ -100,7 +99,7 @@ function WheelGameContent() {
         dispatch(setIsBetInProgress(false));
       }
     };
-    WheelSocket.on("Insufficientfund", handleInsufficientFunds);
+    wheelGameSocket.on("Insufficientfund", handleInsufficientFunds);
 
     const resetToastFlag = () => {
       setFundsToastShown(false);
@@ -108,19 +107,19 @@ function WheelGameContent() {
 
     return () => {
       resetToastFlag();
-      WheelSocket.off("Insufficientfund", handleInsufficientFunds);
+      wheelGameSocket.off("Insufficientfund", handleInsufficientFunds);
     };
   }, [fundsToastShown]);
 
-  useEffect(() => {
-    WheelSocket.on("manualBetResult", (data) => {
+  // useEffect(() => {
+    wheelGameSocket.on("manualBetResult", (data) => {
       dispatch(setFinaMultiplier(data));
     });
 
-    WheelSocket.on("autoBetResult", (data) => {
+    wheelGameSocket.on("autoBetResult", (data) => {
       dispatch(setFinaMultiplier(data));
     });
-  }, []);
+  // }, []);
 
   useEffect(() => {
     if (finalmultiplier?.multiplier) {
@@ -158,7 +157,7 @@ function WheelGameContent() {
     dispatch(setIsSpinning(false));
     dispatch(setMustSpin(false));
 
-    WheelSocket.emit("betCompleted", {
+    wheelGameSocket.emit("betCompleted", {
       betId: finalmultiplier?.betId,
       userId: decoded?.userId,
     });
@@ -219,8 +218,8 @@ function WheelGameContent() {
       ) : (
         <button
           className={`border-b-[#d5e8f2] group relative inline-block overflow-hidden font-medium bg-[#213743] cursor-help border-b-8 rounded-lg xl:px-8 xl:h-12 xl:mt-5 lg:px-6 lg:h-12 lg:mt-10 md:px-2 md:h-11 mt-2 sm:px-4 h-9 px-2.5 py-1 text-xs sm:text-sm md:text-base${wheelValue?.segments === "30" || wheelValue?.segments === 30
-              ? "px-8"
-              : "px-10"
+            ? "px-8"
+            : "px-10"
             } ${buttons.includes("1.9")
               ? "bg-[#d5e8f2]"
               : buttons.includes("1.8")
@@ -421,4 +420,5 @@ function WheelGameContent() {
   );
 }
 
-export default memo(WheelGameContent);
+export default WheelGameContent
+// export default memo(WheelGameContent);

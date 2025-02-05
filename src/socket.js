@@ -46,12 +46,12 @@ export const PlinkoSocket = io(process.env.REACT_APP_PLINKO_URL, {
 //   },
 // });
 
-export const WheelSocket = io(process.env.REACT_APP_WHEEL_URL, {
-  path: "/ws",
-  extraHeaders: {
-    Authorization: `token: ${token}`,
-  },
-});
+// export const WheelSocket = io(process.env.REACT_APP_WHEEL_URL, {
+//   path: "/ws",
+//   extraHeaders: {
+//     Authorization: `token: ${token}`,
+//   },
+// });
 
 // export const LimboSocket = io(process.env.REACT_APP_LIMBO_URL, {
 //   path: "/ws",

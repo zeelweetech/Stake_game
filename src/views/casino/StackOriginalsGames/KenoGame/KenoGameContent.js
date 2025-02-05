@@ -21,7 +21,7 @@ function KenoGameContent({ kenoGameSocket }) {
     dispatch(setMunulGameResult(data))
   })
 
-  console.log('munulGameResult : ', munulGameResult?.matches);
+  // console.log('munulGameResult : ', munulGameResult?.matches);
   console.log('selectTile', selectTile);
 
   const handleClick = (index) => {
@@ -117,7 +117,7 @@ function KenoGameContent({ kenoGameSocket }) {
         <div
           key={index}
           className={`flex justify-center items-center w-full ${isMobile
-            ? "md:w-[2.6rem] p-2 md:h-[2.7rem] w-[2.5431rem] h-[2.5431rem] "
+            ? "md:w-[2.6rem] p-0.5 md:p-2 md:h-[2.7rem] w-[2.5431rem] h-[2.5431rem] "
             : "xl:w-[5.3rem] lg:w-[4.2rem] xl:h-[5.3rem] lg:h-[4.2rem]"
             } bg-[#2f4553] rounded-lg hover:-translate-y-1 hover:bg-[#688a9f] ${zoomClass[index] ? "zoom-in-out" : ""
             } ${isRandomRed ? 'text-red-500' : ''}`}
@@ -133,7 +133,7 @@ function KenoGameContent({ kenoGameSocket }) {
             // borderBottom: selectTile?.includes(index + 1)
             //   ? "8px solid #7100c7"
             //   : "8px solid #253742",
-            border: isMatch ? "8px solid #9000ff" : "",
+            border: isMatch && !isMobile ? "8px solid #9000ff" : isMobile && isMatch ? "4px solid #9000ff" : "",
             cursor: revealed[index + 1] ? "not-allowed" : "pointer",
             opacity:
               selectTile?.length < 10
@@ -145,7 +145,7 @@ function KenoGameContent({ kenoGameSocket }) {
         >
           {isMatch ? (
             <img
-              className={`flex justify-center items-center w-16 h-16`}
+              className={`flex justify-center items-center w-32 h-8 md:w-32 md:h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16`}
               src={kenoDaimonds}
               alt="Keno Diamond"
             />

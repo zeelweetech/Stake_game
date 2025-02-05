@@ -61,6 +61,8 @@ function MinesGameContent({ mineGameSocket }) {
 
   useEffect(() => {
     mineGameSocket.on("gameRestored", (data, currentMultiplier) => {
+      console.log("data", data);
+      
       dispatch(setRestored(data));
       dispatch(setRestoredMultiplier(currentMultiplier));
 
@@ -81,7 +83,7 @@ function MinesGameContent({ mineGameSocket }) {
       setRevealed(newRevealed);
       dispatch(setGameBet(true));
     });
-  }, []);
+  });
 
   useEffect(() => {
     const handleInsufficientFunds = (data) => {
@@ -103,7 +105,7 @@ function MinesGameContent({ mineGameSocket }) {
   }, [fundsToastShown]);
 
   mineGameSocket.on("walletBalance", (data) => {
-    console.log("walletBalance walletBalance data", data);
+    // console.log("walletBalance walletBalance data", data);
     // dispatch(setWallet(data?.walletBalance));
   });
 

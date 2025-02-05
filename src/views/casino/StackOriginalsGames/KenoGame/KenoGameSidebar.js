@@ -256,9 +256,9 @@ function KenoGameSidebar({ kenoGameSocket }) {
                 className={`${selectTile?.length > 0
                   ? "bg-[#1fff20] hover:bg-[#42ed45]"
                   : "bg-[#46a147]"
-                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full cursor-pointer`}
                 onClick={() => handleOnManualBet()}
-              // disabled={selectTile.length > 0}
+                disabled={selectTile.length === 0}
               >
                 Bet
               </button>
@@ -542,6 +542,7 @@ function KenoGameSidebar({ kenoGameSocket }) {
                       ? toast.error("Please enter a number of bets")
                       : handleOnAutoBet()
                   }
+                // disabled={selectTile.length === 0}
                 >
                   Start Autobet
                 </button>
@@ -607,12 +608,12 @@ function KenoGameSidebar({ kenoGameSocket }) {
                 </button>
               </div>
               <button
-                className={`${selectTile.length > 0
+                className={`${selectTile?.length > 0
                   ? "bg-[#1fff20] hover:bg-[#42ed45]"
                   : "bg-[#46a147]"
-                  } text-black mt-3.5 py-3 rounded font-semibold w-full`}
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full cursor-pointer`}
                 onClick={() => handleOnManualBet()}
-                disabled={selectTile.length > 0}
+                disabled={selectTile.length === 0}
               >
                 Bet
               </button>
@@ -653,7 +654,13 @@ function KenoGameSidebar({ kenoGameSocket }) {
                       ? "bg-[#1fff20] hover:bg-[#42ed45]"
                       : "bg-[#46a147]"
                       } text-black mt-3 py-3 rounded font-semibold w-full`}
-                    onClick={() => handleOnAutoBet()}
+                    onClick={() =>
+                      values?.autoBetCount === undefined ||
+                        values?.autoBetCount === ""
+                        ? toast.error("Please enter a number of bets")
+                        : handleOnAutoBet()
+                    }
+                  // disabled={selectTile.length === 0}
                   >
                     Start Autobet
                   </button>

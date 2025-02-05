@@ -128,10 +128,10 @@ function DragonContent({ dragonGameSocket }) {
       }
       dispatch(setClickedBoxes(initialClickedBoxes));
     });
-  }, []);
+  });
 
   dragonGameSocket.on("gameStarted", (data) => {
-    console.log("gameStarted data", data);
+    // console.log("gameStarted data", data);
 
     setCashoutVisible(false);
     resetGame();
@@ -139,7 +139,6 @@ function DragonContent({ dragonGameSocket }) {
   });
 
   dragonGameSocket.on("tileSelected", (data) => {
-    console.log("tileSelected data", data);
     dispatch(setTileSelected(data));
   });
 
@@ -210,8 +209,6 @@ function DragonContent({ dragonGameSocket }) {
   };
 
   dragonGameSocket.on("cashoutSuccess", (data) => {
-    console.log("cashoutSuccess data", data);
-
     setCashoutResult(data);
     setCashoutVisible(true);
     dispatch(setTileSelected({}));

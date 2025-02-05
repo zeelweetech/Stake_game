@@ -12,12 +12,12 @@ import { Divider } from "@mui/material";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import PercentIcon from "@mui/icons-material/Percent";
 import { openRegisterModel } from "../../../../features/auth/authSlice";
-import { WheelSocket } from "../../../../socket";
+// import { WheelSocket } from "../../../../socket";
 import { useParams } from "react-router-dom";
 import wheelSound from "../../../../assets/Sound/wheelSound.wav";
 import toast from "react-hot-toast";
 
-function WheelGameSidebar() {
+function WheelGameSidebar({ wheelGameSocket }) {
   const dispatch = useDispatch();
   const decoded = decodedToken();
   const { id } = useParams();
@@ -44,7 +44,7 @@ function WheelGameSidebar() {
       dispatch(openRegisterModel());
     } else {
       dispatch(setIsBetInProgress(true));
-      WheelSocket.emit("manualBet", {
+      wheelGameSocket.emit("manualBet", {
         userId: decoded?.userId,
         gameId: id,
         betAmount: wheelValue?.betamount
@@ -64,7 +64,7 @@ function WheelGameSidebar() {
     if (!localStorage.getItem("token")) {
       dispatch(openRegisterModel());
     } else {
-      WheelSocket.emit("autoBet", {
+      wheelGameSocket.emit("autoBet", {
         userId: decoded?.userId,
         gameId: id,
         betAmount: wheelValue?.betamount
@@ -88,7 +88,7 @@ function WheelGameSidebar() {
   };
 
   const handleOnStopAutoBet = () => {
-    WheelSocket.emit("pauseAutoBet");
+    wheelGameSocket.emit("pauseAutoBet");
     dispatch(setAutoBet(false));
   };
 
@@ -100,17 +100,15 @@ function WheelGameSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 overflow-hidden">
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.08rem] md:w-[12.81rem] w-[11.12rem] rounded-full ${
-                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.08rem] md:w-[12.81rem] w-[11.12rem] rounded-full ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[12.9rem] w-[11.12rem] rounded-full ${
-                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }`}
+                  className={`py-2 xl:w-[8.7rem] lg:w-[7.1rem] md:w-[12.9rem] w-[11.12rem] rounded-full ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }`}
                   onClick={() => setIsManual(false)}
                 >
                   Auto
@@ -139,7 +137,7 @@ function WheelGameSidebar() {
                     value={wheelValue?.betamount}
                     onChange={(e) => handleOnChange(e)}
                     className={`xl:w-48 lg:w-36 md:w-80 w-64 pr-1.5 pl-2 py-2 rounded-l text-white border-2 focus:border-[#557086] group-hover:border-[#557086] hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
-                    // disabled={minesBetStatus}
+                  // disabled={minesBetStatus}
                   />
                 </div>
                 <button
@@ -155,7 +153,7 @@ function WheelGameSidebar() {
                       })
                     )
                   }
-                  // disabled={minesBetStatus}
+                // disabled={minesBetStatus}
                 >
                   ½
                 </button>
@@ -177,7 +175,7 @@ function WheelGameSidebar() {
                       })
                     )
                   }
-                  // disabled={minesBetStatus}
+                // disabled={minesBetStatus}
                 >
                   2×
                 </button>
@@ -193,10 +191,10 @@ function WheelGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                   className={`w-full px-2 py-2 text-white font-bold rounded border-2 border-[#4d718768] bg-[#0f212e] 
                         hover:border-[#557086] focus:border-[#557086] focus:outline-none`}
-                  //   ${
-                  //   completeBetStatus && "cursor-not-allowed"
-                  // }
-                  // disabled={completeBetStatus}
+                //   ${
+                //   completeBetStatus && "cursor-not-allowed"
+                // }
+                // disabled={completeBetStatus}
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -225,11 +223,10 @@ function WheelGameSidebar() {
                 </div>
               </div>
               <button
-                className={`${
-                  isBetInProgress
+                className={`${isBetInProgress
                     ? "bg-[#298629]"
                     : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3.5 py-3 rounded font-semibold w-full md:block hidden`}
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full md:block hidden`}
                 onClick={() => handleOnManualBet()}
                 disabled={isBetInProgress}
               >
@@ -316,10 +313,10 @@ function WheelGameSidebar() {
                   onChange={(e) => handleOnChange(e)}
                   className={`w-full px-2 py-2 text-white font-bold  rounded border-2 border-[#4d718768] bg-[#0f212e] 
                         hover:border-[#557086] focus:border-[#557086] focus:outline-none`}
-                  //   ${
-                  //   completeBetStatus && "cursor-not-allowed"
-                  // }
-                  // disabled={completeBetStatus}
+                //   ${
+                //   completeBetStatus && "cursor-not-allowed"
+                // }
+                // disabled={completeBetStatus}
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -390,11 +387,10 @@ function WheelGameSidebar() {
               </div>
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded  bg-[#2F4553]">
                 <button
-                  className={`${
-                    onProfit.win
+                  className={`${onProfit.win
                       ? "bg-[#0f212e] rounded"
                       : "rounded hover:bg-[#85afca68]"
-                  } xl:px-2 lg:px-2 md:px-6 px-2 ml-0.5 py-1.5 rounded`}
+                    } xl:px-2 lg:px-2 md:px-6 px-2 ml-0.5 py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setWheelValue({ ...wheelValue, onwin: "" }));
@@ -403,11 +399,10 @@ function WheelGameSidebar() {
                   Reset
                 </button>
                 <button
-                  className={`${
-                    onProfit.win
+                  className={`${onProfit.win
                       ? "hover:bg-[#85afca68]"
                       : "bg-[#0f212e] rounded"
-                  } px-[0.20rem] py-1.5 rounded`}
+                    } px-[0.20rem] py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -415,11 +410,10 @@ function WheelGameSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${
-                    onProfit.win
+                  className={`relative flex ${onProfit.win
                       ? "opacity-50 pointer-events-none cursor-not-allowed"
                       : ""
-                  }`}
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -441,11 +435,10 @@ function WheelGameSidebar() {
               <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
+                    className={`${onProfit.lose
                         ? "bg-[#0f212e] rounded"
                         : "hover:bg-[#85afca68] rounded"
-                    } xl:px-2 lg:px-2 md:px-6 px-2 ml-0.5 py-1.5 rounded`}
+                      } xl:px-2 lg:px-2 md:px-6 px-2 ml-0.5 py-1.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                       dispatch(setWheelValue({ ...wheelValue, onlose: "" }));
@@ -456,11 +449,10 @@ function WheelGameSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
+                    className={`${onProfit.lose
                         ? "hover:bg-[#85afca68]"
                         : "bg-[#0f212e] rounded"
-                    } px-[0.20rem] py-1.5`}
+                      } px-[0.20rem] py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -469,11 +461,10 @@ function WheelGameSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${
-                    onProfit.lose
+                  className={`relative flex ${onProfit.lose
                       ? "opacity-50 pointer-events-none cursor-not-allowed"
                       : ""
-                  }`}
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -542,7 +533,7 @@ function WheelGameSidebar() {
                   className={`${"bg-[#1fff20] hover:bg-[#42ed45]"} text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>
                     wheelValue?.numberofbet === undefined ||
-                    wheelValue?.numberofbet === ""
+                      wheelValue?.numberofbet === ""
                       ? toast.error("Please enter a number of bets")
                       : handleOnAutoBet()
                   }
@@ -578,7 +569,7 @@ function WheelGameSidebar() {
                     value={wheelValue?.betamount}
                     onChange={(e) => handleOnChange(e)}
                     className={`xl:w-48 lg:w-36 md:w- w-64 pr-1.5 pl-2 py-2 rounded-l-md focus:border-[#557086] group-hover:border-[#557086] text-white border-2 hover:border-[#557086] border-[#2F4553] bg-[#0f212e] focus:outline-none`}
-                    // disabled={minesBetStatus}
+                  // disabled={minesBetStatus}
                   />
                 </div>
                 <button
@@ -594,7 +585,7 @@ function WheelGameSidebar() {
                       })
                     )
                   }
-                  // disabled={minesBetStatus}
+                // disabled={minesBetStatus}
                 >
                   ½
                 </button>
@@ -616,17 +607,16 @@ function WheelGameSidebar() {
                       })
                     )
                   }
-                  // disabled={minesBetStatus}
+                // disabled={minesBetStatus}
                 >
                   2×
                 </button>
               </div>
               <button
-                className={`${
-                  isBetInProgress
+                className={`${isBetInProgress
                     ? "bg-[#298629]"
                     : "bg-[#1fff20] hover:bg-[#42ed45]"
-                } text-black mt-3.5 py-3 rounded font-semibold w-full focus:outline-none`}
+                  } text-black mt-3.5 py-3 rounded font-semibold w-full focus:outline-none`}
                 onClick={() => handleOnManualBet()}
                 disabled={isBetInProgress}
               >
@@ -646,10 +636,10 @@ function WheelGameSidebar() {
                       onChange={(e) => handleOnChange(e)}
                       className={`w-full px-2 py-2 text-white font-bold rounded border-2 border-[#4d718768] bg-[#0f212e] 
                         hover:border-[#557086] focus:border-[#557086] focus:outline-none`}
-                      //   ${
-                      //   completeBetStatus && "cursor-not-allowed"
-                      // }
-                      // disabled={completeBetStatus}
+                    //   ${
+                    //   completeBetStatus && "cursor-not-allowed"
+                    // }
+                    // disabled={completeBetStatus}
                     >
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
@@ -696,10 +686,10 @@ function WheelGameSidebar() {
                     //   ? "bg-[#489649]"
                     //   :
                     "bg-[#1fff20] hover:bg-[#42ed45]"
-                  } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent`}
+                    } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent`}
                   onClick={() =>
                     wheelValue?.numberofbet === undefined ||
-                    wheelValue?.numberofbet === ""
+                      wheelValue?.numberofbet === ""
                       ? toast.error("Please enter a number of bets")
                       : handleOnAutoBet()
                   }
@@ -785,10 +775,10 @@ function WheelGameSidebar() {
                       value={wheelValue?.risk}
                       onChange={(e) => handleOnChange(e)}
                       className={`w-full px-2 py-2 text-white rounded bg-[#0f212e] focus:outline-none focus:border-transparent`}
-                      //   ${
-                      //   completeBetStatus && "cursor-not-allowed"
-                      // }
-                      // disabled={completeBetStatus}
+                    //   ${
+                    //   completeBetStatus && "cursor-not-allowed"
+                    // }
+                    // disabled={completeBetStatus}
                     >
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
@@ -858,11 +848,10 @@ function WheelGameSidebar() {
               </div>
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
                 <button
-                  className={`${
-                    onProfit.win
+                  className={`${onProfit.win
                       ? "bg-[#0f212e] rounded"
                       : "hover:bg-[#85afca68]"
-                  } xl:px-2 lg:px-2 md:px-4 ml-0.5 px-2 py-1.5 rounded-sm`}
+                    } xl:px-2 lg:px-2 md:px-4 ml-0.5 px-2 py-1.5 rounded-sm`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
                     dispatch(setWheelValue({ ...wheelValue, onwin: "" }));
@@ -871,11 +860,10 @@ function WheelGameSidebar() {
                   Reset
                 </button>
                 <button
-                  className={`${
-                    onProfit.win
+                  className={`${onProfit.win
                       ? "hover:bg-[#85afca68]"
                       : "bg-[#0f212e] rounded-sm"
-                  } px-[0.20rem] py-1.5`}
+                    } px-[0.20rem] py-1.5`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
                   }}
@@ -883,11 +871,10 @@ function WheelGameSidebar() {
                   Increase by:
                 </button>
                 <div
-                  className={`relative flex ${
-                    onProfit.win
+                  className={`relative flex ${onProfit.win
                       ? "opacity-50 pointer-events-none cursor-not-allowed"
                       : ""
-                  }`}
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -909,11 +896,10 @@ function WheelGameSidebar() {
               <div className="flex items-center space-x-0.5 mt-1 rounded bg-[#2F4553]">
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
+                    className={`${onProfit.lose
                         ? "bg-[#0f212e] rounded-sm"
                         : "hover:bg-[#85afca68] rounded"
-                    } xl:px-2 lg:px-2 md:px-4 ml-0.5 px-2 py-1.5 rounded-sm`}
+                      } xl:px-2 lg:px-2 md:px-4 ml-0.5 px-2 py-1.5 rounded-sm`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
                       dispatch(setWheelValue({ ...wheelValue, onlose: "" }));
@@ -924,11 +910,10 @@ function WheelGameSidebar() {
                 </div>
                 <div>
                   <button
-                    className={`${
-                      onProfit.lose
+                    className={`${onProfit.lose
                         ? "hover:bg-[#85afca68]"
                         : "bg-[#0f212e] rounded-sm"
-                    } px-[0.20rem] py-1.5`}
+                      } px-[0.20rem] py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
                     }}
@@ -937,11 +922,10 @@ function WheelGameSidebar() {
                   </button>
                 </div>
                 <div
-                  className={`relative flex ${
-                    onProfit.lose
+                  className={`relative flex ${onProfit.lose
                       ? "opacity-50 pointer-events-none cursor-not-allowed"
                       : ""
-                  }`}
+                    }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
                     <PercentIcon fontSize="small" />
@@ -1004,18 +988,16 @@ function WheelGameSidebar() {
             <div className="bg-[#0f212e] flex grow rounded-full p-[5px] flex-shrink-0">
               <div className="flex space-x-2 w-full">
                 <button
-                  className={`py-2 rounded-full transition-all ${
-                    isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }
+                  className={`py-2 rounded-full transition-all ${isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }
                               xl:w-[8.7rem] lg:w-[4rem] md:w-[10.7rem] w-full`}
                   onClick={() => setIsManual(true)}
                 >
                   Manual
                 </button>
                 <button
-                  className={`py-2 rounded-full transition-all ${
-                    !isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
-                  }
+                  className={`py-2 rounded-full transition-all ${!isManual ? "bg-[#4d718768]" : "hover:bg-[#4d718768]"
+                    }
                               xl:w-[8.5rem] lg:w-[6.68rem] md:w-[10.7rem] w-full`}
                   onClick={() => setIsManual(false)}
                 >
