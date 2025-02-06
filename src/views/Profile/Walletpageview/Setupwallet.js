@@ -1,6 +1,6 @@
 import { Dialog } from "@mui/material";
 import React, { useState } from "react";
-
+import { ImNotification } from "react-icons/im";
 const Setupwallet = ({ closeSetupWallet }) => {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
@@ -39,7 +39,67 @@ const Setupwallet = ({ closeSetupWallet }) => {
       </div>
       <div className="text-[#b1bad3] bg-[#0f212e] text-base px-4 pb-4 flex flex-col justify-between h-full">
         <div className="h-full bg-[#0f212e] w-full">
-          <div className="mt-[2.5rem]">
+          <div className="fixed top-20 left-4 bg-[#213742] text-white rounded-lg shadow-lg h-16 flex items-center max-w-xs">
+            <div className="bg-[#1A2C38] text-red-700 p-4 h-full flex items-center">
+              <ImNotification className="bg-red-700" />
+            </div>
+            <div className="p-4 flex items-center h-full gap-y-2">
+              <div>
+                <p className="font-semibold">Error</p>
+                <p className="text-sm text-gray-300">Request limit reached.</p>
+              </div>
+            </div>
+            <button className="text-gray-400 hover:text-white h-14 flex items-center px-4">
+              <svg
+                className="w-4 h-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M6.225 5.293a1 1 0 0 1 1.414 0L12 9.647l4.361-4.354a1 1 0 0 1 1.415 1.414L13.414 12l4.36 4.361a1 1 0 0 1-1.414 1.414L12 14.353l-4.361 4.36a1 1 0 0 1-1.414-1.414L10.586 12 6.225 7.639a1 1 0 0 1 0-1.414Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* <div className="fixed top-10 left-4 bg-[#1E2A36] text-white p-4 rounded-lg shadow-lg flex items-center justify-between w-96">
+            <div className="flex items-center space-x-3">
+              <svg
+                className="w-5 h-5 text-red-500"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2ZM11 6h2v6h-2Zm1 10a1.25 1.25 0 1 1 1.25-1.25A1.25 1.25 0 0 1 12 16Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <div>
+                <p className="font-semibold text-sm">Error</p>
+                <p className="text-sm text-gray-300">Request limit reached.</p>
+              </div>
+            </div>
+            <button className="text-gray-400 hover:text-white">
+              <svg
+                className="w-4 h-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M6.225 5.293a1 1 0 0 1 1.414 0L12 9.647l4.361-4.354a1 1 0 0 1 1.415 1.414L13.414 12l4.36 4.361a1 1 0 0 1-1.414 1.414L12 14.353l-4.361 4.36a1 1 0 0 1-1.414-1.414L10.586 12 6.225 7.639a1 1 0 0 1 0-1.414Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div> */}
+          {/* <div className="mt-[2.5rem]">
             <h1 className="text-xl font-semibold text-white cursor-default flex space-y-2">
               Confirm your email
             </h1>
@@ -120,7 +180,7 @@ const Setupwallet = ({ closeSetupWallet }) => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <button
           onClick={handleSubmit}
