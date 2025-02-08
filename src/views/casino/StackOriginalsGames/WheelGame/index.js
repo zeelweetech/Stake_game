@@ -46,13 +46,13 @@ function WheelGame() {
     return () => {
       wheelGameSocket.off("connect");
       wheelGameSocket.off("disconnect");
-      wheelGameSocket.disconnect();
+      wheelGameSocket.disconnect(); 
     };
   }, [decoded?.userId, id]);
 
   return (
     <div className="flex justify-center w-full h-full">
-      <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full xl:-ml-0 lg:-ml-[3.4rem]">
+      <div className="bg-[#1a2c38] py-10 text-white flex justify-center items-center md:max-w-96 max-w-full">
         <div className="w-full">
           <div
             className={`flex justify-center w-full ${isMobile ? "h-[24rem]" : "h-[46rem]"
