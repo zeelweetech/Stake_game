@@ -52,7 +52,7 @@ function MinesGame() {
 
   return (
     <div className="flex justify-center ">
-      <div className="md:py-10 py-3 bg-[#1a2c38] flex justify-center items-center text-white h-full md:max-w-96 max-w-full xl:-ml-0 lg:-ml-[3rem]">
+      <div className="md:py-10 py-3 bg-[#1a2c38] flex justify-center items-center text-white h-full md:max-w-96 max-w-full">
         <div className="w-full">
           <div
             className={`flex justify-center w-full   ${

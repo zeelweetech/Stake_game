@@ -52,7 +52,7 @@ function DragonTowerGame() {
 
   return (
     <div className="flex justify-center items-center w-full h-full">
-      <div className="bg-[#1a2c38] py-10 max-sm:py-5 text-white flex justify-center items-center md:max-w-96 max-w-full xl:ml-0 lg:-ml-[3rem]">
+      <div className="bg-[#1a2c38] py-10 max-sm:py-5 text-white flex justify-center items-center md:max-w-96 max-w-full">
         <div className="w-full">
           <div
             className={`flex justify-center w-full ${isMobile ? "h-[25rem]" : "h-[46rem] "
