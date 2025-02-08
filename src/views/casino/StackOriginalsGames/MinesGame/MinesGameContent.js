@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import bombIcon from "../../../../assets/img/bomb.svg";
@@ -23,6 +23,7 @@ import {
 } from "../../../../features/casino/minesSlice";
 import toast from "react-hot-toast";
 import { setWallet } from "../../../../features/auth/authSlice";
+import { debounce } from "@mui/material";
 
 function MinesGameContent({ mineGameSocket }) {
   const { id } = useParams();
@@ -62,7 +63,7 @@ function MinesGameContent({ mineGameSocket }) {
   useEffect(() => {
     mineGameSocket.on("gameRestored", (data, currentMultiplier) => {
       console.log("data", data);
-      
+
       dispatch(setRestored(data));
       dispatch(setRestoredMultiplier(currentMultiplier));
 
@@ -104,9 +105,14 @@ function MinesGameContent({ mineGameSocket }) {
     };
   }, [fundsToastShown]);
 
+  // const debouncedUpdateWallet = useMemo(() => {
+  //   return debounce((data) => dispatch(setWallet(data?.walletBalance)), 300);
+  // }, [dispatch]);
+
   mineGameSocket.on("walletBalance", (data) => {
     // console.log("walletBalance walletBalance data", data);
     // dispatch(setWallet(data?.walletBalance));
+    // debouncedUpdateWallet(data)
   });
 
   mineGameSocket.on("gameStarted", (data) => {

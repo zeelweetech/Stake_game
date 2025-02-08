@@ -15,6 +15,7 @@ import { createObstacles, createSinks } from "../objects";
 import { pad, unpad } from "../padding";
 import Ball from "./Ball";
 import { PlinkoSocket } from "../../../../../../socket";
+
 export default class BallManager {
   balls;
   canvasRef;
@@ -25,6 +26,7 @@ export default class BallManager {
   onFinish;
   selectedValues;
   dispatch;
+  // plinkoGameSocket
   constructor(canvasRef, selectedValues, dispatch, onFinish) {
     this.balls = [];
     this.canvasRef = canvasRef;
@@ -35,6 +37,7 @@ export default class BallManager {
     this.update();
     this.onFinish = onFinish;
     this.dispatch = dispatch;
+    // this.plinkoGameSocket = plinkoGameSocket
   }
 
   addBall(startX, lastMultipliers, decoded) {
@@ -74,6 +77,45 @@ export default class BallManager {
     );
     this.balls.push(newBall);
   }
+
+  // addBall(startX, lastMultipliers, decoded) {
+  //   const newBall = new Ball(
+  //     startX?.point || pad(WIDTH / 2 + 13),
+  //     pad(50),
+  //     ballRadius,
+  //     "red",
+  //     this.ctx,
+  //     this.obstacles,
+  //     this.sinks,
+  //     (index) => {
+  //       this.balls = this.balls.filter((ball) => ball !== newBall);
+  //       if (typeof this.onFinish === 'function') {
+  //         this.onFinish(index, startX?.point);
+  //       }
+  //       this.dispatch(setCompleteBetStatus(false));
+  //       const data = this.sinks?.find((item) => {
+  //         return item?.multiplier === startX?.multiplier;
+  //       });
+  //       // Get the current lastMultipliers array from the Redux state
+  //       const currentMultipliers = Array.isArray(lastMultipliers)
+  //         ? lastMultipliers
+  //         : [];
+
+  //       const updatedMultipliers = [...currentMultipliers, data].slice(-4);
+
+  //       // Dispatch the updated array
+  //       this.dispatch(setLastMultipliers(updatedMultipliers));
+  //       if (startX?.remainingBets === 1) {
+  //         this.dispatch(setStopAutoBet(false));
+  //       }
+  //       this.plinkoGameSocket?.emit("betCompleted", {
+  //         betId: startX?.betId,
+  //         userId: decoded?.userId,
+  //       });
+  //     }
+  //   );
+  //   this.balls.push(newBall);
+  // }
 
   drawObstacles() {
     this.ctx.fillStyle = "white";

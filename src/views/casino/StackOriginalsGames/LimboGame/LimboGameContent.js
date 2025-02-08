@@ -25,13 +25,6 @@ function LimboGameContent({limboGameSocket}) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [topXData, setTopXData] = useState([]);
 
-  // useEffect(() => {
-  //   limboGameSocket.emit("joinGame", {
-  //     userId: decoded?.userId,
-  //     gameId: id,
-  //   });
-  // }, []);
-
   limboGameSocket.on("limbobetResult", (data) => {
     dispatch(setLimboStatusData(data));
 

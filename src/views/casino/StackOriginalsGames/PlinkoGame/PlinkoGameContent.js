@@ -109,9 +109,8 @@ function PlinkoGameContent({ plinkoGameSocket }) {
                 : data?.multiplier >= 10 ? "bg-[#ff003f]" : "bg-[#ff4827]"
               } ${index === 0 ? "rounded-t-xl" : index === 3 ? "rounded-b-xl" : ""
               }`}
-            style={{ transitionDelay: `${index * 0.1}s` }}
+          // style={{ transitionDelay: `${index * 0.1}s` }}
           >
-            {console.log("data", data)}
             {data?.multiplier}x
           </button>
         ));

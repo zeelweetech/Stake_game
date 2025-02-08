@@ -397,8 +397,8 @@ function MinesGameSidebar({ mineGameSocket }) {
 
               <button
                 className={`${gameBet && !gamesOver
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                  ? "bg-[#489649]"
+                  : "bg-[#1fff20] hover:bg-[#42ed45]"
                   } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleBetClick()}
                 // disabled={gameBet && !gamesOver && tileSelect?.tileIndex === undefined}
@@ -567,8 +567,8 @@ function MinesGameSidebar({ mineGameSocket }) {
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#4d718768]">
                 <button
                   className={`${onProfit.win
-                      ? "bg-[#0f212e] rounded"
-                      : "rounded hover:bg-[#85afca68]"
+                    ? "bg-[#0f212e] rounded"
+                    : "rounded hover:bg-[#85afca68]"
                     } px-3.5 py-1.5 ml-0.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
@@ -579,8 +579,8 @@ function MinesGameSidebar({ mineGameSocket }) {
                 </button>
                 <button
                   className={`${onProfit.win
-                      ? "hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded"
+                    ? "hover:bg-[#85afca68]"
+                    : "bg-[#0f212e] rounded"
                     } px-[0.3rem] py-1.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
@@ -590,8 +590,8 @@ function MinesGameSidebar({ mineGameSocket }) {
                 </button>
                 <div
                   className={`relative flex ${onProfit.win
-                      ? "opacity-50 pointer-events-none cursor-not-allowed"
-                      : ""
+                    ? "opacity-50 pointer-events-none cursor-not-allowed"
+                    : ""
                     }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2 ">
@@ -615,8 +615,8 @@ function MinesGameSidebar({ mineGameSocket }) {
                 <div>
                   <button
                     className={`${onProfit.lose
-                        ? "bg-[#0f212e] rounded"
-                        : "hover:bg-[#85afca68] rounded"
+                      ? "bg-[#0f212e] rounded"
+                      : "hover:bg-[#85afca68] rounded"
                       } px-3.5 py-1.5 ml-0.5 rounded`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
@@ -629,8 +629,8 @@ function MinesGameSidebar({ mineGameSocket }) {
                 <div>
                   <button
                     className={`${onProfit.lose
-                        ? "hover:bg-[#85afca68]"
-                        : "bg-[#0f212e] rounded"
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded"
                       } px-[0.3rem] py-1.5`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
@@ -641,8 +641,8 @@ function MinesGameSidebar({ mineGameSocket }) {
                 </div>
                 <div
                   className={`relative flex ${onProfit.lose
-                      ? "opacity-50 pointer-events-none cursor-not-allowed"
-                      : ""
+                    ? "opacity-50 pointer-events-none cursor-not-allowed"
+                    : ""
                     }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
@@ -709,8 +709,8 @@ function MinesGameSidebar({ mineGameSocket }) {
               ) : (
                 <button
                   className={`${preSelectTile?.length > 0
-                      ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer"
-                      : "bg-[#489649] cursor-default"
+                    ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer"
+                    : "bg-[#489649] cursor-default"
                     } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>
                     mineValue?.numberofbet === undefined ||
@@ -718,7 +718,7 @@ function MinesGameSidebar({ mineGameSocket }) {
                       ? toast.error("Please enter a number of bets")
                       : handleOnAutoBet()
                   }
-                // disabled={preSelectTile?.length > 0}
+                  disabled={preSelectTile?.length === 0}
                 >
                   Start Autobet
                 </button>
@@ -806,8 +806,8 @@ function MinesGameSidebar({ mineGameSocket }) {
               </div>
               <button
                 className={`${gameBet && !gamesOver
-                    ? "bg-[#489649]"
-                    : "bg-[#1fff20] hover:bg-[#42ed45]"
+                  ? "bg-[#489649]"
+                  : "bg-[#1fff20] hover:bg-[#42ed45]"
                   } text-black mt-3.5 py-3 rounded font-semibold w-full`}
                 onClick={() => handleBetClick()}
                 disabled={
@@ -961,8 +961,8 @@ function MinesGameSidebar({ mineGameSocket }) {
               ) : (
                 <button
                   className={`${preSelectTile?.length > 0
-                      ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer"
-                      : "bg-[#489649] cursor-default"
+                    ? "bg-[#1fff20] hover:bg-[#42ed45] cursor-pointer"
+                    : "bg-[#489649] cursor-default"
                     } text-black mt-3 py-3 rounded font-semibold w-full focus:outline-none focus:border-transparent md:block hidden`}
                   onClick={() =>
                     mineValue?.numberofbet === undefined ||
@@ -970,7 +970,7 @@ function MinesGameSidebar({ mineGameSocket }) {
                       ? toast.error("Please enter a number of bets")
                       : handleOnAutoBet()
                   }
-                // disabled={preSelectTile?.length > 0}
+                  disabled={preSelectTile?.length === 0}
                 >
                   Start Autobet
                   {/* {console.log("preSelectTile", preSelectTile)} */}
@@ -1121,8 +1121,8 @@ function MinesGameSidebar({ mineGameSocket }) {
               <div className="flex items-center space-x-0.5 mt-1 mb-2 rounded bg-[#2F4553]">
                 <button
                   className={`${onProfit.win
-                      ? "bg-[#0f212e] rounded"
-                      : "hover:bg-[#85afca68]"
+                    ? "bg-[#0f212e] rounded"
+                    : "hover:bg-[#85afca68]"
                     } px-3.5 py-1.5 ml-0.5 rounded`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: true });
@@ -1133,8 +1133,8 @@ function MinesGameSidebar({ mineGameSocket }) {
                 </button>
                 <button
                   className={`${onProfit.win
-                      ? "hover:bg-[#85afca68]"
-                      : "bg-[#0f212e] rounded"
+                    ? "hover:bg-[#85afca68]"
+                    : "bg-[#0f212e] rounded"
                     } px-[0.3rem] py-1.5`}
                   onClick={() => {
                     setOnProfit({ ...onProfit, win: false });
@@ -1144,8 +1144,8 @@ function MinesGameSidebar({ mineGameSocket }) {
                 </button>
                 <div
                   className={`relative flex ${onProfit.win
-                      ? "opacity-50 pointer-events-none cursor-not-allowed"
-                      : ""
+                    ? "opacity-50 pointer-events-none cursor-not-allowed"
+                    : ""
                     }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2 ">
@@ -1169,8 +1169,8 @@ function MinesGameSidebar({ mineGameSocket }) {
                 <div>
                   <button
                     className={`${onProfit.lose
-                        ? "bg-[#0f212e] rounded-sm"
-                        : "hover:bg-[#85afca68] rounded"
+                      ? "bg-[#0f212e] rounded-sm"
+                      : "hover:bg-[#85afca68] rounded"
                       } px-3.5 py-1.5 ml-0.5 rounded-sm`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: true });
@@ -1183,8 +1183,8 @@ function MinesGameSidebar({ mineGameSocket }) {
                 <div>
                   <button
                     className={`${onProfit.lose
-                        ? "hover:bg-[#85afca68]"
-                        : "bg-[#0f212e] rounded-sm"
+                      ? "hover:bg-[#85afca68]"
+                      : "bg-[#0f212e] rounded-sm"
                       } px-[0.3rem] py-2`}
                     onClick={() => {
                       setOnProfit({ ...onProfit, lose: false });
@@ -1195,8 +1195,8 @@ function MinesGameSidebar({ mineGameSocket }) {
                 </div>
                 <div
                   className={`relative flex ${onProfit.lose
-                      ? "opacity-50 pointer-events-none cursor-not-allowed"
-                      : ""
+                    ? "opacity-50 pointer-events-none cursor-not-allowed"
+                    : ""
                     }`}
                 >
                   <div className="cursor-text absolute flex top-1/2 right-2 -translate-y-1/2 pointer-events-none z-2">
