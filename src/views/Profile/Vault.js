@@ -106,15 +106,15 @@ const Vault = ({ closeVault }) => {
                 borderRadius: "10px",
             }}
         >
-            <DialogTitle sx={{ backgroundColor: "#1a2c38", color: "#b1bad3" }}>
-                <div className="flex justify-between items-center w-full">
-                    <h1 className="text-lg flex items-center space-x-2">
-                        <span className="mr-2">
+            <DialogTitle sx={{ backgroundColor: "#1a2c38" }}>
+                <div className="flex justify-between items-center w-full cursor-default">
+                    <h1 className="text-lg flex items-center space-x-2 font-semibold text-white">
+                        <span className="mr-2 text-[#b1bad3">
                             <PiVaultFill />
                         </span>
                         Vault
                     </h1>
-                    <IconButton onClick={closeVault} sx={{ color: "white" }}>
+                    <IconButton onClick={closeVault} className="hover:text-white cursor-pointer" sx={{ color: "#B1BAD3" }}>
                         <CloseIcon />
                     </IconButton>
                 </div>
@@ -122,8 +122,8 @@ const Vault = ({ closeVault }) => {
             <DialogContent sx={{ backgroundColor: "#1a2c38", color: "white" }}>
                 <div className="bg-[#1a2c38] flex flex-col items-center justify-center">
                     {/* Menu Buttons */}
-                    <div className="">
-                        <div className="bg-[#0f212e] flex rounded-full p-[3px] space-x-2 font-bold ">
+                    <div>
+                        <div className="bg-[#0f212e] flex rounded-full p-[5px] space-x-2 font-bold ">
                             {menuItems.map((item) => (
                                 <button
                                     key={item.label}
@@ -211,51 +211,20 @@ const Vault = ({ closeVault }) => {
                     {/* Amount Input Section */}
                     <div className="w-full flex flex-col mt-4">
                         <p className="text-sm font-medium text-gray-400 mb-2">Amount</p>
-                        <FormControl sx={{ width: "100%" }}>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    backgroundColor: "#0f212e",
-                                    padding: "8px 12px",
-                                    border: "1px solid #b1bad3",
-                                    borderRadius: "4px",
-                                    color: "white",
-                                    gap: "8px",
-                                }}
-                            >
-                                <TextField
-                                    placeholder="Enter amount"
-                                    value={amount}
-                                    onChange={(e) => handleAmountChange(e.target.value)}
-                                    InputProps={{
-                                        inputProps: { min: 0 },
-                                    }}
-                                    sx={{
-                                        flexGrow: 1,
-                                        backgroundColor: "transparent",
-                                        input: { color: "white" },
-                                        "& .MuiOutlinedInput-root": {
-                                            height: "25px",
-                                            "& fieldset": { border: "none" },
-                                        },
-                                    }}
+                        <div className="flex border-1 rounded border-[#2F4553] bg-[#2F4553] group">
+                            <div className="relative flex w-full">
+                                <input
+                                    className="w-full pr-1.5 pl-2 py-1.5 rounded-l text-white border-2 hover:border-[#557086] focus:hover:border-[#557086] group-hover:border-[#557086] border-[#2F4553] focus:border-[#557086] bg-[#0f212e] focus:outline-none"
+                                    type="number"
+                                    placeholder="0.00"
                                 />
-                                <PiCurrencyBtcFill color="#FFD700" />
-                                <button
-                                    onClick={handleMaxClick}
-                                    style={{
-                                        backgroundColor: "#4d718768",
-                                        color: "white",
-                                        borderRadius: "4px",
-                                        border: "none",
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    Max
-                                </button>
-                         </div>
-                        </FormControl>
+                            </div>
+                            <button
+                                className=" hover:bg-[#5c849e68] px-5 py-[0.7rem] text-sm font-semibold hover:border-[#557086] hover:rounded-r"
+                            >
+                                Max
+                            </button>
+                        </div>
                         {amountError && (
                             <Typography color="error" sx={{ marginTop: "8px", fontSize: "0.875rem" }}>
                                 {amountError}
@@ -305,7 +274,6 @@ const Vault = ({ closeVault }) => {
                         )}
                     </div>
 
-
                     {/* Action Buttons */}
                     <div className="flex w-full justify-between mt-4">
                         <Button
@@ -315,41 +283,30 @@ const Vault = ({ closeVault }) => {
                                 width: "100%",
                                 padding: "12px",
                                 fontSize: "16px",
+                                textTransform: "none",
                                 "&:hover": { backgroundColor: "rgba(20, 117, 225, var(--tw-bg-opacity))" },
                             }}
                             onClick={gameMenu === "Deposit" ? handleDeposit : handleWithdraw}
                         >
-                            {gameMenu === "Deposit" ? "Deposit to Vault" : "Withdraw to Vault"}
+                            {gameMenu === "Deposit" ? "Deposit from Wallet" : "Withdraw to Vault"}
                         </Button>
                     </div>
-
                 </div>
-
             </DialogContent>
-            <div className="bg-[#0f212e] w-full py-2">
-                <p className="text-gray-400 p-2">Improve your account security with Two-Factor Authentication</p>
-                <button
-                    onClick={handleEnable2FA}
-                    style={{
-                        backgroundColor: "#213743",
-                        color: "white",
-                        width: "100%",
-                        border: "none",
-                        padding: "8px 16px",
-                        cursor: "pointer",
-                    }}
-                    onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "gray")}
-                    onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#213743")}
-                >
-                    Enable 2FA
-                </button>
-
-
-                <div>
-                    <p className="text-gray-400 py-2 px-2">Learn more about Vault</p>
+            <div className="bg-[#0f212e] w-full pt-4 px-4">
+                <div className=" flex gap-y-3 flex-col">
+                    <p className="text-[#B1BAD3] text-center cursor-default">Improve your account security with Two-Factor Authentication</p>
+                    <button
+                        onClick={handleEnable2FA}
+                        className=" w-full px-4 py-2 rounded cursor-pointer text-white font-semibold bg-[#2F4553] hover:bg-[#557086]"
+                    >
+                        Enable 2FA
+                    </button>
                 </div>
             </div>
-
+            <div className="p-4 bg-[#0f212e]">
+                <p className="text-[#B1BAD3] hover:text-white text-center font-semibold cursor-pointer">Learn More About Vault</p>
+            </div>
         </Dialog>
     );
 };
