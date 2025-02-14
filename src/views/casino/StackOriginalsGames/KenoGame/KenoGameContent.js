@@ -17,12 +17,9 @@ function KenoGameContent({ kenoGameSocket }) {
   // const decoded = decodedToken()
 
   kenoGameSocket.on('gameResult', (data) => {
-    // console.log("data , ", data);
+    console.log("data , ", data);
     dispatch(setMunulGameResult(data))
   })
-
-  // console.log('munulGameResult : ', munulGameResult?.matches);
-  console.log('selectTile', selectTile);
 
   const handleClick = (index) => {
     if (revealed[index]) return;
@@ -157,21 +154,6 @@ function KenoGameContent({ kenoGameSocket }) {
     });
   };
 
-  // {cashoutVisible && !gameBet && gameOverResult && (
-  //   <div className="xl:mt-80 lg:mt-80 md:mt-56 mt-52 w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
-  //     <p className="text-3xl font-medium">
-  //       {cashoutResult?.multiplier}x
-  //     </p>
-  //     <div className="flex items-center justify-center space-x-1">
-  //       <p>
-  //         {cashoutResult?.winAmount ? cashoutResult?.winAmount : "0.00"}
-  //         ₹
-  //       </p>
-  //       {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
-  //     </div>
-  //   </div>
-  // )}
-
   return (
     <div
       className={`bg-[#0f212e] relative h-full flex flex-col items-center justify-center lg:p-4 md:p-1.5 ${isMobile
@@ -179,8 +161,22 @@ function KenoGameContent({ kenoGameSocket }) {
         : "xl:w-[51rem] lg:w-[39rem] rounded-tr-lg"
         }`}
     >
+      {munulGameResult?.winnings && (
+        <div className="w-40 py-5 space-y-3 rounded-lg bg-[#1a2c38] text-center border-4 border-[#1fff20] text-[#1fff20] absolute z-20">
+          <p className="text-3xl font-medium">
+            {/* {cashoutResult?.multiplier}x */}
+          </p>
+          <div className="flex items-center justify-center space-x-1">
+            <p>
+              {munulGameResult?.winnings ? munulGameResult?.winnings : "0.00"}₹
+            </p>
+            {/* <RiMoneyRupeeCircleFill color="yellow" className="text-xl" /> */}
+          </div>
+        </div>
+      )}
+
       {/* main game content  */}
-      <div
+      < div
         className={`grid ${isMobile
           ? "grid-cols-8 gap-1.5"
           : "grid-cols-8 xl:gap-x-3 lg:gap-x-2 md:gap-x-3 gap-x-3 gap-y-1.5"
@@ -190,37 +186,39 @@ function KenoGameContent({ kenoGameSocket }) {
       </div>
 
       {/* multiplier boxes */}
-      {selectTile?.length > 0 ? (
-        <div className="w-full pt-2">
-          <div className="xl:px-4 lg:px-1 px-0 mb-3">{renderButtons()}</div>
+      {
+        selectTile?.length > 0 ? (
+          <div className="w-full pt-2">
+            <div className="xl:px-4 lg:px-1 px-0 mb-3">{renderButtons()}</div>
 
-          <div className="w-full xl:px-4 lg:px-1 px-0 mb-4 flex">
-            {Array.from({ length: Math.min(selectTile.length + 1, 11) }).map(
-              (_, index) => (
-                <button
-                  key={index}
-                  className={`text-white text-[10px] md:text-xs lg:text-xs xl:text-base font-bold py-2 md:py-4 ${munulGameResult?.matches?.length === index ? "bg-[#557086]" : "bg-[#2f4553]"} w-full flex items-center justify-center`}
-                >
-                  {index}x
-                  <img
-                    src={kenoDaimond}
-                    className="xl:w-4 xl:h-4 lg:w-3 lg:h-3 md:w-2 md:h-2 w-2 h-2 ml-1"
-                    style={{ filter: munulGameResult?.matches?.length === index ? "" : "grayscale(100%)" }}
-                    alt="Not Found"
-                  />
-                </button>
-              )
-            )}
+            <div className="w-full xl:px-4 lg:px-1 px-0 mb-4 flex">
+              {Array.from({ length: Math.min(selectTile.length + 1, 11) }).map(
+                (_, index) => (
+                  <button
+                    key={index}
+                    className={`text-white text-[10px] md:text-xs lg:text-xs xl:text-base font-bold py-2 md:py-4 ${munulGameResult?.matches?.length === index ? "bg-[#557086]" : "bg-[#2f4553]"} w-full flex items-center justify-center`}
+                  >
+                    {index}x
+                    <img
+                      src={kenoDaimond}
+                      className="xl:w-4 xl:h-4 lg:w-3 lg:h-3 md:w-2 md:h-2 w-2 h-2 ml-1"
+                      style={{ filter: munulGameResult?.matches?.length === index ? "" : "grayscale(100%)" }}
+                      alt="Not Found"
+                    />
+                  </button>
+                )
+              )}
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="w-full px-4 mb-4 lg:mt-14 md:mt-8 mt-10">
-          <button className="text-[#d5dceb] text-sm md:py-2 xl:py-4 lg:py-3 py-2 bg-[#2f4553] font-semibold w-full rounded-md">
-            Select 1 - 10 numbers to play
-          </button>
-        </div>
-      )}
-    </div>
+        ) : (
+          <div className="w-full px-4 mb-4 lg:mt-14 md:mt-8 mt-10">
+            <button className="text-[#d5dceb] text-sm md:py-2 xl:py-4 lg:py-3 py-2 bg-[#2f4553] font-semibold w-full rounded-md">
+              Select 1 - 10 numbers to play
+            </button>
+          </div>
+        )
+      }
+    </div >
   );
 }
 

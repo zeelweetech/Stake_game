@@ -47,6 +47,7 @@ function MinesGameContent({ mineGameSocket }) {
     autoBetResult,
     cashoutResult,
   } = useSelector((state) => state.minesGame);
+  const { wallet } = useSelector((state) => state.auth);
   const decoded = decodedToken();
 
   useEffect(() => {
@@ -62,7 +63,7 @@ function MinesGameContent({ mineGameSocket }) {
 
   useEffect(() => {
     mineGameSocket.on("gameRestored", (data, currentMultiplier) => {
-      console.log("data", data);
+      // console.log("data", data);
 
       dispatch(setRestored(data));
       dispatch(setRestoredMultiplier(currentMultiplier));
@@ -105,14 +106,30 @@ function MinesGameContent({ mineGameSocket }) {
     };
   }, [fundsToastShown]);
 
-  // const debouncedUpdateWallet = useMemo(() => {
-  //   return debounce((data) => dispatch(setWallet(data?.walletBalance)), 300);
-  // }, [dispatch]);
+  const debouncedUpdateWallet = useMemo(() => {
+    return debounce((data) => dispatch(setWallet(data?.walletBalance.toFixed(2))));
+  }, []);
 
-  mineGameSocket.on("walletBalance", (data) => {
-    // console.log("walletBalance walletBalance data", data);
-    // dispatch(setWallet(data?.walletBalance));
-    // debouncedUpdateWallet(data)
+  // mineGameSocket.on("walletBalance", (data) => {
+  //   console.log("walletBalance walletBalance data", data);
+  //   // if (mineValue?.betamount) {
+  //     // debouncedUpdateWallet(data);
+  //   // }
+  //   debouncedUpdateWallet(data)
+  // });
+
+  useEffect(() => {
+    const handleWalletBalance = (data) => {
+      if (mineValue?.betamount) {
+        debouncedUpdateWallet(data);
+      }
+    };
+
+    mineGameSocket.on("walletBalance", handleWalletBalance);
+
+    return () => {
+      mineGameSocket.off("walletBalance", handleWalletBalance);
+    };
   });
 
   mineGameSocket.on("gameStarted", (data) => {
@@ -328,8 +345,8 @@ function MinesGameContent({ mineGameSocket }) {
 
     if (isManual) {
       if (!gameOverProcessedRef.current) {
-        const audio = new Audio(winSound);
-        audio.play();
+        // const audio = new Audio(winSound);
+        // audio.play();
       }
 
       mineGameSocket.emit("selectTile", {
@@ -400,8 +417,7 @@ function MinesGameContent({ mineGameSocket }) {
       )}
       <div
         className={`grid ${isMobile ? "grid-cols-5 gap-1.5" : "grid-cols-5 gap-2"
-          } relative z-10 p-1.5 max-sm:w-full`}
-      >
+          } relative z-10 p-1.5 max-sm:w-full`}>
         {images?.map((img, index) => (
           <div
             key={index}
@@ -412,34 +428,19 @@ function MinesGameContent({ mineGameSocket }) {
               }`}
             onClick={() => handleClick(index)}
             style={{
-              backgroundColor:
-                revealed[index] || gamesOver
-                  ? "#071824"
-                  : preSelectTile.includes(index) && !isManual
-                    ? "#9000ff"
-                    : "#2f4553",
-              border:
-                !isManual &&
-                  autoBetResult?.mineLocations?.length > 0 &&
-                  preSelectTile.includes(index)
-                  ? "7px solid #9000ff"
-                  : "",
-              borderBottom:
-                !isManual &&
-                  autoBetResult?.mineLocations?.length > 0 &&
-                  preSelectTile.includes(index)
-                  ? "12px solid #7100c7"
-                  : "",
+              backgroundColor: revealed[index] || gamesOver
+                ? "#071824"
+                : preSelectTile.includes(index) && !isManual
+                  ? "#9000ff"
+                  : "#2f4553",
+              border: !isManual && autoBetResult?.mineLocations?.length > 0 && preSelectTile.includes(index) ? "7px solid #9000ff" : "",
+              borderBottom: !isManual && autoBetResult?.mineLocations?.length > 0 && preSelectTile.includes(index) ? "12px solid #7100c7" : "",
               cursor: revealed[index] ? "not-allowed" : "pointer",
             }}
           >
             {img && (
               <img
-                style={{
-                  width: img.size,
-                  height: img.size,
-                  opacity: img.opacity || 1,
-                }}
+                style={{ width: img.size, height: img.size, opacity: img.opacity || 1 }}
                 className={`flex justify-center items-center ${revealed[index] || gamesOver ? "reveal-animation" : "hidden"
                   } ${img.className || ""}`}
                 src={img.icon}
