@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 // import { AreaChart, Area, XAxis, YAxis } from "recharts";
-import { Line } from "react-chartjs-2";
+// import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,7 +17,7 @@ import {
 
 import { IoIosTrendingUp } from "react-icons/io";
 import { BsIncognito } from "react-icons/bs";
-import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+// import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 // import { CrashSocket } from "../../../../socket";
 import {

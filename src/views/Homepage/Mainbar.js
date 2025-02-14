@@ -58,11 +58,10 @@ function Mainbar() {
   return (
     <div className="w-full">
       <div
-        className={`h-auto flex flex-col lg:flex-row justify-evenly items-center p-4 ${
-          isBetslipOpen || isChatOpen
+        className={`h-auto flex flex-col lg:flex-row justify-evenly items-center p-4 ${isBetslipOpen || isChatOpen
             ? "flex xl:flex-row lg:flex-col md:flex-col gap-y-5"
             : ""
-        }`}
+          }`}
         style={{
           backgroundImage: `url(${mainbarBGimage})`,
           backgroundSize: "cover",
@@ -79,7 +78,7 @@ function Mainbar() {
           className="mb-6 lg:mb-0"
         >
           <div
-            className={`${getVIPProgressWidth()}  bg-[#0f212e] max-80 overflow-hidden p-6 border text-white border-[#2f4553]`}
+            className={`${getVIPProgressWidth()} bg-[#0f212e] p-6 border text-white border-[#2f4553]`}
           >
             <div className="flex justify-between font-semibold cursor-default items-center">
               <p>{progressData?.userName || "User"}</p>
@@ -141,12 +140,12 @@ function Mainbar() {
                     progressData?.medal === "Bronze"
                       ? "#c69c6d"
                       : progressData?.medal === "Silver"
-                      ? "#b2cccc"
-                      : progressData?.medal === "Gold"
-                      ? "#fed100"
-                      : progressData?.medal === "Platinum"
-                      ? "#6fdde7"
-                      : "#2f4553"
+                        ? "#b2cccc"
+                        : progressData?.medal === "Gold"
+                          ? "#fed100"
+                          : progressData?.medal === "Platinum"
+                            ? "#6fdde7"
+                            : "#2f4553"
                   }
                 />
                 <p className="text-sm text-[#b1bad3] font-medium">
@@ -160,12 +159,12 @@ function Mainbar() {
                     progressData?.nextMedal === "Bronze"
                       ? "#c69c6d"
                       : progressData?.nextMedal === "Silver"
-                      ? "#b2cccc"
-                      : progressData?.nextMedal === "Gold"
-                      ? "#fed100"
-                      : progressData?.nextMedal === "Platinum"
-                      ? "#6fdde7"
-                      : "#2f4553"
+                        ? "#b2cccc"
+                        : progressData?.nextMedal === "Gold"
+                          ? "#fed100"
+                          : progressData?.nextMedal === "Platinum"
+                            ? "#6fdde7"
+                            : "#2f4553"
                   }
                 />
                 <p className="text-sm text-[#b1bad3] font-medium">
@@ -177,9 +176,8 @@ function Mainbar() {
         </div>
 
         <div
-          className={`flex md:flex-row md:space-x-1 md:space-y-0 ${
-            isBetslipOpen || isChatOpen ? "flex flex-row" : ""
-          } `}
+          className={`flex md:flex-row md:space-x-1 md:space-y-0 ${isBetslipOpen || isChatOpen ? "flex flex-row" : ""
+            } `}
         >
           <div
             className="bg-[#1a2c38] h-full hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-8px] mx-3"

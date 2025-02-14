@@ -134,8 +134,8 @@ function CasinoHomePage() {
 
   const getMenuContainerClass = () => {
     if (windowWidth <= 768) {
-      return isChatOpen || isBetslipOpen 
-        ? "w-[12rem]" 
+      return isChatOpen || isBetslipOpen
+        ? "w-[12rem]"
         : "w-[35rem]";
     } else if (windowWidth <= 1024) {
       return isChatOpen || isBetslipOpen
@@ -150,8 +150,8 @@ function CasinoHomePage() {
 
   const getSubMenuClass = () => {
     if (windowWidth <= 768) {
-      return isChatOpen || isBetslipOpen 
-        ? "w-[22rem]" 
+      return isChatOpen || isBetslipOpen
+        ? "w-[22rem]"
         : "w-[37rem]";
     } else if (windowWidth <= 1024) {
       return isChatOpen || isBetslipOpen
@@ -176,14 +176,14 @@ function CasinoHomePage() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="w-full max-w-[1536px] mx-auto px-4">
+        <div className="w-full max-w-[1536px] px-4">
           <div className="text-white pt-6">
             <SlideBar />
           </div>
-          
+
           {/* Search Section */}
-          <div className="pt-8 relative">
-            <div className="relative">
+          <div className="pt-8 relative flex items-center justify-center flex-col">
+            <div className="relative w-full max-w-screen-xl flex justify-center items-center flex-col">
               <input
                 className="border-2 rounded-full w-full py-2 px-10 bg-[#0f212e] border-[#213743] hover:border-[#1b3d50] focus:outline-[#1b3d50] text-white"
                 value={search}
@@ -204,7 +204,7 @@ function CasinoHomePage() {
               </div>
             )}
             {dropdown && (
-              <div ref={dropdownRef} className=" bg-[#0f212e] border border-[#213743] flex space-x-4 rounded-md p-5 my-2 w-full z-50">
+              <div ref={dropdownRef} className=" bg-[#0f212e] flex space-x-4 rounded-md p-5 my-2 w-full h-16 max-w-screen-xl z-50">
                 {Array.isArray(searchResult) && searchResult.map((game) => (
                   <div
                     key={game.id} // Add a key for each game
@@ -225,7 +225,7 @@ function CasinoHomePage() {
           {/* Menu Section */}
           <div className="flex justify-center my-7 text-white">
             <div className={`${getSubMenuClass()} overflow-x-auto scrollbar-thin`}>
-              <div className="bg-[#0f212e] flex rounded-full p-[5px] space-x-2 text-xs min-w-max">
+              <div className="bg-[#0f212e] flex rounded-full p-[5px] space-x-2 text-xs">
                 {menuItems.map((item) => (
                   <button
                     key={item.label}

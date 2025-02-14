@@ -3,14 +3,26 @@ import React, { useState } from "react";
 
 const Setupwallet = ({ closeSetupWallet }) => {
   const [input, setInput] = useState("");
-  const [error, setError] = useState("");
+  const [error] = useState("");
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [showpopup, setshowpopup] = useState("");
+
 
   const handleSubmit = () => {
-    if (input.length !== 6) {
-      setError("emailCode must be exactly 6 characters");
-    } else {
-      setError("");
+    if (input.trim() === "") {
+      return;
     }
+
+    if (input.length !== 6 || input !== "expectedCode") {
+      setShowErrorPopup(true);
+      setTimeout(() => setShowErrorPopup(false), 5000);
+      return;
+    }
+  };
+
+  const handleResendClick = () => {
+    setTimeout(() => setshowpopup(false), 5000);
+    setshowpopup(true);
   };
 
   return (
@@ -26,8 +38,8 @@ const Setupwallet = ({ closeSetupWallet }) => {
           borderRadius: "8px",
         },
       }}
-      >
-      <div className="flex justify-between items-center w-full px-4 h-[4.106rem] ">
+    >
+      <div className="flex justify-between items-center w-full px-4 h-[4.106rem]">
         <h1 className="text-3xl xl:text-3xl lg:text-3xl md:text-2xlflex font-extrabold italic font-sans transition active:scale-[0.98] select-none items-center space-x-2 text-white">
           Listor
         </h1>
@@ -40,51 +52,6 @@ const Setupwallet = ({ closeSetupWallet }) => {
       </div>
       <div className="text-[#b1bad3] bg-[#0f212e] text-base px-4 pb-4 flex flex-col justify-between h-full">
         <div className="h-full bg-[#0f212e] w-full">
-          <div
-            className="fixed top-20 left-4 bg-[#213743] text-white rounded shadow-lg h-20 flex items-center md:w-80 max-w-xs group"
-          >
-            <div className="bg-[#1A2C38] text-[#e9113c] p-4 h-full rounded-l md:w-16 w-14 flex justify-center items-center">
-              <svg className="w-5 h-5" viewBox="0 0 64 64" fill="currentColor">
-                <path
-                  fillRule="evenodd"
-                  d="M32 64c17.672 0 32-14.328 32-32S49.672 0 32 0 0 14.328 0 32s14.328 32 32 32Zm-5.333-51.68h10.666v20.987H26.667V12.32ZM32 39.44a6.134 6.134 0 1 1-6.133 6.133v-.026a6.106 6.106 0 0 1 6.106-6.107h.03H32Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-            <div className="p-4 flex items-center h-full w-full">
-              <div className="flex gap-y-1 flex-col">
-                <p className="font-semibold">Error</p>
-                <p className="text-sm text-[#B1BAD3] cursor-default">Request limit reached.</p>
-              </div>
-            </div>
-            <button className="text-gray-400 hover:text-white flex justify-center items-center p-4 h-full w-16">
-              <svg className="w-4 h-4" viewBox="0 0 64 64" fill="currentColor">
-                <path
-                  fillRule="evenodd"
-                  d="m54.827 16.187-7.014-7.014L32 24.987 16.187 9.173l-7.014 7.014L24.987 32 9.173 47.813l7.014 7.014L32 39.013l15.813 15.814 7.014-7.014L39.013 32l15.814-15.813Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-
-            {/* Progress Bar with Hover to Pause */}
-            <div
-              className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#557086] rounded-bl animate-[countdown_5s_linear_forwards] group-hover:[animation-play-state:paused]"
-            ></div>
-
-            {/* Tailwind Keyframes */}
-            <style>
-              {`
-          @keyframes countdown {
-            from { width: 100%; }
-            to { width: 0%; }
-          } 
-        `}
-            </style>
-          </div>
-
-
           <div className="mt-[2.5rem]">
             <h1 className="text-xl font-semibold text-white cursor-default flex space-y-2">
               Confirm your email
@@ -154,16 +121,92 @@ const Setupwallet = ({ closeSetupWallet }) => {
                       </div>
                     )}
                   </div>
+                  {showErrorPopup && (
+                    <div className="fixed top-20 left-4 bg-[#213743] text-white rounded shadow-lg h-20 flex items-center md:w-80 max-w-xs group">
+                      <div className="bg-[#1A2C38] text-[#e9113c] p-4 h-full rounded-l md:w-16 w-14 flex justify-center items-center">
+                        <svg className="w-5 h-5" viewBox="0 0 64 64" fill="currentColor">
+                          <path
+                            fillRule="evenodd"
+                            d="M32 64c17.672 0 32-14.328 32-32S49.672 0 32 0 0 14.328 0 32s14.328 32 32 32Zm-5.333-51.68h10.666v20.987H26.667V12.32ZM32 39.44a6.134 6.134 0 1 1-6.133 6.133v-.026a6.106 6.106 0 0 1 6.106-6.107h.03H32Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                      <div className="p-4 flex items-center h-full w-full">
+                        <div className="flex gap-y-1 flex-col">
+                          <p className="font-semibold">Error</p>
+                          <p className="text-sm text-[#B1BAD3] cursor-default">Invalid email verification code.</p>
+                        </div>
+                      </div>
+                      <button onClick={() => setShowErrorPopup(false)} className="text-gray-400 hover:text-white flex justify-center items-center p-4 h-full w-16">
+                        <svg className="w-4 h-4" viewBox="0 0 64 64" fill="currentColor">
+                          <path
+                            fillRule="evenodd"
+                            d="m54.827 16.187-7.014-7.014L32 24.987 16.187 9.173l-7.014 7.014L24.987 32 9.173 47.813l7.014 7.014L32 39.013l15.813 15.814 7.014-7.014L39.013 32l15.814-15.813Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </button>
+                      <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#557086] rounded-bl animate-[countdown_5s_linear_forwards] group-hover:[animation-play-state:paused]"></div>
+                      <style>
+                        {`
+                          @keyframes countdown {
+                            from { width: 100%; }
+                            to { width: 0%; }
+                          } 
+                      `}
+                      </style>
+                    </div>
+                  )}
                 </div>
               </form>
               <div className="text-right font-semibold">
                 <button
+                  onClick={handleResendClick}
                   type="button"
-                  className="text-white text-xs px-5 py-[0.9375rem]"
+                  className="text-white text-xs px-5 py-[0.9375rem] transition active:scale-[0.98]"
                 >
                   Resend email
                 </button>
               </div>
+              {showpopup && (
+                <div className="fixed top-20 left-4 bg-[#213743] text-white rounded shadow-lg h-20 flex items-center  max-sm:max-w-xs group">
+                  <div className="bg-[#1A2C38] text-[#1475e1] p-4 h-full rounded-l md:w-16 w-14 flex justify-center items-center">
+                    <svg className="w-5 h-5" viewBox="0 0 64 64" fill="currentColor">
+                      <path
+                        fillRule="evenodd"
+                        d="M64 21.946V52c0 2.21-1.79 4-4 4H4c-2.21 0-4-1.79-4-4V21.974l32 17.44 32-17.468ZM32 32.614 64 15.12V12a4 4 0 0 0-3.972-4H4c-2.21 0-4 1.79-4 4v3.146l32 17.468Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div className="p-4 flex items-center h-full w-full">
+                    <div className="flex gap-y-1 flex-col">
+                      <p className="font-semibold">Email Resent</p>
+                      <p className="text-sm text-[#B1BAD3] cursor-default">
+                        Verification email resent to ...</p>
+                    </div>
+                  </div>
+                  <button onClick={() => setshowpopup(false)} className="text-gray-400 hover:text-white flex justify-center items-center p-4 h-full w-16">
+                    <svg className="w-4 h-4" viewBox="0 0 64 64" fill="currentColor">
+                      <path
+                        fillRule="evenodd"
+                        d="m54.827 16.187-7.014-7.014L32 24.987 16.187 9.173l-7.014 7.014L24.987 32 9.173 47.813l7.014 7.014L32 39.013l15.813 15.814 7.014-7.014L39.013 32l15.814-15.813Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#557086] rounded-bl animate-[countdown_5s_linear_forwards] group-hover:[animation-play-state:paused]"></div>
+                  <style>
+                    {`
+                        @keyframes countdown {
+                          from { width: 100%; }
+                          to { width: 0%; }
+                        } 
+                    `}
+                  </style>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -172,7 +215,7 @@ const Setupwallet = ({ closeSetupWallet }) => {
           className={`${input.length === 6 ? "bg-[#1475E1]" : "bg-[#105eb4] opacity-55"
             } bg-opacity-100 text-white font-semibold py-2 rounded w-full cursor-default`}
         >
-          <div className="font-semibold text-[#b1bad3]">Submit</div>
+          <div className="font-semibold text-white cursor-pointer">Submit</div>
         </button>
       </div>
     </Dialog>
