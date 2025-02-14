@@ -65,7 +65,7 @@ function LiveCasino({ allGames, isLobby }) {
   }, [isChatOpen, isBetslipOpen]);
 
   return (
-    <div className={`${!isLobby && "flex justify-center"}`}>
+    <div className={`${!isLobby && "flex justify-center select-none"}`}>
       <div className={`${!isLobby && "flex flex-col items-start mt-10"}`}>
         <div className="flex justify-between items-center">
           <div className="flex items-center mx-3 space-x-2">
@@ -73,7 +73,7 @@ function LiveCasino({ allGames, isLobby }) {
               fontSize="small"
               className="text-[#b1bad3] hover:text-white"
             />
-            <Link className="text-lg font-medium text-white">Live Casino</Link>
+            <Link className="text-lg font-medium text-white select-text">Live Casino</Link>
           </div>
           {isLobby && (
             <div ref={navButtonsRef}>

@@ -60,14 +60,14 @@ function Exclusives({ allGames, isLobby }) {
     if (swiperRef.current && swiperRef.current.swiper) {
       const prevButton = navButtonsRef.current?.querySelector(".prev-arrow");
       const nextButton = navButtonsRef.current?.querySelector(".next-arrow");
-      
+
       if (prevButton && nextButton) {
         swiperRef.current.swiper.params.navigation.prevEl = prevButton;
         swiperRef.current.swiper.params.navigation.nextEl = nextButton;
         swiperRef.current.swiper.navigation.init();
         swiperRef.current.swiper.navigation.update();
       }
-      
+
       swiperRef.current.swiper.params.slidesPerView = getVisibleGamesCount();
       swiperRef.current.swiper.params.slidesPerGroup = 1;
       swiperRef.current.swiper.update();
@@ -75,7 +75,7 @@ function Exclusives({ allGames, isLobby }) {
   }, [isChatOpen, isBetslipOpen]);
 
   return (
-    <div className={`${!isLobby && "flex justify-center"}`}>
+    <div className={`${!isLobby && "flex justify-center select-none"}`}>
       <div className={`${!isLobby && "flex flex-col items-start mt-10"}`}>
         <div className="flex justify-between items-center">
           <div className="flex items-center mx-3 space-x-2">
@@ -83,7 +83,7 @@ function Exclusives({ allGames, isLobby }) {
               fontSize="small"
               className="text-[#b1bad3] hover:text-white"
             />
-            <Link className="text-lg font-medium text-white">Listor Exclusives</Link>
+            <Link className="text-lg font-medium text-white select-text">Listor Exclusives</Link>
           </div>
           {isLobby && (
             <div ref={navButtonsRef}>
@@ -162,11 +162,10 @@ function Exclusives({ allGames, isLobby }) {
                     <div className="text-center">
                       <img
                         src={exclusives.gameImage}
-                        className={`${
-                          windowWidth <= 425 
-                            ? 'w-24 h-32' // Smaller size for 425px and below
-                            : 'xl:w-44 lg:w-36 lg:h-48 xl:h-56'
-                        } rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]`}
+                        className={`${windowWidth <= 425
+                          ? 'w-24 h-32' // Smaller size for 425px and below
+                          : 'xl:w-44 lg:w-36 lg:h-48 xl:h-56'
+                          } rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]`}
                         alt={exclusives?.gameName || "Game Image"}
                         onClick={() => handleAllGame(exclusives?.gameName, exclusives?.id)}
                       />
@@ -183,30 +182,28 @@ function Exclusives({ allGames, isLobby }) {
               )}
             </Swiper>
           ) : (
-            <div className={`grid ${
-              windowWidth <= 425
-                ? 'grid-cols-3'
-                : windowWidth >= 1024 
-                  ? isChatOpen || isBetslipOpen 
-                    ? 'md:grid-cols-4' 
-                    : 'md:grid-cols-6'
-                  : windowWidth <= 768 
-                    ? 'grid-cols-4' 
-                    : isChatOpen || isBetslipOpen 
-                      ? 'md:grid-cols-3' 
-                      : 'md:grid-cols-4'
-            } gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0`}>
+            <div className={`grid ${windowWidth <= 425
+              ? 'grid-cols-3'
+              : windowWidth >= 1024
+                ? isChatOpen || isBetslipOpen
+                  ? 'md:grid-cols-4'
+                  : 'md:grid-cols-6'
+                : windowWidth <= 768
+                  ? 'grid-cols-4'
+                  : isChatOpen || isBetslipOpen
+                    ? 'md:grid-cols-3'
+                    : 'md:grid-cols-4'
+              } gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0`}>
               {allGame?.allGame?.games?.map((exclusives, index) =>
                 exclusives?.gameType === "StackExclusives" ? (
                   <div key={index}>
                     <div className="text-center">
                       <img
                         src={exclusives.gameImage}
-                        className={`${
-                          windowWidth <= 425 
-                            ? 'w-24 h-32' 
-                            : 'xl:w-48 lg:w-36 lg:h-48 xl:h-64'
-                        } rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]`}
+                        className={`${windowWidth <= 425
+                          ? 'w-24 h-32'
+                          : 'xl:w-48 lg:w-36 lg:h-48 xl:h-64'
+                          } rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]`}
                         alt={exclusives?.gameName || "Game Image"}
                         onClick={() => handleAllGame(exclusives?.gameName, exclusives?.id)}
                       />
