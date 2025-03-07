@@ -176,7 +176,6 @@ function DragonSidebar({ dragonGameSocket }) {
         onLoss: parseInt(values?.onlose, 10),
         stopOnLoss: parseInt(values?.stoponloss, 10),
         stopOnProfit: parseInt(values?.stoponprofit, 10),
-
       });
       dispatch(setAutoBetOnClick(true));
     }

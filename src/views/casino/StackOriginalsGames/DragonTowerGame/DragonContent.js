@@ -49,10 +49,6 @@ function DragonContent({ dragonGameSocket }) {
   const { wallet } = useSelector((state) => state.auth);
   const decoded = decodedToken();
 
-  // const debouncedUpdateWallet = useMemo(() => {
-  //   return debounce((data) => dispatch(setWallet(data?.walletBalance.toFixed(2))));
-  // }, [wallet]);
-
   dragonGameSocket?.on("walletBalance", (data) => {
     console.log("wallet data ", data);
     // debouncedUpdateWallet(data)
@@ -106,11 +102,11 @@ function DragonContent({ dragonGameSocket }) {
   useEffect(() => {
     dragonGameSocket?.on("gameRestored", (data, currentMultiplier) => {
       console.log("gameRestored data", data);
-      
+
       dispatch(setRestor(data));
       dispatch(setRestodMultiplier(currentMultiplier));
       dispatch(setRestorData(data.restoreData));
-      dispatch(setRowsIndex(data.currentStep - 1));
+      dispatch(setRowsIndex(data.currentStep - 1))
 
       dispatch(setGameBet(true));
 
@@ -204,7 +200,7 @@ function DragonContent({ dragonGameSocket }) {
 
   dragonGameSocket?.on("cashoutSuccess", (data) => {
     console.log("cashoutSuccess data", data);
-    
+
     setCashoutResult(data);
     setCashoutVisible(true);
     dispatch(setTileSelected({}));
@@ -484,7 +480,7 @@ function DragonContent({ dragonGameSocket }) {
                       onClick={() => handleBoxClick(rowIndex, boxIndex)}
                     >
                       {imageToShow && (
-                        <img src={imageToShow} alt="Not Found" className="w-auto h-full object-cover rounded-md" />
+                        <img src={imageToShow} alt="Not Found" className="w-auto leading h-full object-cover rounded-md" />
                       )}
                     </div>
                   );

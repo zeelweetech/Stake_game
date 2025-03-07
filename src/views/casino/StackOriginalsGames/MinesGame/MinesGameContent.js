@@ -345,8 +345,8 @@ function MinesGameContent({ mineGameSocket }) {
 
     if (isManual) {
       if (!gameOverProcessedRef.current) {
-        // const audio = new Audio(winSound);
-        // audio.play();
+        const audio = new Audio(winSound);
+        audio.play();
       }
 
       mineGameSocket.emit("selectTile", {
