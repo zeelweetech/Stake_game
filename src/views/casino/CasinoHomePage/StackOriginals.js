@@ -35,7 +35,7 @@ function StackOriginals({ isLobby }) {
   const handleAllGame = (gameName, id) => {
     setLoading(true);
     navigate(`/casino/${gameName}/${id}`);
-    
+
     // switch (gameName) {
     //   case "Crash":
     //     return CrashSocket.emit("joinGame", {
@@ -102,13 +102,13 @@ function StackOriginals({ isLobby }) {
     const isDrawerOpen = isChatOpen || isBetslipOpen;
 
     if (screenWidth <= 425) {
-      return 3; 
+      return 3;
     } else if (screenWidth <= 768) {
-      return isDrawerOpen ? 3 : 4; 
+      return isDrawerOpen ? 3 : 4;
     } else if (screenWidth >= 1024) {
-      return isDrawerOpen ? 4 : 7; 
+      return isDrawerOpen ? 4 : 7;
     } else {
-      return isDrawerOpen ? 4 : 5; 
+      return isDrawerOpen ? 4 : 5;
     }
   };
 
@@ -135,24 +135,24 @@ function StackOriginals({ isLobby }) {
       swiperRef.current.swiper.update();
     }
   }, [isChatOpen, isBetslipOpen]);
-// Add function to get image class based on screen size and drawer state
+  // Add function to get image class based on screen size and drawer state
   // const getImageClass = () => {
   //   const isDrawerOpen = isChatOpen || isBetslipOpen;
-    
+
   //   if (windowWidth <= 768 && isDrawerOpen) {
   //     return "w-full h-full"; // Smaller size when drawer open on mobile
   //   }
-    
+
   //   return "xl:w-44 lg:w-36 lg:h-48 xl:h-56"; // Default size
   // };
 
   return (
-    <div className={`${!isLobby && "flex justify-center"}`}>
-      <div className={`${!isLobby && "flex flex-col items-start mt-10"}`}>
+    <div className={`${!isLobby && "flex justify-center select-none"}`}>
+      <div className={`${!isLobby && "flex flex-col items-start mt-10 "}`}>
         <div className="flex justify-between items-center">
           <div className="flex items-center mx-3 space-x-2">
             <BsFire fontSize={20} className="text-[#b1bad3] hover:text-white" />
-            <Link className="text-lg font-medium text-white">Listor Originals</Link>
+            <Link className="text-lg font-medium text-white select-text">Listor Originals</Link>
           </div>
           {isLobby && (
             <div ref={navButtonsRef}>
@@ -227,16 +227,15 @@ function StackOriginals({ isLobby }) {
             >
               {allGame?.allGame?.games?.map((gameData, index) =>
                 gameData?.gameType === "casino" ||
-                gameData?.gameType === "Casino" ? (
+                  gameData?.gameType === "Casino" ? (
                   <SwiperSlide key={index}>
                     <div className="text-center">
                       <img
                         src={gameData.gameImage}
-                        className={`${
-                          windowWidth <= 425 
-                            ? 'w-24 h-32' // Smaller size for 425px and below
-                            : 'xl:w-44 lg:w-36 lg:h-48 xl:h-56'
-                        } rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]`}
+                        className={`${windowWidth <= 425
+                          ? 'w-24 h-32' // Smaller size for 425px and below
+                          : 'xl:w-44 lg:w-36 lg:h-48 xl:h-56'
+                          } rounded-md hover:cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]`}
                         alt="Not Found"
                         onClick={() =>
                           handleAllGame(gameData?.gameName, gameData?.id)
@@ -255,19 +254,18 @@ function StackOriginals({ isLobby }) {
               )}
             </Swiper>
           ) : (
-            <div className={`grid ${
-              windowWidth <= 425
-                ? 'grid-cols-3'
-                : windowWidth >= 1024 
-                  ? isChatOpen || isBetslipOpen 
-                    ? 'md:grid-cols-4' 
-                    : 'md:grid-cols-6'
-                  : windowWidth <= 768 
-                    ? 'grid-cols-4' 
-                    : isChatOpen || isBetslipOpen 
-                      ? 'md:grid-cols-3' 
-                      : 'md:grid-cols-4'
-            } gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0`}>
+            <div className={`grid ${windowWidth <= 425
+              ? 'grid-cols-3'
+              : windowWidth >= 1024
+                ? isChatOpen || isBetslipOpen
+                  ? 'md:grid-cols-4'
+                  : 'md:grid-cols-6'
+                : windowWidth <= 768
+                  ? 'grid-cols-4'
+                  : isChatOpen || isBetslipOpen
+                    ? 'md:grid-cols-3'
+                    : 'md:grid-cols-4'
+              } gap-x-2 md:gap-x-4 gap-y-5 px-2 md:px-0`}>
               {allGame?.allGame?.games?.map((gameData, index) =>
                 gameData?.gameType === "casino" ||
                   gameData?.gameType === "Casino" ? (
