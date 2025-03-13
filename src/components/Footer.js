@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Bitcoin from "../assets/img/bitcoin.DpHO7atL.svg";
 import Ethereum from "../assets/img/ethereum.svg.svg";
 import Dogecoin from "../assets/img/dogecoin.k8OeA1SN.svg";
@@ -22,7 +22,7 @@ import { FaYoutube } from "react-icons/fa";
 import { IoShirt } from "react-icons/io5";
 import { FaCrown } from "react-icons/fa6";
 import { FaBloggerB } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Footer() {
   const navigate = useNavigate();
@@ -141,7 +141,7 @@ function Footer() {
             <h3 className="text-white font-semibold mb-4">Support</h3>
             <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
               <li><a href="/HelpCenter" className="hover:text-white flex items-center">Help Center <svg className="w-3 h-3 ml-1" /></a></li>
-              <li><a href="/ComeSoon" className="hover:text-white flex items-center">Fairness</a></li>
+              <li><a href="/Fairness!" className="hover:text-white flex items-center">Fairness</a></li>
               <li><a href="/ComeSoon" className="hover:text-white flex items-center">Gambling Helpline <svg className="w-3 h-3 ml-1" /></a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Live Support</a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Self Exclusion</a></li>

@@ -13,39 +13,39 @@ const GameContainer = React.lazy(() =>
   import("./views/casino/StackOriginalsGames")
 );
 const HelpCenter = React.lazy(() =>
-  import("./views/footerpage/HelpCenter"))
+  import("./views/footerpage/HelpCenter"));
 
 const Fairness = React.lazy(() =>
   import("./views/footerpage/Fairness")
 );
 
   
-const Policies = React.lazy(() => import("./views/footerpage/Policies"))
-const VipProgramLevels = React.lazy(() => import("./views/footerpage/VipProgramLevels"))
-const OnlineCasinoGuide = React.lazy(() => import("./views/footerpage/onlineCasinoGuide"))
-const ComeSoon = React.lazy(() => import("./views/component/ComeSoon"))
+const Policies = React.lazy(() => import("./views/footerpage/Policies"));
+const VipProgramLevels = React.lazy(() => import("./views/footerpage/VipProgramLevels"));
+const OnlineCasinoGuide = React.lazy(() => import("./views/footerpage/onlineCasinoGuide"));
+const ComeSoon = React.lazy(() => import("./views/component/ComeSoon"));
 // const antiMoneyLaundering = React.lazy(() => import("./views/footerpage/antiMoneyLaundering"))
 const Slots = React.lazy(() => import("./views/casino/CasinoHomePage/Slots"));
-const LiveCasion = React.lazy(() => import("./views/casino/CasinoHomePage/LiveCasino"))
-const favourites = React.lazy(() => import("./views/sidebar/Favourites"))
-const Recent = React.lazy(() => import("./views/sidebar/Recent"))
-const MyBet = React.lazy(() => import("./views/sidebar/myBets/MyBet"))
-const GameShows = React.lazy(() => import("./views/casino/CasinoHomePage/GameShows"))
-const Exclusives = React.lazy(() => import("./views/casino/CasinoHomePage/Exclusives"))
-const StackOriginals = React.lazy(() => import("./views/casino/CasinoHomePage/StackOriginals"))
-const NewReleases = React.lazy(() => import("./views/casino/CasinoHomePage/NewReleases"))
-const Lobby = React.lazy(() => import("./views/casino/CasinoHomePage/Lobby"))
+const LiveCasion = React.lazy(() => import("./views/casino/CasinoHomePage/LiveCasino"));
+const favourites = React.lazy(() => import("./views/sidebar/Favourites"));
+const Recent = React.lazy(() => import("./views/sidebar/Recent"));
+const MyBet = React.lazy(() => import("./views/sidebar/myBets/MyBet"));
+const GameShows = React.lazy(() => import("./views/casino/CasinoHomePage/GameShows"));
+const Exclusives = React.lazy(() => import("./views/casino/CasinoHomePage/Exclusives"));
+const StackOriginals = React.lazy(() => import("./views/casino/CasinoHomePage/StackOriginals"));
+const NewReleases = React.lazy(() => import("./views/casino/CasinoHomePage/NewReleases"));
+const Lobby = React.lazy(() => import("./views/casino/CasinoHomePage/Lobby"));
 const Setting = React.lazy(() => import("./views/Profile/Setting"));
-const Profile = React.lazy(() => import("./views/Profile/index"))
+const Profile = React.lazy(() => import("./views/Profile/index"));
 const token = localStorage.getItem("token");
 // const Wallet = React.lazy(() => import("./views/Profile/Wallet"))
-const vipclub = React.lazy(() => import("./views/footerpage/VipClub"))
+const vipclub = React.lazy(() => import("./views/footerpage/VipClub"));
 // const Vault = React.lazy(() => import("./views/Profile/Vault"))
 // const Vip = React.lazy(() => import("./views/Profile/Vip"))
 // const Statistics = React.lazy(() => import("./views/Profile/Statistic"))
 // const Notification = React.lazy(() => import("./views/Profile/Notification"))
-const Logout = React.lazy(() => import("./views/Profile/Logout"))
-const ResetPassword = React.lazy(() => import("./views/pages/forgotpassword/NewPassword"))
+const Logout = React.lazy(() => import("./views/Profile/Logout"));
+const ResetPassword = React.lazy(() => import("./views/pages/forgotpassword/NewPassword"));
 
 const routes = [
   {

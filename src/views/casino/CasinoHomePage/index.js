@@ -19,7 +19,9 @@ import { decodedToken } from "../../../resources/utility";
 import { getWallet, updateWallet } from "../../../services/LoginServices";
 import { useDispatch, useSelector } from "react-redux";
 import { setWallet } from "../../../features/auth/authSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, 
+  // useParams 
+} from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
 
@@ -30,15 +32,19 @@ function CasinoHomePage() {
   const [search, setSearch] = useState();
   const [searchResult, setSearchResult] = useState([]);
   const [dropdown, setDropdown] = useState(false);
-  const { id, gameName } = useParams()
+  // const { id, gameName } = useParams()
   // const { openMenubar } = useSelector((state) => state.auth);
-  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
+  const { isBetslipOpen, 
+    // isType 
+  } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
   const decoded = decodedToken();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dropdownRef = useRef();
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, 
+    // setWindowWidth
+  ] = useState(window.innerWidth);
 
   const menuItems = [
     { label: "Lobby", icon: <TbCherryFilled color="#b1bad3" fontSize={15} /> },

@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
-import { Badge, IconButton } from "@mui/material";
+import { 
+  // Badge,
+   IconButton } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { IoIosChatboxes } from "react-icons/io";
 import { MdEmojiEvents, MdOutlineEventNote, MdSettings } from "react-icons/md";
@@ -35,9 +37,13 @@ function MainHeader({ handleRightSidebarToggle }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const { tooltipOpen } = useSelector((state) => state.auth);
-  const { isBetslipOpen, isType } = useSelector((state) => state.betslip);
+  const { isBetslipOpen, 
+    // isType 
+  } = useSelector((state) => state.betslip);
   const { isChatOpen } = useSelector((state) => state.chat);
-  const [showMessage, setShowMessage] = useState(false);
+  const [
+    // showMessage
+    , setShowMessage] = useState(false);
   const dispatch = useDispatch();
   const tooltipRef = useRef(null);
   const personIconRef = useRef(null);

@@ -16,8 +16,8 @@ function GameShows({ allGames, isLobby }) {
   const navigate = useNavigate();
   const swiperRef = useRef(null);
   const navButtonsRef = useRef(null);
-  const dispatch = useDispatch()
-  const allGame = useSelector((state) => state.allGame)
+  const dispatch = useDispatch();
+  const allGame = useSelector((state) => state.allGame);
   const { isChatOpen } = useSelector((state) => state.chat);
   const { isBetslipOpen } = useSelector((state) => state.betslip);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
