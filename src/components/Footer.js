@@ -141,7 +141,7 @@ function Footer() {
             <h3 className="text-white font-semibold mb-4">Support</h3>
             <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
               <li><a href="/HelpCenter" className="hover:text-white flex items-center">Help Center <svg className="w-3 h-3 ml-1" /></a></li>
-              <li><a href="/Fairness!" className="hover:text-white flex items-center">Fairness</a></li>
+              <li><a href="/Fairness" className="hover:text-white flex items-center">Fairness</a></li>
               <li><a href="/ComeSoon" className="hover:text-white flex items-center">Gambling Helpline <svg className="w-3 h-3 ml-1" /></a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Live Support</a></li>
               <li><a href="/ComeSoon" className="hover:text-white">Self Exclusion</a></li>
