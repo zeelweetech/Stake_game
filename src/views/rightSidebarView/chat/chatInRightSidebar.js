@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import EmojiPicker from "emoji-picker-react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, 
+  // useSelector 
+} from "react-redux";
 import { setEmoji } from "../../../features/auth/emojiSlice";
 import { Country } from "./country";
 import { decodedToken } from "../../../resources/utility";
@@ -36,7 +38,7 @@ const ChatApp = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const dispatch = useDispatch();
   const messagesEndRef = useRef(null);
-  const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
+  // const selectedEmoji = useSelector((state) => state.emoji.selectedEmoji);
   const emojiPickerRef = useRef(null);
   const dropDownRef = useRef(null);
   const socketRef = useRef(null);

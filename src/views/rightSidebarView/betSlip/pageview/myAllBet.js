@@ -3,11 +3,11 @@ import sportsTable from "../../../../assets/img/sportsTable.png";
 
 function MyAllBet() {
   const [gameMenu, setGameMenu] = useState("Active");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setDropdownOpen(!dropdownOpen);
+  // };
 
   const menuItems = [{ label: "Active" }, { label: "Settled" }];
 

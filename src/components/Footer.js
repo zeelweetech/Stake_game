@@ -14,6 +14,7 @@ import EvertonLogo from "../assets/img/everton-logo.DjZkLatD (1).svg";
 import SafeGamble from "../assets/img/safe-gamble.Lrrm0l28.svg";
 import Age from "../assets/img/18plus.DgozareE (1).svg";
 import cryptogambling1 from "../assets/img/cryptogambling1.png";
+import GCB from "../assets/img/GCB.png"
 import { FaCommentAlt } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -26,9 +27,9 @@ import { useNavigate } from "react-router-dom";
 
 function Footer() {
   const navigate = useNavigate();
- 
+
   return (
-    <footer className="bg-[#071d2a] text-gray-400 py-12 px-8 z-auto mt-10">
+    <footer className="bg-[#071d2a] text-[#B1BAD3] md:py-12 md:px-8 py-8 px-3 z-auto mt-10">
       {/* Main Navigation Section */}
       <div className="max-w-7xl mx-auto mb-12">
         <div className="max-w-7xl mx-auto mb-12">
@@ -36,13 +37,12 @@ function Footer() {
             <span className="text-white text-5xl font-extrabold italic font-sans cursor-pointer" onClick={() => navigate("/")}>
               Listor
             </span>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-[#B1BAD3]">
               © 2024 Listor.com | All Rights Reserved.
             </p>
           </div>
-
           {/* Social Icons */}
-          <div className="flex items-center justify-end gap-4 mt-3">
+          <div className="flex items-center md:justify-end justify-between w-full  gap-4 mt-3">
             <a
               href="https://blog.Listor.com"
               target="_blank"
@@ -123,6 +123,7 @@ function Footer() {
               <li><a href="/ComeSoon" className="hover:text-white">Promos & Competitions</a></li>
             </ul>
           </div>
+          {/* Sports Section */}
           <div>
             <h3 className="text-white font-semibold mb-4">Sports</h3>
             <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
@@ -137,6 +138,7 @@ function Footer() {
               <li><a href="/ComeSoon" className="hover:text-white">Racing Rules</a></li>
             </ul>
           </div>
+          {/* Support Section */}
           <div>
             <h3 className="text-white font-semibold mb-4">Support</h3>
             <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
@@ -147,6 +149,7 @@ function Footer() {
               <li><a href="/ComeSoon" className="hover:text-white">Self Exclusion</a></li>
             </ul>
           </div>
+          {/* About Us Section */}
           <div>
             <div>
               <h3 className="text-white font-semibold mb-4">About Us</h3>
@@ -154,11 +157,12 @@ function Footer() {
                 <li><a href="/vip-club" className="hover:text-white">VIP Club</a></li>
                 <li><a href="#" className="hover:text-white">Affiliate</a></li>
                 <li><a href="/policies/Privacy" className=" hover:text-white transition-colors" onClick={() => window.scroll(0, 0)}>Privacy Policy</a></li>
-                <li><a href="/policies/AntiMoneyLaunderings" className=" hover:text-white transition-colors"onClick={() => window.scroll(0,0)}>AML Policy</a></li>
+                <li><a href="/policies/AntiMoneyLaunderings" className=" hover:text-white transition-colors" onClick={() => window.scroll(0, 0)}>AML Policy</a></li>
                 <li><a href="/policies/Terms" className=" hover:text-white transition-colors">Terms of Service</a></li>
-             </ul>
+              </ul>
             </div>
           </div>
+          {/* Payment Info Section */}
           {/* <div>
             <h3 className="text-white font-semibold mb-4">Payment Info</h3>
             <ul className="space-y-2">
@@ -170,6 +174,7 @@ function Footer() {
               <li><a href="#" className="hover:text-white">How Much to Bet With</a></li>
             </ul>
           </div> */}
+          {/* How-to Guides Section */}
           <div>
             <h3 className="text-white font-semibold mb-4">How-to Guides</h3>
             <ul className="grid gap-1 text-sm font-bold text-[#B1BAD3]">
@@ -182,7 +187,6 @@ function Footer() {
             </ul>
           </div>
         </div>
-
         {/* Cryptocurrency Icons Section */}
         <div className="border-t border-gray-700 py-8 ">
           <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-6">
@@ -199,7 +203,6 @@ function Footer() {
             <img src={Age} alt="Partner" className="h-11" />
           </div>
         </div>
-
         {/* Partners Section */}
         <div className="border-t border-gray-700 py-8">
           <div className="max-w-7xl mx-auto flex flex-wrap justify-around gap-12 items-center">
@@ -255,6 +258,10 @@ function Footer() {
               press@Listor.com
             </a>
           </div>
+        </div>
+        <div className="flex justify-center items-center text-white pt-8 gap-x-8">
+          <img src={GCB} alt="Partner" className="w-[32px] h-[18.09px]" />
+          <img src={l2} alt="Partner" className="w-8 h-8" />
         </div>
       </div>
     </footer>

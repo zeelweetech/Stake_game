@@ -190,11 +190,16 @@ tr:nth-child(even) {
   /* --epr-emoji-size: 10px; */
   /* display: none!important; */
 }
+
 .full-screen-container {
-  height: 90vh; /* Full height of the viewport */
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-  position: relative; /* Positioning context for child elements */
+  height: 90vh;
+  /* Full height of the viewport */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
+  position: relative;
+  /* Positioning context for child elements */
 
 }
 
@@ -227,14 +232,17 @@ tr:nth-child(even) {
 @media (max-width: 768px) {
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: #b1bad3 transparent;
+    scrollbar-color: #2f4553 transparent;
   }
+
   .scrollbar-thin::-webkit-scrollbar {
     width: 8px;
   }
+
   .scrollbar-thin::-webkit-scrollbar-track {
     background: transparent;
   }
+
   .scrollbar-thin::-webkit-scrollbar-thumb {
     background-color: #b1bad3;
     border-radius: 10px;

@@ -15,7 +15,9 @@ function Betslip({ onClose }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [gameMenu, setGameMenu] = useState("Single");
   const [tooltip, setTooltip] = useState(false);
-  const [amountError, setAmountError] = useState("");
+  const [
+    // amountError
+    , setAmountError] = useState("");
   const [amount, setAmount] = useState(0);
   const [selectedView, setSelectedView] = useState("Bet Slip");
   const betSlipRef = useRef(null);

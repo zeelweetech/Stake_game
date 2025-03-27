@@ -6,17 +6,19 @@ import { useNavigate } from "react-router-dom";
 import { searchGames } from "../../services/GameServices";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const Favourites = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [dropdown, setDropdown] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [
+    // windowWidth
+    , setWindowWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
   const dropdownRef = useRef();
-  const { isChatOpen } = useSelector((state) => state.chat);
-  const { isBetslipOpen } = useSelector((state) => state.betslip);
+  // const { isChatOpen } = useSelector((state) => state.chat);
+  // const { isBetslipOpen } = useSelector((state) => state.betslip);
 
   useEffect(() => {
     const handleResize = () => {
